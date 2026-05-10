@@ -280,7 +280,24 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
 }
 
 /**
+ * 捕获情况档位权重（数值越小越强，排名越靠前）
+ * 顺序：7×3 > 6×3+2 > 6×3+1 > 6×3
+ */
+var CAPTURE_RANK = {
+  '7×3':   1,
+  '6×3+2': 2,
+  '6×3+1': 3,
+  '6×3':   4
+};
+function captureWeight(status) {
+  return CAPTURE_RANK[status] !== undefined ? CAPTURE_RANK[status] : 99;
+}
+
+/**
  * 渲染「夜灵」类榜单（含捕获情况列）
+ * 排序规则：
+ *   1. 捕获情况越强越靠前（7×3 > 6×3+2 > 6×3+1 > 6×3）
+ *   2. 捕获情况相同时，avgRealTime 越短越靠前
  * @param {Array}  records - 数据文件中的记录数组
  * @param {string} tbodyId - 目标 <tbody> 的 id
  */
@@ -288,9 +305,13 @@ function renderEidolonLeaderboard(records, tbodyId) {
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
 
-  const sorted = [...records].sort(
-    (a, b) => parseTimeMs(a.avgRealTime) - parseTimeMs(b.avgRealTime)
-  );
+  const sorted = [...records].sort((a, b) => {
+    // 第一优先级：捕获情况（权重小的排前面）
+    var cw = captureWeight(a.captureStatus) - captureWeight(b.captureStatus);
+    if (cw !== 0) return cw;
+    // 第二优先级：平均真实时间（越短越前）
+    return parseTimeMs(a.avgRealTime) - parseTimeMs(b.avgRealTime);
+  });
 
   if (!sorted.length) {
     tbody.innerHTML =

@@ -266,6 +266,46 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   letter-spacing: .12em !important;
 }
 
+/* ══════════════════════════════════════════════════════════
+   分类 Tab 按钮（夜灵等有子分类的榜单页使用）
+   ══════════════════════════════════════════════════════════ */
+.lb-tabs {
+  display: flex;
+  gap: .6rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.lb-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: .42rem 1.2rem;
+  font-family: var(--f-sci);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--c-text2);
+  border: 1px solid rgba(0,212,255,.15);
+  border-radius: var(--r-sm);
+  background: rgba(0,212,255,.03);
+  cursor: pointer;
+  transition: all var(--ease-med);
+  user-select: none;
+  white-space: nowrap;
+}
+.lb-tab-btn:hover {
+  color: var(--c-cyan);
+  border-color: rgba(0,212,255,.35);
+  background: rgba(0,212,255,.07);
+}
+.lb-tab-btn.active {
+  color: var(--c-cyan);
+  border-color: var(--c-cyan);
+  background: rgba(0,212,255,.12);
+  box-shadow: var(--glow-c-sm);
+}
+
 /* ── 表格底部统计 ── */
 .lb-stats {
   display: flex;
