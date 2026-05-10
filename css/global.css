@@ -1,0 +1,415 @@
+/* ════════════════════════════════════════════════════════════
+   global.css  —  全站通用基础样式
+   包含：CSS 变量、重置、导航栏、底部备案、星云层、工具类
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── Google Fonts 引入（由各 HTML 页面 <link> 统一加载） ─── */
+
+/* ─── CSS 全局变量 ─── */
+:root {
+  /* 背景色 */
+  --c-bg:       #07080f;
+  --c-bg2:      #0d101e;
+  --c-card:     rgba(8, 14, 30, 0.72);
+  --c-card-hov: rgba(0, 212, 255, 0.06);
+
+  /* 辉光色系 */
+  --c-cyan:       #00d4ff;
+  --c-cyan-dim:   rgba(0, 212, 255, 0.35);
+  --c-cyan-faint: rgba(0, 212, 255, 0.1);
+  --c-purple:     #8b5cf6;
+  --c-purple-dim: rgba(139, 92, 246, 0.35);
+  --c-teal:       #00ffcc;
+
+  /* 排名辉光 */
+  --c-gold:    #ffd700;
+  --c-silver:  #c0d0e8;
+  --c-bronze:  #cd8c46;
+
+  /* 文字 */
+  --c-text:   #b0cae8;
+  --c-text2:  #607898;
+  --c-text3:  #324560;
+  --c-white:  #e8f4ff;
+
+  /* 辉光预设 */
+  --glow-c-sm:  0 0 8px rgba(0,212,255,.55), 0 0 16px rgba(0,212,255,.3);
+  --glow-c-md:  0 0 15px rgba(0,212,255,.65), 0 0 35px rgba(0,212,255,.4), 0 0 70px rgba(0,212,255,.18);
+  --glow-c-lg:  0 0 25px rgba(0,212,255,.8), 0 0 55px rgba(0,212,255,.55), 0 0 100px rgba(0,212,255,.28);
+  --glow-p-md:  0 0 15px rgba(139,92,246,.65), 0 0 35px rgba(139,92,246,.4), 0 0 70px rgba(139,92,246,.18);
+
+  /* 字体 */
+  --f-sci:  'Orbitron', 'Rajdhani', sans-serif;
+  --f-body: 'Rajdhani', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --f-cn:   'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* 圆角 */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+
+  /* 过渡 */
+  --ease-fast: .18s ease;
+  --ease-med:  .35s ease;
+  --ease-slow: .65s cubic-bezier(.22,.68,0,1.2);
+}
+
+/* ─── 全局重置 ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--f-body);
+  line-height: 1.65;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ─── 星空 Canvas 背景（position:fixed，全部页面共用） ─── */
+#star-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── CSS 星云漂移层（叠在 canvas 之上） ─── */
+.nebula-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.nebula-bg::before {
+  content: '';
+  position: absolute;
+  width: 90vw; height: 90vw;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(139,92,246,.14) 0%,
+    rgba(0,212,255,.06) 40%,
+    transparent 68%);
+  top: -30vw; left: -25vw;
+  animation: nebulaDrift 42s ease-in-out infinite alternate;
+  filter: blur(48px);
+}
+.nebula-bg::after {
+  content: '';
+  position: absolute;
+  width: 65vw; height: 65vw;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(0,212,255,.09) 0%,
+    rgba(139,92,246,.05) 45%,
+    transparent 70%);
+  bottom: -15vw; right: -15vw;
+  animation: nebulaDrift 38s ease-in-out infinite alternate-reverse;
+  filter: blur(55px);
+}
+@keyframes nebulaDrift {
+  0%   { transform: translate(0,0) scale(1); }
+  33%  { transform: translate(4vw, 3vw) scale(1.06); }
+  66%  { transform: translate(-3vw, 5vw) scale(.96); }
+  100% { transform: translate(5vw,-3vw) scale(1.04); }
+}
+
+/* ─── 页面内容层 ─── */
+.page-wrap { position: relative; z-index: 10; }
+
+/* ══════════════════════════════════════════════════════════
+   导航栏（适用除首页外的所有 6 个页面）
+   ══════════════════════════════════════════════════════════ */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  height: 62px;
+  background: rgba(5,8,18,.8);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-bottom: 1px solid rgba(0,212,255,.13);
+  box-shadow: 0 0 0 0 transparent, 0 2px 40px rgba(0,0,0,.55);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100%;
+  gap: 0;
+}
+
+/* ── Logo ── */
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.15;
+  margin-right: 2.4rem;
+  flex-shrink: 0;
+}
+.logo-title {
+  font-family: var(--f-sci);
+  font-size: 1.05rem;
+  font-weight: 700;
+  background: linear-gradient(110deg, var(--c-cyan) 0%, var(--c-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(0,212,255,.6));
+  letter-spacing: .04em;
+}
+.logo-domain {
+  font-family: var(--f-sci);
+  font-size: .58rem;
+  letter-spacing: .22em;
+  color: var(--c-text2);
+}
+
+/* ── 导航链接区 ── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+}
+
+.nav-item {
+  position: relative;
+  height: 62px;
+  display: flex;
+  align-items: center;
+}
+.nav-item > a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1.15rem;
+  font-family: var(--f-sci);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .05em;
+  color: var(--c-text2);
+  white-space: nowrap;
+  transition: color var(--ease-fast);
+  user-select: none;
+}
+.nav-item > a:hover { color: var(--c-cyan); }
+.nav-item.active > a { color: var(--c-cyan); }
+
+/* 有下拉的按钮显示箭头 */
+.nav-item.has-dropdown > a::after {
+  content: '▾';
+  margin-left: .35rem;
+  font-size: .6rem;
+  opacity: .55;
+  transition: transform var(--ease-fast);
+}
+.nav-item.has-dropdown:hover > a::after { transform: rotate(180deg); }
+
+/* ── 下拉菜单 ── */
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;          /* 紧贴导航栏底部，无间隙 */
+  left: 0;
+  min-width: 165px;
+  background: rgba(4,8,20,.94);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0,212,255,.2);
+  border-top: 2px solid var(--c-cyan);
+  border-radius: 0 0 var(--r-md) var(--r-md);
+  box-shadow: 0 10px 40px rgba(0,0,0,.7), var(--glow-c-sm);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .22s ease, visibility .22s ease, transform .22s ease;
+  overflow: hidden;
+}
+/* 父项或菜单自身悬停时保持展开 */
+.nav-item.has-dropdown:hover .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav-dropdown-menu a {
+  display: flex;
+  align-items: center;
+  padding: .72rem 1.2rem;
+  font-family: var(--f-sci);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  color: var(--c-text);
+  border-bottom: 1px solid rgba(0,212,255,.07);
+  position: relative;
+  transition: color var(--ease-fast), background var(--ease-fast), padding-left .2s ease;
+}
+.nav-dropdown-menu a:last-child { border-bottom: none; }
+.nav-dropdown-menu a::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--c-cyan), var(--c-purple));
+  transform: scaleY(0);
+  transition: transform .2s ease;
+  box-shadow: var(--glow-c-sm);
+}
+.nav-dropdown-menu a:hover {
+  color: var(--c-cyan);
+  background: rgba(0,212,255,.055);
+  padding-left: 1.7rem;
+}
+.nav-dropdown-menu a:hover::before { transform: scaleY(1); }
+
+/* ── 提交成绩按钮 ── */
+.nav-submit {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .45rem 1.3rem;
+  font-family: var(--f-sci);
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--c-cyan);
+  border: 1px solid var(--c-cyan-dim);
+  border-radius: var(--r-sm);
+  background: rgba(0,212,255,.07);
+  transition: all var(--ease-slow);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-submit:hover {
+  color: #000;
+  background: var(--c-cyan);
+  border-color: var(--c-cyan);
+  box-shadow: var(--glow-c-md);
+  transform: translateY(-1px);
+}
+
+/* ── 汉堡菜单（移动端） ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px; height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+  padding: 4px;
+  flex-shrink: 0;
+}
+.nav-hamburger span {
+  display: block;
+  width: 100%; height: 1.5px;
+  background: var(--c-text);
+  border-radius: 2px;
+  transition: all .3s ease;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ══════════════════════════════════════════════════════════
+   底部备案区（通用，首页通过 .home-footer 类控制显示）
+   ══════════════════════════════════════════════════════════ */
+.site-footer {
+  position: relative;
+  z-index: 10;
+  padding: 2.5rem 1rem 2rem;
+  text-align: center;
+  border-top: 1px solid rgba(0,212,255,.07);
+  margin-top: 5rem;
+}
+.site-footer a,
+.site-footer p {
+  color: var(--c-text3);
+  font-size: .75rem;
+  font-family: var(--f-sci);
+  letter-spacing: .06em;
+  display: block;
+  line-height: 2;
+  transition: color var(--ease-fast);
+}
+.site-footer a:hover { color: var(--c-text2); }
+
+/* ══════════════════════════════════════════════════════════
+   移动端响应式
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .nav-hamburger { display: flex; }
+
+  /* 导航链接收起为抽屉 */
+  .nav-links {
+    position: fixed;
+    top: 62px; left: 0; right: 0;
+    background: rgba(4,8,20,.97);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,212,255,.13);
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease;
+    z-index: 800;
+  }
+  .nav-links.open { max-height: 80vh; overflow-y: auto; }
+
+  .nav-item {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .nav-item > a {
+    width: 100%;
+    height: auto;
+    padding: .9rem 1.5rem;
+    border-bottom: 1px solid rgba(0,212,255,.06);
+    font-size: .78rem;
+  }
+
+  /* 移动端下拉菜单改为点击展开 */
+  .nav-dropdown-menu {
+    position: static;
+    opacity: 0;
+    visibility: hidden;
+    transform: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    max-height: 0;
+    padding: 0;
+    transition: max-height .3s ease, opacity .3s ease, visibility .3s ease;
+    background: rgba(0,0,0,.3);
+    backdrop-filter: none;
+  }
+  .nav-item.has-dropdown.mob-open .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    max-height: 200px;
+  }
+  .nav-dropdown-menu a { padding-left: 2.5rem; }
+
+  /* 移动端提交按钮：紧跟汉堡键，不再 margin-left:auto */
+  .nav-submit {
+    margin-left: .6rem;
+    padding: .38rem .85rem;
+    font-size: .62rem;
+    letter-spacing: .07em;
+  }
+  /* nav-links 是 fixed 不占位，所以 nav-inner 只剩 logo + hamburger + submit */
+  /* hamburger 的 margin-left:auto 会把 hamburger+submit 推到最右侧 */
+}

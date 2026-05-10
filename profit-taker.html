@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大蜘蛛竞速排行榜（无宏）— Warframe Speed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/leaderboard.css">
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+<div class="nebula-bg"></div>
+
+<div class="page-wrap lb-page">
+
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <span class="logo-title">Warframe Speed</span>
+        <span class="logo-domain">WFSPEED.RUN</span>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="disruption.html">中断竞速榜单</a>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="eidolon.html">夜灵竞速榜单</a>
+          <div class="nav-dropdown-menu">
+            <a href="eidolon.html">无宏</a>
+            <a href="eidolon-macro.html">有宏</a>
+          </div>
+        </div>
+        <div class="nav-item has-dropdown active">
+          <a href="profit-taker.html">大蜘蛛竞速榜单</a>
+          <div class="nav-dropdown-menu">
+            <a href="profit-taker.html">无宏</a>
+            <a href="profit-taker-macro.html">有宏</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="about.html">关于</a>
+        </div>
+      </div>
+      <button class="nav-hamburger" aria-label="打开菜单">
+        <span></span><span></span><span></span>
+      </button>
+      <a class="nav-submit" href="https://qcnye09jdqm2.feishu.cn/share/base/form/shrcnUS6boP9k8GD9iKCi2tXb2e"
+         target="_blank" rel="noopener">提交成绩</a>
+    </div>
+  </nav>
+
+  <main class="lb-main">
+    <a href="index.html" class="lb-back">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      返回首页
+    </a>
+
+    <div class="lb-header">
+      <h1 class="lb-title">
+        大蜘蛛竞速排行榜
+        <span class="lb-badge no-macro">无宏</span>
+      </h1>
+      <p class="lb-subtitle">Profit-Taker Speedrun Leaderboards</p>
+    </div>
+
+    <div class="lb-table-wrap">
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th>排名</th>
+            <th>结算时间</th>
+            <th>玩家 ID</th>
+            <th>上传时间</th>
+          </tr>
+        </thead>
+        <tbody id="lb-tbody">
+          <!-- 此处由数据文件自动填充，无需手动修改 -->
+        </tbody>
+      </table>
+      <div class="lb-stats" id="lb-stats"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">沪ICP备2022033368号</a>
+    <p>Copyright &copy; 2026 CSC Alliance All Rights Reserved.</p>
+  </footer>
+</div>
+
+<script src="data/profit-taker.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    renderTimeLeaderboard(profitTakerRecords, 'lb-tbody', 'clearTime');
+  });
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>
