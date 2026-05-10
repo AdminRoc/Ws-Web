@@ -151,26 +151,30 @@ img { display: block; max-width: 100%; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  line-height: 1.15;
+  gap: .28rem;          /* 两行之间留出间距 */
   margin-right: 2.4rem;
   flex-shrink: 0;
+  text-decoration: none;
 }
 .logo-title {
   font-family: var(--f-sci);
-  font-size: 1.05rem;
+  font-size: 1.18rem;
   font-weight: 700;
+  letter-spacing: .05em;
   background: linear-gradient(110deg, var(--c-cyan) 0%, var(--c-purple) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 8px rgba(0,212,255,.6));
-  letter-spacing: .04em;
+  line-height: 1;
 }
 .logo-domain {
   font-family: var(--f-sci);
-  font-size: .58rem;
-  letter-spacing: .22em;
+  font-size: .62rem;
+  /* letter-spacing 撑宽到与 logo-title 视觉等宽 */
+  letter-spacing: .42em;
   color: var(--c-text2);
+  line-height: 1;
 }
 
 /* ── 导航链接区 ── */
@@ -193,7 +197,7 @@ img { display: block; max-width: 100%; }
   height: 100%;
   padding: 0 1.15rem;
   font-family: var(--f-sci);
-  font-size: .7rem;
+  font-size: .8rem;
   font-weight: 500;
   letter-spacing: .05em;
   color: var(--c-text2);
@@ -277,7 +281,7 @@ img { display: block; max-width: 100%; }
   gap: .4rem;
   padding: .45rem 1.3rem;
   font-family: var(--f-sci);
-  font-size: .7rem;
+  font-size: .78rem;
   font-weight: 600;
   letter-spacing: .1em;
   color: var(--c-cyan);

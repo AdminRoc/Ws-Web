@@ -104,7 +104,7 @@
    ══════════════════════════════════════════════════════════ */
 .lb-table-wrap {
   width: 100%;
-  overflow-x: auto;
+  overflow: hidden;   /* 锁定布局，禁止出现系统滚动条 */
   border-radius: var(--r-lg);
   /* 玻璃拟态外容器 */
   background: rgba(6,12,26,.78);
@@ -120,7 +120,7 @@
 .lb-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 500px;
+  table-layout: auto;  /* 列宽自适应内容，无横向溢出 */
 }
 
 /* ── 表头 ── */
