@@ -1,6 +1,6 @@
 # Warframe Speed · wfspeed.run
 
-Warframe 竞速成绩排行榜网站，纯静态，无后端。
+Warframe 竞速成绩排行榜网站，纯静态，便于维护与监督。
 
 ---
 
