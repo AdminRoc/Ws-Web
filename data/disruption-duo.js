@@ -24,7 +24,7 @@ const disruptionDuoRecords = [
     clearTime:  "38:56",
     playerId:   "邵真龙 / Kuva",
     uploadTime: "2026-05-10",
-    videoUrl:   "https://www.bilibili.com/video/BV1HdA4z6ErV"
+    videoUrl:   "https://www.bilibili.com/video/BV1HdA4z6ErV/"
   },
   // ─── 在此处继续添加新条目 ───
   // {
