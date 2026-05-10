@@ -273,6 +273,32 @@ img { display: block; max-width: 100%; }
 }
 .nav-dropdown-menu a:hover::before { transform: scaleY(1); }
 
+/* ── 查看竞速规则按钮 ── */
+.nav-rules {
+  display: inline-flex;
+  align-items: center;
+  padding: .45rem 1.1rem;
+  font-family: var(--f-sci);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--c-purple);
+  border: 1px solid var(--c-purple-dim);
+  border-radius: var(--r-sm);
+  background: rgba(139,92,246,.07);
+  transition: all var(--ease-slow);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-right: .55rem;
+}
+.nav-rules:hover {
+  color: #fff;
+  background: var(--c-purple);
+  border-color: var(--c-purple);
+  box-shadow: var(--glow-p-md);
+  transform: translateY(-1px);
+}
+
 /* ── 提交成绩按钮 ── */
 .nav-submit {
   margin-left: auto;
@@ -407,10 +433,17 @@ img { display: block; max-width: 100%; }
   }
   .nav-dropdown-menu a { padding-left: 2.5rem; }
 
-  /* 移动端提交按钮：紧跟汉堡键，不再 margin-left:auto */
+  /* 移动端规则/提交按钮：紧跟汉堡键 */
+  .nav-rules {
+    margin-right: 0;
+    margin-left: .45rem;
+    padding: .36rem .6rem;
+    font-size: .58rem;
+    letter-spacing: .05em;
+  }
   .nav-submit {
-    margin-left: .6rem;
-    padding: .38rem .85rem;
+    margin-left: .4rem;
+    padding: .38rem .7rem;
     font-size: .62rem;
     letter-spacing: .07em;
   }

@@ -1,0 +1,262 @@
+/* ════════════════════════════════════════════════════════════
+   about.css  —  关于页面专属样式
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── 页面整体布局 ─── */
+.about-page {
+  padding-top: 62px;   /* 为固定导航栏留出空间 */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-main {
+  flex: 1;
+  padding: 3.5rem 1.5rem 3rem;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ─── 页面标题区 ─── */
+.about-heading {
+  font-family: var(--f-sci);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: .06em;
+  background: linear-gradient(135deg, var(--c-cyan) 0%, var(--c-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 16px rgba(0,212,255,.4));
+  line-height: 1.2;
+  margin-bottom: .5rem;
+  margin-top: 1rem;
+}
+
+.about-heading-en {
+  font-family: var(--f-sci);
+  font-size: clamp(.7rem, 1.3vw, .88rem);
+  letter-spacing: .22em;
+  color: var(--c-text2);
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+}
+
+/* ─── 主体卡片 ─── */
+.about-card {
+  background: rgba(6, 12, 26, .78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(0, 212, 255, .16);
+  border-radius: 14px;
+  box-shadow:
+    0 8px 50px rgba(0, 0, 0, .6),
+    inset 0 1px 0 rgba(0, 212, 255, .1);
+  padding: 2.8rem 2.8rem 2.4rem;
+}
+
+/* ─── 引言段落 ─── */
+.lead {
+  font-family: var(--f-cn);
+  font-size: 1.08rem;
+  line-height: 2;
+  color: var(--c-white);
+  margin-bottom: 1.5rem;
+  text-wrap: pretty;
+}
+
+/* ─── 分割线 ─── */
+.about-divider {
+  border: none;
+  border-top: 1px solid rgba(0, 212, 255, .14);
+  margin: 2rem 0;
+}
+
+/* ─── 章节标题 ─── */
+.about-section-title {
+  font-family: var(--f-sci);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--c-cyan);
+  margin-bottom: 1rem;
+  margin-top: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  filter: drop-shadow(0 0 8px rgba(0,212,255,.35));
+}
+
+.about-section-title .sn {
+  color: var(--c-text2);
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  flex-shrink: 0;
+}
+
+/* ─── 正文段落 ─── */
+.about-card p {
+  font-family: var(--f-cn);
+  font-size: .94rem;
+  line-height: 2;
+  color: var(--c-text);
+  margin-bottom: .8rem;
+  text-wrap: pretty;
+}
+
+/* ─── 关键词高亮 ─── */
+.kw {
+  color: var(--c-cyan);
+  font-weight: 600;
+}
+
+.kw-warn {
+  color: #f97316;
+  font-weight: 600;
+}
+
+.kw-gold {
+  color: var(--c-gold);
+  font-weight: 700;
+  filter: drop-shadow(0 0 4px rgba(255,215,0,.4));
+}
+
+/* ─── 罪状列表 ─── */
+.charge-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: .5rem;
+}
+
+.charge-item {
+  padding: 1.4rem 0 1.4rem 1.2rem;
+  border-left: 2px solid rgba(0, 212, 255, .2);
+  margin-left: .2rem;
+  position: relative;
+}
+
+.charge-item::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 1.6rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-cyan-dim);
+  box-shadow: 0 0 8px rgba(0,212,255,.5);
+}
+
+.charge-item + .charge-item {
+  border-top: 1px solid rgba(0,212,255,.06);
+}
+
+.charge-label {
+  font-family: var(--f-sci);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: #f97316;
+  margin-bottom: .6rem !important;
+  text-transform: uppercase;
+}
+
+/* ─── 引用块 ─── */
+.about-quote {
+  margin: 1rem 0 1rem .5rem;
+  padding: .9rem 1.4rem;
+  background: rgba(139, 92, 246, .08);
+  border-left: 3px solid var(--c-purple);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  font-family: var(--f-cn);
+  font-size: .94rem;
+  font-style: italic;
+  color: var(--c-white);
+  line-height: 1.8;
+  box-shadow: inset 0 0 30px rgba(139,92,246,.05);
+}
+
+/* ─── 价值观列表 ─── */
+.value-list {
+  list-style: none;
+  padding: 0;
+  margin: .8rem 0 .8rem .2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+}
+
+.value-list li {
+  font-family: var(--f-cn);
+  font-size: .93rem;
+  line-height: 1.8;
+  color: var(--c-text);
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+.value-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--c-cyan);
+  font-size: .75rem;
+  top: .18rem;
+  filter: drop-shadow(0 0 4px rgba(0,212,255,.6));
+}
+
+/* ─── 结语段落 ─── */
+.about-closing {
+  font-family: var(--f-cn);
+  font-size: .9rem;
+  color: var(--c-text2);
+  text-align: center;
+  line-height: 2;
+  margin-top: .6rem;
+}
+
+/* ─── 规则按钮（关于页底部） ─── */
+.about-rule-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .55rem 1.6rem;
+  font-family: var(--f-sci);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--c-purple);
+  border: 1px solid var(--c-purple-dim);
+  border-radius: var(--r-sm);
+  background: rgba(139, 92, 246, .08);
+  transition: all var(--ease-slow);
+  white-space: nowrap;
+  margin-top: .5rem;
+}
+
+.about-rule-btn:hover {
+  color: #fff;
+  background: var(--c-purple);
+  border-color: var(--c-purple);
+  box-shadow: var(--glow-p-md);
+  transform: translateY(-1px);
+}
+
+/* ─── 响应式 ─── */
+@media (max-width: 640px) {
+  .about-main {
+    padding: 2.5rem 1rem 2rem;
+  }
+  .about-card {
+    padding: 1.8rem 1.4rem 1.6rem;
+  }
+  .about-heading {
+    font-size: 1.5rem;
+  }
+  .charge-item {
+    padding-left: .9rem;
+  }
+}

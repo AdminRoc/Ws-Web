@@ -26,7 +26,7 @@
   <section class="hero">
     <h1 class="hero-warframe" data-text="Warframe">Warframe</h1>
     <h2 class="hero-speed">SPEED</h2>
-    <p class="hero-domain">wfspeed.run</p>
+    <p class="hero-domain">WFSPEED.RUN</p>
 
     <!-- 三个入口按钮 -->
     <div class="hero-buttons">
@@ -104,5 +104,34 @@
 </div><!-- /home-wrap -->
 
 <script src="js/main.js"></script>
+
+<script>
+/* ── 首页专属：Hero 淡出视差 + 区段入场 ── */
+(function () {
+  var hero = document.querySelector('.hero');
+
+  /* 滚动时 Hero 整体淡出（不覆盖 CSS 动画 transform） */
+  function onScroll() {
+    if (!hero) return;
+    var sy     = window.scrollY;
+    var heroH  = hero.offsetHeight || window.innerHeight;
+    if (sy <= 0) { hero.style.opacity = ''; return; }
+    var progress = Math.min(sy / heroH, 1);
+    hero.style.opacity = Math.max(1 - progress * 1.4, 0);
+  }
+
+  /* 区段分割线：进入 viewport 时加 section-in */
+  var sections = document.querySelectorAll('.scroll-section');
+  var secObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) e.target.classList.add('section-in');
+    });
+  }, { threshold: 0.1 });
+  sections.forEach(function (s) { secObs.observe(s); });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  if (window.scrollY > 0) window.scrollTo(0, 0);
+})();
+</script>
 </body>
 </html>
