@@ -20,11 +20,11 @@
  */
 const disruptionDuoRecords = [
   // ─── 示例条目，上线前请替换为真实数据 ───
-  {
-    clearTime:  "01:10.234",
-    playerId:   "Player1 / Player2",
+    {
+    clearTime:  "38:56",
+    playerId:   "邵真龙 / Kuva",
     uploadTime: "2026-05-10",
-    videoUrl:   ""
+    videoUrl:   "https://www.bilibili.com/video/BV1HdA4z6ErV"
   },
   // ─── 在此处继续添加新条目 ───
   // {
