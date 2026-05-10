@@ -76,6 +76,14 @@
       <p class="lb-subtitle">Eidolon Speedrun Leaderboards</p>
     </div>
 
+    <!-- 分类 Tab 按钮：单人 / 双人 / 三人 / 四人 -->
+    <div class="lb-tabs" id="lb-tabs">
+      <button class="lb-tab-btn active" data-tab="solo">单人</button>
+      <button class="lb-tab-btn" data-tab="duo">双人</button>
+      <button class="lb-tab-btn" data-tab="trio">三人</button>
+      <button class="lb-tab-btn" data-tab="quad">四人</button>
+    </div>
+
     <div class="lb-table-wrap">
       <table class="lb-table">
         <thead>
@@ -101,10 +109,42 @@
   </footer>
 </div>
 
-<script src="data/eidolon.js"></script>
+<!-- 四个分类数据文件（无宏） -->
+<script src="data/eidolon-solo.js"></script>
+<script src="data/eidolon-duo.js"></script>
+<script src="data/eidolon-trio.js"></script>
+<script src="data/eidolon-quad.js"></script>
+
 <script>
+  /* ── Tab 数据映射 ── */
+  var eidolonDataMap = {
+    solo: typeof eidolonSoloRecords !== 'undefined' ? eidolonSoloRecords : [],
+    duo:  typeof eidolonDuoRecords  !== 'undefined' ? eidolonDuoRecords  : [],
+    trio: typeof eidolonTrioRecords !== 'undefined' ? eidolonTrioRecords : [],
+    quad: typeof eidolonQuadRecords !== 'undefined' ? eidolonQuadRecords : []
+  };
+  var currentTab = 'solo';
+
   document.addEventListener('DOMContentLoaded', function () {
-    renderEidolonLeaderboard(eidolonRecords, 'lb-tbody');
+    /* 初始渲染单人 */
+    renderEidolonLeaderboard(eidolonDataMap['solo'], 'lb-tbody');
+
+    /* Tab 切换事件 */
+    document.getElementById('lb-tabs').addEventListener('click', function (e) {
+      var btn = e.target.closest('.lb-tab-btn');
+      if (!btn) return;
+      var tab = btn.getAttribute('data-tab');
+      if (tab === currentTab) return;
+      currentTab = tab;
+
+      /* 更新按钮高亮 */
+      document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-tab') === tab);
+      });
+
+      /* 重新渲染表格 */
+      renderEidolonLeaderboard(eidolonDataMap[tab], 'lb-tbody');
+    });
   });
 </script>
 <script src="js/main.js"></script>
