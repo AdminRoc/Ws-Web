@@ -96,6 +96,32 @@
   flex-shrink: 0;
 }
 
+/* ─── 章节块间距 ─── */
+.about-section-block {
+  padding-top: 1.8rem;
+  padding-bottom: .6rem;
+}
+.about-section-block + hr.about-divider {
+  margin-top: 2rem;
+  margin-bottom: 0;
+}
+
+/* ─── "令人作呕" 微暖色 ─── */
+.kw-disgust {
+  color: rgba(220, 170, 100, .88);
+  font-style: italic;
+}
+
+/* ─── 宣言引语（03章段落）── */
+.kw-manifesto {
+  color: var(--c-white);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 2.1;
+  letter-spacing: .02em;
+  text-shadow: 0 0 18px rgba(255,255,255,.12);
+}
+
 /* ─── 正文段落 ─── */
 .about-card p {
   font-family: var(--f-cn);
