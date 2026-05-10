@@ -8,8 +8,8 @@ Warframe 竞速成绩排行榜网站，纯静态，无后端。
 
 | 文件 | 说明 |
 |------|------|
-| `index.html` | 首页（星空英雄区 + 三项入口） |
-| `disruption.html` | 中断竞速榜单 |
+| `index.html` | 首页（三项入口） |
+| `disruption.html` | 中断竞速榜单（单人、双人、多人） |
 | `eidolon.html` | 夜灵竞速榜单（无宏） |
 | `eidolon-macro.html` | 夜灵竞速榜单（有宏） |
 | `profit-taker.html` | 大蜘蛛竞速榜单（无宏） |
@@ -18,7 +18,7 @@ Warframe 竞速成绩排行榜网站，纯静态，无后端。
 
 ## 维护榜单数据
 
-**只需修改 `data/` 目录下对应的 `.js` 文件**，保存后刷新页面生效。无需碰任何 HTML。
+**只需修改 `data/` 目录下对应的 `.js` 文件**。
 
 ```js
 // 示例：data/disruption.js
@@ -40,11 +40,11 @@ const disruptionRecords = [
 
 ## 提交成绩表单
 
-飞书表单：<https://qcnye09jdqm2.feishu.cn/share/base/form/shrcnUS6boP9k8GD9iKCi2tXb2e>
+飞书表单：<*****>
 
 ## 部署
 
-纯静态站点，直接推送至 GitHub，配合 Cloudflare Pages / GitHub Pages 即可上线。域名指向 `wfspeed.run`。
+纯静态站点。
 
 ---
 
