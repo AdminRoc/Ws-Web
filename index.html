@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warframe Speed — wfspeed.run</title>
+  <meta name="description" content="Warframe 竞速成绩排行榜 — 公平、透明、属于每一位速通玩家">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<!-- 星空 Canvas 背景 -->
+<canvas id="star-canvas"></canvas>
+<!-- CSS 星云漂移层 -->
+<div class="nebula-bg"></div>
+
+<!-- 首页主内容 -->
+<div class="home-wrap">
+
+  <!-- ══ 第一屏：英雄区 ══ -->
+  <section class="hero">
+    <h1 class="hero-warframe" data-text="Warframe">Warframe</h1>
+    <h2 class="hero-speed">SPEED</h2>
+    <p class="hero-domain">wfspeed.run</p>
+
+    <!-- 三个入口按钮 -->
+    <div class="hero-buttons">
+      <a href="disruption.html" class="hero-btn">中断</a>
+      <a href="eidolon.html"    class="hero-btn">夜灵</a>
+      <a href="profit-taker.html" class="hero-btn">蜘蛛</a>
+    </div>
+
+    <!-- 向下滚动提示 -->
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <span>SCROLL</span>
+      <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
+        <path d="M8 1v14M2 10l6 6 6-6" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ══ 第二屏：理念延展 ══ -->
+  <section class="scroll-section">
+    <h2 class="scroll-s1-heading reveal">公平 · 透明 · 竞速</h2>
+    <p class="scroll-s1-sub reveal">每一份成绩，都应被平等对待</p>
+
+    <div class="principle-cards">
+      <div class="principle-card reveal">
+        <span class="pc-icon">⚖️</span>
+        <h3>公平审核</h3>
+        <p>无论国籍，无论背景，每一条提交记录都经过同等标准的审查。没有偏袒，没有拖延。</p>
+      </div>
+      <div class="principle-card reveal">
+        <span class="pc-icon">🔭</span>
+        <h3>透明公示</h3>
+        <p>所有可疑记录将接受公开、透明的质询，过程对所有人可见，结论有据可查。</p>
+      </div>
+      <div class="principle-card reveal">
+        <span class="pc-icon">⚡</span>
+        <h3>真实速通</h3>
+        <p>我们坚决抵制任何形式的作弊行为，只有真正的速度，才有资格出现在这里。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 第三屏：项目入口 ══ -->
+  <section class="scroll-section">
+    <h2 class="scroll-s2-heading reveal">三大竞速项目</h2>
+    <p class="scroll-s2-sub reveal">选择你的战场，留下你的名字</p>
+
+    <div class="lb-entry-grid">
+      <a href="disruption.html" class="lb-entry-card reveal">
+        <h4>中断竞速</h4>
+        <p>Disruption · 以最快的结算时间突破防线，争夺绝对统治地位。</p>
+        <span class="entry-arrow">查看排行榜 →</span>
+      </a>
+      <a href="eidolon.html" class="lb-entry-card reveal">
+        <h4>夜灵竞速</h4>
+        <p>Eidolon · 在平均真实时间的维度上，证明你的捕获技艺已臻化境。</p>
+        <span class="entry-arrow">查看排行榜 →</span>
+      </a>
+      <a href="profit-taker.html" class="lb-entry-card reveal">
+        <h4>大蜘蛛竞速</h4>
+        <p>Profit-Taker · 极限输出，极限配合，用最短的时间击倒这只巨兽。</p>
+        <span class="entry-arrow">查看排行榜 →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ 备案区（默认在 200vh 之外，需滚动才可见） ══ -->
+  <footer class="site-footer home-footer">
+    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">
+      沪ICP备2022033368号
+    </a>
+    <p>Copyright &copy; 2026 CSC Alliance All Rights Reserved.</p>
+  </footer>
+
+</div><!-- /home-wrap -->
+
+<script src="js/main.js"></script>
+</body>
+</html>
