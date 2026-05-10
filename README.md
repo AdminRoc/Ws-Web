@@ -1,6 +1,6 @@
 # Warframe Speed · wfspeed.run
 
-Warframe 竞速成绩排行榜网站，静态。
+Warframe 竞速成绩排行榜网站，纯静态，无后端。
 
 ---
 
@@ -8,7 +8,7 @@ Warframe 竞速成绩排行榜网站，静态。
 
 | 文件 | 说明 |
 |------|------|
-| `index.html` | 首页（三项入口） |
+| `index.html` | 首页（星空英雄区 + 三项入口） |
 | `disruption.html` | 中断竞速榜单 |
 | `eidolon.html` | 夜灵竞速榜单（无宏） |
 | `eidolon-macro.html` | 夜灵竞速榜单（有宏） |
@@ -40,11 +40,11 @@ const disruptionRecords = [
 
 ## 提交成绩表单
 
-飞书表单：<******************************>
+飞书表单：<https://qcnye09jdqm2.feishu.cn/share/base/form/shrcnUS6boP9k8GD9iKCi2tXb2e>
 
 ## 部署
 
-静态站点。
+纯静态站点，直接推送至 GitHub，配合 Cloudflare Pages / GitHub Pages 即可上线。域名指向 `wfspeed.run`。
 
 ---
 

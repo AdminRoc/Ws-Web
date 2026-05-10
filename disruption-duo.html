@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大蜘蛛竞速排行榜（无宏）— Warframe Speed</title>
+  <title>中断竞速排行榜（双人）— Warframe Speed</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
         <span class="logo-domain">WFSPEED.RUN</span>
       </a>
       <div class="nav-links">
-        <div class="nav-item has-dropdown">
+        <div class="nav-item has-dropdown active">
           <a href="disruption.html">中断竞速榜单</a>
           <div class="nav-dropdown-menu">
             <a href="disruption.html">单人</a>
@@ -40,7 +40,7 @@
             <a href="eidolon-macro.html">有宏</a>
           </div>
         </div>
-        <div class="nav-item has-dropdown active">
+        <div class="nav-item has-dropdown">
           <a href="profit-taker.html">大蜘蛛竞速榜单</a>
           <div class="nav-dropdown-menu">
             <a href="profit-taker.html">无宏</a>
@@ -70,10 +70,10 @@
 
     <div class="lb-header">
       <h1 class="lb-title">
-        大蜘蛛竞速排行榜
-        <span class="lb-badge no-macro">无宏</span>
+        中断竞速排行榜
+        <span class="lb-badge no-macro">双人</span>
       </h1>
-      <p class="lb-subtitle">Profit-Taker Speedrun Leaderboards</p>
+      <p class="lb-subtitle">Disruption Speedrun Leaderboards — Duo</p>
     </div>
 
     <div class="lb-table-wrap">
@@ -100,10 +100,10 @@
   </footer>
 </div>
 
-<script src="data/profit-taker.js"></script>
+<script src="data/disruption-duo.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    renderTimeLeaderboard(profitTakerRecords, 'lb-tbody', 'clearTime');
+    renderTimeLeaderboard(disruptionDuoRecords, 'lb-tbody', 'clearTime');
   });
 </script>
 <script src="js/main.js"></script>
