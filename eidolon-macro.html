@@ -10,6 +10,165 @@
   <link rel="icon" type="image/svg+xml" href="https://www-static.warframe.com/images/warframe-logo-white.svg">
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/leaderboard.css">
+  <style>
+    /* ── 按钮悬停文字渐变替换 ── */
+    .hover-text-swap { position: relative; display: inline-block; }
+    .hover-text-swap .text-cn { display: inline; transition: opacity 0.3s ease; }
+    .hover-text-swap .text-en {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap; opacity: 0;
+      transition: opacity 0.3s ease;
+      font-size: clamp(0.5rem, 1.2vw, 0.8em);
+      pointer-events: none;
+    }
+    .nav-item:hover > a .hover-text-swap .text-cn { opacity: 0; }
+    .nav-item:hover > a .hover-text-swap .text-en { opacity: 1; }
+    .nav-dropdown-menu a:hover .hover-text-swap .text-cn { opacity: 0; }
+    .nav-dropdown-menu a:hover .hover-text-swap .text-en { opacity: 1; }
+    .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-cn { opacity: 0; }
+    .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-en { opacity: 1; }
+    .nav-submit:hover .hover-text-swap .text-cn { opacity: 0; }
+    .nav-submit:hover .hover-text-swap .text-en { opacity: 1; }
+    .lb-back:hover .hover-text-swap .text-cn { opacity: 0; }
+    .lb-back:hover .hover-text-swap .text-en { opacity: 1; }
+
+    /* ── Badge 交替动画 ── */
+    .lb-badge-wrap {
+      display: inline-flex; align-items: center; justify-content: center;
+      position: relative; min-width: 3.5rem; min-height: 1.6rem;
+    }
+    .lb-badge-cn, .lb-badge-en {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: .22rem .75rem;
+      font-family: var(--f-sci); font-size: .6rem; font-weight: 700;
+      letter-spacing: .12em; border-radius: 20px; white-space: nowrap;
+      color: var(--c-purple);
+      border: 1px solid var(--c-purple-dim);
+      background: rgba(139,92,246,.08);
+      transition: opacity 0.6s ease;
+      position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+      /* 重置父元素 lb-title 的渐变文字裁切，确保 badge 文字颜色可见 */
+      -webkit-text-fill-color: var(--c-purple);
+      background-clip: unset;
+      -webkit-background-clip: unset;
+    }
+    .lb-badge-cn, .lb-badge-en {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: .22rem .75rem;
+      font-family: var(--f-sci); font-size: .6rem; font-weight: 700;
+      letter-spacing: .12em; border-radius: 20px; white-space: nowrap;
+      color: var(--c-purple);
+      border: 1px solid var(--c-purple-dim);
+      background: rgba(139,92,246,.08);
+      transition: opacity 0.6s ease;
+      position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+      /* 重置父元素 lb-title 的渐变文字裁切，确保 badge 文字颜色可见 */
+      -webkit-text-fill-color: var(--c-purple);
+      background-clip: unset;
+      -webkit-background-clip: unset;
+    }
+    .lb-badge-cn { opacity: 1; }
+    .lb-badge-en { opacity: 0; }
+    .lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; }
+    .lb-badge-wrap.show-en .lb-badge-en { opacity: 1; }
+
+    /* ══ 举报违规按钮 ══ */
+    .report-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 3rem 0 3rem;   /* 上下各空约两行 */
+    }
+    .report-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .55rem 1.8rem;
+      font-family: var(--f-sci);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      color: #ff4d6d;
+      border: 1px solid rgba(255,77,109,.35);
+      border-radius: var(--r-sm);
+      background: rgba(255,77,109,.06);
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition:
+        color .45s cubic-bezier(.22,.68,0,1.2),
+        border-color .45s ease,
+        background .45s ease,
+        box-shadow .45s ease,
+        transform .45s cubic-bezier(.22,.68,0,1.2);
+      white-space: nowrap;
+    }
+    /* 扫光层 */
+    .report-btn::before {
+      content: '';
+      position: absolute;
+      inset: -10%;
+      width: 40%;
+      background: linear-gradient(105deg,
+        transparent 20%,
+        rgba(255,77,109,.45) 50%,
+        rgba(255,255,255,.15) 55%,
+        transparent 80%);
+      transform: translateX(-160%) skewX(-15deg);
+      transition: transform .65s ease;
+      pointer-events: none;
+    }
+    /* 外发光边框装饰线 */
+    .report-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg,
+        rgba(255,77,109,.18) 0%,
+        transparent 50%,
+        rgba(255,77,109,.08) 100%);
+      pointer-events: none;
+    }
+    .report-btn:hover {
+      color: #fff;
+      border-color: #ff4d6d;
+      background: rgba(255,77,109,.18);
+      transform: translateY(-2px);
+      animation: reportPulse 2s ease-in-out infinite;
+    }
+    .report-btn:hover::before {
+      transform: translateX(360%) skewX(-15deg);
+    }
+    .report-btn:hover .hover-text-swap .text-cn { opacity: 0; }
+    .report-btn:hover .hover-text-swap .text-en { opacity: 1; }
+    .report-icon {
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+      transition: transform .4s cubic-bezier(.22,.68,0,1.2), color .45s ease;
+    }
+    .report-btn:hover .report-icon {
+      transform: rotate(20deg) scale(1.15);
+    }
+    @keyframes reportPulse {
+      0%, 100% {
+        box-shadow:
+          0 0 10px rgba(255,77,109,.7),
+          0 0 25px rgba(255,77,109,.45),
+          0 0 55px rgba(255,77,109,.22),
+          0 0 90px rgba(255,77,109,.1);
+      }
+      50% {
+        box-shadow:
+          0 0 16px rgba(255,77,109,.9),
+          0 0 38px rgba(255,77,109,.65),
+          0 0 80px rgba(255,77,109,.35),
+          0 0 130px rgba(255,77,109,.15);
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -26,29 +185,29 @@
       </a>
       <div class="nav-links">
         <div class="nav-item has-dropdown">
-          <a href="disruption.html">中断竞速榜单</a>
+          <a href="disruption.html"><span class="hover-text-swap"><span class="text-cn">中断竞速榜单</span><span class="text-en">Disruption</span></span></a>
           <div class="nav-dropdown-menu">
-            <a href="disruption.html">单人</a>
-            <a href="disruption-duo.html">双人</a>
-            <a href="disruption-multi.html">多人</a>
+            <a href="disruption.html"><span class="hover-text-swap"><span class="text-cn">单人</span><span class="text-en">Solo</span></span></a>
+            <a href="disruption-duo.html"><span class="hover-text-swap"><span class="text-cn">双人</span><span class="text-en">Duo</span></span></a>
+            <a href="disruption-multi.html"><span class="hover-text-swap"><span class="text-cn">多人</span><span class="text-en">Multi</span></span></a>
           </div>
         </div>
         <div class="nav-item has-dropdown active">
-          <a href="eidolon.html">夜灵竞速榜单</a>
+          <a href="eidolon.html"><span class="hover-text-swap"><span class="text-cn">夜灵竞速榜单</span><span class="text-en">Eidolon</span></span></a>
           <div class="nav-dropdown-menu">
-            <a href="eidolon.html">无宏</a>
-            <a href="eidolon-macro.html">有宏</a>
+            <a href="eidolon.html"><span class="hover-text-swap"><span class="text-cn">无宏</span><span class="text-en">No Macro</span></span></a>
+            <a href="eidolon-macro.html"><span class="hover-text-swap"><span class="text-cn">有宏</span><span class="text-en">Macro</span></span></a>
           </div>
         </div>
         <div class="nav-item has-dropdown">
-          <a href="profit-taker.html">大蜘蛛竞速榜单</a>
+          <a href="profit-taker.html"><span class="hover-text-swap"><span class="text-cn">大蜘蛛竞速榜单</span><span class="text-en">Profit-Taker</span></span></a>
           <div class="nav-dropdown-menu">
-            <a href="profit-taker.html">无宏</a>
-            <a href="profit-taker-macro.html">有宏</a>
+            <a href="profit-taker.html"><span class="hover-text-swap"><span class="text-cn">无宏</span><span class="text-en">No Macro</span></span></a>
+            <a href="profit-taker-macro.html"><span class="hover-text-swap"><span class="text-cn">有宏</span><span class="text-en">Macro</span></span></a>
           </div>
         </div>
         <div class="nav-item">
-          <a href="about.html">关于</a>
+          <a href="about.html"><span class="hover-text-swap"><span class="text-cn">关于</span><span class="text-en">About</span></span></a>
         </div>
       </div>
       <button class="nav-hamburger" aria-label="打开菜单">
@@ -56,7 +215,7 @@
       </button>
       <div class="nav-rules-wrap">
         <a class="nav-rules" href="https://qcnye09jdqm2.feishu.cn/docx/PmFYdf0gXoR8EBxIY6dcr3UKn0f"
-           target="_blank" rel="noopener">查看提交规则</a>
+           target="_blank" rel="noopener"><span class="hover-text-swap"><span class="text-cn">查看提交规则</span><span class="text-en">Rules</span></span></a>
         <div class="nav-rules-dropdown">
           <a href="https://qcnye09jdqm2.feishu.cn/docx/T65jdhc61ohAOSxHopTcpOd8njc" target="_blank" rel="noopener">中断竞速</a>
           <a href="https://qcnye09jdqm2.feishu.cn/docx/UxmXdbcHUoo0iCxQUXccUMTNncf" target="_blank" rel="noopener">夜灵竞速</a>
@@ -64,7 +223,7 @@
         </div>
       </div>
       <a class="nav-submit" href="https://qcnye09jdqm2.feishu.cn/share/base/form/shrcnUS6boP9k8GD9iKCi2tXb2e"
-         target="_blank" rel="noopener">提交成绩</a>
+         target="_blank" rel="noopener"><span class="hover-text-swap"><span class="text-cn">提交成绩</span><span class="text-en">Submit</span></span></a>
     </div>
   </nav>
 
@@ -74,13 +233,13 @@
         <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5"
               stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      返回首页
+      <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
 
     <div class="lb-header">
       <h1 class="lb-title">
         夜灵竞速排行榜
-        <span class="lb-badge macro">有宏</span>
+        <span class="lb-badge-wrap" id="badge-wrap"><span class="lb-badge-cn macro">有宏</span><span class="lb-badge-en macro">Macro</span></span>
       </h1>
       <p class="lb-subtitle">Eidolon Speedrun Leaderboards</p>
     </div>
@@ -111,6 +270,25 @@
       <div class="lb-stats" id="lb-stats"></div>
     </div>
   </main>
+
+  <!-- ══ 举报违规按钮 ══ -->
+  <div class="report-wrap">
+    <a class="report-btn"
+       href="https://qcnye09jdqm2.feishu.cn/share/base/form/shrcnju7pg9xiHVjyQcH4AUrVVc"
+       target="_blank" rel="noopener">
+      <span class="report-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 1L8.5 5.5H13L9.5 8.5L11 13L7 10L3 13L4.5 8.5L1 5.5H5.5L7 1Z"
+                stroke="currentColor" stroke-width="1.2"
+                stroke-linejoin="round" fill="none"/>
+        </svg>
+      </span>
+      <span class="hover-text-swap">
+        <span class="text-cn">举报违规</span>
+        <span class="text-en">Report</span>
+      </span>
+    </a>
+  </div>
 
   <footer class="site-footer">
     <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">沪ICP备2022033368号</a>
@@ -157,5 +335,17 @@
   });
 </script>
 <script src="js/main.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var badgeWrap = document.getElementById('badge-wrap');
+    if (badgeWrap) {
+      var showEn = false;
+      setInterval(function() {
+        showEn = !showEn;
+        badgeWrap.classList.toggle('show-en', showEn);
+      }, 3000);
+    }
+  });
+</script>
 </body>
 </html>

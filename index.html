@@ -11,6 +11,51 @@
   <link rel="icon" type="image/svg+xml" href="https://www-static.warframe.com/images/warframe-logo-white.svg">
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/home.css">
+  <style>
+    /* ── 按钮悬停文字渐变替换 ── */
+    .hover-text-swap { position: relative; display: inline-block; }
+    .hover-text-swap .text-cn { display: inline; transition: opacity 0.3s ease; }
+    .hover-text-swap .text-en {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap; opacity: 0;
+      transition: opacity 0.3s ease;
+      font-size: clamp(0.5rem, 1.2vw, 0.8em);
+      pointer-events: none;
+    }
+    .nav-item:hover > a .hover-text-swap .text-cn { opacity: 0; }
+    .nav-item:hover > a .hover-text-swap .text-en { opacity: 1; }
+    .nav-dropdown-menu a:hover .hover-text-swap .text-cn { opacity: 0; }
+    .nav-dropdown-menu a:hover .hover-text-swap .text-en { opacity: 1; }
+    .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-cn { opacity: 0; }
+    .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-en { opacity: 1; }
+    .nav-submit:hover .hover-text-swap .text-cn { opacity: 0; }
+    .nav-submit:hover .hover-text-swap .text-en { opacity: 1; }
+    .lb-back:hover .hover-text-swap .text-cn { opacity: 0; }
+    .lb-back:hover .hover-text-swap .text-en { opacity: 1; }
+    /* ── 首页Hero按钮悬停文字替换 ── */
+    .hero-btn:hover .hover-text-swap .text-cn { opacity: 0; }
+    .hero-btn:hover .hover-text-swap .text-en { opacity: 1; }
+
+
+    /* ── Badge 交替动画 ── */
+    .lb-badge-wrap {
+      display: inline-flex; align-items: center; justify-content: center;
+      position: relative; min-width: 3.5rem; min-height: 1.6rem;
+    }
+    .lb-badge-cn, .lb-badge-en {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: .22rem .75rem;
+      font-family: var(--f-sci); font-size: .6rem; font-weight: 700;
+      letter-spacing: .12em; border-radius: 20px; white-space: nowrap;
+      border: 1px solid; transition: opacity 0.6s ease;
+      position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+    }
+    .lb-badge-cn { opacity: 1; }
+    .lb-badge-en { opacity: 0; }
+    .lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; }
+    .lb-badge-wrap.show-en .lb-badge-en { opacity: 1; }
+  </style>
 </head>
 <body>
 
@@ -30,9 +75,9 @@
 
     <!-- 三个入口按钮 -->
     <div class="hero-buttons">
-      <a href="disruption.html" class="hero-btn">中断</a>
-      <a href="eidolon.html"    class="hero-btn">夜灵</a>
-      <a href="profit-taker.html" class="hero-btn">蜘蛛</a>
+      <a href="disruption.html" class="hero-btn"><span class="hover-text-swap"><span class="text-cn">中断</span><span class="text-en">Disruption</span></span></a>
+      <a href="eidolon.html" class="hero-btn"><span class="hover-text-swap"><span class="text-cn">夜灵</span><span class="text-en">Eidolon</span></span></a>
+      <a href="profit-taker.html" class="hero-btn"><span class="hover-text-swap"><span class="text-cn">蜘蛛</span><span class="text-en">Profit-Taker</span></span></a>
     </div>
 
     <!-- 向下滚动提示 -->
