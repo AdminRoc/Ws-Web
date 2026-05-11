@@ -362,4 +362,44 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   // 滚动动画
   initReveal();
+  // Logo 两行等宽对齐（字体加载完成后测量，避免 fallback 字体误差）
+  alignLogoText();
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(alignLogoText);
+  }
+  window.addEventListener('resize', alignLogoText);
 });
+
+/* ══════════════════════════════════════════════════════════
+   5. Logo 第二行动态等宽：让 WFSPEED.RUN 与 Warframe Speed 等宽
+      关键：用 Range API 测量真实文字宽度，而非 flex 拉伸后的元素宽度
+   ══════════════════════════════════════════════════════════ */
+function alignLogoText() {
+  var title  = document.querySelector('.logo-title');
+  var domain = document.querySelector('.logo-domain');
+  if (!title || !domain) return;
+
+  /* 先置零，消除上次计算的 letter-spacing */
+  domain.style.letterSpacing = '0px';
+
+  /* 用 Range 测量实际渲染文字宽度（而非 flex 拉伸的元素宽） */
+  function textWidth(el) {
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    return range.getBoundingClientRect().width;
+  }
+
+  var titleW  = textWidth(title);
+  var domainW = textWidth(domain);
+
+  if (titleW <= domainW || titleW < 1) {
+    domain.style.letterSpacing = '';
+    return;
+  }
+
+  /* 将差值均分到每个字符后的间距 */
+  var charCount = domain.textContent.trim().length;
+  if (charCount < 1) return;
+  var extra = (titleW - domainW) / charCount;
+  domain.style.letterSpacing = extra.toFixed(3) + 'px';
+}

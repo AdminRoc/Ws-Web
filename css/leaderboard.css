@@ -5,7 +5,7 @@
 
 /* ─── 榜单页整体容器 ─── */
 .lb-page {
-  padding-top: 62px;   /* 为固定导航栏留出空间 */
+  padding-top: 70px;   /* 为固定导航栏留出空间 */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -33,16 +33,41 @@
   border-radius: var(--r-sm);
   background: rgba(0,212,255,.04);
   white-space: nowrap;
-  transition: all var(--ease-med);
+  transition:
+    color .45s cubic-bezier(.22,.68,0,1.2),
+    border-color .45s ease,
+    box-shadow .45s ease,
+    transform .45s cubic-bezier(.22,.68,0,1.2),
+    background .45s ease;
   margin-bottom: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.lb-back::before {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  width: 35%;
+  background: linear-gradient(105deg,
+    transparent 20%,
+    rgba(0,212,255,.3) 50%,
+    rgba(255,255,255,.1) 55%,
+    transparent 80%);
+  transform: translateX(-150%) skewX(-15deg);
+  transition: transform .55s ease;
+  pointer-events: none;
 }
 .lb-back:hover {
   color: var(--c-cyan);
-  border-color: rgba(0,212,255,.4);
-  box-shadow: var(--glow-c-sm);
-  transform: translateX(-3px);
+  border-color: rgba(0,212,255,.5);
+  background: rgba(0,212,255,.07);
+  box-shadow: 0 0 12px rgba(0,212,255,.3), 0 0 28px rgba(0,212,255,.14);
+  transform: translateX(-4px);
 }
-.lb-back svg { transition: transform var(--ease-fast); }
+.lb-back:hover::before {
+  transform: translateX(360%) skewX(-15deg);
+}
+.lb-back svg { transition: transform .4s cubic-bezier(.22,.68,0,1.2); }
 .lb-back:hover svg { transform: translateX(-4px); }
 
 /* ─── 榜单页标题区 ─── */
@@ -104,7 +129,9 @@
    ══════════════════════════════════════════════════════════ */
 .lb-table-wrap {
   width: 100%;
-  overflow: hidden;   /* 锁定布局，禁止出现系统滚动条 */
+  height: auto;
+  max-height: none;      /* 不限制行数，随内容自动增高 */
+  overflow: hidden;      /* 仅用于 border-radius 圆角裁切，不会裁切行数 */
   border-radius: var(--r-lg);
   /* 玻璃拟态外容器 */
   background: rgba(6,12,26,.78);
@@ -290,20 +317,50 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   border-radius: var(--r-sm);
   background: rgba(0,212,255,.03);
   cursor: pointer;
-  transition: all var(--ease-med);
+  transition:
+    color .42s cubic-bezier(.22,.68,0,1.2),
+    border-color .42s ease,
+    background .42s ease,
+    box-shadow .42s ease,
+    transform .42s cubic-bezier(.22,.68,0,1.2);
   user-select: none;
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+.lb-tab-btn::before {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  width: 35%;
+  background: linear-gradient(105deg,
+    transparent 20%,
+    rgba(0,212,255,.28) 50%,
+    rgba(255,255,255,.08) 55%,
+    transparent 80%);
+  transform: translateX(-150%) skewX(-15deg);
+  transition: transform .5s ease;
+  pointer-events: none;
 }
 .lb-tab-btn:hover {
   color: var(--c-cyan);
-  border-color: rgba(0,212,255,.35);
+  border-color: rgba(0,212,255,.38);
   background: rgba(0,212,255,.07);
+  transform: translateY(-1px);
+}
+.lb-tab-btn:hover::before {
+  transform: translateX(360%) skewX(-15deg);
 }
 .lb-tab-btn.active {
   color: var(--c-cyan);
   border-color: var(--c-cyan);
   background: rgba(0,212,255,.12);
   box-shadow: var(--glow-c-sm);
+  animation: tabActivePulse 2.8s ease-in-out infinite;
+}
+@keyframes tabActivePulse {
+  0%,100% { box-shadow: var(--glow-c-sm); }
+  50%     { box-shadow: 0 0 12px rgba(0,212,255,.75), 0 0 28px rgba(0,212,255,.45); }
 }
 
 /* ── 表格底部统计 ── */
