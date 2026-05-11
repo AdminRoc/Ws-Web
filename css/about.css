@@ -4,7 +4,7 @@
 
 /* ─── 页面整体布局 ─── */
 .about-page {
-  padding-top: 62px;   /* 为固定导航栏留出空间 */
+  padding-top: 70px;   /* 为固定导航栏留出空间 */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -244,11 +244,26 @@
   margin-top: .6rem;
 }
 
+/* ─── 规则按钮包装器（关于页底部） ─── */
+.about-rule-wrap {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 居中对齐辅助容器 */
+.about-closing--center {
+  display: flex;
+  justify-content: center;
+  margin-top: .6rem;
+}
+
 /* ─── 规则按钮（关于页底部） ─── */
 .about-rule-btn {
   display: inline-flex;
   align-items: center;
-  gap: .4rem;
+  gap: .35rem;
   padding: .55rem 1.6rem;
   font-family: var(--f-sci);
   font-size: .78rem;
@@ -258,17 +273,173 @@
   border: 1px solid var(--c-purple-dim);
   border-radius: var(--r-sm);
   background: rgba(139, 92, 246, .08);
-  transition: all var(--ease-slow);
+  transition:
+    color .5s cubic-bezier(.22,.68,0,1.2),
+    background .5s cubic-bezier(.22,.68,0,1.2),
+    border-color .5s cubic-bezier(.22,.68,0,1.2),
+    box-shadow .5s cubic-bezier(.22,.68,0,1.2),
+    transform .5s cubic-bezier(.22,.68,0,1.2);
   white-space: nowrap;
   margin-top: .5rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
-
-.about-rule-btn:hover {
+/* 扫光层 */
+.about-rule-btn::before {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  width: 40%;
+  background: linear-gradient(105deg,
+    transparent 20%,
+    rgba(139,92,246,.5) 50%,
+    rgba(255,255,255,.15) 55%,
+    transparent 80%);
+  transform: translateX(-160%) skewX(-15deg);
+  transition: transform .65s ease;
+  pointer-events: none;
+}
+/* 下箭头 */
+.about-rule-btn::after {
+  content: '▾';
+  font-size: .58rem;
+  opacity: .7;
+  transition: transform .4s cubic-bezier(.22,.68,0,1.2), opacity .3s ease;
+  display: inline-block;
+}
+.about-rule-wrap:hover .about-rule-btn {
   color: #fff;
-  background: var(--c-purple);
+  background: rgba(139, 92, 246, .82);
   border-color: var(--c-purple);
   box-shadow: var(--glow-p-md);
   transform: translateY(-1px);
+}
+.about-rule-wrap:hover .about-rule-btn::before {
+  transform: translateX(360%) skewX(-15deg);
+}
+.about-rule-wrap:hover .about-rule-btn::after {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+/* ─── 关于页规则下拉菜单 ─── */
+.about-rule-dropdown {
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px) scaleY(.88);
+  transform-origin: top center;
+  min-width: 152px;
+  background: rgba(4,6,20,.97);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(139,92,246,.38);
+  border-top: 2px solid var(--c-purple);
+  border-radius: 0 0 var(--r-md) var(--r-md);
+  box-shadow:
+    0 14px 55px rgba(0,0,0,.85),
+    0 0 25px rgba(139,92,246,.22),
+    0 0 60px rgba(139,92,246,.1);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity .38s cubic-bezier(.22,.68,0,1.2),
+    visibility .38s ease,
+    transform .38s cubic-bezier(.22,.68,0,1.2);
+  overflow: hidden;
+  z-index: 50;
+}
+.about-rule-dropdown::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 130% 120% at 50% 0%,
+    rgba(139,92,246,.16) 0%,
+    rgba(0,212,255,.05) 55%,
+    transparent 80%);
+  pointer-events: none;
+  animation: dropdownAurora2 4s ease-in-out infinite alternate;
+}
+@keyframes dropdownAurora2 {
+  0%   { opacity: .7; transform: scale(1); }
+  100% { opacity: 1;  transform: scale(1.08) translateY(-3%); }
+}
+.about-rule-wrap:hover .about-rule-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scaleY(1);
+}
+.about-rule-dropdown a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  padding: .72rem 1rem;
+  font-family: var(--f-sci);
+  font-size: .72rem;
+  letter-spacing: .09em;
+  color: var(--c-text);
+  border-bottom: 1px solid rgba(139,92,246,.12);
+  position: relative;
+  transition:
+    color .35s ease,
+    background .35s ease,
+    box-shadow .35s ease;
+  opacity: 0;
+  cursor: pointer;
+  box-shadow: inset 3px 0 0 transparent;
+}
+.about-rule-dropdown a:last-child { border-bottom: none; }
+/* 左侧装饰横线 */
+.about-rule-dropdown a::before {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(139,92,246,.38));
+  transform: scaleX(.35);
+  transform-origin: right;
+  transition: transform .38s cubic-bezier(.22,.68,0,1.2), opacity .38s ease;
+  opacity: .55;
+}
+/* 右侧装饰横线 */
+.about-rule-dropdown a::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to left, transparent, rgba(139,92,246,.38));
+  transform: scaleX(.35);
+  transform-origin: left;
+  transition: transform .38s cubic-bezier(.22,.68,0,1.2), opacity .38s ease;
+  opacity: .55;
+}
+.about-rule-dropdown a:hover {
+  color: #c4b5fd;
+  background: rgba(139,92,246,.12);
+  box-shadow: inset 3px 0 0 var(--c-purple), inset 8px 0 16px rgba(139,92,246,.12);
+}
+.about-rule-dropdown a:hover::before {
+  transform: scaleX(1);
+  opacity: 1;
+  background: linear-gradient(to right, transparent, rgba(139,92,246,.7));
+}
+.about-rule-dropdown a:hover::after {
+  transform: scaleX(1);
+  opacity: 1;
+  background: linear-gradient(to left, transparent, rgba(139,92,246,.7));
+}
+.about-rule-wrap:hover .about-rule-dropdown a:nth-child(1) {
+  animation: ruleItemIn2 .3s cubic-bezier(.22,.68,0,1.2) .06s forwards;
+}
+.about-rule-wrap:hover .about-rule-dropdown a:nth-child(2) {
+  animation: ruleItemIn2 .3s cubic-bezier(.22,.68,0,1.2) .13s forwards;
+}
+.about-rule-wrap:hover .about-rule-dropdown a:nth-child(3) {
+  animation: ruleItemIn2 .3s cubic-bezier(.22,.68,0,1.2) .20s forwards;
+}
+@keyframes ruleItemIn2 {
+  from { opacity: 0; transform: translateY(-6px) translateX(-4px); }
+  to   { opacity: 1; transform: translateY(0)  translateX(0); }
 }
 
 /* ─── 响应式 ─── */
