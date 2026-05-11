@@ -1,32 +1,29 @@
 /**
  * ════════════════════════════════════════════════════════════
- *  data/disruption.js  —  中断竞速排行榜 数据文件
+ *  data/disruption-kappa-solo.js  —  中断竞速（Kappa·单人）数据文件
  *
- *  ┌─────────────────────────────────────────────────────┐
- *  │  维护说明（仅需修改此文件，无需碰 HTML）              │
- *  │                                                     │
- *  │  字段说明：                                          │
- *  │    clearTime  —— 结算时间，格式 "MM:SS.mmm"          │
- *  │                  例："01:23.456"                    │
- *  │    playerId   —— 玩家 ID（游戏内名称或自定义昵称）    │
- *  │    uploadTime —— 上传日期，格式 "YYYY-MM-DD"         │
- *  │    videoUrl   —— 成绩视频或证据链接；                 │
- *  │                  留空 "" 则该行不可点击跳转           │
- *  │                                                     │
- *  │  排名规则：脚本按 clearTime 从小到大自动排序，         │
- *  │           无需手动填写排名字段                        │
- *  │                                                     │
- *  │  新增条目：在 records 数组末尾复制一条模板并填写字段   │
- *  │  修改生效：保存文件后刷新对应页面即可                  │
- *  └─────────────────────────────────────────────────────┘
+ *  字段说明：
+ *    clearTime  —— 结算时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrl   —— 成绩视频链接；留空 "" 则不可点击跳转
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序，无需手动填写排名
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
  * ════════════════════════════════════════════════════════════
  */
-const disruptionRecords = [
+const disruptionKappaSoloRecords = [
   {
     clearTime:  "53:43.000",
     playerId:   "NamelessDeity",
     uploadTime: "2025-11-24",
     videoUrl:   "https://youtu.be/1Bc6lQefhEY?si=iTlCdUIuOGaVT4US"
+  },
+  {
+    clearTime:  "55:30.000",
+    playerId:   "MikuPrime",
+    uploadTime: "2026-05-01",
+    videoUrl:   "https://www.bilibili.com/video/BV1fW9vBwEzT"
   },
   {
     clearTime:  "55:49.000",
@@ -75,12 +72,6 @@ const disruptionRecords = [
     playerId:   "Clarn",
     uploadTime: "2026-04-20",
     videoUrl:   "https://youtu.be/d8HcTw0YjqU?si=2_T59uUz5g3zdjeB"
-  },
-  {
-    clearTime:  "55:30.000",
-    playerId:   "MikuPrime",
-    uploadTime: "2026-05-01",
-    videoUrl:   "https://www.bilibili.com/video/BV1fW9vBwEzT"
   },
   // ─── 在此处继续添加新条目 ───
   // {
