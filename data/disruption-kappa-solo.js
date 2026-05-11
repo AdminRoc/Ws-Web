@@ -73,6 +73,12 @@ const disruptionKappaSoloRecords = [
     uploadTime: "2026-04-20",
     videoUrl:   "https://youtu.be/d8HcTw0YjqU?si=2_T59uUz5g3zdjeB"
   },
+  {
+    clearTime:  "68:34.000",
+    playerId:   "Zhevia",
+    uploadTime: "2026-05-11",
+    videoUrl:   "https://www.bilibili.com/video/BV1qvZFBrEvg"
+  },
   // ─── 在此处继续添加新条目 ───
   // {
   //   clearTime:  "MM:SS.mmm",
