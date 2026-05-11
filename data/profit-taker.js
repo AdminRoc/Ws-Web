@@ -59,60 +59,60 @@ const profitTakerRecords = [
     clearTime:  "00:51.917",
     playerId:   "wtzkk121",
     uploadTime: "2025-08-05",
-    videoUrl:   ""
+    videoUrl:   "https://youtu.be/rtZ69xmj9OU?si=dBty86IM9Rd5DELz"
   },
   {
     clearTime:  "00:51.983",
     playerId:   "Kungfuszifu",
-    uploadTime: "2025-05-11",
-    videoUrl:   ""
+    uploadTime: "2025-03-23",
+    videoUrl:   "https://youtu.be/FiNe3kVHYOQ?si=EUMxcwb-go8on0zd"
   },
   {
     clearTime:  "00:52.550",
     playerId:   "ScamCat",
-    uploadTime: "2026-03-11",
-    videoUrl:   ""
+    uploadTime: "2026-03-07",
+    videoUrl:   "https://youtu.be/xF5KUIUAQMU?si=GoCx2Su6pSpMBn43"
   },
   {
     clearTime:  "00:52.567",
     playerId:   "HL_BAN",
-    uploadTime: "2025-05-11",
-    videoUrl:   ""
+    uploadTime: "2024-12-07",
+    videoUrl:   "https://youtu.be/7OetOOg0WlY?si=7oX6H8LoVXM3wyTk"
   },
   {
     clearTime:  "00:52.633",
     playerId:   "not21dropper",
-    uploadTime: "2025-05-11",
-    videoUrl:   ""
+    uploadTime: "2025-01-21",
+    videoUrl:   "https://youtu.be/h6r_L9IDXIw?si=zSxLh91qIjadKodC"
   },
   {
     clearTime:  "00:54.800",
     playerId:   "Insomnia_fs",
     uploadTime: "2026-04-18",
-    videoUrl:   ""
+    videoUrl:   "https://youtu.be/GREhY2bTVg4?si=spsOJMvEJpPkKt3p"
   },
   {
     clearTime:  "00:55.288",
     playerId:   "Eoh_",
-    uploadTime: "2025-05-11",
-    videoUrl:   ""
+    uploadTime: "2025-04-13",
+    videoUrl:   "https://youtu.be/WJqOSqfxrLQ?si=FRed4151byTNwi4R"
   },
   {
     clearTime:  "00:55.483",
     playerId:   "ADHDino",
-    uploadTime: "2025-05-11",
-    videoUrl:   ""
+    uploadTime: "2025-03-28",
+    videoUrl:   "https://youtu.be/1o4vOcDQ6rA?si=_trUUnC6K8RSRbRx"
   },
   {
     clearTime:  "00:55.695",
     playerId:   "jaedyn2001",
-    uploadTime: "2025-05-11",
+    uploadTime: "2025-03-12",
     videoUrl:   ""
   },
   {
     clearTime:  "00:55.717",
     playerId:   "CFSimpleH",
-    uploadTime: "2025-05-11",
+    uploadTime: "2025-01-11",
     videoUrl:   ""
   },
   {
@@ -124,139 +124,139 @@ const profitTakerRecords = [
   {
     clearTime:  "00:56.433",
     playerId:   "acsi",
-    uploadTime: "2025-05-11",
+    uploadTime: "2024-11-23",
     videoUrl:   ""
   },
   {
     clearTime:  "00:56.817",
     playerId:   "HOPDanh",
-    uploadTime: "2025-06-11",
+    uploadTime: "2025-05-13",
     videoUrl:   ""
   },
   {
     clearTime:  "00:57.933",
     playerId:   "ilyRogue",
-    uploadTime: "2025-05-11",
+    uploadTime: "2025-02-28",
     videoUrl:   ""
   },
   {
     clearTime:  "00:58.067",
     playerId:   "HL_Unknown",
-    uploadTime: "2025-05-11",
+    uploadTime: "2025-02-03",
     videoUrl:   ""
   },
   {
     clearTime:  "00:58.600",
     playerId:   "4MIR",
-    uploadTime: "2026-02-11",
+    uploadTime: "2026-01-26",
     videoUrl:   ""
   },
   {
     clearTime:  "00:58.967",
     playerId:   "Curser",
-    uploadTime: "2026-02-11",
+    uploadTime: "2026-01-13",
     videoUrl:   ""
   },
   {
     clearTime:  "01:02.458",
     playerId:   "LukerPower",
-    uploadTime: "2025-08-11",
+    uploadTime: "2025-08-06",
     videoUrl:   ""
   },
   {
     clearTime:  "01:03.283",
     playerId:   "ZombieEPx",
-    uploadTime: "2025-05-11",
+    uploadTime: "2024-12-01",
     videoUrl:   ""
   },
   {
     clearTime:  "01:05.900",
     playerId:   "zozdnvil",
-    uploadTime: "2025-05-11",
+    uploadTime: "2025-03-09",
     videoUrl:   ""
   },
   {
     clearTime:  "01:06.000",
     playerId:   "UnOriginalGN",
-    uploadTime: "2025-05-11",
+    uploadTime: "2025-04-20",
     videoUrl:   ""
   },
   {
     clearTime:  "01:06.350",
     playerId:   "44bananas",
-    uploadTime: "2025-05-11",
+    uploadTime: "2025-01-11",
     videoUrl:   ""
   },
   {
     clearTime:  "01:10.333",
     playerId:   "Fremyrac",
-    uploadTime: "2025-05-11",
+    uploadTime: "2025-02-03",
     videoUrl:   ""
   },
   {
     clearTime:  "01:13.633",
     playerId:   "Endryx_Ow",
-    uploadTime: "2025-05-11",
+    uploadTime: "2024-12-14",
     videoUrl:   ""
   },
   {
     clearTime:  "01:20.033",
     playerId:   "FINISHEROWNED",
-    uploadTime: "2025-05-11",
+    uploadTime: "2025-05-06",
     videoUrl:   ""
   },
   {
     clearTime:  "01:23.233",
     playerId:   "real_spinner",
-    uploadTime: "2025-05-11",
+    uploadTime: "2024-11-18",
     videoUrl:   ""
   },
   {
     clearTime:  "01:27.433",
     playerId:   "PuppiesPlushie",
-    uploadTime: "2025-12-11",
+    uploadTime: "2025-11-28",
     videoUrl:   ""
   },
   {
     clearTime:  "01:30.467",
     playerId:   "Prot0w0gen",
-    uploadTime: "2025-05-11",
+    uploadTime: "2025-01-04",
     videoUrl:   ""
   },
   {
     clearTime:  "01:34.367",
     playerId:   "Aeshen",
-    uploadTime: "2025-12-11",
+    uploadTime: "2025-12-01",
     videoUrl:   ""
   },
   {
     clearTime:  "01:37.017",
     playerId:   "RestInPizza",
-    uploadTime: "2025-05-11",
+    uploadTime: "2024-10-27",
     videoUrl:   ""
   },
   {
     clearTime:  "01:39.133",
     playerId:   "CoochieCrusader",
-    uploadTime: "2025-12-11",
+    uploadTime: "2025-11-30",
     videoUrl:   ""
   },
   {
     clearTime:  "02:43.017",
     playerId:   "TanderXaylor",
-    uploadTime: "2025-08-11",
+    uploadTime: "2025-07-25",
     videoUrl:   ""
   },
   {
     clearTime:  "06:04.666",
     playerId:   "NightmarePlays",
-    uploadTime: "2025-05-11",
+    uploadTime: "2024-09-14",
     videoUrl:   ""
   },
   {
     clearTime:  "09:33.533",
     playerId:   "ManInTheWall",
-    uploadTime: "2025-05-11",
+    uploadTime: "2024-06-24",
     videoUrl:   ""
   },
   // ─── 在此处继续添加新条目 ───
