@@ -13,6 +13,17 @@
  * ════════════════════════════════════════════════════════════
  */
 const disruptionUrDuoRecords = [
+  {
+    clearTime:  "49:20.000",
+    playerId:   "Clarn / Simaris",
+    uploadTime: "2026-04-11",
+    videoUrl:   "https://www.youtube.com/watch?v=jEf7nln4eeY"
+  },  
+  
+  
+  
+
+  
   // ─── 在此处添加双人条目 ───
   // {
   //   clearTime:  "MM:SS.mmm",
