@@ -86,6 +86,12 @@ const disruptionMultiRecords = [
     uploadTime: "2025-02-01",
     videoUrl:   "https://www.bilibili.com/video/BV1T3FeeeEP6"
   },
+  {
+    clearTime:  "35:06.000",
+    playerId:   "NamelessDeity / yfoxyfan / -Yamarashi / Empress",
+    uploadTime: "2026-05-10",
+    videoUrl:   "https://youtu.be/t3Mlmqae_Ow?si=_3-ChD4C-SxjwGv_"
+  },
   // ─── 在此处继续添加新条目 ───
   // {
   //   clearTime:  "MM:SS.mmm",
