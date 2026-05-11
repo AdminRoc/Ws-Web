@@ -23,22 +23,64 @@
  */
 const disruptionRecords = [
   {
-    clearTime:  "01:23.456",
-    playerId:   "ExamplePlayer1",
-    uploadTime: "2026-05-10",
-    videoUrl:   "https://example.com/video1"
+    clearTime:  "53:43.000",
+    playerId:   "NamelessDeity",
+    uploadTime: "2025-11-24",
+    videoUrl:   "https://youtu.be/1Bc6lQefhEY?si=iTlCdUIuOGaVT4US"
   },
   {
-    clearTime:  "01:31.020",
-    playerId:   "ExamplePlayer2",
-    uploadTime: "2026-05-09",
-    videoUrl:   "https://example.com/video2"
+    clearTime:  "55:49.000",
+    playerId:   "sakvayumika",
+    uploadTime: "2025-09-29",
+    videoUrl:   "https://youtu.be/5NQzaqJrC5c?si=wUjGMxoYngtfmbe_"
   },
   {
-    clearTime:  "01:45.888",
-    playerId:   "ExamplePlayer3",
-    uploadTime: "2026-05-08",
-    videoUrl:   ""
+    clearTime:  "59:14.000",
+    playerId:   "Endryx_Ow",
+    uploadTime: "2026-04-23",
+    videoUrl:   "https://youtu.be/21h4oSgmDtE?si=x5RjJxUlG4Ox-ZUp"
+  },
+  {
+    clearTime:  "59:15.000",
+    playerId:   "Takagi1218",
+    uploadTime: "2025-09-03",
+    videoUrl:   "https://youtu.be/wVKCTb2Ca6c?si=WgQc1LBN5akU1wy2"
+  },
+  {
+    clearTime:  "59:23.000",
+    playerId:   "Kuva_Prime",
+    uploadTime: "2025-07-01",
+    videoUrl:   "https://www.bilibili.com/video/BV1u1gSzwENr?share_source=copy_web"
+  },
+  {
+    clearTime:  "59:27.000",
+    playerId:   "MikuPrime",
+    uploadTime: "2025-10-05",
+    videoUrl:   "https://www.bilibili.com/video/BV1aaxgzaEUu?share_source=copy_web"
+  },
+  {
+    clearTime:  "67:15.000",
+    playerId:   "LastShao",
+    uploadTime: "2024-12-02",
+    videoUrl:   "https://www.bilibili.com/video/BV16L6KYtEao?share_source=copy_web"
+  },
+  {
+    clearTime:  "68:57.000",
+    playerId:   "Elenjeager",
+    uploadTime: "2025-10-06",
+    videoUrl:   "https://b23.tv/KzUJGji"
+  },
+  {
+    clearTime:  "71:17.000",
+    playerId:   "Clarn",
+    uploadTime: "2026-04-20",
+    videoUrl:   "https://youtu.be/d8HcTw0YjqU?si=2_T59uUz5g3zdjeB"
+  },
+  {
+    clearTime:  "55:30.000",
+    playerId:   "MikuPrime",
+    uploadTime: "2026-05-01",
+    videoUrl:   "https://www.bilibili.com/video/BV1fW9vBwEzT"
   },
   // ─── 在此处继续添加新条目 ───
   // {
