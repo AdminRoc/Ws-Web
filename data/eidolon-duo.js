@@ -21,11 +21,46 @@
 const eidolonDuoRecords = [
   // ─── 示例条目，上线前请替换为真实数据 ───
   {
-    avgRealTime:   "04:55.200",
-    captureStatus: "3T",
-    playerId:      "Player1 / Player2",
-    uploadTime:    "2026-05-10",
-    videoUrl:      ""
+    avgRealTime:   "07:47.231",
+    captureStatus: "6x3",
+    playerId:      "aimuduwi / Loongx.",
+    uploadTime:    "2025-07-10",
+    videoUrl:      "https://youtu.be/2ycWErzBljQ?si=8Vaz6dkRUF-t_dvX"
+  },
+  {
+    avgRealTime:   "07:47.269",
+    captureStatus: "6x3",
+    playerId:      "-T14Nt / Loongx.",
+    uploadTime:    "2025-05-02",
+    videoUrl:      "https://youtu.be/xfojq9bYxiE"
+  },
+  {
+    avgRealTime:   "07:48.766",
+    captureStatus: "6x3 - novaless%",
+    playerId:      "Fenomeral / vMooose.",
+    uploadTime:    "2026-02-06",
+    videoUrl:      "https://youtu.be/fvztvEBneh4"
+  },
+  {
+    avgRealTime:   "07:48.911",
+    captureStatus: "6x3",
+    playerId:      "Fenomeral / vMooose.",
+    uploadTime:    "2026-02-13",
+    videoUrl:      "https://www.youtube.com/watch?v=G3kIfkXds2Q"
+  },
+  {
+    avgRealTime:   "07:50.984",
+    captureStatus: "6x3 - novaless%",
+    playerId:      "aimuduwi / Loongx.",
+    uploadTime:    "2025-06-03",
+    videoUrl:      "https://youtu.be/TGYUL6jfb9E?si=ahuvCrLNGkWOZ7HT"
+  },
+  {
+    avgRealTime:   "07:56.177",
+    captureStatus: "6x3 - novaless%",
+    playerId:      "itzNicc / ForsakenIdol",
+    uploadTime:    "2025-05-21",
+    videoUrl:      "https://youtu.be/0PxKjTw6bvY"
   },
   // ─── 在此处继续添加新条目 ───
   // {
