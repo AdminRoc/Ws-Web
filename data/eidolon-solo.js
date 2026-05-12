@@ -21,23 +21,58 @@
 const eidolonSoloRecords = [
   // ─── 示例条目，上线前请替换为真实数据 ───
   {
-    avgRealTime:   "05:42.100",
-    captureStatus: "3T",
-    playerId:      "ExamplePlayer1",
-    uploadTime:    "2026-05-10",
-    videoUrl:      "https://example.com/eidolon-solo-1"
+    avgRealTime:   "07:48.533",
+    captureStatus: "6×3",
+    playerId:      "Loongx.",
+    uploadTime:    "2026-04-12",
+    videoUrl:      "https://youtu.be/bLSXgWxWX30"
   },
   {
-    avgRealTime:   "06:01.350",
-    captureStatus: "3T",
-    playerId:      "ExamplePlayer2",
-    uploadTime:    "2026-05-08",
-    videoUrl:      "https://example.com/eidolon-solo-2"
+    avgRealTime:   "07:48.796",
+    captureStatus: "6×3",
+    playerId:      "Fenomeral",
+    uploadTime:    "2026-02-15",
+    videoUrl:      "https://youtu.be/TmwfctxpJsE"
+  },
+  {
+    avgRealTime:   "07:48.943",
+    captureStatus: "6×3",
+    playerId:      "aggro",
+    uploadTime:    "2026-04-23",
+    videoUrl:      "https://youtu.be/ybNSwChvTfs"
+  },
+  {
+    avgRealTime:   "07:49.829",
+    captureStatus: "6×3",
+    playerId:      "Jigy5000",
+    uploadTime:    "2025-05-30",
+    videoUrl:      "https://youtu.be/lKjveIM0Js4"
+  },
+  {
+    avgRealTime:   "07:49.854",
+    captureStatus: "6×3",
+    playerId:      "elaine",
+    uploadTime:    "2026-02-25",
+    videoUrl:      "https://www.youtube.com/watch?v=zq9-npjbWdI"
+  },
+  {
+    avgRealTime:   "07:53.827",
+    captureStatus: "6×3",
+    playerId:      "itzNicc",
+    uploadTime:    "2025-06-01",
+    videoUrl:      "https://www.youtube.com/watch?v=KGt1Dzk1h8Y&feature=youtu.be"
+  },
+  {
+    avgRealTime:   "07:57.170",
+    captureStatus: "6×3",
+    playerId:      "Meliodas_MH",
+    uploadTime:    "2026-02-11",
+    videoUrl:      "https://youtu.be/Wfwm4TFGLQs"
   },
   // ─── 在此处继续添加新条目 ───
   // {
   //   avgRealTime:   "MM:SS.mmm",
-  //   captureStatus: "3T",
+  //   captureStatus: "6×",
   //   playerId:      "玩家ID",
   //   uploadTime:    "YYYY-MM-DD",
   //   videoUrl:      "https://..."
