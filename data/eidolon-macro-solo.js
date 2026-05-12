@@ -19,21 +19,6 @@
  * ════════════════════════════════════════════════════════════
  */
 const eidolonMacroSoloRecords = [
-  // ─── 示例条目，上线前请替换为真实数据 ───
-  {
-    avgRealTime:   "04:58.200",
-    captureStatus: "3T",
-    playerId:      "ExamplePlayer1",
-    uploadTime:    "2026-05-10",
-    videoUrl:      "https://example.com/eidolon-macro-solo-1"
-  },
-  {
-    avgRealTime:   "05:12.780",
-    captureStatus: "3T",
-    playerId:      "ExamplePlayer2",
-    uploadTime:    "2026-05-09",
-    videoUrl:      "https://example.com/eidolon-macro-solo-2"
-  },
   // ─── 在此处继续添加新条目 ───
   // {
   //   avgRealTime:   "MM:SS.mmm",

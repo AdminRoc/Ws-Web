@@ -19,14 +19,6 @@
  * ════════════════════════════════════════════════════════════
  */
 const eidolonTrioRecords = [
-  // ─── 示例条目，上线前请替换为真实数据 ───
-  {
-    avgRealTime:   "04:22.800",
-    captureStatus: "3T",
-    playerId:      "Player1 / Player2 / Player3",
-    uploadTime:    "2026-05-10",
-    videoUrl:      ""
-  },
   // ─── 在此处继续添加新条目 ───
   // {
   //   avgRealTime:   "MM:SS.mmm",
