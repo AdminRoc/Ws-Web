@@ -18,24 +18,6 @@
  * ════════════════════════════════════════════════════════════
  */
 const profitTakerMacroRecords = [
-  {
-    clearTime:  "01:58.440",
-    playerId:   "ExamplePlayer1",
-    uploadTime: "2026-05-10",
-    videoUrl:   "https://example.com/pt-macro1"
-  },
-  {
-    clearTime:  "02:05.990",
-    playerId:   "ExamplePlayer2",
-    uploadTime: "2026-05-09",
-    videoUrl:   "https://example.com/pt-macro2"
-  },
-  {
-    clearTime:  "02:19.650",
-    playerId:   "ExamplePlayer3",
-    uploadTime: "2026-05-08",
-    videoUrl:   ""
-  },
   // ─── 在此处继续添加新条目 ───
   // {
   //   clearTime:  "MM:SS.mmm",
