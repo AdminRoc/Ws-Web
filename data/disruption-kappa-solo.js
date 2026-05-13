@@ -79,6 +79,18 @@ const disruptionKappaSoloRecords = [
     uploadTime: "2026-05-11",
     videoUrl:   "https://www.bilibili.com/video/BV1qvZFBrEvg"
   },
+  {
+    clearTime:  "64:42.000",
+    playerId:   "[SO]戰爭惡魔Liberalio",
+    uploadTime: "2026-05-12",
+    videoUrl:   "https://www.bilibili.com/video/BV1FS536zEYp?t=23.4"
+  },
+  {
+    clearTime:  "60:01.000",
+    playerId:   "Gaiseric",
+    uploadTime: "2026-05-13",
+    videoUrl:   "https://www.bilibili.com/video/BV1mV5y6GEEt/?spm_id_from=333.1387.homepage.video_card.click"
+  },
   // ─── 在此处继续添加新条目 ───
   // {
   //   clearTime:  "MM:SS.mmm",
