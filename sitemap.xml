@@ -9,52 +9,127 @@
 
 <url>
   <loc>https://wfspeed.run/</loc>
-  <lastmod>2026-05-11T20:04:03+00:00</lastmod>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://wfspeed.run/disruption.html</loc>
-  <lastmod>2026-05-11T20:04:03+00:00</lastmod>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://wfspeed.run/eidolon.html</loc>
-  <lastmod>2026-05-11T20:04:03+00:00</lastmod>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://wfspeed.run/profit-taker.html</loc>
-  <lastmod>2026-05-11T20:04:03+00:00</lastmod>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://wfspeed.run/disruption-duo.html</loc>
-  <lastmod>2026-05-11T20:04:03+00:00</lastmod>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://wfspeed.run/disruption-multi.html</loc>
-  <lastmod>2026-05-11T20:04:03+00:00</lastmod>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://wfspeed.run/eidolon-macro.html</loc>
-  <lastmod>2026-05-11T20:04:03+00:00</lastmod>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://wfspeed.run/profit-taker-macro.html</loc>
-  <lastmod>2026-05-11T20:04:03+00:00</lastmod>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://wfspeed.run/about.html</loc>
-  <lastmod>2026-05-11T20:04:03+00:00</lastmod>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/capture.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/exterminate.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/rescue.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/sabotage.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/spy.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/assassination.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/archon-hunt.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/defense-relic.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/cambire.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/victory-plaza.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/ropalolyst.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/exploiter.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/the-guilty.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/obstacle-course.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://wfspeed.run/special-events.html</loc>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://wfspeed.run/index.html</loc>
-  <lastmod>2026-05-11T20:04:03+00:00</lastmod>
+  <lastmod>2026-05-15T18:50:41+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 
