@@ -437,6 +437,9 @@
 .about-rule-wrap:hover .about-rule-dropdown a:nth-child(3) {
   animation: ruleItemIn2 .3s cubic-bezier(.22,.68,0,1.2) .20s forwards;
 }
+.about-rule-wrap:hover .about-rule-dropdown a:nth-child(4) {
+  animation: ruleItemIn2 .3s cubic-bezier(.22,.68,0,1.2) .27s forwards;
+}
 @keyframes ruleItemIn2 {
   from { opacity: 0; transform: translateY(-6px) translateX(-4px); }
   to   { opacity: 1; transform: translateY(0)  translateX(0); }

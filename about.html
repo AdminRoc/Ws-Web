@@ -69,7 +69,12 @@
       </a>
       <div class="nav-links">
         <div class="nav-item has-dropdown">
-          <a href="disruption.html"><span class="hover-text-swap"><span class="text-cn">中断竞速榜单</span><span class="text-en">Disruption</span></span></a>
+          <a href="disruption.html">
+            <span class="hover-text-swap">
+              <span class="text-cn">中断竞速榜单</span>
+              <span class="text-en">Disruption</span>
+            </span>
+          </a>
           <div class="nav-dropdown-menu">
             <a href="disruption.html"><span class="hover-text-swap"><span class="text-cn">单人</span><span class="text-en">Solo</span></span></a>
             <a href="disruption-duo.html"><span class="hover-text-swap"><span class="text-cn">双人</span><span class="text-en">Duo</span></span></a>
@@ -77,21 +82,32 @@
           </div>
         </div>
         <div class="nav-item has-dropdown">
-          <a href="eidolon.html"><span class="hover-text-swap"><span class="text-cn">夜灵竞速榜单</span><span class="text-en">Eidolon</span></span></a>
+          <a href="eidolon.html">
+            <span class="hover-text-swap">
+              <span class="text-cn">夜灵竞速榜单</span>
+              <span class="text-en">Eidolon</span>
+            </span>
+          </a>
           <div class="nav-dropdown-menu">
             <a href="eidolon.html"><span class="hover-text-swap"><span class="text-cn">无宏</span><span class="text-en">No Macro</span></span></a>
             <a href="eidolon-macro.html"><span class="hover-text-swap"><span class="text-cn">有宏</span><span class="text-en">Macro</span></span></a>
           </div>
         </div>
         <div class="nav-item has-dropdown">
-          <a href="profit-taker.html"><span class="hover-text-swap"><span class="text-cn">大蜘蛛竞速榜单</span><span class="text-en">Profit-Taker</span></span></a>
+          <a href="profit-taker.html">
+            <span class="hover-text-swap">
+              <span class="text-cn">蜘蛛竞速榜单</span>
+              <span class="text-en">Profit-Taker</span>
+            </span>
+          </a>
           <div class="nav-dropdown-menu">
             <a href="profit-taker.html"><span class="hover-text-swap"><span class="text-cn">无宏</span><span class="text-en">No Macro</span></span></a>
             <a href="profit-taker-macro.html"><span class="hover-text-swap"><span class="text-cn">有宏</span><span class="text-en">Macro</span></span></a>
           </div>
         </div>
-        <div class="nav-item active">
-          <a href="about.html"><span class="hover-text-swap"><span class="text-cn">关于</span><span class="text-en">About</span></span></a>
+        <button class="nav-more-btn" id="nav-more-btn" aria-label="查看更多榜单"><span class="nm-wrap"><span class="nm-cn">查看更多</span><span class="nm-en">Others</span></span></button>
+        <div class="nav-item">
+          <a href="about.html"><span class="hover-text-swap"><span class="text-cn">关于本站</span><span class="text-en">About</span></span></a>
         </div>
       </div>
       <button class="nav-hamburger" aria-label="打开菜单">
@@ -102,6 +118,34 @@
          target="_blank" rel="noopener"><span class="hover-text-swap"><span class="text-cn">提交成绩</span><span class="text-en">Submit</span></span></a>
     </div>
   </nav>
+
+  <!-- ══ 超级导航面板 ══ -->
+  <div class="super-nav-overlay" id="super-nav-overlay" style="display:none;opacity:0;transition:opacity .4s ease;"></div>
+  <div class="super-nav-panel" id="super-nav-panel">
+    <div class="super-nav-grid">
+      <div class="super-nav-row">
+        <a class="snav-btn" href="capture.html"><div class="snav-text-wrap"><span class="snav-cn">捕获</span><span class="snav-en">Capture</span></div></a>
+        <a class="snav-btn" href="exterminate.html"><div class="snav-text-wrap"><span class="snav-cn">歼灭</span><span class="snav-en">Exterminate</span></div></a>
+        <a class="snav-btn" href="rescue.html"><div class="snav-text-wrap"><span class="snav-cn">救援</span><span class="snav-en">Rescue</span></div></a>
+        <a class="snav-btn" href="sabotage.html"><div class="snav-text-wrap"><span class="snav-cn">破坏</span><span class="snav-en">Sabotage</span></div></a>
+        <a class="snav-btn" href="spy.html"><div class="snav-text-wrap"><span class="snav-cn">间谍</span><span class="snav-en">Spy</span></div></a>
+      </div>
+      <div class="super-nav-row">
+        <a class="snav-btn" href="assassination.html"><div class="snav-text-wrap"><span class="snav-cn">刺杀</span><span class="snav-en">Assassination</span></div></a>
+        <a class="snav-btn" href="archon-hunt.html"><div class="snav-text-wrap"><span class="snav-cn">执刑官猎杀</span><span class="snav-en">Archon Hunt</span></div></a>
+        <a class="snav-btn" href="defense-relic.html"><div class="snav-text-wrap"><span class="snav-cn">防御裂缝81轮</span><span class="snav-en">Defense Relic</span></div></a>
+        <a class="snav-btn" href="cambire.html"><div class="snav-text-wrap"><span class="snav-cn">元素转换</span><span class="snav-en">Cambire</span></div></a>
+        <a class="snav-btn" href="victory-plaza.html"><div class="snav-text-wrap"><span class="snav-cn">1999 坦克</span><span class="snav-en">Victory Plaza</span></div></a>
+      </div>
+      <div class="super-nav-row">
+        <a class="snav-btn" href="ropalolyst.html"><div class="snav-text-wrap"><span class="snav-cn">蝠力使</span><span class="snav-en">Ropalolyst</span></div></a>
+        <a class="snav-btn" href="exploiter.html"><div class="snav-text-wrap"><span class="snav-cn">二蜘蛛</span><span class="snav-en">Exploiter</span></div></a>
+        <a class="snav-btn" href="the-guilty.html"><div class="snav-text-wrap"><span class="snav-cn">有罪之人</span><span class="snav-en">The Guilty</span></div></a>
+        <a class="snav-btn" href="obstacle-course.html"><div class="snav-text-wrap"><span class="snav-cn">氏族跑酷</span><span class="snav-en">Obstacle Course</span></div></a>
+        <a class="snav-btn" href="special-events.html"><div class="snav-text-wrap"><span class="snav-cn">站内特殊活动</span><span class="snav-en">Special Events</span></div></a>
+      </div>
+    </div>
+  </div>
 
   <!-- ══ 主体 ══ -->
   <main class="about-main">
@@ -271,6 +315,7 @@
             <a href="https://qcnye09jdqm2.feishu.cn/docx/T65jdhc61ohAOSxHopTcpOd8njc" target="_blank" rel="noopener">中断竞速</a>
             <a href="https://qcnye09jdqm2.feishu.cn/docx/UxmXdbcHUoo0iCxQUXccUMTNncf" target="_blank" rel="noopener">夜灵竞速</a>
             <a href="https://qcnye09jdqm2.feishu.cn/docx/JCBfdkdJpoAfkgxD37ic1VVcnkf" target="_blank" rel="noopener">蜘蛛竞速</a>
+            <a href="https://qcnye09jdqm2.feishu.cn/docx/AaMCdHX7Toa8hrxah1DcMQnJnNe" target="_blank" rel="noopener">更多项目</a>
           </div>
         </div>
       </div>
@@ -286,5 +331,52 @@
 </div><!-- /about-page -->
 
 <script src="js/main.js"></script>
+<script>
+/* ── 超级导航面板控制 ── */
+(function() {
+  var panel   = document.getElementById('super-nav-panel');
+  var overlay = document.getElementById('super-nav-overlay');
+  var btn     = document.getElementById('nav-more-btn');
+  if (!panel || !btn) return;
+
+  var isOpen = false;
+
+  function openPanel() {
+    isOpen = true;
+    panel.classList.add('open');
+    overlay.style.display = 'block';
+    setTimeout(function() { overlay.style.opacity = '1'; }, 10);
+    btn.classList.add('open');
+  }
+
+  function closePanel() {
+    isOpen = false;
+    panel.classList.remove('open');
+    overlay.style.opacity = '0';
+    setTimeout(function() { overlay.style.display = 'none'; }, 400);
+    btn.classList.remove('open');
+  }
+
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    isOpen ? closePanel() : openPanel();
+  });
+
+  overlay.addEventListener('click', closePanel);
+
+  document.addEventListener('click', function(e) {
+    if (isOpen && !panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+      closePanel();
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isOpen) closePanel();
+  });
+
+  /* 中英文3秒切换 */
+  setInterval(function() { panel.classList.toggle('lang-en'); }, 3000);
+})();
+</script>
 </body>
 </html>
