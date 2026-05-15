@@ -1,10 +1,5 @@
 /* ════════════════════════════════════════════════════════════
-   main.js  —  全站通用脚本
-   包含：
-   1. StarField 星空 Canvas 类（动态星空 + 流星）
-   2. 导航栏：汉堡菜单、移动端下拉点击展开
-   3. 滚动进入动画（IntersectionObserver）
-   4. 榜单渲染工具函数（供各榜单页调用）
+   main.js  —  全站通用脚本（先于 data/*.js 加载）
    ════════════════════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════════════════
@@ -16,160 +11,99 @@ class StarField {
     if (!this.canvas) return;
     this.ctx    = this.canvas.getContext('2d');
     this.stars  = [];
-    this.shoots = [];   // 流星
+    this.shoots = [];
     this._raf   = null;
     this._resize = this._resize.bind(this);
-
     window.addEventListener('resize', this._resize);
     this._resize();
     this._animate();
   }
-
   _resize() {
     this.canvas.width  = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this._createStars(320);
   }
-
   _createStars(count) {
     const { width: w, height: h } = this.canvas;
     this.stars = Array.from({ length: count }, () => {
       const r = Math.random();
-      // 星色：大多白/蓝白，少量暖色/青色
       let color;
       if      (r < .55) color = '#ffffff';
       else if (r < .75) color = '#b8d8ff';
       else if (r < .88) color = '#ffe8c8';
       else              color = '#00d4ff';
-      return {
-        x:      Math.random() * w,
-        y:      Math.random() * h,
-        size:   Math.random() * 1.7 + .2,
-        base:   Math.random() * .55 + .2,
-        speed:  Math.random() * .025 + .004,
-        phase:  Math.random() * Math.PI * 2,
-        color
-      };
+      return { x: Math.random()*w, y: Math.random()*h,
+               size: Math.random()*1.7+.2, base: Math.random()*.55+.2,
+               speed: Math.random()*.025+.004, phase: Math.random()*Math.PI*2, color };
     });
   }
-
   _maybeShoot() {
-    // 每帧约 0.4% 概率生成一颗流星，最多同时 3 颗
     if (Math.random() > .004 || this.shoots.length >= 3) return;
     const { width: w, height: h } = this.canvas;
-    const ang = Math.PI / 4 + (Math.random() - .5) * .35;
-    const spd = Math.random() * 9 + 6;
-    this.shoots.push({
-      x:   Math.random() * w * .75,
-      y:   Math.random() * h * .35,
-      dx:  Math.cos(ang) * spd,
-      dy:  Math.sin(ang) * spd,
-      len: Math.random() * 160 + 80,
-      op:  1
-    });
+    const ang = Math.PI/4 + (Math.random()-.5)*.35;
+    const spd = Math.random()*9+6;
+    this.shoots.push({ x: Math.random()*w*.75, y: Math.random()*h*.35,
+      dx: Math.cos(ang)*spd, dy: Math.sin(ang)*spd, len: Math.random()*160+80, op: 1 });
   }
-
   _animate() {
     const ctx = this.ctx;
     const { width: w, height: h } = this.canvas;
-    const now = performance.now() * .001;
-
-    /* ── 深空背景 ── */
-    const bg = ctx.createLinearGradient(0, 0, 0, h);
-    bg.addColorStop(0,   '#07080f');
-    bg.addColorStop(.45, '#090c18');
-    bg.addColorStop(1,   '#070810');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, w, h);
-
-    /* ── 闪烁星点 ── */
+    const now = performance.now()*.001;
+    const bg = ctx.createLinearGradient(0,0,0,h);
+    bg.addColorStop(0,'#07080f'); bg.addColorStop(.45,'#090c18'); bg.addColorStop(1,'#070810');
+    ctx.fillStyle = bg; ctx.fillRect(0,0,w,h);
     this.stars.forEach(s => {
-      const op = s.base * (.72 + .28 * Math.sin(now * s.speed * 55 + s.phase));
-      ctx.save();
-      ctx.globalAlpha = op;
-      // 较大星星加一圈辉光
+      const op = s.base*(.72+.28*Math.sin(now*s.speed*55+s.phase));
+      ctx.save(); ctx.globalAlpha = op;
       if (s.size > 1.1) {
-        const gr = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size * 3.5);
-        gr.addColorStop(0,   s.color);
-        gr.addColorStop(.4,  s.color + '55');
-        gr.addColorStop(1,   'transparent');
-        ctx.fillStyle = gr;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size * 3.5, 0, Math.PI * 2);
-        ctx.fill();
+        const gr = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.size*3.5);
+        gr.addColorStop(0,s.color); gr.addColorStop(.4,s.color+'55'); gr.addColorStop(1,'transparent');
+        ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(s.x,s.y,s.size*3.5,0,Math.PI*2); ctx.fill();
       }
-      ctx.fillStyle = s.color;
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.fillStyle = s.color; ctx.beginPath(); ctx.arc(s.x,s.y,s.size,0,Math.PI*2); ctx.fill();
       ctx.restore();
     });
-
-    /* ── 流星 ── */
     this._maybeShoot();
     this.shoots = this.shoots.filter(s => s.op > .02);
     this.shoots.forEach(s => {
-      const tail = s.len / Math.hypot(s.dx, s.dy);
-      const gr = ctx.createLinearGradient(s.x, s.y, s.x - s.dx * tail, s.y - s.dy * tail);
-      gr.addColorStop(0,   `rgba(255,255,255,${s.op})`);
-      gr.addColorStop(.25, `rgba(0,212,255,${s.op * .6})`);
-      gr.addColorStop(1,   'transparent');
-      ctx.save();
-      ctx.globalAlpha = s.op;
-      ctx.strokeStyle = gr;
-      ctx.lineWidth   = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(s.x, s.y);
-      ctx.lineTo(s.x - s.dx * tail, s.y - s.dy * tail);
-      ctx.stroke();
-      ctx.restore();
-      s.x  += s.dx;
-      s.y  += s.dy;
-      s.op -= .018;
+      const tail = s.len/Math.hypot(s.dx,s.dy);
+      const gr = ctx.createLinearGradient(s.x,s.y,s.x-s.dx*tail,s.y-s.dy*tail);
+      gr.addColorStop(0,`rgba(255,255,255,${s.op})`);
+      gr.addColorStop(.25,`rgba(0,212,255,${s.op*.6})`);
+      gr.addColorStop(1,'transparent');
+      ctx.save(); ctx.globalAlpha=s.op; ctx.strokeStyle=gr; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-s.dx*tail,s.y-s.dy*tail);
+      ctx.stroke(); ctx.restore();
+      s.x+=s.dx; s.y+=s.dy; s.op-=.018;
     });
-
     this._raf = requestAnimationFrame(() => this._animate());
   }
-
-  destroy() {
-    cancelAnimationFrame(this._raf);
-    window.removeEventListener('resize', this._resize);
-  }
+  destroy() { cancelAnimationFrame(this._raf); window.removeEventListener('resize',this._resize); }
 }
 
 /* ══════════════════════════════════════════════════════════
-   2. 导航栏交互（移动端汉堡 + 下拉）
+   2. 导航栏
    ══════════════════════════════════════════════════════════ */
 function initNav() {
   const hamburger = document.querySelector('.nav-hamburger');
   const navLinks  = document.querySelector('.nav-links');
   if (!hamburger || !navLinks) return;
-
-  // ── 汉堡菜单开关 ──
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('open');
     navLinks.classList.toggle('open');
   });
-
-  // ── 移动端下拉点击展开 ──
   const dropItems = document.querySelectorAll('.nav-item.has-dropdown');
   dropItems.forEach(item => {
     const link = item.querySelector(':scope > a');
     if (!link) return;
-    // 仅在窄屏时拦截点击进入子页面，改为展开菜单
     link.addEventListener('click', (e) => {
       if (window.innerWidth <= 860) {
         e.preventDefault();
-        // 关闭其他已展开项
-        dropItems.forEach(other => {
-          if (other !== item) other.classList.remove('mob-open');
-        });
+        dropItems.forEach(other => { if (other !== item) other.classList.remove('mob-open'); });
         item.classList.toggle('mob-open');
       }
     });
   });
-
-  // ── 点击页面空白处关闭菜单 ──
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.site-nav')) {
       hamburger.classList.remove('open');
@@ -180,17 +114,14 @@ function initNav() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   3. 滚动进入动画（IntersectionObserver）
+   3. 滚动进入动画
    ══════════════════════════════════════════════════════════ */
 function initReveal() {
   const els = document.querySelectorAll('.reveal');
   if (!els.length) return;
   const obs = new IntersectionObserver(
-    (entries) => entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        obs.unobserve(e.target);
-      }
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
     }),
     { threshold: .12 }
   );
@@ -198,153 +129,376 @@ function initReveal() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   4. 榜单渲染工具
+   4. 工具函数
    ══════════════════════════════════════════════════════════ */
-
-/**
- * 将时间字符串（如 "01:23.456" 或 "12:34:56.789"）解析为毫秒数
- * 用于对榜单记录按成绩从小到大自动排序
- */
 function parseTimeMs(timeStr) {
   if (!timeStr) return Infinity;
   const parts = timeStr.split(':');
   let ms = 0;
-  if (parts.length === 3) {
-    // HH:MM:SS.mmm
-    ms = (parseInt(parts[0], 10) * 3600
-        + parseInt(parts[1], 10) * 60
-        + parseFloat(parts[2])) * 1000;
-  } else if (parts.length === 2) {
-    // MM:SS.mmm
-    ms = (parseInt(parts[0], 10) * 60
-        + parseFloat(parts[1])) * 1000;
-  } else {
-    // SS.mmm
-    ms = parseFloat(parts[0]) * 1000;
-  }
+  if (parts.length === 3)      ms = (parseInt(parts[0],10)*3600 + parseInt(parts[1],10)*60 + parseFloat(parts[2]))*1000;
+  else if (parts.length === 2) ms = (parseInt(parts[0],10)*60   + parseFloat(parts[1]))*1000;
+  else                         ms = parseFloat(parts[0])*1000;
   return isNaN(ms) ? Infinity : ms;
 }
 
-/**
- * 渲染「结算时间」类榜单（disruption、profit-taker）
- * @param {Array}  records   - 数据文件中的记录数组
- * @param {string} tbodyId   - 目标 <tbody> 的 id
- * @param {string} timeField - 时间字段名（clearTime 等）
- */
+function getVideoUrls(rec) {
+  if (rec.videoUrls && Array.isArray(rec.videoUrls))
+    return rec.videoUrls.filter(u => u && typeof u === 'string' && u.trim());
+  if (rec.videoUrl && typeof rec.videoUrl === 'string' && rec.videoUrl.trim())
+    return [rec.videoUrl.trim()];
+  return [];
+}
+
+function getDomain(url) {
+  try { return new URL(url).hostname.replace(/^www\./, ''); }
+  catch(e) { return url.slice(0, 24); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   5. 多视角弹窗（注入样式 + 创建 DOM）
+   ══════════════════════════════════════════════════════════ */
+
+/* --- 注入弹窗样式 --- */
+(function injectPopupStyle() {
+  const s = document.createElement('style');
+  s.textContent = `
+/* ── 多视角弹窗 ── */
+#vp-popup {
+  position: fixed;
+  z-index: 99999;
+  min-width: 230px;
+  max-width: 350px;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.94);
+  transition: opacity .2s cubic-bezier(.22,.68,0,1.2),
+              transform .2s cubic-bezier(.22,.68,0,1.2);
+  background: rgba(4, 9, 22, 0.98);
+  border: 1px solid rgba(0,212,255,.5);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(0,212,255,.07),
+    0 20px 65px rgba(0,0,0,.95),
+    0 0 50px rgba(0,212,255,.2),
+    inset 0 1px 0 rgba(0,212,255,.25);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  /* 默认隐藏 */
+  visibility: hidden;
+}
+#vp-popup.vp-show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.vp-head {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .55rem 1rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: .56rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  color: rgba(0,212,255,.6);
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0,212,255,.14);
+  background: linear-gradient(90deg,
+    rgba(0,212,255,.08) 0%,
+    rgba(139,92,246,.05) 100%);
+}
+.vp-head-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  background: rgba(0,212,255,.15);
+  border-radius: 50%;
+  border: 1px solid rgba(0,212,255,.3);
+}
+.vp-row {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .72rem 1rem;
+  text-decoration: none;
+  color: #9bbad8;
+  font-family: 'Orbitron', sans-serif;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  border-bottom: 1px solid rgba(0,212,255,.07);
+  position: relative;
+  overflow: hidden;
+  transition:
+    background .15s ease,
+    color .15s ease,
+    padding-left .18s cubic-bezier(.22,.68,0,1.2);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.vp-row:last-child { border-bottom: none; }
+.vp-row::before {
+  content: '';
+  position: absolute;
+  top: -20%; left: -10%;
+  width: 38%; height: 140%;
+  background: linear-gradient(105deg,
+    transparent 20%,
+    rgba(0,212,255,.25) 50%,
+    rgba(255,255,255,.09) 55%,
+    transparent 80%);
+  transform: translateX(-200%) skewX(-15deg);
+  transition: transform .38s ease;
+  pointer-events: none;
+}
+.vp-row:hover {
+  background: rgba(0,212,255,.12);
+  color: #00d4ff;
+  padding-left: 1.35rem;
+}
+.vp-row:hover::before { transform: translateX(420%) skewX(-15deg); }
+.vp-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px; height: 26px;
+  border-radius: 50%;
+  background: rgba(0,212,255,.1);
+  border: 1px solid rgba(0,212,255,.3);
+  font-size: .7rem;
+  font-weight: 700;
+  color: rgba(0,212,255,.9);
+  flex-shrink: 0;
+  transition: background .15s ease, box-shadow .15s ease;
+}
+.vp-row:hover .vp-num {
+  background: rgba(0,212,255,.24);
+  box-shadow: 0 0 12px rgba(0,212,255,.55);
+  color: #00d4ff;
+}
+.vp-label { flex: 1; min-width: 0; }
+.vp-domain {
+  display: block;
+  font-size: .56rem;
+  opacity: .42;
+  margin-top: .06rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: .04em;
+  font-weight: 400;
+}
+.vp-arrow {
+  font-size: .65rem;
+  opacity: .35;
+  flex-shrink: 0;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.vp-row:hover .vp-arrow { opacity: 1; transform: translateX(4px); }
+
+/* 榜单行：有视频时显示指针 */
+.lb-table tbody tr[data-has-video] { cursor: pointer; }
+`;
+  document.head.appendChild(s);
+})();
+
+/* --- 弹窗 DOM 单例 --- */
+let _popup     = null;
+let _hideTimer = null;
+
+function _getPopup() {
+  if (_popup) return _popup;
+  _popup = document.createElement('div');
+  _popup.id = 'vp-popup';
+  _popup.setAttribute('role', 'menu');
+  document.body.appendChild(_popup);
+  _popup.addEventListener('mouseenter', _cancelHide);
+  _popup.addEventListener('mouseleave', _scheduleHide);
+  return _popup;
+}
+
+function _cancelHide() { clearTimeout(_hideTimer); }
+
+function _scheduleHide() {
+  clearTimeout(_hideTimer);
+  _hideTimer = setTimeout(() => {
+    if (_popup) _popup.classList.remove('vp-show');
+  }, 220);
+}
+
+/* 显示弹窗 */
+function _showPopup(anchorEl, urls) {
+  const p = _getPopup();
+  _cancelHide();
+
+  /* 构建内容 */
+  const labels = ['视角 1','视角 2','视角 3','视角 4'];
+  let html = `
+    <div class="vp-head">
+      <span class="vp-head-icon">
+        <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+          <polygon points="1.5,1 8,4.5 1.5,8" fill="rgba(0,212,255,.9)"/>
+        </svg>
+      </span>
+      视频录像&nbsp;·&nbsp;${urls.length}&nbsp;个视角
+    </div>`;
+
+  urls.forEach((url, i) => {
+    const domain = getDomain(url);
+    const label  = labels[i] || `视角 ${i+1}`;
+    html += `
+    <a class="vp-row" href="${url}" target="_blank" rel="noopener" role="menuitem">
+      <span class="vp-num">${i+1}</span>
+      <span class="vp-label">
+        ${label}
+        <span class="vp-domain">${domain}</span>
+      </span>
+      <span class="vp-arrow">→</span>
+    </a>`;
+  });
+  p.innerHTML = html;
+
+  /* 定位：紧贴行的下方或上方 */
+  p.classList.remove('vp-show'); // 先隐藏，避免测量到旧尺寸
+  p.style.visibility = 'hidden';
+  p.style.opacity = '0';
+
+  // 临时让它可测量
+  p.style.display = 'block';
+  const rect  = anchorEl.getBoundingClientRect();
+  const vpW   = window.innerWidth;
+  const vpH   = window.innerHeight;
+  const popW  = p.offsetWidth  || 260;
+  const popH  = p.offsetHeight || 180;
+
+  let left = rect.left + 12;
+  if (left + popW > vpW - 10) left = vpW - popW - 10;
+  if (left < 8) left = 8;
+
+  const below = vpH - rect.bottom;
+  let top;
+  if (below >= popH + 10) {
+    top = rect.bottom + 6;
+  } else {
+    top = rect.top - popH - 6;
+  }
+  if (top < 4) top = 4;
+
+  p.style.left    = left + 'px';
+  p.style.top     = top  + 'px';
+  p.style.display = '';
+  p.style.visibility = '';
+  p.style.opacity = '';
+
+  /* 触发过渡 */
+  requestAnimationFrame(() => requestAnimationFrame(() => p.classList.add('vp-show')));
+}
+
+/* ══════════════════════════════════════════════════════════
+   6. 榜单行绑定（所有有视频的行）
+   ══════════════════════════════════════════════════════════ */
+function _bindRow(tr, urls) {
+  if (!urls || !urls.length) return;
+  tr.setAttribute('data-has-video', '1');
+
+  // 悬停：200ms 延迟显示（防止划过误触）
+  let enterTimer = null;
+  tr.addEventListener('mouseenter', () => {
+    enterTimer = setTimeout(() => _showPopup(tr, urls), 80);
+  });
+  tr.addEventListener('mouseleave', () => {
+    clearTimeout(enterTimer);
+    _scheduleHide();
+  });
+
+  // 点击：如果只有1个视角直接跳转；多视角点击也显示菜单
+  tr.addEventListener('click', (e) => {
+    if (e.target.closest('#vp-popup')) return; // 点击弹窗内部不处理
+    if (urls.length === 1) {
+      window.open(urls[0], '_blank', 'noopener');
+    } else {
+      _showPopup(tr, urls);
+    }
+  });
+}
+
+/* ESC 关闭 */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') _scheduleHide();
+});
+
+/* ══════════════════════════════════════════════════════════
+   7. 榜单渲染：结算时间类
+   ══════════════════════════════════════════════════════════ */
 function renderTimeLeaderboard(records, tbodyId, timeField) {
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
 
-  // 按时间升序排序
-  const sorted = [...records].sort(
-    (a, b) => parseTimeMs(a[timeField]) - parseTimeMs(b[timeField])
-  );
+  const sorted = [...records].sort((a,b) => parseTimeMs(a[timeField]) - parseTimeMs(b[timeField]));
 
   if (!sorted.length) {
-    tbody.innerHTML =
-      `<tr><td class="lb-empty" colspan="4">暂无记录，快来提交第一个成绩！</td></tr>`;
+    tbody.innerHTML = `<tr><td class="lb-empty" colspan="4">暂无记录，快来提交第一个成绩！</td></tr>`;
     return;
   }
 
   tbody.innerHTML = '';
   sorted.forEach((rec, idx) => {
     const rank = idx + 1;
+    const urls = getVideoUrls(rec);
     const tr   = document.createElement('tr');
     if (rank <= 3) tr.classList.add(`rank-${rank}`);
-    if (rec.videoUrl) {
-      tr.addEventListener('click', () =>
-        window.open(rec.videoUrl, '_blank', 'noopener'));
-    }
 
-    const videoHint = rec.videoUrl
-      ? `<span class="video-indicator">
-           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-             <polygon points="2,1 9,5 2,9" fill="currentColor"/>
-           </svg>录像
-         </span>`
-      : '';
-
+    /* 无"录像"字，改为仅凭 cursor:pointer 暗示可点 */
     tr.innerHTML = `
-      <td class="rank-col">
-        <span class="rank-badge">#${rank}</span>
-      </td>
+      <td class="rank-col"><span class="rank-badge">#${rank}</span></td>
       <td class="time-col">${rec[timeField] || '—'}</td>
-      <td class="player-col">${rec.playerId || '—'} ${videoHint}</td>
+      <td class="player-col">${rec.playerId || '—'}</td>
       <td>${rec.uploadTime || '—'}</td>`;
+
+    _bindRow(tr, urls);
     tbody.appendChild(tr);
   });
 
-  // 更新表格底部统计
   const stats = document.getElementById('lb-stats');
   if (stats) stats.textContent = `共 ${sorted.length} 条记录`;
 }
 
-/**
- * 捕获情况档位权重（数值越小越强，排名越靠前）
- * 顺序：7×3 > 6×3+2 > 6×3+1 > 6×3
- */
-var CAPTURE_RANK = {
-  '7×3':   1,
-  '6×3+2': 2,
-  '6×3+1': 3,
-  '6×3':   4
-};
-function captureWeight(status) {
-  return CAPTURE_RANK[status] !== undefined ? CAPTURE_RANK[status] : 99;
-}
+/* ══════════════════════════════════════════════════════════
+   8. 榜单渲染：夜灵类
+   ══════════════════════════════════════════════════════════ */
+const CAPTURE_RANK = { '7×3':1,'6×3+2':2,'6×3+1':3,'6×3':4 };
+function captureWeight(s) { return CAPTURE_RANK[s] !== undefined ? CAPTURE_RANK[s] : 99; }
 
-/**
- * 渲染「夜灵」类榜单（含捕获情况列）
- * 排序规则：
- *   1. 捕获情况越强越靠前（7×3 > 6×3+2 > 6×3+1 > 6×3）
- *   2. 捕获情况相同时，avgRealTime 越短越靠前
- * @param {Array}  records - 数据文件中的记录数组
- * @param {string} tbodyId - 目标 <tbody> 的 id
- */
 function renderEidolonLeaderboard(records, tbodyId) {
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
 
-  const sorted = [...records].sort((a, b) => {
-    // 第一优先级：捕获情况（权重小的排前面）
-    var cw = captureWeight(a.captureStatus) - captureWeight(b.captureStatus);
-    if (cw !== 0) return cw;
-    // 第二优先级：平均真实时间（越短越前）
-    return parseTimeMs(a.avgRealTime) - parseTimeMs(b.avgRealTime);
+  const sorted = [...records].sort((a,b) => {
+    const cw = captureWeight(a.captureStatus) - captureWeight(b.captureStatus);
+    return cw !== 0 ? cw : parseTimeMs(a.avgRealTime) - parseTimeMs(b.avgRealTime);
   });
 
   if (!sorted.length) {
-    tbody.innerHTML =
-      `<tr><td class="lb-empty" colspan="5">暂无记录，快来提交第一个成绩！</td></tr>`;
+    tbody.innerHTML = `<tr><td class="lb-empty" colspan="5">暂无记录，快来提交第一个成绩！</td></tr>`;
     return;
   }
 
   tbody.innerHTML = '';
   sorted.forEach((rec, idx) => {
     const rank = idx + 1;
+    const urls = getVideoUrls(rec);
     const tr   = document.createElement('tr');
     if (rank <= 3) tr.classList.add(`rank-${rank}`);
-    if (rec.videoUrl) {
-      tr.addEventListener('click', () =>
-        window.open(rec.videoUrl, '_blank', 'noopener'));
-    }
-
-    const videoHint = rec.videoUrl
-      ? `<span class="video-indicator">
-           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-             <polygon points="2,1 9,5 2,9" fill="currentColor"/>
-           </svg>录像
-         </span>`
-      : '';
 
     tr.innerHTML = `
-      <td class="rank-col">
-        <span class="rank-badge">#${rank}</span>
-      </td>
+      <td class="rank-col"><span class="rank-badge">#${rank}</span></td>
       <td class="time-col">${rec.avgRealTime || '—'}</td>
       <td>${rec.captureStatus || '—'}</td>
-      <td class="player-col">${rec.playerId || '—'} ${videoHint}</td>
+      <td class="player-col">${rec.playerId || '—'}</td>
       <td>${rec.uploadTime || '—'}</td>`;
+
+    _bindRow(tr, urls);
     tbody.appendChild(tr);
   });
 
@@ -353,53 +507,29 @@ function renderEidolonLeaderboard(records, tbodyId) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   页面加载时初始化
+   页面加载
    ══════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  // 启动星空 Canvas（所有页面共用同一个 canvas#star-canvas）
   new StarField('star-canvas');
-  // 导航栏交互
   initNav();
-  // 滚动动画
   initReveal();
-  // Logo 两行等宽对齐（字体加载完成后测量，避免 fallback 字体误差）
   alignLogoText();
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(alignLogoText);
-  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(alignLogoText);
   window.addEventListener('resize', alignLogoText);
 });
 
 /* ══════════════════════════════════════════════════════════
-   5. Logo 第二行动态等宽：让 WFSPEED.RUN 与 Warframe Speed 等宽
-      关键：用 Range API 测量真实文字宽度，而非 flex 拉伸后的元素宽度
+   Logo 等宽对齐
    ══════════════════════════════════════════════════════════ */
 function alignLogoText() {
-  var title  = document.querySelector('.logo-title');
-  var domain = document.querySelector('.logo-domain');
+  const title  = document.querySelector('.logo-title');
+  const domain = document.querySelector('.logo-domain');
   if (!title || !domain) return;
-
-  /* 先置零，消除上次计算的 letter-spacing */
   domain.style.letterSpacing = '0px';
-
-  /* 用 Range 测量实际渲染文字宽度（而非 flex 拉伸的元素宽） */
-  function textWidth(el) {
-    var range = document.createRange();
-    range.selectNodeContents(el);
-    return range.getBoundingClientRect().width;
-  }
-
-  var titleW  = textWidth(title);
-  var domainW = textWidth(domain);
-
-  if (titleW <= domainW || titleW < 1) {
-    domain.style.letterSpacing = '';
-    return;
-  }
-
-  /* 将差值均分到每个字符后的间距 */
-  var charCount = domain.textContent.trim().length;
-  if (charCount < 1) return;
-  var extra = (titleW - domainW) / charCount;
-  domain.style.letterSpacing = extra.toFixed(3) + 'px';
+  const tw = el => { const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width; };
+  const titleW = tw(title), domainW = tw(domain);
+  if (titleW <= domainW || titleW < 1) { domain.style.letterSpacing = ''; return; }
+  const chars = domain.textContent.trim().length;
+  if (chars < 1) return;
+  domain.style.letterSpacing = ((titleW - domainW) / chars).toFixed(3) + 'px';
 }

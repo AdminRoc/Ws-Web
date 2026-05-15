@@ -131,7 +131,8 @@
   width: 100%;
   height: auto;
   max-height: none;      /* 不限制行数，随内容自动增高 */
-  overflow: hidden;      /* 仅用于 border-radius 圆角裁切，不会裁切行数 */
+  overflow: hidden;      /* 圆角裁切 */
+  /* 桌面端不滚动；手机端见 @media 块 */
   border-radius: var(--r-lg);
   /* 玻璃拟态外容器 */
   background: rgba(6,12,26,.78);
@@ -384,4 +385,47 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   .lb-table td,
   .lb-table th { padding: .75rem .85rem; font-size: .8rem; }
   .lb-title { font-size: 1.4rem; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   ★ 手机端表格适配（无横向滚动条）
+   ══════════════════════════════════════════════════════════ */
+@media screen and (max-width: 768px) {
+  .lb-main { padding: 2rem .85rem 1.5rem; }
+
+  /* 关键：表格包装层允许横滑但隐藏滚动条 */
+  .lb-table-wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* 隐藏滚动条（所有浏览器） */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .lb-table-wrap::-webkit-scrollbar { display: none; }
+
+  .lb-table { min-width: 480px; }
+
+  .lb-title { font-size: clamp(1.1rem, 5.5vw, 1.7rem); }
+  .lb-subtitle { font-size: .6rem; letter-spacing: .1em; }
+  .lb-back { margin-bottom: 1.5rem; padding: .38rem .75rem; font-size: .6rem; }
+
+  .lb-tab-btn { padding: .36rem .85rem; font-size: .64rem; letter-spacing: .08em; }
+  .lb-tabs { gap: .4rem; }
+
+  /* 地图Tab（disruption用） */
+  .map-tabs { gap: .4rem; }
+  .map-tab-btn { padding: .36rem .85rem; font-size: .64rem; letter-spacing: .08em; }
+}
+
+@media screen and (max-width: 480px) {
+  .lb-main { padding: 1.5rem .6rem 1rem; }
+  .lb-table { min-width: 400px; }
+  .lb-table thead th { padding: .65rem .75rem; font-size: .6rem; }
+  .lb-table td { padding: .65rem .75rem; font-size: .78rem; }
+  .lb-title { font-size: clamp(1rem, 6vw, 1.4rem); }
+  .rank-badge { width: 30px; height: 30px; font-size: .62rem; }
+
+  /* 极窄屏隐藏上传时间列（最次要信息） */
+  .lb-table thead th:last-child,
+  .lb-table td:last-child { display: none; }
 }

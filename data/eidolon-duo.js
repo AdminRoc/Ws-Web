@@ -10,7 +10,7 @@
  *  │    captureStatus —— 捕获情况，如 "3T" / "2T1K" 等   │
  *  │    playerId      —— 玩家 ID，双人用 / 分隔            │
  *  │    uploadTime    —— 上传日期，格式 "YYYY-MM-DD"      │
- *  │    videoUrl      —— 成绩视频链接；留空则该行不跳转    │
+ *  │    videoUrls     —— 视频链接数组；最多4个视角 ["url1","url2",...]    │
  *  │                                                     │
  *  │  排名规则：脚本按 avgRealTime 从小到大自动排序        │
  *  │  新增条目：在数组末尾添加对象                         │
@@ -25,42 +25,42 @@ const eidolonDuoRecords = [
     captureStatus: "6×3",
     playerId:      "aimuduwi / Loongx.",
     uploadTime:    "2025-07-10",
-    videoUrl:      "https://youtu.be/2ycWErzBljQ?si=8Vaz6dkRUF-t_dvX"
+    videoUrls:     ["https://youtu.be/2ycWErzBljQ?si=8Vaz6dkRUF-t_dvX"]
   },
   {
     avgRealTime:   "07:47.269",
     captureStatus: "6×3",
     playerId:      "-T14Nt / Loongx.",
     uploadTime:    "2025-05-02",
-    videoUrl:      "https://youtu.be/xfojq9bYxiE"
+    videoUrls:     ["https://youtu.be/xfojq9bYxiE"]
   },
   {
     avgRealTime:   "07:48.766",
     captureStatus: "6×3 - novaless%",
     playerId:      "Fenomeral / vMooose.",
     uploadTime:    "2026-02-06",
-    videoUrl:      "https://youtu.be/fvztvEBneh4"
+    videoUrls:     ["https://youtu.be/fvztvEBneh4"]
   },
   {
     avgRealTime:   "07:48.911",
     captureStatus: "6×3",
     playerId:      "Fenomeral / vMooose.",
     uploadTime:    "2026-02-13",
-    videoUrl:      "https://www.youtube.com/watch?v=G3kIfkXds2Q"
+    videoUrls:     ["https://www.youtube.com/watch?v=G3kIfkXds2Q"]
   },
   {
     avgRealTime:   "07:50.984",
     captureStatus: "6×3 - novaless%",
     playerId:      "aimuduwi / Loongx.",
     uploadTime:    "2025-06-03",
-    videoUrl:      "https://youtu.be/TGYUL6jfb9E?si=ahuvCrLNGkWOZ7HT"
+    videoUrls:     ["https://youtu.be/TGYUL6jfb9E?si=ahuvCrLNGkWOZ7HT"]
   },
   {
     avgRealTime:   "07:56.177",
     captureStatus: "6×3 - novaless%",
     playerId:      "itzNicc / ForsakenIdol",
     uploadTime:    "2025-05-21",
-    videoUrl:      "https://youtu.be/0PxKjTw6bvY"
+    videoUrls:     ["https://youtu.be/0PxKjTw6bvY"]
   },
   // ─── 在此处继续添加新条目 ───
   // {
@@ -68,6 +68,6 @@ const eidolonDuoRecords = [
   //   captureStatus: "3T",
   //   playerId:      "玩家A / 玩家B",
   //   uploadTime:    "YYYY-MM-DD",
-  //   videoUrl:      "https://..."
+  //   videoUrls:     ["https://..."]
   // },
 ];

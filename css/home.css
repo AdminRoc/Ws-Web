@@ -474,6 +474,37 @@
 /* ══════════════════════════════════════════════════════════
    首页移动端适配
    ══════════════════════════════════════════════════════════ */
+/* ── 更多排行榜提示 ── */
+.more-boards-hint {
+  text-align: center;
+  margin-top: 2rem;
+  padding: .5rem 1rem;
+}
+.more-boards-text {
+  display: inline-block;
+  font-family: var(--f-sci);
+  font-size: clamp(.72rem, 1.6vw, .95rem);
+  font-weight: 700;
+  letter-spacing: .16em;
+  background: linear-gradient(90deg,
+    rgba(0,212,255,.75) 0%,
+    rgba(139,92,246,.95) 35%,
+    rgba(0,255,204,.85) 65%,
+    rgba(0,212,255,.75) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: moreShimmer 3.5s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(0,212,255,.3));
+  text-transform: uppercase;
+  position: relative;
+}
+@keyframes moreShimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
 @media (max-width: 600px) {
   .hero-buttons { gap: .9rem; }
   .hero-btn {
@@ -482,4 +513,27 @@
   }
   .principle-cards { gap: 1rem; }
   .lb-entry-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   ★ 手机端首页适配（独立块，不覆盖桌面）
+   ══════════════════════════════════════════════════════════ */
+@media screen and (max-width: 768px) {
+  .scroll-section { padding: 5rem 1.2rem 3rem; }
+  .scroll-s1-heading { font-size: clamp(1.4rem, 6vw, 2.2rem); }
+  .scroll-s2-heading { font-size: clamp(1.2rem, 5vw, 2rem); }
+  .scroll-s1-sub { font-size: clamp(.85rem, 3.5vw, 1.1rem); }
+  .scroll-s2-sub { font-size: clamp(.82rem, 3.2vw, 1rem); }
+  .lb-entry-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .lb-entry-card { padding: 1.5rem 1.2rem; }
+  .more-boards-text { font-size: .68rem; letter-spacing: .1em; }
+}
+
+@media screen and (max-width: 480px) {
+  .hero-warframe { font-size: clamp(2.8rem, 14vw, 5rem); }
+  .hero-speed { font-size: clamp(3.5rem, 18vw, 7rem); }
+  .hero-buttons { flex-direction: column; align-items: center; gap: .8rem; }
+  .hero-btn { width: 80vw; max-width: 240px; justify-content: center; padding: .85rem 1rem; }
+  .principle-cards { gap: .85rem; }
+  .principle-card { padding: 1.5rem 1rem; }
 }
