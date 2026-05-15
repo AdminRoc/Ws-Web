@@ -10,7 +10,7 @@
  *  │    captureStatus —— 捕获情况，如 "3T" / "2T1K" 等   │
  *  │    playerId      —— 玩家 ID，三人用 / 分隔            │
  *  │    uploadTime    —— 上传日期，格式 "YYYY-MM-DD"      │
- *  │    videoUrl      —— 成绩视频链接；留空则该行不跳转    │
+ *  │    videoUrls     —— 视频链接数组；最多4个视角 ["url1","url2",...]    │
  *  │                                                     │
  *  │  排名规则：脚本按 avgRealTime 从小到大自动排序        │
  *  │  新增条目：在数组末尾添加对象                         │
@@ -25,6 +25,6 @@ const eidolonTrioRecords = [
   //   captureStatus: "3T",
   //   playerId:      "玩家A / 玩家B / 玩家C",
   //   uploadTime:    "YYYY-MM-DD",
-  //   videoUrl:      "https://..."
+  //   videoUrls:     ["https://..."]
   // },
 ];
