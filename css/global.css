@@ -910,21 +910,21 @@ img { display: block; max-width: 100%; }
 /* shame-text-wrap 包裹文字部分（不含图标），用于切换 */
 .shame-btn .shame-text-wrap {
   position: relative;
-  display: inline-flex;
-  align-items: center;
+  display: inline-grid;   /* grid让cn和en占同一个格子，高度由cn撑开 */
+  place-items: center;
 }
 .shame-btn .shame-cn {
+  grid-area: 1/1;         /* cn占第1格，撑开容器高度 */
   display: block;
   transition: opacity .25s ease, transform .25s cubic-bezier(.22,.68,0,1.2);
 }
 .shame-btn .shame-en {
-  position: absolute;
-  left: 0; right: 0;
-  top: 50%; transform: translateY(calc(-50% + 6px));
+  grid-area: 1/1;         /* en也占第1格，完全叠放在cn上方 */
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
+  transform: translateY(6px);   /* 初始：在正确位置基础上向下偏6px */
   transition: opacity .25s ease, transform .25s cubic-bezier(.22,.68,0,1.2);
   font-size: .72rem;
   letter-spacing: .14em;
@@ -937,7 +937,7 @@ img { display: block; max-width: 100%; }
 }
 .shame-btn:hover .shame-en {
   opacity: 1;
-  transform: translateY(-50%);
+  transform: translateY(0);     /* hover：回到正确位置，不偏移 */
 }
 
 
