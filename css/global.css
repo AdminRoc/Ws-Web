@@ -862,6 +862,7 @@ img { display: block; max-width: 100%; }
   background: rgba(255,215,0,.05);
   cursor: pointer;
   text-decoration: none;
+  /* 关键：必须有 position:relative 才能让 shame-en 的 absolute 正确定位 */
   position: relative;
   overflow: hidden;
   transition: color .45s cubic-bezier(.22,.68,0,1.2), border-color .45s ease,
@@ -905,6 +906,41 @@ img { display: block; max-width: 100%; }
       0 0 80px rgba(255,215,0,.3), 0 0 130px rgba(255,215,0,.12);
   }
 }
+/* ── 作弊公示 <-> Ban List 文字切换 ── */
+/* shame-text-wrap 包裹文字部分（不含图标），用于切换 */
+.shame-btn .shame-text-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.shame-btn .shame-cn {
+  display: block;
+  transition: opacity .25s ease, transform .25s cubic-bezier(.22,.68,0,1.2);
+}
+.shame-btn .shame-en {
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%; transform: translateY(calc(-50% + 6px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .25s ease, transform .25s cubic-bezier(.22,.68,0,1.2);
+  font-size: .72rem;
+  letter-spacing: .14em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.shame-btn:hover .shame-cn {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+.shame-btn:hover .shame-en {
+  opacity: 1;
+  transform: translateY(-50%);
+}
+
+
 .shame-icon {
   display: inline-flex;
   align-items: center;
@@ -999,154 +1035,285 @@ img { display: block; max-width: 100%; }
 }
 
 /* ══════════════════════════════════════════════════════════
-   超级导航面板 — 酷炫展开/收起动效
+   超级导航面板 — 震撼展开/收起动效（完整版）
    ══════════════════════════════════════════════════════════ */
+
+/* ── 面板容器 ── */
+/* ══════════════════════════════════════════════════════════
+   超级导航面板 — 真正震撼的动效
+   核心原理：面板始终 display:block，靠 transform+opacity 控制
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 面板容器：默认折叠在导航栏背后 ── */
+/* ══════════════════════════════════════════════════════════
+   超级导航面板
+   ══════════════════════════════════════════════════════════ */
+
 .super-nav-panel {
+  display: block;
   position: fixed;
-  top: 70px;
-  left: 0; right: 0;
+  top: 70px; left: 0; right: 0;
   z-index: 700;
   overflow: hidden;
-  max-height: 0;
-  background: rgba(3, 6, 18, 0.98);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  /* 边框光效：关闭时无 */
+  opacity: 0;
+  transform: translateY(-18px) scaleY(0.65);
+  transform-origin: top center;
+  pointer-events: none;
+  /* 背景：深宇宙蓝，带微妙星云色调 */
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%,
+      rgba(0,212,255,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 110%,
+      rgba(139,92,246,.1) 0%, transparent 55%),
+    linear-gradient(180deg,
+      rgba(2,8,28,.98) 0%,
+      rgba(3,10,30,.97) 60%,
+      rgba(1,6,22,.98) 100%);
+  backdrop-filter: blur(40px) saturate(1.6);
+  -webkit-backdrop-filter: blur(40px) saturate(1.6);
   border-bottom: 1px solid rgba(0,212,255,0);
   box-shadow: none;
   transition:
-    max-height .58s cubic-bezier(.77,0,.175,1),
-    border-color .45s ease,
-    box-shadow .45s ease;
+    opacity   .35s cubic-bezier(.4,0,.2,1),
+    transform .40s cubic-bezier(.34,1.25,.64,1),
+    border-color .3s ease .12s,
+    box-shadow   .3s ease .12s;
 }
 .super-nav-panel.open {
-  max-height: 420px;
-  border-bottom: 1px solid rgba(0,212,255,.22);
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+  pointer-events: auto;
+  border-bottom: 1px solid rgba(0,212,255,.35);
   box-shadow:
-    0 16px 70px rgba(0,0,0,.9),
-    0 0 60px rgba(0,212,255,.12),
-    inset 0 1px 0 rgba(0,212,255,.18);
+    0 30px 100px rgba(0,0,0,.97),
+    0 0 120px rgba(0,212,255,.18),
+    0 0 240px rgba(139,92,246,.1),
+    inset 0 1px 0 rgba(0,212,255,.3);
 }
-/* 面板内部扫描线装饰 */
+
+/* ── 顶部激光扫描线 ── */
 .super-nav-panel::before {
   content: '';
   position: absolute;
-  top: 0; left: -100%;
-  width: 60%;
-  height: 1px;
+  top: 0; left: -120%; width: 75%; height: 2px;
   background: linear-gradient(90deg,
     transparent 0%,
-    rgba(0,212,255,.8) 50%,
+    rgba(0,212,255,0) 6%,
+    rgba(0,212,255,.9) 40%,
+    rgba(255,255,255,1) 50%,
+    rgba(0,212,255,.9) 60%,
+    rgba(0,212,255,0) 94%,
     transparent 100%);
-  transition: left .9s cubic-bezier(.22,.68,0,1.2);
+  filter: blur(.3px);
+  box-shadow:
+    0 0 22px rgba(0,212,255,1),
+    0 0 55px rgba(0,212,255,.65),
+    0 0 100px rgba(0,212,255,.35);
+  transition: left 1.05s cubic-bezier(.22,.68,0,1.2) .04s;
+  pointer-events: none; z-index: 20;
+}
+.super-nav-panel.open::before { left: 145%; }
+
+/* ── 底部紫色辉光 ── */
+.super-nav-panel::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 8%; right: 8%; height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(139,92,246,.85) 22%,
+    rgba(0,212,255,.6) 50%,
+    rgba(139,92,246,.85) 78%,
+    transparent);
+  box-shadow: 0 0 22px rgba(139,92,246,.55), 0 0 50px rgba(139,92,246,.25);
+  opacity: 0;
+  transition: opacity .45s ease .28s;
   pointer-events: none;
 }
-.super-nav-panel.open::before { left: 120%; }
+.super-nav-panel.open::after { opacity: 1; }
 
-/* 三排网格 */
+/* ── 网格容器 ── */
 .super-nav-grid {
-  padding: 1.4rem 2.5rem 1.6rem;
-  max-width: 1200px;
+  padding: 1.5rem 3rem 1.7rem;
+  max-width: 1320px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: .6rem;
+  transform: translateY(-10px);
+  opacity: 0;
+  transition:
+    transform .4s cubic-bezier(.34,1.2,.64,1) .06s,
+    opacity   .3s ease .06s;
 }
+.super-nav-panel.open .super-nav-grid {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 .super-nav-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: .7rem;
-  padding: .5rem 0;
-  border-bottom: 1px solid rgba(0,212,255,.06);
+  grid-template-columns: repeat(5,1fr);
+  gap: .9rem;
+  padding: .45rem 0;
+  position: relative;
 }
-.super-nav-row:last-child { border-bottom: none; }
 
-/* ── 超级面板按钮 ── */
+/* 行间分隔线展开动画 */
+.super-nav-row::after {
+  content: '';
+  position: absolute;
+  bottom: -.3rem; left: 50%; right: 50%; height: 1px;
+  background: linear-gradient(90deg,
+    rgba(0,212,255,.22), rgba(139,92,246,.18), transparent);
+  transition: left .6s cubic-bezier(.22,.68,0,1.2),
+              right .6s cubic-bezier(.22,.68,0,1.2);
+}
+.super-nav-row:last-child::after { display: none; }
+.super-nav-panel.open .super-nav-row:nth-child(1)::after { left:0; right:0; transition-delay:.34s; }
+.super-nav-panel.open .super-nav-row:nth-child(2)::after { left:0; right:0; transition-delay:.46s; }
+
+/* ══════════════════════════════════════════════════════════
+   snav-btn — 视觉设计核心
+   ══════════════════════════════════════════════════════════ */
 .snav-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: .9rem .6rem;
-  border-radius: var(--r-md);
+  gap: .2rem;
+  padding: 1.1rem .8rem;
+  border-radius: 12px;
   font-family: var(--f-sci);
-  font-size: .7rem;
-  font-weight: 600;
-  letter-spacing: .08em;
-  color: var(--c-text2);
+  font-size: .78rem;          /* 稍大，清晰可读 */
+  font-weight: 700;
+  letter-spacing: .09em;
+  /* 文字：明亮的蓝白色，不再暗淡 */
+  color: rgba(200,228,255,.88);
   text-decoration: none;
   cursor: pointer;
-  border: 1px solid rgba(0,212,255,.1);
-  background: rgba(0,212,255,.025);
+  /* 边框：清晰可见的青色线 */
+  border: 1px solid rgba(0,212,255,.28);
+  /* 背景：有层次感的深蓝渐变 */
+  background:
+    linear-gradient(145deg,
+      rgba(0,212,255,.1)  0%,
+      rgba(0,160,200,.06) 40%,
+      rgba(0,0,40,.4)     100%);
+  box-shadow:
+    inset 0 1px 0 rgba(0,212,255,.15),
+    inset 0 -1px 0 rgba(0,0,0,.3),
+    0 2px 12px rgba(0,0,0,.4);
   position: relative;
   overflow: hidden;
   text-align: center;
-  /* 入场动画初始状态 */
+  /* 初始入场状态：3D折起 */
   opacity: 0;
-  transform: translateY(-18px) scale(.94);
+  transform: perspective(700px) translateY(-28px) rotateX(18deg) scale(.92);
+  transform-origin: top center;
   transition:
-    opacity .38s cubic-bezier(.22,.68,0,1.2),
-    transform .38s cubic-bezier(.22,.68,0,1.2),
-    background .2s ease,
-    border-color .2s ease,
-    color .2s ease,
-    box-shadow .2s ease;
+    opacity      .34s cubic-bezier(.34,1.3,.64,1),
+    transform    .34s cubic-bezier(.34,1.3,.64,1),
+    background   .22s ease,
+    border-color .22s ease,
+    color        .22s ease,
+    box-shadow   .22s ease;
 }
 
-/* 展开：逐排 + 逐按钮级联入场 */
-.super-nav-panel.open .super-nav-row:nth-child(1) .snav-btn:nth-child(1) { opacity:1; transform:none; transition-delay:.08s; }
-.super-nav-panel.open .super-nav-row:nth-child(1) .snav-btn:nth-child(2) { opacity:1; transform:none; transition-delay:.13s; }
-.super-nav-panel.open .super-nav-row:nth-child(1) .snav-btn:nth-child(3) { opacity:1; transform:none; transition-delay:.18s; }
-.super-nav-panel.open .super-nav-row:nth-child(1) .snav-btn:nth-child(4) { opacity:1; transform:none; transition-delay:.23s; }
-.super-nav-panel.open .super-nav-row:nth-child(1) .snav-btn:nth-child(5) { opacity:1; transform:none; transition-delay:.28s; }
-
-.super-nav-panel.open .super-nav-row:nth-child(2) .snav-btn:nth-child(1) { opacity:1; transform:none; transition-delay:.20s; }
-.super-nav-panel.open .super-nav-row:nth-child(2) .snav-btn:nth-child(2) { opacity:1; transform:none; transition-delay:.25s; }
-.super-nav-panel.open .super-nav-row:nth-child(2) .snav-btn:nth-child(3) { opacity:1; transform:none; transition-delay:.30s; }
-.super-nav-panel.open .super-nav-row:nth-child(2) .snav-btn:nth-child(4) { opacity:1; transform:none; transition-delay:.35s; }
-.super-nav-panel.open .super-nav-row:nth-child(2) .snav-btn:nth-child(5) { opacity:1; transform:none; transition-delay:.40s; }
-
-.super-nav-panel.open .super-nav-row:nth-child(3) .snav-btn:nth-child(1) { opacity:1; transform:none; transition-delay:.32s; }
-.super-nav-panel.open .super-nav-row:nth-child(3) .snav-btn:nth-child(2) { opacity:1; transform:none; transition-delay:.37s; }
-.super-nav-panel.open .super-nav-row:nth-child(3) .snav-btn:nth-child(3) { opacity:1; transform:none; transition-delay:.42s; }
-.super-nav-panel.open .super-nav-row:nth-child(3) .snav-btn:nth-child(4) { opacity:1; transform:none; transition-delay:.47s; }
-.super-nav-panel.open .super-nav-row:nth-child(3) .snav-btn:nth-child(5) { opacity:1; transform:none; transition-delay:.52s; }
-
-/* 收起：逆序倒放，第3排先消失 */
-.super-nav-panel:not(.open) .snav-btn {
-  opacity: 0;
-  transform: translateY(-18px) scale(.94);
+/* 按钮内顶部高光线 */
+.snav-btn .snav-topline {
+  position: absolute;
+  top: 0; left: 15%; right: 15%; height: 1px;
+  background: linear-gradient(90deg,
+    transparent, rgba(0,212,255,.55), transparent);
+  border-radius: 1px;
+  transition: opacity .22s ease;
 }
-.super-nav-panel:not(.open) .super-nav-row:nth-child(3) .snav-btn { transition-delay:.00s; }
-.super-nav-panel:not(.open) .super-nav-row:nth-child(2) .snav-btn { transition-delay:.06s; }
-.super-nav-panel:not(.open) .super-nav-row:nth-child(1) .snav-btn { transition-delay:.12s; }
 
-/* 扫光悬停效果 */
+/* ── 展开：对角瀑布弹入 ── */
+.super-nav-panel.open .super-nav-row:nth-child(1) .snav-btn:nth-child(1){opacity:1;transform:none;transition-delay:.09s}
+.super-nav-panel.open .super-nav-row:nth-child(1) .snav-btn:nth-child(2){opacity:1;transform:none;transition-delay:.15s}
+.super-nav-panel.open .super-nav-row:nth-child(1) .snav-btn:nth-child(3){opacity:1;transform:none;transition-delay:.21s}
+.super-nav-panel.open .super-nav-row:nth-child(1) .snav-btn:nth-child(4){opacity:1;transform:none;transition-delay:.27s}
+.super-nav-panel.open .super-nav-row:nth-child(1) .snav-btn:nth-child(5){opacity:1;transform:none;transition-delay:.33s}
+.super-nav-panel.open .super-nav-row:nth-child(2) .snav-btn:nth-child(1){opacity:1;transform:none;transition-delay:.21s}
+.super-nav-panel.open .super-nav-row:nth-child(2) .snav-btn:nth-child(2){opacity:1;transform:none;transition-delay:.27s}
+.super-nav-panel.open .super-nav-row:nth-child(2) .snav-btn:nth-child(3){opacity:1;transform:none;transition-delay:.33s}
+.super-nav-panel.open .super-nav-row:nth-child(2) .snav-btn:nth-child(4){opacity:1;transform:none;transition-delay:.39s}
+.super-nav-panel.open .super-nav-row:nth-child(2) .snav-btn:nth-child(5){opacity:1;transform:none;transition-delay:.45s}
+.super-nav-panel.open .super-nav-row:nth-child(3) .snav-btn:nth-child(1){opacity:1;transform:none;transition-delay:.33s}
+.super-nav-panel.open .super-nav-row:nth-child(3) .snav-btn:nth-child(2){opacity:1;transform:none;transition-delay:.39s}
+.super-nav-panel.open .super-nav-row:nth-child(3) .snav-btn:nth-child(3){opacity:1;transform:none;transition-delay:.45s}
+.super-nav-panel.open .super-nav-row:nth-child(3) .snav-btn:nth-child(4){opacity:1;transform:none;transition-delay:.51s}
+.super-nav-panel.open .super-nav-row:nth-child(3) .snav-btn:nth-child(5){opacity:1;transform:none;transition-delay:.57s}
+
+/* ── 收起：逆序右下→左上 ── */
+.super-nav-panel:not(.open) .snav-btn{opacity:0;transform:perspective(700px) translateY(-28px) rotateX(18deg) scale(.92)}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(3) .snav-btn:nth-child(5){transition-delay:.00s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(3) .snav-btn:nth-child(4){transition-delay:.03s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(3) .snav-btn:nth-child(3){transition-delay:.06s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(3) .snav-btn:nth-child(2){transition-delay:.09s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(3) .snav-btn:nth-child(1){transition-delay:.12s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(2) .snav-btn:nth-child(5){transition-delay:.06s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(2) .snav-btn:nth-child(4){transition-delay:.09s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(2) .snav-btn:nth-child(3){transition-delay:.12s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(2) .snav-btn:nth-child(2){transition-delay:.15s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(2) .snav-btn:nth-child(1){transition-delay:.18s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(1) .snav-btn:nth-child(5){transition-delay:.12s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(1) .snav-btn:nth-child(4){transition-delay:.15s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(1) .snav-btn:nth-child(3){transition-delay:.18s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(1) .snav-btn:nth-child(2){transition-delay:.21s}
+.super-nav-panel:not(.open) .super-nav-row:nth-child(1) .snav-btn:nth-child(1){transition-delay:.24s}
+
+/* ── 扫光 ── */
 .snav-btn::before {
   content: '';
   position: absolute;
-  inset: -20%;
-  width: 38%;
+  inset: -20%; width: 40%; height: 140%;
   background: linear-gradient(105deg,
     transparent 20%,
-    rgba(0,212,255,.28) 50%,
-    rgba(255,255,255,.1) 55%,
+    rgba(0,212,255,.38) 50%,
+    rgba(255,255,255,.18) 55%,
     transparent 80%);
-  transform: translateX(-170%) skewX(-15deg);
-  transition: transform .45s ease;
+  transform: translateX(-200%) skewX(-15deg);
+  transition: transform .48s ease;
   pointer-events: none;
 }
-.snav-btn:hover {
-  color: var(--c-cyan);
-  border-color: rgba(0,212,255,.4);
-  background: rgba(0,212,255,.09);
-  box-shadow:
-    0 0 16px rgba(0,212,255,.22),
-    inset 0 1px 0 rgba(0,212,255,.18);
+/* ── 底部辉光条 ── */
+.snav-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 18%; right: 18%; height: 1px;
+  background: linear-gradient(90deg,
+    transparent, rgba(0,212,255,.9), transparent);
+  box-shadow: 0 0 14px rgba(0,212,255,.6);
+  opacity: 0;
+  transform: scaleX(0);
+  transition: opacity .2s ease, transform .28s cubic-bezier(.22,.68,0,1.2);
 }
-.snav-btn:hover::before { transform: translateX(400%) skewX(-15deg); }
 
-/* 中/英文叠放居中切换 */
+/* ── Hover 态：显著发光上浮 ── */
+.snav-btn:hover {
+  color: #fff;
+  border-color: rgba(0,212,255,.7);
+  background:
+    linear-gradient(145deg,
+      rgba(0,212,255,.22) 0%,
+      rgba(0,180,230,.14) 40%,
+      rgba(139,92,246,.1) 100%);
+  transform: translateY(-5px) scale(1.04);
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.65),
+    0 0 30px rgba(0,212,255,.35),
+    0 0 60px rgba(0,212,255,.15),
+    inset 0 1px 0 rgba(0,212,255,.35),
+    inset 0 0 40px rgba(0,212,255,.07);
+}
+.snav-btn:hover::before { transform: translateX(440%) skewX(-15deg); }
+.snav-btn:hover::after  { opacity:1; transform:scaleX(1); }
+.snav-btn:hover .snav-topline { opacity: 1.4; }
+
+/* ── 中英文叠放 ── */
 .snav-text-wrap {
   position: relative;
   display: flex;
@@ -1158,41 +1325,39 @@ img { display: block; max-width: 100%; }
 .snav-cn {
   display: block;
   opacity: 1;
-  transition: opacity .5s ease, transform .5s cubic-bezier(.22,.68,0,1.2);
   transform: translateY(0);
+  transition: opacity .5s ease, transform .5s cubic-bezier(.22,.68,0,1.2);
+  line-height: 1.4;
 }
 .snav-en {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: .6rem;
+  font-size: .65rem;
   letter-spacing: .07em;
-  font-weight: 600;
-  color: var(--c-cyan);
+  font-weight: 700;
+  color: #00d4ff;
   opacity: 0;
-  transform: translateY(6px);
+  transform: translateY(8px);
   transition: opacity .5s ease, transform .5s cubic-bezier(.22,.68,0,1.2);
   white-space: nowrap;
+  text-shadow: 0 0 16px rgba(0,212,255,.8), 0 0 32px rgba(0,212,255,.4);
 }
-.super-nav-panel.lang-en .snav-cn {
-  opacity: 0;
-  transform: translateY(-6px);
-}
-.super-nav-panel.lang-en .snav-en {
-  opacity: 1;
-  transform: translateY(0);
-}
+.super-nav-panel.lang-en .snav-cn { opacity:0; transform:translateY(-8px); }
+.super-nav-panel.lang-en .snav-en { opacity:1; transform:translateY(0); }
 
 /* 遮罩 */
 .super-nav-overlay {
   position: fixed;
   inset: 70px 0 0 0;
   z-index: 699;
-  background: rgba(0,0,0,.45);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  display: none;      /* JS控制显示 */
+  opacity: 0;
+  background: rgba(0,0,0,.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: opacity .35s ease;
 }
 
 
@@ -1218,9 +1383,84 @@ img { display: block; max-width: 100%; }
   margin-top: .05rem;
 }
 
-/* 移动端隐藏超级面板（直接用汉堡） */
+/* ══════════════════════════════════════════════════════════
+   移动端完整适配（860px以下）
+   ══════════════════════════════════════════════════════════ */
 @media screen and (max-width: 860px) {
+  /* 超级面板在移动端隐藏（已有汉堡菜单覆盖功能） */
   .nav-more-btn { display: none; }
-  .super-nav-panel { display: none; }
-  .super-nav-overlay { display: none; }
+  .super-nav-panel { display: none !important; }
+  .super-nav-overlay { display: none !important; }
+
+  /* 移动端导航栏内：提交成绩按钮显示 */
+  .nav-submit {
+    display: inline-flex;
+    margin-left: .3rem;
+    padding: .35rem .65rem;
+    font-size: .6rem;
+    letter-spacing: .06em;
+    flex-shrink: 0;
+  }
+
+  /* nav-inner 布局：logo | hamburger | submit */
+  .nav-inner {
+    gap: 0;
+  }
+
+  /* 汉堡菜单展开时，"查看更多"作为一个普通菜单项 */
+  .nav-links .nav-more-mobile {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: .9rem 1.5rem;
+    border-bottom: 1px solid rgba(0,212,255,.06);
+    font-family: var(--f-sci);
+    font-size: .78rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+    color: var(--c-text2);
+    cursor: pointer;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: left;
+    user-select: none;
+    transition: color .25s ease;
+  }
+  .nav-links .nav-more-mobile:hover,
+  .nav-links .nav-more-mobile.mob-open { color: var(--c-cyan); }
+
+  /* 移动端"更多"展开的子菜单面板 */
+  .mob-more-panel {
+    display: none;
+    flex-direction: column;
+    background: rgba(0,8,20,.95);
+    border-top: 1px solid rgba(0,212,255,.08);
+  }
+  .mob-more-panel.open { display: flex; }
+  .mob-more-panel a {
+    display: block;
+    padding: .7rem 2.5rem;
+    font-family: var(--f-sci);
+    font-size: .72rem;
+    color: var(--c-text2);
+    border-bottom: 1px solid rgba(0,212,255,.05);
+    text-decoration: none;
+    transition: color .2s ease, background .2s ease;
+  }
+  .mob-more-panel a:hover { color: var(--c-cyan); background: rgba(0,212,255,.05); }
+  .mob-more-panel a:last-child { border-bottom: none; }
+}
+
+/* 极小屏（480px）进一步优化 */
+@media screen and (max-width: 480px) {
+  .nav-inner { padding: 0 .75rem; }
+  .logo-title { font-size: .9rem; }
+  .logo-domain { font-size: .52rem; }
+  .nav-submit {
+    padding: .3rem .5rem;
+    font-size: .55rem;
+    letter-spacing: .04em;
+  }
 }
