@@ -183,5 +183,86 @@
   if (window.scrollY > 0) window.scrollTo(0, 0);
 })();
 </script>
+<script>
+/* ── 超级导航面板 ── */
+(function() {
+  var panel   = document.getElementById('super-nav-panel');
+  var overlay = document.getElementById('super-nav-overlay');
+  var btn     = document.getElementById('nav-more-btn');
+  if (!panel || !btn) return;
+
+  var isOpen = false;
+  function openPanel() {
+    isOpen = true;
+    panel.classList.add('open');
+    overlay.classList.add('open');
+    btn.classList.add('open');
+    // 推下方内容
+    document.querySelector('.page-wrap') && (document.querySelector('.page-wrap').style.transition = 'margin-top .55s cubic-bezier(.4,0,.2,1)');
+  }
+  function closePanel() {
+    isOpen = false;
+    panel.classList.remove('open');
+    overlay.classList.remove('open');
+    btn.classList.remove('open');
+  }
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    isOpen ? closePanel() : openPanel();
+  });
+  overlay.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePanel(); });
+
+  /* 中英文3秒切换 */
+  setInterval(function() { panel.classList.toggle('lang-en'); }, 3000);
+})();
+</script>
+<script>
+/* ── 超级导航面板控制 ── */
+(function() {
+  var panel   = document.getElementById('super-nav-panel');
+  var overlay = document.getElementById('super-nav-overlay');
+  var btn     = document.getElementById('nav-more-btn');
+  if (!panel || !btn) return;
+
+  var isOpen = false;
+
+  function openPanel() {
+    isOpen = true;
+    panel.classList.add('open');
+    overlay.style.display = 'block';
+    setTimeout(function() { overlay.style.opacity = '1'; }, 10);
+    btn.classList.add('open');
+  }
+
+  function closePanel() {
+    isOpen = false;
+    panel.classList.remove('open');
+    overlay.style.opacity = '0';
+    setTimeout(function() { overlay.style.display = 'none'; }, 400);
+    btn.classList.remove('open');
+  }
+
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    isOpen ? closePanel() : openPanel();
+  });
+
+  overlay.addEventListener('click', closePanel);
+
+  document.addEventListener('click', function(e) {
+    if (isOpen && !panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+      closePanel();
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isOpen) closePanel();
+  });
+
+  /* 中英文3秒切换 */
+  setInterval(function() { panel.classList.toggle('lang-en'); }, 3000);
+})();
+</script>
 </body>
 </html>

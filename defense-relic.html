@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>防御裂缝81轮竞速排行榜 — Warframe Speed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="https://www-static.warframe.com/images/warframe-logo-white.svg">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/leaderboard.css">
+  <style>
+    .hover-text-swap { position: relative; display: inline-block; }
+    .hover-text-swap .text-cn { display: inline; transition: opacity 0.3s ease; }
+    .hover-text-swap .text-en {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap; opacity: 0;
+      transition: opacity 0.3s ease;
+      font-size: clamp(0.5rem, 1.2vw, 0.8em);
+      pointer-events: none;
+    }
+    .nav-item:hover > a .hover-text-swap .text-cn { opacity: 0; }
+    .nav-item:hover > a .hover-text-swap .text-en { opacity: 1; }
+    .nav-dropdown-menu a:hover .hover-text-swap .text-cn { opacity: 0; }
+    .nav-dropdown-menu a:hover .hover-text-swap .text-en { opacity: 1; }
+    .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-cn { opacity: 0; }
+    .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-en { opacity: 1; }
+    .lb-badge-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+    .lb-badge-en { opacity: 0; position: relative; pointer-events: none; transition: opacity .5s ease; }
+    .lb-badge-cn { position: absolute; inset: 0; opacity: 1; transition: opacity .5s ease; }
+    .lb-badge-wrap.show-en .lb-badge-en { opacity: 1; }
+    .lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; }
+  </style>
+</head>
+<body>
+<canvas id="star-canvas"></canvas>
+<div class="nebula-bg"></div>
+<div class="page-wrap lb-page">
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="https://wfspeed.run">
+        <span class="logo-title">Warframe Speed</span>
+        <span class="logo-domain">→ WFSPEED.RUN</span>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item has-dropdown">
+          <a href="disruption.html"><span class="hover-text-swap"><span class="text-cn">中断竞速榜单</span><span class="text-en">Disruption</span></span></a>
+          <div class="nav-dropdown-menu">
+            <a href="disruption.html"><span class="hover-text-swap"><span class="text-cn">单人</span><span class="text-en">Solo</span></span></a>
+            <a href="disruption-duo.html"><span class="hover-text-swap"><span class="text-cn">双人</span><span class="text-en">Duo</span></span></a>
+            <a href="disruption-multi.html"><span class="hover-text-swap"><span class="text-cn">多人</span><span class="text-en">Multi</span></span></a>
+          </div>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="eidolon.html"><span class="hover-text-swap"><span class="text-cn">夜灵竞速榜单</span><span class="text-en">Eidolon</span></span></a>
+          <div class="nav-dropdown-menu">
+            <a href="eidolon.html"><span class="hover-text-swap"><span class="text-cn">无宏</span><span class="text-en">No Macro</span></span></a>
+            <a href="eidolon-macro.html"><span class="hover-text-swap"><span class="text-cn">有宏</span><span class="text-en">Macro</span></span></a>
+          </div>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="profit-taker.html"><span class="hover-text-swap"><span class="text-cn">蜘蛛竞速榜单</span><span class="text-en">Profit-Taker</span></span></a>
+          <div class="nav-dropdown-menu">
+            <a href="profit-taker.html"><span class="hover-text-swap"><span class="text-cn">无宏</span><span class="text-en">No Macro</span></span></a>
+            <a href="profit-taker-macro.html"><span class="hover-text-swap"><span class="text-cn">有宏</span><span class="text-en">Macro</span></span></a>
+          </div>
+        </div>
+        <button class="nav-more-btn" id="nav-more-btn" aria-label="查看更多榜单"><span class="nm-wrap"><span class="nm-cn">查看更多</span><span class="nm-en">Others</span></span></button>
+        <div class="nav-item">
+          <a href="about.html"><span class="hover-text-swap"><span class="text-cn">关于本站</span><span class="text-en">About</span></span></a>
+        </div>
+      </div>
+      <button class="nav-hamburger" aria-label="打开菜单"><span></span><span></span><span></span></button>
+      <div class="nav-rules-wrap">
+        <a class="nav-rules" href="https://qcnye09jdqm2.feishu.cn/docx/PmFYdf0gXoR8EBxIY6dcr3UKn0f" target="_blank" rel="noopener">
+          <span class="hover-text-swap"><span class="text-cn">查看提交规则</span><span class="text-en">Rules</span></span>
+        </a>
+        <div class="nav-rules-dropdown">
+          <a href="https://qcnye09jdqm2.feishu.cn/docx/T65jdhc61ohAOSxHopTcpOd8njc" target="_blank" rel="noopener">中断竞速</a>
+          <a href="https://qcnye09jdqm2.feishu.cn/docx/UxmXdbcHUoo0iCxQUXccUMTNncf" target="_blank" rel="noopener">夜灵竞速</a>
+          <a href="https://qcnye09jdqm2.feishu.cn/docx/JCBfdkdJpoAfkgxD37ic1VVcnkf" target="_blank" rel="noopener">蜘蛛竞速</a>
+          <a href="https://qcnye09jdqm2.feishu.cn/docx/AaMCdHX7Toa8hrxah1DcMQnJnNe" target="_blank" rel="noopener">更多项目</a>
+        </div>
+      </div>
+      <a class="nav-submit" href="https://qcnye09jdqm2.feishu.cn/share/base/form/shrcnUS6boP9k8GD9iKCi2tXb2e" target="_blank" rel="noopener">
+        <span class="hover-text-swap"><span class="text-cn">提交成绩</span><span class="text-en">Submit</span></span>
+      </a>
+    </div>
+  </nav>
+  <!-- ══ 超级导航面板 ══ -->
+  <div class="super-nav-overlay" id="super-nav-overlay" style="display:none;opacity:0;transition:opacity .4s ease;"></div>
+  <div class="super-nav-panel" id="super-nav-panel">
+    <div class="super-nav-grid">
+      <div class="super-nav-row">
+        <a class="snav-btn" href="capture.html"><div class="snav-text-wrap"><span class="snav-cn">捕获</span><span class="snav-en">Capture</span></div></a>
+        <a class="snav-btn" href="exterminate.html"><div class="snav-text-wrap"><span class="snav-cn">歼灭</span><span class="snav-en">Exterminate</span></div></a>
+        <a class="snav-btn" href="rescue.html"><div class="snav-text-wrap"><span class="snav-cn">救援</span><span class="snav-en">Rescue</span></div></a>
+        <a class="snav-btn" href="sabotage.html"><div class="snav-text-wrap"><span class="snav-cn">破坏</span><span class="snav-en">Sabotage</span></div></a>
+        <a class="snav-btn" href="spy.html"><div class="snav-text-wrap"><span class="snav-cn">间谍</span><span class="snav-en">Spy</span></div></a>
+      </div>
+      <div class="super-nav-row">
+        <a class="snav-btn" href="assassination.html"><div class="snav-text-wrap"><span class="snav-cn">刺杀</span><span class="snav-en">Assassination</span></div></a>
+        <a class="snav-btn" href="archon-hunt.html"><div class="snav-text-wrap"><span class="snav-cn">执刑官猎杀</span><span class="snav-en">Archon Hunt</span></div></a>
+        <a class="snav-btn" href="defense-relic.html"><div class="snav-text-wrap"><span class="snav-cn">防御裂缝81轮</span><span class="snav-en">Defense Relic</span></div></a>
+        <a class="snav-btn" href="cambire.html"><div class="snav-text-wrap"><span class="snav-cn">元素转换</span><span class="snav-en">Cambire</span></div></a>
+        <a class="snav-btn" href="victory-plaza.html"><div class="snav-text-wrap"><span class="snav-cn">1999 坦克</span><span class="snav-en">Victory Plaza</span></div></a>
+      </div>
+      <div class="super-nav-row">
+        <a class="snav-btn" href="ropalolyst.html"><div class="snav-text-wrap"><span class="snav-cn">蝠力使</span><span class="snav-en">Ropalolyst</span></div></a>
+        <a class="snav-btn" href="exploiter.html"><div class="snav-text-wrap"><span class="snav-cn">二蜘蛛</span><span class="snav-en">Exploiter</span></div></a>
+        <a class="snav-btn" href="the-guilty.html"><div class="snav-text-wrap"><span class="snav-cn">有罪之人</span><span class="snav-en">The Guilty</span></div></a>
+        <a class="snav-btn" href="obstacle-course.html"><div class="snav-text-wrap"><span class="snav-cn">氏族跑酷</span><span class="snav-en">Obstacle Course</span></div></a>
+        <a class="snav-btn" href="special-events.html"><div class="snav-text-wrap"><span class="snav-cn">站内特殊活动</span><span class="snav-en">Special Events</span></div></a>
+      </div>
+    </div>
+  </div>
+  <main class="lb-main">
+    <a href="index.html" class="lb-back">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
+    </a>
+    <div class="lb-header">
+      <h1 class="lb-title">防御裂缝81轮竞速排行榜</h1>
+      <p class="lb-subtitle">Defense Relic 81 Rounds Speedrun Leaderboard</p>
+    </div>
+    <div class="lb-tip reveal">
+      <span class="lb-tip-icon">⚠</span>
+      请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。
+    </div>
+    <div class="lb-tabs" id="lb-tabs">
+      <button class="lb-tab-btn  active" data-cat="钢铁">钢铁</button>
+      <button class="lb-tab-btn" data-cat="普通">普通</button>
+    </div>
+    <div class="map-tabs" id="map-tabs">
+      <button class="map-tab-btn  active" data-mapname="Lith">Lith</button>
+      <button class="map-tab-btn" data-mapname="Coba">Coba</button>
+      <button class="map-tab-btn" data-mapname="Tessera">Tessera</button>
+      <button class="map-tab-btn" data-mapname="Romula">Romula</button>
+      <button class="map-tab-btn" data-mapname="Lares">Lares</button>
+      <button class="map-tab-btn" data-mapname="Spear">Spear</button>
+      <button class="map-tab-btn" data-mapname="Kadesh">Kadesh</button>
+      <button class="map-tab-btn" data-mapname="Gulliver">Gulliver</button>
+      <button class="map-tab-btn" data-mapname="Taranis">Taranis</button>
+      <button class="map-tab-btn" data-mapname="Casta">Casta</button>
+      <button class="map-tab-btn" data-mapname="Seimeni">Seimeni</button>
+      <button class="map-tab-btn" data-mapname="Io">Io</button>
+      <button class="map-tab-btn" data-mapname="Sinai">Sinai</button>
+      <button class="map-tab-btn" data-mapname="Hyf">Hyf</button>
+      <button class="map-tab-btn" data-mapname="Paimon">Paimon</button>
+      <button class="map-tab-btn" data-mapname="Larzac">Larzac</button>
+      <button class="map-tab-btn" data-mapname="Helene">Helene</button>
+      <button class="map-tab-btn" data-mapname="Stephano">Stephano</button>
+      <button class="map-tab-btn" data-mapname="Stöfler">Stöfler</button>
+      <button class="map-tab-btn" data-mapname="Proteus">Proteus</button>
+      <button class="map-tab-btn" data-mapname="Nabuk">Nabuk</button>
+      <button class="map-tab-btn" data-mapname="Belenus">Belenus</button>
+      <button class="map-tab-btn" data-mapname="Hydron">Hydron</button>
+      <button class="map-tab-btn" data-mapname="Kala-azar">Kala-azar</button>
+      <button class="map-tab-btn" data-mapname="Outer">Outer</button>
+      <button class="map-tab-btn" data-mapname="Akkad">Akkad</button>
+      <button class="map-tab-btn" data-mapname="Sechura">Sechura</button>
+      <button class="map-tab-btn" data-mapname="Sangeru">Sangeru</button>
+    </div>
+    <div class="lb-table-wrap">
+      <table class="lb-table">
+        <thead><tr><th>排名</th><th>结算时间</th><th>玩家 ID</th><th>提交日期</th></tr></thead>
+        <tbody id="lb-tbody"></tbody>
+      </table>
+      <div class="lb-stats" id="lb-stats"></div>
+    </div>
+    <!-- ══ 举报违规 + 作弊公示 ══ -->
+    <div class="report-wrap">
+      <a class="report-btn" href="https://qcnye09jdqm2.feishu.cn/share/base/form/shrcnju7pg9xiHVjyQcH4AUrVVc" target="_blank" rel="noopener">
+        <span class="report-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 5.5H13L9.5 8.5L11 13L7 10L3 13L4.5 8.5L1 5.5H5.5L7 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/></svg></span>
+        <span class="hover-text-swap"><span class="text-cn">举报违规</span><span class="text-en">Report</span></span>
+      </a>
+      <a class="shame-btn" href="https://qcnye09jdqm2.feishu.cn/share/base/view/shrcnij5zLwd9XPCCEoYVobYMHe" target="_blank" rel="noopener">
+        <span class="shame-icon"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M7.5 4v3.5M7.5 10v.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        作弊公示
+      </a>
+    </div>
+  </main>
+  <footer class="site-footer home-footer">
+    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">沪ICP备2022033368号</a>
+    <p>Copyright &copy; 2026 CSC Alliance All Rights Reserved.</p>
+  </footer>
+</div>
+
+<script src="js/main.js"></script>
+<script src="data/defense-relic/defense-relic-steel-lith.js"></script>
+<script src="data/defense-relic/defense-relic-steel-coba.js"></script>
+<script src="data/defense-relic/defense-relic-steel-tessera.js"></script>
+<script src="data/defense-relic/defense-relic-steel-romula.js"></script>
+<script src="data/defense-relic/defense-relic-steel-lares.js"></script>
+<script src="data/defense-relic/defense-relic-steel-spear.js"></script>
+<script src="data/defense-relic/defense-relic-steel-kadesh.js"></script>
+<script src="data/defense-relic/defense-relic-steel-gulliver.js"></script>
+<script src="data/defense-relic/defense-relic-steel-taranis.js"></script>
+<script src="data/defense-relic/defense-relic-steel-casta.js"></script>
+<script src="data/defense-relic/defense-relic-steel-seimeni.js"></script>
+<script src="data/defense-relic/defense-relic-steel-io.js"></script>
+<script src="data/defense-relic/defense-relic-steel-sinai.js"></script>
+<script src="data/defense-relic/defense-relic-steel-hyf.js"></script>
+<script src="data/defense-relic/defense-relic-steel-paimon.js"></script>
+<script src="data/defense-relic/defense-relic-steel-larzac.js"></script>
+<script src="data/defense-relic/defense-relic-steel-helene.js"></script>
+<script src="data/defense-relic/defense-relic-steel-stephano.js"></script>
+<script src="data/defense-relic/defense-relic-steel-stofler.js"></script>
+<script src="data/defense-relic/defense-relic-steel-proteus.js"></script>
+<script src="data/defense-relic/defense-relic-steel-nabuk.js"></script>
+<script src="data/defense-relic/defense-relic-steel-belenus.js"></script>
+<script src="data/defense-relic/defense-relic-steel-hydron.js"></script>
+<script src="data/defense-relic/defense-relic-steel-kala-azar.js"></script>
+<script src="data/defense-relic/defense-relic-steel-outer.js"></script>
+<script src="data/defense-relic/defense-relic-steel-akkad.js"></script>
+<script src="data/defense-relic/defense-relic-steel-sechura.js"></script>
+<script src="data/defense-relic/defense-relic-steel-sangeru.js"></script>
+<script src="data/defense-relic/defense-relic-normal-lith.js"></script>
+<script src="data/defense-relic/defense-relic-normal-coba.js"></script>
+<script src="data/defense-relic/defense-relic-normal-tessera.js"></script>
+<script src="data/defense-relic/defense-relic-normal-romula.js"></script>
+<script src="data/defense-relic/defense-relic-normal-lares.js"></script>
+<script src="data/defense-relic/defense-relic-normal-spear.js"></script>
+<script src="data/defense-relic/defense-relic-normal-kadesh.js"></script>
+<script src="data/defense-relic/defense-relic-normal-gulliver.js"></script>
+<script src="data/defense-relic/defense-relic-normal-taranis.js"></script>
+<script src="data/defense-relic/defense-relic-normal-casta.js"></script>
+<script src="data/defense-relic/defense-relic-normal-seimeni.js"></script>
+<script src="data/defense-relic/defense-relic-normal-io.js"></script>
+<script src="data/defense-relic/defense-relic-normal-sinai.js"></script>
+<script src="data/defense-relic/defense-relic-normal-hyf.js"></script>
+<script src="data/defense-relic/defense-relic-normal-paimon.js"></script>
+<script src="data/defense-relic/defense-relic-normal-larzac.js"></script>
+<script src="data/defense-relic/defense-relic-normal-helene.js"></script>
+<script src="data/defense-relic/defense-relic-normal-stephano.js"></script>
+<script src="data/defense-relic/defense-relic-normal-stofler.js"></script>
+<script src="data/defense-relic/defense-relic-normal-proteus.js"></script>
+<script src="data/defense-relic/defense-relic-normal-nabuk.js"></script>
+<script src="data/defense-relic/defense-relic-normal-belenus.js"></script>
+<script src="data/defense-relic/defense-relic-normal-hydron.js"></script>
+<script src="data/defense-relic/defense-relic-normal-kala-azar.js"></script>
+<script src="data/defense-relic/defense-relic-normal-outer.js"></script>
+<script src="data/defense-relic/defense-relic-normal-akkad.js"></script>
+<script src="data/defense-relic/defense-relic-normal-sechura.js"></script>
+<script src="data/defense-relic/defense-relic-normal-sangeru.js"></script>
+<script>
+  var _allData = {
+    "钢铁||Lith": function(){return defense_relic_steel_lithRecords;},
+    "钢铁||Coba": function(){return defense_relic_steel_cobaRecords;},
+    "钢铁||Tessera": function(){return defense_relic_steel_tesseraRecords;},
+    "钢铁||Romula": function(){return defense_relic_steel_romulaRecords;},
+    "钢铁||Lares": function(){return defense_relic_steel_laresRecords;},
+    "钢铁||Spear": function(){return defense_relic_steel_spearRecords;},
+    "钢铁||Kadesh": function(){return defense_relic_steel_kadeshRecords;},
+    "钢铁||Gulliver": function(){return defense_relic_steel_gulliverRecords;},
+    "钢铁||Taranis": function(){return defense_relic_steel_taranisRecords;},
+    "钢铁||Casta": function(){return defense_relic_steel_castaRecords;},
+    "钢铁||Seimeni": function(){return defense_relic_steel_seimeniRecords;},
+    "钢铁||Io": function(){return defense_relic_steel_ioRecords;},
+    "钢铁||Sinai": function(){return defense_relic_steel_sinaiRecords;},
+    "钢铁||Hyf": function(){return defense_relic_steel_hyfRecords;},
+    "钢铁||Paimon": function(){return defense_relic_steel_paimonRecords;},
+    "钢铁||Larzac": function(){return defense_relic_steel_larzacRecords;},
+    "钢铁||Helene": function(){return defense_relic_steel_heleneRecords;},
+    "钢铁||Stephano": function(){return defense_relic_steel_stephanoRecords;},
+    "钢铁||Stöfler": function(){return defense_relic_steel_stoflerRecords;},
+    "钢铁||Proteus": function(){return defense_relic_steel_proteusRecords;},
+    "钢铁||Nabuk": function(){return defense_relic_steel_nabukRecords;},
+    "钢铁||Belenus": function(){return defense_relic_steel_belenusRecords;},
+    "钢铁||Hydron": function(){return defense_relic_steel_hydronRecords;},
+    "钢铁||Kala-azar": function(){return defense_relic_steel_kala_azarRecords;},
+    "钢铁||Outer": function(){return defense_relic_steel_outerRecords;},
+    "钢铁||Akkad": function(){return defense_relic_steel_akkadRecords;},
+    "钢铁||Sechura": function(){return defense_relic_steel_sechuraRecords;},
+    "钢铁||Sangeru": function(){return defense_relic_steel_sangeruRecords;},
+    "普通||Lith": function(){return defense_relic_normal_lithRecords;},
+    "普通||Coba": function(){return defense_relic_normal_cobaRecords;},
+    "普通||Tessera": function(){return defense_relic_normal_tesseraRecords;},
+    "普通||Romula": function(){return defense_relic_normal_romulaRecords;},
+    "普通||Lares": function(){return defense_relic_normal_laresRecords;},
+    "普通||Spear": function(){return defense_relic_normal_spearRecords;},
+    "普通||Kadesh": function(){return defense_relic_normal_kadeshRecords;},
+    "普通||Gulliver": function(){return defense_relic_normal_gulliverRecords;},
+    "普通||Taranis": function(){return defense_relic_normal_taranisRecords;},
+    "普通||Casta": function(){return defense_relic_normal_castaRecords;},
+    "普通||Seimeni": function(){return defense_relic_normal_seimeniRecords;},
+    "普通||Io": function(){return defense_relic_normal_ioRecords;},
+    "普通||Sinai": function(){return defense_relic_normal_sinaiRecords;},
+    "普通||Hyf": function(){return defense_relic_normal_hyfRecords;},
+    "普通||Paimon": function(){return defense_relic_normal_paimonRecords;},
+    "普通||Larzac": function(){return defense_relic_normal_larzacRecords;},
+    "普通||Helene": function(){return defense_relic_normal_heleneRecords;},
+    "普通||Stephano": function(){return defense_relic_normal_stephanoRecords;},
+    "普通||Stöfler": function(){return defense_relic_normal_stoflerRecords;},
+    "普通||Proteus": function(){return defense_relic_normal_proteusRecords;},
+    "普通||Nabuk": function(){return defense_relic_normal_nabukRecords;},
+    "普通||Belenus": function(){return defense_relic_normal_belenusRecords;},
+    "普通||Hydron": function(){return defense_relic_normal_hydronRecords;},
+    "普通||Kala-azar": function(){return defense_relic_normal_kala_azarRecords;},
+    "普通||Outer": function(){return defense_relic_normal_outerRecords;},
+    "普通||Akkad": function(){return defense_relic_normal_akkadRecords;},
+    "普通||Sechura": function(){return defense_relic_normal_sechuraRecords;},
+    "普通||Sangeru": function(){return defense_relic_normal_sangeruRecords;},
+  };
+  var _curCat = '钢铁';
+  var _curMap = 'Lith';
+
+  function loadBoard() {
+    var key = _curCat + '||' + _curMap;
+    renderTimeLeaderboard(_allData[key] ? _allData[key]() : [], 'lb-tbody', 'clearTime');
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b) {
+      b.addEventListener('click', function() {
+        _curCat = b.dataset.cat;
+        document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+        loadBoard();
+      });
+    });
+    document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b) {
+      b.addEventListener('click', function() {
+        _curMap = b.getAttribute('data-mapname');
+        document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+        loadBoard();
+      });
+    });
+    loadBoard();
+  });
+</script>
+<script>
+(function() {
+  var panel   = document.getElementById('super-nav-panel');
+  var overlay = document.getElementById('super-nav-overlay');
+  var btn     = document.getElementById('nav-more-btn');
+  if (!panel || !btn) return;
+  var isOpen = false;
+  function openPanel() {
+    isOpen = true;
+    panel.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(function() { overlay.style.opacity = '1'; });
+    btn.classList.add('open');
+  }
+  function closePanel() {
+    isOpen = false;
+    panel.classList.remove('open');
+    overlay.style.opacity = '0';
+    setTimeout(function() { if (!isOpen) overlay.style.display = 'none'; }, 420);
+    btn.classList.remove('open');
+  }
+  btn.addEventListener('click', function(e) { e.stopPropagation(); isOpen ? closePanel() : openPanel(); });
+  overlay.addEventListener('click', closePanel);
+  document.addEventListener('click', function(e) {
+    if (isOpen && !panel.contains(e.target) && !btn.contains(e.target)) closePanel();
+  });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePanel(); });
+  setInterval(function() { panel.classList.toggle('lang-en'); }, 3000);
+})();
+</script>
+</body>
+</html>
