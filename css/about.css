@@ -326,17 +326,18 @@
 /* ─── 关于页规则下拉菜单 ─── */
 .about-rule-dropdown {
   position: absolute;
-  top: calc(100% + 3px);
+  bottom: calc(100% + 8px);   /* 在按钮上方展开，距离备案区两行字以上 */
+  top: auto;
   left: 50%;
-  transform: translateX(-50%) translateY(-8px) scaleY(.88);
-  transform-origin: top center;
+  transform: translateX(-50%) translateY(8px) scaleY(.88);
+  transform-origin: bottom center;
   min-width: 152px;
   background: rgba(4,6,20,.97);
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
   border: 1px solid rgba(139,92,246,.38);
-  border-top: 2px solid var(--c-purple);
-  border-radius: 0 0 var(--r-md) var(--r-md);
+  border-bottom: 2px solid var(--c-purple);
+  border-radius: var(--r-md) var(--r-md) 0 0;
   box-shadow:
     0 14px 55px rgba(0,0,0,.85),
     0 0 25px rgba(139,92,246,.22),
