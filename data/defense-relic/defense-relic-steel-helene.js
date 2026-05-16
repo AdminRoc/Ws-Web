@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════
- *  防御裂缝81轮 竞速排行榜  /  Defense Relic 81 Rounds Speedrun Leaderboard
+ *  防御裂缝78轮 竞速排行榜  /  Defense Relic 78 Rounds Speedrun Leaderboard
  *  数据文件：defense-relic-steel-helene.js
  *  ┌──────────────────────────────────────────────────────┐
  *  │  字段说明：                                          │
