@@ -101,7 +101,7 @@
   text-transform: uppercase;
 }
 
-/* ── 无宏/有宏 标签徽章 ── */
+/* ── Restricted/Non-restricted 标签徽章 ── */
 .lb-badge {
   display: inline-flex;
   align-items: center;
