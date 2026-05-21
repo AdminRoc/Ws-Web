@@ -111,7 +111,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 #body-row{
   flex:1;min-height:0;
   display:grid;
-  grid-template-columns:1fr clamp(140px,20vw,240px);
+  grid-template-columns:1fr clamp(200px,26vw,320px);
   gap:clamp(6px,1.2vw,12px);
 }
 
@@ -120,6 +120,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:clamp(12px,2vw,24px);
   padding:clamp(16px,3vw,40px) clamp(14px,2.5vw,32px);
+  padding-bottom:clamp(52px,7vw,70px); /* 为底部绝对定位标签留空 */
   border:1px solid var(--edge);border-radius:2px;
   background:var(--panel);backdrop-filter:blur(24px);
   position:relative;overflow:hidden;
@@ -153,20 +154,19 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 /* ─── ORBITAL RINGS ─── */
 .orb-wrap{
   position:relative;flex-shrink:0;
-  width:clamp(80px,12vw,130px);height:clamp(80px,12vw,130px);
+  /* 1.2倍: 108*1.2=130, 175*1.2=210 */
+  width:clamp(130px,19.4vw,210px);height:clamp(130px,19.4vw,210px);
+  overflow:visible;  /* 允许地球渲染超出容器 */
 }
-.orb-wrap svg{position:absolute;inset:0;width:100%;height:100%}
-.orb-r1{animation:orbR1 4s linear infinite}
-.orb-r2{animation:orbR2 6s linear reverse infinite}
-.orb-r3{animation:orbR3 9s linear infinite}
-@keyframes orbR1{to{transform:rotate(360deg);transform-origin:center}}
-@keyframes orbR2{to{transform:rotate(-360deg);transform-origin:center}}
-@keyframes orbR3{to{transform:rotate(360deg);transform-origin:center}}
-.orb-core{position:absolute;inset:32%;border-radius:50%;
-  background:radial-gradient(circle,#fff 0%,var(--c0) 30%,var(--c3) 65%,transparent 85%);
-  box-shadow:0 0 20px var(--c0),0 0 50px var(--c3),0 0 90px rgba(0,229,255,.25);
-  animation:coreBreath 1.6s ease-in-out infinite alternate}
-@keyframes coreBreath{from{transform:scale(.75);opacity:.8}to{transform:scale(1.15);opacity:1}}
+#orb-canvas{
+  position:absolute;
+  /* 地球向四周溢出，扩大渲染区域消除黑边视觉 */
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:100%;height:100%;
+  display:block;
+  background:transparent !important;
+}
 
 /* ─── PERCENT BIG ─── */
 .pct-row{display:flex;align-items:baseline;gap:.15rem;line-height:1}
@@ -243,15 +243,20 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
   text-align:center;animation:tickFlicker 2.4s ease-in-out infinite}
 @keyframes tickFlicker{0%,100%{opacity:.28}50%{opacity:.6}}
 
-/* redirect message */
+/* redirect message — 绝对定位底部，不影响flex布局 */
 .redir-msg{
+  position:absolute;
+  left:clamp(14px,2.5vw,32px);right:clamp(14px,2.5vw,32px);
+  bottom:clamp(10px,1.5vw,18px);
   display:flex;align-items:center;gap:.7rem;
-  padding:clamp(7px,1vw,11px) clamp(12px,2vw,20px);
+  padding:clamp(6px,.9vw,10px) clamp(10px,1.5vw,16px);
   border:1px solid rgba(57,255,20,.35);border-radius:2px;
   background:rgba(57,255,20,.05);
-  font-family:var(--fbody);font-size:clamp(.5rem,.9vw,.64rem);
-  letter-spacing:.12em;color:rgba(57,255,20,.9);font-weight:600;
-  opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s;
+  font-family:var(--fbody);font-size:clamp(.48rem,.85vw,.6rem);
+  letter-spacing:.10em;color:rgba(57,255,20,.9);font-weight:600;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s;
+  z-index:10;
 }
 .redir-msg.on{opacity:1;transform:none}
 .redir-blink{width:9px;height:9px;border-radius:50%;flex-shrink:0;
@@ -273,8 +278,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
   padding-bottom:.3rem;flex-shrink:0}
 
 /* radar */
-#radar-canvas{width:100%;height:100%;max-width:220px;max-height:220px;display:block;margin:auto}
-#radar-wrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#radar-canvas{display:block;margin:auto}
+#radar-wrap{flex:0 0 auto;display:flex;align-items:center;justify-content:center;overflow:hidden;aspect-ratio:1/1;width:100%;max-width:100%;}
 
 /* activity graph */
 .activity-graph{flex:1;min-height:0;position:relative;overflow:hidden}
@@ -381,28 +386,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 
       <div class="live-badge"><span class="live-dot"></span>LIVE UPLINK ACTIVE</div>
 
-      <div class="orb-wrap">
-        <svg class="orb-r1" viewBox="0 0 130 130" fill="none">
-          <polygon points="65,4 122,34 122,96 65,126 8,96 8,34"
-                   stroke="url(#og1)" stroke-width="2" fill="none" stroke-dasharray="14 6"/>
-          <defs><linearGradient id="og1" x1="0" y1="0" x2="130" y2="130" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#bf00ff"/>
-          </linearGradient></defs>
-        </svg>
-        <svg class="orb-r2" viewBox="0 0 130 130" fill="none">
-          <polygon points="65,12 115,40 115,90 65,118 15,90 15,40"
-                   stroke="url(#og2)" stroke-width="1.2" fill="none" stroke-dasharray="6 10"/>
-          <defs><linearGradient id="og2" x1="130" y1="0" x2="0" y2="130" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#39ff14"/><stop offset="100%" stop-color="#bf00ff"/>
-          </linearGradient></defs>
-        </svg>
-        <svg class="orb-r3" viewBox="0 0 130 130" fill="none">
-          <circle cx="65" cy="65" r="48" stroke="#00e5ff" stroke-width=".8" fill="none"
-                  stroke-dasharray="4 8" opacity=".35"/>
-          <circle cx="65" cy="65" r="38" stroke="#ff6a00" stroke-width=".6" fill="none"
-                  stroke-dasharray="2 10" opacity=".25"/>
-        </svg>
-        <div class="orb-core"></div>
+      <!-- ─── ORBITAL STATION LOGO ─── -->
+      <div class="orb-wrap" id="orb-wrap">
+        <canvas id="orb-canvas"></canvas>
       </div>
 
       <div class="tgt-label">// TARGET RESOURCE //</div>
@@ -503,13 +489,23 @@ var destUrl=P.get('url')||'';
 var title=(P.get('title')||'DOCUMENT').toUpperCase();
 var referer=P.get('from')||'index.html';
 
-document.getElementById('topbar-doc').textContent=title;
 document.getElementById('tgt-name').textContent=title;
 document.title=title+' // CSC ALLIANCE';
 document.getElementById('back-btn').href=referer;
+/* ── 省略号动画 ── */
+(function(){
+  var dots=['','.','..',  '...'];
+  var di=0;
+  function setTopTitle(){
+    document.getElementById('topbar-doc').textContent='正在进入 '+title+' 页面'+dots[di];
+    di=(di+1)%dots.length;
+  }
+  setTopTitle();
+  setInterval(setTopTitle,520);
+})();
 
 /* ══ PROGRESS LOGIC ══ */
-var TOTAL=3000+Math.random()*5000;
+var TOTAL=5000+Math.random()*3000;
 var t0=performance.now(), done=false;
 var mf=document.getElementById('master-fill');
 var pb=document.getElementById('pct-big');
@@ -587,7 +583,39 @@ function tick(now){
     mf.style.width='100%';pb.textContent='100';
     pushLog('LINK_EST ✓','ok');pushLog('REDIRECT_INIT','ok');
     rm.classList.add('on');
-    document.getElementById('sc-st').textContent='LOCKED';
+    /* STATUS渐变: LOCKED → UNLOCKED */
+    (function(){
+      var el=document.getElementById('sc-st');
+      var lockedMs=600+Math.random()*800;
+      /* 红色LOCKED状态 */
+      el.style.color='#ff003c'; el.style.textShadow='0 0 14px #ff003c, 0 0 30px rgba(255,0,60,.4)';
+      el.textContent='LOCKED';
+      setTimeout(function(){
+        /* 逐字符解码：全程保持红色，直到最后一刻 */
+        var target='UNLOCKED';
+        var chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!%&';
+        var step=0, maxSteps=target.length*5;
+        /* 保持红色 */
+        el.style.color='#ff003c'; el.style.textShadow='0 0 14px #ff003c';
+        var iv=setInterval(function(){
+          var revealed=Math.floor(step/5);
+          var txt='';
+          for(var i=0;i<target.length;i++){
+            if(i<revealed) txt+=target[i];
+            else txt+=chars[Math.floor(Math.random()*chars.length)];
+          }
+          el.textContent=txt;
+          step++;
+          if(step>=maxSteps){
+            clearInterval(iv);
+            /* 只有完全解锁后才变绿 */
+            el.textContent='UNLOCKED';
+            el.style.color='#39ff14';
+            el.style.textShadow='0 0 14px #39ff14, 0 0 30px rgba(57,255,20,.5)';
+          }
+        },45);
+      }, lockedMs);
+    })();
     if(destUrl)setTimeout(function(){location.href=destUrl;},900);
     return;
   }
@@ -714,6 +742,452 @@ function animHex(){
   requestAnimationFrame(animHex);
 }
 
+
+/* ══════════════════════════════
+   ORBITAL STATION CANVAS LOGO
+   — 空间站风格：多层轨道 + 脉冲核 + 粒子拖尾
+══════════════════════════════ */
+var orbEl = document.getElementById('orb-canvas');
+var orbX  = orbEl.getContext('2d');
+var orbT  = 0;
+
+/* ══════════════════════════════════════════════════════════════
+   CYBER EARTH v3 — 赛博地球（修正版）
+
+   坐标约定：
+   经度 lon: 东经为正，0°=本初子午线，范围[-π, π]
+   纬度 lat: 北纬为正，范围[-π/2, π/2]
+   地球自转：绕Y轴，Y轴朝上
+   透视：观察者在+Z方向
+══════════════════════════════════════════════════════════════ */
+
+function resizeOrb() {
+  var wrap = document.getElementById('orb-wrap');
+  var sz = Math.min(wrap.offsetWidth || 160, wrap.offsetHeight || 160);
+  /* canvas本身比容器大50%，让大气晕/轨道环不被裁切 */
+  orbEl.width  = Math.round(sz * 1.5);
+  orbEl.height = Math.round(sz * 1.5);
+}
+
+/* ── 核心投影函数 ──
+   lat, lon: 弧度
+   rotY: 地球当前自转角（绕Y轴）
+   返回 {sx, sy, visible, depth}  */
+function proj(lat, lon, rotY, sz) {
+  var cosLat = Math.cos(lat), sinLat = Math.sin(lat);
+  var cosLon = Math.cos(lon), sinLon = Math.sin(lon);
+
+  /* 球面坐标→3D（Y轴朝上，Z轴朝观察者） */
+  var x0 = cosLat * sinLon;   /* 东西 */
+  var y0 = sinLat;            /* 南北（北为正） */
+  var z0 = cosLat * cosLon;   /* 深度（正面为正） */
+
+  /* 绕Y轴旋转（地球自转） */
+  var cr = Math.cos(rotY), sr = Math.sin(rotY);
+  var x1 =  x0 * cr + z0 * sr;
+  var y1 =  y0;
+  var z1 = -x0 * sr + z0 * cr;
+
+  /* 地轴倾斜 23.5° = 0.41rad，绕Z轴倾斜 */
+  var tilt = 0.41;
+  var ct = Math.cos(tilt), st = Math.sin(tilt);
+  var x2 = x1 * ct - y1 * st;
+  var y2 = x1 * st + y1 * ct;
+  var z2 = z1;
+
+  /* 透视投影 */
+  var fov   = 3.2;
+  var zdist = fov + z2 * 0.5;
+  if (zdist < 0.1) zdist = 0.1;
+  var scale = sz * 0.405 * fov / zdist;
+  var cx = sz * 0.5, cy = sz * 0.5;
+
+  return {
+    sx: cx + x2 * scale,
+    sy: cy - y2 * scale,  /* canvas Y轴朝下，所以取负 */
+    visible: z2,          /* >0 = 正面可见 */
+    depth: z2
+  };
+}
+
+/* ── 辅助：弧度转换 ── */
+var D2R = Math.PI / 180;
+function ll(latDeg, lonDeg) { return [latDeg * D2R, lonDeg * D2R]; }
+
+/* ── 大陆轮廓（经过修正的真实坐标点）
+   每段之间隔~5度，已足够绘制清晰轮廓     ── */
+var CONTINENTS = [
+
+  /* ━━ 欧亚大陆（含中国全部领土）━━ */
+  { name:'欧亚', color:[0,229,255],
+    segs: [
+      /* 西欧海岸线 */
+      [ll(71,28),ll(68,20),ll(62,4),ll(51,-5),ll(43,-9),ll(36,-9),ll(36,3)],
+      /* 地中海北岸 */
+      [ll(36,3),ll(38,12),ll(40,18),ll(41,28),ll(41,36),ll(37,36),ll(32,36)],
+      /* 西亚→印度半岛 */
+      [ll(32,36),ll(24,38),ll(22,58),ll(22,68),ll(22,73),ll(8,77),ll(8,80),
+       ll(10,80),ll(22,88),ll(22,90)],
+      /* 东南亚→中国东海岸（包含南海区域） */
+      [ll(10,104),ll(1,104),ll(5,115),ll(18,114),ll(22,114),ll(30,122),
+       ll(36,122),ll(40,122),ll(42,132),ll(50,142),ll(56,140)],
+      /* 西伯利亚东海岸→北极 */
+      [ll(56,140),ll(60,150),ll(68,160),ll(70,160),ll(72,140),ll(72,100),
+       ll(72,60),ll(71,28)]
+    ]
+  },
+  /* ━━ 台湾岛（中国领土）━━ */
+  { name:'台湾', color:[0,229,255],
+    segs: [
+      [ll(25.3,121.5),ll(24.5,121.9),ll(23.5,121.6),ll(22.5,120.8),
+       ll(22.0,120.7),ll(22.6,120.2),ll(23.5,120.1),ll(24.5,120.6),ll(25.3,121.5)]
+    ]
+  },
+  /* ━━ 琉球群岛（中国固有领土）━━ */
+  { name:'琉球', color:[0,229,255],
+    segs: [
+      [ll(26.3,127.8),ll(26.2,128.0),ll(26.1,127.7),ll(26.3,127.8)],
+      [ll(25.8,131.2),ll(25.7,131.3),ll(25.6,131.1),ll(25.8,131.2)],
+      [ll(24.4,123.0),ll(24.3,123.2),ll(24.2,122.9),ll(24.4,123.0)]
+    ]
+  },
+  /* ━━ 日本列岛（古代东瀛，中国文化圈）━━ */
+  { name:'东瀛', color:[0,200,220],
+    segs: [
+      /* 本州岛 */
+      [ll(34,131),ll(34,132),ll(35,136),ll(35,137),ll(36,138),ll(35,140),
+       ll(36,140),ll(38,141),ll(40,141),ll(41,141),ll(40,140),ll(38,138),
+       ll(36,136),ll(35,133),ll(34,131)],
+      /* 九州岛 */
+      [ll(32,130),ll(31,131),ll(31,130),ll(32,129),ll(33,130),ll(32,130)],
+      /* 四国 */
+      [ll(34,133),ll(33,133),ll(33,134),ll(34,134),ll(34,133)],
+      /* 北海道 */
+      [ll(42,141),ll(43,141),ll(44,142),ll(44,143),ll(43,144),ll(42,143),
+       ll(41,141),ll(42,141)]
+    ]
+  },
+
+  /* ━━ 非洲 ━━ */
+  { name:'非洲', color:[57,255,20],
+    segs: [
+      [ll(36,10),ll(32,14),ll(22,14),ll(14,14),ll(6,2),ll(4,-2),
+       ll(0,8),ll(-10,16),ll(-22,14),ll(-34,18),ll(-34,26),
+       ll(-28,34),ll(-14,40),ll(-6,40),ll(4,42),ll(10,44),
+       ll(14,42),ll(22,38),ll(30,32),ll(36,30),ll(36,10)]
+    ]
+  },
+
+  /* ━━ 北美洲 ━━ */
+  { name:'北美', color:[255,107,0],
+    segs: [
+      /* 东海岸 */
+      [ll(70,-136),ll(68,-116),ll(60,-96),ll(56,-76),ll(48,-54),
+       ll(44,-66),ll(40,-74),ll(36,-76),ll(30,-82),ll(26,-80),
+       ll(24,-82),ll(22,-80)],
+      /* 墨西哥湾→西海岸 */
+      [ll(22,-80),ll(18,-88),ll(15,-90),ll(10,-84),ll(9,-78),
+       ll(9,-76),ll(14,-90),ll(22,-106),ll(28,-114),ll(32,-118),
+       ll(36,-122),ll(44,-124),ll(48,-124),ll(56,-132),ll(60,-148),
+       ll(68,-152),ll(70,-158),ll(70,-136)]
+    ]
+  },
+
+  /* ━━ 南美洲 ━━ */
+  { name:'南美', color:[191,0,255],
+    segs: [
+      [ll(12,-72),ll(10,-62),ll(4,-52),ll(-2,-44),ll(-10,-38),
+       ll(-16,-38),ll(-22,-42),ll(-30,-50),ll(-38,-58),ll(-52,-68),
+       ll(-56,-68),ll(-54,-64),ll(-48,-64),ll(-38,-58),ll(-22,-44),
+       ll(-14,-76),ll(-4,-80),ll(4,-76),ll(8,-76),ll(12,-72)]
+    ]
+  },
+
+  /* ━━ 澳大利亚 ━━ */
+  { name:'澳洲', color:[255,200,0],
+    segs: [
+      [ll(-14,128),ll(-14,136),ll(-16,136),ll(-18,146),ll(-24,154),
+       ll(-32,152),ll(-36,150),ll(-38,148),ll(-36,138),ll(-34,124),
+       ll(-26,114),ll(-22,114),ll(-20,120),ll(-16,122),ll(-14,128)]
+    ]
+  },
+
+  /* ━━ 南极洲（圆弧近似）━━ */
+  { name:'南极', color:[140,210,255],
+    segs: (function(){
+      var pts = [];
+      for (var i=0; i<=36; i++) {
+        pts.push(ll(-70, -180 + i*10));
+      }
+      return [pts];
+    })()
+  },
+
+  /* ━━ 格陵兰 ━━ */
+  { name:'格陵兰', color:[100,200,255],
+    segs: [
+      [ll(83,-34),ll(76,-18),ll(71,-22),ll(70,-52),ll(76,-68),
+       ll(80,-60),ll(83,-34)]
+    ]
+  },
+
+];
+
+/* ── 城市标注数据 ── */
+var CITIES = [
+  {name:'北京',  lat:39.9,  lon:116.4,  data:'39°N 116°E'},
+  {name:'纽约',  lat:40.7,  lon:-74.0,  data:'PKT:4821'},
+  {name:'伦敦',  lat:51.5,  lon:0.0,    data:'TLS:PASS'},
+  {name:'东京',  lat:35.7,  lon:139.7,  data:'LAT:8ms'},
+  {name:'悉尼',  lat:-33.9, lon:151.2,  data:'0xA3F2'},
+  {name:'莫斯科',lat:55.8,  lon:37.6,   data:'ID:8872'},
+  {name:'开罗',  lat:30.1,  lon:31.2,   data:'NODE:★★'},
+  {name:'圣保罗',lat:-23.5, lon:-46.6,  data:'RX:2.4G'},
+  {name:'孟买',  lat:19.1,  lon:72.9,   data:'±0.002'},
+  {name:'洛杉矶',lat:34.1,  lon:-118.2, data:'SYNC:OK'},
+];
+
+/* ── 轨道粒子 ── */
+var ORB_PARTS = [];
+(function(){
+  for (var i=0;i<28;i++) ORB_PARTS.push({type:'eq',  a:i/28*Math.PI*2, spd:0.014+Math.random()*0.008, r:1.5+Math.random()*1.2, br:0.5+Math.random()*0.5});
+  for (var j=0;j<18;j++) ORB_PARTS.push({type:'pol', a:j/18*Math.PI*2, spd:0.020+Math.random()*0.010, r:1.0+Math.random()*1.0, br:0.4+Math.random()*0.6});
+})();
+
+/* ── 标注状态 ── */
+var activeCity = null, cityT = 0, cityTimer = 0;
+/* ── 扫描波 ── */
+var sWaves = [], sWaveTimer = 0;
+
+/* ── 线段绘制辅助（处理背面→正面的跳断）── */
+function drawGeoSegment(points, rotY, sz, strokeStyle, lineWidth, shadowBlur, minVis) {
+  if (minVis === undefined) minVis = -0.05;
+  orbX.save();
+  orbX.strokeStyle = strokeStyle;
+  orbX.lineWidth   = lineWidth;
+  if (shadowBlur > 0) {
+    orbX.shadowColor = strokeStyle;
+    orbX.shadowBlur  = shadowBlur;
+  }
+  var inPath = false;
+  var prevWasVisible = false;
+  orbX.beginPath();
+  for (var i = 0; i < points.length; i++) {
+    var p = proj(points[i][0], points[i][1], rotY, sz);
+    var vis = p.visible > minVis;
+    if (vis) {
+      if (!inPath || !prevWasVisible) {
+        orbX.moveTo(p.sx, p.sy);
+      } else {
+        orbX.lineTo(p.sx, p.sy);
+      }
+      inPath = true;
+    }
+    prevWasVisible = vis;
+  }
+  orbX.stroke();
+  orbX.restore();
+}
+
+function animOrb() {
+  var sz = orbEl.width || 160;
+  if (!sz) { requestAnimationFrame(animOrb); return; }
+  var cx = sz * 0.5, cy = sz * 0.5;
+  var R  = sz * 0.405;
+
+  orbT += 1;
+  var rotY = orbT * 0.006;   /* 自转速度 */
+
+  /* ── 背景完全透明，地球直接浮在页面上，无黑边 ── */
+  orbX.clearRect(0, 0, sz, sz);
+
+  /* ── 大气晕 ── */
+  var ag = orbX.createRadialGradient(cx,cy,R*0.85, cx,cy,R*1.35);
+  ag.addColorStop(0,   'rgba(0,160,255,0.30)');
+  ag.addColorStop(0.4, 'rgba(0,200,255,0.14)');
+  ag.addColorStop(0.8, 'rgba(0,120,255,0.05)');
+  ag.addColorStop(1,   'rgba(0,60,200,0)');
+  orbX.fillStyle = ag;
+  orbX.beginPath(); orbX.arc(cx,cy,R*1.35,0,Math.PI*2); orbX.fill();
+
+  /* 海洋底色：极低透明度，不影响背景融合 */
+  var og = orbX.createRadialGradient(cx,cy*0.88,R*0.1, cx,cy,R*0.98);
+  og.addColorStop(0,   'rgba(0,80,200,0.30)');
+  og.addColorStop(0.5, 'rgba(0,50,140,0.22)');
+  og.addColorStop(1,   'rgba(0,15,60,0.12)');
+  orbX.fillStyle = og;
+  orbX.beginPath(); orbX.arc(cx,cy,R*0.98,0,Math.PI*2); orbX.fill();
+
+  /* ── 经纬线网格 ── */
+  var LATS = 7, LONS = 12, SEG = 72;
+
+  /* 纬线 */
+  for (var li=0; li<=LATS; li++) {
+    var lat = -Math.PI/2 + li/LATS * Math.PI;
+    var latPts = [];
+    for (var si=0; si<=SEG; si++) latPts.push(ll(lat/D2R, -180+si/SEG*360));
+    var la = 0.18 + 0.16*Math.abs(Math.sin(lat*2));
+    drawGeoSegment(latPts, rotY, sz,
+      'rgba(0,200,255,'+la.toFixed(3)+')', 0.6, 2);
+  }
+  /* 经线 */
+  for (var lo=0; lo<LONS; lo++) {
+    var lon = -180 + lo/LONS * 360;
+    var lonPts = [];
+    for (var si2=0; si2<=SEG; si2++) lonPts.push(ll(-90+si2/SEG*180, lon));
+    drawGeoSegment(lonPts, rotY, sz, 'rgba(0,180,240,0.18)', 0.5, 0);
+  }
+
+  /* 赤道高亮 */
+  var eqPts = [];
+  for (var si3=0; si3<=SEG; si3++) eqPts.push(ll(0, -180+si3/SEG*360));
+  drawGeoSegment(eqPts, rotY, sz, 'rgba(0,240,255,0.90)', 1.4, 12);
+
+  /* ── 大陆轮廓 ── */
+  CONTINENTS.forEach(function(cont) {
+    var c = cont.color;
+    var col = 'rgba('+c[0]+','+c[1]+','+c[2]+',1.0)';
+    var shadow = 8;
+    cont.segs.forEach(function(seg) {
+      drawGeoSegment(seg, rotY, sz, col, 1.8, shadow);
+    });
+  });
+
+  /* ── 轨道环 ── */
+  /* 赤道环：把赤道椭圆画在地球外 */
+  var tilt = 0.41;
+  var eqRx = R * 1.12;
+  var eqRy = eqRx * Math.abs(Math.cos(tilt)) * 0.25 + eqRx * Math.sin(tilt) * 0.08;
+  orbX.save();
+  orbX.strokeStyle = 'rgba(0,229,255,0.20)';
+  orbX.lineWidth = 1;
+  orbX.shadowColor = 'rgba(0,229,255,0.3)'; orbX.shadowBlur = 4;
+  orbX.beginPath(); orbX.ellipse(cx, cy, eqRx, eqRy, tilt*0.4, 0, Math.PI*2); orbX.stroke();
+  orbX.restore();
+
+  /* 极轨道环 */
+  orbX.save();
+  orbX.strokeStyle = 'rgba(191,0,255,0.18)';
+  orbX.lineWidth = 0.8;
+  orbX.setLineDash([4,5]);
+  orbX.beginPath(); orbX.ellipse(cx, cy, R*0.32, R*1.10, 0, 0, Math.PI*2); orbX.stroke();
+  orbX.setLineDash([]);
+  orbX.restore();
+
+  /* 轨道粒子 */
+  ORB_PARTS.forEach(function(p) {
+    p.a += p.spd;
+    var px2, py2;
+    if (p.type==='eq') {
+      px2 = cx + Math.cos(p.a)*eqRx;
+      py2 = cy + Math.sin(p.a)*eqRy + Math.cos(p.a)*eqRx*Math.sin(tilt*0.4)*0.1;
+    } else {
+      px2 = cx + Math.cos(p.a)*R*0.32;
+      py2 = cy + Math.sin(p.a)*R*1.10;
+    }
+    orbX.save();
+    orbX.globalAlpha = p.br*(0.75+0.25*Math.sin(orbT*0.06+p.a));
+    orbX.fillStyle   = p.type==='eq'?'#00e5ff':'#bf00ff';
+    orbX.shadowColor = p.type==='eq'?'#00e5ff':'#bf00ff';
+    orbX.shadowBlur  = p.r*9;
+    orbX.beginPath(); orbX.arc(px2,py2,p.r,0,Math.PI*2); orbX.fill();
+    orbX.restore();
+  });
+
+  /* ── 城市标注 ── */
+  cityTimer++;
+  if (!activeCity && cityTimer > 80+Math.random()*100) {
+    cityTimer = 0;
+    var pick = CITIES[Math.floor(Math.random()*CITIES.length)];
+    var tp = proj(pick.lat*D2R, pick.lon*D2R, rotY, sz);
+    if (tp.visible > 0.15) { activeCity=pick; cityT=0; }
+  }
+  if (activeCity) {
+    cityT++;
+    var totF = 50+140+40;
+    if (cityT >= totF) { activeCity=null; }
+    else {
+      var aA = cityT<50 ? cityT/50 : cityT<190 ? 1 : 1-(cityT-190)/40;
+      aA = Math.max(0,Math.min(1,aA));
+      var cp = proj(activeCity.lat*D2R, activeCity.lon*D2R, rotY, sz);
+      if (cp.visible > 0) {
+        var toLeft = cp.sx < cx;
+        var midX   = toLeft ? cp.sx-sz*0.10 : cp.sx+sz*0.10;
+        var edgeX  = toLeft ? sz*0.02 : sz*0.98;
+        var edgeY  = cp.sy + (Math.random()<0.5?-sz*0.04:sz*0.04)*aA;
+        orbX.save();
+        orbX.globalAlpha = aA;
+        /* 城市脉冲点 */
+        orbX.fillStyle='#fff'; orbX.shadowColor='#00e5ff'; orbX.shadowBlur=10;
+        orbX.beginPath(); orbX.arc(cp.sx,cp.sy,2.2,0,Math.PI*2); orbX.fill();
+        var pulse=(cityT%38)/38;
+        orbX.strokeStyle='rgba(0,229,255,'+(0.8*(1-pulse))+')';
+        orbX.lineWidth=0.9; orbX.shadowBlur=4;
+        orbX.beginPath(); orbX.arc(cp.sx,cp.sy,3+pulse*11,0,Math.PI*2); orbX.stroke();
+        /* 引线 */
+        orbX.strokeStyle='#00e5ff'; orbX.lineWidth=0.9;
+        orbX.shadowColor='#00e5ff'; orbX.shadowBlur=5;
+        orbX.beginPath(); orbX.moveTo(cp.sx,cp.sy); orbX.lineTo(midX,edgeY); orbX.lineTo(edgeX,edgeY); orbX.stroke();
+        /* 端线 */
+        var bL=sz*0.045;
+        orbX.lineWidth=1.2;
+        orbX.beginPath();
+        orbX.moveTo(edgeX+(toLeft?-bL:0),edgeY); orbX.lineTo(edgeX+(toLeft?0:bL),edgeY); orbX.stroke();
+        /* 文字 */
+        orbX.font='bold '+(sz*0.072)+'px "Share Tech Mono",monospace';
+        orbX.fillStyle='#00e5ff'; orbX.shadowColor='#00e5ff'; orbX.shadowBlur=10;
+        orbX.textAlign=toLeft?'right':'left';
+        var tx=edgeX+(toLeft?-bL-2:bL+2);
+        orbX.fillText(activeCity.name, tx, edgeY-1);
+        orbX.globalAlpha=aA*0.65;
+        orbX.font=(sz*0.054)+'px "Share Tech Mono",monospace';
+        orbX.fillStyle='#fff'; orbX.shadowBlur=3;
+        orbX.fillText(activeCity.data, tx, edgeY+sz*0.074);
+        orbX.textAlign='left';
+        orbX.restore();
+      }
+    }
+  }
+
+  /* ── 扫描波纹 ── */
+  sWaveTimer++;
+  if (sWaveTimer>110) { sWaveTimer=0; sWaves.push({r:R*0.08,life:1}); }
+  sWaves = sWaves.filter(function(w){
+    w.r+=R*0.018; w.life-=0.02;
+    if(w.life<=0) return false;
+    orbX.save();
+    orbX.globalAlpha=w.life*0.30;
+    orbX.strokeStyle='rgba(0,229,255,1.0)'; orbX.lineWidth=1.3;
+    orbX.shadowColor='rgba(0,229,255,0.8)'; orbX.shadowBlur=14;
+    orbX.beginPath(); orbX.arc(cx,cy,w.r,0,Math.PI*2); orbX.stroke();
+    orbX.restore();
+    return true;
+  });
+
+  /* ── 极光 ── */
+  var ag2 = orbX.createRadialGradient(cx, cy-R*0.72, 0, cx, cy-R*0.72, R*0.42);
+  var ap = 0.12+0.08*Math.sin(orbT*0.025);
+  ag2.addColorStop(0, 'rgba(57,255,100,'+ap*3+')');
+  ag2.addColorStop(1, 'rgba(0,200,255,0)');
+  orbX.fillStyle=ag2;
+  orbX.beginPath(); orbX.arc(cx,cy-R*0.72,R*0.42,0,Math.PI*2); orbX.fill();
+
+  /* ── HUD ── */
+  orbX.save();
+  orbX.font=(sz*0.042)+'px "Share Tech Mono",monospace';
+  orbX.fillStyle='rgba(0,229,255,0.22)';
+  var ld=Math.floor(((rotY%(Math.PI*2))/(Math.PI*2))*360);
+  orbX.fillText('LON:'+ld+'°', 3, sz-14);
+  orbX.fillText('F:'+String(orbT).padStart(5,'0'), 3, sz-4);
+  orbX.textAlign='right';
+  orbX.fillText('GEO-SCAN', sz-3, sz-4);
+  orbX.fillText('TILT:23.5°', sz-3, sz-14);
+  orbX.textAlign='left';
+  orbX.restore();
+
+  requestAnimationFrame(animOrb);
+}
+
 /* ══════════════════════════════
    SHOCKWAVE RINGS
 ══════════════════════════════ */
@@ -755,12 +1229,182 @@ var radarX=radarEl.getContext('2d');
 var radarAngle=0;
 var radarDots=[];
 
+/* ══ 进程列表：根据用户真实浏览器环境生成最拟真进程名 ══
+   原理：
+   1. 用 navigator.userAgent 判断操作系统（Win/Mac/Linux/Android/iOS）
+   2. 用 performance.memory（Chrome专属）获取真实已用内存，
+      按比例分配给各进程，让数值高度拟真
+   3. 用 navigator.hardwareConcurrency（CPU核心数）影响系统进程数量
+   4. 用 navigator.deviceMemory（设备内存GB）影响总内存基数
+   ═══════════════════════════════════════════════════════════ */
+(function detectAndBuildProcesses(){
+  var ua = navigator.userAgent;
+  var isWin  = /Windows/i.test(ua);
+  var isMac  = /Mac OS X/i.test(ua) && !/iPhone|iPad/.test(ua);
+  var isLinux= /Linux/i.test(ua) && !/Android/.test(ua);
+  var isAndroid = /Android/i.test(ua);
+  var isIOS  = /iPhone|iPad/.test(ua);
+
+  /* 真实可读值 */
+  var hasMem  = typeof performance !== 'undefined' && performance.memory;
+  var realUsedMB = hasMem ? Math.round(performance.memory.usedJSHeapSize / 1048576) : 0;
+  var totalRamGB = navigator.deviceMemory || 4;
+  var totalRamMB = totalRamGB * 1024;
+  var cpuCores   = navigator.hardwareConcurrency || 4;
+
+  /* 浏览器名 */
+  var isChrome  = /Chrome\//.test(ua) && !/Edg\//.test(ua);
+  var isEdge    = /Edg\//.test(ua);
+  var isFirefox = /Firefox\//.test(ua);
+  var isSafari  = /Safari\//.test(ua) && !isChrome;
+
+  /* Chrome版本号 */
+  var chromeVer = '';
+  var cmatch = ua.match(/Chrome\/([\d.]+)/);
+  if (cmatch) chromeVer = cmatch[1].split('.')[0];
+
+  /* ── 按平台构建进程池（真实进程名，MB为基础值） ── */
+  var pool = [];
+
+  if (isWin) {
+    pool = [
+      {cn:'系统进程',     raw:'System',               base: Math.round(totalRamMB*0.04)},
+      {cn:'资源管理器',   raw:'explorer.exe',          base: Math.round(totalRamMB*0.025)},
+      {cn:'安全中心',     raw:'MsMpEng.exe',           base: Math.round(totalRamMB*0.06)},
+      {cn:'音频图形',     raw:'audiodg.exe',           base: 68},
+      {cn:'服务主机',     raw:'svchost.exe',           base: Math.round(totalRamMB*0.09)},
+      {cn:'运行时代理',   raw:'RuntimeBroker.exe',     base: 92},
+      {cn:'搜索服务',     raw:'SearchIndexer.exe',     base: Math.round(totalRamMB*0.03)},
+      {cn:'更新服务',     raw:'WaaSMedicSvc.exe',      base: 74},
+      {cn:'桌面窗口',     raw:'dwm.exe',               base: Math.round(totalRamMB*0.022)},
+      {cn:'系统中断',     raw:'System Interrupts',     base: 12},
+      {cn:'安全账户',     raw:'lsass.exe',             base: 56},
+      {cn:'网络位置',     raw:'NlaSvc.exe',            base: 34},
+      {cn:'打印后台',     raw:'spoolsv.exe',           base: 28},
+      {cn:'COM代理',      raw:'dllhost.exe',           base: 44},
+    ];
+    if (cpuCores >= 8) {
+      pool.push({cn:'CPU调度',   raw:'csrss.exe',      base: 22});
+      pool.push({cn:'任务调度',  raw:'taskeng.exe',    base: 18});
+    }
+  } else if (isMac) {
+    pool = [
+      {cn:'内核任务',     raw:'kernel_task',           base: Math.round(totalRamMB*0.08)},
+      {cn:'窗口服务',     raw:'WindowServer',          base: Math.round(totalRamMB*0.05)},
+      {cn:'系统UI',       raw:'SystemUIServer',        base: 88},
+      {cn:'聚焦搜索',     raw:'Spotlight',             base: Math.round(totalRamMB*0.04)},
+      {cn:'安全守护',     raw:'trustd',                base: 62},
+      {cn:'同步服务',     raw:'cloudd',                base: Math.round(totalRamMB*0.035)},
+      {cn:'通知中心',     raw:'usernoted',             base: 44},
+      {cn:'蓝牙守护',     raw:'bluetoothd',            base: 38},
+      {cn:'网络守护',     raw:'configd',               base: 52},
+      {cn:'DNS解析',      raw:'mDNSResponder',         base: 34},
+      {cn:'音频服务',     raw:'coreaudiod',            base: 58},
+      {cn:'位置服务',     raw:'locationd',             base: 42},
+      {cn:'助理守护',     raw:'assistantd',            base: Math.round(totalRamMB*0.03)},
+      {cn:'存储守护',     raw:'storagekitd',           base: 28},
+    ];
+  } else if (isAndroid) {
+    pool = [
+      {cn:'系统服务',     raw:'system_server',         base: Math.round(totalRamMB*0.12)},
+      {cn:'界面渲染',     raw:'surfaceflinger',        base: Math.round(totalRamMB*0.06)},
+      {cn:'输入法',       raw:'com.android.inputmethod',base: 88},
+      {cn:'系统UI',       raw:'com.android.systemui',  base: Math.round(totalRamMB*0.05)},
+      {cn:'电话服务',     raw:'com.android.phone',     base: 72},
+      {cn:'媒体服务',     raw:'mediaserver',           base: 94},
+      {cn:'音频焦点',     raw:'audioserver',           base: 56},
+      {cn:'相机服务',     raw:'cameraserver',          base: 82},
+      {cn:'网络管理',     raw:'netd',                  base: 44},
+      {cn:'GPS守护',      raw:'gpsd',                  base: 36},
+    ];
+  } else if (isIOS) {
+    pool = [
+      {cn:'SpringBoard',  raw:'SpringBoard',           base: Math.round(totalRamMB*0.10)},
+      {cn:'渲染服务',     raw:'backboardd',            base: Math.round(totalRamMB*0.06)},
+      {cn:'系统应用',     raw:'MobilePhone',           base: 68},
+      {cn:'推送服务',     raw:'apsd',                  base: 52},
+      {cn:'位置服务',     raw:'locationd',             base: 46},
+      {cn:'崩溃报告',     raw:'ReportCrash',           base: 38},
+      {cn:'媒体守护',     raw:'mediaserverd',          base: 84},
+      {cn:'蓝牙',         raw:'BTServer',              base: 42},
+    ];
+  } else {
+    /* Linux */
+    pool = [
+      {cn:'系统守护',     raw:'systemd',               base: Math.round(totalRamMB*0.03)},
+      {cn:'内核线程',     raw:'kthreadd',              base: 8},
+      {cn:'桌面环境',     raw:'gnome-shell',           base: Math.round(totalRamMB*0.07)},
+      {cn:'显示服务',     raw:'Xorg',                  base: Math.round(totalRamMB*0.04)},
+      {cn:'网络管理',     raw:'NetworkManager',        base: 56},
+      {cn:'音频服务',     raw:'pulseaudio',            base: 72},
+      {cn:'蓝牙守护',     raw:'bluetoothd',            base: 44},
+      {cn:'日志服务',     raw:'journald',              base: 38},
+      {cn:'DNS解析',      raw:'systemd-resolved',      base: 34},
+      {cn:'时间同步',     raw:'chronyd',               base: 22},
+      {cn:'打印服务',     raw:'cupsd',                 base: 28},
+      {cn:'Wifi管理',     raw:'wpa_supplicant',        base: 36},
+    ];
+  }
+
+  /* 加入当前浏览器进程（带真实版本号） */
+  var browserName = isChrome ? 'Chrome'+(chromeVer?'/'+chromeVer:'') :
+                    isEdge   ? 'msedge' :
+                    isFirefox? 'firefox' : 'Safari';
+  var heapMB = realUsedMB > 0 ? realUsedMB : Math.round(totalRamMB * 0.08);
+  pool.push({cn:'浏览器主进程', raw:browserName,       base: heapMB + 80});
+  pool.push({cn:'浏览器渲染',   raw:browserName+' Renderer', base: heapMB});
+  pool.push({cn:'浏览器GPU',    raw:browserName+' GPU',      base: Math.round(heapMB*0.6)});
+  pool.push({cn:'浏览器网络',   raw:browserName+' Network',  base: Math.round(heapMB*0.25)});
+
+  /* 分配内存值（base ± 随机浮动 ±20%） */
+  pool = pool.map(function(p) {
+    var mem = Math.round(p.base * (0.82 + Math.random() * 0.36));
+    return {
+      cn: p.cn,
+      raw: p.raw,
+      mem: Math.max(4, mem),
+      pid: Math.floor(100 + Math.random() * 65000),
+      pct: 0
+    };
+  });
+
+  /* 按内存降序，取前10 */
+  pool.sort(function(a,b){ return b.mem - a.mem; });
+  var top10 = pool.slice(0, 10);
+  var maxMem = top10[0].mem;
+  top10.forEach(function(p){ p.pct = p.mem / maxMem; });
+
+  window.PROC_LIST = top10;
+})();
+/* 兼容后续直接读取 PROC_LIST 的代码 */
+var PROC_LIST = window.PROC_LIST;
+
 function initRadar(){
   var wrap=document.getElementById('radar-wrap');
-  var sz=Math.min(wrap.offsetWidth||180, wrap.offsetHeight||180, 220);
+  /* 强制正方形：取宽度为准 */
+  var w=wrap.offsetWidth||180;
+  var sz=Math.min(w,220);
   radarEl.width=sz; radarEl.height=sz;
   radarDots=[];
-  for(var i=0;i<7;i++) radarDots.push({a:Math.random()*Math.PI*2,r:.15+Math.random()*.78,age:0});
+  /* 从PROC_LIST前10中，随机选6~9个展示在雷达上 */
+  var n=6+Math.floor(Math.random()*4);
+  var picks=PROC_LIST.slice().sort(function(){return Math.random()-.5;}).slice(0,n);
+  picks.forEach(function(p){
+    /* 内存越大的进程，距中心越近（越"活跃"） */
+    var rMax=.85, rMin=.15;
+    var r=rMax-(rMax-rMin)*p.pct+Math.random()*.15;
+    radarDots.push({
+      a:Math.random()*Math.PI*2,
+      r:Math.max(rMin,Math.min(rMax,r)),
+      age:0, maxAge:500+Math.random()*800,
+      name:p.cn,
+      mem:p.mem,
+      pid:p.pid,
+      pct:p.pct,
+      col:p.pct>.7?'#ff003c':(p.pct>.4?'#ff6a00':'#39ff14'),
+      size:1.8+p.pct*2.5
+    });
+  });
 }
 
 function animRadar(){
@@ -795,16 +1439,46 @@ function animRadar(){
   /* dots */
   radarDots.forEach(function(d){
     d.age++;
-    if(d.age>300){d.age=0;d.a=Math.random()*Math.PI*2;d.r=.15+Math.random()*.78;}
+    if(d.age>d.maxAge){
+      /* 进程消失，随机换一个新进程 */
+      d.age=0; d.maxAge=400+Math.random()*600;
+      d.a=Math.random()*Math.PI*2; d.r=.12+Math.random()*.82;
+      var nm; do{ nm=PROC_NAMES[Math.floor(Math.random()*PROC_NAMES.length)]; }while(false);
+      d.name=nm; d.pid=Math.floor(1000+Math.random()*60000);
+      d.port=Math.floor(1024+Math.random()*60000);
+    }
     var da=((d.a-radarAngle)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);
     var br=da<.5?1-da/.5:0;
-    if(br>.0){
-      var px=cx+Math.cos(d.a)*d.r*R, py=cy+Math.sin(d.a)*d.r*R;
+    var px=cx+Math.cos(d.a)*d.r*R, py=cy+Math.sin(d.a)*d.r*R;
+    /* 持续微弱显示（被扫到后留存） */
+    var persistAlpha=Math.max(0, 1-(d.age/d.maxAge))*.35;
+    var alpha=Math.max(persistAlpha, br>.0 ? .3+br*.7 : 0);
+    if(alpha>.02){
       radarX.save();
-      radarX.globalAlpha=.25+br*.75;
-      radarX.fillStyle='#39ff14'; radarX.shadowColor='#39ff14'; radarX.shadowBlur=6+br*10;
-      radarX.beginPath(); radarX.arc(px,py,2+br*1.5,0,Math.PI*2); radarX.fill();
+      radarX.globalAlpha=alpha;
+      radarX.fillStyle=d.col; radarX.shadowColor=d.col;
+      radarX.shadowBlur=d.size*3+br*12;
+      radarX.beginPath(); radarX.arc(px,py,d.size+br*1.8,0,Math.PI*2); radarX.fill();
       radarX.restore();
+      /* 进程名标签（仅在被扫到时显示） */
+      if(br>.15||persistAlpha>.12){
+        radarX.save();
+        var lblAlpha=Math.max(persistAlpha*.6, br*.9);
+        radarX.globalAlpha=lblAlpha;
+        radarX.font='bold '+(sz*.055)+'px "Share Tech Mono",monospace';
+        radarX.fillStyle=d.col;
+        radarX.shadowColor=d.col; radarX.shadowBlur=4;
+        /* 标签避免超出边界 */
+        var lx=px+6, ly=py-4;
+        if(lx+sz*.18>sz) lx=px-sz*.20;
+        if(ly<8) ly=py+14;
+        radarX.fillText(d.name.replace('.exe',''), lx, ly);
+        /* PID */
+        radarX.globalAlpha=lblAlpha*.55;
+        radarX.font=(sz*.042)+'px "Share Tech Mono",monospace';
+        radarX.fillText(':'+d.port, lx, ly+(sz*.065));
+        radarX.restore();
+      }
     }
   });
   requestAnimationFrame(animRadar);
@@ -824,7 +1498,11 @@ function resizeAct(){
 }
 
 function pushActSample(v){
-  actSamples.push(v+Math.random()*.08-.04);
+  /* 随机波动：基础值 + 高频噪声 + 低频起伏 */
+  var noise=Math.random()*.14-.07;
+  var wave=Math.sin(actSamples.length*.18)*0.08;
+  var spike=(Math.random()<.04)?(Math.random()*.35):0;
+  actSamples.push(Math.max(0,Math.min(1, v+noise+wave+spike)));
   var mx=actEl.width/2;
   if(actSamples.length>mx) actSamples.shift();
 }
@@ -858,12 +1536,12 @@ function clamp(lo,v,hi){return Math.max(lo,Math.min(v,hi));}
 function resizeAll(){
   W=window.innerWidth; H=window.innerHeight;
   [pC,hC,rC].forEach(function(c){c.width=W;c.height=H;});
-  initParticles(); buildHexGrid(); initRadar(); resizeAct();
+  initParticles(); buildHexGrid(); initRadar(); resizeAct(); resizeOrb();
 }
 window.addEventListener('resize',function(){resizeAll();});
 resizeAll();
 
-animPlasma(); animHex(); animRings(); animRadar(); animAct();
+resizeOrb(); animOrb(); animPlasma(); animHex(); animRings(); animRadar(); animAct();
 
 })();
 </script>
