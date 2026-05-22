@@ -7,327 +7,345 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap">
 <style>
-/* ─────────────────────────────────────────
-   RESET
-───────────────────────────────────────── */
+/* ── RESET ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --c0:#00e5ff;   /* electric cyan  */
-  --c1:#ff003c;   /* alert red      */
-  --c2:#39ff14;   /* neon green     */
-  --c3:#bf00ff;   /* plasma purple  */
-  --c4:#ff6a00;   /* amber          */
-  --bg:#000913;
-  --panel:rgba(0,9,25,.88);
-  --edge:rgba(0,229,255,.18);
-  --glow:rgba(0,229,255,.06);
+  --c0:#00e5ff;--c1:#ff003c;--c2:#39ff14;--c3:#bf00ff;--c4:#ff6a00;
+  --bg:#000913;--panel:rgba(0,9,25,.88);--edge:rgba(0,229,255,.18);
   --fmono:'Share Tech Mono',monospace;
   --ftitle:'Orbitron',sans-serif;
   --fbody:'Rajdhani',sans-serif;
 }
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:var(--fmono);color:var(--c0)}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);
+  font-family:var(--fmono);color:var(--c0)}
 
-/* ─────────────────────────────────────────
-   LAYER STACK
-───────────────────────────────────────── */
-#plasma-canvas{position:fixed;inset:0;z-index:1}
-#hex-canvas   {position:fixed;inset:0;z-index:2;opacity:.55}
-#ring-canvas  {position:fixed;inset:0;z-index:3}
-#noise        {position:fixed;inset:0;z-index:4;pointer-events:none;
-               background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-               background-size:200px;opacity:.4;mix-blend-mode:screen}
-#scanline     {position:fixed;inset:0;z-index:5;pointer-events:none;
-               background:repeating-linear-gradient(0deg,transparent 0px,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px)}
-#vignette     {position:fixed;inset:0;z-index:6;pointer-events:none;
-               background:radial-gradient(ellipse 80% 80% at 50% 50%,transparent 35%,rgba(0,0,8,.75) 100%)}
-
-/* moving scan beam */
+/* ── BG LAYERS ── */
+#plasma-canvas,#hex-canvas,#ring-canvas{position:fixed;inset:0}
+#plasma-canvas{z-index:1}
+#hex-canvas{z-index:2;opacity:.55}
+#ring-canvas{z-index:3}
+#noise{position:fixed;inset:0;z-index:4;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-size:200px;opacity:.4;mix-blend-mode:screen}
+#scanline{position:fixed;inset:0;z-index:5;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px)}
+#vignette{position:fixed;inset:0;z-index:6;pointer-events:none;
+  background:radial-gradient(ellipse 80% 80% at 50% 50%,transparent 35%,rgba(0,0,8,.75) 100%)}
 #beam{position:fixed;left:0;right:0;height:2px;z-index:7;pointer-events:none;
-      background:linear-gradient(90deg,transparent,rgba(0,229,255,.25),rgba(0,229,255,.55),rgba(0,229,255,.25),transparent);
-      box-shadow:0 0 22px rgba(0,229,255,.4);
-      animation:beamDown 5s linear infinite}
+  background:linear-gradient(90deg,transparent,rgba(0,229,255,.25),rgba(0,229,255,.55),rgba(0,229,255,.25),transparent);
+  box-shadow:0 0 22px rgba(0,229,255,.4);animation:beamDown 5s linear infinite}
 @keyframes beamDown{0%{top:-2px}100%{top:100%}}
 
-/* ─────────────────────────────────────────
-   MAIN SHELL  – full-screen flex
-───────────────────────────────────────── */
+/* ── SHELL：固定全屏，flex列 ── */
 #shell{
   position:fixed;inset:0;z-index:10;
   display:flex;flex-direction:column;
-  padding:clamp(8px,1.8vw,18px);
-  gap:clamp(6px,1.2vw,12px);
+  padding:clamp(8px,1.5vw,16px);
+  gap:clamp(5px,1vw,10px);
   pointer-events:none;
 }
 
-/* ═══ TOP BAR ═══ */
+/* ── TOP BAR ── */
 #topbar{
-  display:flex;align-items:center;gap:clamp(8px,1.5vw,16px);
-  padding:clamp(7px,1.2vw,12px) clamp(10px,2vw,20px);
-  border:1px solid var(--edge);
-  border-top:2px solid var(--c0);
-  border-radius:2px;
-  background:var(--panel);
-  backdrop-filter:blur(24px);
-  position:relative;overflow:hidden;flex-shrink:0;
+  flex-shrink:0;
+  display:flex;align-items:center;gap:clamp(8px,1.5vw,14px);
+  padding:clamp(6px,1vw,11px) clamp(10px,1.8vw,18px);
+  border:1px solid var(--edge);border-top:2px solid var(--c0);border-radius:2px;
+  background:var(--panel);backdrop-filter:blur(24px);
+  position:relative;overflow:hidden;
 }
-/* animated top border glow */
 #topbar::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:2px;
   background:linear-gradient(90deg,transparent,var(--c0),var(--c3),var(--c0),transparent);
   animation:topSweep 3s linear infinite}
 @keyframes topSweep{to{left:160%}}
-
-.logo-wrap{display:flex;align-items:center;gap:.55rem;flex-shrink:0}
-.logo-emblem{width:clamp(26px,3.5vw,36px);height:clamp(26px,3.5vw,36px)}
-.logo-txt{font-family:var(--ftitle);font-size:clamp(.58rem,1.2vw,.78rem);
-  font-weight:900;letter-spacing:.22em;color:var(--c0);
-  text-shadow:0 0 18px var(--c0),0 0 40px rgba(0,229,255,.4);white-space:nowrap}
-.logo-sub{font-size:clamp(.38rem,.7vw,.48rem);letter-spacing:.3em;
-  color:rgba(0,229,255,.35);margin-top:1px;white-space:nowrap}
-
-.topbar-mid{flex:1;text-align:center;overflow:hidden}
-.topbar-doc{font-family:var(--ftitle);font-size:clamp(.55rem,1.3vw,.82rem);
-  font-weight:700;letter-spacing:.12em;
-  background:linear-gradient(90deg,var(--c0),#fff,var(--c3),var(--c0));
+.logo-wrap{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+.logo-emblem{width:clamp(24px,3.2vw,34px);height:clamp(24px,3.2vw,34px)}
+.logo-txt{font-family:var(--ftitle);font-size:clamp(.56rem,1.1vw,.75rem);font-weight:900;
+  letter-spacing:.2em;color:var(--c0);text-shadow:0 0 18px var(--c0);white-space:nowrap}
+.logo-sub{font-size:clamp(.36rem,.65vw,.46rem);letter-spacing:.28em;
+  color:rgba(0,229,255,.32);margin-top:1px;white-space:nowrap}
+.topbar-mid{flex:1;text-align:center;overflow:hidden;min-width:0}
+.topbar-doc{font-family:var(--ftitle);font-size:clamp(.52rem,1.2vw,.78rem);font-weight:700;
+  letter-spacing:.12em;background:linear-gradient(90deg,var(--c0),#fff,var(--c3),var(--c0));
   background-size:300%;-webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;animation:docFlow 4s linear infinite;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
 @keyframes docFlow{0%{background-position:0%}100%{background-position:300%}}
-.topbar-sub{font-size:clamp(.38rem,.65vw,.5rem);letter-spacing:.18em;
-  color:rgba(0,229,255,.3);margin-top:2px}
-
+.topbar-sub{font-size:clamp(.34rem,.58vw,.46rem);letter-spacing:.16em;
+  color:rgba(0,229,255,.28);margin-top:2px}
 .abort-btn{
   display:flex;align-items:center;gap:.4rem;flex-shrink:0;pointer-events:all;
-  padding:clamp(5px,.9vw,9px) clamp(10px,1.8vw,18px);
+  padding:clamp(4px,.8vw,8px) clamp(9px,1.6vw,16px);
   border:1px solid rgba(255,0,60,.35);border-radius:2px;
   background:rgba(255,0,60,.06);color:rgba(255,80,100,.8);
-  font-family:var(--fmono);font-size:clamp(.48rem,.9vw,.6rem);
-  letter-spacing:.15em;text-decoration:none;cursor:pointer;
+  font-family:var(--fmono);font-size:clamp(.46rem,.85vw,.58rem);
+  letter-spacing:.14em;text-decoration:none;cursor:pointer;
   transition:all .18s;white-space:nowrap}
 .abort-btn:hover{border-color:var(--c1);background:rgba(255,0,60,.14);
-  color:#fff;box-shadow:0 0 20px rgba(255,0,60,.35),inset 0 0 16px rgba(255,0,60,.08)}
+  color:#fff;box-shadow:0 0 20px rgba(255,0,60,.35)}
 .abort-btn svg{flex-shrink:0}
 
-/* ═══ BODY ROW ═══ */
+/* ── BODY ROW：左主面板 + 右边栏 ── */
 #body-row{
   flex:1;min-height:0;
   display:grid;
-  grid-template-columns:1fr clamp(200px,26vw,320px);
-  gap:clamp(6px,1.2vw,12px);
+  grid-template-columns:1fr clamp(180px,24vw,300px);
+  gap:clamp(5px,1vw,10px);
 }
 
-/* ─── LEFT: MAIN PANEL ─── */
+/* ── MAIN PANEL ── */
 #main-panel{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:clamp(12px,2vw,24px);
-  padding:clamp(16px,3vw,40px) clamp(14px,2.5vw,32px);
-  padding-bottom:clamp(52px,7vw,70px); /* 为底部绝对定位标签留空 */
+  min-height:0;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:space-evenly;  /* 均匀分布，不会溢出 */
+  padding:clamp(10px,1.8vw,22px) clamp(12px,2vw,28px);
   border:1px solid var(--edge);border-radius:2px;
   background:var(--panel);backdrop-filter:blur(24px);
-  position:relative;overflow:hidden;
+  position:relative;
+  gap:0; /* 不用gap，用space-evenly */
 }
-/* corner brackets */
-.mp-corner{position:absolute;width:clamp(20px,3vw,30px);height:clamp(20px,3vw,30px);pointer-events:none}
-.mp-corner::before,.mp-corner::after{content:'';position:absolute;background:var(--c0);
-  box-shadow:0 0 8px var(--c0)}
+.mp-corner{position:absolute;width:clamp(18px,2.5vw,26px);height:clamp(18px,2.5vw,26px);pointer-events:none}
+.mp-corner::before,.mp-corner::after{content:'';position:absolute;background:var(--c0);box-shadow:0 0 7px var(--c0)}
 .mp-corner::before{width:2px;height:100%}
 .mp-corner::after{width:100%;height:2px}
-.mp-corner.tl{top:8px;left:8px}.mp-corner.tr{top:8px;right:8px;transform:scaleX(-1)}
-.mp-corner.bl{bottom:8px;left:8px;transform:scaleY(-1)}.mp-corner.br{bottom:8px;right:8px;transform:scale(-1,-1)}
+.mp-corner.tl{top:7px;left:7px}.mp-corner.tr{top:7px;right:7px;transform:scaleX(-1)}
+.mp-corner.bl{bottom:7px;left:7px;transform:scaleY(-1)}.mp-corner.br{bottom:7px;right:7px;transform:scale(-1,-1)}
 
-/* live red dot */
-.live-badge{display:flex;align-items:center;gap:.4rem;
-  font-size:clamp(.42rem,.75vw,.54rem);letter-spacing:.2em;color:rgba(255,0,60,.75)}
+/* live badge */
+.live-badge{display:flex;align-items:center;gap:.38rem;flex-shrink:0;
+  font-size:clamp(.4rem,.7vw,.52rem);letter-spacing:.18em;color:rgba(255,0,60,.75)}
 .live-dot{width:6px;height:6px;border-radius:50%;background:var(--c1);
   box-shadow:0 0 8px var(--c1);animation:livePulse .9s ease-in-out infinite alternate}
 @keyframes livePulse{from{opacity:.5;transform:scale(.7)}to{opacity:1;transform:scale(1.3)}}
 
-/* target label */
-.tgt-label{font-size:clamp(.42rem,.75vw,.54rem);letter-spacing:.3em;
-  color:rgba(0,229,255,.35);text-transform:uppercase}
-.tgt-name{
-  font-family:var(--ftitle);font-weight:900;text-align:center;
-  font-size:clamp(.85rem,2.3vw,1.4rem);letter-spacing:.1em;
-  color:#fff;text-shadow:0 0 30px var(--c0),0 0 60px rgba(0,229,255,.3);
-  line-height:1.3;word-break:break-word;max-width:100%;
-}
+/* target label + name */
+.tgt-label{font-size:clamp(.38rem,.68vw,.5rem);letter-spacing:.28em;
+  color:rgba(0,229,255,.32);text-transform:uppercase;flex-shrink:0}
+.tgt-name{font-family:var(--ftitle);font-weight:900;text-align:center;
+  font-size:clamp(.78rem,2vw,1.25rem);letter-spacing:.09em;
+  color:#fff;text-shadow:0 0 25px var(--c0),0 0 50px rgba(0,229,255,.25);
+  line-height:1.25;word-break:break-word;max-width:100%;flex-shrink:0}
 
-/* ─── ORBITAL RINGS ─── */
+/* ── 地球 canvas 容器
+   关键修复：不用 overflow:visible，改用固定宽高，
+   canvas 比容器大 via negative margin，但容器保持在文档流中 ── */
 .orb-wrap{
-  position:relative;flex-shrink:0;
-  /* 1.2倍: 108*1.2=130, 175*1.2=210 */
-  width:clamp(130px,19.4vw,210px);height:clamp(130px,19.4vw,210px);
-  overflow:visible;  /* 允许地球渲染超出容器 */
+  flex-shrink:0;
+  width:clamp(120px,17vw,195px);
+  height:clamp(120px,17vw,195px);
+  position:relative;
+  /* 不用 overflow:visible！canvas 在内部居中，用 transform 放大 */
 }
 #orb-canvas{
   position:absolute;
-  /* 地球向四周溢出，扩大渲染区域消除黑边视觉 */
   top:50%;left:50%;
+  /* 渲染尺寸比容器大50%，但视觉上透明，不会产生黑边或遮挡 */
   transform:translate(-50%,-50%);
-  width:100%;height:100%;
+  width:150%;height:150%;
   display:block;
-  background:transparent !important;
+  /* 完全透明背景，无任何填充 */
 }
 
-/* ─── PERCENT BIG ─── */
-.pct-row{display:flex;align-items:baseline;gap:.15rem;line-height:1}
+/* ── PERCENT ── */
+.pct-row{display:flex;align-items:baseline;gap:.12rem;line-height:1;flex-shrink:0}
 .pct-big{
   font-family:var(--ftitle);font-weight:900;
-  font-size:clamp(3rem,10vw,6.5rem);
+  font-size:clamp(2.5rem,8vw,5.5rem);
   color:var(--c0);letter-spacing:-.02em;
-  text-shadow:0 0 40px var(--c0),0 0 100px rgba(0,229,255,.35),0 0 2px #fff;
-  font-variant-numeric:tabular-nums;
-  transition:text-shadow .15s;
+  text-shadow:0 0 35px var(--c0),0 0 80px rgba(0,229,255,.3),0 0 2px #fff;
+  font-variant-numeric:tabular-nums;transition:text-shadow .15s;
 }
-.pct-sym{font-family:var(--ftitle);font-size:clamp(1.2rem,3.5vw,2.4rem);
-  color:rgba(0,229,255,.45);font-weight:700}
+.pct-sym{font-family:var(--ftitle);font-size:clamp(1rem,3vw,2rem);
+  color:rgba(0,229,255,.42);font-weight:700}
 
-/* ─── PROGRESS BARS ─── */
-.prog-system{width:100%;display:flex;flex-direction:column;gap:clamp(8px,1.4vw,14px)}
-
-/* master bar */
+/* ── PROGRESS SYSTEM ── */
+.prog-system{width:100%;display:flex;flex-direction:column;
+  gap:clamp(5px,1vw,10px);flex-shrink:0}
 .master-track{
-  position:relative;width:100%;height:clamp(10px,1.6vw,16px);
-  border-radius:1px;
-  background:rgba(0,229,255,.05);
-  border:1px solid rgba(0,229,255,.16);
-  overflow:visible;
+  position:relative;width:100%;height:clamp(8px,1.3vw,13px);
+  border-radius:1px;background:rgba(0,229,255,.05);
+  border:1px solid rgba(0,229,255,.15);overflow:visible;
 }
 .master-fill{
   height:100%;width:0%;border-radius:1px;
   background:linear-gradient(90deg,var(--c3) 0%,var(--c0) 40%,var(--c2) 80%,#fff 100%);
   background-size:200%;animation:masterShift 1s linear infinite;
-  box-shadow:0 0 18px var(--c0),0 0 50px rgba(0,229,255,.3);
+  box-shadow:0 0 16px var(--c0),0 0 40px rgba(0,229,255,.28);
   transition:width .06s linear;position:relative;
 }
 @keyframes masterShift{0%{background-position:0%}100%{background-position:200%}}
-/* glowing head */
 .master-fill::after{
-  content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);
-  width:clamp(12px,2vw,20px);height:clamp(12px,2vw,20px);border-radius:50%;
+  content:'';position:absolute;right:-3px;top:50%;transform:translateY(-50%);
+  width:clamp(10px,1.7vw,16px);height:clamp(10px,1.7vw,16px);border-radius:50%;
   background:radial-gradient(circle,#fff 0%,var(--c0) 45%,transparent 80%);
-  box-shadow:0 0 18px var(--c0),0 0 40px rgba(0,229,255,.6),0 0 70px rgba(0,229,255,.3);
+  box-shadow:0 0 16px var(--c0),0 0 35px rgba(0,229,255,.55);
   animation:headFlare .5s ease-in-out infinite alternate;
 }
-@keyframes headFlare{from{opacity:.7;transform:translateY(-50%) scale(.75)}to{opacity:1;transform:translateY(-50%) scale(1.25)}}
-/* tick marks */
-.master-ticks{position:absolute;inset:-5px 0;display:flex;justify-content:space-evenly;pointer-events:none}
-.master-ticks span{width:1px;align-self:center;height:clamp(22px,3.5vw,32px);
-  background:rgba(0,229,255,.12)}
+@keyframes headFlare{from{opacity:.7;transform:translateY(-50%) scale(.7)}to{opacity:1;transform:translateY(-50%) scale(1.2)}}
+.master-ticks{position:absolute;inset:-4px 0;display:flex;justify-content:space-evenly;pointer-events:none}
+.master-ticks span{width:1px;align-self:center;height:clamp(18px,3vw,28px);background:rgba(0,229,255,.11)}
 
-/* sub bars */
-.sub-bars{display:flex;flex-direction:column;gap:5px}
-.sb-row{display:flex;align-items:center;gap:.6rem}
-.sb-lbl{font-size:clamp(.38rem,.68vw,.5rem);letter-spacing:.12em;
-  color:rgba(0,229,255,.38);width:clamp(56px,8vw,82px);flex-shrink:0;white-space:nowrap}
+.sub-bars{display:flex;flex-direction:column;gap:4px}
+.sb-row{display:flex;align-items:center;gap:.5rem}
+.sb-lbl{font-size:clamp(.36rem,.62vw,.48rem);letter-spacing:.1em;
+  color:rgba(0,229,255,.35);width:clamp(52px,7.5vw,78px);flex-shrink:0;white-space:nowrap}
 .sb-track{flex:1;height:3px;border-radius:1px;background:rgba(0,229,255,.07);overflow:hidden}
 .sb-fill{height:100%;width:0%;border-radius:1px;transition:width .1s ease-out}
-.sb-fill.a{background:var(--c0);box-shadow:0 0 7px var(--c0)}
-.sb-fill.b{background:var(--c3);box-shadow:0 0 7px var(--c3)}
-.sb-fill.c{background:var(--c2);box-shadow:0 0 7px var(--c2)}
-.sb-fill.d{background:var(--c4);box-shadow:0 0 7px var(--c4)}
-.sb-val{font-size:clamp(.38rem,.65vw,.5rem);width:2.6em;text-align:right;
-  color:rgba(0,229,255,.45)}
+.sb-fill.a{background:var(--c0);box-shadow:0 0 6px var(--c0)}
+.sb-fill.b{background:var(--c3);box-shadow:0 0 6px var(--c3)}
+.sb-fill.c{background:var(--c2);box-shadow:0 0 6px var(--c2)}
+.sb-fill.d{background:var(--c4);box-shadow:0 0 6px var(--c4)}
+.sb-val{font-size:clamp(.36rem,.6vw,.48rem);width:2.5em;text-align:right;color:rgba(0,229,255,.42)}
 
-/* status row */
-.st-row{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
-.st-phase{font-family:var(--fbody);font-size:clamp(.5rem,.9vw,.64rem);
-  letter-spacing:.14em;color:rgba(0,229,255,.8);font-weight:600;
-  animation:stFade .4s ease}
-@keyframes stFade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-.st-timer{font-size:clamp(.5rem,.88vw,.62rem);letter-spacing:.1em;
-  color:rgba(191,0,255,.7);font-variant-numeric:tabular-nums}
+.st-row{display:flex;justify-content:space-between;align-items:center;gap:.4rem}
+.st-phase{font-family:var(--fbody);font-size:clamp(.46rem,.85vw,.6rem);
+  letter-spacing:.12em;color:rgba(0,229,255,.78);font-weight:600;
+  animation:stFade .4s ease;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@keyframes stFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.st-timer{font-size:clamp(.46rem,.82vw,.58rem);letter-spacing:.09em;
+  color:rgba(191,0,255,.68);font-variant-numeric:tabular-nums;flex-shrink:0}
 
-/* data stream ticker */
-.ticker{font-size:clamp(.36rem,.6vw,.48rem);color:rgba(0,229,255,.28);
-  letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+.ticker{font-size:clamp(.34rem,.56vw,.46rem);color:rgba(0,229,255,.26);
+  letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   text-align:center;animation:tickFlicker 2.4s ease-in-out infinite}
-@keyframes tickFlicker{0%,100%{opacity:.28}50%{opacity:.6}}
+@keyframes tickFlicker{0%,100%{opacity:.26}50%{opacity:.58}}
 
-/* redirect message — 绝对定位底部，不影响flex布局 */
+/* ── REDIR MSG：在文档流末尾，flex-shrink:0，
+   opacity/visibility 控制显隐，不影响布局 ── */
 .redir-msg{
-  position:absolute;
-  left:clamp(14px,2.5vw,32px);right:clamp(14px,2.5vw,32px);
-  bottom:clamp(10px,1.5vw,18px);
-  display:flex;align-items:center;gap:.7rem;
-  padding:clamp(6px,.9vw,10px) clamp(10px,1.5vw,16px);
+  flex-shrink:0;
+  display:flex;align-items:center;gap:.6rem;
+  width:100%;
+  padding:clamp(5px,.8vw,9px) clamp(8px,1.2vw,14px);
   border:1px solid rgba(57,255,20,.35);border-radius:2px;
   background:rgba(57,255,20,.05);
-  font-family:var(--fbody);font-size:clamp(.48rem,.85vw,.6rem);
-  letter-spacing:.10em;color:rgba(57,255,20,.9);font-weight:600;
+  font-family:var(--fbody);font-size:clamp(.44rem,.78vw,.56rem);
+  letter-spacing:.09em;color:rgba(57,255,20,.9);font-weight:600;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s;
-  z-index:10;
+  /* 用 visibility+opacity 双控：
+     visibility:hidden 占位但不可见，不影响布局 */
+  visibility:hidden;opacity:0;
+  transition:opacity .5s ease,visibility .5s ease;
 }
-.redir-msg.on{opacity:1;transform:none}
-.redir-blink{width:9px;height:9px;border-radius:50%;flex-shrink:0;
-  background:var(--c2);box-shadow:0 0 14px var(--c2);
+.redir-msg.on{visibility:visible;opacity:1}
+.redir-blink{width:8px;height:8px;border-radius:50%;flex-shrink:0;
+  background:var(--c2);box-shadow:0 0 12px var(--c2);
   animation:rBlink .55s ease-in-out infinite alternate}
 @keyframes rBlink{from{transform:scale(.6);opacity:.6}to{transform:scale(1.4);opacity:1}}
 
-/* ─── RIGHT COLUMN ─── */
-#right-col{display:flex;flex-direction:column;gap:clamp(6px,1.2vw,12px)}
+/* ── RIGHT COLUMN ── */
+#right-col{display:flex;flex-direction:column;gap:clamp(5px,1vw,10px);min-height:0}
 .side-card{
   flex:1;min-height:0;
   border:1px solid var(--edge);border-radius:2px;
   background:var(--panel);backdrop-filter:blur(20px);
-  padding:clamp(8px,1.3vw,14px);
-  display:flex;flex-direction:column;gap:.5rem;overflow:hidden;
+  padding:clamp(7px,1.1vw,12px);
+  display:flex;flex-direction:column;gap:.4rem;overflow:hidden;
 }
-.card-ttl{font-size:clamp(.4rem,.75vw,.54rem);letter-spacing:.22em;
-  color:rgba(0,229,255,.38);border-bottom:1px solid rgba(0,229,255,.08);
-  padding-bottom:.3rem;flex-shrink:0}
-
-/* radar */
+.card-ttl{font-size:clamp(.38rem,.7vw,.52rem);letter-spacing:.2em;
+  color:rgba(0,229,255,.36);border-bottom:1px solid rgba(0,229,255,.08);
+  padding-bottom:.28rem;flex-shrink:0}
 #radar-canvas{display:block;margin:auto}
-#radar-wrap{flex:0 0 auto;display:flex;align-items:center;justify-content:center;overflow:hidden;aspect-ratio:1/1;width:100%;max-width:100%;}
-
-/* activity graph */
-.activity-graph{flex:1;min-height:0;position:relative;overflow:hidden}
+#radar-wrap{
+  flex:1;min-height:0;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  /* 强制正方形：让容器高度等于宽度 */
+  aspect-ratio:1/1;
+  width:100%;max-width:100%;
+}
+.activity-graph{flex:1;min-height:0;overflow:hidden}
 #act-canvas{width:100%;height:100%;display:block}
-
-/* syslog */
 .syslog{flex:1;min-height:0;overflow:hidden;
-  font-size:clamp(.38rem,.68vw,.52rem);line-height:1.75;
-  color:rgba(0,229,255,.45)}
-.syslog .ll{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  animation:llIn .2s ease}
-@keyframes llIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
-.syslog .ok{color:rgba(57,255,20,.75)}.syslog .err{color:rgba(255,0,60,.7)}
+  font-size:clamp(.36rem,.64vw,.5rem);line-height:1.7;color:rgba(0,229,255,.42)}
+.syslog .ll{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;animation:llIn .2s ease}
+@keyframes llIn{from{opacity:0;transform:translateX(-5px)}to{opacity:1;transform:none}}
+.syslog .ok{color:rgba(57,255,20,.72)}.syslog .err{color:rgba(255,0,60,.68)}
 .syslog .cur{color:var(--c0);animation:curB .7s step-end infinite}
 @keyframes curB{0%,100%{opacity:1}50%{opacity:.2}}
 
-/* ═══ BOTTOM STRIP ═══ */
+/* ── BOTTOM STRIP ── */
 #botstrip{
+  flex-shrink:0;
   display:grid;grid-template-columns:repeat(4,1fr);
-  gap:clamp(6px,1.2vw,12px);flex-shrink:0;
+  gap:clamp(5px,1vw,10px);
 }
 .stat-chip{
-  padding:clamp(5px,.9vw,9px) clamp(8px,1.4vw,14px);
+  padding:clamp(4px,.8vw,8px) clamp(7px,1.2vw,13px);
   border:1px solid var(--edge);border-radius:2px;
   background:var(--panel);backdrop-filter:blur(16px);
 }
-.stat-chip-lbl{font-size:clamp(.38rem,.65vw,.5rem);letter-spacing:.14em;
-  color:rgba(0,229,255,.32);margin-bottom:2px}
-.stat-chip-val{font-family:var(--ftitle);font-size:clamp(.58rem,1.1vw,.75rem);
-  font-weight:700;color:var(--c0);text-shadow:0 0 12px var(--c0)}
+.stat-chip-lbl{font-size:clamp(.36rem,.6vw,.48rem);letter-spacing:.12em;
+  color:rgba(0,229,255,.30);margin-bottom:2px}
+.stat-chip-val{font-family:var(--ftitle);font-size:clamp(.54rem,1vw,.7rem);
+  font-weight:700;color:var(--c0);text-shadow:0 0 10px var(--c0)}
 
-/* ─────────────────────────────────────────
-   RESPONSIVE
-───────────────────────────────────────── */
+/* ── RESPONSIVE ── */
 @media(max-width:640px){
   #body-row{grid-template-columns:1fr;grid-template-rows:1fr auto}
-  #right-col{flex-direction:row;max-height:clamp(90px,18vw,120px)}
+  #right-col{flex-direction:row;max-height:clamp(85px,17vw,115px)}
   .side-card{min-height:0}
   #radar-wrap{display:none}
   #botstrip{grid-template-columns:1fr 1fr}
   #botstrip .stat-chip:nth-child(n+3){display:none}
+  .pct-big{font-size:clamp(2rem,11vw,4rem)}
 }
 @media(max-width:400px){
   .logo-sub{display:none}
   #right-col{display:none}
   #botstrip{grid-template-columns:1fr}
   #botstrip .stat-chip:nth-child(n+2){display:none}
-  .pct-big{font-size:clamp(2.5rem,15vw,5rem)}
+  .pct-big{font-size:clamp(1.8rem,13vw,3.5rem)}
+}
+
+/* ═══════════════════════════════════════
+   EXIT ANIMATION — 全屏退场特效
+═══════════════════════════════════════ */
+
+/* 退场遮罩层 */
+#exit-overlay{
+  position:fixed;inset:0;z-index:9999;
+  pointer-events:none;
+  opacity:0;
+}
+
+/* 退场时 shell 整体收缩+消失 */
+#shell.exiting{
+  animation:shellExit 1.2s cubic-bezier(.4,0,1,1) forwards;
+}
+@keyframes shellExit{
+  0%  {opacity:1;transform:scale(1)       filter:brightness(1)}
+  30% {opacity:1;transform:scale(1.012)   filter:brightness(1.8)}
+  60% {opacity:.6;transform:scale(.96)    filter:brightness(.6) blur(2px)}
+  100%{opacity:0;transform:scale(.88)     filter:brightness(0)  blur(8px)}
+}
+
+/* 白色闪光冲击帧 */
+#exit-flash{
+  position:fixed;inset:0;z-index:10000;
+  background:radial-gradient(ellipse at 50% 50%,
+    rgba(0,229,255,1) 0%,
+    rgba(0,160,255,.9) 20%,
+    rgba(0,50,180,.6) 50%,
+    rgba(0,0,40,0) 100%);
+  opacity:0;pointer-events:none;
+  mix-blend-mode:screen;
+}
+
+/* 扫描线加速收缩 */
+#exit-scan{
+  position:fixed;inset:0;z-index:10001;
+  pointer-events:none;opacity:0;
+  background:repeating-linear-gradient(0deg,
+    rgba(0,229,255,.18) 0px,rgba(0,229,255,.18) 1px,
+    transparent 1px,transparent 3px);
+}
+
+/* 数据雨崩解层 */
+#exit-glitch{
+  position:fixed;inset:0;z-index:10002;
+  pointer-events:none;opacity:0;
+  overflow:hidden;
 }
 </style>
 </head>
@@ -341,6 +359,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 <div id="scanline"></div>
 <div id="vignette"></div>
 <div id="beam"></div>
+
+<!-- 退场特效层 -->
+<div id="exit-overlay"></div>
+<div id="exit-flash"></div>
+<div id="exit-scan"></div>
+<canvas id="exit-glitch"></canvas>
 
 <!-- SHELL -->
 <div id="shell">
@@ -616,12 +640,197 @@ function tick(now){
         },45);
       }, lockedMs);
     })();
-    if(destUrl)setTimeout(function(){location.href=destUrl;},900);
+    /* ── 退场动画序列，完成后再跳转 ── */
+    if(destUrl) setTimeout(function(){ playExitAnimation(destUrl); }, 600);
     return;
   }
   requestAnimationFrame(tick);
 }
 requestAnimationFrame(tick);
+
+
+/* ══════════════════════════════════════════════════════
+   EXIT ANIMATION ENGINE
+   序列：
+   0ms    — 数字雨崩解开始（canvas撒碎片）
+   0ms    — shell 整体开始收缩淡出
+   80ms   — 青色冲击闪光（亮度冲击帧）
+   180ms  — 扫描线密度骤增
+   400ms  — 竖向光柱从中心爆开
+   800ms  — 全屏像素化溶解
+   1100ms — 纯黑，跳转
+══════════════════════════════════════════════════════ */
+function playExitAnimation(url) {
+  var shell    = document.getElementById('shell');
+  var flash    = document.getElementById('exit-flash');
+  var scanEl   = document.getElementById('exit-scan');
+  var glitchEl = document.getElementById('exit-glitch');
+
+  /* ── 初始化崩解 canvas ── */
+  glitchEl.width  = window.innerWidth;
+  glitchEl.height = window.innerHeight;
+  var gc = glitchEl.getContext('2d');
+
+  /* 生成随机碎片粒子（从屏幕中心爆散） */
+  var cx2 = glitchEl.width * .5, cy2 = glitchEl.height * .5;
+  var shards = [];
+  var COLORS = ['#00e5ff','#bf00ff','#39ff14','#ffffff','#ff003c','#ff6a00'];
+  for (var i = 0; i < 180; i++) {
+    var ang = Math.random() * Math.PI * 2;
+    var spd = 120 + Math.random() * 420;
+    shards.push({
+      x: cx2 + (Math.random()-.5) * glitchEl.width * .6,
+      y: cy2 + (Math.random()-.5) * glitchEl.height * .4,
+      vx: Math.cos(ang) * spd,
+      vy: Math.sin(ang) * spd - 60,
+      w: 2  + Math.random() * 28,
+      h: 1  + Math.random() * 4,
+      col: COLORS[Math.floor(Math.random() * COLORS.length)],
+      life: 1,
+      rot: Math.random() * Math.PI * 2,
+      vrot: (Math.random()-.5) * 8
+    });
+  }
+  /* 光柱（竖向宽线从中心爆开） */
+  var beams = [];
+  for (var b = 0; b < 8; b++) {
+    beams.push({
+      x: cx2 + (Math.random()-.5)*glitchEl.width*.7,
+      w: 1 + Math.random()*3,
+      life: 1,
+      col: COLORS[Math.floor(Math.random()*COLORS.length)],
+      delay: Math.random()*200
+    });
+  }
+
+  var startT = null;
+  var TOTAL_MS = 1100;
+
+  /* 每帧随机横向glitch位移 */
+  var glitchLines = [];
+  for (var gl = 0; gl < 20; gl++) {
+    glitchLines.push({
+      y: Math.random() * glitchEl.height,
+      h: 2 + Math.random() * 18,
+      dx: (Math.random()-.5) * 80,
+      alpha: .4 + Math.random()*.5
+    });
+  }
+
+  function animExit(ts) {
+    if (!startT) startT = ts;
+    var elapsed = ts - startT;
+    var prog = Math.min(elapsed / TOTAL_MS, 1);
+    var dt = 1/60;
+
+    /* ── shell 淡出 ── */
+    if (elapsed > 0) shell.classList.add('exiting');
+
+    /* ── 冲击闪光 ── */
+    var flashAlpha = 0;
+    if (elapsed > 60  && elapsed < 200) flashAlpha = (elapsed-60)/70;
+    if (elapsed >= 200 && elapsed < 380) flashAlpha = 1-(elapsed-200)/180;
+    flash.style.opacity = flashAlpha;
+
+    /* ── 扫描线加密 ── */
+    var scanAlpha = 0;
+    if (elapsed > 150) scanAlpha = Math.min((elapsed-150)/200, .9);
+    if (elapsed > 700) scanAlpha = .9*(1-(elapsed-700)/400);
+    scanEl.style.opacity = scanAlpha;
+    var scanSize = Math.max(1, 4 - prog*3);
+    scanEl.style.background = 'repeating-linear-gradient(0deg,'
+      +'rgba(0,229,255,'+(.15+prog*.35)+') 0px,'
+      +'rgba(0,229,255,'+(.15+prog*.35)+') '+scanSize+'px,'
+      +'transparent '+scanSize+'px,'
+      +'transparent '+(scanSize*3)+'px)';
+
+    /* ── 崩解 canvas ── */
+    gc.clearRect(0, 0, glitchEl.width, glitchEl.height);
+    glitchEl.style.opacity = Math.min(prog * 2.5, 1);
+
+    /* glitch 横线位移块 */
+    if (prog > .15) {
+      glitchLines.forEach(function(gl2) {
+        gc.save();
+        gc.globalAlpha = gl2.alpha * prog;
+        gc.fillStyle = 'rgba(0,229,255,'+(prog*.3)+')';
+        gc.fillRect(gl2.dx * prog, gl2.y, glitchEl.width, gl2.h);
+        gc.restore();
+      });
+    }
+
+    /* 碎片粒子 */
+    shards.forEach(function(sh) {
+      if (elapsed < 40) return;
+      sh.x  += sh.vx * dt;
+      sh.y  += sh.vy * dt;
+      sh.vy += 280 * dt;
+      sh.vx *= .97;
+      sh.life -= dt * 1.1;
+      sh.rot += sh.vrot * dt;
+      if (sh.life <= 0) return;
+      gc.save();
+      gc.globalAlpha = sh.life * .85;
+      gc.translate(sh.x, sh.y);
+      gc.rotate(sh.rot);
+      gc.fillStyle = sh.col;
+      gc.shadowColor = sh.col; gc.shadowBlur = 6;
+      gc.fillRect(-sh.w/2, -sh.h/2, sh.w, sh.h);
+      gc.restore();
+    });
+
+    /* 光柱 */
+    beams.forEach(function(bm) {
+      if (elapsed < bm.delay) return;
+      bm.life -= dt * .8;
+      if (bm.life <= 0) return;
+      gc.save();
+      gc.globalAlpha = bm.life * .7;
+      gc.strokeStyle = bm.col;
+      gc.lineWidth = bm.w * (1 + (1-bm.life)*3);
+      gc.shadowColor = bm.col; gc.shadowBlur = 14;
+      gc.beginPath();
+      gc.moveTo(bm.x, 0); gc.lineTo(bm.x, glitchEl.height);
+      gc.stroke();
+      gc.restore();
+    });
+
+    /* 像素溶解（后期） */
+    if (prog > .65) {
+      var dissolve = (prog - .65) / .35;
+      var pixSz = Math.floor(dissolve * 12) + 1;
+      gc.save();
+      gc.globalAlpha = dissolve * .6;
+      for (var px = 0; px < glitchEl.width; px += pixSz * 3) {
+        for (var py = 0; py < glitchEl.height; py += pixSz * 3) {
+          if (Math.random() < dissolve * .4) {
+            gc.fillStyle = 'rgba(0,229,255,'+(Math.random()*.5)+')';
+            gc.fillRect(px, py, pixSz, pixSz);
+          }
+        }
+      }
+      gc.restore();
+    }
+
+    /* ── 末尾：全黑遮罩推入 ── */
+    if (prog > .82) {
+      var blackAlpha = (prog - .82) / .18;
+      gc.save();
+      gc.globalAlpha = blackAlpha;
+      gc.fillStyle = '#000';
+      gc.fillRect(0, 0, glitchEl.width, glitchEl.height);
+      gc.restore();
+    }
+
+    if (prog < 1) {
+      requestAnimationFrame(animExit);
+    } else {
+      /* 动画完毕，跳转 */
+      window.location.href = url;
+    }
+  }
+  requestAnimationFrame(animExit);
+}
 
 /* ══════════════════════════════
    PLASMA PARTICLE BACKGROUND
@@ -763,10 +972,11 @@ var orbT  = 0;
 
 function resizeOrb() {
   var wrap = document.getElementById('orb-wrap');
-  var sz = Math.min(wrap.offsetWidth || 160, wrap.offsetHeight || 160);
-  /* canvas本身比容器大50%，让大气晕/轨道环不被裁切 */
-  orbEl.width  = Math.round(sz * 1.5);
-  orbEl.height = Math.round(sz * 1.5);
+  var wrapSz = Math.min(wrap.offsetWidth || 140, wrap.offsetHeight || 140);
+  /* canvas 宽高 = 容器的 150%，透明背景，直接浮在页面上 */
+  var canvasSz = Math.round(wrapSz * 1.5);
+  orbEl.width  = canvasSz;
+  orbEl.height = canvasSz;
 }
 
 /* ── 核心投影函数 ──
