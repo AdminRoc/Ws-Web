@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIGNAL LOST // WFSpeed.run</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{width:100%;height:100%;overflow:hidden;background:#000;}
+    canvas{position:fixed;inset:0;pointer-events:none;}
+    #c-bg{z-index:1;} #c-bdr{z-index:8;}
+    #scl{position:fixed;inset:0;z-index:3;pointer-events:none;
+      background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,
+        rgba(255,60,60,.018) 3px,rgba(255,60,60,.018) 4px);}
+    .beam{position:fixed;left:0;right:0;height:1px;z-index:4;pointer-events:none;
+      background:linear-gradient(90deg,transparent,rgba(255,60,60,.2),rgba(255,60,60,.55),rgba(255,60,60,.2),transparent);
+      box-shadow:0 0 18px rgba(255,60,60,.45),0 0 48px rgba(255,60,60,.15);}
+    .beam:nth-child(1){animation:bm 6s linear infinite;}
+    .beam:nth-child(2){animation:bm 9s linear 3s infinite;opacity:.5;}
+    @keyframes bm{0%{top:-2px;}100%{top:100vh;}}
+
+    /* 四角装饰（红色） */
+    .cs{position:fixed;width:70px;height:70px;z-index:9;pointer-events:none;}
+    .cs::before,.cs::after{content:'';position:absolute;border-style:solid;animation:cp 2.5s ease-in-out infinite;}
+    .cs-tl{top:0;left:0;} .cs-tl::before{top:0;left:0;width:20px;height:20px;border-color:rgba(255,60,60,.7);border-width:2px 0 0 2px;}
+    .cs-tl::after{top:5px;left:5px;width:9px;height:9px;border-color:rgba(255,60,60,.4);border-width:1px 0 0 1px;animation-delay:.3s;}
+    .cs-tr{top:0;right:0;} .cs-tr::before{top:0;right:0;width:20px;height:20px;border-color:rgba(255,60,60,.7);border-width:2px 2px 0 0;}
+    .cs-tr::after{top:5px;right:5px;width:9px;height:9px;border-color:rgba(255,60,60,.4);border-width:1px 1px 0 0;animation-delay:.3s;}
+    .cs-bl{bottom:0;left:0;} .cs-bl::before{bottom:0;left:0;width:20px;height:20px;border-color:rgba(255,60,60,.7);border-width:0 0 2px 2px;}
+    .cs-br{bottom:0;right:0;} .cs-br::before{bottom:0;right:0;width:20px;height:20px;border-color:rgba(255,60,60,.7);border-width:0 2px 2px 0;}
+    @keyframes cp{0%,100%{opacity:.4;}50%{opacity:1;box-shadow:0 0 12px rgba(255,60,60,.7);}}
+
+    /* 舞台 */
+    #stage{position:relative;z-index:10;width:100%;min-height:100vh;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:clamp(.75rem,3vw,2rem);gap:clamp(.7rem,2vh,1.3rem);}
+
+    /* 状态头 */
+    .st-bar{display:flex;align-items:center;gap:.6rem;opacity:0;animation:fadeUp .4s ease .1s both;}
+    .st-dot{width:7px;height:7px;border-radius:50%;background:#ff3c3c;
+      box-shadow:0 0 8px #ff3c3c,0 0 20px rgba(255,60,60,.5);animation:dp 0.8s ease-in-out infinite;}
+    @keyframes dp{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.15;transform:scale(.5);}}
+    .st-text{font-family:'Share Tech Mono',monospace;font-size:clamp(.42rem,1vw,.56rem);
+      letter-spacing:.32em;color:rgba(255,60,60,.5);text-transform:uppercase;}
+
+    /* 主卡片 */
+    .card{width:100%;max-width:700px;position:relative;overflow:hidden;
+      background:rgba(8,0,0,.98);border:1px solid rgba(255,60,60,.45);
+      border-top:2px solid #ff3c3c;border-radius:6px;
+      box-shadow:
+        0 0 0 1px rgba(255,60,60,.07),
+        0 0 65px rgba(255,60,60,.28),
+        0 0 130px rgba(255,60,60,.1),
+        0 30px 80px rgba(0,0,0,.98),
+        inset 0 1px 0 rgba(255,60,60,.25),
+        inset 0 0 50px rgba(255,60,60,.025);
+      opacity:0;transform:translateY(24px) scale(.96);
+      animation:ci .5s cubic-bezier(.22,.68,0,1.2) .3s both;}
+    @keyframes ci{to{opacity:1;transform:translateY(0) scale(1);}}
+    .card::before{content:'';position:absolute;top:0;left:-100%;width:70%;height:2px;z-index:20;
+      background:linear-gradient(90deg,transparent,rgba(255,60,60,.5),#ff3c3c,rgba(255,150,60,.9),rgba(255,60,60,.5),transparent);
+      animation:cs2 2.8s linear infinite;}
+    @keyframes cs2{to{left:175%;}}
+
+    /* 卡头 */
+    .ch{display:flex;align-items:center;padding:.7rem 1.4rem;gap:.7rem;
+      background:linear-gradient(90deg,rgba(255,60,60,.12),rgba(255,120,60,.05),transparent);
+      border-bottom:1px solid rgba(255,60,60,.18);}
+    .ch-ic{flex-shrink:0;display:flex;align-items:center;justify-content:center;
+      width:26px;height:26px;border-radius:50%;
+      background:rgba(255,60,60,.16);border:1px solid rgba(255,60,60,.52);
+      box-shadow:0 0 14px rgba(255,60,60,.42);}
+    .ch-ttl{font-family:'Orbitron',sans-serif;font-size:clamp(.54rem,1.4vw,.72rem);
+      font-weight:700;letter-spacing:.28em;color:rgba(255,60,60,.9);text-transform:uppercase;}
+
+    /* 主体 */
+    .cb{display:flex;flex-direction:column;align-items:center;
+      padding:clamp(1.5rem,4vw,2.5rem) clamp(1.2rem,3vw,2rem);gap:1.4rem;text-align:center;}
+
+    /* 大图标 */
+    .icon-wrap{position:relative;width:88px;height:88px;flex-shrink:0;}
+    .icon-ring{position:absolute;inset:0;border-radius:50%;
+      border:1px dashed rgba(255,60,60,.28);
+      animation:spin 6s linear infinite;}
+    .icon-ring2{position:absolute;inset:10px;border-radius:50%;
+      border:1px dashed rgba(255,120,60,.2);
+      animation:spin 4s linear infinite reverse;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .icon-main{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      font-size:2.2rem;animation:iconPulse 2s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(255,60,60,.6));}
+    @keyframes iconPulse{0%,100%{opacity:.65;transform:scale(1);}50%{opacity:1;transform:scale(1.08);}}
+
+    /* 错误码 */
+    .err-code{font-family:'Orbitron',sans-serif;font-size:clamp(.48rem,1vw,.58rem);
+      letter-spacing:.38em;color:rgba(255,60,60,.38);text-transform:uppercase;}
+
+    /* 主标题 */
+    .err-title{font-family:'Orbitron',sans-serif;
+      font-size:clamp(1.1rem,4.5vw,1.6rem);font-weight:900;
+      letter-spacing:.05em;line-height:1.15;
+      color:#ff3c3c;filter:drop-shadow(0 0 14px rgba(255,60,60,.65));
+      animation:titleGlow 2.5s ease-in-out infinite;}
+    @keyframes titleGlow{
+      0%,100%{filter:drop-shadow(0 0 10px rgba(255,60,60,.5));}
+      50%{filter:drop-shadow(0 0 24px rgba(255,60,60,.95)) drop-shadow(0 0 55px rgba(255,100,60,.4));}}
+
+    /* 英文副标题 */
+    .err-title-en{font-family:'Share Tech Mono',monospace;
+      font-size:clamp(.65rem,1.8vw,.85rem);letter-spacing:.15em;
+      color:rgba(255,80,80,.55);margin-top:.2rem;}
+
+    /* 说明文字 */
+    .err-desc{display:flex;flex-direction:column;gap:.5rem;max-width:500px;}
+    .err-desc p{font-family:'Noto Sans SC',sans-serif;font-size:clamp(.72rem,1.6vw,.88rem);
+      color:rgba(255,200,200,.55);line-height:1.8;letter-spacing:.04em;}
+    .err-desc p.en{font-family:'Share Tech Mono',monospace;font-size:clamp(.58rem,1.2vw,.7rem);
+      color:rgba(255,150,150,.35);letter-spacing:.08em;}
+
+    /* 按钮区 */
+    .btn-row{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-top:.5rem;}
+    .btn-back{font-family:'Orbitron',sans-serif;font-size:clamp(.46rem,1vw,.56rem);
+      letter-spacing:.18em;color:rgba(255,60,60,.7);
+      border:1px solid rgba(255,60,60,.35);border-radius:3px;
+      padding:.38rem 1.1rem;text-decoration:none;background:rgba(255,60,60,.06);
+      transition:all .25s;display:inline-flex;align-items:center;gap:.4rem;}
+    .btn-back:hover{color:#ff3c3c;border-color:rgba(255,60,60,.75);background:rgba(255,60,60,.14);
+      box-shadow:0 0 16px rgba(255,60,60,.4);}
+    .btn-home{font-family:'Orbitron',sans-serif;font-size:clamp(.46rem,1vw,.56rem);
+      letter-spacing:.18em;color:rgba(0,255,220,.55);
+      border:1px solid rgba(0,255,220,.25);border-radius:3px;
+      padding:.38rem 1.1rem;text-decoration:none;background:rgba(0,255,220,.04);
+      transition:all .25s;}
+    .btn-home:hover{color:#00ffdc;border-color:rgba(0,255,220,.6);background:rgba(0,255,220,.1);
+      box-shadow:0 0 14px rgba(0,255,220,.35);}
+
+    /* 底栏 */
+    .cf{border-top:1px solid rgba(255,60,60,.1);padding:.5rem 1.4rem;background:rgba(0,0,0,.3);
+      display:flex;align-items:center;justify-content:space-between;gap:.5rem;}
+    .cf-note{font-family:'Share Tech Mono',monospace;font-size:.42rem;
+      color:rgba(255,60,60,.18);letter-spacing:.08em;}
+    .cf-badge{font-family:'Orbitron',sans-serif;font-size:.4rem;letter-spacing:.18em;
+      color:rgba(255,60,60,.22);border:1px solid rgba(255,60,60,.12);border-radius:2px;padding:.13rem .45rem;}
+
+    /* 倒计时条（静止装饰） */
+    .dbar{position:absolute;bottom:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(255,60,60,.4),rgba(255,120,60,.6),rgba(255,60,60,.4),transparent);
+      animation:dbarPulse 2s ease-in-out infinite;}
+    @keyframes dbarPulse{0%,100%{opacity:.4;}50%{opacity:1;box-shadow:0 0 8px rgba(255,60,60,.6);}}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  </style>
+</head>
+<body>
+<canvas id="c-bg"></canvas>
+<canvas id="c-bdr"></canvas>
+<div id="scl"></div>
+<div class="beam"></div><div class="beam"></div>
+<div class="cs cs-tl"></div><div class="cs cs-tr"></div>
+<div class="cs cs-bl"></div><div class="cs cs-br"></div>
+
+<div id="stage">
+  <div class="st-bar">
+    <div class="st-dot"></div>
+    <span class="st-text">WFSpeed.run &nbsp;·&nbsp; Signal Lost &nbsp;·&nbsp; Error 404</span>
+    <div class="st-dot"></div>
+  </div>
+
+  <div class="card">
+    <div class="ch">
+      <span class="ch-ic">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M6 1v6M6 9.5v1" stroke="#ff3c3c" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="ch-ttl">SIGNAL LOST</span>
+    </div>
+
+    <div class="cb">
+      <div class="icon-wrap">
+        <div class="icon-ring"></div>
+        <div class="icon-ring2"></div>
+        <div class="icon-main">🎬</div>
+      </div>
+
+      <div>
+        <div class="err-code">ERROR &nbsp;·&nbsp; STREAM UNAVAILABLE</div>
+        <div class="err-title">视频已无法访问</div>
+        <div class="err-title-en">VIDEO UNAVAILABLE / DELETED BY UPLOADER</div>
+      </div>
+
+      <div class="err-desc">
+        <p>该成绩的证明视频可能已被发布者删除，或因平台策略无法访问。</p>
+        <p class="en">The proof video for this record may have been deleted by its uploader,<br>or is currently inaccessible due to platform policy.</p>
+        <p>如有疑义，可通过举报系统联系管理员进行核查。</p>
+        <p class="en">If you believe this is an error, please contact the admin via the report system.</p>
+      </div>
+
+      <div class="btn-row">
+        <a class="btn-back" id="btn-back" href="javascript:history.back()">
+          ← 返回上一页 / Go Back
+        </a>
+        <a class="btn-home" href="index.html">⌂ 返回首页 / Home</a>
+      </div>
+    </div>
+
+    <div class="cf">
+      <span class="cf-note">WFSPEED.RUN &nbsp;·&nbsp; 视频失效提示 &nbsp;·&nbsp; VIDEO UNAVAILABLE NOTICE</span>
+      <span class="cf-badge">CSC ALLIANCE</span>
+    </div>
+
+    <div class="dbar"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* 背景粒子（红色调） */
+  var cv=document.getElementById('c-bg'), cx=cv.getContext('2d');
+  var pts=[];
+  var PAL=['#ff3c3c','#ff6060','#ff9060','#ffaa44','#ff4488','#ffffff','#ff2060'];
+  function rz(){
+    cv.width=innerWidth; cv.height=innerHeight; pts=[];
+    for(var i=0;i<80;i++){pts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,
+      r:.25+Math.random()*1.8,vx:(Math.random()-.5)*.45,vy:(Math.random()-.5)*.35,
+      col:PAL[i%PAL.length],a:Math.random()*Math.PI*2,da:.003+Math.random()*.009,gw:1.5+Math.random()*8});}
+  }
+  rz(); window.addEventListener('resize',rz);
+  function draw(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    var bg=cx.createRadialGradient(cv.width*.5,cv.height*.5,0,cv.width*.5,cv.height*.5,Math.max(cv.width,cv.height)*.8);
+    bg.addColorStop(0,'#0e0000');bg.addColorStop(.5,'#090000');bg.addColorStop(1,'#040000');
+    cx.fillStyle=bg;cx.fillRect(0,0,cv.width,cv.height);
+    var hl=cx.createRadialGradient(cv.width*.5,cv.height*.5,0,cv.width*.5,cv.height*.5,Math.min(cv.width,cv.height)*.38);
+    hl.addColorStop(0,'rgba(255,60,60,.04)');hl.addColorStop(1,'transparent');
+    cx.fillStyle=hl;cx.fillRect(0,0,cv.width,cv.height);
+    pts.forEach(function(q){
+      q.x+=q.vx;q.y+=q.vy;q.a+=q.da;
+      if(q.x<0)q.x=cv.width;if(q.x>cv.width)q.x=0;
+      if(q.y<0)q.y=cv.height;if(q.y>cv.height)q.y=0;
+      var al=.06+.65*Math.abs(Math.sin(q.a));
+      cx.save();cx.globalAlpha=al;cx.fillStyle=q.col;cx.shadowColor=q.col;cx.shadowBlur=q.gw;
+      cx.beginPath();cx.arc(q.x,q.y,q.r,0,Math.PI*2);cx.fill();cx.restore();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  /* 红色虹光边框 */
+  var bc=document.getElementById('c-bdr'), bx=bc.getContext('2d');
+  function szB(){bc.width=innerWidth;bc.height=innerHeight;}
+  szB(); window.addEventListener('resize',szB);
+  var bT0=performance.now();
+  function dBorder(){
+    var W=bc.width,H=bc.height;
+    bx.clearRect(0,0,W,H);
+    var t=(performance.now()-bT0)/1000, pad=3;
+    var segs=[{x1:pad,y1:pad,x2:W-pad,y2:pad,h0:0},{x1:W-pad,y1:pad,x2:W-pad,y2:H-pad,h0:25},
+              {x1:W-pad,y1:H-pad,x2:pad,y2:H-pad,h0:50},{x1:pad,y1:H-pad,x2:pad,y2:pad,h0:75}];
+    segs.forEach(function(s){
+      var h1=(s.h0+t*18)%360, h2=(s.h0+90+t*18)%360;
+      var g=bx.createLinearGradient(s.x1,s.y1,s.x2,s.y2);
+      g.addColorStop(0,'hsla('+h1+',100%,60%,.88)');
+      g.addColorStop(.5,'hsla('+((h1+h2)/2)%360+',100%,72%,1)');
+      g.addColorStop(1,'hsla('+h2+',100%,60%,.88)');
+      bx.save();bx.beginPath();bx.moveTo(s.x1,s.y1);bx.lineTo(s.x2,s.y2);
+      bx.strokeStyle=g;bx.lineWidth=18;bx.globalAlpha=.15;bx.stroke();bx.restore();
+      bx.save();bx.beginPath();bx.moveTo(s.x1,s.y1);bx.lineTo(s.x2,s.y2);
+      bx.strokeStyle=g;bx.lineWidth=3;bx.globalAlpha=.9;
+      bx.shadowColor='hsl('+h1+',100%,65%)';bx.shadowBlur=22;bx.stroke();bx.restore();
+    });
+    requestAnimationFrame(dBorder);
+  }
+  dBorder();
+
+  /* 返回按钮 from 参数 */
+  var p=new URLSearchParams(location.search);
+  var from=p.get('from');
+  var btnBack=document.getElementById('btn-back');
+  if(from&&btnBack){
+    btnBack.href=from;
+    btnBack.removeAttribute('onclick');
+  }
+})();
+</script>
+</body>
+</html>

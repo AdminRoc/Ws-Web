@@ -141,10 +141,23 @@ function parseTimeMs(timeStr) {
   return isNaN(ms) ? Infinity : ms;
 }
 
+function _isValidVideoUrl(url) {
+  if (!url || typeof url !== 'string' || url.trim().length < 10) return false;
+  try {
+    var u = new URL(url.trim());
+    // 裸 youtu.be（无视频 ID）
+    if (u.hostname === 'youtu.be' && (u.pathname === '/' || u.pathname.length <= 1)) return false;
+    // youtube.com 无 v= 参数且无 /live/ /shorts/
+    if ((u.hostname.includes('youtube.com') && u.pathname === '/') &&
+        !u.searchParams.get('v')) return false;
+    return true;
+  } catch(e) { return false; }
+}
+
 function getVideoUrls(rec) {
   if (rec.videoUrls && Array.isArray(rec.videoUrls))
-    return rec.videoUrls.filter(u => u && typeof u === 'string' && u.trim());
-  if (rec.videoUrl && typeof rec.videoUrl === 'string' && rec.videoUrl.trim())
+    return rec.videoUrls.filter(u => u && typeof u === 'string' && _isValidVideoUrl(u));
+  if (rec.videoUrl && typeof rec.videoUrl === 'string' && _isValidVideoUrl(rec.videoUrl))
     return [rec.videoUrl.trim()];
   return [];
 }
@@ -328,7 +341,7 @@ function _scheduleHide() {
 }
 
 /* 显示弹窗 */
-function _showPopup(anchorEl, urls) {
+function _showPopup(anchorEl, urls, rec) {
   const p = _getPopup();
   _cancelHide();
 
@@ -348,7 +361,7 @@ function _showPopup(anchorEl, urls) {
     const domain = getDomain(url);
     const label  = labels[i] || `视角 ${i+1}`;
     html += `
-    <a class="vp-row" href="${url}" target="_blank" rel="noopener" role="menuitem">
+    <a class="vp-row" href="redirect.html?url=${encodeURIComponent(url)}&lbl=${encodeURIComponent(label)}&player=${encodeURIComponent((rec&&rec.playerId)||'')}&time=${encodeURIComponent((rec&&(rec.clearTime||rec.avgRealTime))||'')}&cap=${encodeURIComponent((rec&&rec.captureStatus)||'')}&date=${encodeURIComponent((rec&&rec.uploadTime)||'')}&from=${encodeURIComponent((location.pathname.split('/').pop())||'index.html')}" target="_blank" rel="noopener" role="menuitem">
       <span class="vp-num">${i+1}</span>
       <span class="vp-label">
         ${label}
@@ -398,14 +411,14 @@ function _showPopup(anchorEl, urls) {
 /* ══════════════════════════════════════════════════════════
    6. 榜单行绑定（所有有视频的行）
    ══════════════════════════════════════════════════════════ */
-function _bindRow(tr, urls) {
+function _bindRow(tr, urls, rec) {
   if (!urls || !urls.length) return;
   tr.setAttribute('data-has-video', '1');
 
   // 悬停：200ms 延迟显示（防止划过误触）
   let enterTimer = null;
   tr.addEventListener('mouseenter', () => {
-    enterTimer = setTimeout(() => _showPopup(tr, urls), 80);
+    enterTimer = setTimeout(() => _showPopup(tr, urls, rec), 80);
   });
   tr.addEventListener('mouseleave', () => {
     clearTimeout(enterTimer);
@@ -416,9 +429,9 @@ function _bindRow(tr, urls) {
   tr.addEventListener('click', (e) => {
     if (e.target.closest('#vp-popup')) return; // 点击弹窗内部不处理
     if (urls.length === 1) {
-      window.open(urls[0], '_blank', 'noopener');
+      _vcShow(urls[0], rec, '视角 1');
     } else {
-      _showPopup(tr, urls);
+      _showPopup(tr, urls, rec);
     }
   });
 }
@@ -438,7 +451,7 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
   const sorted = [...records].sort((a,b) => parseTimeMs(a[timeField]) - parseTimeMs(b[timeField]));
 
   if (!sorted.length) {
-    tbody.innerHTML = `<tr><td class="lb-empty" colspan="4">暂无记录，快来提交第一个成绩！</td></tr>`;
+    tbody.innerHTML = `<tr><td class="lb-empty-cell" colspan="4"><div class="lb-empty-state"><div class="lb-empty-ring"></div><svg class="lb-empty-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="rgba(0,212,255,.28)" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M10 16h12M16 10v12" stroke="rgba(0,212,255,.55)" stroke-width="1.5" stroke-linecap="round"/></svg><p class="lb-empty-text">NO SIGNAL</p><p class="lb-empty-sub">暂无记录 &nbsp;·&nbsp; 期待你成为第一</p></div></td></tr>`;
     return;
   }
 
@@ -456,12 +469,14 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
       <td class="player-col">${rec.playerId || '—'}</td>
       <td>${rec.uploadTime || '—'}</td>`;
 
-    _bindRow(tr, urls);
+    _bindRow(tr, urls, rec);
     tbody.appendChild(tr);
   });
 
+  animateTableRows(tbody);
   const stats = document.getElementById('lb-stats');
   if (stats) stats.textContent = `共 ${sorted.length} 条记录`;
+  animateTableRows(tbody);
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -480,7 +495,7 @@ function renderEidolonLeaderboard(records, tbodyId) {
   });
 
   if (!sorted.length) {
-    tbody.innerHTML = `<tr><td class="lb-empty" colspan="5">暂无记录，快来提交第一个成绩！</td></tr>`;
+    tbody.innerHTML = `<tr><td class="lb-empty-cell" colspan="5"><div class="lb-empty-state"><div class="lb-empty-ring"></div><svg class="lb-empty-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="rgba(0,212,255,.28)" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M10 16h12M16 10v12" stroke="rgba(0,212,255,.55)" stroke-width="1.5" stroke-linecap="round"/></svg><p class="lb-empty-text">NO SIGNAL</p><p class="lb-empty-sub">暂无记录 &nbsp;·&nbsp; 期待你成为第一</p></div></td></tr>`;
     return;
   }
 
@@ -498,12 +513,13 @@ function renderEidolonLeaderboard(records, tbodyId) {
       <td class="player-col">${rec.playerId || '—'}</td>
       <td>${rec.uploadTime || '—'}</td>`;
 
-    _bindRow(tr, urls);
+    _bindRow(tr, urls, rec);
     tbody.appendChild(tr);
   });
 
   const stats = document.getElementById('lb-stats');
   if (stats) stats.textContent = `共 ${sorted.length} 条记录`;
+  animateTableRows(tbody);
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -513,6 +529,8 @@ document.addEventListener('DOMContentLoaded', () => {
   new StarField('star-canvas');
   initNav();
   initReveal();
+  initHashState();
+  initAutoActiveNav();
   alignLogoText();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(alignLogoText);
   window.addEventListener('resize', alignLogoText);
@@ -532,4 +550,70 @@ function alignLogoText() {
   const chars = domain.textContent.trim().length;
   if (chars < 1) return;
   domain.style.letterSpacing = ((titleW - domainW) / chars).toFixed(3) + 'px';
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   榜单行错开入场动画
+   ══════════════════════════════════════════════════════════ */
+function animateTableRows(tbody) {
+  if (!tbody) return;
+  var rows = tbody.querySelectorAll('tr');
+  rows.forEach(function(tr, i) {
+    tr.classList.add('lb-row-pre');
+    setTimeout(function() {
+      tr.classList.remove('lb-row-pre');
+      tr.classList.add('lb-row-in');
+    }, 30 + i * 30);
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   URL Hash 状态同步（Tab 可书签 / 分享）
+   ══════════════════════════════════════════════════════════ */
+function initHashState() {
+  var hash = location.hash.replace('#', '').trim();
+  if (hash) {
+    var btn = document.querySelector('[data-map="' + hash + '"], [data-tab="' + hash + '"]');
+    if (btn) setTimeout(function() { btn.click(); }, 60);
+  }
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-map],[data-tab]');
+    if (!btn) return;
+    var key = btn.dataset.map || btn.dataset.tab;
+    if (key) history.replaceState(null, '', '#' + key);
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   导航栏当前页自动高亮
+   ══════════════════════════════════════════════════════════ */
+function initAutoActiveNav() {
+  var page = (location.pathname.split('/').pop() || 'index.html').split('?')[0].split('#')[0];
+  document.querySelectorAll('.nav-item').forEach(function(item) {
+    var links = item.querySelectorAll('a[href]');
+    var match = false;
+    links.forEach(function(a) {
+      var href = (a.getAttribute('href') || '').split('?')[0].split('#')[0];
+      if (href === page) match = true;
+    });
+    if (match) item.classList.add('active');
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   过渡页跳转（赛博风格 redirect.html）
+   ══════════════════════════════════════════════════════════ */
+function _vcShow(url, rec, lbl) {
+  var q = ['url=' + encodeURIComponent(url)];
+  if (lbl) q.push('lbl=' + encodeURIComponent(lbl));
+  if (rec) {
+    if (rec.playerId)      q.push('player=' + encodeURIComponent(rec.playerId));
+    if (rec.clearTime)     q.push('time='   + encodeURIComponent(rec.clearTime));
+    if (rec.avgRealTime)   q.push('time='   + encodeURIComponent(rec.avgRealTime));
+    if (rec.captureStatus) q.push('cap='    + encodeURIComponent(rec.captureStatus));
+    if (rec.uploadTime)    q.push('date='   + encodeURIComponent(rec.uploadTime));
+  }
+  q.push('from=' + encodeURIComponent((location.pathname.split('/').pop()) || 'index.html'));
+  window.open('redirect.html?' + q.join('&'), '_blank', 'noopener');
 }
