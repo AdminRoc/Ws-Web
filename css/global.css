@@ -1573,3 +1573,36 @@ img { display: block; max-width: 100%; }
     letter-spacing: .04em;
   }
 }
+
+
+/* ══════════════════════════════════════════════════════════
+   移动端补充优化 v2
+   ══════════════════════════════════════════════════════════ */
+
+/* 导航栏：超小屏（≤400px）隐藏"查看提交规则"文字，只留图标 */
+@media (max-width: 400px) {
+  .nav-rules { padding: .3rem .45rem; font-size: 0; letter-spacing: 0; }
+  .nav-rules::after { font-size: .55rem; }
+  /* 让 flex 不溢出：logo 缩短 */
+  .nav-logo { margin-right: .6rem; }
+  /* 强制 nav-inner 不超出视口 */
+  .nav-inner { overflow: hidden; }
+}
+
+/* 导航下拉：移动端文字稍大，更好点击 */
+@media (max-width: 860px) {
+  .nav-dropdown-menu a { padding: .85rem 1.5rem; font-size: .76rem; }
+  /* 移动端 nav-rules-dropdown 右对齐，不超出屏幕 */
+  .nav-rules-dropdown { left: auto; right: 0; min-width: 150px; }
+  /* 举报/公示按钮竖排，占满宽度时换行 */
+  .report-wrap { gap: .7rem; padding: 0 1rem; }
+}
+
+/* 触摸设备：增大可点击区域 */
+@media (hover: none) {
+  .nav-item > a { min-height: 48px; }
+  .lb-tab-btn, .map-tab-btn { min-height: 40px; padding-top: .5rem; padding-bottom: .5rem; }
+  /* 禁止悬停下拉（触摸设备用点击） */
+  .nav-item.has-dropdown:hover .nav-dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(-8px) scaleY(.88); }
+  .nav-item.has-dropdown.mob-open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0) scaleY(1); }
+}

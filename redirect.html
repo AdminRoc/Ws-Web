@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPLINK // WFSpeed.run</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{width:100%;height:100%;overflow:hidden;background:#000;}
+
+    /* ── 层叠 canvas ── */
+    canvas{position:fixed;inset:0;pointer-events:none;}
+    #c-bg  {z-index:1;}
+    #c-grid{z-index:2;opacity:.5;}
+    #c-bdr {z-index:8;}  /* 虹光边框层 */
+
+    /* ── 扫描线 ── */
+    #scl{position:fixed;inset:0;z-index:3;pointer-events:none;
+      background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,
+        rgba(0,255,220,.024) 3px,rgba(0,255,220,.024) 4px);}
+
+    /* ── 移动光束 ── */
+    .beam{position:fixed;left:0;right:0;height:1px;z-index:4;pointer-events:none;
+      background:linear-gradient(90deg,transparent,rgba(0,255,220,.2),rgba(0,255,220,.6),rgba(0,255,220,.2),transparent);
+      box-shadow:0 0 18px rgba(0,255,220,.5),0 0 48px rgba(0,255,220,.18);}
+    .beam:nth-child(1){animation:bm 5s linear infinite;}
+    .beam:nth-child(2){animation:bm 8s linear 3.2s infinite;opacity:.55;}
+    .beam:nth-child(3){animation:bm 6.5s linear 1.5s infinite;opacity:.3;
+      background:linear-gradient(90deg,transparent,rgba(180,100,255,.3),rgba(180,100,255,.75),rgba(180,100,255,.3),transparent);}
+    @keyframes bm{0%{top:-2px;}100%{top:100vh;}}
+
+    /* ── 四角装饰 ── */
+    .cs{position:fixed;width:80px;height:80px;z-index:9;pointer-events:none;}
+    .cs::before,.cs::after{content:'';position:absolute;border-color:rgba(0,255,220,.75);border-style:solid;animation:cp 2.8s ease-in-out infinite;}
+    .cs-tl{top:0;left:0;} .cs-tl::before{top:0;left:0;width:24px;height:24px;border-width:2px 0 0 2px;}
+    .cs-tl::after{top:6px;left:6px;width:11px;height:11px;border-width:1px 0 0 1px;animation-delay:.35s;}
+    .cs-tr{top:0;right:0;} .cs-tr::before{top:0;right:0;width:24px;height:24px;border-width:2px 2px 0 0;}
+    .cs-tr::after{top:6px;right:6px;width:11px;height:11px;border-width:1px 1px 0 0;animation-delay:.35s;}
+    .cs-bl{bottom:0;left:0;} .cs-bl::before{bottom:0;left:0;width:24px;height:24px;border-width:0 0 2px 2px;}
+    .cs-bl::after{bottom:6px;left:6px;width:11px;height:11px;border-width:0 0 1px 1px;animation-delay:.35s;}
+    .cs-br{bottom:0;right:0;} .cs-br::before{bottom:0;right:0;width:24px;height:24px;border-width:0 2px 2px 0;}
+    .cs-br::after{bottom:6px;right:6px;width:11px;height:11px;border-width:0 1px 1px 0;animation-delay:.35s;}
+    @keyframes cp{0%,100%{opacity:.45;box-shadow:none;}50%{opacity:1;box-shadow:0 0 14px rgba(0,255,220,.85),0 0 32px rgba(0,255,220,.35);}}
+
+    /* ── 闪光 ── */
+    #flash{position:fixed;inset:0;z-index:9999;background:#00ffdc;opacity:0;pointer-events:none;}
+    #flash.go{animation:fl .5s ease forwards;}
+    @keyframes fl{0%{opacity:.9;}100%{opacity:0;}}
+
+    /* ── 舞台 ── */
+    #stage{position:relative;z-index:10;width:100%;min-height:100vh;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:clamp(.75rem,3vw,2rem);gap:clamp(.6rem,1.8vh,1.2rem);}
+
+    /* ── 状态头 ── */
+    .st-bar{display:flex;align-items:center;gap:.6rem;opacity:0;animation:fadeUp .4s ease .1s both;}
+    .st-dot{width:7px;height:7px;border-radius:50%;background:#00ffdc;
+      box-shadow:0 0 8px #00ffdc,0 0 20px rgba(0,255,220,.5);animation:dp 1.2s ease-in-out infinite;}
+    .st-dot.p{background:#b46fff;box-shadow:0 0 8px #b46fff;animation-delay:.6s;}
+    @keyframes dp{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.2;transform:scale(.6);}}
+    .st-text{font-family:'Share Tech Mono',monospace;font-size:clamp(.42rem,1vw,.56rem);
+      letter-spacing:.32em;color:rgba(0,255,220,.5);text-transform:uppercase;}
+
+    /* ── 主卡片 ── */
+    .card{width:100%;max-width:780px;position:relative;overflow:hidden;
+      background:rgba(0,8,22,.98);border:1px solid rgba(0,255,220,.48);
+      border-top:2px solid #00ffdc;border-radius:6px;
+      box-shadow:
+        0 0 0 1px rgba(0,255,220,.08),
+        0 0 70px rgba(0,255,220,.32),
+        0 0 140px rgba(0,255,220,.13),
+        0 0 240px rgba(180,100,255,.08),
+        0 32px 80px rgba(0,0,0,.98),
+        inset 0 1px 0 rgba(0,255,220,.28),
+        inset 0 0 55px rgba(0,255,220,.03);
+      opacity:0;transform:translateY(28px) scale(.96);
+      animation:ci .55s cubic-bezier(.22,.68,0,1.2) .3s both;}
+    @keyframes ci{to{opacity:1;transform:translateY(0) scale(1);}}
+    .card::before{content:'';position:absolute;top:0;left:-100%;width:75%;height:2px;z-index:20;
+      background:linear-gradient(90deg,transparent,rgba(0,255,220,.5),#00ffdc,rgba(0,220,255,.9),#b46fff,rgba(0,255,220,.5),transparent);
+      animation:cs2 2.2s linear infinite;filter:blur(.4px);}
+    @keyframes cs2{to{left:175%;}}
+    .card::after{content:'';position:absolute;bottom:0;right:-100%;width:60%;height:1px;z-index:20;
+      background:linear-gradient(90deg,transparent,rgba(180,100,255,.6),rgba(180,100,255,.95),transparent);
+      animation:csr 4s linear 1s infinite;}
+    @keyframes csr{to{right:175%;}}
+
+    /* ── 卡头 ── */
+    .ch{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.4rem;
+      background:linear-gradient(90deg,rgba(0,255,220,.12),rgba(180,100,255,.06),transparent);
+      border-bottom:1px solid rgba(0,255,220,.18);gap:.8rem;flex-wrap:wrap;}
+    .ch-l{display:flex;align-items:center;gap:.6rem;}
+    .ch-ic{flex-shrink:0;display:flex;align-items:center;justify-content:center;
+      width:26px;height:26px;border-radius:50%;
+      background:rgba(0,255,220,.16);border:1px solid rgba(0,255,220,.52);
+      box-shadow:0 0 14px rgba(0,255,220,.42);}
+    .ch-ttl{font-family:'Orbitron',sans-serif;font-size:clamp(.54rem,1.4vw,.72rem);
+      font-weight:700;letter-spacing:.3em;color:rgba(0,255,220,.92);text-transform:uppercase;}
+    .ch-type{font-family:'Share Tech Mono',monospace;font-size:clamp(.48rem,1.1vw,.6rem);
+      letter-spacing:.1em;color:rgba(0,255,220,.42);
+      border-left:1px solid rgba(0,255,220,.2);padding-left:.75rem;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:240px;}
+
+    /* ── 内容体 ── */
+    .cb{display:grid;grid-template-columns:104px 1fr;}
+    @media(max-width:500px){.cb{grid-template-columns:1fr;}}
+
+    /* 环形区 */
+    .ring-col{display:flex;align-items:center;justify-content:center;padding:1.5rem .9rem;
+      border-right:1px solid rgba(0,255,220,.1);background:rgba(0,255,220,.018);}
+    @media(max-width:500px){.ring-col{border-right:none;border-bottom:1px solid rgba(0,255,220,.1);padding:1.1rem;}}
+    .rw{position:relative;width:82px;height:82px;}
+    .rw svg{position:absolute;inset:0;transform:rotate(-90deg);}
+    .rt{stroke:rgba(0,255,220,.07);}
+    .ra{stroke:url(#rg);stroke-linecap:round;stroke-dasharray:226;stroke-dashoffset:226;
+      filter:drop-shadow(0 0 7px rgba(0,255,220,.9));
+      animation:af var(--dur,1.8s) cubic-bezier(.25,.1,.25,1) .4s forwards;}
+    @keyframes af{to{stroke-dashoffset:0;}}
+    .ri{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05rem;}
+    .rp{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:900;
+      color:#00ffdc;filter:drop-shadow(0 0 8px rgba(0,255,220,.95));line-height:1;}
+    .rs{font-family:'Share Tech Mono',monospace;font-size:.3rem;letter-spacing:.16em;color:rgba(0,255,220,.38);text-transform:uppercase;}
+
+    /* 数据区 */
+    .dc{padding:clamp(1rem,2.5vw,1.5rem) clamp(1rem,2.5vw,1.5rem);display:flex;flex-direction:column;gap:.85rem;}
+
+    /* 玩家名 ★ */
+    .d-player{font-family:'Orbitron',sans-serif;
+      font-size:clamp(1.2rem,5.5vw,2rem);font-weight:900;
+      letter-spacing:.04em;line-height:1.1;
+      background:linear-gradient(115deg,#e8faff 0%,#00ffdc 40%,#c084fc 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      filter:drop-shadow(0 0 14px rgba(0,255,220,.6));word-break:break-all;
+      animation:pg 3s ease-in-out infinite;}
+    @keyframes pg{
+      0%,100%{filter:drop-shadow(0 0 12px rgba(0,255,220,.5));}
+      50%{filter:drop-shadow(0 0 28px rgba(0,255,220,1)) drop-shadow(0 0 55px rgba(180,100,255,.45));}}
+
+    /* 赛事 pill */
+    .d-type-pill{display:inline-flex;align-items:center;gap:.38rem;padding:.22rem .72rem;
+      background:rgba(0,255,220,.08);border:1px solid rgba(0,255,220,.3);border-radius:3px;
+      font-family:'Share Tech Mono',monospace;font-size:clamp(.52rem,1.2vw,.65rem);
+      letter-spacing:.1em;color:rgba(0,255,220,.7);width:fit-content;}
+    .d-type-dot{width:6px;height:6px;border-radius:50%;background:#00ffdc;
+      box-shadow:0 0 7px #00ffdc;flex-shrink:0;animation:dp 1.5s ease-in-out infinite;}
+
+    /* 时间 ★ */
+    .d-time-block{display:flex;flex-direction:column;gap:.18rem;}
+    .d-time-lbl{font-family:'Share Tech Mono',monospace;font-size:clamp(.4rem,.95vw,.5rem);
+      letter-spacing:.22em;color:rgba(255,210,0,.52);text-transform:uppercase;}
+    .d-time{font-family:'Orbitron',sans-serif;
+      font-size:clamp(1.6rem,6.5vw,2.8rem);font-weight:900;
+      letter-spacing:.05em;line-height:1;color:#ffd700;
+      filter:drop-shadow(0 0 12px rgba(255,215,0,.8)) drop-shadow(0 0 32px rgba(255,215,0,.4));
+      animation:tg 2.2s ease-in-out infinite;}
+    @keyframes tg{
+      0%,100%{filter:drop-shadow(0 0 10px rgba(255,215,0,.65)) drop-shadow(0 0 30px rgba(255,215,0,.3));}
+      50%{filter:drop-shadow(0 0 24px rgba(255,215,0,1)) drop-shadow(0 0 65px rgba(255,215,0,.65));}}
+
+    /* meta 字段 */
+    .d-meta{display:flex;flex-wrap:wrap;gap:.5rem .9rem;}
+    .d-tag{display:flex;flex-direction:column;gap:.08rem;}
+    .d-tag-l{font-family:'Share Tech Mono',monospace;font-size:.38rem;letter-spacing:.2em;color:rgba(0,255,220,.25);text-transform:uppercase;}
+    .d-tag-v{font-family:'Share Tech Mono',monospace;font-size:clamp(.64rem,1.5vw,.78rem);color:rgba(0,255,220,.72);}
+
+    /* ── 底栏 ── */
+    .cf{border-top:1px solid rgba(0,255,220,.12);padding:.58rem 1.4rem;
+      background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap;}
+    .cf-dest{font-family:'Share Tech Mono',monospace;font-size:.46rem;color:rgba(0,255,220,.18);
+      letter-spacing:.06em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;}
+    .cf-r{display:flex;align-items:center;gap:.5rem;flex-shrink:0;flex-wrap:wrap;}
+    .cf-badge{font-family:'Orbitron',sans-serif;font-size:.4rem;letter-spacing:.18em;
+      color:rgba(0,255,220,.28);border:1px solid rgba(0,255,220,.14);border-radius:2px;padding:.14rem .45rem;}
+    .cf-btn{font-family:'Orbitron',sans-serif;font-size:.42rem;letter-spacing:.12em;
+      color:rgba(0,255,220,.65);border:1px solid rgba(0,255,220,.32);border-radius:2px;
+      padding:.24rem .7rem;text-decoration:none;background:rgba(0,255,220,.05);transition:all .2s;}
+    .cf-btn:hover{color:#00ffdc;border-color:rgba(0,255,220,.75);background:rgba(0,255,220,.12);box-shadow:0 0 14px rgba(0,255,220,.38);}
+    .cf-unavail{font-family:'Share Tech Mono',monospace;font-size:.4rem;letter-spacing:.08em;
+      color:rgba(255,100,100,.45);border:1px solid rgba(255,100,100,.2);border-radius:2px;
+      padding:.22rem .6rem;text-decoration:none;background:rgba(255,80,80,.04);transition:all .2s;}
+    .cf-unavail:hover{color:rgba(255,120,120,.9);border-color:rgba(255,100,100,.5);background:rgba(255,80,80,.1);}
+
+    /* 倒计时条 */
+    .cbar-wrap{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(0,255,220,.06);}
+    .cbar{height:100%;background:linear-gradient(90deg,#00ffdc,#b46fff,#ffd700,#00ffdc);
+      transform-origin:left;
+      animation:cb var(--dur,6s) linear .2s forwards;}
+    @keyframes cb{to{transform:scaleX(0);}}
+
+    /* 底部提示 */
+    .bot-note{font-family:'Share Tech Mono',monospace;font-size:clamp(.4rem,.85vw,.48rem);
+      letter-spacing:.14em;color:rgba(0,255,220,.16);text-transform:uppercase;text-align:center;
+      opacity:0;animation:fadeUp .4s ease .75s both;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  
+    .d-player{display:flex;flex-direction:column;gap:.22rem;}
+    .pl-row{display:block;line-height:1.15;font-size:inherit;}
+    .pl-row2{font-size:.88em;opacity:.82;}
+  </style>
+</head>
+<body>
+<canvas id="c-bg"></canvas>
+<canvas id="c-grid"></canvas>
+<canvas id="c-bdr"></canvas>
+<div id="scl"></div>
+<div class="beam"></div><div class="beam"></div><div class="beam"></div>
+<div class="cs cs-tl"></div><div class="cs cs-tr"></div>
+<div class="cs cs-bl"></div><div class="cs cs-br"></div>
+<div id="flash"></div>
+
+<div id="stage">
+  <div class="st-bar">
+    <div class="st-dot"></div>
+    <span class="st-text">CSC Alliance &nbsp;·&nbsp; WFSpeed.run &nbsp;·&nbsp; Uplink Protocol</span>
+    <div class="st-dot p"></div>
+  </div>
+
+  <div class="card">
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#00ffdc"/>
+          <stop offset="50%"  stop-color="#b46fff"/>
+          <stop offset="100%" stop-color="#00e5ff"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="ch">
+      <div class="ch-l">
+        <span class="ch-ic">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+            <polygon points="2.5,1.5 9.5,5.5 2.5,9.5" fill="#00ffdc"/>
+          </svg>
+        </span>
+        <span class="ch-ttl">UPLINK ESTABLISHED</span>
+        <span class="ch-type" id="ch-type"></span>
+      </div>
+    </div>
+
+    <div class="cb">
+      <div class="ring-col">
+        <div class="rw">
+          <svg viewBox="0 0 82 82" fill="none">
+            <circle class="rt" cx="41" cy="41" r="37" stroke-width="2.8"/>
+            <circle class="ra" cx="41" cy="41" r="37" stroke-width="2.8"/>
+          </svg>
+          <div class="ri">
+            <span class="rp" id="rp">0%</span>
+            <span class="rs">SYNC</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dc">
+        <div class="d-player" id="d-player">—</div>
+        <div class="d-type-pill" id="d-type-pill" style="display:none">
+          <span class="d-type-dot"></span>
+          <span id="d-type-text"></span>
+        </div>
+        <div class="d-time-block" id="d-time-block" style="display:none">
+          <span class="d-time-lbl" id="d-time-lbl">RECORD TIME</span>
+          <span class="d-time" id="d-time"></span>
+        </div>
+        <div class="d-meta" id="d-meta"></div>
+      </div>
+    </div>
+
+    <div class="cf">
+      <span class="cf-dest" id="cf-dest"></span>
+      <div class="cf-r">
+        <span class="cf-badge">WFSPEED.RUN</span>
+        <a class="cf-unavail" id="cf-unavail" href="unavailable.html">视频无法访问？</a>
+        <a class="cf-btn" id="cf-btn" href="#" target="_blank" rel="noopener">↗ 立即前往</a>
+      </div>
+    </div>
+
+    <div class="cbar-wrap"><div class="cbar" id="cbar"></div></div>
+  </div>
+
+  <div class="bot-note">连接建立中 · 即将跳转至目标站点 · REDIRECTING</div>
+</div>
+
+<script>
+(function(){
+  /* ── 参数 ── */
+  var p      = new URLSearchParams(location.search);
+  var dest   = p.get('url')    || '';
+  var lbl    = p.get('lbl')    || '';
+  var player = p.get('player') || '';
+  var time   = p.get('time')   || '';
+  var cap    = p.get('cap')    || '';
+  var date   = p.get('date')   || '';
+  var from   = p.get('from')   || '';
+
+  /* ── 随机停留时长 5~8 秒 ── */
+  var stayMs = 5000 + Math.random() * 3000;
+  /* 注入 CSS 变量供动画使用 */
+  document.documentElement.style.setProperty('--dur', (stayMs/1000).toFixed(2) + 's');
+
+  /* ── 赛事类型映射 ── */
+  var typeMap={
+    'disruption.html':'中断竞速 Solo · Disruption',
+    'disruption-duo.html':'中断竞速 Duo · Disruption',
+    'disruption-multi.html':'中断竞速 Multi · Disruption',
+    'eidolon.html':'夜灵竞速 无宏 · Eidolon',
+    'eidolon-macro.html':'夜灵竞速 有宏 · Eidolon Macro',
+    'profit-taker.html':'大蜘蛛 无宏 · Profit-Taker',
+    'profit-taker-macro.html':'大蜘蛛 有宏 · Profit-Taker Macro',
+    'exterminate.html':'消灭竞速 · Exterminate',
+    'assassination.html':'暗杀竞速 · Assassination',
+    'defense-relic.html':'防御遗物 · Defense Relic',
+    'capture.html':'捕获竞速 · Capture',
+    'rescue.html':'营救竞速 · Rescue',
+    'sabotage.html':'破坏竞速 · Sabotage',
+    'spy.html':'间谍竞速 · Spy',
+    'ropalolyst.html':'萝帕竞速 · Ropalolyst',
+    'exploiter.html':'开采者 · Exploiter',
+    'archon-hunt.html':'执政官狩猎 · Archon Hunt',
+    'cambire.html':'Cambire 竞速',
+    'obstacle-course.html':'障碍赛 · Obstacle Course',
+    'the-guilty.html':'有罪者 · The Guilty',
+    'victory-plaza.html':'胜利广场 · Victory Plaza',
+    'special-events.html':'特殊活动 · Special Events',
+  };
+  var typeText = typeMap[from] || (from ? from.replace('.html','') : 'WFSpeed 竞速');
+
+  /* ── 填充 UI ── */
+  var chType=document.getElementById('ch-type');
+  var dPlayer=document.getElementById('d-player');
+  var dTypePill=document.getElementById('d-type-pill');
+  var dTypeText=document.getElementById('d-type-text');
+  var dTimeBlock=document.getElementById('d-time-block');
+  var dTimeLbl=document.getElementById('d-time-lbl');
+  var dTimeEl=document.getElementById('d-time');
+  var dMeta=document.getElementById('d-meta');
+  var rpEl=document.getElementById('rp');
+  var cfDest=document.getElementById('cf-dest');
+  var cfBtn=document.getElementById('cf-btn');
+  var cfUnavail=document.getElementById('cf-unavail');
+
+  if(chType) chType.textContent=typeText;
+  /* 多玩家名分行显示 */
+  var _players = player ? player.split(' / ').map(function(s){return s.trim();}).filter(Boolean) : [];
+  if(dPlayer){
+    dPlayer.innerHTML = '';
+    dPlayer.style.display = 'flex';
+    dPlayer.style.flexDirection = 'column';
+    dPlayer.style.gap = '.25rem';
+    if(_players.length === 0){
+      dPlayer.textContent = '未知玩家';
+    } else if(_players.length <= 2){
+      dPlayer.textContent = _players.join('  /  ');
+    } else if(_players.length === 3){
+      /* 必须给 span 设置独立渐变，否则继承 transparent 不可见 */
+      var GRAD = 'linear-gradient(115deg,#e8faff 0%,#00ffdc 40%,#c084fc 100%)';
+      var r1 = document.createElement('span');
+      r1.className = 'pl-row';
+      r1.textContent = _players[0] + '  /  ' + _players[1];
+      r1.style.background = GRAD;
+      r1.style.webkitBackgroundClip = 'text';
+      r1.style.webkitTextFillColor = 'transparent';
+      r1.style.backgroundClip = 'text';
+      var r2 = document.createElement('span');
+      r2.className = 'pl-row pl-row2';
+      r2.textContent = _players[2];
+      r2.style.background = GRAD;
+      r2.style.webkitBackgroundClip = 'text';
+      r2.style.webkitTextFillColor = 'transparent';
+      r2.style.backgroundClip = 'text';
+      dPlayer.appendChild(r1);
+      dPlayer.appendChild(r2);
+    } else {
+      var GRAD = 'linear-gradient(115deg,#e8faff 0%,#00ffdc 40%,#c084fc 100%)';
+      var r1 = document.createElement('span');
+      r1.className = 'pl-row';
+      r1.textContent = _players[0] + '  /  ' + _players[1];
+      r1.style.background = GRAD;
+      r1.style.webkitBackgroundClip = 'text';
+      r1.style.webkitTextFillColor = 'transparent';
+      r1.style.backgroundClip = 'text';
+      var r2 = document.createElement('span');
+      r2.className = 'pl-row pl-row2';
+      r2.textContent = _players[2] + '  /  ' + _players[3];
+      r2.style.background = GRAD;
+      r2.style.webkitBackgroundClip = 'text';
+      r2.style.webkitTextFillColor = 'transparent';
+      r2.style.backgroundClip = 'text';
+      dPlayer.appendChild(r1);
+      dPlayer.appendChild(r2);
+    }
+  }
+  if(cfBtn) cfBtn.href=dest;
+  if(cfDest){try{cfDest.textContent=new URL(dest).hostname;}catch(e){cfDest.textContent=dest.slice(0,50);}}
+
+  /* 传递 from 到 unavailable 页面 */
+  if(cfUnavail) cfUnavail.href='unavailable.html?from='+encodeURIComponent(from)+'&url='+encodeURIComponent(dest);
+
+  if(typeText&&dTypePill){dTypePill.style.display='inline-flex';if(dTypeText)dTypeText.textContent=typeText;}
+
+  if(time&&dTimeBlock){
+    dTimeBlock.style.display='flex';
+    if(dTimeLbl) dTimeLbl.textContent=cap?'平均真实时间':'结算时间';
+    if(dTimeEl)  dTimeEl.textContent=time;
+  }
+
+  var mhtml='';
+  if(cap)  mhtml+=mtag('捕获情况',cap);
+  if(lbl)  mhtml+=mtag('当前视角',lbl);
+  if(date) mhtml+=mtag('上传日期',date);
+  if(dMeta) dMeta.innerHTML=mhtml;
+  function mtag(l,v){return '<div class="d-tag"><span class="d-tag-l">'+l+'</span><span class="d-tag-v">'+v+'</span></div>';}
+
+  /* ── 进度环 ── */
+  var t0=performance.now(), dur=stayMs*0.9;
+  function tick(now){
+    var f=Math.min((now-t0)/dur,1);
+    if(rpEl) rpEl.textContent=Math.round(f*100)+'%';
+    if(f<1) requestAnimationFrame(tick);
+    else if(rpEl) rpEl.textContent='100%';
+  }
+  requestAnimationFrame(tick);
+
+  /* ── 跳转 ── */
+  if(dest){
+    setTimeout(function(){
+      var fl=document.getElementById('flash');
+      if(fl) fl.classList.add('go');
+      setTimeout(function(){location.href=dest;},350);
+    },stayMs);
+  }
+
+  /* ══ 粒子 Canvas ══ */
+  var cv=document.getElementById('c-bg'), cx=cv.getContext('2d');
+  var pts=[];
+  var PAL=['#00ffdc','#b46fff','#00e5ff','#ffffff','#fbbf24','#60a5fa','#34d399','#f472b6'];
+  function rz(){
+    cv.width=innerWidth; cv.height=innerHeight; pts=[];
+    for(var i=0;i<100;i++){pts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,
+      r:.3+Math.random()*2.2,vx:(Math.random()-.5)*.55,vy:(Math.random()-.5)*.4,
+      col:PAL[i%PAL.length],a:Math.random()*Math.PI*2,da:.003+Math.random()*.01,gw:2+Math.random()*10});}
+  }
+  rz(); window.addEventListener('resize',rz);
+  function draw(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    var bg=cx.createRadialGradient(cv.width*.5,cv.height*.5,0,cv.width*.5,cv.height*.5,Math.max(cv.width,cv.height)*.8);
+    bg.addColorStop(0,'#000e1e');bg.addColorStop(.5,'#000913');bg.addColorStop(1,'#000407');
+    cx.fillStyle=bg;cx.fillRect(0,0,cv.width,cv.height);
+    var hl=cx.createRadialGradient(cv.width*.5,cv.height*.5,0,cv.width*.5,cv.height*.5,Math.min(cv.width,cv.height)*.38);
+    hl.addColorStop(0,'rgba(0,255,220,.055)');hl.addColorStop(.5,'rgba(180,100,255,.022)');hl.addColorStop(1,'transparent');
+    cx.fillStyle=hl;cx.fillRect(0,0,cv.width,cv.height);
+    pts.forEach(function(q){
+      q.x+=q.vx;q.y+=q.vy;q.a+=q.da;
+      if(q.x<0)q.x=cv.width;if(q.x>cv.width)q.x=0;
+      if(q.y<0)q.y=cv.height;if(q.y>cv.height)q.y=0;
+      var al=.07+.75*Math.abs(Math.sin(q.a));
+      cx.save();cx.globalAlpha=al;cx.fillStyle=q.col;cx.shadowColor=q.col;cx.shadowBlur=q.gw;
+      cx.beginPath();cx.arc(q.x,q.y,q.r,0,Math.PI*2);cx.fill();cx.restore();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  /* ══ 网格 Canvas ══ */
+  var gc=document.getElementById('c-grid'),gx=gc.getContext('2d');
+  function dg(){
+    gc.width=innerWidth;gc.height=innerHeight;
+    gx.clearRect(0,0,gc.width,gc.height);
+    var cx2=gc.width*.5,cy2=gc.height*.5,step=54;gx.lineWidth=.35;
+    for(var x=0;x<=gc.width;x+=step){var d=Math.abs(x-cx2)/gc.width;gx.strokeStyle='rgba(0,255,220,'+(0.006+(1-d)*.03)+')';gx.beginPath();gx.moveTo(x,0);gx.lineTo(x,gc.height);gx.stroke();}
+    for(var y=0;y<=gc.height;y+=step){var d2=Math.abs(y-cy2)/gc.height;gx.strokeStyle='rgba(0,255,220,'+(0.006+(1-d2)*.03)+')';gx.beginPath();gx.moveTo(0,y);gx.lineTo(gc.width,y);gx.stroke();}
+  }
+  dg(); window.addEventListener('resize',dg);
+
+  /* ══ 虹光边框 Canvas ══ */
+  var bc=document.getElementById('c-bdr'), bx=bc.getContext('2d');
+  var borderW=4, glowW=22;
+  function sizeBorder(){bc.width=innerWidth;bc.height=innerHeight;}
+  sizeBorder(); window.addEventListener('resize',sizeBorder);
+
+  var borderT0=performance.now();
+  /* ══ 五彩霓虹边框 ══ */
+  var bc=document.getElementById('c-bdr'), bx=bc.getContext('2d');
+  var BORDER_W=7, GLOW_W1=45, GLOW_W2=18;
+  /* 每段起始色相均匀散开，覆盖全色轮 */
+  var SEG_HUES=[320, 45, 195, 270]; // 洋红·橙·青·紫（赛博朋克标准配色）
+  var borderT0=performance.now();
+  /* 边框粒子（沿边运动的亮点） */
+  var bParticles=[];
+  function initBParticles(){
+    bParticles=[];
+    for(var i=0;i<14;i++){
+      bParticles.push({
+        pos:Math.random(),          // 0~1，沿周长的位置
+        speed:.025+Math.random()*.04,
+        size:2+Math.random()*3,
+        hue:(i/14*360)|0
+      });
+    }
+  }
+  initBParticles();
+  function perimPoint(frac, W, H, pad){
+    var p=frac%1; if(p<0)p+=1;
+    var top=W-2*pad, right=H-2*pad, bottom=W-2*pad, left=H-2*pad;
+    var total=2*(top+right);
+    var dist=p*total;
+    if(dist<top)       return {x:pad+dist,           y:pad};
+    dist-=top;
+    if(dist<right)     return {x:W-pad,              y:pad+dist};
+    dist-=right;
+    if(dist<bottom)    return {x:W-pad-dist,          y:H-pad};
+    dist-=bottom;
+                       return {x:pad,                y:H-pad-dist};
+  }
+  function sizeBorder(){bc.width=innerWidth;bc.height=innerHeight;}
+  sizeBorder(); window.addEventListener('resize',function(){sizeBorder();initBParticles();});
+
+  function drawBorder(){
+    var W=bc.width,H=bc.height;
+    bx.clearRect(0,0,W,H);
+    var t=(performance.now()-borderT0)/1000;
+    var pad=BORDER_W/2+2;
+    var speed=35; // 色相旋转速度（度/秒）
+
+    var segs=[
+      {x1:pad,y1:pad,       x2:W-pad,y2:pad,       h0:SEG_HUES[0]}, // top
+      {x1:W-pad,y1:pad,     x2:W-pad,y2:H-pad,     h0:SEG_HUES[1]}, // right
+      {x1:W-pad,y1:H-pad,   x2:pad,y2:H-pad,       h0:SEG_HUES[2]}, // bottom
+      {x1:pad,y1:H-pad,     x2:pad,y2:pad,          h0:SEG_HUES[3]}, // left
+    ];
+
+    segs.forEach(function(s,si){
+      var h1=(s.h0+t*speed)%360;
+      var h2=(s.h0+90+t*speed)%360;
+      var mid=(s.h0+45+t*speed)%360;
+      var g=bx.createLinearGradient(s.x1,s.y1,s.x2,s.y2);
+      g.addColorStop(0,   'hsla('+h1+',100%,62%,.92)');
+      g.addColorStop(.35, 'hsla('+mid+',100%,78%,1)');
+      g.addColorStop(.65, 'hsla('+((mid+30)%360)+',100%,75%,1)');
+      g.addColorStop(1,   'hsla('+h2+',100%,62%,.92)');
+
+      /* 外光晕 1（最宽） */
+      bx.save();
+      bx.beginPath();bx.moveTo(s.x1,s.y1);bx.lineTo(s.x2,s.y2);
+      bx.strokeStyle=g;bx.lineWidth=GLOW_W1;bx.globalAlpha=.12;
+      bx.shadowBlur=0;bx.stroke();bx.restore();
+
+      /* 外光晕 2 */
+      bx.save();
+      bx.beginPath();bx.moveTo(s.x1,s.y1);bx.lineTo(s.x2,s.y2);
+      bx.strokeStyle=g;bx.lineWidth=GLOW_W2;bx.globalAlpha=.22;
+      bx.shadowColor='hsl('+h1+',100%,68%)';bx.shadowBlur=16;
+      bx.stroke();bx.restore();
+
+      /* 主边框线 */
+      bx.save();
+      bx.beginPath();bx.moveTo(s.x1,s.y1);bx.lineTo(s.x2,s.y2);
+      bx.strokeStyle=g;bx.lineWidth=BORDER_W;bx.globalAlpha=.95;
+      bx.shadowColor='hsl('+h1+',100%,72%)';bx.shadowBlur=GLOW_W2;
+      bx.stroke();bx.restore();
+
+      /* 高光细线 */
+      bx.save();
+      bx.beginPath();bx.moveTo(s.x1,s.y1);bx.lineTo(s.x2,s.y2);
+      bx.strokeStyle='rgba(255,255,255,.7)';bx.lineWidth=1.2;bx.globalAlpha=.65;
+      bx.shadowBlur=0;bx.stroke();bx.restore();
+    });
+
+    /* 沿边粒子 */
+    bParticles.forEach(function(bp){
+      bp.pos=(bp.pos+bp.speed*0.00375)%1;
+      var pt=perimPoint(bp.pos,W,H,pad);
+      var hue=(bp.hue+t*speed*1.5)%360;
+      var pulse=.6+.4*Math.sin(t*4+bp.pos*12);
+      bx.save();
+      bx.beginPath();bx.arc(pt.x,pt.y,bp.size*pulse,0,Math.PI*2);
+      bx.fillStyle='hsl('+hue+',100%,72%)';
+      bx.shadowColor='hsl('+hue+',100%,70%)';
+      bx.shadowBlur=12;bx.globalAlpha=.85*pulse;
+      bx.fill();bx.restore();
+    });
+
+    requestAnimationFrame(drawBorder);
+  }
+  drawBorder();
+
+
+
+})();
+</script>
+</body>
+</html>
