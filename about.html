@@ -13,6 +13,89 @@
   <link rel="stylesheet" href="css/leaderboard.css">
   <link rel="stylesheet" href="css/about.css">
   <style>
+    /* ══ 纪录提交规则按钮：五彩渐变（直接背景，无伪元素裁剪问题）══ */
+    .about-rule-btn {
+      background: linear-gradient(115deg,
+        rgba(255,60,110,.7) 0%, rgba(255,140,0,.62) 20%, rgba(255,215,0,.58) 35%,
+        rgba(0,255,220,.62) 55%, rgba(99,102,241,.68) 78%, rgba(217,70,239,.7) 100%
+      ) !important;
+      border: 1px solid rgba(255,255,255,.28) !important;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      text-shadow: 0 1px 3px rgba(0,0,0,.5) !important;
+      box-shadow:
+        0 0 10px rgba(255,100,150,.38),
+        0 0 22px rgba(99,102,241,.32),
+        0 0 38px rgba(0,255,220,.18) !important;
+      animation: rbHueRotate 2.5s linear infinite !important;
+      transition: transform .4s cubic-bezier(.22,.68,0,1.2), box-shadow .4s ease !important;
+    }
+    .about-rule-wrap:hover .about-rule-btn {
+      transform: translateY(-2px) scale(1.03) !important;
+      box-shadow:
+        0 0 22px rgba(255,100,150,.8),
+        0 0 48px rgba(99,102,241,.7),
+        0 0 80px rgba(0,255,220,.45) !important;
+      border-color: rgba(255,255,255,.7) !important;
+    }
+    @keyframes rbHueRotate {
+      0%   { filter: hue-rotate(0deg)   brightness(.95); }
+      50%  { filter: hue-rotate(180deg) brightness(1.1);  }
+      100% { filter: hue-rotate(360deg) brightness(.95); }
+    }
+    /* 下箭头旋转 */
+    .about-rule-wrap:hover .about-rule-btn::after {
+      transform: rotate(180deg);
+      opacity: 1;
+    }
+    @keyframes rbBtnShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ══ 下拉菜单：向下弹出 + 五彩顶线 ══ */
+    .about-rule-dropdown {
+      position: absolute !important;
+      top: calc(100% + 3px) !important;
+      bottom: auto !important;
+      left: 50% !important;
+      transform: translateX(-50%) translateY(-8px) scaleY(.88) !important;
+      transform-origin: top center !important;
+      border-top: 2px solid transparent !important;
+      background:
+        linear-gradient(rgba(4,6,20,.97), rgba(4,6,20,.97)) padding-box,
+        linear-gradient(90deg, #ff3c6e, #ff8c00, #ffd700, #00ffdc, #6366f1, #d946ef) border-box !important;
+    }
+    .about-rule-wrap:hover .about-rule-dropdown {
+      transform: translateX(-50%) translateY(0) scaleY(1) !important;
+    }
+    /* 第4项入场动画 */
+    .about-rule-wrap:hover .about-rule-dropdown a:nth-child(4) {
+      animation: ruleItemIn2 .3s cubic-bezier(.22,.68,0,1.2) .26s forwards;
+    }
+    .about-rule-dropdown a:hover {
+      color: #e8f4ff !important;
+      background: rgba(255,215,0,.06) !important;
+      box-shadow: inset 3px 0 0 #ffd700, inset 8px 0 18px rgba(255,215,0,.1) !important;
+    }
+    .about-rule-dropdown a:hover::before {
+      background: linear-gradient(to right, transparent, rgba(255,100,150,.6)) !important;
+      transform: scaleX(1) !important; opacity: 1 !important;
+    }
+    .about-rule-dropdown a:hover::after {
+      background: linear-gradient(to left, transparent, rgba(99,102,241,.6)) !important;
+      transform: scaleX(1) !important; opacity: 1 !important;
+    }
+
+    /* ══ 底部 card 和 closing 与 footer 保持间距 ══ */
+    .about-card { margin-bottom: 3.5rem !important; }
+    .about-closing--center { margin-bottom: 0 !important; }
+  </style>
+  </style>
+  <style>
+  </style>
+  <style>
     /* ── 按钮悬停文字渐变替换 ── */
     .hover-text-swap { position: relative; display: inline-block; }
     .hover-text-swap .text-cn { display: inline; transition: opacity 0.3s ease; }
@@ -112,12 +195,12 @@
             <a href="profit-taker-macro.html"><span class="hover-text-swap"><span class="text-cn">无限制</span><span class="text-en">Non-restricted</span></span></a>
           </div>
         </div>
-        <button class="nav-more-btn" id="nav-more-btn" aria-label="查看更多榜单"><span class="nm-wrap"><span class="nm-cn">查看更多</span><span class="nm-en">Others</span></span></button>
+        <button class="nav-more-btn" id="nav-more-btn" aria-label="更多榜单榜单"><span class="nm-wrap"><span class="nm-cn">更多榜单</span><span class="nm-en">Others</span></span></button>
         <div class="nav-item">
           <a href="about.html"><span class="hover-text-swap"><span class="text-cn">关于本站</span><span class="text-en">About</span></span></a>
         </div>
-        <!-- 移动端：查看更多 -->
-        <button class="nav-more-mobile" id="nav-more-mobile" aria-label="查看更多榜单">查看更多</button>
+        <!-- 移动端：更多榜单 -->
+        <button class="nav-more-mobile" id="nav-more-mobile" aria-label="更多榜单榜单">更多榜单</button>
         <div class="mob-more-panel" id="mob-more-panel">
           <a href="capture.html">捕获</a>
           <a href="exterminate.html">歼灭</a>
@@ -375,7 +458,7 @@
       // 第二次点（mob-open已存在）：直接跳转（不阻止默认行为）
     });
   });
-  /* 移动端"查看更多"展开子菜单 */
+  /* 移动端"更多榜单"展开子菜单 */
   var mobMoreBtn = document.getElementById('nav-more-mobile');
   var mobMorePanel = document.getElementById('mob-more-panel');
   if (mobMoreBtn && mobMorePanel) {
