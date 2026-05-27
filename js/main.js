@@ -168,6 +168,53 @@ function getDomain(url) {
 }
 
 /* ══════════════════════════════════════════════════════════
+   4.1 自动将标签选择与地址栏 hash 同步（通用）
+   当页面存在 `.map-tab-btn` / `.lb-tab-btn` 时：
+   - 点击会把相应的 data-* 值写入 fragment（#）
+   - 页面载入时若 fragment 存在，会自动触发对应按钮的 click
+   该逻辑为兼容改造：不替换各页面的现有加载函数，只做非侵入式的同步与初始触发。
+   ══════════════════════════════════════════════════════════ */
+function _attachTabHashSync() {
+  function keyOf(btn) {
+    if (!btn) return '';
+    return btn.dataset.map || btn.dataset.mapname || btn.dataset.cat || btn.getAttribute('data-map') || btn.getAttribute('data-mapname') || btn.getAttribute('data-cat') || '';
+  }
+
+  var buttons = Array.from(document.querySelectorAll('.map-tab-btn, .lb-tab-btn'));
+  if (!buttons.length) return;
+
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var k = keyOf(btn);
+      if (!k) return;
+      try { history.replaceState(null, '', location.pathname + '#' + encodeURIComponent(k)); }
+      catch (e) { location.hash = encodeURIComponent(k); }
+    });
+  });
+
+  // 延后到下一 tick，确保页面其它 DOMContentLoaded 回调已注册其 handler 后再触发初始点击
+  setTimeout(function() {
+    var h = decodeURIComponent((location.hash||'').replace(/^#/, ''));
+    if (h) {
+      var target = buttons.find(function(b){ return keyOf(b) === h; });
+      if (target) {
+        try { target.click(); } catch(e) { target.dispatchEvent(new Event('click')); }
+        return;
+      }
+    }
+
+    var active = buttons.find(function(b){ return b.classList.contains('active'); });
+    if (active) {
+      try { active.click(); } catch(e) { active.dispatchEvent(new Event('click')); }
+    } else if (buttons[0]) {
+      try { buttons[0].click(); } catch(e) { buttons[0].dispatchEvent(new Event('click')); }
+    }
+  }, 0);
+}
+
+document.addEventListener('DOMContentLoaded', _attachTabHashSync);
+
+/* ══════════════════════════════════════════════════════════
    5. 多视角弹窗（注入样式 + 创建 DOM）
    ══════════════════════════════════════════════════════════ */
 
