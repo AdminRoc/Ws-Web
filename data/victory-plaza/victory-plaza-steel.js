@@ -23,4 +23,22 @@
 
 var victory_plaza_steelRecords = [
   /* 暂无记录 */
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "00:04:52.000",
+    uploadTime: "2025-10-18",
+    videoUrls:  ["https://www.youtube.com/watch?v=FRiJLg3DEEM"],
+  }, 
+  {
+    playerId:   "PWNZ",
+    clearTime:  "00:07:31.017",
+    uploadTime: "2025-09-19",
+    videoUrls:  ["null"],
+  }, 
+  {
+    playerId:   "NamelessDeity / RoniPrime",
+    clearTime:  "00:03:42.000",
+    uploadTime: "2025-10-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=cqCJqK0yVMc"],
+  },
 ];
