@@ -168,53 +168,6 @@ function getDomain(url) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   4.1 自动将标签选择与地址栏 hash 同步（通用）
-   当页面存在 `.map-tab-btn` / `.lb-tab-btn` 时：
-   - 点击会把相应的 data-* 值写入 fragment（#）
-   - 页面载入时若 fragment 存在，会自动触发对应按钮的 click
-   该逻辑为兼容改造：不替换各页面的现有加载函数，只做非侵入式的同步与初始触发。
-   ══════════════════════════════════════════════════════════ */
-function _attachTabHashSync() {
-  function keyOf(btn) {
-    if (!btn) return '';
-    return btn.dataset.map || btn.dataset.mapname || btn.dataset.cat || btn.getAttribute('data-map') || btn.getAttribute('data-mapname') || btn.getAttribute('data-cat') || '';
-  }
-
-  var buttons = Array.from(document.querySelectorAll('.map-tab-btn, .lb-tab-btn'));
-  if (!buttons.length) return;
-
-  buttons.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var k = keyOf(btn);
-      if (!k) return;
-      try { history.replaceState(null, '', location.pathname + '#' + encodeURIComponent(k)); }
-      catch (e) { location.hash = encodeURIComponent(k); }
-    });
-  });
-
-  // 延后到下一 tick，确保页面其它 DOMContentLoaded 回调已注册其 handler 后再触发初始点击
-  setTimeout(function() {
-    var h = decodeURIComponent((location.hash||'').replace(/^#/, ''));
-    if (h) {
-      var target = buttons.find(function(b){ return keyOf(b) === h; });
-      if (target) {
-        try { target.click(); } catch(e) { target.dispatchEvent(new Event('click')); }
-        return;
-      }
-    }
-
-    var active = buttons.find(function(b){ return b.classList.contains('active'); });
-    if (active) {
-      try { active.click(); } catch(e) { active.dispatchEvent(new Event('click')); }
-    } else if (buttons[0]) {
-      try { buttons[0].click(); } catch(e) { buttons[0].dispatchEvent(new Event('click')); }
-    }
-  }, 0);
-}
-
-document.addEventListener('DOMContentLoaded', _attachTabHashSync);
-
-/* ══════════════════════════════════════════════════════════
    5. 多视角弹窗（注入样式 + 创建 DOM）
    ══════════════════════════════════════════════════════════ */
 
@@ -222,7 +175,7 @@ document.addEventListener('DOMContentLoaded', _attachTabHashSync);
 (function injectPopupStyle() {
   const s = document.createElement('style');
   s.textContent = `
-/* ── 多视角弹窗 ── */
+/* ── 多视角弹窗（暗金风格） ── */
 #vp-popup {
   position: fixed;
   z-index: 99999;
@@ -233,18 +186,17 @@ document.addEventListener('DOMContentLoaded', _attachTabHashSync);
   transform: translateY(-10px) scale(0.94);
   transition: opacity .2s cubic-bezier(.22,.68,0,1.2),
               transform .2s cubic-bezier(.22,.68,0,1.2);
-  background: rgba(4, 9, 22, 0.98);
-  border: 1px solid rgba(0,212,255,.5);
-  border-radius: 12px;
+  background: rgba(10, 7, 2, 0.98);
+  border: 1px solid rgba(185,142,52,.5);
+  border-radius: 4px;
   overflow: hidden;
   box-shadow:
-    0 0 0 1px rgba(0,212,255,.07),
-    0 20px 65px rgba(0,0,0,.95),
-    0 0 50px rgba(0,212,255,.2),
-    inset 0 1px 0 rgba(0,212,255,.25);
+    0 0 0 1px rgba(185,142,52,.08),
+    0 20px 65px rgba(0,0,0,.98),
+    0 0 50px rgba(185,142,52,.18),
+    inset 0 1px 0 rgba(185,142,52,.22);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
-  /* 默认隐藏 */
   visibility: hidden;
 }
 #vp-popup.vp-show {
@@ -261,21 +213,21 @@ document.addEventListener('DOMContentLoaded', _attachTabHashSync);
   font-size: .56rem;
   font-weight: 700;
   letter-spacing: .22em;
-  color: rgba(0,212,255,.6);
+  color: rgba(185,142,52,.65);
   text-transform: uppercase;
-  border-bottom: 1px solid rgba(0,212,255,.14);
+  border-bottom: 1px solid rgba(185,142,52,.14);
   background: linear-gradient(90deg,
-    rgba(0,212,255,.08) 0%,
-    rgba(139,92,246,.05) 100%);
+    rgba(185,142,52,.08) 0%,
+    rgba(140,95,20,.04) 100%);
 }
 .vp-head-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 18px; height: 18px;
-  background: rgba(0,212,255,.15);
+  background: rgba(185,142,52,.15);
   border-radius: 50%;
-  border: 1px solid rgba(0,212,255,.3);
+  border: 1px solid rgba(185,142,52,.35);
 }
 .vp-row {
   display: flex;
@@ -283,12 +235,12 @@ document.addEventListener('DOMContentLoaded', _attachTabHashSync);
   gap: .7rem;
   padding: .72rem 1rem;
   text-decoration: none;
-  color: #9bbad8;
+  color: rgba(185,155,90,.8);
   font-family: 'Orbitron', sans-serif;
   font-size: .72rem;
   font-weight: 600;
   letter-spacing: .1em;
-  border-bottom: 1px solid rgba(0,212,255,.07);
+  border-bottom: 1px solid rgba(185,142,52,.08);
   position: relative;
   overflow: hidden;
   transition:
@@ -306,16 +258,16 @@ document.addEventListener('DOMContentLoaded', _attachTabHashSync);
   width: 38%; height: 140%;
   background: linear-gradient(105deg,
     transparent 20%,
-    rgba(0,212,255,.25) 50%,
-    rgba(255,255,255,.09) 55%,
+    rgba(185,142,52,.22) 50%,
+    rgba(255,220,100,.08) 55%,
     transparent 80%);
   transform: translateX(-200%) skewX(-15deg);
   transition: transform .38s ease;
   pointer-events: none;
 }
 .vp-row:hover {
-  background: rgba(0,212,255,.12);
-  color: #00d4ff;
+  background: rgba(185,142,52,.10);
+  color: rgba(215,172,65,.95);
   padding-left: 1.35rem;
 }
 .vp-row:hover::before { transform: translateX(420%) skewX(-15deg); }
@@ -325,18 +277,18 @@ document.addEventListener('DOMContentLoaded', _attachTabHashSync);
   justify-content: center;
   min-width: 26px; height: 26px;
   border-radius: 50%;
-  background: rgba(0,212,255,.1);
-  border: 1px solid rgba(0,212,255,.3);
+  background: rgba(185,142,52,.10);
+  border: 1px solid rgba(185,142,52,.32);
   font-size: .7rem;
   font-weight: 700;
-  color: rgba(0,212,255,.9);
+  color: rgba(210,165,60,.88);
   flex-shrink: 0;
   transition: background .15s ease, box-shadow .15s ease;
 }
 .vp-row:hover .vp-num {
-  background: rgba(0,212,255,.24);
-  box-shadow: 0 0 12px rgba(0,212,255,.55);
-  color: #00d4ff;
+  background: rgba(185,142,52,.22);
+  box-shadow: 0 0 12px rgba(185,142,52,.5);
+  color: #e8c060;
 }
 .vp-label { flex: 1; min-width: 0; }
 .vp-domain {

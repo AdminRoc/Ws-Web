@@ -29,9 +29,9 @@
   letter-spacing: .12em;
   color: var(--c-text2);
   padding: .45rem .9rem;
-  border: 1px solid rgba(0,212,255,.15);
-  border-radius: var(--r-sm);
-  background: rgba(0,212,255,.04);
+  border: 1px solid rgba(185,142,52,.15);
+  border-radius: 2px;
+  background: rgba(185,142,52,.04);
   white-space: nowrap;
   transition:
     color .45s cubic-bezier(.22,.68,0,1.2),
@@ -50,7 +50,7 @@
   width: 35%;
   background: linear-gradient(105deg,
     transparent 20%,
-    rgba(0,212,255,.3) 50%,
+    rgba(185,142,52,.3) 50%,
     rgba(255,255,255,.1) 55%,
     transparent 80%);
   transform: translateX(-150%) skewX(-15deg);
@@ -58,10 +58,10 @@
   pointer-events: none;
 }
 .lb-back:hover {
-  color: var(--c-cyan);
-  border-color: rgba(0,212,255,.5);
-  background: rgba(0,212,255,.07);
-  box-shadow: 0 0 12px rgba(0,212,255,.3), 0 0 28px rgba(0,212,255,.14);
+  color: var(--c-gold-bright);
+  border-color: rgba(185,142,52,.5);
+  background: rgba(185,142,52,.07);
+  box-shadow: 0 0 12px rgba(185,142,52,.28), 0 0 28px rgba(185,142,52,.12);
   transform: translateX(-4px);
 }
 .lb-back:hover::before {
@@ -77,14 +77,20 @@
 }
 .lb-title {
   font-family: var(--f-sci);
-  font-size: clamp(1.6rem, 4vw, 3rem);
+  font-size: clamp(1.92rem, 4.8vw, 3.6rem);
   font-weight: 800;
   letter-spacing: .06em;
-  background: linear-gradient(135deg, var(--c-cyan) 0%, var(--c-purple) 100%);
+  background: linear-gradient(90deg,
+    #b87830 0%, #d4a848 18%, #c8781e 32%,
+    #e8c060 45%, #ffd700 50%,
+    #e8c060 55%, #c8781e 68%,
+    #d4a848 82%, #b87830 100%);
+  background-size: 220% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 16px rgba(0,212,255,.45));
+  animation: lbTitleShimmer 5s linear infinite;
+  filter: drop-shadow(0 0 18px rgba(185,142,52,.45));
   line-height: 1.2;
   display: flex;
   align-items: center;
@@ -92,11 +98,15 @@
   gap: .8rem;
   flex-wrap: wrap;
 }
+@keyframes lbTitleShimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 220% center; }
+}
 .lb-subtitle {
   font-family: var(--f-sci);
-  font-size: clamp(.7rem, 1.3vw, .9rem);
+  font-size: clamp(.84rem, 1.56vw, 1.08rem);
   letter-spacing: .2em;
-  color: var(--c-text2);
+  color: rgba(185,142,52,.65);
   margin-top: .55rem;
   text-transform: uppercase;
 }
@@ -114,14 +124,14 @@
   white-space: nowrap;
 }
 .lb-badge.no-macro {
-  color: var(--c-cyan);
-  border: 1px solid var(--c-cyan-dim);
-  background: rgba(0,212,255,.08);
+  color: var(--c-gold-bright);
+  border: 1px solid var(--c-gold-dim);
+  background: rgba(185,142,52,.08);
 }
 .lb-badge.macro {
-  color: var(--c-purple);
-  border: 1px solid var(--c-purple-dim);
-  background: rgba(139,92,246,.08);
+  color: rgba(210,158,55,.85);
+  border: 1px solid rgba(185,130,42,.32);
+  background: rgba(160,105,28,.08);
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -130,19 +140,16 @@
 .lb-table-wrap {
   width: 100%;
   height: auto;
-  max-height: none;      /* 不限制行数，随内容自动增高 */
-  overflow: hidden;      /* 圆角裁切 */
-  /* 桌面端不滚动；手机端见 @media 块 */
-  border-radius: var(--r-lg);
-  /* 玻璃拟态外容器 */
-  background: rgba(6,12,26,.78);
+  max-height: none;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(12,8,2,.82);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(0,212,255,.16);
+  border: 1px solid rgba(185,142,52,.18);
   box-shadow:
-    0 0 0 0 transparent,
-    0 8px 50px rgba(0,0,0,.6),
-    inset 0 1px 0 rgba(0,212,255,.12);
+    0 8px 50px rgba(0,0,0,.65),
+    inset 0 1px 0 rgba(185,142,52,.10);
 }
 
 .lb-table {
@@ -154,15 +161,15 @@
 /* ── 表头 ── */
 .lb-table thead tr {
   background: linear-gradient(90deg,
-    rgba(0,212,255,.1) 0%, rgba(139,92,246,.07) 100%);
-  border-bottom: 1px solid rgba(0,212,255,.2);
+    rgba(185,142,52,.10) 0%, rgba(140,95,20,.06) 100%);
+  border-bottom: 1px solid rgba(185,142,52,.22);
 }
 .lb-table thead th {
   font-family: var(--f-sci);
-  font-size: .68rem;
+  font-size: .72rem;
   font-weight: 600;
   letter-spacing: .15em;
-  color: var(--c-cyan);
+  color: var(--c-gold-bright);
   text-transform: uppercase;
   padding: 1rem 1.4rem;
   text-align: left;
@@ -172,23 +179,19 @@
 
 /* ── 表体行 ── */
 .lb-table tbody tr {
-  border-bottom: 1px solid rgba(0,212,255,.05);
+  border-bottom: 1px solid rgba(185,142,52,.06);
   cursor: pointer;
-  transition:
-    background var(--ease-fast),
-    transform var(--ease-fast),
-    box-shadow var(--ease-fast);
+  transition: background var(--ease-fast), transform var(--ease-fast), box-shadow var(--ease-fast);
   position: relative;
 }
 .lb-table tbody tr:last-child { border-bottom: none; }
 
-/* 整行悬停：微抬起 + 左侧流光条 + 文字微亮 */
 .lb-table tbody tr:hover {
-  background: rgba(0,212,255,.055);
+  background: rgba(185,142,52,.055);
   transform: translateX(4px);
-  box-shadow: inset 3px 0 0 var(--c-cyan), inset 3px 0 12px rgba(0,212,255,.2);
+  box-shadow: inset 3px 0 0 var(--c-gold-bright), inset 3px 0 12px rgba(185,142,52,.18);
 }
-.lb-table tbody tr:hover td { color: var(--c-white); }
+.lb-table tbody tr:hover td { color: rgba(230,200,140,.95); }
 
 /* ── 单元格 ── */
 .lb-table td {
@@ -279,10 +282,10 @@
   align-items: center;
   gap: .3rem;
   font-size: .7rem;
-  color: var(--c-cyan-dim);
+  color: var(--c-gold-dim);
   transition: color var(--ease-fast);
 }
-tr:hover .video-indicator { color: var(--c-cyan); }
+tr:hover .video-indicator { color: var(--c-gold-bright); }
 
 /* ── 无数据占位行 ── */
 .lb-empty {
@@ -312,9 +315,9 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   gap: .55rem;
   margin-bottom: 1.8rem;
   padding: .9rem 1.1rem;
-  background: rgba(0,212,255,.025);
-  border: 1px solid rgba(0,212,255,.09);
-  border-radius: var(--r-md);
+  background: rgba(185,142,52,.025);
+  border: 1px solid rgba(185,142,52,.09);
+  border-radius: 2px;
   row-gap: .55rem;
 }
 
@@ -323,13 +326,13 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   align-items: center;
   padding: .42rem 1.2rem;
   font-family: var(--f-sci);
-  font-size: .72rem;
+  font-size: .76rem;
   font-weight: 600;
   letter-spacing: .1em;
-  color: var(--c-text2);
-  border: 1px solid rgba(0,212,255,.15);
-  border-radius: var(--r-sm);
-  background: rgba(0,212,255,.03);
+  color: rgba(165,130,68,.72);
+  border: 1px solid rgba(185,142,52,.15);
+  border-radius: 2px;
+  background: rgba(185,142,52,.03);
   cursor: pointer;
   transition:
     color .42s cubic-bezier(.22,.68,0,1.2),
@@ -349,7 +352,7 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   width: 35%;
   background: linear-gradient(105deg,
     transparent 20%,
-    rgba(0,212,255,.28) 50%,
+    rgba(185,142,52,.28) 50%,
     rgba(255,255,255,.08) 55%,
     transparent 80%);
   transform: translateX(-150%) skewX(-15deg);
@@ -357,24 +360,24 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   pointer-events: none;
 }
 .lb-tab-btn:hover {
-  color: var(--c-cyan);
-  border-color: rgba(0,212,255,.38);
-  background: rgba(0,212,255,.07);
+  color: var(--c-gold-bright);
+  border-color: rgba(185,142,52,.38);
+  background: rgba(185,142,52,.07);
   transform: translateY(-1px);
 }
 .lb-tab-btn:hover::before {
   transform: translateX(360%) skewX(-15deg);
 }
 .lb-tab-btn.active {
-  color: var(--c-cyan);
-  border-color: var(--c-cyan);
-  background: rgba(0,212,255,.12);
-  box-shadow: var(--glow-c-sm);
+  color: var(--c-gold-bright);
+  border-color: var(--c-gold-bright);
+  background: rgba(185,142,52,.12);
+  box-shadow: 0 0 8px rgba(185,142,52,.5), 0 0 16px rgba(185,142,52,.28);
   animation: tabActivePulse 2.8s ease-in-out infinite;
 }
 @keyframes tabActivePulse {
-  0%,100% { box-shadow: var(--glow-c-sm); }
-  50%     { box-shadow: 0 0 12px rgba(0,212,255,.75), 0 0 28px rgba(0,212,255,.45); }
+  0%,100% { box-shadow: 0 0 8px rgba(185,142,52,.5), 0 0 16px rgba(185,142,52,.28); }
+  50%     { box-shadow: 0 0 12px rgba(210,168,58,.75), 0 0 28px rgba(185,142,52,.45); }
 }
 
 /* ── 地图 Tab 按钮（与lb-tab-btn共享样式） ── */
@@ -387,9 +390,9 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   font-weight: 600;
   letter-spacing: .1em;
   color: var(--c-text2);
-  border: 1px solid rgba(0,212,255,.15);
+  border: 1px solid rgba(185,142,52,.15);
   border-radius: var(--r-sm);
-  background: rgba(0,212,255,.03);
+  background: rgba(185,142,52,.03);
   cursor: pointer;
   transition:
     color .42s cubic-bezier(.22,.68,0,1.2),
@@ -408,24 +411,24 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   inset: -10%;
   width: 35%;
   background: linear-gradient(105deg,
-    transparent 20%, rgba(0,212,255,.28) 50%,
+    transparent 20%, rgba(185,142,52,.28) 50%,
     rgba(255,255,255,.08) 55%, transparent 80%);
   transform: translateX(-150%) skewX(-15deg);
   transition: transform .5s ease;
   pointer-events: none;
 }
 .map-tab-btn:hover {
-  color: var(--c-cyan);
-  border-color: rgba(0,212,255,.38);
-  background: rgba(0,212,255,.07);
+  color: var(--c-gold-bright);
+  border-color: rgba(185,142,52,.38);
+  background: rgba(185,142,52,.07);
   transform: translateY(-1px);
 }
 .map-tab-btn:hover::before { transform: translateX(360%) skewX(-15deg); }
 .map-tab-btn.active {
-  color: var(--c-cyan);
-  border-color: var(--c-cyan);
-  background: rgba(0,212,255,.12);
-  box-shadow: var(--glow-c-sm);
+  color: var(--c-gold-bright);
+  border-color: var(--c-gold-bright);
+  background: rgba(185,142,52,.12);
+  box-shadow: 0 0 8px rgba(185,142,52,.5), 0 0 16px rgba(185,142,52,.28);
   animation: tabActivePulse 2.8s ease-in-out infinite;
 }
 
@@ -435,7 +438,7 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   justify-content: flex-end;
   align-items: center;
   padding: .75rem 1.4rem;
-  border-top: 1px solid rgba(0,212,255,.07);
+  border-top: 1px solid rgba(185,142,52,.07);
   font-family: var(--f-sci);
   font-size: .65rem;
   letter-spacing: .12em;
@@ -527,10 +530,11 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   padding: .22rem .85rem;
   font-family: var(--f-sci); font-size: .6rem; font-weight: 700;
   letter-spacing: .1em; border-radius: 20px; white-space: nowrap;
-  color: var(--c-cyan);
-  border: 1px solid var(--c-cyan-dim);
-  background: rgba(0,212,255,.08);
-  -webkit-text-fill-color: var(--c-cyan);
+  /* !important 覆盖各页面内联 <style> 中残留的青色定义 */
+  color: var(--c-gold-bright) !important;
+  border: 1px solid var(--c-gold-dim) !important;
+  background: rgba(185,142,52,.08) !important;
+  -webkit-text-fill-color: var(--c-gold-bright) !important;
   background-clip: unset; -webkit-background-clip: unset;
   transition: opacity .6s ease;
 }
@@ -540,10 +544,10 @@ tr:hover .video-indicator { color: var(--c-cyan); }
 .lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; }
 .lb-badge-wrap.macro-badge .lb-badge-en,
 .lb-badge-wrap.macro-badge .lb-badge-cn {
-  color: var(--c-purple);
-  border-color: var(--c-purple-dim);
-  background: rgba(139,92,246,.08);
-  -webkit-text-fill-color: var(--c-purple);
+  color: rgba(210,158,55,.85) !important;
+  border-color: rgba(185,130,42,.38) !important;
+  background: rgba(160,105,28,.10) !important;
+  -webkit-text-fill-color: rgba(210,158,55,.85) !important;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -596,7 +600,7 @@ tr:hover .video-indicator { color: var(--c-cyan); }
   position: absolute; top: 50%; left: 50%;
   width: 90px; height: 90px; margin: -45px 0 0 -45px;
   border-radius: 50%;
-  border: 1px dashed rgba(0,212,255,.18);
+  border: 1px dashed rgba(185,142,52,.18);
   animation: emptyRingRotate 8s linear infinite;
   pointer-events: none;
 }
@@ -609,7 +613,7 @@ tr:hover .video-indicator { color: var(--c-cyan); }
 @keyframes emptyRingRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .lb-empty-icon {
   position: relative; z-index: 1; opacity: .55;
-  filter: drop-shadow(0 0 8px rgba(0,212,255,.4));
+  filter: drop-shadow(0 0 8px rgba(185,142,52,.4));
   animation: emptyIconPulse 3s ease-in-out infinite;
 }
 @keyframes emptyIconPulse {
@@ -618,7 +622,7 @@ tr:hover .video-indicator { color: var(--c-cyan); }
 }
 .lb-empty-text {
   font-family: var(--f-sci); font-size: .82rem; font-weight: 700;
-  letter-spacing: .38em; color: rgba(0,212,255,.35);
+  letter-spacing: .38em; color: rgba(185,142,52,.35);
   text-transform: uppercase; position: relative; z-index: 1;
 }
 .lb-empty-sub {

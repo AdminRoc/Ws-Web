@@ -210,10 +210,15 @@
   function loadCat(c) {
     renderTimeLeaderboard(_catData[c] ? _catData[c]() : [], 'lb-tbody', 'clearTime');
     document.querySelectorAll('.lb-tab-btn').forEach(function(b){b.classList.toggle('active',b.dataset.cat===c);});
+    history.replaceState(null, '', '#' + encodeURIComponent(c));
   }
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.lb-tab-btn').forEach(function(b){b.addEventListener('click',function(){loadCat(b.dataset.cat);});});
-    loadCat('钢铁');
+    /* ── URL Hash 恢复 ── */
+    (function(){
+      var _h = decodeURIComponent(location.hash.replace('#','').trim());
+      loadCat((_h && _catData[_h]) ? _h : '钢铁');
+    })();
   });
 </script>
 <script>

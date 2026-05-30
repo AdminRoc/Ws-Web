@@ -195,9 +195,103 @@
       opacity:0;animation:fadeUp .4s ease .75s both;}
     @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
   
-    .d-player{display:flex;flex-direction:column;gap:.22rem;}
-    .pl-row{display:block;line-height:1.15;font-size:inherit;}
-    .pl-row2{font-size:.88em;opacity:.82;}
+  /* ══════════════════════════════════════════════════════
+   暗金 + 霓虹混搭主题覆盖
+   ══════════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'Futurak';
+  src: url('fonts/futurak.ttf') format('truetype');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+html,body { background: #0b0805; }
+
+/* 主卡片：金边替代纯青色 */
+.card {
+  border-color: rgba(185,142,52,.55);
+  border-top-color: #d4a840;
+  box-shadow:
+    0 0 0 1px rgba(185,142,52,.10),
+    0 0 70px rgba(185,142,52,.28),
+    0 0 140px rgba(185,142,52,.12),
+    0 0 240px rgba(160,100,200,.06),
+    0 32px 80px rgba(0,0,0,.98),
+    inset 0 1px 0 rgba(185,142,52,.28),
+    inset 0 0 55px rgba(185,142,52,.03);
+}
+/* 卡头扫光金色 */
+.card::before {
+  background: linear-gradient(90deg,
+    transparent, rgba(185,142,52,.45), #d4a840,
+    rgba(220,180,80,.85), #b46fff,
+    rgba(185,142,52,.45), transparent);
+}
+.ch {
+  background: linear-gradient(90deg,
+    rgba(185,142,52,.14), rgba(180,100,255,.06), transparent);
+  border-bottom-color: rgba(185,142,52,.22);
+}
+.ch-ic {
+  background: rgba(185,142,52,.18);
+  border-color: rgba(185,142,52,.55);
+  box-shadow: 0 0 14px rgba(185,142,52,.42);
+}
+.ch-ttl {
+  font-family: 'Futurak', 'Orbitron', sans-serif;
+  color: rgba(210,168,65,.92);
+}
+/* 时间展示：金色 */
+.d-time {
+  color: #d4a840;
+  filter:
+    drop-shadow(0 0 12px rgba(195,152,52,.85))
+    drop-shadow(0 0 32px rgba(195,152,52,.42));
+  animation: tgGold 2.2s ease-in-out infinite;
+}
+@keyframes tgGold {
+  0%,100% { filter: drop-shadow(0 0 10px rgba(195,152,52,.65)) drop-shadow(0 0 30px rgba(195,152,52,.3)); }
+  50%      { filter: drop-shadow(0 0 24px rgba(210,168,58,1))  drop-shadow(0 0 65px rgba(195,152,52,.65)); }
+}
+.d-time-lbl { color: rgba(185,142,52,.55); }
+/* 玩家名保留霓虹渐变 */
+/* 进度环金色渐变 — 使用已有的 #rg，无需新增 SVG */
+.ra { stroke: url(#rg); filter: hue-rotate(-30deg) saturate(1.5); }
+/* 底栏 */
+.cf { border-top-color: rgba(185,142,52,.14); }
+.cf-badge {
+  font-family: 'Futurak', 'Orbitron', sans-serif;
+  color: rgba(185,142,52,.35);
+  border-color: rgba(185,142,52,.18);
+}
+.cf-btn {
+  font-family: 'Futurak', 'Orbitron', sans-serif;
+  color: rgba(185,142,52,.72);
+  border-color: rgba(185,142,52,.38);
+  background: rgba(185,142,52,.06);
+}
+.cf-btn:hover {
+  color: #d4a840;
+  border-color: rgba(185,142,52,.8);
+  background: rgba(185,142,52,.14);
+  box-shadow: 0 0 14px rgba(185,142,52,.38);
+}
+/* 进度条金→霓虹 */
+.cbar {
+  background: linear-gradient(90deg, #d4a840, #b46fff, #e8c060, #d4a840);
+}
+/* 粒子画布暖化 */
+#c-bg { filter: sepia(0.4) saturate(1.2) hue-rotate(-5deg); }
+/* 四角装饰金色 */
+.cs::before, .cs::after { border-color: rgba(185,142,52,.75); }
+@keyframes cp {
+  0%,100% { opacity:.45; box-shadow:none; }
+  50%      { opacity:1;   box-shadow:0 0 14px rgba(185,142,52,.75), 0 0 32px rgba(185,142,52,.35); }
+}
+/* 状态头 */
+.st-dot    { background: #d4a840; box-shadow: 0 0 8px #d4a840, 0 0 20px rgba(185,142,52,.5); }
+.st-dot.p  { background: #b46fff; box-shadow: 0 0 8px #b46fff; }
+.st-text   { color: rgba(185,142,52,.55); }
+.bot-note  { color: rgba(185,142,52,.18); }
+
   </style>
 </head>
 <body>

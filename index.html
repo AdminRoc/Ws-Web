@@ -3,15 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Warframe Speedrun Leaderboards & Tools - Warframe Speed</title>
+  <title>Warframe Speedrun Leaderboards &amp; Tools - Warframe Speed</title>
   <meta name="description" content="A Truly Fair and Comprehensive Warframe Speedrun Leaderboard.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="https://www-static.warframe.com/images/warframe-logo-white.svg">
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/home.css">
   <style>
+    /* ── 首页覆盖：改用复古底色，隐藏科幻背景层 ── */
+    body { background: #0c0a07; }
+    #star-canvas  { display: none !important; }
+    .nebula-bg    { display: none !important; }
+
     /* ── 按钮悬停文字渐变替换 ── */
     .hover-text-swap { position: relative; display: inline-block; }
     .hover-text-swap .text-cn { display: inline; transition: opacity 0.3s ease; }
@@ -33,10 +38,8 @@
     .nav-submit:hover .hover-text-swap .text-en { opacity: 1; }
     .lb-back:hover .hover-text-swap .text-cn { opacity: 0; }
     .lb-back:hover .hover-text-swap .text-en { opacity: 1; }
-    /* ── 首页Hero按钮悬停文字替换 ── */
     .hero-btn:hover .hover-text-swap .text-cn { opacity: 0; }
     .hero-btn:hover .hover-text-swap .text-en { opacity: 1; }
-
 
     /* ── Badge 交替动画 ── */
     .lb-badge-wrap {
@@ -55,6 +58,7 @@
     .lb-badge-en { opacity: 0; }
     .lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; }
     .lb-badge-wrap.show-en .lb-badge-en { opacity: 1; }
+
     /* 移动端菜单：桌面隐藏 */
     .nav-more-mobile, .mob-more-panel { display: none; }
     @media screen and (max-width: 860px) {
@@ -65,35 +69,71 @@
 </head>
 <body>
 
-<!-- 星空 Canvas 背景 -->
+<!-- 原星空 Canvas（main.js 会初始化它，此处 CSS 已隐藏，无视觉影响） -->
 <canvas id="star-canvas"></canvas>
-<!-- CSS 星云漂移层 -->
 <div class="nebula-bg"></div>
 
-<!-- 首页主内容 -->
+<!-- ══ 复古大气背景 Canvas ══ -->
+<canvas id="vintage-bg"></canvas>
+
+<!-- ══ 动态胶片颗粒噪点（SVG feTurbulence，seed 由 JS 逐帧更新） ══ -->
+<svg id="grain-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <filter id="grain-filter" x="0" y="0" width="100%" height="100%">
+      <feTurbulence id="grain-turb" type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch"></feTurbulence>
+      <feColorMatrix type="saturate" values="0"></feColorMatrix>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" filter="url(#grain-filter)"></rect>
+</svg>
+
+<!-- ══════════ 首页主内容 ══════════ -->
 <div class="home-wrap">
 
-  <!-- ══ 第一屏 ══ -->
+  <!-- ══ 第一屏：英雄区 ══ -->
   <section class="hero">
-    <h1 class="hero-warframe" data-text="Warframe">Warframe</h1>
-    <h2 class="hero-speed">SPEED</h2>
-    <p class="hero-domain">WFSPEED.RUN</p>
 
-    <!-- 三个入口按钮 -->
-    <div class="hero-buttons">
-      <a href="disruption.html" class="hero-btn"><span class="hover-text-swap"><span class="text-cn">中断</span><span class="text-en">Disruption</span></span></a>
-      <a href="eidolon.html" class="hero-btn"><span class="hover-text-swap"><span class="text-cn">夜灵</span><span class="text-en">Eidolon</span></span></a>
-      <a href="profit-taker.html" class="hero-btn"><span class="hover-text-swap"><span class="text-cn">蜘蛛</span><span class="text-en">Profit-Taker</span></span></a>
-    </div>
+    <!--
+      双层大字标题：
+        layer-rust  = 锈迹钢铁材质（基底，始终可见）
+        layer-paint = 五颜六色油漆（叠加，由 JS clip-path 动画控制）
+
+      WARFRAME → 从左向右填充 / 从左向右褪色
+      SPEED    → 从右向左填充 / 从右向左褪色
+    -->
+    <div class="hero-textblock">
+
+      <div class="hero-word-wrap">
+        <h1 class="hero-word wf-word layer-rust">WARFRAME</h1>
+        <h1 class="hero-word wf-word layer-paint" id="wf-paint" aria-hidden="true">WARFRAME</h1>
+      </div>
+
+      <div class="hero-word-wrap">
+        <h2 class="hero-word spd-word layer-rust">SPEED</h2>
+        <h2 class="hero-word spd-word layer-paint" id="spd-paint" aria-hidden="true">SPEED</h2>
+      </div>
+
+    </div><!-- /hero-textblock -->
+
+    <!-- 域名 + 三按钮：统一固定在底部 hero-bottom 容器 -->
+    <div class="hero-bottom">
+      <p class="hero-domain">WFSPEED.RUN</p>
+      <div class="hero-buttons">
+        <a href="disruption.html" class="hero-btn"><span class="hover-text-swap"><span class="text-cn">中断</span><span class="text-en">Disruption</span></span></a>
+        <a href="eidolon.html" class="hero-btn"><span class="hover-text-swap"><span class="text-cn">夜灵</span><span class="text-en">Eidolon</span></span></a>
+        <a href="profit-taker.html" class="hero-btn"><span class="hover-text-swap"><span class="text-cn">蜘蛛</span><span class="text-en">Profit-Taker</span></span></a>
+      </div>
+    </div><!-- /hero-bottom -->
 
     <!-- 向下滚动提示 -->
     <div class="hero-scroll-hint" aria-hidden="true">
       <span>SCROLL</span>
       <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
         <path d="M8 1v14M2 10l6 6 6-6" stroke="currentColor" stroke-width="1.5"
-              stroke-linecap="round" stroke-linejoin="round"/>
+              stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </div>
+
   </section>
 
   <!-- ══ 第二屏：理念延展 ══ -->
@@ -143,13 +183,12 @@
       </a>
     </div>
 
-    <!-- 更多排行榜提示 -->
     <div class="more-boards-hint reveal">
       <span class="more-boards-text">此外，还有大量可参与的其他排行榜，欢迎提交成绩</span>
     </div>
   </section>
 
-  <!-- ══ 备案区（默认在 200vh 之外，需滚动才可见） ══ -->
+  <!-- ══ 底部备案 ══ -->
   <footer class="site-footer home-footer">
     <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">
       沪ICP备2022033368号
@@ -160,6 +199,293 @@
 </div><!-- /home-wrap -->
 
 <script src="js/main.js"></script>
+
+<!-- ══════════════════════════════════════════════════════════
+     复古大气背景 Canvas
+     绘制内容：深暖基色 · 多色墨水晕染 · 四角压暗 · 扫描线 · 漂浮余烬粒子
+     ══════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+  var canvas = document.getElementById('vintage-bg');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, rafId;
+  var particles = [];
+
+  /* 离屏静态底图（resize 时重绘一次，避免每帧重绘） */
+  var bgEl  = document.createElement('canvas');
+  var bCtx  = bgEl.getContext('2d');
+
+  /* 椭圆渐变辅助：在当前坐标系下平移+缩放，画单位圆径向渐变 */
+  function ellipseGrad(cx, cy, rx, ry, r, g, b, a) {
+    bCtx.save();
+    bCtx.translate(cx, cy);
+    bCtx.scale(rx, ry);
+    var grd = bCtx.createRadialGradient(0, 0, 0, 0, 0, 1);
+    grd.addColorStop(0,    'rgba('+r+','+g+','+b+','+a+')');
+    grd.addColorStop(0.52, 'rgba('+r+','+g+','+b+','+(a*0.32)+')');
+    grd.addColorStop(1,    'rgba('+r+','+g+','+b+',0)');
+    bCtx.fillStyle = grd;
+    bCtx.beginPath();
+    bCtx.arc(0, 0, 1, 0, Math.PI * 2);
+    bCtx.fill();
+    bCtx.restore();
+  }
+
+  function drawStatic() {
+    W = canvas.width = bgEl.width  = window.innerWidth;
+    H = canvas.height = bgEl.height = window.innerHeight;
+
+    /* 深暖基色 */
+    bCtx.fillStyle = '#0c0a07';
+    bCtx.fillRect(0, 0, W, H);
+
+    /* 墨水晕染 —— 深红 · 深青 · 琥珀 · 深紫 · 焦橙 */
+    ellipseGrad(W*0.09,  H*0.24, W*0.60, H*0.54, 165, 22, 20,  0.18);
+    ellipseGrad(W*0.93,  H*0.78, W*0.54, H*0.48, 18,  68, 54,  0.14);
+    ellipseGrad(W*0.50,  H*0.46, W*0.46, H*0.42, 115, 80, 16,  0.07);
+    ellipseGrad(W*0.85,  H*0.18, W*0.34, H*0.32, 60,  18, 90,  0.09);
+    ellipseGrad(W*0.04,  H*0.84, W*0.30, H*0.26, 82,  42, 10,  0.07);
+    ellipseGrad(W*0.65,  H*0.88, W*0.28, H*0.22, 140, 30, 18,  0.06);
+
+    /* 四角/四边压暗渐晕 */
+    var vig = bCtx.createRadialGradient(W/2, H/2, H*0.16, W/2, H/2, H*0.92);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(1, 'rgba(2,1,0,0.74)');
+    bCtx.fillStyle = vig;
+    bCtx.fillRect(0, 0, W, H);
+
+    /* 水平扫描线（老胶片感） */
+    bCtx.fillStyle = 'rgba(0,0,0,0.024)';
+    for (var y = 0; y < H; y += 4) {
+      bCtx.fillRect(0, y + 3, W, 1);
+    }
+  }
+
+  /* 余烬粒子调色板（琥珀 · 金 · 焦橙 · 浅铜） */
+  var PAL = [
+    [192, 138, 58],
+    [218, 172, 68],
+    [165, 102, 40],
+    [240, 194, 82],
+    [150, 92, 32]
+  ];
+
+  function initParticles() {
+    particles = [];
+    for (var i = 0; i < 58; i++) {
+      var c = PAL[i % PAL.length];
+      particles.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.20,
+        vy: -(0.14 + Math.random() * 0.38),
+        r: 0.4 + Math.random() * 1.75,
+        life: Math.random() * Math.PI * 2,
+        spd: 0.0028 + Math.random() * 0.0055,
+        col: c
+      });
+    }
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.drawImage(bgEl, 0, 0);
+
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life += p.spd;
+
+      /* 超出顶部后在底部随机重生 */
+      if (p.y < -8) {
+        p.y = H + 8;
+        p.x = Math.random() * W;
+        p.life = 0;
+      }
+
+      var a = Math.abs(Math.sin(p.life)) * 0.50;
+      if (a < 0.02) continue;
+
+      ctx.save();
+      ctx.globalAlpha = a;
+      ctx.fillStyle   = 'rgb(' + p.col[0] + ',' + p.col[1] + ',' + p.col[2] + ')';
+      ctx.shadowColor = 'rgb(' + p.col[0] + ',' + p.col[1] + ',' + p.col[2] + ')';
+      ctx.shadowBlur  = p.r * 5.5;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function init() {
+    drawStatic();
+    initParticles();
+    if (rafId) cancelAnimationFrame(rafId);
+    frame();
+  }
+
+  /* 窗口缩放时重绘静态底图，粒子沿用 */
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(drawStatic, 160);
+  }, { passive: true });
+
+  init();
+}());
+</script>
+
+<!-- ══════════════════════════════════════════════════════════
+     锈迹钢铁 ↔ 彩色油漆  笔刷动画  v3
+
+     ★ 核心修复：
+       1. mask-image 渐变柔边（SOFT=14%），彻底无硬边方块
+       2. 延迟 ENTRY_DELAY_S=1.9s 再开始，与 textblockIn 入场
+          动画完全同步，杜绝"文字刚出现就已经涂了一半"的跳跃感
+       3. 使用 sinEase（正弦缓动），比二次缓动在两端更柔，
+          "0→开始填充""填满→结束" 的过渡更加绵软自然
+       4. 循环边界（t≈21→0）两字均处于 EMPTY，完全无跳变
+
+     时序（CYCLE=22s）：
+       0.0  →  3.5   WARFRAME 左→右填充
+       3.5  →  4.5   停顿
+       4.5  →  8.0   SPEED 右→左填充
+       8.0  → 10.5   两字全亮
+       10.5 → 14.0   WARFRAME 左→右褪色
+       14.0 → 15.0   停顿
+       15.0 → 18.5   SPEED 右→左褪色
+       18.5 → 22.0   全锈停顿 → 下一循环
+     ══════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+  var wfPaint  = document.getElementById('wf-paint');
+  var spdPaint = document.getElementById('spd-paint');
+  if (!wfPaint || !spdPaint) return;
+
+  var CYCLE          = 22;    /* 循环总秒数 */
+  var SOFT           = 14;    /* 笔锋柔化区宽度（%） */
+  var OVER           = SOFT / 100; /* 扩展量：让笔刷在边界外提前/延后 */
+  var ENTRY_DELAY_S  = 1.9;   /* 等待文字入场动画完成后再启动 */
+  var startTS        = null;
+
+  /* 正弦缓动——两端极其柔和 */
+  function sinEase(t) {
+    return (1 - Math.cos(t * Math.PI)) / 2;
+  }
+  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+  /* ★ 扩展相位：raw [0,1] 映射到 [-OVER, 1+OVER]
+     使笔刷在可见范围边缘之外提前/延后运动，
+     彻底消除"第一帧突然出现"和"最后帧突然消失"的感觉 */
+  function phaseP(t, s, d) {
+    var raw = sinEase(clamp01((t - s) / d));
+    return raw * (1 + 2 * OVER) - OVER;
+  }
+
+  function setMask(el, v) {
+    el.style.webkitMaskImage = v;
+    el.style.maskImage       = v;
+  }
+
+  var FULL  = 'linear-gradient(to right,black 0%,black 100%)';
+  var EMPTY = 'linear-gradient(to right,transparent 0%,transparent 100%)';
+
+  /* ★ 不再 clamp lo/hi，允许超出 0-100%
+     CSS 会将超出范围的色标自动夹到端点，
+     从而在边界产生柔和渐入/渐出而非硬切 */
+
+  /* 左→右 填充（WARFRAME 出现） */
+  function fillLR(p) {
+    var c = p * 100;
+    if (c + SOFT <= 0)   return EMPTY;
+    if (c - SOFT >= 100) return FULL;
+    return 'linear-gradient(to right,black 0%,black '+(c-SOFT).toFixed(2)+'%,transparent '+(c+SOFT).toFixed(2)+'%,transparent 100%)';
+  }
+
+  /* 左→右 褪色（WARFRAME 消失） */
+  function unfillLR(p) {
+    var c = p * 100;
+    if (c + SOFT <= 0)   return FULL;
+    if (c - SOFT >= 100) return EMPTY;
+    return 'linear-gradient(to right,transparent 0%,transparent '+(c-SOFT).toFixed(2)+'%,black '+(c+SOFT).toFixed(2)+'%,black 100%)';
+  }
+
+  /* 右→左 填充（SPEED 出现） */
+  function fillRL(p) {
+    var edge = (1 - p) * 100;
+    if (edge + SOFT <= 0)   return FULL;
+    if (edge - SOFT >= 100) return EMPTY;
+    return 'linear-gradient(to right,transparent 0%,transparent '+(edge-SOFT).toFixed(2)+'%,black '+(edge+SOFT).toFixed(2)+'%,black 100%)';
+  }
+
+  /* 右→左 褪色（SPEED 消失） */
+  function unfillRL(p) {
+    var edge = (1 - p) * 100;
+    if (edge + SOFT <= 0)   return EMPTY;
+    if (edge - SOFT >= 100) return FULL;
+    return 'linear-gradient(to right,black 0%,black '+(edge-SOFT).toFixed(2)+'%,transparent '+(edge+SOFT).toFixed(2)+'%,transparent 100%)';
+  }
+
+  function tick(ts) {
+    if (!startTS) startTS = ts;
+
+    /* 入场等待：文字动画完成前两字均为锈迹 */
+    var elapsed = (ts - startTS) / 1000 - ENTRY_DELAY_S;
+    if (elapsed < 0) {
+      setMask(wfPaint,  EMPTY);
+      setMask(spdPaint, EMPTY);
+      requestAnimationFrame(tick);
+      return;
+    }
+
+    var t = elapsed % CYCLE;
+
+    /* ── WARFRAME mask ── */
+    if      (t <  3.5)  setMask(wfPaint, fillLR  (phaseP(t,  0.0, 3.5)));
+    else if (t < 10.5)  setMask(wfPaint, FULL);
+    else if (t < 14.0)  setMask(wfPaint, unfillLR(phaseP(t, 10.5, 3.5)));
+    else                setMask(wfPaint, EMPTY);
+
+    /* ── SPEED mask ── */
+    if      (t <  4.5)  setMask(spdPaint, EMPTY);
+    else if (t <  8.0)  setMask(spdPaint, fillRL  (phaseP(t,  4.5, 3.5)));
+    else if (t < 15.0)  setMask(spdPaint, FULL);
+    else if (t < 18.5)  setMask(spdPaint, unfillRL(phaseP(t, 15.0, 3.5)));
+    else                setMask(spdPaint, EMPTY);
+
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}());
+</script>
+
+<!-- ══════════════════════════════════════════════════════════
+     动态胶片颗粒：每 3 帧更新 feTurbulence seed，模拟 20fps 噪点帧
+     ══════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+  var turb = document.getElementById('grain-turb');
+  if (!turb) return;
+  var seed = 0, fCount = 0;
+  function tick() {
+    if (++fCount % 3 === 0) {
+      seed = (seed + 1) % 100;
+      turb.setAttribute('seed', seed);
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}());
+</script>
 
 <script>
 /* ── 首页专属：Hero 淡出视差 + 区段入场 ── */
@@ -187,25 +513,22 @@
 
   window.addEventListener('scroll', onScroll, { passive: true });
   if (window.scrollY > 0) window.scrollTo(0, 0);
-})();
+}());
 </script>
 <script>
 /* ── 移动端有下拉框的链接点两次再跳转 ── */
 (function() {
   if (!('ontouchstart' in window)) return; // 仅移动端
-  var firstTap = null;
   document.querySelectorAll('.nav-item.has-dropdown > a').forEach(function(a) {
     a.addEventListener('click', function(e) {
       var item = a.closest('.nav-item');
       if (!item.classList.contains('mob-open')) {
         e.preventDefault();
-        // 第一次点：展开下拉
         document.querySelectorAll('.nav-item.has-dropdown').forEach(function(i) {
           if (i !== item) i.classList.remove('mob-open');
         });
         item.classList.add('mob-open');
       }
-      // 第二次点（mob-open已存在）：直接跳转（不阻止默认行为）
     });
   });
   /* 移动端"更多榜单"展开子菜单 */
@@ -217,7 +540,7 @@
       mobMorePanel.classList.toggle('open');
     });
   }
-})();
+}());
 </script>
 <script>
 /* ── 超级导航面板 ── */
@@ -297,7 +620,7 @@
     bgParticles = [];
   }
 
-  /* ══ 彩虹粒子爆发（开场烟花） ══ */
+  /* ══ 金色火花迸发（暗金主题） ══ */
   function burst() {
     var rect = btn.getBoundingClientRect();
     var cx = rect.left + rect.width / 2;
@@ -309,21 +632,22 @@
     document.body.appendChild(c);
     var ctx = c.getContext('2d');
 
-    var PAL = ['#00d4ff','#8b5cf6','#00ffcc','#ffffff','#60a5fa','#f0abfc','#a78bfa','#00ff88','#ff6b9d'];
+    /* 暗金色调板 */
+    var PAL = ['#e8c060','#c8a040','#f0d878','#ffd700','#d48020',
+               '#e8a830','#fff0a0','#c07820','#f5e080','#e8c840'];
     var pts = [];
-    for (var i = 0; i < 60; i++) {
-      var a = (i / 60) * Math.PI * 2 + (Math.random() - .5) * .5;
-      var spd = 70 + Math.random() * 180;
+    for (var i = 0; i < 72; i++) {
+      var a = (i / 72) * Math.PI * 2 + (Math.random() - .5) * .6;
+      var spd = 60 + Math.random() * 210;
       pts.push({
         x: cx, y: cy,
         vx: Math.cos(a) * spd,
-        vy: Math.sin(a) * spd - 55,
-        r: 1.2 + Math.random() * 4.0,
+        vy: Math.sin(a) * spd - 65,
+        r: 0.8 + Math.random() * 3.5,
         col: PAL[i % PAL.length],
         life: 1,
-        decay: .013 + Math.random() * .016,
-        trail: [],
-        spark: Math.random() < .3   // 30% 为星形
+        decay: .011 + Math.random() * .015,
+        trail: []
       });
     }
 
@@ -331,43 +655,37 @@
     function frame(now) {
       var dt = Math.min((now - last) / 1000, .05); last = now;
       ctx.clearRect(0, 0, c.width, c.height);
-
       var alive = false;
       pts.forEach(function(p) {
         if (p.life <= 0) return;
         p.trail.push({x:p.x, y:p.y, a:p.life});
-        if (p.trail.length > 8) p.trail.shift();
-
-        p.vx *= .96; p.vy += 240 * dt;
+        if (p.trail.length > 9) p.trail.shift();
+        p.vx *= .97; p.vy += 260 * dt;
         p.x += p.vx * dt; p.y += p.vy * dt;
         p.life -= p.decay;
         alive = true;
-
-        /* 拖尾 */
         for (var t = 1; t < p.trail.length; t++) {
           ctx.save();
-          ctx.globalAlpha = p.trail[t].a * .4 * (t / p.trail.length);
+          ctx.globalAlpha = p.trail[t].a * .36 * (t / p.trail.length);
           ctx.strokeStyle = p.col;
-          ctx.lineWidth = p.r * .55;
+          ctx.lineWidth = p.r * .52;
           ctx.lineCap = 'round';
-          ctx.shadowColor = p.col; ctx.shadowBlur = p.r * 3;
+          ctx.shadowColor = p.col; ctx.shadowBlur = p.r * 5;
           ctx.beginPath();
           ctx.moveTo(p.trail[t-1].x, p.trail[t-1].y);
           ctx.lineTo(p.trail[t].x, p.trail[t].y);
           ctx.stroke();
           ctx.restore();
         }
-        /* 粒子本体 */
         ctx.save();
         ctx.globalAlpha = Math.max(0, p.life);
-        ctx.shadowColor = p.col; ctx.shadowBlur = p.r * 7;
+        ctx.shadowColor = p.col; ctx.shadowBlur = p.r * 9;
         ctx.fillStyle = p.col;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       });
-
       if (alive) requestAnimationFrame(frame); else c.remove();
     }
     requestAnimationFrame(frame);
@@ -424,7 +742,7 @@
   });
   document.addEventListener('keydown', function(e) { if (e.key==='Escape') close(); });
   window.addEventListener('resize', function() { if (isOpen) resizePanelCanvas(); });
-})();
+}());
 </script>
 </body>
 </html>

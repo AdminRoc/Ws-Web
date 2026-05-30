@@ -281,6 +281,7 @@
   function loadBoard() {
     var key = _curCat + '||' + _curMap;
     renderTimeLeaderboard(_allData[key] ? _allData[key]() : [], 'lb-tbody', 'clearTime');
+    history.replaceState(null, '', '#' + encodeURIComponent(_curCat) + '--' + encodeURIComponent(_curMap));
   }
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -298,6 +299,46 @@
         loadBoard();
       });
     });
+    /* ── URL Hash 恢复 ── */
+    (function() {
+      var _h = decodeURIComponent(location.hash.replace('#',''));
+      if (_h && _h.indexOf('--') !== -1) {
+        var parts = _h.split('--');
+        var hCat = decodeURIComponent(parts[0]);
+        var hMap = decodeURIComponent(parts[1]);
+        if (_allData[hCat + '||' + hMap]) {
+          _curCat = hCat; _curMap = hMap;
+          /* 同步高亮按钮 */
+          document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
+            b.classList.toggle('active', b.dataset && (b.dataset.cat === _curCat || b.textContent.trim() === _curCat));
+          });
+          document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
+            var nm = b.getAttribute('data-mapname') || b.dataset.mapname || '';
+            b.classList.toggle('active', nm === _curMap);
+          });
+        }
+      }
+    })();
+    /* ── URL Hash 恢复 ── */
+    (function() {
+      var _h = location.hash.replace('#','');
+      if (_h && _h.indexOf('--') !== -1) {
+        try {
+          var parts = _h.split('--');
+          var hCat = decodeURIComponent(parts[0]);
+          var hMap = decodeURIComponent(parts[1]);
+          if (_allData[hCat + '||' + hMap]) {
+            _curCat = hCat; _curMap = hMap;
+            document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
+              b.classList.toggle('active', b.dataset.cat === _curCat);
+            });
+            document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
+              b.classList.toggle('active', b.getAttribute('data-mapname') === _curMap);
+            });
+          }
+        } catch(e) {}
+      }
+    })();
     loadBoard();
   });
 </script>
