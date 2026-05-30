@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════
  *  1999 坦克 竞速排行榜  /  Victory Plaza Speedrun Leaderboard
- *  数据文件：victory-plaza-steel.js
+ *  数据文件：victory-plaza-apex.js
  *  ┌──────────────────────────────────────────────────────┐
  *  │  字段说明：                                          │
  *  │    playerId  —— 玩家 ID（昵称）                      │
@@ -12,7 +12,7 @@
  *  └──────────────────────────────────────────────────────┘
  *
  *  添加/修改记录方法：
- *  在下方 victory_plaza_steelRecords 数组中新增一个对象，如：
+ *  在下方 victory_plaza_apexRecords 数组中新增一个对象，如：
  *    {
  *      playerId:   "玩家名",
  *      clearTime:  "1:23.456",
@@ -21,7 +21,7 @@
  *    },
  * ════════════════════════════════════════════════════════════ */
 
-var victory_plaza_steelRecords = [
+var victory_plaza_apexRecords = [
   /* 暂无记录 */
   {
     playerId:   "RoniPrime",

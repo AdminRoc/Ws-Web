@@ -171,7 +171,7 @@
       <p class="lb-subtitle">Victory Plaza Speedrun Leaderboard</p>
     </div>
     <div class="lb-tabs" id="lb-tabs">
-      <button class="lb-tab-btn  active" data-cat="钢铁"><span class="hover-text-swap"><span class="text-cn">钢铁</span><span class="text-en">Steel</span></span></button>
+      <button class="lb-tab-btn  active" data-cat="王者"><span class="hover-text-swap"><span class="text-cn">王者</span><span class="text-en">Apex</span></span></button>
       <button class="lb-tab-btn" data-cat="普通"><span class="hover-text-swap"><span class="text-cn">普通</span><span class="text-en">Normal</span></span></button>
     </div>
     <div class="lb-table-wrap">
@@ -201,11 +201,11 @@
 </div>
 
 <script src="js/main.js"></script>
-<script src="data/victory-plaza/victory-plaza-steel.js"></script>
+<script src="data/victory-plaza/victory-plaza-apex.js"></script>
 <script src="data/victory-plaza/victory-plaza-normal.js"></script>
 <script>
   var _catData = {
-    "钢铁": function(){return victory_plaza_steelRecords;},
+    "王者": function(){return victory_plaza_apexRecords;},
     "普通": function(){return victory_plaza_normalRecords;},
   };
   function loadCat(c) {
@@ -218,7 +218,7 @@
     /* ── URL Hash 恢复 ── */
     (function(){
       var _h = decodeURIComponent(location.hash.replace('#','').trim());
-      loadCat((_h && _catData[_h]) ? _h : '钢铁');
+      loadCat((_h && _catData[_h]) ? _h : '王者');
     })();
   });
 </script>
