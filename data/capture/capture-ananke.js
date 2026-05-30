@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_anankeRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:17.733",
+    uploadTime: "2024-03-17",
+    videoUrls:  ["https://www.youtube.com/watch?v=D2y8ZhYY5So"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:19.583",
+    uploadTime: "2022-03-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=Y7h3Kq9r3iM"],
+  },
+  {
+    playerId:   "Txdo",
+    clearTime:  "0:20.300",
+    uploadTime: "2024-03-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=QUnusKryTy0"],
+  },
 ];

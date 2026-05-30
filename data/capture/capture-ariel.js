@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_arielRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:23.400",
+    uploadTime: "2025-12-29",
+    videoUrls:  ["https://www.youtube.com/watch?v=gCtM0lbzaWk"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:24.100",
+    uploadTime: "2024-01-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=4MRBb6P5SKQ"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:25.850",
+    uploadTime: "2022-04-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=XqP7mi_R2VI"],
+  },
 ];
