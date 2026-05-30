@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var spy_allow_oceanumRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:49.000",
+    uploadTime: "2026-03-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=aK4BXpR4haQ"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:54.040",
+    uploadTime: "2021-07-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=WtQOMqF9QnM"],
+  },
 ];
