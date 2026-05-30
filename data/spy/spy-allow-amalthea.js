@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var spy_allow_amaltheaRecords = [
-  /* 暂无记录 */
+
+{
+  playerId:   "Salat",
+  clearTime:  "0:57.000",
+  uploadTime: "2026-03-11",
+  videoUrls:  ["https://www.youtube.com/watch?v=7vAsUCcXBIg"],
+},
+{
+  playerId:   "_Gabriel",
+  clearTime:  "1:02.000",
+  uploadTime: "2023-08-25",
+  videoUrls:  ["https://www.youtube.com/watch?v=JQcelU0pqUM"],
+},
+{
+  playerId:   "L1ndell",
+  clearTime:  "1:03.000",
+  uploadTime: "2022-01-18",
+  videoUrls:  ["https://www.youtube.com/watch?v=5wYo2D0vv34"],
+},
 ];
