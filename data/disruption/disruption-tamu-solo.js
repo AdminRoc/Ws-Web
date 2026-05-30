@@ -20,4 +20,10 @@ const disruptionTamuSoloRecords = [
   //   uploadTime: "YYYY-MM-DD",
   //   videoUrls:     ["https://..."]
   // },
+  {
+    clearTime:  "63:13.000",
+    playerId:   "NamelessDeity",
+    uploadTime: "2025-12-01",
+    videoUrls:     ["https://www.youtube.com/watch?v=0b-IJ1AbarQ"]
+  },
 ];

@@ -20,4 +20,10 @@ const disruptionApolloDuoRecords = [
   //   uploadTime: "YYYY-MM-DD",
   //   videoUrls:     ["https://..."]
   // },
+  {
+    clearTime:  "45:28.000",
+    playerId:   "NamelessDeity / Yamarashi",
+    uploadTime: "2024-11-29",
+    videoUrls:     ["https://www.youtube.com/watch?v=occfyr5wiaw"]
+  },
 ];

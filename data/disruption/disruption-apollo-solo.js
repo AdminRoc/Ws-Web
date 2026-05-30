@@ -20,4 +20,10 @@ const disruptionApolloSoloRecords = [
   //   uploadTime: "YYYY-MM-DD",
   //   videoUrls:     ["https://..."]
   // },
+  {
+    clearTime:  "57:58.000",
+    playerId:   "NamelessDeity",
+    uploadTime: "2025-11-28",
+    videoUrls:     ["https://www.youtube.com/watch?v=Q6m4kLB5nho"]
+  },
 ];

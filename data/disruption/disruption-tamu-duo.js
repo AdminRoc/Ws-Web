@@ -20,4 +20,10 @@ const disruptionTamuDuoRecords = [
   //   uploadTime: "YYYY-MM-DD",
   //   videoUrls:     ["https://..."]
   // },
+  {
+    clearTime:  "46:00.000",
+    playerId:   "NamelessDeity / Yamarashi",
+    uploadTime: "2025-08-03",
+    videoUrls:     ["https://www.youtube.com/watch?v=3YTDdzzbvcA"]
+  },
 ];

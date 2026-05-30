@@ -20,4 +20,17 @@ const disruptionUrSoloRecords = [
   //   uploadTime: "YYYY-MM-DD",
   //   videoUrls:     ["https://..."]
   // },
+
+  {
+    clearTime:  "57:01.000",
+    playerId:   "NamelessDeity",
+    uploadTime: "2026-01-19",
+    videoUrls:     ["https://www.youtube.com/watch?v=4B4OPUS_bHg"]
+  },
+  {
+    clearTime:  "73:25.000",
+    playerId:   "RoniPrime",
+    uploadTime: "2025-11-10",
+    videoUrls:     ["https://www.youtube.com/watch?v=6uO4ILberQ0"]
+  },
 ];
