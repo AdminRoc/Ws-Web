@@ -23,4 +23,25 @@
 
 var spy_allow_arvalRecords = [
   /* 暂无记录 */
+
+  /* 示例记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:33.183",
+    uploadTime: "2026-01-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=4AFQSX5u9U0"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:39.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=M13ymDAfIbA"],
+  },
+  {
+    playerId:   "_Gabriel",
+    clearTime:  "0:43.000",
+    uploadTime: "2023-09-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=FrZqz4OYtFg"],
+  },
+
 ];
