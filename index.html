@@ -11,7 +11,35 @@
   <link rel="icon" type="image/svg+xml" href="https://www-static.warframe.com/images/warframe-logo-white.svg">
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/home.css">
+  <!-- FontFaceObserver 字体加载监测库 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.3.0/fontfaceobserver.standalone.min.js"></script>
   <style>
+    /* ── Futurak 字体加载前隐藏（防止闪烁） ── */
+    body.fonts-loading .hero-word,
+    body.fonts-loading .logo-title,
+    body.fonts-loading .hero-domain,
+    body.fonts-loading .hero-btn,
+    body.fonts-loading .principle-card h3,
+    body.fonts-loading .lb-title,
+    body.fonts-loading .card-title,
+    body.fonts-loading .lb-card-title {
+      visibility: hidden;
+      opacity: 0;
+    }
+    /* 字体加载完毕后平滑显示 */
+    body.fonts-loaded .hero-word,
+    body.fonts-loaded .logo-title,
+    body.fonts-loaded .hero-domain,
+    body.fonts-loaded .hero-btn,
+    body.fonts-loaded .principle-card h3,
+    body.fonts-loaded .lb-title,
+    body.fonts-loaded .card-title,
+    body.fonts-loaded .lb-card-title {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+
     /* ── 首页覆盖：改用复古底色，隐藏科幻背景层 ── */
     body { background: #0c0a07; }
     #star-canvas  { display: none !important; }
@@ -744,6 +772,46 @@
   document.addEventListener('keydown', function(e) { if (e.key==='Escape') close(); });
   window.addEventListener('resize', function() { if (isOpen) resizePanelCanvas(); });
 }());
+</script>
+
+<!-- ══════════════════════════════════════════════════════════
+     Futurak 字体加载监测
+     防止字体加载前的闪烁（FOUT - Flash of Unstyled Text）
+     使用 FontFaceObserver 库检测字体加载完毕后再显示相关元素
+     ══════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+  
+  /* 页面加载时立即设置为 fonts-loading 状态，隐藏 Futurak 相关元素 */
+  document.documentElement.className = 'fonts-loading';
+  document.body.classList.add('fonts-loading');
+
+  /* 确保 FontFaceObserver 库已加载 */
+  if (typeof FontFaceObserver !== 'undefined') {
+    /* 监听 Futurak 字体的加载 */
+    var futurakFont = new FontFaceObserver('Futurak', {
+      weight: 'normal',
+      style: 'normal'
+    });
+
+    /* 设置加载超时为 5 秒，防止网络缓慢时无限等待 */
+    futurakFont.load(null, 5000).then(function() {
+      /* 字体加载成功 - 移除隐藏状态，显示所有使用 Futurak 的元素 */
+      document.body.classList.remove('fonts-loading');
+      document.body.classList.add('fonts-loaded');
+    }).catch(function(error) {
+      /* 字体加载超时或失败 - 仍然显示内容（使用备用字体） */
+      document.body.classList.remove('fonts-loading');
+      document.body.classList.add('fonts-loaded');
+      console.warn('Futurak font loading failed or timed out:', error);
+    });
+  } else {
+    /* FontFaceObserver 库未加载 - 直接显示（降级处理） */
+    document.body.classList.remove('fonts-loading');
+    document.body.classList.add('fonts-loaded');
+  }
+})();
 </script>
 </body>
 </html>
