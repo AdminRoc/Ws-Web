@@ -23,4 +23,19 @@
 
 var spy_allow_dioneRecords = [
   /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:36.883",
+    uploadTime: "2026-01-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=c7V68RCviFI"],
+  },
+
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:42.000",
+    uploadTime: "2022-12-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=tFVHLWjN1Vs"],
+  },
+
 ];
