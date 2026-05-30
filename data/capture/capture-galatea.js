@@ -24,21 +24,21 @@
 var capture_galateaRecords = [
 
   {
-  playerId:   "Salat",
-  clearTime:  "0:16.866",
-  uploadTime: "2025-12-24",
-  videoUrls:  ["https://www.youtube.com/watch?v=pvPF-OLcwXo"],
-},
-{
-  playerId:   "L1ndell",
-  clearTime:  "0:19.917",
-  uploadTime: "2022-03-09",
-  videoUrls:  ["https://www.youtube.com/watch?v=h0H8RF9O-Qw"],
-},
-{
-  playerId:   "Mortar",
-  clearTime:  "0:19.933",
-  uploadTime: "2021-01-25",
-  videoUrls:  ["https://www.youtube.com/watch?v=R_2L-eWMPeE"],
-},
+    playerId:   "Salat",
+    clearTime:  "0:16.866",
+    uploadTime: "2025-12-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=pvPF-OLcwXo"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:19.917",
+    uploadTime: "2022-03-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=h0H8RF9O-Qw"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:19.933",
+    uploadTime: "2021-01-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=R_2L-eWMPeE"],
+  },
 ];
