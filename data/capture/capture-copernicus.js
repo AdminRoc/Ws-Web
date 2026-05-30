@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_copernicusRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:15.850",
+    uploadTime: "2026-03-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=wJOgoRMloZ8"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:16.683",
+    uploadTime: "2024-01-31",
+    videoUrls:  ["https://www.youtube.com/watch?v=H5X23drfecE"],
+  },
+  {
+    playerId:   "FXCloud",
+    clearTime:  "0:16.856",
+    uploadTime: "2025-11-26",
+    videoUrls:  ["https://wfspeed.run/unavailable.html"],
+  },
 ];
