@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_cassiniRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:18.433",
+    uploadTime: "2025-11-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=cATuVBHQd84"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:19.267",
+    uploadTime: "2021-11-18",
+    videoUrls:  ["https://www.youtube.com/watch?v=n_TK1ViSP2w"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:20.933",
+    uploadTime: "2021-01-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=69DdM6vhXQs"],
+  },
 ];
