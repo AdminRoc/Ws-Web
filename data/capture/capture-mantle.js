@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_mantleRecords = [
-  /* 暂无记录 */
+
+  {
+  playerId:   "Salat",
+  clearTime:  "0:12.966",
+  uploadTime: "2025-10-27",
+  videoUrls:  ["https://www.youtube.com/watch?v=ebYdIqf7iTg"],
+},
+{
+  playerId:   "Mortar",
+  clearTime:  "0:13.933",
+  uploadTime: "2022-05-30",
+  videoUrls:  ["https://www.youtube.com/watch?v=aXJW0KLRqK0"],
+},
+{
+  playerId:   "OgvDams",
+  clearTime:  "0:14.707",
+  uploadTime: "2024-01-07",
+  videoUrls:  ["https://www.youtube.com/watch?v=5zjxGEhNJmQ"],
+},
 ];
