@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var spy_allow_valacRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:51.483",
+    uploadTime: "2019-11-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=b8_IuxnyDZE"],
+  },
+  {
+    playerId:   "-Rekken-",
+    clearTime:  "1:02.633",
+    uploadTime: "2018-08-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=qE7l-DXQ2Yg"],
+  },
+  {
+    playerId:   "NightWorrer",
+    clearTime:  "1:06.197",
+    uploadTime: "2018-07-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=X96Oap6w7A4"],
+  },
 ];
