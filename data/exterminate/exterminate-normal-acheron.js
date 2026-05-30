@@ -22,5 +22,11 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_acheronRecords = [
-  /* 暂无记录 */
+
+  {
+  playerId:   "Jagdtor",
+  clearTime:  "0:18.983",
+  uploadTime: "2026-05-01",
+  videoUrls:  ["https://www.youtube.com/watch?v=up8bodFtGMY"],
+},
 ];
