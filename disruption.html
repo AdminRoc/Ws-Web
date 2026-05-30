@@ -43,21 +43,21 @@
       padding: .36rem 1rem;
       font-family: var(--f-sci); font-size: .7rem; font-weight: 700;
       letter-spacing: .12em; color: var(--c-text2);
-      border: 1px solid rgba(0,212,255,.12); border-radius: var(--r-sm);
-      background: rgba(0,212,255,.02); cursor: pointer;
+      border: 1px solid rgba(185,142,52,.15); border-radius: 2px;
+      background: rgba(185,142,52,.03); cursor: pointer;
       transition: color .38s, border-color .38s, background .38s, box-shadow .38s, transform .38s;
       user-select: none; white-space: nowrap; position: relative; overflow: hidden;
     }
     .map-tab-btn::before {
       content: ''; position: absolute; inset: -10%; width: 35%;
-      background: linear-gradient(105deg, transparent 20%, rgba(0,212,255,.28) 50%, rgba(255,255,255,.08) 55%, transparent 80%);
+      background: linear-gradient(105deg, transparent 20%, rgba(185,142,52,.28) 50%, rgba(255,218,100,.06) 55%, transparent 80%);
       transform: translateX(-150%) skewX(-15deg); transition: transform .5s ease; pointer-events: none;
     }
-    .map-tab-btn:hover { color: var(--c-cyan); border-color: rgba(0,212,255,.38); background: rgba(0,212,255,.07); transform: translateY(-1px); }
+    .map-tab-btn:hover { color: var(--c-gold-bright); border-color: rgba(185,142,52,.38); background: rgba(185,142,52,.07); transform: translateY(-1px); }
     .map-tab-btn:hover::before { transform: translateX(360%) skewX(-15deg); }
     .map-tab-btn.active {
-      color: var(--c-cyan); border-color: var(--c-cyan);
-      background: rgba(0,212,255,.12); box-shadow: var(--glow-c-sm);
+      color: var(--c-gold-bright); border-color: var(--c-gold-bright);
+      background: rgba(185,142,52,.12); box-shadow: 0 0 8px rgba(185,142,52,.55), 0 0 20px rgba(185,142,52,.28);
       animation: tabActivePulse 2.8s ease-in-out infinite;
     }
 
@@ -76,10 +76,10 @@
       padding: .22rem .85rem;
       font-family: var(--f-sci); font-size: .6rem; font-weight: 700;
       letter-spacing: .1em; border-radius: 20px; white-space: nowrap;
-      color: var(--c-cyan);
-      border: 1px solid var(--c-cyan-dim);
-      background: rgba(0,212,255,.08);
-      -webkit-text-fill-color: var(--c-cyan);
+      color: var(--c-gold-bright);
+      border: 1px solid var(--c-gold-dim);
+      background: rgba(185,142,52,.08);
+      -webkit-text-fill-color: var(--c-gold-bright);
       background-clip: unset;
       -webkit-background-clip: unset;
       transition: opacity 0.6s ease;
