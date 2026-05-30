@@ -22,5 +22,24 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_ukkoRecords = [
-  /* 暂无记录 */
+
+  {
+  playerId:   "PrimedDarkeN",
+  clearTime:  "0:15.033",
+  uploadTime: "2023-10-12",
+  videoUrls:  ["https://www.youtube.com/watch?v=8R0e3DngN4s"],
+},
+{
+  playerId:   "AresWrath562",
+  clearTime:  "0:15.067",
+  uploadTime: "2025-04-28",
+  videoUrls:  ["https://www.youtube.com/watch?v=aEBBgbnQMYs"],
+},
+{
+  playerId:   "OgvDams",
+  clearTime:  "0:15.467",
+  uploadTime: "2024-03-17",
+  videoUrls:  ["https://www.youtube.com/watch?v=IYZVNXvWbNI"],
+},
+
 ];
