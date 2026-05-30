@@ -22,5 +22,25 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_abaddonRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:18.667",
+    uploadTime: "2025-03-04",
+    videoUrls:  ["https://www.youtube.com/watch?v=Rki7F6QXba4"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:21.933",
+    uploadTime: "2021-01-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=ctl3ew4dUaw"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:22.183",
+    uploadTime: "2022-03-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=HwTsH8l07T8"],
+  },
+
+
 ];
