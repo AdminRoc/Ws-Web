@@ -22,5 +22,18 @@
  * ════════════════════════════════════════════════════════════ */
 
 var spy_allow_cambriaRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:47.433",
+    uploadTime: "2026-05-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=mHErshqhclU"],
+  },
+
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:59.000",
+    uploadTime: "2021-04-04",
+    videoUrls:  ["https://www.youtube.com/watch?v=1_xejd8ncsM"],
+  },
 ];
