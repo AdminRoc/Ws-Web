@@ -31,7 +31,7 @@ const disruptionKappaMultiRecords = [
     videoUrls:     ["https://youtu.be/6Feq9lDbIcw?si=wSeMMY2srMK7i8Dq"]
   },
   {
-    clearTime:  "38:06.000",
+    clearTime:  "38:06.000 [违规/作弊]",
     playerId:   "sealmp4 / Rouxka / Endryx_Ow / Gamer123169",
     uploadTime: "2025-03-16",
     videoUrls:     ["https://youtu.be/oRxoJHWJ6v8?si=oUDggf0L8E44ISVz"]

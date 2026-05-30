@@ -33,7 +33,7 @@ var victory_plaza_apexRecords = [
     playerId:   "PWNZ",
     clearTime:  "00:07:31.017",
     uploadTime: "2025-09-19",
-    videoUrls:  ["null"],
+    videoUrls:  ["https://wfspeed.run/unavailable.html"],
   }, 
   {
     playerId:   "NamelessDeity / RoniPrime",
