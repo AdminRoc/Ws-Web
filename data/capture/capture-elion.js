@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_elionRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:17.400",
+    uploadTime: "2025-05-29",
+    videoUrls:  ["https://www.youtube.com/watch?v=6pzTV-qjR_o"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:19.467",
+    uploadTime: "2023-01-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=k4P4Ud3jBUM"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:20.833",
+    uploadTime: "2020-09-28",
+    videoUrls:  ["https://www.youtube.com/watch?v=WzNMzSCiYMU"],
+  },
 ];
