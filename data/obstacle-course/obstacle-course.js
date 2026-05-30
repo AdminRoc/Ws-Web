@@ -22,5 +22,42 @@
  * ════════════════════════════════════════════════════════════ */
 
 var obstacle_courseRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Mebius",
+    clearTime:  "0:03.760",
+    uploadTime: "2024-01-31",
+    videoUrls:  ["https://www.youtube.com/watch?v=6H0LmCoZ2b8&t=37s"],
+  },
+  {
+    playerId:   "nik9094",
+    clearTime:  "0:03.980",
+    uploadTime: "2024-01-31",
+    videoUrls:  ["https://www.youtube.com/watch?v=0C9JHRYyO_M"],
+  },  
+  {
+    playerId:   "forze33",
+    clearTime:  "0:04.170",
+    uploadTime: "2023-06-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=PbXZKUeno7k"],
+  },
+  {
+    playerId:   "_choso",
+    clearTime:  "0:04.960",
+    uploadTime: "2024-08-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=ppMrPc5gUF4"],
+  },
+  {
+    playerId:   "itsConcept",
+    clearTime:  "0:06.360",
+    uploadTime: "2026-03-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=h6SXoPX1_dA"],
+  },
+  {
+    playerId:   "Fuego999",
+    clearTime:  "0:24.020",
+    uploadTime: "2026-03-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=uavCxWMVS7U"],
+  },
+
 ];
