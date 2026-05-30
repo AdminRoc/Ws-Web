@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var spy_allow_rosalindRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:55.367",
+    uploadTime: "2026-03-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=e3gmJEWdFDc"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:59.250",
+    uploadTime: "2026-02-18",
+    videoUrls:  ["https://www.youtube.com/watch?v=5Zj9MIFl8nw"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "1:11.000",
+    uploadTime: "2022-06-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=xvjD7vO8l2M"],
+  },
 ];
