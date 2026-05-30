@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var spy_allow_kelpieRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:40.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=YQsiUoCKHus"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:42.967",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=6uijMJMs7cU"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:51.000",
+    uploadTime: "2022-06-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=vj_AsZn2qaw"],
+  },
 ];
