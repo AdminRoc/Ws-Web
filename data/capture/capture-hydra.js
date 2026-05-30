@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_hydraRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:17.883",
+    uploadTime: "2025-10-28",
+    videoUrls:  ["https://www.youtube.com/watch?v=Y9waylBru3M"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:17.967",
+    uploadTime: "2023-01-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=AZ0iIG8kQ5s"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:19.167",
+    uploadTime: "2021-07-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=Mm8qwI_VDpI"],
+  },
 ];
