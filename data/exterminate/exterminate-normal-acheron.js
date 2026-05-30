@@ -29,4 +29,16 @@ var exterminate_normal_acheronRecords = [
   uploadTime: "2026-05-01",
   videoUrls:  ["https://www.youtube.com/watch?v=up8bodFtGMY"],
 },
+{
+  playerId:   "Hvna",
+  clearTime:  "0:20.000",
+  uploadTime: "2026-02-20",
+  videoUrls:  ["https://www.youtube.com/watch?v=54SL6t0wh00"],
+},
+{
+  playerId:   "Salat",
+  clearTime:  "0:20.000",
+  uploadTime: "2026-02-20",
+  videoUrls:  ["https://www.youtube.com/watch?v=6r3H9vVnb44"],
+},
 ];
