@@ -14,16 +14,19 @@
  */
 const disruptionUrDuoRecords = [
   {
+    clearTime:  "38:42.000",
+    playerId:   "NamelessDeity / Yamarashi",
+    uploadTime: "2026-04-12",
+    videoUrls:     ["https://www.youtube.com/watch?v=0YMKGrFRE7I"]
+  },
+  {
     clearTime:  "49:20.000",
     playerId:   "Clarn / Simaris",
     uploadTime: "2026-04-11",
     videoUrls:     ["https://www.youtube.com/watch?v=jEf7nln4eeY"]
   },  
-  
-  
-  
 
-  
+ 
   // ─── 在此处添加双人条目 ───
   // {
   //   clearTime:  "MM:SS.mmm",

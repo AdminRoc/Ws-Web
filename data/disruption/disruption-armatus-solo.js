@@ -20,4 +20,10 @@ const disruptionArmatusSoloRecords = [
   //   uploadTime: "YYYY-MM-DD",
   //   videoUrls:     ["https://..."]
   // },
+  {
+    clearTime:  "72:39.000",
+    playerId:   "NamelessDeity",
+    uploadTime: "2025-10-21",
+    videoUrls:     ["https://www.youtube.com/watch?v=fLOalPb7twc"]
+  },
 ];
