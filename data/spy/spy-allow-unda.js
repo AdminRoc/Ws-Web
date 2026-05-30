@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var spy_allow_undaRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:42.783",
+    uploadTime: "2025-11-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=AFDE7AzjLpw"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:44.233",
+    uploadTime: "2025-11-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=pJOAB0ae67E"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:46.550",
+    uploadTime: "2022-06-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=2h01qKpVrEs"],
+  },
 ];
