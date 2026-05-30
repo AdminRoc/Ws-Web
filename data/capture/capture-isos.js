@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_isosRecords = [
-  /* 暂无记录 */
+
+  {
+  playerId:   "Salat",
+  clearTime:  "0:21.233",
+  uploadTime: "2025-12-03",
+  videoUrls:  ["https://www.youtube.com/watch?v=t4m5yxsw6Oo"],
+},
+{
+  playerId:   "Mortar",
+  clearTime:  "0:21.733",
+  uploadTime: "2021-03-07",
+  videoUrls:  ["https://www.youtube.com/watch?v=MjdROzRLVfA"],
+},
+{
+  playerId:   "L1ndell",
+  clearTime:  "0:25.033",
+  uploadTime: "2021-11-07",
+  videoUrls:  ["https://www.youtube.com/watch?v=3jX2ZH2EL44"],
+},
 ];

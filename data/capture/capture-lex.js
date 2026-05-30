@@ -22,5 +22,17 @@
  * ════════════════════════════════════════════════════════════ */
 
 var capture_lexRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:11.467",
+    uploadTime: "2026-02-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=Hsj9pY5h_UY"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:12.367",
+    uploadTime: "2024-04-04",
+    videoUrls:  ["https://www.youtube.com/watch?v=5TpqORNKBDs"],
+  },
 ];
