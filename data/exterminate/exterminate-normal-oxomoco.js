@@ -22,12 +22,12 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_oxomocoRecords = [
-  /* 暂无记录 */
+
   {
-       playerId:   "Jagdtor",
-       clearTime:  "0:12.550",
-       uploadTime: "2026-04-27",
-       videoUrls:  ["https://www.youtube.com/watch?v=AeFZigvQNS8&t=30s"],
+     playerId:   "Jagdtor",
+     clearTime:  "0:11.467",
+     uploadTime: "2026-05-29",
+     videoUrls:  ["https://www.youtube.com/watch?v=uuwuOflqXXo"],
   },
   {
        playerId:   "yukkpo",
