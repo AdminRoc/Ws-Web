@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_platoRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:31.000",
+    uploadTime: "2026-01-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=5fDbOmft2D8"],
+  },
 ];
