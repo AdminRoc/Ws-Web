@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_saxisRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:13.900",
+    uploadTime: "2026-02-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=BMYM7SuXZ4E"],
+  },
+  {
+    playerId:   "Hvna",
+    clearTime:  "0:14.767",
+    uploadTime: "2026-02-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=6mKbfORjyEw"],
+  },
 ];
