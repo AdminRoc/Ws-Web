@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_garusRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:21.067",
+    uploadTime: "2026-05-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=B_49gG68ER4"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:21.983",
+    uploadTime: "2026-05-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=xlwjJRZTNTs"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:28.000",
+    uploadTime: "2022-06-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=q8jO5iVe8uI"],
+  },
 ];

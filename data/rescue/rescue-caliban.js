@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_calibanRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:23.083",
+    uploadTime: "2025-12-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=DFgl5zcvVZ8"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:23.083",
+    uploadTime: "2026-01-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=9v_UvJl-5LI"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:26.000",
+    uploadTime: "2022-06-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=QfHQtdHGUIs"],
+  },
 ];
