@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_marianaRecords = [
-  /* 暂无记录 */
+{
+  playerId:   "kkV357",
+  clearTime:  "0:29.000",
+  uploadTime: "2026-05-20",
+  videoUrls:  ["https://www.youtube.com/watch?v=qFPVm_iSEss"],
+},
+{
+  playerId:   "NamelessDeity",
+  clearTime:  "0:33.000",
+  uploadTime: "2026-02-10",
+  videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
+},
 ];
