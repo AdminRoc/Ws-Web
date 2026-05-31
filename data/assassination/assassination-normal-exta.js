@@ -22,5 +22,11 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_extaRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:35.883",
+    uploadTime: "2024-04-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=V_oZK86X1P0"],
+  },
 ];
