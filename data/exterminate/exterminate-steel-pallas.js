@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_pallasRecords = [
-  /* 暂无记录 */
+{
+  playerId:   "NamelessDeity",
+  clearTime:  "0:47.000",
+  uploadTime: "2026-02-10",
+  videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
+},
+{
+  playerId:   "Salat",
+  clearTime:  "0:49.000",
+  uploadTime: "2026-01-07",
+  videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
+},
+{
+  playerId:   "RoniPrime",
+  clearTime:  "1:20.000",
+  uploadTime: "2026-01-09",
+  videoUrls:  ["https://www.youtube.com/watch?v=6YdKPwvshUs"],
+},
 ];
