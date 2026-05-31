@@ -22,5 +22,34 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_brugiaRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:22.917",
+    uploadTime: "2026-05-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=EAkWuaDiKIU"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:23.750",
+    uploadTime: "2025-12-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=DAhv0NQARmE"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:26.000",
+    uploadTime: "2022-06-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=E5e5pUexKEg"],
+  },
+  {
+    playerId:   "Wasamii",
+    clearTime:  "0:32.000",
+    uploadTime: "2025-05-17",
+    videoUrls:  ["https://www.youtube.com/watch?v=tjhvE56TbqM"],
+  },
+  {
+    playerId:   "Febi",
+    clearTime:  "0:33.000",
+    uploadTime: "2021-04-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=WU9MWmv8HO0"],
+  },
 ];
