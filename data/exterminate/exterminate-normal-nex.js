@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_nexRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "kkV357",
+    clearTime:  "0:32.000",
+    uploadTime: "2026-05-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=fbLuRdWYcqM"],
+  },
 ];
