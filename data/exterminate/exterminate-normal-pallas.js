@@ -22,16 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_pallasRecords = [
-{
-  playerId:   "Salat",
-  clearTime:  "0:15.900",
-  uploadTime: "2026-02-20",
-  videoUrls:  ["https://www.youtube.com/watch?v=LHSYMSHnCVo"],
-},
-{
-  playerId:   "Hvna",
-  clearTime:  "0:16.000",
-  uploadTime: "2026-02-20",
-  videoUrls:  ["https://www.youtube.com/watch?v=6_AXBhdrlo0"],
-},
+  {
+    playerId:   "Salat",
+    clearTime:  "0:15.900",
+    uploadTime: "2026-02-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=LHSYMSHnCVo"],
+  },
+  {
+    playerId:   "Hvna",
+    clearTime:  "0:16.000",
+    uploadTime: "2026-02-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=6_AXBhdrlo0"],
+  },
 ];
