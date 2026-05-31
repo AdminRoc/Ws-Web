@@ -22,5 +22,17 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_jordas_golemRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "1:34.533",
+    uploadTime: "2025-04-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=pnonHr5xes8"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "1:36.500",
+    uploadTime: "2021-04-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=goP_A3dlYQM"],
+  },
 ];

@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_tethysRecords = [
-  /* 暂无记录 */
+  /* General Sargas Ruk */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:24.566",
+    uploadTime: "2025-04-15",
+    videoUrls:  ["https://www.youtube.com/watch?v=Wq3yw-p93RY"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:26.200",
+    uploadTime: "2024-03-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=qhFyIBOCap4"],
+  },
+  {
+    playerId:   "SarcasticPengwuin",
+    clearTime:  "0:27.750",
+    uploadTime: "2023-11-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=ECgXY3zYGKw"],
+  },
 ];

@@ -19,8 +19,27 @@
  *      uploadTime: "2025-01-01",
  *      videoUrls:  ["https://..."],
  *    },
+ * Lieutenant Lech Kril
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_warRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:40.733",
+    uploadTime: "2024-04-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=-lnLPYaITXI"],
+  },
+  {
+    playerId:   "namenBARS",
+    clearTime:  "0:46.000",
+    uploadTime: "2022-07-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=msUhe8JyCwM"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:47.000",
+    uploadTime: "2022-07-28",
+    videoUrls:  ["https://www.youtube.com/watch?v=Eer1uIpk_I8"],
+  },
 ];

@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_hadesRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "7:18.516",
+    uploadTime: "2025-11-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=52kCbgL2etQ"],
+  },
+  {
+    playerId:   "Txdo",
+    clearTime:  "7:19.933",
+    uploadTime: "2025-01-29",
+    videoUrls:  ["https://www.youtube.com/watch?v=Z-vFfK2q5YE"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "7:23.000",
+    uploadTime: "2024-01-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=VUSPYCfrc-U"],
+  },
 ];

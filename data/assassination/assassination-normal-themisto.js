@@ -22,5 +22,17 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_themistoRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:16.017",
+    uploadTime: "2026-04-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=B7AM_CMXQ3w"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:18.000",
+    uploadTime: "2024-03-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=dRt1V2lRk-8"],
+  },
 ];

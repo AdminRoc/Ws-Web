@@ -19,8 +19,27 @@
  *      uploadTime: "2025-01-01",
  *      videoUrls:  ["https://..."],
  *    },
+ * Captain Vor
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_tolstojRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:37.000",
+    uploadTime: "2025-06-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=zCKTTEOUz-w"],
+  },
+  {
+    playerId:   "_BaJIMaTbE_",
+    clearTime:  "0:59.000",
+    uploadTime: "2026-04-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=uFUOiAuF3pQ"],
+  },
+  {
+    playerId:   "SABBA_HOSTUMEX",
+    clearTime:  "1:27.000",
+    uploadTime: "2026-01-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=AZ_rx3Ps_YA"],
+  },
 ];

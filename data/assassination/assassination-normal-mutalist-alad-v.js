@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_mutalist_alad_vRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:29.000",
+    uploadTime: "2025-04-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=Na6bgUYTSCg"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:30.000",
+    uploadTime: "2024-03-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=j--OZMsCUiU"],
+  },
+  {
+    playerId:   "mashor2004",
+    clearTime:  "0:35.000",
+    uploadTime: "2019-08-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=p5lDZaa59O8"],
+  },
 ];

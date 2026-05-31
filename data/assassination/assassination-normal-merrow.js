@@ -22,5 +22,11 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_merrowRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "1:39.550",
+    uploadTime: "2023-07-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=qyclY0ATDng"],
+  },
 ];
