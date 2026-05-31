@@ -22,5 +22,29 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_e_primeRecords = [
-  /* 暂无记录 */
+
+  {
+  playerId:   "Salat",
+  clearTime:  "0:08.617",
+  uploadTime: "2026-05-30",
+  videoUrls:  ["https://www.youtube.com/watch?v=oLzkX1REEuE"],
+},
+{
+  playerId:   "Jagdtor",
+  clearTime:  "0:09.217",
+  uploadTime: "2026-05-13",
+  videoUrls:  ["https://www.youtube.com/watch?v=ZdgtDtYJ5K0"],
+},
+{
+  playerId:   "Mortar",
+  clearTime:  "0:12.000",
+  uploadTime: "2022-12-03",
+  videoUrls:  ["https://www.youtube.com/watch?v=WUa_Sddtu_w"],
+},
+{
+  playerId:   "Wasamii",
+  clearTime:  "0:13.000",
+  uploadTime: "2026-01-17",
+  videoUrls:  ["https://www.youtube.com/watch?v=Jegk4bwH-fg"],
+},
 ];
