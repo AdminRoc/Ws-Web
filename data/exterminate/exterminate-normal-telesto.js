@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_telestoRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:22.000",
+    uploadTime: "2026-04-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=_mTvVm5s0T0"],
+  },
 ];
