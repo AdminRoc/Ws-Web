@@ -22,5 +22,47 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_e_primeRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "kkV357",
+    clearTime:  "0:23.000",
+    uploadTime: "2026-05-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=pcm1OH4gEEw"],
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:25.900",
+    uploadTime: "2026-04-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=sbSMICy0rkc"],
+  },
+  {
+    playerId:   "Soloframes",
+    clearTime:  "0:26.333",
+    uploadTime: "2026-05-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=fO4utdmbF8c"],
+  },
+  {
+    playerId:   "Clarn",
+    clearTime:  "0:27.467",
+    uploadTime: "2026-05-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=VYRU5UAcHJ4"],
+  },
+  {
+    playerId:   "_BaJlMaTbE_",
+    clearTime:  "0:35.000",
+    uploadTime: "2026-04-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=vJn1BpBLD88"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:44.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
+  },
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "0:58.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=Stkde6DjoRE"],
+  },
 ];
