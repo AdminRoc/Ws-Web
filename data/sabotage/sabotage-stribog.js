@@ -22,5 +22,11 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_stribogRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "1:55.000",
+    uploadTime: "2026-04-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=Fh4Tk44Meas"],
+  },
 ];

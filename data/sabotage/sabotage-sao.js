@@ -22,5 +22,11 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_saoRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:13.566",
+    uploadTime: "2025-11-29",
+    videoUrls:  ["https://www.youtube.com/watch?v=pdT85VUg_qI"],
+  },
 ];

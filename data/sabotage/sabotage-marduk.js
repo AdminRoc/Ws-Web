@@ -22,5 +22,11 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_mardukRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "1:54.000",
+    uploadTime: "2026-04-14",
+    videoUrls:  ["https://www.youtube.com/watch?v=ywZHQNr7_-I"],
+  },
 ];

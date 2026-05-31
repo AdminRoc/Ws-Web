@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_cervantesRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "1:31.433",
+    uploadTime: "2025-10-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=MWdMEwD918g"],
+  },
 ];

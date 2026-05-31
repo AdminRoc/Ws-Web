@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_aresRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:22.417",
+    uploadTime: "2026-05-04",
+    videoUrls:  ["https://www.youtube.com/watch?v=oL8wbh7t-BY"],
+  },
 ];
