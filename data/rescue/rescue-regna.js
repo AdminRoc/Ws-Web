@@ -22,5 +22,17 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_regnaRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:21.250",
+    uploadTime: "2025-11-14",
+    videoUrls:  ["https://www.youtube.com/watch?v=jQGGFXZcFW0"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:25.000",
+    uploadTime: "2022-08-01",
+    videoUrls:  ["https://www.youtube.com/watch?v=BICQQ99J8Bk"],
+  },
 ];
