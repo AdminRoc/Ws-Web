@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_phlegyasRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:18.000",
+    uploadTime: "2026-01-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=49stGQMf6Mo"],
+  }
 ];
