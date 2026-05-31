@@ -24,33 +24,33 @@
 var exterminate_steel_acheronRecords = [
 
   {
-  playerId:   "kkV357",
-  clearTime:  "0:26.000",
-  uploadTime: "2026-05-24",
-  videoUrls:  ["https://www.youtube.com/watch?v=2iRbaEA2sb8"],
-},
-{
-  playerId:   "NamelessDeity",
-  clearTime:  "0:35.000",
-  uploadTime: "2026-04-30",
-  videoUrls:  ["https://www.youtube.com/watch?v=xfp6LcterC4"],
-},
-{
-  playerId:   "oTonJleHue",
-  clearTime:  "0:36.000",
-  uploadTime: "2026-02-12",
-  videoUrls:  ["https://www.youtube.com/watch?v=XORNfK6W8WM"],
-},
-{
-  playerId:   "Salat",
-  clearTime:  "0:39.000",
-  uploadTime: "2026-01-26",
-  videoUrls:  ["https://www.youtube.com/watch?v=bE2-4_wCTx4"],
-},
-{
-  playerId:   "RoniPrime",
-  clearTime:  "0:46.533",
-  uploadTime: "2026-01-25",
-  videoUrls:  ["https://www.youtube.com/watch?v=6kq79Rbjdjw"],
-},
+    playerId:   "kkV357",
+    clearTime:  "0:26.000",
+    uploadTime: "2026-05-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=2iRbaEA2sb8"],
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:35.000",
+    uploadTime: "2026-04-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=xfp6LcterC4"],
+  },
+  {
+    playerId:   "oTonJleHue",
+    clearTime:  "0:36.000",
+    uploadTime: "2026-02-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=XORNfK6W8WM"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:39.000",
+    uploadTime: "2026-01-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=bE2-4_wCTx4"],
+  },
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "0:46.533",
+    uploadTime: "2026-01-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=6kq79Rbjdjw"],
+  },
 ];

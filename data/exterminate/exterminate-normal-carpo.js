@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_carpoRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Jagdtor",
+    clearTime:  "0:19.483",
+    uploadTime: "2026-04-28",
+    videoUrls:  ["https://www.youtube.com/watch?v=-E0pAZHzHns"],
+  },
+  {
+    playerId:   "Hvna",
+    clearTime:  "0:20.533",
+    uploadTime: "2026-02-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=NtjVlU2EOR8"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:22.566",
+    uploadTime: "2026-02-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=jaFmRfDNCvE"],
+  },
 ];
