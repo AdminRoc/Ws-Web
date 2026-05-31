@@ -24,21 +24,21 @@
 var exterminate_normal_adaroRecords = [
 
   {
-  playerId:   "Mortar",
-  clearTime:  "0:19.000",
-  uploadTime: "2024-03-24",
-  videoUrls:  ["https://www.youtube.com/watch?v=r38Fq1Pubxg"],
-},
-{
-  playerId:   "Salat",
-  clearTime:  "0:21.000",
-  uploadTime: "2024-03-22",
-  videoUrls:  ["https://www.youtube.com/watch?v=my5eSjH_BN4"],
-},
-{
-  playerId:   "PrimedDarkeN",
-  clearTime:  "0:53.000",
-  uploadTime: "2021-02-27",
-  videoUrls:  ["https://www.youtube.com/watch?v=Cyh5xTP9JU8"],
-},
+    playerId:   "Mortar",
+    clearTime:  "0:19.000",
+    uploadTime: "2024-03-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=r38Fq1Pubxg"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:21.000",
+    uploadTime: "2024-03-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=my5eSjH_BN4"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:53.000",
+    uploadTime: "2021-02-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=Cyh5xTP9JU8"],
+  },
 ];

@@ -22,5 +22,29 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_adaroRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:41.000",
+    uploadTime: "2026-04-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=0mhKjSUwPZk"],
+  },
+  {
+    playerId:   "oTonJleHue",
+    clearTime:  "0:46.000",
+    uploadTime: "2026-02-13",
+    videoUrls:  ["https://www.youtube.com/watch?v=EZcRF2DNHF4"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:48.000",
+    uploadTime: "2026-01-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=wI6LTQLvWtU"],
+  },
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "1:10.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=B5XHqdMt7oQ"],
+  },
 ];
