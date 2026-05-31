@@ -22,5 +22,28 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_nexRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "kkV357",
+    clearTime:  "0:38.000",
+    uploadTime: "2026-05-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=zpbN1ncEEm4"],
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:49.000",
+    uploadTime: "2026-02-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
+  },
+  {
+    playerId:   "Soloframes",
+    clearTime:  "0:53.000",
+    uploadTime: "2026-05-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=qIdrpN1X6ZM"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "1:04.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
+  },
 ];
