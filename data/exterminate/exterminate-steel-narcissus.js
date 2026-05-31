@@ -22,5 +22,28 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_narcissusRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "kkV357",
+    clearTime:  "0:32.000",
+    uploadTime: "2026-05-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=xe-1uAyS3bk"],
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:34.000",
+    uploadTime: "2026-02-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:43.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
+  },
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "1:08.000",
+    uploadTime: "2026-01-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=Wnhm69dk_fE"],
+  },
 ];
