@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_saxisRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "kkV357",
+    clearTime:  "0:17.000",
+    uploadTime: "2026-05-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=_OV-wMY9mVQ"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:21.000",
+    uploadTime: "2026-01-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=6zBZfzh8L1U"],
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:35.000",
+    uploadTime: "2026-02-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
+  },
 ];
