@@ -22,5 +22,28 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_halako_perimeterRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "kkV357",
+    clearTime:  "0:34.000",
+    uploadTime: "2026-05-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=VQBmMpIVbV8"],
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:35.000",
+    uploadTime: "2026-02-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=KBSFiQXLGqU"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:48.000",
+    uploadTime: "2026-02-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=5FVLMClFdnM"],
+  },
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "1:24.000",
+    uploadTime: "2026-01-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=2-Rw0PGN1JE"],
+  },
 ];
