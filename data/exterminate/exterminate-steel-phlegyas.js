@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_phlegyasRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:27.000",
+    uploadTime: "2026-02-15",
+    videoUrls:  ["https://www.youtube.com/watch?v=319FhRjpy74"],
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:29.000",
+    uploadTime: "2026-02-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
+  },
 ];
