@@ -22,5 +22,11 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_dakataRecords = [
-  /* 暂无记录 */
+
+  {
+  playerId:   "Salat",
+  clearTime:  "0:17.000",
+  uploadTime: "2026-04-12",
+  videoUrls:  ["https://www.youtube.com/watch?v=G9UjdSwSD58"],
+}
 ];
