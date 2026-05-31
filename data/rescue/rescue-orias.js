@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_oriasRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:12.900",
+    uploadTime: "2025-11-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=0pQeD2uILGs"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:15.000",
+    uploadTime: "2022-03-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=XRuYPBroCsY"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:16.000",
+    uploadTime: "2021-06-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=2xtAbbAZikc"],
+  },
 ];
