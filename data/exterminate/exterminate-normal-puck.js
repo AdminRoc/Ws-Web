@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_puckRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:55.000",
+    uploadTime: "2024-08-02",
+    videoUrls:  ["https://www.youtube.com/watch?v=fMB1YAUOdUA"],
+  },
 ];

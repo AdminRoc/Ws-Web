@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_puckRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "1:22.000",
+    uploadTime: "2026-02-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "1:26.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
+  },
 ];
