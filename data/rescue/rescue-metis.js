@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_metisRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:32.933",
+    uploadTime: "2025-12-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=xT4O1JZ1uVc"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:36.000",
+    uploadTime: "2022-03-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=KuEDD7EeQXM"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:37.000",
+    uploadTime: "2021-02-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=z_4suc1WHPM"],
+  },
 ];
