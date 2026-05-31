@@ -46,4 +46,10 @@ var exterminate_steel_nexRecords = [
     uploadTime: "2026-01-07",
     videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
   },
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "1:21.000",
+    uploadTime: "2026-01-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=VrwPJBtS5rU"],
+  },
 ];
