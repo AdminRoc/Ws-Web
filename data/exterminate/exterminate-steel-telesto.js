@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_telestoRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "kkV357",
+    clearTime:  "0:33.000",
+    uploadTime: "2026-05-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=QZvcq2lBzXE"],
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:47.000",
+    uploadTime: "2026-02-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=dH9qFl1NRjo"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:57.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
+  },
 ];
