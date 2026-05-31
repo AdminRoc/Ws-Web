@@ -22,5 +22,25 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_numaRecords = [
-  /* 暂无记录 */
+{
+  playerId:   "Salat",
+  clearTime:  "0:25.200",
+  uploadTime: "2025-05-29",
+  videoUrls:  ["https://www.youtube.com/watch?v=tXjN-c-BU9U"],
+},
+{
+  playerId:   "L1ndell",
+  clearTime:  "0:30.000",
+  uploadTime: "2022-08-02",
+  videoUrls:  ["https://www.youtube.com/watch?v=GotjjGk7iQw"],
+},
+{
+  playerId:   "Salat / L1ndell",
+  clearTime:  "0:30.000",
+  uploadTime: "2025-12-21",
+  videoUrls:  [
+    "https://www.youtube.com/watch?v=uw5f_yHnNPQ",
+    "https://www.youtube.com/watch?v=35HM0fEqFIg"
+  ],
+},
 ];

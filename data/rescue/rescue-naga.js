@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_nagaRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:23.933",
+    uploadTime: "2025-11-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=k5OTeGtxQIs"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:24.400",
+    uploadTime: "2025-11-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=u9zAuFtyehY"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:29.000",
+    uploadTime: "2022-06-28",
+    videoUrls:  ["https://www.youtube.com/watch?v=oVYm0aSmB4o"],
+  },
 ];
