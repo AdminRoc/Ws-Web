@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_zeipelRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:26.000",
+    uploadTime: "2026-05-13",
+    videoUrls:  ["https://www.youtube.com/watch?v=JvxJaNjzeqQ"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:29.000",
+    uploadTime: "2026-05-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=Zzn4BzFQBOU"],
+  },
 ];

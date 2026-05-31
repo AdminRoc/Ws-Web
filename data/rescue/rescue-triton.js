@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_tritonRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:16.383",
+    uploadTime: "2026-05-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=NFLXoqv1Wys"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:18.116",
+    uploadTime: "2025-11-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=1YoTcCrD-U4"],
+  },
 ];
