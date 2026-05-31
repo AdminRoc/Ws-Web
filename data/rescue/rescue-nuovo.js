@@ -22,5 +22,22 @@
  * ════════════════════════════════════════════════════════════ */
 
 var rescue_nuovoRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:19.550",
+    uploadTime: "2025-10-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=ts7LwIkbWf8"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:24.000",
+    uploadTime: "2022-08-02",
+    videoUrls:  ["https://www.youtube.com/watch?v=1RXGFJlA7-k"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:26.000",
+    uploadTime: "2022-06-28",
+    videoUrls:  ["https://www.youtube.com/watch?v=vms0P7IK3RE"],
+  },
 ];
