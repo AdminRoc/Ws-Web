@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_marianaRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Jagdtor",
+    clearTime:  "0:10.450",
+    uploadTime: "2026-05-29",
+    videoUrls:  ["https://www.youtube.com/watch?v=VKvDpdwMIBs"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:10.883",
+    uploadTime: "2026-04-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=uN4-mLZ_i88"],
+  },
 ];

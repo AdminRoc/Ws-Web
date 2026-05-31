@@ -22,5 +22,29 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_hellasRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "kkV357",
+    clearTime:  "0:25.000",
+    uploadTime: "2026-05-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=2nygbixvGDc"],
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:35.000",
+    uploadTime: "2026-02-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:43.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
+  },
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "1:10.000",
+    uploadTime: "2026-01-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=RhXzCMZFb-M"],
+  },
 ];

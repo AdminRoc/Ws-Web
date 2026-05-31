@@ -22,16 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_hellasRecords = [
-{
-  playerId:   "Salat",
-  clearTime:  "0:13.000",
-  uploadTime: "2026-02-12",
-  videoUrls:  ["https://www.youtube.com/watch?v=Ksi_rZ3SWig"],
-},
-{
-  playerId:   "Hvna",
-  clearTime:  "0:15.000",
-  uploadTime: "2026-02-12",
-  videoUrls:  ["https://www.youtube.com/watch?v=UteD9L7NGjo"],
-},
+  {
+    playerId:   "Salat",
+    clearTime:  "0:13.000",
+    uploadTime: "2026-02-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=Ksi_rZ3SWig"],
+  },
+  {
+    playerId:   "Hvna",
+    clearTime:  "0:15.000",
+    uploadTime: "2026-02-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=UteD9L7NGjo"],
+  },
 ];
