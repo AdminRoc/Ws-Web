@@ -22,5 +22,35 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_carpoRecords = [
-  /* 暂无记录 */
+
+  {
+  playerId:   "kkV357",
+  clearTime:  "0:40.000",
+  uploadTime: "2026-05-20",
+  videoUrls:  ["https://www.youtube.com/watch?v=ml6OHHkBRsY"],
+},
+{
+  playerId:   "oTonJleHue",
+  clearTime:  "0:50.000",
+  uploadTime: "2026-02-13",
+  videoUrls:  ["https://www.youtube.com/watch?v=C0lxFaDO3fE"],
+},
+{
+  playerId:   "NamelessDeity",
+  clearTime:  "0:54.000",
+  uploadTime: "2026-02-10",
+  videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
+},
+{
+  playerId:   "Salat",
+  clearTime:  "1:03.000",
+  uploadTime: "2026-01-07",
+  videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
+},
+{
+  playerId:   "RoniPrime",
+  clearTime:  "1:17.000",
+  uploadTime: "2026-01-07",
+  videoUrls:  ["https://www.youtube.com/watch?v=1cDxpQDgWX4"],
+},
 ];
