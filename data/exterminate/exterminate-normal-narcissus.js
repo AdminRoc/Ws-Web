@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_narcissusRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:18.583",
+    uploadTime: "2026-04-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=16_QUyWd4a0"],
+  },
+  {
+    playerId:   "_Phobos",
+    clearTime:  "0:21.467",
+    uploadTime: "2026-04-01",
+    videoUrls:  ["https://www.youtube.com/watch?v=GpyZ0IrRpvA"],
+  },
 ];
