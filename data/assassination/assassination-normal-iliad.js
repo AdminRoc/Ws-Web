@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_iliadRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Endryx_Ow",
+    clearTime:  "3:32.967",
+    uploadTime: "2025-12-31",
+    videoUrls:  ["https://www.youtube.com/watch?v=N3k5yqeEHpo"],
+  },
+  {
+    playerId:   "Akemi",
+    clearTime:  "4:43.667",
+    uploadTime: "2025-12-31",
+    videoUrls:  ["https://www.youtube.com/watch?v=N3k5yqeEHpo"],
+  },
+  {
+    playerId:   "SilentDarkKnight",
+    clearTime:  "8:05.733",
+    uploadTime: "2025-12-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=SKTgRdb316c"],
+  },
 ];

@@ -22,5 +22,17 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_naamahRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:30.966",
+    uploadTime: "2025-11-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=-MomuTQxsg0"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:32.000",
+    uploadTime: "2023-01-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=zuuKUD_vXT4"],
+  },
 ];

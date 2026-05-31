@@ -29,4 +29,16 @@ var assassination_normal_extaRecords = [
     uploadTime: "2024-04-19",
     videoUrls:  ["https://www.youtube.com/watch?v=V_oZK86X1P0"],
   },
+  {
+    playerId:   ".cat",
+    clearTime:  "0:45.500",
+    uploadTime: "2020-05-04",
+    videoUrls:  ["https://www.youtube.com/watch?v=nPFHPLVRXEY"],
+  },
+  {
+    playerId:   "zukerben",
+    clearTime:  "0:47.500",
+    uploadTime: "2020-05-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=gluK6ZHokKQ"],
+  },
 ];

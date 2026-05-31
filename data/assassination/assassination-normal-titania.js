@@ -19,8 +19,26 @@
  *      uploadTime: "2025-01-01",
  *      videoUrls:  ["https://..."],
  *    },
+ * Tyl Regor
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_titaniaRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "1:16.066",
+    uploadTime: "2025-05-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=5f79Zt17UN4"],
+  },
+  {
+    playerId:   "Txdo",
+    clearTime:  "1:16.783",
+    uploadTime: "2025-01-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=6Xgn9SEre1A"],
+  },
+  {
+    playerId:   "Lithiu",
+    clearTime:  "1:18.067",
+    uploadTime: "2025-04-13",
+    videoUrls:  ["https://www.youtube.com/watch?v=1KQ-nbTVDNc"],
+  },
 ];

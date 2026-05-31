@@ -22,5 +22,17 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_psamatheRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:13.250",
+    uploadTime: "2026-03-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=uv8uriwnnwQ"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:14.550",
+    uploadTime: "2021-09-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=UA5N0olYGGI"],
+  },
 ];

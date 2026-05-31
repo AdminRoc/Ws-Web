@@ -22,5 +22,24 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_magnacidiumRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "1:02.083",
+    uploadTime: "2025-06-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=ZRUEuSK5ank"],
+  },
+  {
+    playerId:   "DishonoredFNG",
+    clearTime:  "1:06.933",
+    uploadTime: "2025-01-04",
+    videoUrls:  ["https://www.youtube.com/watch?v=kxA2FDG4D3o"],
+  },
+  {
+    playerId:   "Titoxx",
+    clearTime:  "1:07.700",
+    uploadTime: "2024-07-14",
+    videoUrls:  ["https://www.youtube.com/watch?v=mAVWTjXT-2A"],
+  },
+
 ];

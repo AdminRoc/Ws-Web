@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_fossaRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "2:04.000",
+    uploadTime: "2026-01-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=q0xoFixEGEo"],
+  },
+  {
+    playerId:   "_Gabriel",
+    clearTime:  "2:12.000",
+    uploadTime: "2023-01-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=Hj7O0bIKmR0"],
+  },
+  {
+    playerId:   "sakivali",
+    clearTime:  "2:13.300",
+    uploadTime: "2024-11-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=-ovGwPVDYCQ"],
+  },
 ];

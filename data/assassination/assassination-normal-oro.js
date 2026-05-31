@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_oroRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:46.366",
+    uploadTime: "2025-10-28",
+    videoUrls:  ["https://www.youtube.com/watch?v=VdLyldma8Iw"],
+  },
+  {
+    playerId:   "Txdo",
+    clearTime:  "0:52.967",
+    uploadTime: "2025-01-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=EoKqSC8JrG8"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:56.983",
+    uploadTime: "2024-02-14",
+    videoUrls:  ["https://www.youtube.com/watch?v=fT2TFi-rKU0"],
+  },
 ];
