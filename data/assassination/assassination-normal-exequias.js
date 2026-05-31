@@ -22,5 +22,35 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_normal_exequiasRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "1:26.333",
+    uploadTime: "2025-06-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=BfkCmo2FBgM"],
+  },
+  {
+    playerId:   "sealmp4",
+    clearTime:  "1:34.000",
+    uploadTime: "2025-03-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=rrHJ5G60uJE"],
+  },
+  {
+    playerId:   "Txdo",
+    clearTime:  "1:37.065",
+    uploadTime: "2025-01-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=w2medEICYvs"],
+  },
+  {
+    playerId:   "Titoxx",
+    clearTime:  "1:43.000",
+    uploadTime: "2024-07-14",
+    videoUrls:  ["https://www.youtube.com/watch?v=Q5cZU3CKqiA"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "1:54.000",
+    uploadTime: "2022-01-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=k6f4FovCEUk"],
+  },
 ];
