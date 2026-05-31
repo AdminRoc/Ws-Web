@@ -22,5 +22,17 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_rusalkaRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:33.083",
+    uploadTime: "2025-08-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=mSinOowbbq8"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:35.000",
+    uploadTime: "2023-01-18",
+    videoUrls:  ["https://www.youtube.com/watch?v=tgC5Zchmz-o"],
+  },
 ];

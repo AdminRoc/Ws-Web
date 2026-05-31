@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_enceladusRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:09.266",
+    uploadTime: "2025-05-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=M8Rft4RNrYE"],
+  },
 ];

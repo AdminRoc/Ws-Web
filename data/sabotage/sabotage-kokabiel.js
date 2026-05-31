@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_kokabielRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:12.750",
+    uploadTime: "2025-11-28",
+    videoUrls:  ["https://www.youtube.com/watch?v=ifIJRtk3Eb4"],
+  },
 ];

@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_cypressRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "0:25.750",
+    uploadTime: "2025-11-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=LOHwB_dn7Vk"],
+  },
 ];

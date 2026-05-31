@@ -22,5 +22,17 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_naeglarRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:28.000",
+    uploadTime: "2026-05-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=ghkN6301YX8"],
+  },
+  {
+    playerId:   "EZQ8",
+    clearTime:  "0:30.000",
+    uploadTime: "2026-05-01",
+    videoUrls:  ["https://www.youtube.com/watch?v=Urw52A1t4iA"],
+  },
 ];

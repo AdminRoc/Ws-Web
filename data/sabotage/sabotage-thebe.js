@@ -22,5 +22,11 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_thebeRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "1:51.000",
+    uploadTime: "2026-04-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=pQPw9S4DusI"],
+  },
 ];

@@ -22,5 +22,10 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_formidoRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "1:56.000",
+    uploadTime: "2026-04-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=Q0kPDW4oS7A"],
+  },
 ];

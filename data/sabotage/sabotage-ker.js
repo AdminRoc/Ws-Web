@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_kerRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:11.150",
+    uploadTime: "2026-04-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=CarSzOg2loc"],
+  },
+  {
+    playerId:   "Hvna",
+    clearTime:  "0:13.900",
+    uploadTime: "2026-03-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=J_sNZLDj7-g"],
+  },
 ];

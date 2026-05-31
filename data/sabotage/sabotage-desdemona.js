@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var sabotage_desdemonaRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "Salat",
+    clearTime:  "1:39.533",
+    uploadTime: "2026-01-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=mvKgfrXD0"],
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "1:44.000",
+    uploadTime: "2021-11-17",
+    videoUrls:  ["https://www.youtube.com/watch?v=FyGpu9Q2rW4"],
+  },
 ];
