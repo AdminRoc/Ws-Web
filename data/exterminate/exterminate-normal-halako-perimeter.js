@@ -22,5 +22,11 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_halako_perimeterRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Salat",
+    clearTime:  "0:29.000",
+    uploadTime: "2026-01-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=EHlMSzhW2dg"],
+  }
 ];
