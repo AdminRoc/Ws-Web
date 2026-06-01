@@ -1480,6 +1480,30 @@ img { display: block; max-width: 100%; }
   flex-shrink: 0;
   font-size: 1rem;
   margin-top: .05rem;
+  margin-right: .2rem;
+}
+
+/* ── lb-tip-cn 和 lb-tip-en 双语切换容器 ── */
+.lb-tip-cn,
+.lb-tip-en {
+  flex: 1;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  transition: opacity .3s ease;
+  position: relative;
+}
+.lb-tip-cn {
+  opacity: 1;
+}
+.lb-tip-en {
+  position: absolute;
+  inset: .7rem 1.1rem .7rem 3.8rem;
+  opacity: 0;
+  font-style: italic;
+  color: rgba(255,215,0,.75);
+  display: block;
+  pointer-events: none;
 }
 
 /* ─ notice模块 hover时中英切换 ─ */
