@@ -145,7 +145,7 @@
       <span class="lb-tip-en" id="notice-en" style="position:absolute;inset:0;display:flex;align-items:center;gap:.6rem;padding:.7rem 1.1rem;opacity:0;transition:opacity .3s ease;font-style:italic;color:rgba(255,215,0,.75);"></span>
     </div>
     <div class="lb-tabs" id="lb-tabs">
-      <button class="lb-tab-btn active" data-cat="锢铁"><span class="hover-text-swap"><span class="text-cn">钢铁</span><span class="text-en">Steel</span></span></button>
+      <button class="lb-tab-btn active" data-cat="钢铁"><span class="hover-text-swap"><span class="text-cn">钢铁</span><span class="text-en">Steel</span></span></button>
       <button class="lb-tab-btn" data-cat="普通"><span class="hover-text-swap"><span class="text-cn">普通</span><span class="text-en">Normal</span></span></button>
     </div>
     <div class="map-tabs" id="map-tabs">
@@ -233,25 +233,25 @@
 <script src="data/assassination/assassination-normal-effervo.js"></script>
 <script>
   var _allData = {
-    "锢铁||Fossa": function(){return assassination_steel_fossaRecords;},
-    "锢铁||Tolstoj": function(){return assassination_steel_tolstojRecords;},
-    "锢铁||War": function(){return assassination_steel_warRecords;},
-    "锢铁||Iliad": function(){return assassination_steel_iliadRecords;},
-    "锢铁||Exta": function(){return assassination_steel_extaRecords;},
-    "锢铁||Themisto": function(){return assassination_steel_themistoRecords;},
-    "锢铁||ORO": function(){return assassination_steel_oroRecords;},
-    "锢铁||Magnacidium": function(){return assassination_steel_magnacidiumRecords;},
-    "锢铁||Naamah": function(){return assassination_steel_naamahRecords;},
-    "锢铁||Tethys": function(){return assassination_steel_tethysRecords;},
-    "锢铁||Titania": function(){return assassination_steel_titaniaRecords;},
-    "锢铁||Psamathe": function(){return assassination_steel_psamatheRecords;},
-    "锢铁||Exequias": function(){return assassination_steel_exequiasRecords;},
-    "锢铁||Hades": function(){return assassination_steel_hadesRecords;},
-    "锢铁||Mutalist Alad V": function(){return assassination_steel_mutalist_alad_vRecords;},
-    "锢铁||Jordas Golem": function(){return assassination_steel_jordas_golemRecords;},
-    "锢铁||Merrow": function(){return assassination_steel_merrowRecords;},
-    "锢铁||The Fragmented": function(){return assassination_steel_effervoRecords;},
-    "锢铁||The Fragmented One": function(){return assassination_steel_the_fragmented_oneRecords;},
+    "钢铁||Fossa": function(){return assassination_steel_fossaRecords;},
+    "钢铁||Tolstoj": function(){return assassination_steel_tolstojRecords;},
+    "钢铁||War": function(){return assassination_steel_warRecords;},
+    "钢铁||Iliad": function(){return assassination_steel_iliadRecords;},
+    "钢铁||Exta": function(){return assassination_steel_extaRecords;},
+    "钢铁||Themisto": function(){return assassination_steel_themistoRecords;},
+    "钢铁||ORO": function(){return assassination_steel_oroRecords;},
+    "钢铁||Magnacidium": function(){return assassination_steel_magnacidiumRecords;},
+    "钢铁||Naamah": function(){return assassination_steel_naamahRecords;},
+    "钢铁||Tethys": function(){return assassination_steel_tethysRecords;},
+    "钢铁||Titania": function(){return assassination_steel_titaniaRecords;},
+    "钢铁||Psamathe": function(){return assassination_steel_psamatheRecords;},
+    "钢铁||Exequias": function(){return assassination_steel_exequiasRecords;},
+    "钢铁||Hades": function(){return assassination_steel_hadesRecords;},
+    "钢铁||Mutalist Alad V": function(){return assassination_steel_mutalist_alad_vRecords;},
+    "钢铁||Jordas Golem": function(){return assassination_steel_jordas_golemRecords;},
+    "钢铁||Merrow": function(){return assassination_steel_merrowRecords;},
+    "钢铁||The Fragmented": function(){return assassination_steel_effervoRecords;},
+    "钢铁||The Fragmented One": function(){return assassination_steel_the_fragmented_oneRecords;},
     "普通||Fossa": function(){return assassination_normal_fossaRecords;},
     "普通||Tolstoj": function(){return assassination_normal_tolstojRecords;},
     "普通||War": function(){return assassination_normal_warRecords;},
@@ -271,7 +271,7 @@
     "普通||Merrow": function(){return assassination_normal_merrowRecords;},
     "普通||The Fragmented": function(){return assassination_normal_effervoRecords;},
   };
-  var _curCat = '锢铁', _curMap = 'Fossa';
+  var _curCat = '钢铁', _curMap = 'Fossa';
 
   function loadBoard() {
     var key = _curCat + '||' + _curMap;
@@ -282,7 +282,7 @@
 
   function setSteelOnlyVisibility(cat) {
     document.querySelectorAll('.map-tab-btn.steel-only').forEach(function(b) {
-      b.style.display = (cat === '锢铁') ? '' : 'none';
+      b.style.display = (cat === '钢铁') ? '' : 'none';
     });
   }
 
@@ -293,7 +293,7 @@
         document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
         setSteelOnlyVisibility(_curCat);
         // 如果当前地图是钢铁限定，切到普通时自动切换到 The Fragmented
-        if (_curCat !== '锢铁' && !_allData[_curCat+'||'+_curMap]) {
+        if (_curCat !== '钢铁' && !_allData[_curCat+'||'+_curMap]) {
           _curMap = 'The Fragmented';
           document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(x){
             x.classList.toggle('active', x.getAttribute('data-mapname') === _curMap);
