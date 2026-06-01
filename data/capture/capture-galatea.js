@@ -42,3 +42,10 @@ var capture_galateaRecords = [
     videoUrls:  ["https://www.youtube.com/watch?v=R_2L-eWMPeE"],
   },
 ];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var capture_galateaNotice_cn = "";
+var capture_galateaNotice_en = "";

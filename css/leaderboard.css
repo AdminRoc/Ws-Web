@@ -321,6 +321,44 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
   row-gap: .55rem;
 }
 
+/* ══ lb-tab-btn 双语叠层自适应宽度 ══
+   hover-text-swap 内两行文本叠在同一 grid-area，
+   按钮宽度取两者最大值，永不溢出。            */
+.lb-tab-btn .hover-text-swap {
+  display: inline-grid;
+  place-items: center;
+}
+.lb-tab-btn .hover-text-swap .text-cn,
+.lb-tab-btn .hover-text-swap .text-en {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  position: static;
+  transform: none;
+  transition: opacity .4s ease;
+  font-size: inherit;
+}
+.lb-tab-btn .hover-text-swap .text-en { display: block; opacity: 0; }
+.lb-tab-btn.lang-en .hover-text-swap .text-cn { opacity: 0; }
+.lb-tab-btn.lang-en .hover-text-swap .text-en { opacity: 1; }
+.lb-tab-btn:hover .hover-text-swap .text-cn { opacity: 0; }
+.lb-tab-btn:hover .hover-text-wrap .text-en { opacity: 1; }
+.lb-tab-btn:hover .hover-text-swap .text-en { opacity: 1; }
+
+/* ══ map-tab-btn 双语叠层（适用含 .tab-cn/.tab-en 结构的按钮）══ */
+.map-tab-btn .tab-text {
+  display: inline-grid;
+  place-items: center;
+}
+.map-tab-btn .tab-cn,
+.map-tab-btn .tab-en {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  transition: opacity .4s ease;
+}
+.map-tab-btn .tab-en { opacity: 0; }
+.map-tab-btn.lang-en .tab-cn { opacity: 0; }
+.map-tab-btn.lang-en .tab-en { opacity: 1; }
+
 .lb-tab-btn {
   display: inline-flex;
   align-items: center;

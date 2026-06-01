@@ -41,3 +41,10 @@ var rescue_nuovoRecords = [
     videoUrls:  ["https://www.youtube.com/watch?v=vms0P7IK3RE"],
   },
 ];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var rescue_nuovoNotice_cn = "";
+var rescue_nuovoNotice_en = "";

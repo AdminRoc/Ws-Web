@@ -43,3 +43,10 @@ var assassination_normal_warRecords = [
     videoUrls:  ["https://www.youtube.com/watch?v=Eer1uIpk_I8"],
   },
 ];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var assassination_normal_warNotice_cn = "";
+var assassination_normal_warNotice_en = "";

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="A Truly Fair and Comprehensive Warframe Speedrun Leaderboard.">
-  <title>氏族跑酷竞速排行榜 — Warframe Speed</title>
+  <title>面纱前哨战竞速排行榜 — Warframe Speed</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -28,20 +28,14 @@
     .nav-dropdown-menu a:hover .hover-text-swap .text-en { opacity: 1; }
     .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-cn { opacity: 0; }
     .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-en { opacity: 1; }
-    /* ── 大类Tab按钮 lang-en 态（中英周期切换，含active） ── */
     .lb-tab-btn.lang-en .hover-text-swap .text-cn { opacity: 0; }
     .lb-tab-btn.lang-en .hover-text-swap .text-en { opacity: 1; }
-    /* ── lb-back 返回首页悬停显示英文 ── */
     .lb-back:hover .hover-text-swap .text-cn { opacity: 0; }
     .lb-back:hover .hover-text-swap .text-en { opacity: 1; }
-    /* ── nav-submit 提交成绩悬停显示英文 ── */
     .nav-submit:hover .hover-text-swap .text-cn { opacity: 0; }
     .nav-submit:hover .hover-text-swap .text-en { opacity: 1; }
-    /* ── lb-tab-btn 大类按钮悬停显示英文 ── */
-    /* hover时切换，active不强制：由JS lang-en控制 */
     .lb-tab-btn:hover .hover-text-swap .text-cn { opacity: 0; }
     .lb-tab-btn:hover .hover-text-swap .text-en { opacity: 1; }
-    /* ── shame-btn 作弊公示悬停显示英文 ── */
     .shame-btn:hover .shame-cn { opacity: 0; transform: translateY(-5px); }
     .shame-btn:hover .shame-en { opacity: 1; transform: translateY(0); }
     .lb-badge-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; }
@@ -49,16 +43,15 @@
     .lb-badge-cn { position: absolute; inset: 0; opacity: 1; transition: opacity .5s ease; }
     .lb-badge-wrap.show-en .lb-badge-en { opacity: 1; }
     .lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; }
-
-    /* ── lb-tip 双语 hover ── */
     .lb-tip:hover .lb-tip-cn { opacity: 0; }
     .lb-tip:hover .lb-tip-en { opacity: 1 !important; }
-    /* 移动端菜单：桌面隐藏 */
     .nav-more-mobile, .mob-more-panel { display: none; }
     @media screen and (max-width: 860px) {
       .nav-more-mobile { display: flex !important; }
       .mob-more-panel.open { display: flex !important; }
     }
+      #page-notice:hover #notice-cn { opacity: 0; }
+    #page-notice:hover #notice-en { opacity: 1 !important; }
   </style>
 </head>
 <body>
@@ -94,12 +87,11 @@
             <a href="profit-taker-macro.html"><span class="hover-text-swap"><span class="text-cn">无限制</span><span class="text-en">Non-restricted</span></span></a>
           </div>
         </div>
-        <button class="nav-more-btn" id="nav-more-btn" aria-label="更多榜单榜单"><span class="nm-wrap"><span class="nm-cn">更多榜单</span><span class="nm-en">Others</span></span></button>
+        <button class="nav-more-btn" id="nav-more-btn" aria-label="更多榜单"><span class="nm-wrap"><span class="nm-cn">更多榜单</span><span class="nm-en">Others</span></span></button>
         <div class="nav-item">
           <a href="about.html"><span class="hover-text-swap"><span class="text-cn">关于本站</span><span class="text-en">About</span></span></a>
         </div>
-        <!-- 移动端：更多榜单 -->
-        <button class="nav-more-mobile" id="nav-more-mobile" aria-label="更多榜单榜单">更多榜单</button>
+        <button class="nav-more-mobile" id="nav-more-mobile" aria-label="更多榜单">更多榜单</button>
         <div class="mob-more-panel" id="mob-more-panel">
           <a href="capture.html">捕获</a>
           <a href="exterminate.html">歼灭</a>
@@ -107,30 +99,30 @@
           <a href="sabotage.html">破坏</a>
           <a href="spy.html">间谍</a>
           <a href="assassination.html">刺杀</a>
-          <a href="archon-hunt.html">执刑官猎杀</a>
+          <a href="special_challenge.html">特殊挑战</a>
           <a href="defense-relic.html">防御裂缝78轮</a>
           <a href="cambire.html">元素转换</a>
-          <a href="victory-plaza.html">1999 坦克</a>
+          <a href="hollvania.html">1999 任务</a>
           <a href="ropalolyst.html">蝠力使</a>
-          <a href="exploiter.html">二蜘蛛</a>
-          <a href="the-guilty.html">有罪之人</a>
-          <a href="obstacle-course.html">氏族跑酷</a>
+          <a href="skirmish.html">面纱前哨战</a>
+          <a href="defection.html">叛逃任务</a>
+          <a href="arbitration.html">仲裁任务</a>
           <a href="special-events.html">站内特殊活动</a>
         </div>
       </div>
       <button class="nav-hamburger" aria-label="打开菜单"><span></span><span></span><span></span></button>
       <div class="nav-rules-wrap">
-        <a class="nav-rules" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FPmFYdf0gXoR8EBxIY6dcr3UKn0f&title=%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99%E6%80%BB%E8%A7%88&from=obstacle-course.html">
+        <a class="nav-rules" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FPmFYdf0gXoR8EBxIY6dcr3UKn0f&title=%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99%E6%80%BB%E8%A7%88&from=skirmish.html">
           <span class="hover-text-swap"><span class="text-cn">查看提交规则</span><span class="text-en">Rules</span></span>
         </a>
         <div class="nav-rules-dropdown">
-          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FT65jdhc61ohAOSxHopTcpOd8njc&title=%E4%B8%AD%E6%96%AD%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=obstacle-course.html">中断竞速</a>
-          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FUxmXdbcHUoo0iCxQUXccUMTNncf&title=%E5%A4%9C%E7%81%B5%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=obstacle-course.html">夜灵竞速</a>
-          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FJCBfdkdJpoAfkgxD37ic1VVcnkf&title=%E8%9C%98%E8%9B%9B%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=obstacle-course.html">蜘蛛竞速</a>
-          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FAaMCdHX7Toa8hrxah1DcMQnJnNe&title=%E6%9B%B4%E5%A4%9A%E7%AB%9E%E9%80%9F%E9%A1%B9%E7%9B%AE&from=obstacle-course.html">更多项目</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FT65jdhc61ohAOSxHopTcpOd8njc&title=%E4%B8%AD%E6%96%AD%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=skirmish.html">中断竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FUxmXdbcHUoo0iCxQUXccUMTNncf&title=%E5%A4%9C%E7%81%B5%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=skirmish.html">夜灵竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FJCBfdkdJpoAfkgxD37ic1VVcnkf&title=%E8%9C%98%E8%9B%9B%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=skirmish.html">蜘蛛竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FAaMCdHX7Toa8hrxah1DcMQnJnNe&title=%E6%9B%B4%E5%A4%9A%E7%AB%9E%E9%80%9F%E9%A1%B9%E7%9B%AE&from=skirmish.html">更多项目</a>
         </div>
       </div>
-      <a class="nav-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=obstacle-course.html">
+      <a class="nav-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=skirmish.html">
         <span class="hover-text-swap"><span class="text-cn">提交成绩</span><span class="text-en">Submit</span></span>
       </a>
     </div>
@@ -149,16 +141,16 @@
       </div>
       <div class="super-nav-row">
         <a class="snav-btn" href="assassination.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">刺杀</span><span class="snav-en">Assassination</span></div><span class="snav-btmglow"></span></a>
-        <a class="snav-btn" href="archon-hunt.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">执刑官猎杀</span><span class="snav-en">Archon Hunt</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="special_challenge.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">特殊挑战</span><span class="snav-en">Special Challenge</span></div><span class="snav-btmglow"></span></a>
         <a class="snav-btn" href="defense-relic.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">防御裂缝78轮</span><span class="snav-en">Defense Relic</span></div><span class="snav-btmglow"></span></a>
         <a class="snav-btn" href="cambire.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">元素转换</span><span class="snav-en">Cambire</span></div><span class="snav-btmglow"></span></a>
-        <a class="snav-btn" href="victory-plaza.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">1999 坦克</span><span class="snav-en">Victory Plaza</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="hollvania.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">1999 任务</span><span class="snav-en">Höllvania</span></div><span class="snav-btmglow"></span></a>
       </div>
       <div class="super-nav-row">
         <a class="snav-btn" href="ropalolyst.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">蝠力使</span><span class="snav-en">Ropalolyst</span></div><span class="snav-btmglow"></span></a>
-        <a class="snav-btn" href="exploiter.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">二蜘蛛</span><span class="snav-en">Exploiter</span></div><span class="snav-btmglow"></span></a>
-        <a class="snav-btn" href="the-guilty.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">有罪之人</span><span class="snav-en">The Guilty</span></div><span class="snav-btmglow"></span></a>
-        <a class="snav-btn" href="obstacle-course.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">氏族跑酷</span><span class="snav-en">Obstacle Course</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="skirmish.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">面纱前哨战</span><span class="snav-en">Skirmish</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="defection.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">叛逃任务</span><span class="snav-en">Defection</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="arbitration.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">仲裁任务</span><span class="snav-en">Arbitration</span></div><span class="snav-btmglow"></span></a>
         <a class="snav-btn" href="special-events.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">站内特殊活动</span><span class="snav-en">Special Events</span></div><span class="snav-btmglow"></span></a>
       </div>
     </div>
@@ -171,13 +163,23 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">氏族跑酷竞速排行榜</h1>
-      <p class="lb-subtitle">Obstacle Course Speedrun Leaderboard</p>
+      <h1 class="lb-title">面纱前哨战竞速排行榜</h1>
+      <p class="lb-subtitle">Skirmish Speedrun Leaderboard</p>
     </div>
-    <div class="lb-tip reveal" style="cursor:default;position:relative;">
+    <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
       <span class="lb-tip-icon">⚠</span>
-      <span class="lb-tip-cn" style="transition:opacity .3s ease;">不可利用快速进出竞速大门的BUG，但可以在跑酷期间跳崖。</span>
-      <span class="lb-tip-en" style="position:absolute;inset:0;display:flex;align-items:center;gap:.6rem;padding:.7rem 1.1rem;opacity:0;transition:opacity .3s ease;font-style:italic;color:rgba(255,215,0,.75);"><span style="flex-shrink:0;">⚠</span>Players must not use the bug of quickly entering and exiting the speedrun gate. But players can jump off the cliff during the parkour.</span>
+      <span id="notice-cn" style="transition:opacity .3s ease;"></span>
+      <span id="notice-en" style="position:absolute;inset:0;display:flex;align-items:center;gap:.6rem;padding:.7rem 1.1rem;opacity:0;transition:opacity .3s ease;pointer-events:none;font-style:italic;color:rgba(255,215,0,.8);"></span>
+    </div>
+    <div class="lb-tabs" id="lb-tabs">
+      <button class="lb-tab-btn active" data-cat="锢铁"><span class="hover-text-swap"><span class="text-cn">锢铁</span><span class="text-en">Steel</span></span></button>
+      <button class="lb-tab-btn" data-cat="普通"><span class="hover-text-swap"><span class="text-cn">普通</span><span class="text-en">Normal</span></span></button>
+    </div>
+    <div class="map-tabs" id="map-tabs">
+      <button class="map-tab-btn active" data-mapname="Nsu Grid">Nsu Grid</button>
+      <button class="map-tab-btn" data-mapname="Flexa">Flexa</button>
+      <button class="map-tab-btn" data-mapname="R-9 Cloud">R-9 Cloud</button>
+      <button class="map-tab-btn" data-mapname="H-2 Cloud">H-2 Cloud</button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">
@@ -186,16 +188,15 @@
       </table>
       <div class="lb-stats" id="lb-stats"></div>
     </div>
-    <!-- ══ 举报违规 + 作弊公示 ══ -->
     <div class="report-wrap">
-      <a class="report-btn" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2Fshrcnju7pg9xiHVjyQcH4AUrVVc&title=%E4%B8%BE%E6%8A%A5%E8%BF%9D%E8%A7%84&from=obstacle-course.html">
+      <a class="report-btn" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2Fshrcnju7pg9xiHVjyQcH4AUrVVc&title=%E4%B8%BE%E6%8A%A5%E8%BF%9D%E8%A7%84&from=skirmish.html">
         <span class="report-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 5.5H13L9.5 8.5L11 13L7 10L3 13L4.5 8.5L1 5.5H5.5L7 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/></svg></span>
         <span class="hover-text-swap"><span class="text-cn">举报违规</span><span class="text-en">Report</span></span>
       </a>
-      <a class="shame-btn"
-       href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fview%2Fshrcnij5zLwd9XPCCEoYVobYMHe&title=%E4%BD%9C%E5%BC%8A%E5%85%AC%E7%A4%BA&from=obstacle-course.html">
-      <span class="shame-icon"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M7.5 4v3.5M7.5 10v.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="shame-text-wrap"><span class="shame-cn">作弊公示</span><span class="shame-en">Ban List</span></span>
-    </a>
+      <a class="shame-btn" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fview%2Fshrcnij5zLwd9XPCCEoYVobYMHe&title=%E4%BD%9C%E5%BC%8A%E5%85%AC%E7%A4%BA&from=skirmish.html">
+        <span class="shame-icon"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M7.5 4v3.5M7.5 10v.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <span class="shame-text-wrap"><span class="shame-cn">作弊公示</span><span class="shame-en">Ban List</span></span>
+      </a>
     </div>
   </main>
   <footer class="site-footer home-footer">
@@ -204,34 +205,78 @@
     <p>特此声明：本站是纯公益性质，且首页的彩虹风格不代表支持性少数群体，望知悉</p>
   </footer>
 </div>
-
 <script src="js/main.js"></script>
-<script src="data/obstacle-course/obstacle-course.js"></script>
+<script src="data/skirmish/skirmish-steel-nsu-grid.js"></script>
+<script src="data/skirmish/skirmish-steel-flexa.js"></script>
+<script src="data/skirmish/skirmish-steel-r9-cloud.js"></script>
+<script src="data/skirmish/skirmish-steel-h2-cloud.js"></script>
+<script src="data/skirmish/skirmish-normal-nsu-grid.js"></script>
+<script src="data/skirmish/skirmish-normal-flexa.js"></script>
+<script src="data/skirmish/skirmish-normal-r9-cloud.js"></script>
+<script src="data/skirmish/skirmish-normal-h2-cloud.js"></script>
 <script>
+  var _allData = {
+    "锢铁||Nsu Grid": function(){return skirmish_steel_nsu_gridRecords;},
+    "锢铁||Flexa": function(){return skirmish_steel_flexaRecords;},
+    "锢铁||R-9 Cloud": function(){return skirmish_steel_r9_cloudRecords;},
+    "锢铁||H-2 Cloud": function(){return skirmish_steel_h2_cloudRecords;},
+    "普通||Nsu Grid": function(){return skirmish_normal_nsu_gridRecords;},
+    "普通||Flexa": function(){return skirmish_normal_flexaRecords;},
+    "普通||R-9 Cloud": function(){return skirmish_normal_r9_cloudRecords;},
+    "普通||H-2 Cloud": function(){return skirmish_normal_h2_cloudRecords;},
+  };
+  var _curCat = '锢铁', _curMap = 'Nsu Grid';
+  function loadBoard() {
+    var key = _curCat+'||'+_curMap;
+    renderTimeLeaderboard(_allData[key]?_allData[key]():[],'lb-tbody','clearTime');
+    _updatePageNotice(_allData[key]);
+    history.replaceState(null,'','#'+encodeURIComponent(_curCat)+'--'+encodeURIComponent(_curMap));
+  }
   document.addEventListener('DOMContentLoaded', function() {
-    renderTimeLeaderboard(obstacle_courseRecords, 'lb-tbody', 'clearTime');
+    document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
+      b.addEventListener('click',function(){
+        _curCat=b.dataset.cat;
+        document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+        loadBoard();
+      });
+    });
+    document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
+      b.addEventListener('click',function(){
+        _curMap=b.getAttribute('data-mapname');
+        document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+        loadBoard();
+      });
+    });
+    (function(){
+      var _h=location.hash.replace('#','');
+      if(_h&&_h.indexOf('--')!==-1){
+        try{
+          var parts=_h.split('--');
+          var hCat=decodeURIComponent(parts[0]),hMap=decodeURIComponent(parts[1]);
+          if(_allData[hCat+'||'+hMap]){_curCat=hCat;_curMap=hMap;}
+        }catch(e){}
+      }
+      document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){b.classList.toggle('active',b.dataset.cat===_curCat);});
+      document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-mapname')===_curMap);});
+      loadBoard();
+    })();
   });
 </script>
 <script>
-/* ── 移动端有下拉框的链接点两次再跳转 ── */
 (function() {
-  if (!('ontouchstart' in window)) return; // 仅移动端
-  var firstTap = null;
+  if (!('ontouchstart' in window)) return;
   document.querySelectorAll('.nav-item.has-dropdown > a').forEach(function(a) {
     a.addEventListener('click', function(e) {
       var item = a.closest('.nav-item');
       if (!item.classList.contains('mob-open')) {
         e.preventDefault();
-        // 第一次点：展开下拉
         document.querySelectorAll('.nav-item.has-dropdown').forEach(function(i) {
           if (i !== item) i.classList.remove('mob-open');
         });
         item.classList.add('mob-open');
       }
-      // 第二次点（mob-open已存在）：直接跳转（不阻止默认行为）
     });
   });
-  /* 移动端"更多榜单"展开子菜单 */
   var mobMoreBtn = document.getElementById('nav-more-mobile');
   var mobMorePanel = document.getElementById('mob-more-panel');
   if (mobMoreBtn && mobMorePanel) {
@@ -243,19 +288,13 @@
 })();
 </script>
 <script>
-/* ── 超级导航面板 ── */
 (function() {
   var panel   = document.getElementById('super-nav-panel');
   var overlay = document.getElementById('super-nav-overlay');
   var btn     = document.getElementById('nav-more-btn');
   if (!panel || !btn) return;
-
-  var isOpen = false;
-  var langTimer = null;
-
-  /* ══ 面板内背景粒子 canvas ══ */
+  var isOpen = false; var langTimer = null;
   var bgCanvas = null, bgCtx = null, bgAnim = null, bgParticles = [];
-
   function initPanelCanvas() {
     if (bgCanvas) return;
     bgCanvas = document.createElement('canvas');
@@ -263,200 +302,116 @@
     bgCanvas.className = 'snav-bg-canvas';
     panel.insertBefore(bgCanvas, panel.firstChild);
     bgCtx = bgCanvas.getContext('2d');
-    resizePanelCanvas();
-    spawnPanelParticles();
-    animatePanelCanvas();
+    resizePanelCanvas(); spawnPanelParticles(); animatePanelCanvas();
   }
-
   function resizePanelCanvas() {
     if (!bgCanvas) return;
-    bgCanvas.width  = panel.offsetWidth  || window.innerWidth;
+    bgCanvas.width = panel.offsetWidth || window.innerWidth;
     bgCanvas.height = panel.offsetHeight || 200;
   }
-
   function spawnPanelParticles() {
     bgParticles = [];
     var W = bgCanvas.width, H = bgCanvas.height;
     var PAL = ['#00d4ff','#8b5cf6','#00ffcc','#60a5fa','#f0abfc'];
     for (var i = 0; i < 55; i++) {
-      bgParticles.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: .5 + Math.random() * 1.8,
-        vx: (Math.random() - .5) * .35,
-        vy: (Math.random() - .5) * .25,
-        col: PAL[Math.floor(Math.random() * PAL.length)],
-        a: Math.random(),
-        da: .004 + Math.random() * .008
-      });
+      bgParticles.push({ x: Math.random()*W, y: Math.random()*H, r: .5+Math.random()*1.8,
+        vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.25, col:PAL[Math.floor(Math.random()*PAL.length)],
+        a:Math.random(), da:.004+Math.random()*.008 });
     }
   }
-
   function animatePanelCanvas() {
     if (!bgCtx) return;
-    bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+    bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
     var W = bgCanvas.width, H = bgCanvas.height;
     bgParticles.forEach(function(p) {
-      p.x += p.vx; p.y += p.vy; p.a += p.da;
-      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-      var alpha = .15 + .55 * Math.abs(Math.sin(p.a));
-      bgCtx.save();
-      bgCtx.globalAlpha = alpha;
-      bgCtx.fillStyle = p.col;
-      bgCtx.shadowColor = p.col;
-      bgCtx.shadowBlur = p.r * 5;
-      bgCtx.beginPath();
-      bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      bgCtx.fill();
-      bgCtx.restore();
+      p.x+=p.vx; p.y+=p.vy; p.a+=p.da;
+      if (p.x<0) p.x=W; if (p.x>W) p.x=0; if (p.y<0) p.y=H; if (p.y>H) p.y=0;
+      var alpha = .15+.55*Math.abs(Math.sin(p.a));
+      bgCtx.save(); bgCtx.globalAlpha=alpha; bgCtx.fillStyle=p.col;
+      bgCtx.shadowColor=p.col; bgCtx.shadowBlur=p.r*5;
+      bgCtx.beginPath(); bgCtx.arc(p.x,p.y,p.r,0,Math.PI*2); bgCtx.fill(); bgCtx.restore();
     });
     bgAnim = requestAnimationFrame(animatePanelCanvas);
   }
-
   function destroyPanelCanvas() {
-    if (bgAnim) { cancelAnimationFrame(bgAnim); bgAnim = null; }
-    if (bgCanvas) { bgCanvas.remove(); bgCanvas = null; bgCtx = null; }
-    bgParticles = [];
+    if (bgAnim) { cancelAnimationFrame(bgAnim); bgAnim=null; }
+    if (bgCanvas) { bgCanvas.remove(); bgCanvas=null; bgCtx=null; } bgParticles=[];
   }
-
-  /* ══ 彩虹粒子爆发（开场烟花） ══ */
   function burst() {
     var rect = btn.getBoundingClientRect();
-    var cx = rect.left + rect.width / 2;
-    var cy = rect.bottom + 2;
-
+    var cx = rect.left+rect.width/2, cy = rect.bottom+2;
     var c = document.createElement('canvas');
-    c.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9998;';
-    c.width = window.innerWidth; c.height = window.innerHeight;
-    document.body.appendChild(c);
-    var ctx = c.getContext('2d');
-
-    var PAL = ['#00d4ff','#8b5cf6','#00ffcc','#ffffff','#60a5fa','#f0abfc','#a78bfa','#00ff88','#ff6b9d'];
-    var pts = [];
-    for (var i = 0; i < 60; i++) {
-      var a = (i / 60) * Math.PI * 2 + (Math.random() - .5) * .5;
-      var spd = 70 + Math.random() * 180;
-      pts.push({
-        x: cx, y: cy,
-        vx: Math.cos(a) * spd,
-        vy: Math.sin(a) * spd - 55,
-        r: 1.2 + Math.random() * 4.0,
-        col: PAL[i % PAL.length],
-        life: 1,
-        decay: .013 + Math.random() * .016,
-        trail: [],
-        spark: Math.random() < .3   // 30% 为星形
-      });
+    c.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:9998;';
+    c.width=window.innerWidth; c.height=window.innerHeight;
+    document.body.appendChild(c); var ctx=c.getContext('2d');
+    var PAL=['#00d4ff','#8b5cf6','#00ffcc','#ffffff','#60a5fa','#f0abfc','#a78bfa','#00ff88','#ff6b9d'];
+    var pts=[];
+    for (var i=0;i<60;i++) {
+      var a=(i/60)*Math.PI*2+(Math.random()-.5)*.5, spd=70+Math.random()*180;
+      pts.push({x:cx,y:cy,vx:Math.cos(a)*spd,vy:Math.sin(a)*spd-55,r:1.2+Math.random()*4,
+        col:PAL[i%PAL.length],life:1,decay:.013+Math.random()*.016,trail:[]});
     }
-
-    var last = performance.now();
-    function frame(now) {
-      var dt = Math.min((now - last) / 1000, .05); last = now;
-      ctx.clearRect(0, 0, c.width, c.height);
-
-      var alive = false;
-      pts.forEach(function(p) {
-        if (p.life <= 0) return;
-        p.trail.push({x:p.x, y:p.y, a:p.life});
-        if (p.trail.length > 8) p.trail.shift();
-
-        p.vx *= .96; p.vy += 240 * dt;
-        p.x += p.vx * dt; p.y += p.vy * dt;
-        p.life -= p.decay;
-        alive = true;
-
-        /* 拖尾 */
-        for (var t = 1; t < p.trail.length; t++) {
-          ctx.save();
-          ctx.globalAlpha = p.trail[t].a * .4 * (t / p.trail.length);
-          ctx.strokeStyle = p.col;
-          ctx.lineWidth = p.r * .55;
-          ctx.lineCap = 'round';
-          ctx.shadowColor = p.col; ctx.shadowBlur = p.r * 3;
-          ctx.beginPath();
-          ctx.moveTo(p.trail[t-1].x, p.trail[t-1].y);
-          ctx.lineTo(p.trail[t].x, p.trail[t].y);
-          ctx.stroke();
-          ctx.restore();
+    var last=performance.now();
+    function frame(now){
+      var dt=Math.min((now-last)/1000,.05); last=now;
+      ctx.clearRect(0,0,c.width,c.height); var alive=false;
+      pts.forEach(function(p){
+        if(p.life<=0)return; p.trail.push({x:p.x,y:p.y,a:p.life});
+        if(p.trail.length>8)p.trail.shift();
+        p.vx*=.96; p.vy+=240*dt; p.x+=p.vx*dt; p.y+=p.vy*dt; p.life-=p.decay; alive=true;
+        for(var t=1;t<p.trail.length;t++){
+          ctx.save(); ctx.globalAlpha=p.trail[t].a*.4*(t/p.trail.length);
+          ctx.strokeStyle=p.col; ctx.lineWidth=p.r*.55; ctx.lineCap='round';
+          ctx.shadowColor=p.col; ctx.shadowBlur=p.r*3;
+          ctx.beginPath(); ctx.moveTo(p.trail[t-1].x,p.trail[t-1].y);
+          ctx.lineTo(p.trail[t].x,p.trail[t].y); ctx.stroke(); ctx.restore();
         }
-        /* 粒子本体 */
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, p.life);
-        ctx.shadowColor = p.col; ctx.shadowBlur = p.r * 7;
-        ctx.fillStyle = p.col;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
+        ctx.save(); ctx.globalAlpha=Math.max(0,p.life);
+        ctx.shadowColor=p.col; ctx.shadowBlur=p.r*7; ctx.fillStyle=p.col;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); ctx.restore();
       });
-
-      if (alive) requestAnimationFrame(frame); else c.remove();
+      if(alive) requestAnimationFrame(frame); else c.remove();
     }
     requestAnimationFrame(frame);
   }
-
-  /* ══ 按钮彩虹涟漪 ══ */
   function ripple() {
-    var r = document.createElement('span');
-    r.style.cssText = [
-      'position:absolute','inset:0','border-radius:inherit','pointer-events:none',
+    var r=document.createElement('span');
+    r.style.cssText=['position:absolute','inset:0','border-radius:inherit','pointer-events:none',
       'background:conic-gradient(from 0deg,#00d4ff,#8b5cf6,#00ffcc,#f0abfc,#00d4ff)',
-      'opacity:.6','transform:scale(0)',
-      'transition:transform .6s ease,opacity .6s ease'
-    ].join(';');
-    btn.style.position = 'relative';
-    btn.style.overflow = 'hidden';
-    btn.appendChild(r);
-    requestAnimationFrame(function() { r.style.transform='scale(4)'; r.style.opacity='0'; });
-    setTimeout(function() { r.remove(); }, 650);
+      'opacity:.6','transform:scale(0)','transition:transform .6s ease,opacity .6s ease'].join(';');
+    btn.style.position='relative'; btn.style.overflow='hidden'; btn.appendChild(r);
+    requestAnimationFrame(function(){r.style.transform='scale(4)';r.style.opacity='0';});
+    setTimeout(function(){r.remove();},650);
   }
-
-  /* ══ 打开面板 ══ */
   function open() {
-    if (isOpen) return;
-    isOpen = true;
-    ripple(); burst();
-    btn.classList.add('open');
-    panel.classList.add('open');
-    overlay.style.display = 'block';
-    requestAnimationFrame(function() { overlay.style.opacity = '1'; });
-    if (!langTimer) langTimer = setInterval(function() {
-      panel.classList.toggle('lang-en');
-    }, 3000);
-    setTimeout(function() { initPanelCanvas(); resizePanelCanvas(); }, 80);
+    if(isOpen)return; isOpen=true; ripple(); burst();
+    btn.classList.add('open'); panel.classList.add('open');
+    overlay.style.display='block';
+    requestAnimationFrame(function(){overlay.style.opacity='1';});
+    if(!langTimer) langTimer=setInterval(function(){panel.classList.toggle('lang-en');},3000);
+    setTimeout(function(){initPanelCanvas();resizePanelCanvas();},80);
   }
-
-  /* ══ 关闭面板 ══ */
   function close() {
-    if (!isOpen) return;
-    isOpen = false;
-    btn.classList.remove('open');
-    panel.classList.remove('open');
-    overlay.style.opacity = '0';
-    setTimeout(function() { if (!isOpen) overlay.style.display = 'none'; }, 430);
-    clearInterval(langTimer); langTimer = null;
-    setTimeout(function() { panel.classList.remove('lang-en'); }, 320);
-    setTimeout(destroyPanelCanvas, 450);
+    if(!isOpen)return; isOpen=false;
+    btn.classList.remove('open'); panel.classList.remove('open');
+    overlay.style.opacity='0';
+    setTimeout(function(){if(!isOpen)overlay.style.display='none';},430);
+    clearInterval(langTimer); langTimer=null;
+    setTimeout(function(){panel.classList.remove('lang-en');},320);
+    setTimeout(destroyPanelCanvas,450);
   }
-
-  btn.addEventListener('click', function(e) { e.stopPropagation(); isOpen ? close() : open(); });
-  overlay.addEventListener('click', close);
-  document.addEventListener('click', function(e) {
-    if (isOpen && !panel.contains(e.target) && !btn.contains(e.target)) close();
-  });
-  document.addEventListener('keydown', function(e) { if (e.key==='Escape') close(); });
-  window.addEventListener('resize', function() { if (isOpen) resizePanelCanvas(); });
+  btn.addEventListener('click',function(e){e.stopPropagation();isOpen?close():open();});
+  overlay.addEventListener('click',close);
+  document.addEventListener('click',function(e){if(isOpen&&!panel.contains(e.target)&&!btn.contains(e.target))close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  window.addEventListener('resize',function(){if(isOpen)resizePanelCanvas();});
 })();
 </script>
 <script>
-/* ── 大类Tab按钮中英周期切换（含active态） ── */
 (function() {
   var tabs = document.querySelectorAll('.lb-tab-btn');
   if (!tabs.length) return;
-  setInterval(function() {
-    tabs.forEach(function(t) { t.classList.toggle('lang-en'); });
-  }, 3000);
+  setInterval(function() { tabs.forEach(function(t){t.classList.toggle('lang-en');}); }, 3000);
 })();
 </script>
 </body>

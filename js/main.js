@@ -555,6 +555,38 @@ function alignLogoText() {
 /* ══════════════════════════════════════════════════════════
    榜单行错开入场动画
    ══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════
+   横幅提醒通用函数 — _updatePageNotice(dataFn)
+   dataFn : 当前选中分类的数据函数（如 _catData[c] / _allData[key]）
+   从函数源码中提取变量名，再读取 window[vn+'Notice_cn'] 和 Notice_en
+   cn 留空则隐藏横幅，非空则显示；鼠标悬停切换为英文。
+   ══════════════════════════════════════════════════════════ */
+function _updatePageNotice(dataFn) {
+  var el = document.getElementById('page-notice');
+  if (!el) return;
+  var cn = '', en = '';
+  if (dataFn) {
+    try {
+      var src = dataFn.toString();
+      var m = src.match(/return\s+([a-zA-Z_][a-zA-Z0-9_]*)Records/);
+      if (m) {
+        var vn = m[1];
+        cn = (typeof window[vn + 'Notice_cn'] !== 'undefined') ? (window[vn + 'Notice_cn'] || '') : '';
+        en = (typeof window[vn + 'Notice_en'] !== 'undefined') ? (window[vn + 'Notice_en'] || '') : '';
+      }
+    } catch(e) {}
+  }
+  if (cn && cn.trim()) {
+    el.style.display = 'flex';
+    var cnEl = document.getElementById('notice-cn');
+    var enEl = document.getElementById('notice-en');
+    if (cnEl) cnEl.textContent = cn;
+    if (enEl) enEl.textContent = en || '';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
 function animateTableRows(tbody) {
   if (!tbody) return;
   var rows = tbody.querySelectorAll('tr');
