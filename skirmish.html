@@ -172,7 +172,7 @@
       <span id="notice-en" style="position:absolute;inset:0;display:flex;align-items:center;gap:.6rem;padding:.7rem 1.1rem;opacity:0;transition:opacity .3s ease;pointer-events:none;font-style:italic;color:rgba(255,215,0,.8);"></span>
     </div>
     <div class="lb-tabs" id="lb-tabs">
-      <button class="lb-tab-btn active" data-cat="锢铁"><span class="hover-text-swap"><span class="text-cn">锢铁</span><span class="text-en">Steel</span></span></button>
+      <button class="lb-tab-btn active" data-cat="钢铁"><span class="hover-text-swap"><span class="text-cn">钢铁</span><span class="text-en">Steel</span></span></button>
       <button class="lb-tab-btn" data-cat="普通"><span class="hover-text-swap"><span class="text-cn">普通</span><span class="text-en">Normal</span></span></button>
     </div>
     <div class="map-tabs" id="map-tabs">
@@ -216,16 +216,16 @@
 <script src="data/skirmish/skirmish-normal-h2-cloud.js"></script>
 <script>
   var _allData = {
-    "锢铁||Nsu Grid": function(){return skirmish_steel_nsu_gridRecords;},
-    "锢铁||Flexa": function(){return skirmish_steel_flexaRecords;},
-    "锢铁||R-9 Cloud": function(){return skirmish_steel_r9_cloudRecords;},
-    "锢铁||H-2 Cloud": function(){return skirmish_steel_h2_cloudRecords;},
+    "钢铁||Nsu Grid": function(){return skirmish_steel_nsu_gridRecords;},
+    "钢铁||Flexa": function(){return skirmish_steel_flexaRecords;},
+    "钢铁||R-9 Cloud": function(){return skirmish_steel_r9_cloudRecords;},
+    "钢铁||H-2 Cloud": function(){return skirmish_steel_h2_cloudRecords;},
     "普通||Nsu Grid": function(){return skirmish_normal_nsu_gridRecords;},
     "普通||Flexa": function(){return skirmish_normal_flexaRecords;},
     "普通||R-9 Cloud": function(){return skirmish_normal_r9_cloudRecords;},
     "普通||H-2 Cloud": function(){return skirmish_normal_h2_cloudRecords;},
   };
-  var _curCat = '锢铁', _curMap = 'Nsu Grid';
+  var _curCat = '钢铁', _curMap = 'Nsu Grid';
   function loadBoard() {
     var key = _curCat+'||'+_curMap;
     renderTimeLeaderboard(_allData[key]?_allData[key]():[],'lb-tbody','clearTime');
