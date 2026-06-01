@@ -22,7 +22,6 @@
  * ════════════════════════════════════════════════════════════ */
 
 var hollvania_1999_exterminateRecords = [
-
   {
     playerId:   "kkV357",
     clearTime:  "0:52.000",
@@ -30,28 +29,10 @@ var hollvania_1999_exterminateRecords = [
     videoUrls:  ["https://www.youtube.com/watch?v=Gqnyvtrijho"],
   },
   {
-    playerId:   "NamelessDeity",
-    clearTime:  "1:09.000",
-    uploadTime: "2026-02-04",
-    videoUrls:  ["https://www.youtube.com/watch?v=nAtBtFu6qHw"],
-  },
-  {
-    playerId:   "Salat",
-    clearTime:  "1:27.000",
-    uploadTime: "2026-01-07",
-    videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
-  },
-  {
     playerId:   "RoniPrime",
     clearTime:  "2:52.000",
     uploadTime: "2026-01-08",
     videoUrls:  ["https://www.youtube.com/watch?v=X5_Z7q5ZqxQ"],
-  },
-  {
-    playerId:   "kkV357",
-    clearTime:  "0:53.000",
-    uploadTime: "2026-05-19",
-    videoUrls:  ["https://www.youtube.com/watch?v=ra3-iR-WDUg"],
   },
   {
     playerId:   "NamelessDeity",
@@ -65,7 +46,6 @@ var hollvania_1999_exterminateRecords = [
     uploadTime: "2026-01-07",
     videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
   },
-  
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
