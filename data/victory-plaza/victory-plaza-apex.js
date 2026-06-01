@@ -22,7 +22,7 @@
  * ════════════════════════════════════════════════════════════ */
 
 var victory_plaza_apexRecords = [
-  /* 暂无记录 */
+
   {
     playerId:   "RoniPrime",
     clearTime:  "00:04:52.000",
