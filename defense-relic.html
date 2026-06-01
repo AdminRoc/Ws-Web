@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="A Truly Fair and Comprehensive Warframe Speedrun Leaderboard.">
-  <title>防御裂缝78轮竞速排行榜 — Warframe Speed</title>
+  <title>防御裂缝60轮竞速排行榜 — Warframe Speed</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -105,7 +105,7 @@
           <a href="spy.html">间谍</a>
           <a href="assassination.html">刺杀</a>
           <a href="special_challenge.html">特殊挑战</a>
-          <a href="defense-relic.html">防御裂缝78轮</a>
+          <a href="defense-relic.html">防御裂缝60轮</a>
           <a href="cambire.html">元素转换</a>
           <a href="hollvania.html">1999 任务</a>
           <a href="ropalolyst.html">蝠力使</a>
@@ -147,7 +147,7 @@
       <div class="super-nav-row">
         <a class="snav-btn" href="assassination.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">刺杀</span><span class="snav-en">Assassination</span></div><span class="snav-btmglow"></span></a>
         <a class="snav-btn" href="special_challenge.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">特殊挑战</span><span class="snav-en">Special Challenge</span></div><span class="snav-btmglow"></span></a>
-        <a class="snav-btn" href="defense-relic.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">防御裂缝78轮</span><span class="snav-en">Defense Relic</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="defense-relic.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">防御裂缝60轮</span><span class="snav-en">Defense Relic</span></div><span class="snav-btmglow"></span></a>
         <a class="snav-btn" href="cambire.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">元素转换</span><span class="snav-en">Cambire</span></div><span class="snav-btmglow"></span></a>
         <a class="snav-btn" href="hollvania.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">1999 任务</span><span class="snav-en">Höllvania</span></div><span class="snav-btmglow"></span></a>
       </div>
@@ -168,8 +168,8 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">防御裂缝78轮竞速排行榜</h1>
-      <p class="lb-subtitle">Defense Relic 78 Rounds Speedrun Leaderboard</p>
+      <h1 class="lb-title">防御裂缝60轮竞速排行榜</h1>
+      <p class="lb-subtitle">Defense Relic 60 Rounds Speedrun Leaderboard</p>
     </div>
         <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
       <span class="lb-tip-icon">⚠</span>
@@ -177,8 +177,8 @@
       <span class="lb-tip-en" id="notice-en" style="opacity:0;transition:opacity .3s ease;font-style:italic;color:rgba(255,215,0,.75);"></span>
     </div>
     <div class="lb-tabs" id="lb-tabs">
-      <button class="lb-tab-btn  active" data-cat="钢铁"><span class="hover-text-swap"><span class="text-cn">钢铁</span><span class="text-en">Steel</span></span></button>
-      <button class="lb-tab-btn" data-cat="普通"><span class="hover-text-swap"><span class="text-cn">普通</span><span class="text-en">Normal</span></span></button>
+      <button class="lb-tab-btn active" data-cat="普通"><span class="hover-text-swap"><span class="text-cn">普通</span><span class="text-en">Normal</span></span></button>
+      <button class="lb-tab-btn" data-cat="钢铁"><span class="hover-text-swap"><span class="text-cn">钢铁</span><span class="text-en">Steel</span></span></button>
     </div>
     <div class="map-tabs" id="map-tabs">
       <button class="map-tab-btn  active" data-mapname="Lith">Lith</button>
@@ -352,7 +352,7 @@
     "普通||Sechura": function(){return defense_relic_normal_sechuraRecords;},
     "普通||Sangeru": function(){return defense_relic_normal_sangeruRecords;},
   };
-  var _curCat = '钢铁';
+  var _curCat = '普通';
   var _curMap = 'Lith';
 
   function loadBoard() {
@@ -362,11 +362,39 @@
     history.replaceState(null, '', '#' + encodeURIComponent(_curCat) + '--' + encodeURIComponent(_curMap));
   }
 
+
+  /* ── 按数据条目数排序地图按钮 ── */
+  function sortMapTabsByRecordCount(category) {
+    var mapNames = [];
+    for (var key in _allData) {
+      if (key.indexOf(category + '||') === 0) {
+        var mapName = key.substring((category + '||').length);
+        var count = 0;
+        try { var r = _allData[key](); count = (r && r.length) ? r.length : 0; } catch(e) {}
+        mapNames.push({ name: mapName, count: count });
+      }
+    }
+    mapNames.sort(function(a, b) {
+      if (b.count !== a.count) return b.count - a.count;
+      return a.name.localeCompare(b.name);
+    });
+    var mapTabs = document.getElementById('map-tabs');
+    if (mapTabs) {
+      mapNames.forEach(function(item) {
+        var btn = mapTabs.querySelector('[data-mapname="' + item.name.replace(/"/g, '&quot;') + '"]');
+        if (btn) mapTabs.appendChild(btn);
+      });
+    }
+    return mapNames.length > 0 ? mapNames[0].name : null;
+  }
   document.addEventListener('DOMContentLoaded', function() {
+    // 初始化地图按钮排序
+    sortMapTabsByRecordCount(_curCat);
     document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b) {
       b.addEventListener('click', function() {
         _curCat = b.dataset.cat;
         document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+        sortMapTabsByRecordCount(_curCat);
         loadBoard();
       });
     });
@@ -407,16 +435,17 @@
           var hMap = decodeURIComponent(parts[1]);
           if (_allData[hCat + '||' + hMap]) {
             _curCat = hCat; _curMap = hMap;
-            document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
-              b.classList.toggle('active', b.dataset.cat === _curCat);
-            });
-            document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
-              b.classList.toggle('active', b.getAttribute('data-mapname') === _curMap);
-            });
           }
         } catch(e) {}
       }
-    })();
+    }
+    sortMapTabsByRecordCount(_curCat);
+    document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
+      b.classList.toggle('active', b.dataset.cat === _curCat);
+    });
+    document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-mapname') === _curMap);
+    });
     loadBoard();
   });
 </script>

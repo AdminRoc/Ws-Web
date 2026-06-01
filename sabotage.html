@@ -104,7 +104,7 @@
           <a href="spy.html">间谍</a>
           <a href="assassination.html">刺杀</a>
           <a href="special_challenge.html">特殊挑战</a>
-          <a href="defense-relic.html">防御裂缝78轮</a>
+          <a href="defense-relic.html">防御裂缝60轮</a>
           <a href="cambire.html">元素转换</a>
           <a href="hollvania.html">1999 任务</a>
           <a href="ropalolyst.html">蝠力使</a>
@@ -146,7 +146,7 @@
       <div class="super-nav-row">
         <a class="snav-btn" href="assassination.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">刺杀</span><span class="snav-en">Assassination</span></div><span class="snav-btmglow"></span></a>
         <a class="snav-btn" href="special_challenge.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">特殊挑战</span><span class="snav-en">Special Challenge</span></div><span class="snav-btmglow"></span></a>
-        <a class="snav-btn" href="defense-relic.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">防御裂缝78轮</span><span class="snav-en">Defense Relic</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="defense-relic.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">防御裂缝60轮</span><span class="snav-en">Defense Relic</span></div><span class="snav-btmglow"></span></a>
         <a class="snav-btn" href="cambire.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">元素转换</span><span class="snav-en">Cambire</span></div><span class="snav-btmglow"></span></a>
         <a class="snav-btn" href="hollvania.html"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">1999 任务</span><span class="snav-en">Höllvania</span></div><span class="snav-btmglow"></span></a>
       </div>
@@ -278,9 +278,32 @@
     _updatePageNotice(_mapData[k]);
     document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){b.classList.toggle('active',b.dataset.map===k);});
   }
+
+  /* ── 按数据条目数排序地图按钮 ── */
+  function sortMapTabs() {
+    var mapItems = [];
+    for (var key in _mapData) {
+      var count = 0;
+      try { var r = _mapData[key](); count = (r && r.length) ? r.length : 0; } catch(e) {}
+      mapItems.push({ key: key, count: count });
+    }
+    mapItems.sort(function(a, b) {
+      if (b.count !== a.count) return b.count - a.count;
+      return a.key.localeCompare(b.key);
+    });
+    var mapTabs = document.getElementById('map-tabs');
+    if (mapTabs) {
+      mapItems.forEach(function(item) {
+        var btn = mapTabs.querySelector('[data-map="' + item.key + '"]');
+        if (btn) mapTabs.appendChild(btn);
+      });
+    }
+    return mapItems.length > 0 ? mapItems[0].key : null;
+  }
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){b.addEventListener('click',function(){loadMap(b.dataset.map);});});
-    loadMap('sabotage-cervantes');
+    var firstMap = sortMapTabs();
+    loadMap(firstMap || 'sabotage-cervantes');
   });
 </script>
 <script>
