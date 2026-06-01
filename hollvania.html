@@ -171,6 +171,8 @@
       <button class="lb-tab-btn active" data-cat="1999歼灭"><span class="hover-text-swap"><span class="text-cn">1999 歼灭</span><span class="text-en">1999 Exterminate</span></span></button>
       <button class="lb-tab-btn" data-cat="传承种收割"><span class="hover-text-swap"><span class="text-cn">传承种收割</span><span class="text-en">Legacyte Harvest</span></span></button>
       <button class="lb-tab-btn" data-cat="舞台防御"><span class="hover-text-swap"><span class="text-cn">舞台防御</span><span class="text-en">Stage Defense</span></span></button>
+      <button class="lb-tab-btn" data-cat="王者坦克"><span class="hover-text-swap"><span class="text-cn">王者坦克</span><span class="text-en">Apex Tank</span></span></button>
+      <button class="lb-tab-btn" data-cat="普通坦克"><span class="hover-text-swap"><span class="text-cn">普通坦克</span><span class="text-en">Normal Tank</span></span></button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">
@@ -200,11 +202,15 @@
 <script src="data/hollvania/hollvania-legacyte-harvest.js"></script>
 <script src="data/hollvania/hollvania-1999-exterminate.js"></script>
 <script src="data/hollvania/hollvania-stage-defense.js"></script>
+<script src="data/hollvania/hollvania-victory-plaza-apex.js"></script>
+<script src="data/hollvania/hollvania-victory-plaza-normal.js"></script>
 <script>
   var _catData = {
-    "1999歼灭": function(){return hollvania_1999_exterminateRecords;},
-    "传承种收割": function(){return hollvania_legacyte_harvestRecords;},
-    "舞台防御": function(){return hollvania_stage_defenseRecords;},
+    "1999歼灭":    function(){return hollvania_1999_exterminateRecords;},
+    "传承种收割":  function(){return hollvania_legacyte_harvestRecords;},
+    "舞台防御":    function(){return hollvania_stage_defenseRecords;},
+    "王者坦克":    function(){return victory_plaza_apexRecords;},
+    "普通坦克":    function(){return victory_plaza_normalRecords;},
   };
   function loadCat(c) {
     renderTimeLeaderboard(_catData[c]?_catData[c]():[],'lb-tbody','clearTime');
