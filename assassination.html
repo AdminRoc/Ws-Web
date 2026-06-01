@@ -271,13 +271,42 @@
     "普通||Merrow": function(){return assassination_normal_merrowRecords;},
     "普通||The Fragmented": function(){return assassination_normal_effervoRecords;},
   };
-  var _curCat = '钢铁', _curMap = 'Fossa';
+  var _curCat = '普通', _curMap = 'Fossa';
 
   function loadBoard() {
     var key = _curCat + '||' + _curMap;
     renderTimeLeaderboard(_allData[key] ? _allData[key]() : [], 'lb-tbody', 'clearTime');
     _updatePageNotice(_allData[key]);
     history.replaceState(null, '', '#' + encodeURIComponent(_curCat) + '--' + encodeURIComponent(_curMap));
+  }
+
+  /* ── 按数据条目数排序地点按钮 ── */
+  function sortMapTabsByRecordCount(category) {
+    var mapNames = [];
+    for (var key in _allData) {
+      if (key.indexOf(category + '||') === 0) {
+        var mapName = key.substring((category + '||').length);
+        var recordsFn = _allData[key];
+        var count = (recordsFn && recordsFn() && recordsFn().length) ? recordsFn().length : 0;
+        mapNames.push({ name: mapName, count: count });
+      }
+    }
+    // 按记录数降序，记录数相同则按字母升序
+    mapNames.sort(function(a, b) {
+      if (b.count !== a.count) return b.count - a.count;
+      return a.name.localeCompare(b.name);
+    });
+    
+    // 重新排序DOM中的按钮
+    var mapTabs = document.getElementById('map-tabs');
+    if (mapTabs) {
+      mapNames.forEach(function(item) {
+        var btn = mapTabs.querySelector('[data-mapname="' + item.name.replace(/"/g, '&quot;') + '"]');
+        if (btn) {
+          mapTabs.appendChild(btn);
+        }
+      });
+    }
   }
 
   function setSteelOnlyVisibility(cat) {
@@ -287,11 +316,15 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
+    // 初始化地点按钮排序
+    sortMapTabsByRecordCount(_curCat);
+    
     document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b) {
       b.addEventListener('click', function() {
         _curCat = b.dataset.cat;
         document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
         setSteelOnlyVisibility(_curCat);
+        sortMapTabsByRecordCount(_curCat);
         // 如果当前地图是钢铁限定，切到普通时自动切换到 The Fragmented
         if (_curCat !== '钢铁' && !_allData[_curCat+'||'+_curMap]) {
           _curMap = 'The Fragmented';
@@ -319,6 +352,7 @@
           if (_allData[hCat+'||'+hMap]) { _curCat = hCat; _curMap = hMap; }
         } catch(e) {}
       }
+      sortMapTabsByRecordCount(_curCat);
       document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){b.classList.toggle('active',b.dataset.cat===_curCat);});
       document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-mapname')===_curMap);});
       setSteelOnlyVisibility(_curCat);

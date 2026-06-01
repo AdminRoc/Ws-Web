@@ -361,7 +361,7 @@
     "普通||Rhu Manor": function(){return exterminate_normal_rhu_manorRecords;},
     "普通||Mausoleum East": function(){return exterminate_normal_mausoleum_eastRecords;},
   };
-  var _curCat = '钢铁';
+  var _curCat = '普通';
   var _curMap = 'E Prime';
 
   function loadBoard() {
@@ -371,11 +371,44 @@
     history.replaceState(null, '', '#' + encodeURIComponent(_curCat) + '--' + encodeURIComponent(_curMap));
   }
 
+  /* ── 按数据条目数排序地图按钮 ── */
+  function sortMapTabsByRecordCount(category) {
+    var mapNames = [];
+    for (var key in _allData) {
+      if (key.indexOf(category + '||') === 0) {
+        var mapName = key.substring((category + '||').length);
+        var recordsFn = _allData[key];
+        var count = (recordsFn && recordsFn() && recordsFn().length) ? recordsFn().length : 0;
+        mapNames.push({ name: mapName, count: count });
+      }
+    }
+    // 按记录数降序，记录数相同则按字母升序
+    mapNames.sort(function(a, b) {
+      if (b.count !== a.count) return b.count - a.count;
+      return a.name.localeCompare(b.name);
+    });
+    
+    // 重新排序DOM中的按钮
+    var mapTabs = document.getElementById('map-tabs');
+    if (mapTabs) {
+      mapNames.forEach(function(item) {
+        var btn = mapTabs.querySelector('[data-mapname="' + item.name.replace(/"/g, '&quot;') + '"]');
+        if (btn) {
+          mapTabs.appendChild(btn);
+        }
+      });
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
+    // 初始化地图按钮排序
+    sortMapTabsByRecordCount(_curCat);
+    
     document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b) {
       b.addEventListener('click', function() {
         _curCat = b.dataset.cat;
         document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+        sortMapTabsByRecordCount(_curCat);
         loadBoard();
       });
     });
@@ -395,6 +428,7 @@
         var hMap = decodeURIComponent(parts[1]);
         if (_allData[hCat + '||' + hMap]) {
           _curCat = hCat; _curMap = hMap;
+          sortMapTabsByRecordCount(_curCat);
           /* 同步高亮按钮 */
           document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
             b.classList.toggle('active', b.dataset && (b.dataset.cat === _curCat || b.textContent.trim() === _curCat));
@@ -416,6 +450,7 @@
           var hMap = decodeURIComponent(parts[1]);
           if (_allData[hCat + '||' + hMap]) {
             _curCat = hCat; _curMap = hMap;
+            sortMapTabsByRecordCount(_curCat);
             document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
               b.classList.toggle('active', b.dataset.cat === _curCat);
             });
