@@ -25,7 +25,7 @@
   align-items: center;
   gap: .5rem;
   font-family: var(--f-sci);
-  font-size: .68rem;
+  font-size: .8rem;
   letter-spacing: .12em;
   color: var(--c-text2);
   padding: .45rem .9rem;
@@ -104,7 +104,7 @@
 }
 .lb-subtitle {
   font-family: var(--f-sci);
-  font-size: clamp(.84rem, 1.56vw, 1.08rem);
+  font-size: clamp(.96rem, 1.76vw, 1.2rem);
   letter-spacing: .2em;
   color: rgba(185,142,52,.65);
   margin-top: .55rem;
@@ -117,7 +117,7 @@
   align-items: center;
   padding: .22rem .75rem;
   font-family: var(--f-sci);
-  font-size: .6rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .12em;
   border-radius: 20px;
@@ -166,7 +166,7 @@
 }
 .lb-table thead th {
   font-family: var(--f-sci);
-  font-size: .72rem;
+  font-size: .86rem;
   font-weight: 600;
   letter-spacing: .15em;
   color: var(--c-gold-bright);
@@ -197,7 +197,7 @@
 .lb-table td {
   padding: .9rem 1.4rem;
   font-family: var(--f-body);
-  font-size: .88rem;
+  font-size: 1rem;
   color: var(--c-text);
   vertical-align: middle;
   white-space: nowrap;
@@ -216,7 +216,7 @@
   width: 36px; height: 36px;
   border-radius: 50%;
   font-family: var(--f-sci);
-  font-size: .75rem;
+  font-size: .88rem;
   font-weight: 700;
   letter-spacing: .05em;
   border: 1px solid rgba(255,255,255,.1);
@@ -266,13 +266,14 @@
 /* ── 时间列特殊样式 ── */
 .time-col {
   font-family: var(--f-sci);
-  font-size: .9rem;
+  font-size: 1rem;
   letter-spacing: .06em;
 }
 
 /* ── 玩家 ID 列 ── */
 .player-col {
   font-weight: 500;
+  font-size: 1rem;
   letter-spacing: .04em;
 }
 
@@ -281,7 +282,7 @@
   display: inline-flex;
   align-items: center;
   gap: .3rem;
-  font-size: .7rem;
+  font-size: .82rem;
   color: var(--c-gold-dim);
   transition: color var(--ease-fast);
 }
@@ -293,7 +294,7 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
   padding: 4rem 1rem !important;
   color: var(--c-text3) !important;
   font-family: var(--f-sci) !important;
-  font-size: .75rem !important;
+  font-size: .88rem !important;
   letter-spacing: .12em !important;
 }
 
@@ -362,9 +363,9 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
 .lb-tab-btn {
   display: inline-flex;
   align-items: center;
-  padding: .42rem 1.2rem;
+  padding: .52rem 1.4rem;
   font-family: var(--f-sci);
-  font-size: .76rem;
+  font-size: .9rem;
   font-weight: 600;
   letter-spacing: .1em;
   color: rgba(165,130,68,.72);
@@ -422,9 +423,9 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
 .map-tab-btn {
   display: inline-flex;
   align-items: center;
-  padding: .42rem 1.2rem;
+  padding: .52rem 1.4rem;
   font-family: var(--f-sci);
-  font-size: .72rem;
+  font-size: .86rem;
   font-weight: 600;
   letter-spacing: .1em;
   color: var(--c-text2);
@@ -478,7 +479,7 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
   padding: .75rem 1.4rem;
   border-top: 1px solid rgba(185,142,52,.07);
   font-family: var(--f-sci);
-  font-size: .65rem;
+  font-size: .76rem;
   letter-spacing: .12em;
   color: var(--c-text3);
 }
@@ -489,7 +490,7 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
 @media (max-width: 640px) {
   .lb-main { padding: 2.5rem 1rem 1.5rem; }
   .lb-table td,
-  .lb-table th { padding: .75rem .85rem; font-size: .8rem; }
+  .lb-table th { padding: .75rem 1rem; font-size: .9rem; }
   .lb-title { font-size: 1.4rem; }
 }
 
@@ -513,7 +514,7 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
   .lb-back { margin-bottom: 1.5rem; padding: .38rem .75rem; font-size: .6rem; }
 
   /* 大类Tab */
-  .lb-tab-btn { padding: .36rem .85rem; font-size: .64rem; letter-spacing: .08em; }
+  .lb-tab-btn { padding: .45rem 1rem; font-size: .82rem; letter-spacing: .08em; }
   .lb-tabs { gap: .4rem; margin-bottom: .6rem; }
 
   /* 小类Tab：移动端横向滚动，不换行 */
@@ -539,15 +540,15 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
 @media screen and (max-width: 480px) {
   .lb-main { padding: 1.5rem .6rem 1rem; }
   .lb-table { min-width: 400px; }
-  .lb-table thead th { padding: .65rem .75rem; font-size: .6rem; }
-  .lb-table td { padding: .65rem .75rem; font-size: .78rem; }
+  .lb-table thead th { padding: .65rem 1rem; font-size: .8rem; }
+  .lb-table td { padding: .7rem 1rem; font-size: .9rem; }
   .lb-title { font-size: clamp(1rem, 6vw, 1.4rem); }
-  .rank-badge { width: 30px; height: 30px; font-size: .62rem; }
+  .rank-badge { width: 30px; height: 30px; font-size: .8rem; }
   .lb-table thead th:last-child,
   .lb-table td:last-child { display: none; }
 
   /* 极小屏：小类按钮再缩小 */
-  .map-tab-btn { padding: .32rem .65rem; font-size: .58rem; }
+  .map-tab-btn { padding: .4rem .8rem; font-size: .8rem; }
   .map-tabs { padding: .6rem .6rem; gap: .35rem; }
 }
 
@@ -566,7 +567,7 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
 .lb-badge-en, .lb-badge-cn {
   display: inline-flex; align-items: center; justify-content: center;
   padding: .22rem .85rem;
-  font-family: var(--f-sci); font-size: .6rem; font-weight: 700;
+  font-family: var(--f-sci); font-size: .72rem; font-weight: 700;
   letter-spacing: .1em; border-radius: 20px; white-space: nowrap;
   /* !important 覆盖各页面内联 <style> 中残留的青色定义 */
   color: var(--c-gold-bright) !important;
@@ -659,12 +660,12 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
   50%     { opacity: .75; transform: scale(1.08); }
 }
 .lb-empty-text {
-  font-family: var(--f-sci); font-size: .82rem; font-weight: 700;
+  font-family: var(--f-sci); font-size: .94rem; font-weight: 700;
   letter-spacing: .38em; color: rgba(185,142,52,.35);
   text-transform: uppercase; position: relative; z-index: 1;
 }
 .lb-empty-sub {
-  font-family: var(--f-cn); font-size: .76rem;
+  font-family: var(--f-cn); font-size: .88rem;
   color: var(--c-text3); letter-spacing: .06em;
   position: relative; z-index: 1;
 }

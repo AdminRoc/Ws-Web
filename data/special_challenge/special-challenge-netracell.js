@@ -22,36 +22,7 @@
  * ════════════════════════════════════════════════════════════ */
 
 var netracellRecords = [
-  {
-    playerId:   "NamelessDeity",
-    clearTime:  "1:38.000",
-    uploadTime: "2026-04-30",
-    videoUrls:  ["https://www.youtube.com/watch?v=rHZ2ZpYGJFE"],
-  },
-  {
-    playerId:   "sakvayumika",
-    clearTime:  "1:44.000",
-    uploadTime: "2025-09-15",
-    videoUrls:  ["https://www.youtube.com/watch?v=zmoB6OkYRzo"],
-  },
-  {
-    playerId:   "Salat",
-    clearTime:  "1:55.000",
-    uploadTime: "2025-09-12",
-    videoUrls:  ["https://www.youtube.com/watch?v=z_wYm507NAg"],
-  },
-  {
-    playerId:   "Clarn",
-    clearTime:  "2:04.000",
-    uploadTime: "2026-05-01",
-    videoUrls:  ["https://www.youtube.com/watch?v=TPbeklFkNbs"],
-  },
-  {
-    playerId:   "Simaris",
-    clearTime:  "2:12.000",
-    uploadTime: "2026-04-29",
-    videoUrls:  ["https://www.youtube.com/watch?v=z4331IVDtJo"],
-  },
+  /* 暂无记录 */
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
