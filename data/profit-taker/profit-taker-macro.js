@@ -32,4 +32,4 @@ const profitTakerMacroRecords = [
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
 var profitTakerMacroNotice_cn = "计时从进入奥布山谷开始，到击杀大蜘蛛时结束。";
-var profitTakerMacroNotice_en = "The timer starts when players enter the Orb Vallis. The timer ends when you kill the Profit-Taker Orb.";
+var profitTakerMacroNotice_en = "    The timer starts when players enter the Orb Vallis. The timer ends when you kill the Profit-Taker Orb.";
