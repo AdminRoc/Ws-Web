@@ -1482,6 +1482,11 @@ img { display: block; max-width: 100%; }
   margin-top: .05rem;
 }
 
+/* ─ notice模块 hover时中英切换 ─ */
+.lb-tip:hover .lb-tip-cn { opacity: 0; }
+.lb-tip:hover .lb-tip-en { opacity: 1 !important; }
+
+
 /* ══════════════════════════════════════════════════════════
    移动端完整适配（860px以下）
    ══════════════════════════════════════════════════════════ */
