@@ -29,5 +29,5 @@ var ropalolyst_normalRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var ropalolyst_normalNotice_cn = "";
-var ropalolyst_normalNotice_en = "";
+var ropalolyst_normalNotice_cn = "测试信息测试信息测试信息测试信息测试信息测试信息测试信息测试信息测试信息测试信息测试信息测试信息测试信息测试信息测试信息测试信息";
+var ropalolyst_normalNotice_en = "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest";
