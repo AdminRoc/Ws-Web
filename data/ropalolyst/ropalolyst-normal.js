@@ -22,7 +22,37 @@
  * ════════════════════════════════════════════════════════════ */
 
 var ropalolyst_normalRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Txdo",
+    clearTime:  "2:30.000",
+    uploadTime: "2025-01-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=gfw8RNE40GI"],
+  },
+  {
+    playerId:   "SarcasticPengwuin",
+    clearTime:  "2:32.200",
+    uploadTime: "2023-11-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=H49wVBjB-pQ"],
+  },
+  {
+    playerId:   "_Gabriel",
+    clearTime:  "2:36.000",
+    uploadTime: "2023-01-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=kd_UfxjUZFQ"],
+  },
+  {
+    playerId:   "Txdo / DishonoredFNG / _Dopa",
+    clearTime:  "2:40.000",
+    uploadTime: "2025-02-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=JqB7XM3WXqQ"],
+  },
+  {
+    playerId:   "SAVentox / luuca1612",
+    clearTime:  "2:41.000",
+    uploadTime: "2025-02-18",
+    videoUrls:  ["https://www.youtube.com/watch?v=mx-6E1j_rEo"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
