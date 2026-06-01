@@ -568,14 +568,7 @@ html,body { background: #0b0805; }
   }
   dg(); window.addEventListener('resize',dg);
 
-  /* ══ 虹光边框 Canvas ══ */
-  var bc=document.getElementById('c-bdr'), bx=bc.getContext('2d');
-  var borderW=4, glowW=22;
-  function sizeBorder(){bc.width=innerWidth;bc.height=innerHeight;}
-  sizeBorder(); window.addEventListener('resize',sizeBorder);
-
-  var borderT0=performance.now();
-  /* ══ 五彩霓虹边框 ══ */
+  /* ══ 虹光边框 / 五彩霓虹边框 Canvas ══ */
   var bc=document.getElementById('c-bdr'), bx=bc.getContext('2d');
   var BORDER_W=7, GLOW_W1=45, GLOW_W2=18;
   /* 每段起始色相均匀散开，覆盖全色轮 */
