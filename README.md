@@ -65,6 +65,7 @@
 站点说明、规则汇总、各项目详细规则链接、成绩提交入口。
 
 （规则链接、举报按钮、成绩提交入口等按钮，在其他页面也都存在。）
+
 ---
 
 ## 提交成绩
@@ -111,3 +112,122 @@
 *© 2026 CSC Alliance · All rights reserved. 由 Roc 于 2026 年 5 月 21 日开始创建代码。*
 
 ---
+
+# English Version:
+
+# WFS Speedrun Leaderboard
+
+A pure static leaderboard website for Warframe speedrun records.
+
+All records are clearly listed and easily searchable. Players submit their own times, which go through a fair review process before going live — everyone can freely browse submitted records. Any suspicious submissions can be reported, and confirmed cheating records are publicly displayed.
+
+---
+
+## Pages
+
+**Home（index.html）**  
+Quick access to the three most popular categories: Disruption, Eidolon, and Profit Taker.
+
+From any leaderboard page, the top navigation leads to all other project pages.
+
+**Disruption（disruption.html）**  
+Disruption speedruns grouped by mission map, with separate leaderboards for Solo, Duo, and Multiplayer.
+
+**Eidolon（eidolon.html / eidolon-macro.html）**  
+Eidolon hunt speedruns. With and without "restrictions" are listed on separate pages.
+
+**Profit Taker（profit-taker.html / profit-taker-macro.html）**  
+Profit Taker kill speedruns. With and without "restrictions" are listed on separate pages.
+
+**Arbitration（arbitration.html）**  
+Arbitration speedruns categorized by mission type (Defense, Survival, Disruption, Interception, Excavation, etc.), across 12 maps × two race formats (reaching 1000 Vitus Essence, or reaching a specified round count).
+
+**Assassination（assassination.html）**  
+Boss assassination speedruns, listed separately for Normal and Steel Path.
+
+**Capture（capture.html）**  
+All capture mission speedruns, by individual map.
+
+**Cambire（cambire.html）**  
+Cambire mission speedruns, Normal and Steel Path.
+
+**Defection（defection.html）**  
+Defection speedruns, grouped by map.
+
+**Defense · Relic 60 rounds（defense-relic.html）**  
+Relic Defense 60-round speedruns, Normal and Steel Path.
+
+**Exterminate（exterminate.html）**  
+All Exterminate mission speedruns, Normal and Steel Path.
+
+**Rescue（rescue.html）**  
+All Rescue mission speedruns, by individual map.
+
+**Sabotage（sabotage.html）**  
+All Sabotage mission speedruns, by individual map.
+
+**Ropalolyst（ropalolyst.html）**  
+Ropalolyst fight speedruns, Normal and Steel Path.
+
+**Skirmish（skirmish.html）**  
+Veil Proxima Skirmish speedruns, Normal and Steel Path.
+
+**Spy（spy.html）**  
+Spy mission speedruns, listing both "vault hack allowed" and "vault hack banned" results, grouped by map.
+
+**Hollvania（hollvania.html）**  
+1999-themed speedruns: 1999 Exterminate, Legacyte Harvest, Stage Defense, Apex Tanks, Normal Tanks.
+
+**Special Challenge（special_challenge.html）**  
+Includes Archon Hunt, Ayatan Capture, Exploiter Orb, Netracell, Obstacle Course, and The Guilty.
+
+**Special Events（special-events.html）**  
+Reserved for temporary community speedrun events; active only during event periods.
+
+**About（about.html）**  
+Site overview, rules for each category, links to detailed rules, and the record submission form.
+
+(Rules links, report buttons, and submission form buttons are also available on all other pages.)
+
+---
+
+## Submitting Records
+
+Click "Submit Record" on any page, fill out the form, and submit. The record goes through a detailed admin review, and once approved, an automated workflow publishes it to the correct leaderboard.
+
+---
+
+## Data Format
+
+All record data lives in `data/` as `.js` files, organized by category. Each entry uses four fields:
+
+| Field | Description |
+|-------|-------------|
+| `clearTime` | Clear time in `MM:SS.mmm` format; shorter is better |
+| `playerId` | In-game player name |
+| `uploadTime` | Submission date in `YYYY-MM-DD` |
+| `videoUrl` | Video link (optional; leave blank to hide the video button) |
+
+Rankings are auto-sorted by time — no need to manually assign positions.
+
+---
+
+## Updating Data
+
+Just edit the relevant `.js` file in `data/`. No need to touch any HTML. Refresh the page and the new data loads instantly.
+
+---
+
+## Styling
+
+All global colors are in `css/global.css` under `:root`. Change a color code there and it applies site-wide immediately.
+
+---
+
+## Notice Banners
+
+Each leaderboard can display its own top-of-page notice banner. Edit the `Notice_cn` (Chinese) and `Notice_en` (English) fields at the bottom of the corresponding data file — no HTML changes needed.
+
+---
+
+*© 2026 CSC Alliance · All rights reserved. Code originally created by Roc on May 21, 2026.*
