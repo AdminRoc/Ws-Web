@@ -472,7 +472,6 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
     tbody.appendChild(tr);
   });
 
-  animateTableRows(tbody);
   const stats = document.getElementById('lb-stats');
   if (stats) stats.textContent = `共 ${sorted.length} 条记录`;
   animateTableRows(tbody);
@@ -640,8 +639,7 @@ function _vcShow(url, rec, lbl) {
   if (lbl) q.push('lbl=' + encodeURIComponent(lbl));
   if (rec) {
     if (rec.playerId)      q.push('player=' + encodeURIComponent(rec.playerId));
-    if (rec.clearTime)     q.push('time='   + encodeURIComponent(rec.clearTime));
-    if (rec.avgRealTime)   q.push('time='   + encodeURIComponent(rec.avgRealTime));
+    if (rec.clearTime || rec.avgRealTime) q.push('time=' + encodeURIComponent(rec.clearTime || rec.avgRealTime));
     if (rec.captureStatus) q.push('cap='    + encodeURIComponent(rec.captureStatus));
     if (rec.uploadTime)    q.push('date='   + encodeURIComponent(rec.uploadTime));
   }
