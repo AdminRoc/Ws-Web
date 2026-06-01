@@ -347,6 +347,7 @@ img { display: block; max-width: 100%; }
     box-shadow .32s ease;
   opacity: 0;
   box-shadow: inset 3px 0 0 transparent;
+  overflow: hidden;
 }
 .nav-dropdown-menu a:last-child { border-bottom: none; }
 /* 左侧装饰横线 */
@@ -1028,7 +1029,6 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   height: 1.4em;
-  overflow: hidden;
 }
 .nav-more-btn .nm-cn,
 .nav-more-btn .nm-en {

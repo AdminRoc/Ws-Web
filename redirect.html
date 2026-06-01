@@ -451,14 +451,12 @@ html,body { background: #0b0805; }
       /* 必须给 span 设置独立渐变，否则继承 transparent 不可见 */
       var GRAD = 'linear-gradient(115deg,#e8faff 0%,#00ffdc 40%,#c084fc 100%)';
       var r1 = document.createElement('span');
-      r1.className = 'pl-row';
       r1.textContent = _players[0] + '  /  ' + _players[1];
       r1.style.background = GRAD;
       r1.style.webkitBackgroundClip = 'text';
       r1.style.webkitTextFillColor = 'transparent';
       r1.style.backgroundClip = 'text';
       var r2 = document.createElement('span');
-      r2.className = 'pl-row pl-row2';
       r2.textContent = _players[2];
       r2.style.background = GRAD;
       r2.style.webkitBackgroundClip = 'text';
@@ -469,14 +467,12 @@ html,body { background: #0b0805; }
     } else {
       var GRAD = 'linear-gradient(115deg,#e8faff 0%,#00ffdc 40%,#c084fc 100%)';
       var r1 = document.createElement('span');
-      r1.className = 'pl-row';
       r1.textContent = _players[0] + '  /  ' + _players[1];
       r1.style.background = GRAD;
       r1.style.webkitBackgroundClip = 'text';
       r1.style.webkitTextFillColor = 'transparent';
       r1.style.backgroundClip = 'text';
       var r2 = document.createElement('span');
-      r2.className = 'pl-row pl-row2';
       r2.textContent = _players[2] + '  /  ' + _players[3];
       r2.style.background = GRAD;
       r2.style.webkitBackgroundClip = 'text';
