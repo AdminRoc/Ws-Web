@@ -254,6 +254,17 @@
   }
   document.addEventListener('DOMContentLoaded', function() {
     sortMapTabsByRecordCount(_curCat);
+    /* 自动选中排序后的第一个按钮（记录数最多），并加载对应榜单 */
+    (function(){
+      var first = document.querySelector('#map-tabs .map-tab-btn:first-child');
+      if (first) {
+        _curMap = first.getAttribute('data-mapname');
+        document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
+          b.classList.toggle('active', b === first);
+        });
+        if (!location.hash || !location.hash.match(/--/)) loadBoard();
+      }
+    })();
     document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
       b.addEventListener('click',function(){
         _curCat=b.dataset.cat;
