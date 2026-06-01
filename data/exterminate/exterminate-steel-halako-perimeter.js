@@ -47,3 +47,10 @@ var exterminate_steel_halako_perimeterRecords = [
     videoUrls:  ["https://www.youtube.com/watch?v=2-Rw0PGN1JE"],
   },
 ];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var exterminate_steel_halako_perimeterNotice_cn = "";
+var exterminate_steel_halako_perimeterNotice_en = "";

@@ -43,3 +43,10 @@ var assassination_normal_tolstojRecords = [
     videoUrls:  ["https://www.youtube.com/watch?v=AZ_rx3Ps_YA"],
   },
 ];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var assassination_normal_tolstojNotice_cn = "";
+var assassination_normal_tolstojNotice_en = "";

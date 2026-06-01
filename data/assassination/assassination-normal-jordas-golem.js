@@ -36,3 +36,10 @@ var assassination_normal_jordas_golemRecords = [
     videoUrls:  ["https://www.youtube.com/watch?v=goP_A3dlYQM"],
   },
 ];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var assassination_normal_jordas_golemNotice_cn = "";
+var assassination_normal_jordas_golemNotice_en = "";

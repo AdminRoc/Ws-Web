@@ -35,3 +35,10 @@ var exterminate_steel_puckRecords = [
     videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
   },
 ];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var exterminate_steel_puckNotice_cn = "";
+var exterminate_steel_puckNotice_en = "";
