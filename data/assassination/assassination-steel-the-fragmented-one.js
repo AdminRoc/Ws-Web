@@ -22,7 +22,13 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_steel_the_fragmented_oneRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Plyonate",
+    clearTime:  "9:44.000",
+    uploadTime: "2026-06-02",
+    videoUrls:  ["https://www.youtube.com/watch?v=OT-i9CWMaeo"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

@@ -22,7 +22,13 @@
  * ════════════════════════════════════════════════════════════ */
 
 var assassination_steel_tolstojRecords = [
-  /* 暂无记录 */
+
+  {
+    playerId:   "Plyonate",
+    clearTime:  "7:45.000",
+    uploadTime: "2026-06-02",
+    videoUrls:  ["https://www.youtube.com/watch?v=vhb8tI2ViPI"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
