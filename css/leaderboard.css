@@ -158,6 +158,22 @@
   table-layout: auto;  /* 列宽自适应内容，无横向溢出 */
 }
 
+/* ── 列宽分配（table-layout:fixed 时由 th 宽度决定） ── */
+/* 4列（结算时间类）：排名、时间、玩家ID、上传日期 */
+.lb-table thead th:nth-child(1) { width: 12%; }
+.lb-table thead th:nth-child(2) { width: 28%; }
+.lb-table thead th:nth-child(3) { width: 42%; }
+.lb-table thead th:nth-child(4) { width: 18%; }
+/* 5列（夜灵类）：排名、时间、击杀数、玩家ID、上传日期 */
+.lb-table thead th:nth-child(5) { width: 10%; }
+
+/* ── 移动端列宽（隐藏第4列，第1-3列均分） ── */
+@media screen and (max-width: 768px) {
+  .lb-table thead th:nth-child(1) { width: 16%; }
+  .lb-table thead th:nth-child(2) { width: 32%; }
+  .lb-table thead th:nth-child(3) { width: 52%; }
+}
+
 /* ── 表头 ── */
 .lb-table thead tr {
   background: linear-gradient(90deg,
@@ -500,22 +516,26 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
 @media screen and (max-width: 768px) {
   .lb-main { padding: 2rem .85rem 1.5rem; }
 
+  /* 表格自适应屏幕宽度，不横向滚动 */
   .lb-table-wrap {
-    overflow-x: auto;
+    overflow-x: visible;
     overflow-y: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
   }
-  .lb-table-wrap::-webkit-scrollbar { display: none; }
-  .lb-table { min-width: 480px; }
+  .lb-table { min-width: unset; table-layout: fixed; }
+  .lb-table thead th,
+  .lb-table td { white-space: normal; word-break: break-all; }
+
+  /* 列宽分配：排名+时间+玩家ID，隐藏视频列 */
+  .lb-table thead th:nth-child(4),
+  .lb-table td:nth-child(4) { display: none; }
 
   .lb-title { font-size: clamp(1.1rem, 5.5vw, 1.7rem); }
   .lb-subtitle { font-size: .6rem; letter-spacing: .1em; }
-  .lb-back { margin-bottom: 1.5rem; padding: .38rem .75rem; font-size: .6rem; }
+  .lb-back { margin-bottom: 1.5rem; padding: .38rem .75rem; font-size: .68rem; }
 
-  /* 大类Tab */
-  .lb-tab-btn { padding: .45rem 1rem; font-size: .82rem; letter-spacing: .08em; }
-  .lb-tabs { gap: .4rem; margin-bottom: .6rem; }
+  /* 大类Tab：字体放大 */
+  .lb-tab-btn { padding: .52rem 1.1rem; font-size: .9rem; letter-spacing: .08em; }
+  .lb-tabs { gap: .4rem; margin-bottom: .7rem; }
 
   /* 小类Tab：移动端横向滚动，不换行 */
   .map-tabs {
@@ -530,26 +550,51 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
   }
   .map-tabs::-webkit-scrollbar { display: none; }
   .map-tab-btn {
-    padding: .36rem .8rem;
-    font-size: .62rem;
-    letter-spacing: .07em;
-    flex-shrink: 0;  /* 防止被压缩 */
+    padding: .42rem .9rem;
+    font-size: .8rem;
+    letter-spacing: .06em;
+    flex-shrink: 0;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .lb-main { padding: 1.5rem .6rem 1rem; }
-  .lb-table { min-width: 400px; }
-  .lb-table thead th { padding: .65rem 1rem; font-size: .8rem; }
-  .lb-table td { padding: .7rem 1rem; font-size: .9rem; }
-  .lb-title { font-size: clamp(1rem, 6vw, 1.4rem); }
-  .rank-badge { width: 30px; height: 30px; font-size: .8rem; }
-  .lb-table thead th:last-child,
-  .lb-table td:last-child { display: none; }
+  .lb-main { padding: 1.5rem .5rem 1rem; }
+  .lb-table { table-layout: fixed; }
 
-  /* 极小屏：小类按钮再缩小 */
-  .map-tab-btn { padding: .4rem .8rem; font-size: .8rem; }
-  .map-tabs { padding: .6rem .6rem; gap: .35rem; }
+  /* 表头：字体放大 */
+  .lb-table thead th {
+    padding: .7rem .6rem;
+    font-size: .82rem;
+    letter-spacing: .08em;
+  }
+  /* 表体单元格：字体放大，防止溢出 */
+  .lb-table td {
+    padding: .75rem .6rem;
+    font-size: 1rem;
+    white-space: normal;
+    word-break: break-all;
+    vertical-align: middle;
+  }
+  /* 排名列保持居中 */
+  .lb-table td.rank-col { padding: .75rem .5rem; }
+  .lb-title { font-size: clamp(1rem, 6vw, 1.4rem); }
+  .rank-badge {
+    width: 32px;
+    height: 32px;
+    font-size: .82rem;
+  }
+  .time-col {
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  .player-col {
+    font-size: 1rem;
+  }
+
+  /* 极小屏：小类按钮字体保持清晰 */
+  .map-tab-btn { padding: .42rem .9rem; font-size: .8rem; letter-spacing: .05em; }
+  .map-tabs { padding: .6rem .5rem; gap: .35rem; }
+  .lb-tab-btn { padding: .5rem 1rem; font-size: .88rem; }
 }
 
 
@@ -676,17 +721,8 @@ tr:hover .video-indicator { color: var(--c-gold-bright); }
   .report-btn, .shame-btn { width: 100%; max-width: 280px; justify-content: center; padding: .6rem 1.2rem; font-size: .7rem; letter-spacing: .1em; }
 }
 
-/* ── 表格横向滚动提示（移动端伪阴影） ── */
+/* ── vp-popup 移动端：位置自适应 ── */
 @media (max-width: 768px) {
-  .lb-table-wrap {
-    /* 右侧渐变提示可横向滚动 */
-    background:
-      linear-gradient(to right, rgba(6,12,26,.78) 30%, transparent) left / 24px 100% no-repeat,
-      linear-gradient(to left,  rgba(6,12,26,.78) 30%, transparent) right / 24px 100% no-repeat,
-      rgba(6,12,26,.78);
-    background-attachment: local, local, scroll;
-  }
-  /* vp-popup 移动端：位置自适应 */
   #vp-popup {
     min-width: 160px !important;
     max-width: min(85vw, 220px) !important;
