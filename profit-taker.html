@@ -297,36 +297,6 @@
   });
 </script>
 <script>
-/* ── 移动端有下拉框的链接点两次再跳转 ── */
-(function() {
-  if (!('ontouchstart' in window)) return; // 仅移动端
-  var firstTap = null;
-  document.querySelectorAll('.nav-item.has-dropdown > a').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var item = a.closest('.nav-item');
-      if (!item.classList.contains('mob-open')) {
-        e.preventDefault();
-        // 第一次点：展开下拉
-        document.querySelectorAll('.nav-item.has-dropdown').forEach(function(i) {
-          if (i !== item) i.classList.remove('mob-open');
-        });
-        item.classList.add('mob-open');
-      }
-      // 第二次点（mob-open已存在）：直接跳转（不阻止默认行为）
-    });
-  });
-  /* 移动端"更多榜单"展开子菜单 */
-  var mobMoreBtn = document.getElementById('nav-more-mobile');
-  var mobMorePanel = document.getElementById('mob-more-panel');
-  if (mobMoreBtn && mobMorePanel) {
-    mobMoreBtn.addEventListener('click', function() {
-      mobMoreBtn.classList.toggle('mob-open');
-      mobMorePanel.classList.toggle('open');
-    });
-  }
-})();
-</script>
-<script>
 /* ── 超级导航面板 ── */
 (function() {
   var panel   = document.getElementById('super-nav-panel');
