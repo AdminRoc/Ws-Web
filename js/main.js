@@ -85,105 +85,164 @@ class StarField {
    2. 导航栏
    ══════════════════════════════════════════════════════════ */
 function initNav() {
-  const hamburger = document.querySelector('.nav-hamburger');
-  const navLinks  = document.querySelector('.nav-links');
-  if (!hamburger || !navLinks) return;
-
-  function toggleHamburger(e) {
-    e.stopPropagation();
-    hamburger.classList.toggle('open');
-    navLinks.classList.toggle('open');
-  }
-  hamburger.addEventListener('click', toggleHamburger);
-
-  const dropItems = document.querySelectorAll('.nav-item.has-dropdown');
-  dropItems.forEach(item => {
-    const link = item.querySelector(':scope > a');
-    if (!link) return;
-    function handleDropToggle(e) {
-      if (window.innerWidth <= 860) {
-        e.preventDefault();
-        e.stopPropagation();
-        const isOpen = item.classList.contains('mob-open');
-        dropItems.forEach(other => { if (other !== item) other.classList.remove('mob-open'); });
-        item.classList.toggle('mob-open', !isOpen);
-      }
-    }
-    link.addEventListener('click', handleDropToggle);
-    link.addEventListener('touchend', function(e) {
-      if (window.innerWidth <= 860) {
-        handleDropToggle(e);
-      }
-    });
-  });
-
-  /* ── 手机端：nav-rules-wrap 点击展开下拉 ── */
-  const rulesWrap = document.querySelector('.nav-rules-wrap');
-  if (rulesWrap) {
-    const rulesBtn = rulesWrap.querySelector(':scope > a');
-    if (rulesBtn) {
-      function handleRulesToggle(e) {
-        if (window.innerWidth <= 860) {
-          e.preventDefault();
-          e.stopPropagation();
-          rulesWrap.classList.toggle('mob-open');
-        }
-      }
-      rulesBtn.addEventListener('click', handleRulesToggle);
-      rulesBtn.addEventListener('touchend', function(e) {
-        if (window.innerWidth <= 860) handleRulesToggle(e);
+  /* PC 端：下拉菜单由 CSS :hover 控制，此处仅处理点击区域外关闭 */
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.site-nav')) {
+      document.querySelectorAll('.nav-item.mob-open').forEach(function(i) {
+        i.classList.remove('mob-open');
       });
     }
-  }
+  });
+}
 
-  /* ── 手机端：nav-more-mobile 点击展开面板 ── */
-  const mobMoreBtn = document.getElementById('nav-more-mobile');
-  const mobPanel = document.getElementById('mob-more-panel');
-  if (mobMoreBtn && mobPanel) {
-    function toggleMobMore(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const isOpen = mobMoreBtn.classList.contains('mob-open');
-      mobMoreBtn.classList.toggle('mob-open', !isOpen);
-      mobPanel.classList.toggle('open', !isOpen);
-    }
-    mobMoreBtn.addEventListener('click', toggleMobMore);
-    mobMoreBtn.addEventListener('touchend', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const isOpen = mobMoreBtn.classList.contains('mob-open');
-      mobMoreBtn.classList.toggle('mob-open', !isOpen);
-      mobPanel.classList.toggle('open', !isOpen);
-    });
-  }
+/* ══════════════════════════════════════════════════════════
+   2b. 手机端全新导航抽屉
+   ══════════════════════════════════════════════════════════ */
+function initMobileNav() {
+  var hamburger = document.querySelector('.nav-hamburger');
+  if (!hamburger) return;
 
-  /* ── 手机端：下拉子链接单击展开，再单击跳转 ── */
-  document.querySelectorAll('.nav-dropdown-menu a').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      if (window.innerWidth <= 860) {
-        var parent = a.closest('.nav-item');
-        if (parent && parent.classList.contains('mob-open')) {
-          // 已展开：关闭并允许跳转
-          parent.classList.remove('mob-open');
-        } else if (parent) {
-          // 未展开：先展开，阻止跳转
-          e.preventDefault();
-          document.querySelectorAll('.nav-item').forEach(function(i) { i.classList.remove('mob-open'); });
-          parent.classList.add('mob-open');
+  /* ── 全部菜单数据 ── */
+  var MENU = [
+    { cn: '中断竞速', sub: [
+        { cn: '单人', href: 'disruption.html' },
+        { cn: '双人', href: 'disruption-duo.html' },
+        { cn: '多人', href: 'disruption-multi.html' }
+    ]},
+    { cn: '夜灵竞速', sub: [
+        { cn: '有限制',  href: 'eidolon.html' },
+        { cn: '无限制', href: 'eidolon-macro.html' }
+    ]},
+    { cn: '蜘蛛竞速', sub: [
+        { cn: '有限制',  href: 'profit-taker.html' },
+        { cn: '无限制', href: 'profit-taker-macro.html' }
+    ]},
+    { cn: '捕获',           href: 'capture.html' },
+    { cn: '歼灭',           href: 'exterminate.html' },
+    { cn: '救援',           href: 'rescue.html' },
+    { cn: '破坏',           href: 'sabotage.html' },
+    { cn: '间谍',           href: 'spy.html' },
+    { cn: '刺杀',           href: 'assassination.html' },
+    { cn: '特殊挑战',       href: 'special_challenge.html' },
+    { cn: '防御裂缝60轮',   href: 'defense-relic.html' },
+    { cn: '元素转换',       href: 'cambire.html' },
+    { cn: '1999 任务',      href: 'hollvania.html' },
+    { cn: '蝠力使',         href: 'ropalolyst.html' },
+    { cn: '面纱前哨战',     href: 'skirmish.html' },
+    { cn: '叛逃任务',       href: 'defection.html' },
+    { cn: '仲裁任务',       href: 'arbitration.html' },
+    { cn: '站内特殊活动',   href: 'special-events.html' },
+    { cn: '关于本站',       href: 'about.html' }
+  ];
+
+  var currentPage = (location.pathname.split('/').pop() || 'index.html')
+                      .split('?')[0].split('#')[0];
+
+  /* ── 创建遮罩层 ── */
+  var overlay = document.createElement('div');
+  overlay.className = 'mob-nav-overlay';
+  document.body.appendChild(overlay);
+
+  /* ── 创建抽屉面板 ── */
+  var drawer = document.createElement('div');
+  drawer.className = 'mob-nav-drawer';
+  document.body.appendChild(drawer);
+
+  /* ── 构建菜单项 ── */
+  MENU.forEach(function(item) {
+    if (item.sub) {
+      /* 有子菜单的父级 */
+      var group = document.createElement('div');
+
+      var parent = document.createElement('div');
+      parent.className = 'mnd-item';
+      var isGroupActive = item.sub.some(function(s) { return s.href === currentPage; });
+      if (isGroupActive) parent.classList.add('mnd-active');
+
+      var label = document.createElement('span');
+      label.textContent = item.cn;
+
+      var arrow = document.createElement('span');
+      arrow.className = 'mnd-arrow';
+      arrow.textContent = '▶';
+
+      parent.appendChild(label);
+      parent.appendChild(arrow);
+
+      var sub = document.createElement('div');
+      sub.className = 'mnd-sub';
+
+      item.sub.forEach(function(s) {
+        var a = document.createElement('a');
+        a.className = 'mnd-sub-item';
+        a.href = s.href;
+        a.textContent = s.cn;
+        if (s.href === currentPage) a.classList.add('mnd-active');
+        sub.appendChild(a);
+      });
+
+      /* 点击父级切换子菜单 */
+      function toggleSub(e) {
+        e.stopPropagation();
+        var isOpen = sub.classList.contains('mnd-sub-open');
+        /* 收起其他所有子菜单 */
+        drawer.querySelectorAll('.mnd-sub.mnd-sub-open').forEach(function(p) {
+          p.classList.remove('mnd-sub-open');
+        });
+        drawer.querySelectorAll('.mnd-item.mnd-parent-open').forEach(function(p) {
+          p.classList.remove('mnd-parent-open');
+        });
+        if (!isOpen) {
+          sub.classList.add('mnd-sub-open');
+          parent.classList.add('mnd-parent-open');
         }
       }
-    });
+      parent.addEventListener('click', toggleSub);
+      parent.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        toggleSub(e);
+      });
+
+      group.appendChild(parent);
+      group.appendChild(sub);
+      drawer.appendChild(group);
+
+    } else {
+      /* 普通链接项 */
+      var a = document.createElement('a');
+      a.className = 'mnd-item';
+      a.href = item.href;
+      a.textContent = item.cn;
+      if (item.href === currentPage) a.classList.add('mnd-active');
+      drawer.appendChild(a);
+    }
   });
 
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.site-nav')) {
-      hamburger.classList.remove('open');
-      navLinks.classList.remove('open');
-      dropItems.forEach(i => i.classList.remove('mob-open'));
-      if (rulesWrap) rulesWrap.classList.remove('mob-open');
-      if (mobMoreBtn) mobMoreBtn.classList.remove('mob-open');
-      if (mobPanel) mobPanel.classList.remove('open');
-    }
+  /* ── 开关函数 ── */
+  function openDrawer() {
+    hamburger.classList.add('open');
+    overlay.classList.add('mnd-show');
+    drawer.classList.add('mnd-show');
+  }
+  function closeDrawer() {
+    hamburger.classList.remove('open');
+    overlay.classList.remove('mnd-show');
+    drawer.classList.remove('mnd-show');
+  }
+
+  /* ── 汉堡按钮绑定 ── */
+  hamburger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (drawer.classList.contains('mnd-show')) closeDrawer();
+    else openDrawer();
+  });
+
+  /* ── 点击遮罩关闭 ── */
+  overlay.addEventListener('click', closeDrawer);
+
+  /* ── 窗口变大时自动关闭（切换到PC） ── */
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 860) closeDrawer();
   });
 }
 
@@ -600,6 +659,7 @@ function renderEidolonLeaderboard(records, tbodyId) {
 document.addEventListener('DOMContentLoaded', () => {
   new StarField('star-canvas');
   initNav();
+  initMobileNav();
   initReveal();
   initHashState();
   initAutoActiveNav();
