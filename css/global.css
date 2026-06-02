@@ -1457,7 +1457,12 @@ img { display: block; max-width: 100%; }
 
 /* ══ 旧移动端专用元素（保留HTML兼容性，CSS层隐藏） ══ */
 .nav-more-mobile { display: none; }
-.mob-more-panel  { display: none; }
+.mob-more-panel  { display: none; }   /* ← 旧 class 选择器（部分页面还在用），保留兼容 */
+#mob-more-panel  { display: none; max-height: 0; overflow: hidden;
+                    transition: max-height .38s cubic-bezier(.22,.68,0,1.2); }
+#mob-more-panel.open {
+  display: block;
+  max-height: 480px; }
 
 /* 极小屏（480px）进一步优化 */
 @media screen and (max-width: 480px) {
