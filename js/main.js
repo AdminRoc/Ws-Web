@@ -264,6 +264,22 @@ function initMobileNav() {
   window.addEventListener('resize', function() {
     if (window.innerWidth > 860) closeDrawer();
   });
+
+  /* ── 手机端"更多榜单"按钮：展开/收起下方面板 ── */
+  /* 注意：PC 端 #nav-more-btn 由各页面内联脚本单独处理，此处不冲突 */
+  var mobMoreBtn = document.getElementById('nav-more-mobile');
+  var mobPanel  = document.getElementById('mob-more-panel');
+  if (mobMoreBtn && mobPanel) {
+    mobMoreBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      mobPanel.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!mobPanel.contains(e.target) && !mobMoreBtn.contains(e.target)) {
+        mobPanel.classList.remove('open');
+      }
+    });
+  }
 }
 
 /* ══════════════════════════════════════════════════════════
