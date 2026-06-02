@@ -469,6 +469,68 @@
 
 <script src="js/main.js"></script>
 <script>
+/* ── 手机端：纪录提交规则彩色按钮两次点击逻辑 ──
+   仅在 ≤860px 移动端生效，PC端 :hover 展开逻辑完全不受影响 */
+(function() {
+  if (window.innerWidth > 860) return;
+
+  var ruleBtn      = document.querySelector('.about-rule-btn');
+  var ruleDropdown = document.querySelector('.about-rule-dropdown');
+  var ruleWrap     = document.querySelector('.about-rule-wrap');
+  if (!ruleBtn || !ruleDropdown || !ruleWrap) return;
+
+  var expanded = false;
+
+  /* 移动端：强制覆盖 about-rule-dropdown 的显示方式
+     PC端依赖 :hover，移动端改为 .mob-expanded class 控制 */
+  var style = document.createElement('style');
+  style.textContent = [
+    '@media (max-width:860px){',
+    /* 取消 hover 展开（移动端没有真正的 hover） */
+    '.about-rule-wrap:hover .about-rule-dropdown{opacity:0!important;visibility:hidden!important;transform:translateX(-50%) translateY(-8px) scaleY(.88)!important;}',
+    /* 改为 mob-expanded class 展开 */
+    '.about-rule-wrap.mob-expanded .about-rule-dropdown{opacity:1!important;visibility:visible!important;transform:translateX(-50%) translateY(0) scaleY(1)!important;}',
+    '.about-rule-wrap.mob-expanded .about-rule-btn::after{transform:rotate(180deg);opacity:1;}',
+    /* 子项入场动画 */
+    '.about-rule-wrap.mob-expanded .about-rule-dropdown a:nth-child(1){animation:ruleItemIn2 .3s cubic-bezier(.22,.68,0,1.2) .06s forwards;}',
+    '.about-rule-wrap.mob-expanded .about-rule-dropdown a:nth-child(2){animation:ruleItemIn2 .3s cubic-bezier(.22,.68,0,1.2) .13s forwards;}',
+    '.about-rule-wrap.mob-expanded .about-rule-dropdown a:nth-child(3){animation:ruleItemIn2 .3s cubic-bezier(.22,.68,0,1.2) .20s forwards;}',
+    '.about-rule-wrap.mob-expanded .about-rule-dropdown a:nth-child(4){animation:ruleItemIn2 .3s cubic-bezier(.22,.68,0,1.2) .27s forwards;}',
+    '}'
+  ].join('');
+  document.head.appendChild(style);
+
+  /* 拦截彩色按钮点击 */
+  ruleBtn.addEventListener('click', function(e) {
+    if (window.innerWidth > 860) return; /* 宽屏直接放行 */
+    if (!expanded) {
+      /* 第一次点击：展开下拉，阻止跳转 */
+      e.preventDefault();
+      e.stopPropagation();
+      expanded = true;
+      ruleWrap.classList.add('mob-expanded');
+    }
+    /* 第二次点击：不阻止默认行为，正常跳转链接 */
+  });
+
+  /* 点击页面其他区域收起 */
+  document.addEventListener('click', function(e) {
+    if (expanded && !ruleWrap.contains(e.target)) {
+      expanded = false;
+      ruleWrap.classList.remove('mob-expanded');
+    }
+  });
+
+  /* 窗口变宽时重置（切到PC） */
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 860) {
+      expanded = false;
+      ruleWrap.classList.remove('mob-expanded');
+    }
+  });
+})();
+</script>
+<script>
 /* ── 超级导航面板 ── */
 (function() {
   var panel   = document.getElementById('super-nav-panel');
