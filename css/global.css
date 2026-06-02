@@ -715,7 +715,8 @@ img { display: block; max-width: 100%; }
     transition: max-height .4s ease;
     z-index: 800;
   }
-  .nav-links.open { max-height: 80vh; overflow-y: auto; }
+  /* 展开时高度自适应，足够容纳"更多榜单"子面板所有链接 */
+  .nav-links.open { max-height: 95vh; overflow-y: auto; overflow-x: hidden; }
 
   .nav-item {
     width: 100%;
@@ -1524,6 +1525,11 @@ img { display: block; max-width: 100%; }
 .lb-tip:hover .lb-tip-en { opacity: 1 !important; }
 
 
+/* ══ 移动端专用元素：桌面端默认隐藏 ══ */
+/* 这些元素只在移动端（≤860px）使用，桌面端不显示 */
+.nav-more-mobile { display: none; }
+.mob-more-panel  { display: none; }
+
 /* ══════════════════════════════════════════════════════════
    移动端完整适配（860px以下）
    ══════════════════════════════════════════════════════════ */
@@ -1548,11 +1554,13 @@ img { display: block; max-width: 100%; }
     gap: 0;
   }
 
-  /* 汉堡菜单展开时，"查看更多"作为一个普通菜单项 */
+  /* ══ 移动端"更多榜单"按钮 ══
+     独立样式，与PC端完全隔离，确保点击响应 */
   .nav-links .nav-more-mobile {
     display: flex;
     width: 100%;
     align-items: center;
+    justify-content: space-between;
     padding: .9rem 1.5rem;
     border-bottom: 1px solid rgba(0,212,255,.06);
     font-family: var(--f-sci);
@@ -1567,30 +1575,62 @@ img { display: block; max-width: 100%; }
     border-right: none;
     text-align: left;
     user-select: none;
-    transition: color .25s ease;
+    transition: color .25s ease, background .25s ease;
+    /* 确保触摸区域足够大 */
+    min-height: 48px;
+    -webkit-tap-highlight-color: rgba(0,212,255,.08);
+    touch-action: manipulation;
+    position: relative;
+    z-index: 1;
   }
-  .nav-links .nav-more-mobile:hover,
-  .nav-links .nav-more-mobile.mob-open { color: var(--c-cyan); }
+  .nav-links .nav-more-mobile::after {
+    content: '▾';
+    font-size: .65rem;
+    opacity: .6;
+    transition: transform .3s ease, opacity .3s ease;
+    flex-shrink: 0;
+  }
+  .nav-links .nav-more-mobile.mob-open::after {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+  .nav-links .nav-more-mobile:active,
+  .nav-links .nav-more-mobile.mob-open {
+    color: var(--c-cyan);
+    background: rgba(0,212,255,.04);
+  }
 
-  /* 移动端"更多"展开的子菜单面板 */
+  /* ══ 移动端"更多榜单"展开面板 ══
+     使用max-height动画而非display:none，确保overflow不裁切 */
   .mob-more-panel {
-    display: none;
+    display: flex; /* 覆盖桌面端的display:none */
     flex-direction: column;
     background: rgba(0,8,20,.95);
     border-top: 1px solid rgba(0,212,255,.08);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
   }
-  .mob-more-panel.open { display: flex; }
+  .mob-more-panel.open {
+    max-height: 800px;
+  }
   .mob-more-panel a {
     display: block;
-    padding: .7rem 2.5rem;
+    padding: .78rem 2.5rem;
     font-family: var(--f-sci);
-    font-size: .72rem;
+    font-size: .75rem;
     color: var(--c-text2);
     border-bottom: 1px solid rgba(0,212,255,.05);
     text-decoration: none;
     transition: color .2s ease, background .2s ease;
+    /* 移动端确保触摸区域 */
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    -webkit-tap-highlight-color: rgba(0,212,255,.08);
+    touch-action: manipulation;
   }
-  .mob-more-panel a:hover { color: var(--c-cyan); background: rgba(0,212,255,.05); }
+  .mob-more-panel a:active { color: var(--c-cyan); background: rgba(0,212,255,.05); }
   .mob-more-panel a:last-child { border-bottom: none; }
 }
 

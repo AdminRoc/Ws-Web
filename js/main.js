@@ -88,19 +88,31 @@ function initNav() {
   const hamburger = document.querySelector('.nav-hamburger');
   const navLinks  = document.querySelector('.nav-links');
   if (!hamburger || !navLinks) return;
-  hamburger.addEventListener('click', () => {
+
+  function toggleHamburger(e) {
+    e.stopPropagation();
     hamburger.classList.toggle('open');
     navLinks.classList.toggle('open');
-  });
+  }
+  hamburger.addEventListener('click', toggleHamburger);
+
   const dropItems = document.querySelectorAll('.nav-item.has-dropdown');
   dropItems.forEach(item => {
     const link = item.querySelector(':scope > a');
     if (!link) return;
-    link.addEventListener('click', (e) => {
+    function handleDropToggle(e) {
       if (window.innerWidth <= 860) {
         e.preventDefault();
+        e.stopPropagation();
+        const isOpen = item.classList.contains('mob-open');
         dropItems.forEach(other => { if (other !== item) other.classList.remove('mob-open'); });
-        item.classList.toggle('mob-open');
+        item.classList.toggle('mob-open', !isOpen);
+      }
+    }
+    link.addEventListener('click', handleDropToggle);
+    link.addEventListener('touchend', function(e) {
+      if (window.innerWidth <= 860) {
+        handleDropToggle(e);
       }
     });
   });
@@ -110,11 +122,16 @@ function initNav() {
   if (rulesWrap) {
     const rulesBtn = rulesWrap.querySelector(':scope > a');
     if (rulesBtn) {
-      rulesBtn.addEventListener('click', (e) => {
+      function handleRulesToggle(e) {
         if (window.innerWidth <= 860) {
           e.preventDefault();
+          e.stopPropagation();
           rulesWrap.classList.toggle('mob-open');
         }
+      }
+      rulesBtn.addEventListener('click', handleRulesToggle);
+      rulesBtn.addEventListener('touchend', function(e) {
+        if (window.innerWidth <= 860) handleRulesToggle(e);
       });
     }
   }
@@ -123,9 +140,20 @@ function initNav() {
   const mobMoreBtn = document.getElementById('nav-more-mobile');
   const mobPanel = document.getElementById('mob-more-panel');
   if (mobMoreBtn && mobPanel) {
-    mobMoreBtn.addEventListener('click', () => {
-      mobMoreBtn.classList.toggle('mob-open');
-      mobPanel.classList.toggle('open');
+    function toggleMobMore(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = mobMoreBtn.classList.contains('mob-open');
+      mobMoreBtn.classList.toggle('mob-open', !isOpen);
+      mobPanel.classList.toggle('open', !isOpen);
+    }
+    mobMoreBtn.addEventListener('click', toggleMobMore);
+    mobMoreBtn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = mobMoreBtn.classList.contains('mob-open');
+      mobMoreBtn.classList.toggle('mob-open', !isOpen);
+      mobPanel.classList.toggle('open', !isOpen);
     });
   }
 
