@@ -504,7 +504,7 @@
     overflow-x: visible;
     overflow-y: hidden;
   }
-  .lb-table { min-width: unset; table-layout: fixed; }
+  .lb-table { width: 100%; min-width: unset; table-layout: fixed; }
   .lb-table thead th,
   .lb-table td { white-space: normal; word-break: break-all; }
 
