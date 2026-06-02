@@ -281,6 +281,7 @@
     "禁用破解器||Kelpie": function(){return spy_ban_kelpieRecords;},
     "禁用破解器||PAGO": function(){return spy_ban_pagoRecords;},
   };
+
   var _curCat = '允许破解器';
   var _curMap = 'Cambria';
 
@@ -291,6 +292,8 @@
     history.replaceState(null, '', '#' + encodeURIComponent(_curCat) + '--' + encodeURIComponent(_curMap));
   }
 
+
+  /* ── 按数据条目数排序地图按钮 ── */
 
   /* ── 按数据条目数排序地图按钮 ── */
   function sortMapTabsByRecordCount(category) {
@@ -316,79 +319,90 @@
     }
     return mapNames.length > 0 ? mapNames[0].name : null;
   }
-  document.addEventListener('DOMContentLoaded', function() {
-    sortMapTabsByRecordCount(_curCat);
-    /* 自动选中排序后的第一个按钮（记录数最多），并加载对应榜单 */
-    (function(){
-      var first = document.querySelector('#map-tabs .map-tab-btn:first-child');
-      if (first) {
-        _curMap = first.getAttribute('data-mapname');
-        document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
-          b.classList.toggle('active', b === first);
-        });
-        if (!location.hash || !location.hash.match(/--/)) loadBoard();
-      }
-    })();
-    document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b) {
-      b.addEventListener('click', function() {
-        _curCat = b.dataset.cat;
-        document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+
+document.addEventListener('DOMContentLoaded', function() {
         sortMapTabsByRecordCount(_curCat);
-        loadBoard();
-      });
-    });
-    document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b) {
-      b.addEventListener('click', function() {
-        _curMap = b.getAttribute('data-mapname');
-        document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
-        loadBoard();
-      });
-    });
-    /* ── URL Hash 恢复 ── */
-    (function() {
-      var _h = decodeURIComponent(location.hash.replace('#',''));
-      if (_h && _h.indexOf('--') !== -1) {
-        var parts = _h.split('--');
-        var hCat = decodeURIComponent(parts[0]);
-        var hMap = decodeURIComponent(parts[1]);
-        if (_allData[hCat + '||' + hMap]) {
-          _curCat = hCat; _curMap = hMap;
-          /* 同步高亮按钮 */
-          document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
-            b.classList.toggle('active', b.dataset && (b.dataset.cat === _curCat || b.textContent.trim() === _curCat));
-          });
-          document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
-            var nm = b.getAttribute('data-mapname') || b.dataset.mapname || '';
-            b.classList.toggle('active', nm === _curMap);
-          });
-        }
-      }
-    })();
-    /* ── URL Hash 恢复 ── */
-    (function() {
-      var _h = location.hash.replace('#','');
-      if (_h && _h.indexOf('--') !== -1) {
-        try {
-          var parts = _h.split('--');
-          var hCat = decodeURIComponent(parts[0]);
-          var hMap = decodeURIComponent(parts[1]);
-          if (_allData[hCat + '||' + hMap]) {
-            _curCat = hCat; _curMap = hMap;
-            document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
-              b.classList.toggle('active', b.dataset.cat === _curCat);
-            });
+
+        /* 自动选中排序后的第一个按钮（记录数最多），并加载对应榜单 */
+        (function(){
+          var first = document.querySelector('#map-tabs .map-tab-btn:first-child');
+          if (first) {
+            _curMap = first.getAttribute('data-mapname');
             document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
-              b.classList.toggle('active', b.getAttribute('data-mapname') === _curMap);
+              b.classList.toggle('active', b === first);
             });
+            if (!location.hash || !location.hash.match(/--/)) loadBoard();
           }
-        } catch(e) {}
-      }
-    })();
-    loadBoard();
-  });
+        })();
+
+        /* ── 次级按钮（允许破解器 / 禁用破解器）点击 ── */
+        document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b) {
+          b.addEventListener('click', function() {
+            _curCat = b.dataset.cat;
+            document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+            sortMapTabsByRecordCount(_curCat);
+            /* 自动选中排序后第一个地图按钮 */
+            var first = document.querySelector('#map-tabs .map-tab-btn:first-child');
+            if (first) {
+              _curMap = first.getAttribute('data-mapname');
+              document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(m){
+                m.classList.toggle('active', m === first);
+              });
+            }
+            loadBoard();
+          });
+        });
+
+        /* ── 次次级按钮（各地图）点击 ── */
+        document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b) {
+          b.addEventListener('click', function() {
+            _curMap = b.getAttribute('data-mapname');
+            document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+            loadBoard();
+          });
+        });
+
+        /* ── URL Hash 恢复 ── */
+        (function() {
+          var _h = decodeURIComponent(location.hash.replace('#',''));
+          if (_h && _h.indexOf('--') !== -1) {
+            var parts = _h.split('--');
+            var hCat = decodeURIComponent(parts[0]);
+            var hMap = decodeURIComponent(parts[1]);
+            if (_allData[hCat + '||' + hMap]) {
+              _curCat = hCat; _curMap = hMap;
+              document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
+                b.classList.toggle('active', b.dataset && (b.dataset.cat === _curCat || b.textContent.trim() === _curCat));
+              });
+              document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
+                var nm = b.getAttribute('data-mapname') || b.dataset.mapname || '';
+                b.classList.toggle('active', nm === _curMap);
+              });
+            }
+          }
+        })();
+        (function() {
+          var _h = location.hash.replace('#','');
+          if (_h && _h.indexOf('--') !== -1) {
+            try {
+              var parts = _h.split('--');
+              var hCat = decodeURIComponent(parts[0]);
+              var hMap = decodeURIComponent(parts[1]);
+              if (_allData[hCat + '||' + hMap]) {
+                _curCat = hCat; _curMap = hMap;
+                document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
+                  b.classList.toggle('active', b.dataset.cat === _curCat);
+                });
+                document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(b){
+                  b.classList.toggle('active', b.getAttribute('data-mapname') === _curMap);
+                });
+              }
+            } catch(e) {}
+          }
+        })();
+        loadBoard();
+      });
 </script>
-<script>
-/* ── 移动端有下拉框的链接点两次再跳转 ── */
 (function() {
   if (!('ontouchstart' in window)) return; // 仅移动端
   var firstTap = null;

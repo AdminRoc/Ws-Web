@@ -533,12 +533,12 @@
 
   /* 夜灵表格 captureStatus（5列第3列 = 倒数第3）：16%
      此选择器在4列表格中不命中任何列，仅对夜灵5列表格生效 */
-  .lb-table thead th:nth-child(3):nth-last-child(3) { width: 16% !important; }
+  .lb-table thead th:nth-child(3):nth-last-child(3) { width: 46% !important; }
 
   /* 玩家ID列（标准4列=第3列 / 夜灵5列=第4列），均为倒数第2列 */
   /* 标准：14+28+58+0 = 100% ✓   夜灵：14+28+16+42+0 = 100% ✓ */
   .lb-table thead th:nth-child(3):nth-last-child(2) { width: 58% !important; }
-  .lb-table thead th:nth-child(4):nth-last-child(2) { width: 42% !important; }
+  .lb-table thead th:nth-child(4):nth-last-child(2) { width: 40% !important; }
 
   .lb-title { font-size: clamp(1.1rem, 5.5vw, 1.7rem); }
   .lb-subtitle { font-size: .6rem; letter-spacing: .1em; }
