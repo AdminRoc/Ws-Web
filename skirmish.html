@@ -43,10 +43,10 @@
     .lb-badge-cn { position: absolute; inset: 0; opacity: 1; transition: opacity .5s ease; }
     .lb-badge-wrap.show-en .lb-badge-en { opacity: 1; }
     .lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; }
-    .nav-more-mobile, .mob-more-panel { display: none; }
+    .nav-more-mobile { display: none; } /* mob-more-panel由global.css的max-height动画控制，无需此处设置 */
     @media screen and (max-width: 860px) {
       .nav-more-mobile { display: flex !important; }
-      .mob-more-panel.open { display: flex !important; }
+      /* mob-more-panel.open 由 global.css max-height 控制 */
     }\n  </style>
 </head>
 <body>
@@ -311,14 +311,7 @@
       }
     });
   });
-  var mobMoreBtn = document.getElementById('nav-more-mobile');
-  var mobMorePanel = document.getElementById('mob-more-panel');
-  if (mobMoreBtn && mobMorePanel) {
-    mobMoreBtn.addEventListener('click', function() {
-      mobMoreBtn.classList.toggle('mob-open');
-      mobMorePanel.classList.toggle('open');
-    });
-  }
+/* mob-more-panel 交互由 main.js 的 initNav() 统一处理，此处不重复绑定 */
 })();
 </script>
 <script>
