@@ -504,13 +504,31 @@
     overflow-x: visible;
     overflow-y: hidden;
   }
+
+  /* table-layout:fixed + 明确列宽 → 让玩家ID列撑满剩余空间 */
   .lb-table { width: 100%; min-width: unset; table-layout: fixed; }
   .lb-table thead th,
-  .lb-table td { white-space: normal; word-break: break-all; }
+  .lb-table td { white-space: normal; word-break: break-word; }
 
-  /* 隐藏最后一列（提交日期）—— 用 last-child 兼容4列和5列表格 */
+  /* 隐藏最后一列（提交日期）—— last-child 兼容4列和5列表格 */
   .lb-table thead th:last-child,
   .lb-table td:last-child { display: none; }
+
+  /* 列宽：排名固定50px，时间固定90px，其余全部给玩家ID */
+  .lb-table thead th:first-child,
+  .lb-table td:first-child  { width: 50px; }
+  .lb-table thead th:nth-child(2),
+  .lb-table td:nth-child(2) { width: 90px; }
+  /* 第3列（玩家ID / captureStatus）自动撑满剩余宽度 */
+  .lb-table thead th:nth-child(3),
+  .lb-table td:nth-child(3) { width: auto; }
+
+  /* 4列表格：玩家ID是第3列，直接铺满 ✓ */
+  /* 5列夜灵表格：第3列=captureStatus，第4列=玩家ID（第4列在visible） */
+  /* 对于5列情况，第3列给固定宽，让第4列撑满（第5列=date已hidden） */
+  /* 通过给第4列也设auto覆盖 */
+  .lb-table thead th:nth-child(4):not(:last-child),
+  .lb-table td:nth-child(4):not(:last-child) { width: auto; }
 
   .lb-title { font-size: clamp(1.1rem, 5.5vw, 1.7rem); }
   .lb-subtitle { font-size: .6rem; letter-spacing: .1em; }
