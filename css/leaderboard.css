@@ -494,51 +494,55 @@
 }
 
 /* ══════════════════════════════════════════════════════════
-   ★ 手机端表格适配（无横向滚动条）
+   ★ 手机端表格适配（≤860px）
    ══════════════════════════════════════════════════════════ */
 @media screen and (max-width: 860px) {
   .lb-main { padding: 2rem .85rem 1.5rem; }
 
-  /* 表格自适应屏幕宽度，不横向滚动 */
-  .lb-table-wrap {
-    overflow-x: visible;
-    overflow-y: hidden;
-  }
+  /* 表格容器：禁止水平溢出 */
+  .lb-table-wrap { overflow-x: hidden; overflow-y: hidden; }
 
-  /* table-layout:fixed + 明确列宽 → 让玩家ID列撑满剩余空间 */
-  .lb-table { width: 100%; min-width: unset; table-layout: fixed; }
-  .lb-table thead th,
-  .lb-table td { white-space: normal; word-break: break-word; }
+  /* ── 核心：fixed布局 + 百分比列宽 ──
+     注意：box-sizing:border-box 下，width 包含 padding。
+     所以必须同时将 th 的 padding 改小，否则大 padding 把列宽全吃掉。
+     only th 宽度影响 fixed布局的列宽，td 宽度无效。 */
+  .lb-table { width: 100% !important; min-width: 0 !important; table-layout: fixed !important; }
 
-  /* 隐藏最后一列（提交日期）—— last-child 兼容4列和5列表格 */
+  /* 覆盖 PC 端的大内边距（PC：1rem 1.4rem；移动端需缩小） */
+  .lb-table thead th { padding: .65rem .5rem !important; white-space: nowrap; }
+  .lb-table td       { padding: .7rem  .55rem; white-space: normal; word-break: break-word; }
+
+  /* 隐藏最后一列（提交日期）：last-child 兼容4列和5列表格 */
   .lb-table thead th:last-child,
-  .lb-table td:last-child { display: none; }
+  .lb-table td:last-child { display: none !important; }
 
-  /* 列宽：排名固定50px，时间固定90px，其余全部给玩家ID */
-  .lb-table thead th:first-child,
-  .lb-table td:first-child  { width: 50px; }
-  .lb-table thead th:nth-child(2),
-  .lb-table td:nth-child(2) { width: 90px; }
-  /* 第3列（玩家ID / captureStatus）自动撑满剩余宽度 */
-  .lb-table thead th:nth-child(3),
-  .lb-table td:nth-child(3) { width: auto; }
+  /* ── 列宽（仅设 th；百分比基于表格总宽度）── */
 
-  /* 4列表格：玩家ID是第3列，直接铺满 ✓ */
-  /* 5列夜灵表格：第3列=captureStatus，第4列=玩家ID（第4列在visible） */
-  /* 对于5列情况，第3列给固定宽，让第4列撑满（第5列=date已hidden） */
-  /* 通过给第4列也设auto覆盖 */
-  .lb-table thead th:nth-child(4):not(:last-child),
-  .lb-table td:nth-child(4):not(:last-child) { width: auto; }
+  /* 排名列（第1列）：14%
+     以 350px 宽手机为例：14% = 49px，含 2×8px padding = 33px content（容纳32px badge）*/
+  .lb-table thead th:first-child { width: 14% !important; padding-left: .35rem !important; padding-right: .35rem !important; }
+  .lb-table td.rank-col { padding-left: .25rem !important; padding-right: .25rem !important; }
+
+  /* 时间列（第2列）：28%
+     28% = 98px，含 2×8px padding = 82px content（容纳 "1:23.456" ≈72px）*/
+  .lb-table thead th:nth-child(2) { width: 28% !important; }
+  /* 时间值不换行，超长时截断 */
+  .lb-table td.time-col { white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }
+
+  /* 夜灵表格 captureStatus 列（5列表格的第3列，占第3列位置且是倒数第3）：16%固定 */
+  /* 选择器 nth-child(3):nth-last-child(3) 仅在共5列时命中第3列，4列表格不受影响 */
+  .lb-table thead th:nth-child(3):nth-last-child(3) { width: 16% !important; }
+
+  /* 玩家ID列（标准4列=第3列、夜灵5列=第4列）：无显式宽度 → auto
+     table-layout:fixed 下，auto列平分剩余空间；唯一auto列独占全部剩余 ✓ */
 
   .lb-title { font-size: clamp(1.1rem, 5.5vw, 1.7rem); }
   .lb-subtitle { font-size: .6rem; letter-spacing: .1em; }
   .lb-back { margin-bottom: 1.5rem; padding: .38rem .75rem; font-size: .68rem; }
 
-  /* 大类Tab：字体放大 */
   .lb-tab-btn { padding: .52rem 1.1rem; font-size: .9rem; letter-spacing: .08em; }
   .lb-tabs { gap: .4rem; margin-bottom: .7rem; }
 
-  /* 小类Tab：移动端横向滚动，不换行 */
   .map-tabs {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -560,39 +564,26 @@
 
 @media screen and (max-width: 480px) {
   .lb-main { padding: 1.5rem .5rem 1rem; }
-  .lb-table { table-layout: fixed; }
+  .lb-table { table-layout: fixed !important; }
 
-  /* 表头：字体放大 */
   .lb-table thead th {
-    padding: .7rem .6rem;
-    font-size: .82rem;
-    letter-spacing: .08em;
+    padding: .6rem .4rem !important;
+    font-size: .8rem;
+    letter-spacing: .06em;
   }
-  /* 表体单元格：字体放大，防止溢出 */
   .lb-table td {
-    padding: .75rem .6rem;
-    font-size: 1rem;
+    padding: .65rem .5rem;
+    font-size: .95rem;
     white-space: normal;
-    word-break: break-all;
+    word-break: break-word;
     vertical-align: middle;
   }
-  /* 排名列保持居中 */
-  .lb-table td.rank-col { padding: .75rem .5rem; }
+  .lb-table td.rank-col { padding-left: .2rem !important; padding-right: .2rem !important; }
   .lb-title { font-size: clamp(1rem, 6vw, 1.4rem); }
-  .rank-badge {
-    width: 32px;
-    height: 32px;
-    font-size: .82rem;
-  }
-  .time-col {
-    font-size: 1rem;
-    white-space: nowrap;
-  }
-  .player-col {
-    font-size: 1rem;
-  }
+  .rank-badge { width: 30px; height: 30px; font-size: .78rem; }
+  .time-col   { font-size: .92rem; white-space: nowrap !important; overflow: hidden; }
+  .player-col { font-size: .92rem; }
 
-  /* 极小屏：小类按钮字体保持清晰 */
   .map-tab-btn { padding: .42rem .9rem; font-size: .8rem; letter-spacing: .05em; }
   .map-tabs { padding: .6rem .5rem; gap: .35rem; }
   .lb-tab-btn { padding: .5rem 1rem; font-size: .88rem; }

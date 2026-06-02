@@ -1495,8 +1495,7 @@ img { display: block; max-width: 100%; }
   position: fixed;
   top: 70px; left: 0; right: 0;
   z-index: 1950;
-  /* 减去导航栏高度，再减去手机底部系统栏（home indicator 等） */
-  max-height: calc(100vh - 70px - env(safe-area-inset-bottom, 0px));
+  max-height: calc(100vh - 70px);
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -1517,12 +1516,14 @@ img { display: block; max-width: 100%; }
   transform: translateY(0);
   pointer-events: auto;
 }
-/* 抽屉内底部留白：确保最后一项在手机底栏上方可见 */
+/* 底部留白：6rem（96px）足以覆盖所有手机底部系统栏高度（iOS最大83px），
+   确保最后一个菜单项滚动到底时完全可见、不被底栏遮挡。
+   注意：env(safe-area-inset-bottom)需要viewport-fit=cover才生效，
+   此处用固定值代替以确保兼容性。 */
 .mob-nav-drawer::after {
   content: '';
   display: block;
-  height: calc(2.5rem + env(safe-area-inset-bottom, 16px));
-  flex-shrink: 0;
+  height: 6rem;
 }
 
 /* ── 菜单项（链接 & 父级按钮共用） ── */
