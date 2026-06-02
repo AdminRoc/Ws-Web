@@ -104,11 +104,57 @@ function initNav() {
       }
     });
   });
+
+  /* ── 手机端：nav-rules-wrap 点击展开下拉 ── */
+  const rulesWrap = document.querySelector('.nav-rules-wrap');
+  if (rulesWrap) {
+    const rulesBtn = rulesWrap.querySelector(':scope > a');
+    if (rulesBtn) {
+      rulesBtn.addEventListener('click', (e) => {
+        if (window.innerWidth <= 860) {
+          e.preventDefault();
+          rulesWrap.classList.toggle('mob-open');
+        }
+      });
+    }
+  }
+
+  /* ── 手机端：nav-more-mobile 点击展开面板 ── */
+  const mobMoreBtn = document.getElementById('nav-more-mobile');
+  const mobPanel = document.getElementById('mob-more-panel');
+  if (mobMoreBtn && mobPanel) {
+    mobMoreBtn.addEventListener('click', () => {
+      mobMoreBtn.classList.toggle('mob-open');
+      mobPanel.classList.toggle('open');
+    });
+  }
+
+  /* ── 手机端：下拉子链接单击展开，再单击跳转 ── */
+  document.querySelectorAll('.nav-dropdown-menu a').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      if (window.innerWidth <= 860) {
+        var parent = a.closest('.nav-item');
+        if (parent && parent.classList.contains('mob-open')) {
+          // 已展开：关闭并允许跳转
+          parent.classList.remove('mob-open');
+        } else if (parent) {
+          // 未展开：先展开，阻止跳转
+          e.preventDefault();
+          document.querySelectorAll('.nav-item').forEach(function(i) { i.classList.remove('mob-open'); });
+          parent.classList.add('mob-open');
+        }
+      }
+    });
+  });
+
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.site-nav')) {
       hamburger.classList.remove('open');
       navLinks.classList.remove('open');
       dropItems.forEach(i => i.classList.remove('mob-open'));
+      if (rulesWrap) rulesWrap.classList.remove('mob-open');
+      if (mobMoreBtn) mobMoreBtn.classList.remove('mob-open');
+      if (mobPanel) mobPanel.classList.remove('open');
     }
   });
 }

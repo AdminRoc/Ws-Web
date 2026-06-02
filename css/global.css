@@ -753,10 +753,14 @@ img { display: block; max-width: 100%; }
   }
   .nav-dropdown-menu a { padding-left: 2.5rem; }
 
-  /* 移动端规则/提交按钮：紧跟汉堡键 */
+  /* ── 手机端隐藏提交成绩按钮 ── */
+  .nav-submit { display: none !important; }
+
+  /* ── 手机端 nav-rules-dropdown 展开样式 ── */
   .nav-rules-wrap {
     margin-right: 0;
     margin-left: .45rem;
+    position: relative;
   }
   .nav-rules {
     padding: .36rem .6rem;
@@ -765,20 +769,29 @@ img { display: block; max-width: 100%; }
   }
   /* 移动端下拉菜单靠右对齐，避免溢出屏幕 */
   .nav-rules-dropdown {
+    position: static;
+    opacity: 0;
+    visibility: hidden;
+    transform: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    max-height: 0;
+    padding: 0;
+    transition: max-height .3s ease, opacity .3s ease, visibility .3s ease;
+    background: rgba(0,0,0,.3);
+    backdrop-filter: none;
     left: auto;
     right: 0;
     min-width: 130px;
   }
+  .nav-rules-wrap.mob-open .nav-rules-dropdown {
+    opacity: 1;
+    visibility: visible;
+    max-height: 300px;
+  }
   /* 移动端隐藏 nav-item 底部下划线 */
   .nav-item > a::before { display: none; }
-  .nav-submit {
-    margin-left: .4rem;
-    padding: .38rem .7rem;
-    font-size: .62rem;
-    letter-spacing: .07em;
-  }
-  /* nav-links 是 fixed 不占位，所以 nav-inner 只剩 logo + hamburger + submit */
-  /* hamburger 的 margin-left:auto 会把 hamburger+submit 推到最右侧 */
 }
 
 /* ══════════════════════════════════════════════════════════
