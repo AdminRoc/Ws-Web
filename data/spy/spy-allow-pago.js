@@ -25,9 +25,9 @@ var spy_allow_pagoRecords = [
 
   {
     playerId:   "L1ndell",
-    clearTime:  "0:46.783",
-    uploadTime: "2025-12-31",
-    videoUrls:  ["https://www.youtube.com/watch?v=NSaaCsqW_9I&t=75s"],
+    clearTime:  "0:46.533",
+    uploadTime: "2026-06-02",
+    videoUrls:  ["https://www.youtube.com/watch?v=BDDeN9A2Uco"],
   },
   
   {

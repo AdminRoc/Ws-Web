@@ -41,6 +41,12 @@ var assassination_normal_tethysRecords = [
     uploadTime: "2023-11-12",
     videoUrls:  ["https://www.youtube.com/watch?v=ECgXY3zYGKw"],
   },
+  {
+    playerId:   "Plyonate",
+    clearTime:  "0:41.000",
+    uploadTime: "2026-06-02",
+    videoUrls:  ["https://www.youtube.com/watch?v=znCFlwTDtlk"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

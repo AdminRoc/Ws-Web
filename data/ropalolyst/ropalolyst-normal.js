@@ -53,6 +53,12 @@ var ropalolyst_normalRecords = [
     uploadTime: "2025-02-18",
     videoUrls:  ["https://www.youtube.com/watch?v=mx-6E1j_rEo"],
   },
+  {
+    playerId:   "_BaJIMaTbE_",
+    clearTime:  "2:43.000",
+    uploadTime: "2026-06-02",
+    videoUrls:  ["https://www.youtube.com/watch?v=oAFp4jCmd6E"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
