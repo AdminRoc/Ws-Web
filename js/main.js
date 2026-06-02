@@ -218,13 +218,33 @@ function initMobileNav() {
     }
   });
 
-  /* ── 开关函数 ── */
+  /* ── 开关函数（含 iOS 兼容的 body 滚动锁定） ── */
+  var _savedScrollY = 0;
+
   function openDrawer() {
+    /* 记录当前滚动位置，再锁定 body（iOS Safari 必须 position:fixed 才能真正阻止下层滚动） */
+    _savedScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top      = '-' + _savedScrollY + 'px';
+    document.body.style.left     = '0';
+    document.body.style.right    = '0';
+
     hamburger.classList.add('open');
     overlay.classList.add('mnd-show');
     drawer.classList.add('mnd-show');
   }
+
   function closeDrawer() {
+    /* 先还原 body，再恢复滚动位置（同步执行，避免视觉跳动） */
+    var sy = _savedScrollY;
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top      = '';
+    document.body.style.left     = '';
+    document.body.style.right    = '';
+    window.scrollTo(0, sy);
+
     hamburger.classList.remove('open');
     overlay.classList.remove('mnd-show');
     drawer.classList.remove('mnd-show');
