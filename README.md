@@ -113,8 +113,6 @@
 
 ---
 
-# English Version:
-
 # WFS Speedrun Leaderboard
 
 A pure static leaderboard website for Warframe speedrun records.
