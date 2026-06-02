@@ -1516,14 +1516,12 @@ img { display: block; max-width: 100%; }
   transform: translateY(0);
   pointer-events: auto;
 }
-/* 底部留白：6rem（96px）足以覆盖所有手机底部系统栏高度（iOS最大83px），
-   确保最后一个菜单项滚动到底时完全可见、不被底栏遮挡。
-   注意：env(safe-area-inset-bottom)需要viewport-fit=cover才生效，
-   此处用固定值代替以确保兼容性。 */
+/* 底部留白：9rem（144px）确保最后菜单项在任何手机底栏上方完全可见。
+   注意：env(safe-area-inset-bottom)需要viewport-fit=cover，此处用固定值保证兼容性。 */
 .mob-nav-drawer::after {
   content: '';
   display: block;
-  height: 6rem;
+  height: 9rem;
 }
 
 /* ── 菜单项（链接 & 父级按钮共用） ── */
