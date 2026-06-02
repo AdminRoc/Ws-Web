@@ -640,15 +640,8 @@
 /* ══════════════════════════════════════════════════════════
    响应式
    ══════════════════════════════════════════════════════════ */
-@media (max-width: 600px) {
-  /* 手机端600px断点：确保按钮可见，移除固定bottom偏移 */
-  .hero-buttons { gap: 1rem; }
-  .hero-btn { padding: .88rem 2rem; font-size: .72rem; }
-  .principle-cards { gap: .95rem; }
-  .lb-entry-grid { grid-template-columns: 1fr; }
-  .hero-bottom { bottom: 2.2rem; }
-}
 
+/* ≤768px：正文区间距调整（不影响首屏按钮） */
 @media screen and (max-width: 768px) {
   .scroll-section { padding: 5rem 1.2rem 3rem; }
   .hero-textblock { margin-bottom: 7rem; }
@@ -658,23 +651,53 @@
   .lb-entry-card { padding: 1.5rem 1.2rem; }
 }
 
+/* ≤600px 手机端：把 hero-bottom 从 absolute 改为 relative，
+   让按钮组跟随文字块在 flex 流中排列，避免被浏览器地址栏遮挡。
+   原因：mobile 浏览器的 100vh 含地址栏，absolute bottom:Xrem 
+   实际落在可见区域之外。改为 relative 后由 flex 自动垂直居中。 */
+@media (max-width: 600px) {
+  .hero {
+    /* justify-content 改为 flex-start + padding 方式，给顶部留空间 */
+    justify-content: center;
+  }
+  .hero-textblock {
+    margin-top: -10vh;        /* 整体上移，让 logo 更靠近屏幕上方 */
+    margin-bottom: 2.2rem;    /* 文字与按钮之间的间距 */
+  }
+  .hero-bottom {
+    position: relative;       /* ★ 脱离 absolute，加入 flex 流 */
+    bottom: auto;
+    left: auto;
+    right: auto;
+    gap: 1rem;
+    width: 100%;
+  }
+  .hero-buttons { gap: 1rem; }
+  .hero-btn { padding: .88rem 2rem; font-size: .72rem; }
+  .principle-cards { gap: .95rem; }
+  .lb-entry-grid { grid-template-columns: 1fr; }
+}
+
+/* ≤480px 极小屏：进一步上移 + 按钮竖排 */
 @media screen and (max-width: 480px) {
   .wf-word  { font-size: clamp(3rem, 14vw, 5.6rem); }
   .spd-word { font-size: clamp(3rem, 14vw, 5.6rem); }
-  /* 手机端专用：按钮竖排并上移，确保三个按钮全部在屏幕视野内 */
+  .hero-textblock {
+    margin-top: -12vh;        /* 比600px断点更激进地上移 */
+    margin-bottom: 1.8rem;
+  }
+  .hero-bottom {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    gap: .8rem;
+  }
   .hero-buttons {
     flex-direction: column;
     align-items: center;
     gap: .72rem;
     padding: 0 1rem;
-    /* 不依赖bottom定位，改为让hero-bottom整体上移 */
   }
   .hero-btn { width: 82vw; max-width: 280px; justify-content: center; }
-  /* 减小hero-textblock下边距，让底部按钮组整体上移 */
-  .hero-textblock { margin-bottom: 4rem; }
-  /* hero-bottom上移，确保三个按钮都在视野内 */
-  .hero-bottom {
-    bottom: 2rem;
-    gap: .9rem;
-  }
 }
