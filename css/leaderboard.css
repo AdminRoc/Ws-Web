@@ -155,24 +155,10 @@
 .lb-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: auto;  /* 列宽自适应内容，无横向溢出 */
+  table-layout: auto;
 }
 
-/* ── 列宽分配（table-layout:fixed 时由 th 宽度决定） ── */
-/* 4列（结算时间类）：排名、时间、玩家ID、上传日期 */
-.lb-table thead th:nth-child(1) { width: 12%; }
-.lb-table thead th:nth-child(2) { width: 28%; }
-.lb-table thead th:nth-child(3) { width: 42%; }
-.lb-table thead th:nth-child(4) { width: 18%; }
-/* 5列（夜灵类）：排名、时间、击杀数、玩家ID、上传日期 */
-.lb-table thead th:nth-child(5) { width: 10%; }
-
-/* ── 移动端列宽（隐藏第4列，第1-3列均分） ── */
-@media screen and (max-width: 768px) {
-  .lb-table thead th:nth-child(1) { width: 16%; }
-  .lb-table thead th:nth-child(2) { width: 32%; }
-  .lb-table thead th:nth-child(3) { width: 52%; }
-}
+/* ── 移动端（隐藏第4列，1-3列自动分配宽度） ── */
 
 /* ── 表头 ── */
 .lb-table thead tr {
@@ -197,17 +183,14 @@
 .lb-table tbody tr {
   border-bottom: 1px solid rgba(185,142,52,.06);
   cursor: pointer;
-  transition: background var(--ease-fast), transform var(--ease-fast), box-shadow var(--ease-fast);
+  transition: background var(--ease-fast);
   position: relative;
 }
 .lb-table tbody tr:last-child { border-bottom: none; }
 
-.lb-table tbody tr:hover {
+.lb-table tbody tr:hover td {
   background: rgba(185,142,52,.055);
-  transform: translateX(4px);
-  box-shadow: inset 3px 0 0 var(--c-gold-bright), inset 3px 0 12px rgba(185,142,52,.18);
 }
-.lb-table tbody tr:hover td { color: rgba(230,200,140,.95); }
 
 /* ── 单元格 ── */
 .lb-table td {
@@ -218,6 +201,7 @@
   vertical-align: middle;
   white-space: nowrap;
   transition: color var(--ease-fast);
+  background: rgba(12,8,2,0); /* 显式透明，防止行背景不满 */
 }
 
 /* ── 排名列 ── */
@@ -242,7 +226,7 @@
 
 /* ── 前三名高亮 ── */
 /* 第 1 名：金色 */
-.lb-table tbody tr.rank-1 { background: rgba(255,215,0,.04); }
+.lb-table tbody tr.rank-1 td { background: rgba(255,215,0,.04); }
 .lb-table tbody tr.rank-1 .rank-badge {
   color: var(--c-gold);
   border-color: rgba(255,215,0,.5);
@@ -255,7 +239,7 @@
   filter: drop-shadow(0 0 5px rgba(255,215,0,.5));
 }
 /* 第 2 名：银色 */
-.lb-table tbody tr.rank-2 { background: rgba(192,208,232,.03); }
+.lb-table tbody tr.rank-2 td { background: rgba(192,208,232,.03); }
 .lb-table tbody tr.rank-2 .rank-badge {
   color: var(--c-silver);
   border-color: rgba(192,208,232,.45);
@@ -267,7 +251,7 @@
   font-weight: 600;
 }
 /* 第 3 名：古铜色 */
-.lb-table tbody tr.rank-3 { background: rgba(205,140,70,.03); }
+.lb-table tbody tr.rank-3 td { background: rgba(205,140,70,.03); }
 .lb-table tbody tr.rank-3 .rank-badge {
   color: var(--c-bronze);
   border-color: rgba(205,140,70,.45);
@@ -302,7 +286,6 @@
   color: var(--c-gold-dim);
   transition: color var(--ease-fast);
 }
-tr:hover .video-indicator { color: var(--c-gold-bright); }
 
 /* ── 无数据占位行 ── */
 .lb-empty {
