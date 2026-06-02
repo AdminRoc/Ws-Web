@@ -450,7 +450,8 @@
         } catch(e) {}
       }
     }
-    sortMapTabsByRecordCount(_curCat);
+    });
+  });
     document.querySelectorAll('#lb-tabs .lb-tab-btn').forEach(function(b){
       b.classList.toggle('active', b.dataset.cat === _curCat);
     });
