@@ -496,7 +496,7 @@
 /* ══════════════════════════════════════════════════════════
    ★ 手机端表格适配（无横向滚动条）
    ══════════════════════════════════════════════════════════ */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 860px) {
   .lb-main { padding: 2rem .85rem 1.5rem; }
 
   /* 表格自适应屏幕宽度，不横向滚动 */
@@ -508,9 +508,9 @@
   .lb-table thead th,
   .lb-table td { white-space: normal; word-break: break-all; }
 
-  /* 列宽分配：排名+时间+玩家ID，隐藏视频列 */
-  .lb-table thead th:nth-child(4),
-  .lb-table td:nth-child(4) { display: none; }
+  /* 隐藏最后一列（提交日期）—— 用 last-child 兼容4列和5列表格 */
+  .lb-table thead th:last-child,
+  .lb-table td:last-child { display: none; }
 
   .lb-title { font-size: clamp(1.1rem, 5.5vw, 1.7rem); }
   .lb-subtitle { font-size: .6rem; letter-spacing: .1em; }

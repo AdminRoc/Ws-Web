@@ -694,105 +694,35 @@ img { display: block; max-width: 100%; }
 .site-footer a:hover { color: var(--c-text2); }
 
 /* ══════════════════════════════════════════════════════════
-   移动端响应式
+   移动端响应式（≤860px）
+   手机端只保留 logo + 汉堡按钮，导航内容由新抽屉接管
    ══════════════════════════════════════════════════════════ */
 @media (max-width: 860px) {
+  /* 显示汉堡按钮 */
   .nav-hamburger { display: flex; }
 
-  /* 导航链接收起为抽屉 */
-  .nav-links {
-    position: fixed;
-    top: 70px; left: 0; right: 0;
-    background: rgba(4,8,20,.97);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0,212,255,.13);
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: auto;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .4s ease;
-    z-index: 800;
-  }
-  /* 展开时高度自适应，足够容纳"更多榜单"子面板所有链接 */
-  .nav-links.open { max-height: 95vh; overflow-y: auto; overflow-x: hidden; }
+  /* 旧的 nav-links 抽屉：完全隐藏，由新移动端抽屉取代 */
+  .nav-links { display: none !important; }
 
-  .nav-item {
-    width: 100%;
-    height: auto;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .nav-item > a {
-    width: 100%;
-    height: auto;
-    padding: .9rem 1.5rem;
-    border-bottom: 1px solid rgba(0,212,255,.06);
-    font-size: .78rem;
-  }
+  /* 隐藏"查看提交规则"方块按钮 */
+  .nav-rules-wrap { display: none !important; }
 
-  /* 移动端下拉菜单改为点击展开 */
-  .nav-dropdown-menu {
-    position: static;
-    opacity: 0;
-    visibility: hidden;
-    transform: none;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    max-height: 0;
-    padding: 0;
-    transition: max-height .3s ease, opacity .3s ease, visibility .3s ease;
-    background: rgba(0,0,0,.3);
-    backdrop-filter: none;
-  }
-  .nav-item.has-dropdown.mob-open .nav-dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    max-height: 200px;
-  }
-  .nav-dropdown-menu a { padding-left: 2.5rem; }
-
-  /* ── 手机端隐藏提交成绩按钮 ── */
+  /* 隐藏"提交成绩"按钮 */
   .nav-submit { display: none !important; }
 
-  /* ── 手机端 nav-rules-dropdown 展开样式 ── */
-  .nav-rules-wrap {
-    margin-right: 0;
-    margin-left: .45rem;
-    position: relative;
+  /* nav-inner：logo 靠左，汉堡靠右 */
+  .nav-inner {
+    padding: 0 1rem;
+    justify-content: space-between;
   }
-  .nav-rules {
-    padding: .36rem .6rem;
-    font-size: .58rem;
-    letter-spacing: .05em;
-  }
-  /* 移动端下拉菜单靠右对齐，避免溢出屏幕 */
-  .nav-rules-dropdown {
-    position: static;
-    opacity: 0;
-    visibility: hidden;
-    transform: none;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    max-height: 0;
-    padding: 0;
-    transition: max-height .3s ease, opacity .3s ease, visibility .3s ease;
-    background: rgba(0,0,0,.3);
-    backdrop-filter: none;
-    left: auto;
-    right: 0;
-    min-width: 130px;
-  }
-  .nav-rules-wrap.mob-open .nav-rules-dropdown {
-    opacity: 1;
-    visibility: visible;
-    max-height: 300px;
-  }
-  /* 移动端隐藏 nav-item 底部下划线 */
-  .nav-item > a::before { display: none; }
+
+  /* 超级面板在移动端隐藏 */
+  .nav-more-btn      { display: none; }
+  .super-nav-panel   { display: none !important; }
+  .super-nav-overlay { display: none !important; }
+
+  /* 举报/公示按钮组：移动端间距调整 */
+  .report-wrap { gap: .7rem; padding: 0 1rem; }
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -1525,158 +1455,151 @@ img { display: block; max-width: 100%; }
 .lb-tip:hover .lb-tip-en { opacity: 1 !important; }
 
 
-/* ══ 移动端专用元素：桌面端默认隐藏 ══ */
-/* 这些元素只在移动端（≤860px）使用，桌面端不显示 */
+/* ══ 旧移动端专用元素（保留HTML兼容性，CSS层隐藏） ══ */
 .nav-more-mobile { display: none; }
 .mob-more-panel  { display: none; }
-
-/* ══════════════════════════════════════════════════════════
-   移动端完整适配（860px以下）
-   ══════════════════════════════════════════════════════════ */
-@media screen and (max-width: 860px) {
-  /* 超级面板在移动端隐藏（已有汉堡菜单覆盖功能） */
-  .nav-more-btn { display: none; }
-  .super-nav-panel { display: none !important; }
-  .super-nav-overlay { display: none !important; }
-
-  /* 移动端导航栏内：提交成绩按钮显示 */
-  .nav-submit {
-    display: inline-flex;
-    margin-left: .3rem;
-    padding: .35rem .65rem;
-    font-size: .6rem;
-    letter-spacing: .06em;
-    flex-shrink: 0;
-  }
-
-  /* nav-inner 布局：logo | hamburger | submit */
-  .nav-inner {
-    gap: 0;
-  }
-
-  /* ══ 移动端"更多榜单"按钮 ══
-     独立样式，与PC端完全隔离，确保点击响应 */
-  .nav-links .nav-more-mobile {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    padding: .9rem 1.5rem;
-    border-bottom: 1px solid rgba(0,212,255,.06);
-    font-family: var(--f-sci);
-    font-size: .78rem;
-    font-weight: 500;
-    letter-spacing: .05em;
-    color: var(--c-text2);
-    cursor: pointer;
-    background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    text-align: left;
-    user-select: none;
-    transition: color .25s ease, background .25s ease;
-    /* 确保触摸区域足够大 */
-    min-height: 48px;
-    -webkit-tap-highlight-color: rgba(0,212,255,.08);
-    touch-action: manipulation;
-    position: relative;
-    z-index: 1;
-  }
-  .nav-links .nav-more-mobile::after {
-    content: '▾';
-    font-size: .65rem;
-    opacity: .6;
-    transition: transform .3s ease, opacity .3s ease;
-    flex-shrink: 0;
-  }
-  .nav-links .nav-more-mobile.mob-open::after {
-    transform: rotate(180deg);
-    opacity: 1;
-  }
-  .nav-links .nav-more-mobile:active,
-  .nav-links .nav-more-mobile.mob-open {
-    color: var(--c-cyan);
-    background: rgba(0,212,255,.04);
-  }
-
-  /* ══ 移动端"更多榜单"展开面板 ══
-     使用max-height动画而非display:none，确保overflow不裁切 */
-  .mob-more-panel {
-    display: flex; /* 覆盖桌面端的display:none */
-    flex-direction: column;
-    background: rgba(0,8,20,.95);
-    border-top: 1px solid rgba(0,212,255,.08);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .35s ease;
-  }
-  .mob-more-panel.open {
-    max-height: 800px;
-  }
-  .mob-more-panel a {
-    display: block;
-    padding: .78rem 2.5rem;
-    font-family: var(--f-sci);
-    font-size: .75rem;
-    color: var(--c-text2);
-    border-bottom: 1px solid rgba(0,212,255,.05);
-    text-decoration: none;
-    transition: color .2s ease, background .2s ease;
-    /* 移动端确保触摸区域 */
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    -webkit-tap-highlight-color: rgba(0,212,255,.08);
-    touch-action: manipulation;
-  }
-  .mob-more-panel a:active { color: var(--c-cyan); background: rgba(0,212,255,.05); }
-  .mob-more-panel a:last-child { border-bottom: none; }
-}
 
 /* 极小屏（480px）进一步优化 */
 @media screen and (max-width: 480px) {
   .nav-inner { padding: 0 .75rem; }
   .logo-title { font-size: .9rem; }
   .logo-domain { font-size: .52rem; }
-  .nav-submit {
-    padding: .3rem .5rem;
-    font-size: .55rem;
-    letter-spacing: .04em;
-  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   手机端全新导航抽屉系统
+   完全独立于 PC 端，PC 端汉堡按钮 display:none 故永远不触发
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 遮罩层（点击可关闭抽屉） ── */
+.mob-nav-overlay {
+  position: fixed;
+  inset: 70px 0 0 0;
+  z-index: 1900;
+  background: rgba(0,0,0,.58);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .28s ease, visibility .28s ease;
+}
+.mob-nav-overlay.mnd-show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ── 抽屉主体（全宽、可滚动） ── */
+.mob-nav-drawer {
+  position: fixed;
+  top: 70px; left: 0; right: 0;
+  z-index: 1950;
+  max-height: calc(100vh - 70px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(4,8,20,.98);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-bottom: 1px solid rgba(185,142,52,.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity .28s ease, visibility .28s ease,
+              transform .28s cubic-bezier(.22,.68,0,1.2);
+}
+.mob-nav-drawer.mnd-show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ── 菜单项（链接 & 父级按钮共用） ── */
+.mnd-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.4rem;
+  font-family: var(--f-sci);
+  font-size: .86rem;
+  letter-spacing: .07em;
+  color: rgba(162,125,65,.82);
+  border-bottom: 1px solid rgba(185,142,52,.08);
+  text-decoration: none;
+  min-height: 54px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background .16s ease, color .16s ease;
+}
+.mnd-item:active                { background: rgba(185,142,52,.07); color: var(--c-gold-bright); }
+a.mnd-item:active               { background: rgba(185,142,52,.07); color: var(--c-gold-bright); }
+.mnd-item.mnd-active            { color: var(--c-gold-bright); border-left: 2px solid var(--c-gold-bright); padding-left: calc(1.4rem - 2px); }
+.mnd-item.mnd-parent-open       { color: var(--c-cyan); background: rgba(0,212,255,.04); }
+
+/* ── 父级展开箭头 ── */
+.mnd-arrow {
+  font-size: .55rem;
+  opacity: .5;
+  flex-shrink: 0;
+  margin-left: .6rem;
+  transition: transform .3s cubic-bezier(.22,.68,0,1.2), opacity .25s ease;
+}
+.mnd-parent-open .mnd-arrow { transform: rotate(90deg); opacity: 1; }
+
+/* ── 子菜单面板（max-height 动画展开） ── */
+.mnd-sub {
+  max-height: 0;
+  overflow: hidden;
+  background: rgba(0,5,15,.65);
+  border-bottom: 1px solid rgba(185,142,52,.06);
+  transition: max-height .32s cubic-bezier(.22,.68,0,1.2);
+}
+.mnd-sub.mnd-sub-open { max-height: 400px; }
+
+/* ── 子菜单项 ── */
+.mnd-sub-item {
+  display: flex;
+  align-items: center;
+  padding: 0 1.4rem 0 2.8rem;
+  font-family: var(--f-sci);
+  font-size: .82rem;
+  letter-spacing: .06em;
+  color: rgba(130,102,55,.72);
+  border-bottom: 1px solid rgba(185,142,52,.05);
+  text-decoration: none;
+  min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background .16s ease, color .16s ease;
+}
+.mnd-sub-item:last-child { border-bottom: none; }
+.mnd-sub-item:active     { background: rgba(185,142,52,.07); color: var(--c-gold-bright); }
+.mnd-sub-item.mnd-active { color: var(--c-gold-bright); }
+
+/* ── 抽屉顶部小标题（分区用） ── */
+.mnd-section-label {
+  display: block;
+  padding: .6rem 1.4rem .3rem;
+  font-family: var(--f-sci);
+  font-size: .6rem;
+  letter-spacing: .18em;
+  color: rgba(185,142,52,.38);
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(185,142,52,.06);
+  background: rgba(185,142,52,.02);
 }
 
 
 /* ══════════════════════════════════════════════════════════
-   移动端补充优化 v2
+   触摸设备：榜单 Tab 按钮增大点击区
    ══════════════════════════════════════════════════════════ */
-
-/* 导航栏：超小屏（≤400px）隐藏"查看提交规则"文字，只留图标 */
-@media (max-width: 400px) {
-  .nav-rules { padding: .3rem .45rem; font-size: 0; letter-spacing: 0; }
-  .nav-rules::after { font-size: .55rem; }
-  /* 让 flex 不溢出：logo 缩短 */
-  .nav-logo { margin-right: .6rem; }
-  /* 强制 nav-inner 不超出视口 */
-  .nav-inner { overflow: hidden; }
-}
-
-/* 导航下拉：移动端文字稍大，更好点击 */
-@media (max-width: 860px) {
-  .nav-dropdown-menu a { padding: .85rem 1.5rem; font-size: .76rem; }
-  /* 移动端 nav-rules-dropdown 右对齐，不超出屏幕 */
-  .nav-rules-dropdown { left: auto; right: 0; min-width: 150px; }
-  /* 举报/公示按钮竖排，占满宽度时换行 */
-  .report-wrap { gap: .7rem; padding: 0 1rem; }
-}
-
-/* 触摸设备：增大可点击区域 */
 @media (hover: none) {
-  .nav-item > a { min-height: 48px; }
   .lb-tab-btn, .map-tab-btn { min-height: 40px; padding-top: .5rem; padding-bottom: .5rem; }
-  /* 禁止悬停下拉（触摸设备用点击） */
-  .nav-item.has-dropdown:hover .nav-dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(-8px) scaleY(.88); }
-  .nav-item.has-dropdown.mob-open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0) scaleY(1); }
 }
 
 /* ══════════════════════════════════════════════════════════
