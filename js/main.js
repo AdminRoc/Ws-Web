@@ -802,7 +802,7 @@ function initAutoActiveNav() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   全站搜索 — 点击按钮时：圆形光晕从按钮位置扩张覆盖全屏，然后跳转
+   全站搜索 — 点击按钮时：柔和光晕从按钮位置扩张覆盖全屏，然后跳转
    ══════════════════════════════════════════════════════════ */
 document.addEventListener('click', function(e) {
   var link = e.target.closest('.nav-serch-link');
@@ -815,19 +815,41 @@ document.addEventListener('click', function(e) {
   var bx = rect.left + rect.width  / 2;
   var by = rect.top  + rect.height / 2;
 
-  /* 创建全屏覆盖层：从按钮中心向外扩张的圆形光晕 */
+  /* 计算对角线长度，确保光晕能完全覆盖屏幕 */
+  var screenDiag = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
+  var scaleNeeded = (screenDiag / Math.min(window.innerWidth, window.innerHeight)) * 1.5;
+
+  /* 创建柔和的光晕层：深色背景 + 中心高亮 */
   var portal = document.createElement('div');
   portal.style.cssText =
-    'position:fixed;inset:0;z-index:99999;pointer-events:all;border-radius:50%;' +
-    'background:radial-gradient(circle at center,#ffffff 0%,#99ccff 30%,#2255cc 100%);' +
-    'transform:scale(0);transform-origin:' + bx + 'px ' + by + 'px;opacity:0;';
+    'position:fixed;inset:0;z-index:99999;pointer-events:all;' +
+    'background:radial-gradient(circle at ' + bx + 'px ' + by + 'px,' +
+    'rgba(0,212,255,0.95) 0%,' +           /* 中心：科技蓝 */
+    'rgba(0,100,180,0.85) 15%,' +          /* 过渡 */
+    'rgba(10,20,40,0.95) 40%,' +           /* 深色过渡 */
+    'rgba(5,10,20,1) 70%);' +              /* 边缘：深空黑 */
   document.body.appendChild(portal);
-  portal.offsetHeight; /* force reflow */
-  portal.style.transition = 'transform .52s ease-in, opacity .28s ease-in .14s';
-  portal.style.transform  = 'scale(3)';
-  portal.style.opacity    = '1';
 
-  setTimeout(function() { window.location.href = dest; }, 580);
+  /* 初始状态：完全透明 */
+  portal.style.opacity = '0';
+  portal.style.transition = 'opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
+
+  /* 强制重绘 */
+  portal.offsetHeight;
+
+  /* 第一阶段：柔和淡入 */
+  portal.style.opacity = '1';
+
+  /* 第二阶段：短暂停留后跳转到搜索页 */
+  setTimeout(function() {
+    /* 添加轻微缩小效果作为过渡 */
+    portal.style.transition = 'opacity 0.2s ease-out';
+    portal.style.opacity = '0.3';
+
+    setTimeout(function() {
+      window.location.href = dest;
+    }, 150);
+  }, 480);
 });
 
 /* ══════════════════════════════════════════════════════════
