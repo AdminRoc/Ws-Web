@@ -802,6 +802,35 @@ function initAutoActiveNav() {
 }
 
 /* ══════════════════════════════════════════════════════════
+   全站搜索 — 点击按钮时：圆形光晕从按钮位置扩张覆盖全屏，然后跳转
+   ══════════════════════════════════════════════════════════ */
+document.addEventListener('click', function(e) {
+  var link = e.target.closest('.nav-serch-link');
+  if (!link) return;
+  e.preventDefault();
+  var dest = link.getAttribute('href') || 'serch.html';
+
+  /* 获取按钮中心在视口中的位置 */
+  var rect = link.getBoundingClientRect();
+  var bx = rect.left + rect.width  / 2;
+  var by = rect.top  + rect.height / 2;
+
+  /* 创建全屏覆盖层：从按钮中心向外扩张的圆形光晕 */
+  var portal = document.createElement('div');
+  portal.style.cssText =
+    'position:fixed;inset:0;z-index:99999;pointer-events:all;border-radius:50%;' +
+    'background:radial-gradient(circle at center,#ffffff 0%,#99ccff 30%,#2255cc 100%);' +
+    'transform:scale(0);transform-origin:' + bx + 'px ' + by + 'px;opacity:0;';
+  document.body.appendChild(portal);
+  portal.offsetHeight; /* force reflow */
+  portal.style.transition = 'transform .52s ease-in, opacity .28s ease-in .14s';
+  portal.style.transform  = 'scale(3)';
+  portal.style.opacity    = '1';
+
+  setTimeout(function() { window.location.href = dest; }, 580);
+});
+
+/* ══════════════════════════════════════════════════════════
    过渡页跳转（赛博风格 redirect.html）
    ══════════════════════════════════════════════════════════ */
 function _vcShow(url, rec, lbl) {
