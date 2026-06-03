@@ -823,143 +823,142 @@ function initAutoActiveNav() {
     _busy = true;
     var dest = link.getAttribute('href') || 'serch.html';
 
-    /* ══ 两阶段像素特效 ══
-       Phase 1 (0→700ms): 彩色像素从全页闪现堆砌，模拟页面像素化
-       Phase 2 (700→1650ms): 像素块从上到下波浪式崩塌落下，渐黑
+    /* ══ 三阶段故障像素特效 ══
+       Phase 1 (0→320ms):  CSS filter 让页面内容变为霓虹彩色 + 少量扫描线
+       Phase 2 (320→1000ms): CSS 极端色调旋转 + Canvas 故障线条/RGB偏移/噪声块
+       Phase 3 (1000→1380ms): 渐黑收尾
     ══════════════════════════════════════════════════════════ */
-    var cv = document.createElement('canvas');
-    cv.style.cssText = 'position:fixed;inset:0;z-index:99999;pointer-events:all;';
-    cv.width = innerWidth; cv.height = innerHeight;
+    var W=innerWidth, H=innerHeight;
+    var cv=document.createElement('canvas');
+    cv.style.cssText='position:fixed;inset:0;z-index:99999;pointer-events:all;';
+    cv.width=W; cv.height=H;
     document.body.appendChild(cv);
-    var ctx = cv.getContext('2d');
-    var W = cv.width, H = cv.height;
+    var ctx=cv.getContext('2d');
 
-    var P1 = 700, P2 = 950, TOTAL = P1 + P2;
+    var P1=320, P2=680, P3=380, TOTAL=P1+P2+P3;
 
-    /* ── 颜色池：赛博朋克主题 ── */
-    var darkPal  = [[3,5,14],[4,8,18],[5,10,22],[6,12,28],[3,6,16],[7,11,24],[2,4,12],[8,14,30]];
-    var cyanPal  = [[0,200,255],[0,170,240],[0,220,200],[20,180,230],[0,150,220]];
-    var goldPal  = [[200,155,40],[180,135,30],[220,170,50],[165,120,28],[210,160,45]];
-    var purpPal  = [[100,40,230],[80,30,200],[120,50,240],[70,25,180],[140,60,220]];
-
-    function rCol() {
-      var r = Math.random();
-      if (r < 0.52) return darkPal[Math.floor(Math.random()*darkPal.length)];
-      if (r < 0.72) return cyanPal[Math.floor(Math.random()*cyanPal.length)];
-      if (r < 0.87) return goldPal[Math.floor(Math.random()*goldPal.length)];
-      return purpPal[Math.floor(Math.random()*purpPal.length)];
+    /* ── 预生成随机故障线数据 ── */
+    var NS=52;
+    var sy=new Float32Array(NS),sh=new Float32Array(NS);
+    var sof=new Float32Array(NS),sph=new Float32Array(NS),ssp=new Float32Array(NS);
+    var scR=new Uint8Array(NS),scG=new Uint8Array(NS),scB=new Uint8Array(NS);
+    for(var i=0;i<NS;i++){
+      sy[i]=Math.random()*H; sh[i]=1+Math.random()*14;
+      sof[i]=(Math.random()-0.5)*130; sph[i]=Math.random()*6.28; ssp[i]=3+Math.random()*8;
+      var rc=Math.random();
+      if(rc<0.33){scR[i]=0;scG[i]=220;scB[i]=255;}
+      else if(rc<0.66){scR[i]=255;scG[i]=0;scB[i]=90;}
+      else{scR[i]=255;scG[i]=210;scB[i]=0;}
     }
 
-    /* ── Phase 1: 细像素格（10px）— 预生成所有随机值 ── */
-    var S1 = 10;
-    var fc = Math.ceil(W/S1), fr = Math.ceil(H/S1);
-    var fp = new Float32Array(fc*fr);   /* delay 0→1 */
-    var fR = new Uint8Array(fc*fr);
-    var fG = new Uint8Array(fc*fr);
-    var fB = new Uint8Array(fc*fr);
-    var fFlick = new Float32Array(fc*fr); /* flicker phase */
-    for (var i=0;i<fc*fr;i++) {
-      var c = rCol();
-      fR[i]=c[0]; fG[i]=c[1]; fB[i]=c[2];
-      /* 波浪：从上到下 + 左右随机扰动 */
-      var row=Math.floor(i/fc), col=i%fc;
-      fp[i] = (row/fr)*0.55 + (col/fc)*0.1 + Math.random()*0.35;
-      fp[i] = Math.min(fp[i],0.98);
-      fFlick[i] = Math.random()*6.28;
-    }
-
-    /* ── Phase 2: 粗像素格（22px）— 崩塌块 ── */
-    var S2 = 22;
-    var bc = Math.ceil(W/S2), br = Math.ceil(H/S2);
-    var bDelay = new Float32Array(bc*br);
-    var bVy    = new Float32Array(bc*br);
-    var bR = new Uint8Array(bc*br);
-    var bG = new Uint8Array(bc*br);
-    var bB = new Uint8Array(bc*br);
-    for (var i=0;i<bc*br;i++) {
-      var c = rCol();
-      bR[i]=c[0]; bG[i]=c[1]; bB[i]=c[2];
-      var row=Math.floor(i/bc);
-      bDelay[i] = (row/br)*0.42 + Math.random()*0.24;
-      bVy[i]    = 2.5 + Math.random()*4.5;
+    /* ── 预生成噪声块数据 ── */
+    var NB=200;
+    var bx=new Float32Array(NB),by=new Float32Array(NB);
+    var bw=new Float32Array(NB),bh=new Float32Array(NB);
+    var bph=new Float32Array(NB),bsp=new Float32Array(NB);
+    var bR=new Uint8Array(NB),bG=new Uint8Array(NB),bBB=new Uint8Array(NB);
+    var pN=[[0,210,255],[255,50,180],[255,190,0],[0,255,160],[160,60,255],[0,255,220]];
+    for(var i=0;i<NB;i++){
+      bx[i]=Math.random()*W; by[i]=Math.random()*H;
+      bw[i]=3+Math.random()*32; bh[i]=2+Math.random()*20;
+      bph[i]=Math.random()*6.28; bsp[i]=4+Math.random()*9;
+      var pl=pN[Math.floor(Math.random()*pN.length)];
+      bR[i]=pl[0];bG[i]=pl[1];bBB[i]=pl[2];
     }
 
     var t0=null;
     function frame(now){
       if(!t0)t0=now;
-      var el=now-t0;
+      var el=now-t0, t=el*0.001;
+      ctx.clearRect(0,0,W,H);
 
-      /* ─ Phase 1 ─ */
-      if(el<=P1){
-        var p1=el/P1;           /* 0→1 */
-        var t=el*0.001;
+      /* ─── Phase 1: 页面内容变彩色 ─── */
+      if(el<P1){
+        var fp=el/P1;
+        document.body.style.filter='saturate('+(1+fp*14)+') hue-rotate('+(fp*180)+'deg) brightness('+(1-fp*0.38)+') contrast('+(1+fp*1.5)+')';
 
-        /* 透明底：让页面内容透出 */
-        ctx.clearRect(0,0,W,H);
+        /* 扫描线 */
+        ctx.fillStyle='rgba(0,0,0,0.07)';
+        for(var y=0;y<H;y+=4)ctx.fillRect(0,y,W,1);
 
-        /* 彩色像素堆砌（批量按颜色绘制以提升性能） */
-        var n=fc*fr;
-        for(var i=0;i<n;i++){
-          if(p1<fp[i])continue;
-          var lp=(p1-fp[i])/(1-fp[i]+0.001);
-          lp=Math.min(lp*4,1);          /* 快速出现 */
-          /* 闪烁：高频 sin 使像素有生命感 */
-          var flick=0.7+0.3*Math.sin(t*18+fFlick[i]);
-          ctx.globalAlpha=lp*flick;
-          ctx.fillStyle='rgb('+fR[i]+','+fG[i]+','+fB[i]+')';
-          var px=(i%fc)*S1, py=Math.floor(i/fc)*S1;
-          ctx.fillRect(px,py,S1,S1);
+        /* 零散噪声块开始出现 */
+        var nc=Math.floor(fp*55);
+        for(var i=0;i<nc;i++){
+          ctx.globalAlpha=Math.abs(Math.sin(t*bsp[i]+bph[i]))*fp*0.65;
+          ctx.fillStyle='rgb('+bR[i]+','+bG[i]+','+bBB[i]+')';
+          ctx.fillRect(bx[i],by[i],bw[i],bh[i]);
         }
         ctx.globalAlpha=1;
 
-        /* RGB 色差扫描线 */
-        if(p1>0.25){
-          var sa=(p1-0.25)/0.75*0.18;
-          for(var y=0;y<H;y+=6){
-            if(Math.sin(y*0.3+t*8)>0.5){
-              ctx.fillStyle='rgba(0,200,255,'+sa+')';
-              ctx.fillRect(0,y,W,1);
-            }
+      /* ─── Phase 2: 故障高峰 ─── */
+      }else if(el<P1+P2){
+        var gp=(el-P1)/P2;
+        var hue=180+gp*420, sat=Math.max(15-gp*11,1), bri=Math.max(0.62-gp*0.57,0.04);
+        document.body.style.filter='saturate('+sat+') hue-rotate('+hue+'deg) brightness('+bri+') contrast('+(3-gp*1.5)+')';
+
+        /* RGB 横向撕裂线 */
+        for(var i=0;i<NS;i++){
+          if(Math.random()>0.42)continue;
+          if(Math.sin(t*ssp[i]+sph[i])<0)continue;
+          var ofs=sof[i]*(0.6+gp*2)*(Math.random()>0.5?1:-1);
+          ctx.globalAlpha=0.26;
+          ctx.fillStyle='rgb('+scR[i]+','+scG[i]+','+scB[i]+')';
+          ctx.fillRect(0,sy[i]+ofs,W,sh[i]);
+          ctx.globalAlpha=0.14;
+          ctx.fillStyle='rgb('+(255-scR[i])+','+(255-scG[i])+','+(255-scB[i])+')';
+          ctx.fillRect(ofs*0.35,sy[i]-ofs*0.25,W,sh[i]*0.6);
+        }
+        ctx.globalAlpha=1;
+
+        /* 全屏噪声块 */
+        for(var i=0;i<NB;i++){
+          var flick=0.5+0.5*Math.abs(Math.sin(t*bsp[i]*2+bph[i]));
+          ctx.globalAlpha=flick*0.90;
+          ctx.fillStyle='rgb('+bR[i]+','+bG[i]+','+bBB[i]+')';
+          ctx.fillRect(bx[i]+Math.sin(t*9+i*0.3)*20*gp,by[i],bw[i],bh[i]);
+        }
+        ctx.globalAlpha=1;
+
+        /* 扫描线加深 */
+        ctx.fillStyle='rgba(0,0,0,'+(0.07+gp*0.14)+')';
+        for(var y=0;y<H;y+=4)ctx.fillRect(0,y,W,1);
+
+        /* 垂直同步撕裂 */
+        if(gp>0.2){
+          var ty=Math.floor((Math.sin(t*6)*0.5+0.5)*H);
+          ctx.fillStyle='rgba(0,210,255,0.30)';ctx.fillRect(0,ty,W,3);
+          ctx.fillStyle='rgba(255,0,90,0.24)';ctx.fillRect(0,ty+3,W,2);
+        }
+
+        /* 暗角渐长 */
+        var vg=ctx.createRadialGradient(W/2,H/2,H*0.15,W/2,H/2,H*0.75);
+        vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,1)');
+        ctx.globalAlpha=gp*0.7;ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;
+
+      /* ─── Phase 3: 渐黑 ─── */
+      }else{
+        var dp=(el-P1-P2)/P3;
+        document.body.style.filter='brightness('+Math.max(0.04-dp*0.04,0)+') saturate(2)';
+        ctx.fillStyle='rgba(0,0,0,'+Math.min(dp*dp*1.5,1)+')';
+        ctx.fillRect(0,0,W,H);
+        if(dp<0.45){
+          for(var i=0;i<22;i++){
+            var idx=(i*9)%NB;
+            ctx.globalAlpha=(0.45-dp)*0.65;
+            ctx.fillStyle='rgb('+bR[idx]+','+bG[idx]+','+bBB[idx]+')';
+            ctx.fillRect(bx[idx],by[idx],bw[idx],bh[idx]);
           }
+          ctx.globalAlpha=1;
         }
-
-        /* 全局暗淡叠加（后期逐渐盖住页面） */
-        ctx.fillStyle='rgba(3,5,14,'+(p1*0.55)+')';
-        ctx.fillRect(0,0,W,H);
-
-      /* ─ Phase 2 ─ */
-      } else {
-        var p2=(el-P1)/P2; p2=Math.min(p2,1);
-
-        ctx.fillStyle='#03050e';
-        ctx.fillRect(0,0,W,H);
-
-        var n2=bc*br;
-        for(var i=0;i<n2;i++){
-          var lp=Math.max(0,Math.min((p2-bDelay[i])/(1-bDelay[i]+0.01),1));
-          var alpha=1-lp;
-          if(alpha<0.01)continue;
-          var fall=lp*lp*bVy[i]*95;
-          var scl=(1-lp*0.58)*(S2-1)*0.5;
-          ctx.globalAlpha=alpha;
-          ctx.fillStyle='rgb('+bR[i]+','+bG[i]+','+bB[i]+')';
-          var bx=(i%bc)*S2+S2/2;
-          var by=Math.floor(i/bc)*S2+S2/2+fall;
-          ctx.fillRect(bx-scl,by-scl,scl*2,scl*2);
-        }
-        ctx.globalAlpha=1;
-
-        /* 渐黑覆盖 */
-        ctx.fillStyle='rgba(0,0,0,'+Math.pow(p2,1.2)+')';
-        ctx.fillRect(0,0,W,H);
       }
 
-      if(el<TOTAL) requestAnimationFrame(frame);
-      else window.location.replace(dest);
+      if(el<TOTAL){requestAnimationFrame(frame);}
+      else{document.body.style.filter='';window.location.href=dest;}
     }
     requestAnimationFrame(frame);
   });
 })();
+  
 
 /* ══════════════════════════════════════════════════════════
    页面显示时重置样式（返回 / bfcache 恢复）
@@ -969,8 +968,8 @@ window.addEventListener('pageshow', function() {
   document.body.style.filter = '';
   document.body.style.animation = '';
   document.body.style.transition = '';
-  /* 清理残留 canvas 遮罩 */
-  document.querySelectorAll('canvas[style*="99999"]').forEach(function(c) {
+  /* 清理残留 canvas 遮罩（匹配所有高层级固定覆盖层） */
+  document.querySelectorAll('canvas[style*="z-index:99999"],canvas[style*="z-index: 99999"],canvas[style*="z-index:9999"],canvas[style*="z-index: 9999"]').forEach(function(c) {
     if (c.parentNode) c.parentNode.removeChild(c);
   });
 });
