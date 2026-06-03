@@ -737,11 +737,19 @@ function _updatePageNotice(dataFn) {
   if (dataFn) {
     try {
       var src = dataFn.toString();
-      var m = src.match(/return\s+([a-zA-Z_][a-zA-Z0-9_]*)Records/);
+      /* 支持多种函数格式：
+         1. function(){return xxxRecords;} 
+         2. function() { return xxxRecords; }
+         3. ()=>xxxRecords 或 () => xxxRecords
+         4. function name(){return xxxRecords;} */
+      var m = src.match(/return\s+([a-zA-Z_][a-zA-Z0-9_$]*)Records/) || 
+              src.match(/=>\s*([a-zA-Z_][a-zA-Z0-9_$]*)Records/);
       if (m) {
         var vn = m[1];
-        cn = (typeof window[vn + 'Notice_cn'] !== 'undefined') ? (window[vn + 'Notice_cn'] || '') : '';
-        en = (typeof window[vn + 'Notice_en'] !== 'undefined') ? (window[vn + 'Notice_en'] || '') : '';
+        var cnVar = vn + 'Notice_cn';
+        var enVar = vn + 'Notice_en';
+        cn = (typeof window[cnVar] !== 'undefined') ? (window[cnVar] || '') : '';
+        en = (typeof window[enVar] !== 'undefined') ? (window[enVar] || '') : '';
       }
     } catch(e) {}
   }
@@ -828,9 +836,9 @@ function initAutoActiveNav() {
       '@keyframes fragmentFade{to{transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(0.5);opacity:0}}';
     document.head.appendChild(style);
 
-    /* 第一阶段：故障彩色效果 */
+    /* 第一阶段：故障彩色效果 - 亮度降低20% */
     document.body.style.animation = 'glitchColor 0.4s ease-out';
-    document.body.style.filter = 'saturate(2.5) contrast(1.3)';
+    document.body.style.filter = 'saturate(2.0) contrast(1.2) brightness(0.8)';
 
     /* 所有元素添加抖动 */
     var allEls = document.querySelectorAll('body > *');
@@ -897,7 +905,7 @@ function initAutoActiveNav() {
         /* 第四阶段：跳转 - 使用 replace 避免 history 记录中间状态 */
         setTimeout(function(){
           window.location.replace(dest);
-        }, 850);
+        }, 1000);
       }, 300);
     }, 400);
   });
