@@ -810,136 +810,98 @@ function initAutoActiveNav() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   全站搜索 — 点击按钮时：故障艺术效果（Glitch Art）
-   彩色扭曲 → 破碎消散 → 慢慢暗淡
+   全站搜索 — 像素化视觉褪色崩塌 过渡效果
+   纯 Canvas，无 CSS 动画，无闪烁
    ══════════════════════════════════════════════════════════ */
 (function(){
-  var isTransitioning = false;
+  var _busy = false;
 
   document.addEventListener('click', function(e) {
     var link = e.target.closest('.nav-serch-link');
-    if (!link) return;
+    if (!link || _busy) return;
     e.preventDefault();
-
-    /* 防止重复触发 */
-    if (isTransitioning) return;
-    isTransitioning = true;
-
+    _busy = true;
     var dest = link.getAttribute('href') || 'serch.html';
 
-    /* 添加故障动画关键帧 */
-    var style = document.createElement('style');
-    style.id = 'glitch-style';
-    style.textContent = 
-      '@keyframes glitchColor{0%,100%{filter:hue-rotate(0deg) saturate(1)}25%{filter:hue-rotate(90deg) saturate(2)}50%{filter:hue-rotate(180deg) saturate(3)}75%{filter:hue-rotate(270deg) saturate(2)}}' +
-      '@keyframes glitchShake{0%,100%{transform:translate(0)}20%{transform:translate(-3px,2px)}40%{transform:translate(3px,-2px)}60%{transform:translate(-2px,-3px)}80%{transform:translate(2px,3px)}}' +
-      '@keyframes fragmentFade{to{transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(0.5);opacity:0}}';
-    document.head.appendChild(style);
+    /* ── Canvas 像素崩塌效果 ── */
+    var cv = document.createElement('canvas');
+    cv.style.cssText = 'position:fixed;inset:0;z-index:99999;pointer-events:all;';
+    cv.width = innerWidth; cv.height = innerHeight;
+    document.body.appendChild(cv);
+    var ctx = cv.getContext('2d');
+    var W = cv.width, H = cv.height;
 
-    /* 第一阶段：故障彩色效果 - 亮度降低20% */
-    document.body.style.animation = 'glitchColor 0.4s ease-out';
-    document.body.style.filter = 'saturate(2.0) contrast(1.2) brightness(0.8)';
+    /* 像素格子 */
+    var CELL = 26;
+    var cols = Math.ceil(W / CELL), rows = Math.ceil(H / CELL);
 
-    /* 所有元素添加抖动 */
-    var allEls = document.querySelectorAll('body > *');
-    allEls.forEach(function(el){
-      if(!el.style) return;
-      el.style.animation = 'glitchShake 0.15s ease-in-out 2';
-    });
+    /* 配色：深色赛博朋克基调 */
+    var dark   = [[3,5,14],[4,8,18],[6,10,22],[5,9,20],[3,6,16],[7,11,25],[4,7,19],[2,4,12]];
+    var accent = [[0,160,210],[0,130,190],[70,30,190],[50,20,160],[0,180,170],[0,140,200]];
 
-    /* 第二阶段：创建随机碎片（无网格线） */
-    setTimeout(function(){
-      var fragmentContainer = document.createElement('div');
-      fragmentContainer.id = 'glitch-fragments';
-      fragmentContainer.style.cssText = 'position:fixed;inset:0;z-index:99998;pointer-events:none;overflow:hidden;background:rgba(3,6,15,0.3)';
-      document.body.appendChild(fragmentContainer);
-
-      var fragments = [];
-      var fragmentCount = 40;
-
-      for(var i = 0; i < fragmentCount; i++){
-        var frag = document.createElement('div');
-        var w = 50 + Math.random() * 150;
-        var h = 30 + Math.random() * 100;
-        var x = Math.random() * (window.innerWidth - w);
-        var y = Math.random() * (window.innerHeight - h);
-        var angle = Math.random() * Math.PI * 2;
-        var flyDist = 100 + Math.random() * 400;
-        var rotation = Math.random() * 180 - 90;
-
-        /* 随机暗色调，无网格线 */
-        var darkness = 0.85 + Math.random() * 0.14;
-        var color = 'rgba(' + Math.floor(5*darkness) + ',' + Math.floor(10*darkness) + ',' + Math.floor(25*darkness) + ',' + (0.9 + Math.random()*0.1) + ')';
-
-        frag.style.cssText = 
-          'position:absolute;' +
-          'left:' + x + 'px;' +
-          'top:' + y + 'px;' +
-          'width:' + w + 'px;' +
-          'height:' + h + 'px;' +
-          'background:' + color + ';' +
-          'backdrop-filter:blur(1px);' +
-          '--tx:' + (Math.cos(angle) * flyDist) + 'px;' +
-          '--ty:' + (Math.sin(angle) * flyDist) + 'px;' +
-          '--rot:' + rotation + 'deg;';
-
-        fragmentContainer.appendChild(frag);
-        fragments.push({el: frag, delay: Math.random() * 0.4});
-      }
-
-      /* 第三阶段：碎片消散 + 页面暗淡 */
-      setTimeout(function(){
-        /* 页面整体暗淡 */
-        document.body.style.transition = 'filter 0.8s ease, opacity 0.8s ease';
-        document.body.style.filter = 'brightness(0.05) contrast(2) saturate(0)';
-        document.body.style.opacity = '0';
-
-        /* 碎片飞散消失 */
-        fragments.forEach(function(f){
-          setTimeout(function(){
-            f.el.style.transition = 'transform 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.6s ease';
-            f.el.style.animation = 'fragmentFade 0.7s cubic-bezier(0.4,0,0.2,1) forwards';
-          }, f.delay * 1000);
+    var blocks = [];
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var isAcc = Math.random() < 0.028;
+        var col = isAcc ? accent[Math.floor(Math.random()*accent.length)]
+                        : dark[Math.floor(Math.random()*dark.length)];
+        /* 从上到下波浪式崩塌 */
+        blocks.push({
+          x: c*CELL, y: r*CELL,
+          cr: col[0], cg: col[1], cb: col[2],
+          delay: (r/rows)*0.45 + Math.random()*0.22,
+          vy: 2 + Math.random()*3.5
         });
+      }
+    }
 
-        /* 第四阶段：跳转 - 使用 replace 避免 history 记录中间状态 */
-        setTimeout(function(){
-          window.location.replace(dest);
-        }, 1000);
-      }, 300);
-    }, 400);
+    var DUR = 1000, t0 = null;
+
+    function frame(now) {
+      if (!t0) t0 = now;
+      var el = now - t0, p = Math.min(el/DUR, 1);
+
+      ctx.fillStyle = '#03050e';
+      ctx.fillRect(0, 0, W, H);
+
+      for (var i = 0; i < blocks.length; i++) {
+        var b = blocks[i];
+        var lp = Math.max(0, Math.min((p - b.delay) / (1 - b.delay + 0.01), 1));
+        var alpha = 1 - lp;
+        if (alpha < 0.01) continue;
+        var fall = lp * lp * b.vy * 80;
+        var scl = (1 - lp * 0.55) * (CELL - 1) * 0.5;
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = 'rgb('+b.cr+','+b.cg+','+b.cb+')';
+        ctx.fillRect(b.x + CELL/2 - scl, b.y + CELL/2 - scl + fall, scl*2, scl*2);
+      }
+      ctx.globalAlpha = 1;
+
+      /* 整体暗淡覆盖 */
+      ctx.fillStyle = 'rgba(0,0,0,' + Math.pow(p, 1.3) + ')';
+      ctx.fillRect(0, 0, W, H);
+
+      if (el < DUR) {
+        requestAnimationFrame(frame);
+      } else {
+        window.location.replace(dest);
+      }
+    }
+    requestAnimationFrame(frame);
   });
 })();
 
 /* ══════════════════════════════════════════════════════════
-   页面加载时重置样式 - 修复返回黑屏问题
+   页面显示时重置样式（返回 / bfcache 恢复）
    ══════════════════════════════════════════════════════════ */
-window.addEventListener('pageshow', function(e) {
-  /* 重置 body 样式，确保从任何状态返回都正常显示 */
+window.addEventListener('pageshow', function() {
   document.body.style.opacity = '';
   document.body.style.filter = '';
   document.body.style.animation = '';
   document.body.style.transition = '';
-
-  /* 清理可能残留的动画元素 */
-  var fragments = document.getElementById('glitch-fragments');
-  if (fragments && fragments.parentNode) {
-    fragments.parentNode.removeChild(fragments);
-  }
-
-  /* 清理动画样式 */
-  var style = document.getElementById('glitch-style');
-  if (style && style.parentNode) {
-    style.parentNode.removeChild(style);
-  }
-
-  /* 重置所有子元素动画 */
-  var allEls = document.querySelectorAll('body > *');
-  allEls.forEach(function(el){
-    if(el.style) {
-      el.style.animation = '';
-      el.style.transition = '';
-    }
+  /* 清理残留 canvas 遮罩 */
+  document.querySelectorAll('canvas[style*="99999"]').forEach(function(c) {
+    if (c.parentNode) c.parentNode.removeChild(c);
   });
 });
 
