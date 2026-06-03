@@ -144,7 +144,7 @@ a{text-decoration:none;color:inherit;}
 <body>
 <canvas id="star-cvs"></canvas>
 <div class="nebula"></div>
-<a class="back-btn" href="javascript:history.length>1?history.back():(window.location='index.html')">
+<a class="back-btn" href="javascript:(function(){var ref=document.referrer;if(ref&&ref.indexOf(location.hostname)!==-1&&ref.indexOf('serch.html')===-1){window.location.href=ref;}else{window.location.href='index.html';}})()">
   <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
     <path d="M9.5 3L5 7.5l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
@@ -195,6 +195,21 @@ a{text-decoration:none;color:inherit;}
 
 
 
+
+<!-- ══ STYLE RESET - 防止返回黑屏 ══ -->
+<script>
+/* 页面显示时立即重置样式，防止返回时出现黑屏 */
+(function(){
+  document.documentElement.style.opacity = '';
+  document.documentElement.style.filter = '';
+  if(document.body){
+    document.body.style.opacity = '';
+    document.body.style.filter = '';
+    document.body.style.animation = '';
+    document.body.style.transition = '';
+  }
+})();
+</script>
 
 <!-- ══ GLITCH ENTRY EFFECT ══ -->
 <style>
