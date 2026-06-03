@@ -823,7 +823,10 @@ function initAutoActiveNav() {
     _busy = true;
     var dest = link.getAttribute('href') || 'serch.html';
 
-    /* ── Canvas 像素崩塌效果 ── */
+    /* ══ 两阶段像素特效 ══
+       Phase 1 (0→700ms): 彩色像素从全页闪现堆砌，模拟页面像素化
+       Phase 2 (700→1650ms): 像素块从上到下波浪式崩塌落下，渐黑
+    ══════════════════════════════════════════════════════════ */
     var cv = document.createElement('canvas');
     cv.style.cssText = 'position:fixed;inset:0;z-index:99999;pointer-events:all;';
     cv.width = innerWidth; cv.height = innerHeight;
@@ -831,61 +834,128 @@ function initAutoActiveNav() {
     var ctx = cv.getContext('2d');
     var W = cv.width, H = cv.height;
 
-    /* 像素格子 */
-    var CELL = 26;
-    var cols = Math.ceil(W / CELL), rows = Math.ceil(H / CELL);
+    var P1 = 700, P2 = 950, TOTAL = P1 + P2;
 
-    /* 配色：深色赛博朋克基调 */
-    var dark   = [[3,5,14],[4,8,18],[6,10,22],[5,9,20],[3,6,16],[7,11,25],[4,7,19],[2,4,12]];
-    var accent = [[0,160,210],[0,130,190],[70,30,190],[50,20,160],[0,180,170],[0,140,200]];
+    /* ── 颜色池：赛博朋克主题 ── */
+    var darkPal  = [[3,5,14],[4,8,18],[5,10,22],[6,12,28],[3,6,16],[7,11,24],[2,4,12],[8,14,30]];
+    var cyanPal  = [[0,200,255],[0,170,240],[0,220,200],[20,180,230],[0,150,220]];
+    var goldPal  = [[200,155,40],[180,135,30],[220,170,50],[165,120,28],[210,160,45]];
+    var purpPal  = [[100,40,230],[80,30,200],[120,50,240],[70,25,180],[140,60,220]];
 
-    var blocks = [];
-    for (var r = 0; r < rows; r++) {
-      for (var c = 0; c < cols; c++) {
-        var isAcc = Math.random() < 0.028;
-        var col = isAcc ? accent[Math.floor(Math.random()*accent.length)]
-                        : dark[Math.floor(Math.random()*dark.length)];
-        /* 从上到下波浪式崩塌 */
-        blocks.push({
-          x: c*CELL, y: r*CELL,
-          cr: col[0], cg: col[1], cb: col[2],
-          delay: (r/rows)*0.45 + Math.random()*0.22,
-          vy: 2 + Math.random()*3.5
-        });
-      }
+    function rCol() {
+      var r = Math.random();
+      if (r < 0.52) return darkPal[Math.floor(Math.random()*darkPal.length)];
+      if (r < 0.72) return cyanPal[Math.floor(Math.random()*cyanPal.length)];
+      if (r < 0.87) return goldPal[Math.floor(Math.random()*goldPal.length)];
+      return purpPal[Math.floor(Math.random()*purpPal.length)];
     }
 
-    var DUR = 1000, t0 = null;
+    /* ── Phase 1: 细像素格（10px）— 预生成所有随机值 ── */
+    var S1 = 10;
+    var fc = Math.ceil(W/S1), fr = Math.ceil(H/S1);
+    var fp = new Float32Array(fc*fr);   /* delay 0→1 */
+    var fR = new Uint8Array(fc*fr);
+    var fG = new Uint8Array(fc*fr);
+    var fB = new Uint8Array(fc*fr);
+    var fFlick = new Float32Array(fc*fr); /* flicker phase */
+    for (var i=0;i<fc*fr;i++) {
+      var c = rCol();
+      fR[i]=c[0]; fG[i]=c[1]; fB[i]=c[2];
+      /* 波浪：从上到下 + 左右随机扰动 */
+      var row=Math.floor(i/fc), col=i%fc;
+      fp[i] = (row/fr)*0.55 + (col/fc)*0.1 + Math.random()*0.35;
+      fp[i] = Math.min(fp[i],0.98);
+      fFlick[i] = Math.random()*6.28;
+    }
 
-    function frame(now) {
-      if (!t0) t0 = now;
-      var el = now - t0, p = Math.min(el/DUR, 1);
+    /* ── Phase 2: 粗像素格（22px）— 崩塌块 ── */
+    var S2 = 22;
+    var bc = Math.ceil(W/S2), br = Math.ceil(H/S2);
+    var bDelay = new Float32Array(bc*br);
+    var bVy    = new Float32Array(bc*br);
+    var bR = new Uint8Array(bc*br);
+    var bG = new Uint8Array(bc*br);
+    var bB = new Uint8Array(bc*br);
+    for (var i=0;i<bc*br;i++) {
+      var c = rCol();
+      bR[i]=c[0]; bG[i]=c[1]; bB[i]=c[2];
+      var row=Math.floor(i/bc);
+      bDelay[i] = (row/br)*0.42 + Math.random()*0.24;
+      bVy[i]    = 2.5 + Math.random()*4.5;
+    }
 
-      ctx.fillStyle = '#03050e';
-      ctx.fillRect(0, 0, W, H);
+    var t0=null;
+    function frame(now){
+      if(!t0)t0=now;
+      var el=now-t0;
 
-      for (var i = 0; i < blocks.length; i++) {
-        var b = blocks[i];
-        var lp = Math.max(0, Math.min((p - b.delay) / (1 - b.delay + 0.01), 1));
-        var alpha = 1 - lp;
-        if (alpha < 0.01) continue;
-        var fall = lp * lp * b.vy * 80;
-        var scl = (1 - lp * 0.55) * (CELL - 1) * 0.5;
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = 'rgb('+b.cr+','+b.cg+','+b.cb+')';
-        ctx.fillRect(b.x + CELL/2 - scl, b.y + CELL/2 - scl + fall, scl*2, scl*2);
-      }
-      ctx.globalAlpha = 1;
+      /* ─ Phase 1 ─ */
+      if(el<=P1){
+        var p1=el/P1;           /* 0→1 */
+        var t=el*0.001;
 
-      /* 整体暗淡覆盖 */
-      ctx.fillStyle = 'rgba(0,0,0,' + Math.pow(p, 1.3) + ')';
-      ctx.fillRect(0, 0, W, H);
+        /* 透明底：让页面内容透出 */
+        ctx.clearRect(0,0,W,H);
 
-      if (el < DUR) {
-        requestAnimationFrame(frame);
+        /* 彩色像素堆砌（批量按颜色绘制以提升性能） */
+        var n=fc*fr;
+        for(var i=0;i<n;i++){
+          if(p1<fp[i])continue;
+          var lp=(p1-fp[i])/(1-fp[i]+0.001);
+          lp=Math.min(lp*4,1);          /* 快速出现 */
+          /* 闪烁：高频 sin 使像素有生命感 */
+          var flick=0.7+0.3*Math.sin(t*18+fFlick[i]);
+          ctx.globalAlpha=lp*flick;
+          ctx.fillStyle='rgb('+fR[i]+','+fG[i]+','+fB[i]+')';
+          var px=(i%fc)*S1, py=Math.floor(i/fc)*S1;
+          ctx.fillRect(px,py,S1,S1);
+        }
+        ctx.globalAlpha=1;
+
+        /* RGB 色差扫描线 */
+        if(p1>0.25){
+          var sa=(p1-0.25)/0.75*0.18;
+          for(var y=0;y<H;y+=6){
+            if(Math.sin(y*0.3+t*8)>0.5){
+              ctx.fillStyle='rgba(0,200,255,'+sa+')';
+              ctx.fillRect(0,y,W,1);
+            }
+          }
+        }
+
+        /* 全局暗淡叠加（后期逐渐盖住页面） */
+        ctx.fillStyle='rgba(3,5,14,'+(p1*0.55)+')';
+        ctx.fillRect(0,0,W,H);
+
+      /* ─ Phase 2 ─ */
       } else {
-        window.location.replace(dest);
+        var p2=(el-P1)/P2; p2=Math.min(p2,1);
+
+        ctx.fillStyle='#03050e';
+        ctx.fillRect(0,0,W,H);
+
+        var n2=bc*br;
+        for(var i=0;i<n2;i++){
+          var lp=Math.max(0,Math.min((p2-bDelay[i])/(1-bDelay[i]+0.01),1));
+          var alpha=1-lp;
+          if(alpha<0.01)continue;
+          var fall=lp*lp*bVy[i]*95;
+          var scl=(1-lp*0.58)*(S2-1)*0.5;
+          ctx.globalAlpha=alpha;
+          ctx.fillStyle='rgb('+bR[i]+','+bG[i]+','+bB[i]+')';
+          var bx=(i%bc)*S2+S2/2;
+          var by=Math.floor(i/bc)*S2+S2/2+fall;
+          ctx.fillRect(bx-scl,by-scl,scl*2,scl*2);
+        }
+        ctx.globalAlpha=1;
+
+        /* 渐黑覆盖 */
+        ctx.fillStyle='rgba(0,0,0,'+Math.pow(p2,1.2)+')';
+        ctx.fillRect(0,0,W,H);
       }
+
+      if(el<TOTAL) requestAnimationFrame(frame);
+      else window.location.replace(dest);
     }
     requestAnimationFrame(frame);
   });
