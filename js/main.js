@@ -802,105 +802,96 @@ function initAutoActiveNav() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   全站搜索 — 点击按钮时：彩虹字体 + 马赛克分散消失效果
+   全站搜索 — 点击按钮时：故障艺术效果（Glitch Art）
+   彩色扭曲 → 破碎消散 → 慢慢暗淡
    ══════════════════════════════════════════════════════════ */
 (function(){
-  /* 彩虹渐变定义 */
-  var rainbowGrad = 'linear-gradient(90deg,' +
-    '#ff1a3c 0%,#ff6600 14%,#ffdd00 28%,#33ff88 42%,' +
-    '#00ccff 57%,#6633ff 71%,#ff33cc 85%,#ff1a3c 100%)';
-
   document.addEventListener('click', function(e) {
     var link = e.target.closest('.nav-serch-link');
     if (!link) return;
     e.preventDefault();
     var dest = link.getAttribute('href') || 'serch.html';
 
-    /* 第一阶段：彩虹字体效果 - 所有文字变彩虹色 */
-    var textElements = document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,span,a,li,td,th,label,button,input,div');
-    var rainbowEls = [];
-    textElements.forEach(function(el){
-      if(el.children.length === 0 && el.textContent.trim()){
-        var originalColor = window.getComputedStyle(el).color;
-        el.dataset.originalColor = originalColor;
-        el.style.background = rainbowGrad;
-        el.style.webkitBackgroundClip = 'text';
-        el.style.webkitTextFillColor = 'transparent';
-        el.style.backgroundClip = 'text';
-        el.style.animation = 'rainbowShift 0.8s linear infinite';
-        rainbowEls.push(el);
-      }
-    });
-
-    /* 添加彩虹动画关键帧 */
+    /* 添加故障动画关键帧 */
     var style = document.createElement('style');
-    style.textContent = '@keyframes rainbowShift{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}' +
-      '@keyframes mosaicFly{to{transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(0);opacity:0}}';
+    style.textContent = 
+      '@keyframes glitchColor{0%,100%{filter:hue-rotate(0deg) saturate(1)}25%{filter:hue-rotate(90deg) saturate(2)}50%{filter:hue-rotate(180deg) saturate(3)}75%{filter:hue-rotate(270deg) saturate(2)}}' +
+      '@keyframes glitchShake{0%,100%{transform:translate(0)}20%{transform:translate(-3px,2px)}40%{transform:translate(3px,-2px)}60%{transform:translate(-2px,-3px)}80%{transform:translate(2px,3px)}}' +
+      '@keyframes fragmentFade{to{transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(0.5);opacity:0}}' +
+      '@keyframes dimOut{to{filter:brightness(0.1) contrast(1.5);opacity:0}}';
     document.head.appendChild(style);
 
-    /* 第二阶段：创建马赛克网格 */
-    setTimeout(function(){
-      var cols = 12, rows = 8;
-      var w = window.innerWidth / cols;
-      var h = window.innerHeight / rows;
-      var mosaicContainer = document.createElement('div');
-      mosaicContainer.style.cssText = 'position:fixed;inset:0;z-index:99998;pointer-events:none;overflow:hidden;';
-      document.body.appendChild(mosaicContainer);
+    /* 第一阶段：故障彩色效果 */
+    document.body.style.animation = 'glitchColor 0.4s ease-out';
+    document.body.style.filter = 'saturate(2.5) contrast(1.3)';
 
-      var tiles = [];
-      for(var r = 0; r < rows; r++){
-        for(var c = 0; c < cols; c++){
-          var tile = document.createElement('div');
-          var centerX = window.innerWidth / 2;
-          var centerY = window.innerHeight / 2;
-          var tileX = c * w + w/2;
-          var tileY = r * h + h/2;
-          var angle = Math.atan2(tileY - centerY, tileX - centerX);
-          var dist = Math.sqrt(Math.pow(tileX - centerX, 2) + Math.pow(tileY - centerY, 2));
-          var flyDist = 200 + Math.random() * 300;
-          
-          tile.style.cssText = 
-            'position:absolute;' +
-            'left:' + (c * w) + 'px;' +
-            'top:' + (r * h) + 'px;' +
-            'width:' + (w + 1) + 'px;' +
-            'height:' + (h + 1) + 'px;' +
-            'background:rgba(5,10,25,0.92);' +
-            'border:1px solid rgba(0,212,255,0.15);' +
-            'box-shadow:inset 0 0 20px rgba(0,100,200,0.1);' +
-            'backdrop-filter:blur(2px);' +
-            '--tx:' + (Math.cos(angle) * flyDist) + 'px;' +
-            '--ty:' + (Math.sin(angle) * flyDist) + 'px;' +
-            '--rot:' + (Math.random() * 60 - 30) + 'deg;';
-          
-          mosaicContainer.appendChild(tile);
-          tiles.push({el: tile, delay: (dist / 1000) * 0.3 + Math.random() * 0.2});
-        }
+    /* 所有元素添加抖动 */
+    var allEls = document.querySelectorAll('body > *');
+    allEls.forEach(function(el){
+      if(!el.style) return;
+      el.style.animation = 'glitchShake 0.15s ease-in-out 2';
+    });
+
+    /* 第二阶段：创建随机碎片（无网格线） */
+    setTimeout(function(){
+      var fragmentContainer = document.createElement('div');
+      fragmentContainer.style.cssText = 'position:fixed;inset:0;z-index:99998;pointer-events:none;overflow:hidden;background:rgba(3,6,15,0.3)';
+      document.body.appendChild(fragmentContainer);
+
+      var fragments = [];
+      var fragmentCount = 40;
+
+      for(var i = 0; i < fragmentCount; i++){
+        var frag = document.createElement('div');
+        var w = 50 + Math.random() * 150;
+        var h = 30 + Math.random() * 100;
+        var x = Math.random() * (window.innerWidth - w);
+        var y = Math.random() * (window.innerHeight - h);
+        var angle = Math.random() * Math.PI * 2;
+        var flyDist = 100 + Math.random() * 400;
+        var rotation = Math.random() * 180 - 90;
+
+        /* 随机暗色调，无网格线 */
+        var darkness = 0.85 + Math.random() * 0.14;
+        var color = 'rgba(' + Math.floor(5*darkness) + ',' + Math.floor(10*darkness) + ',' + Math.floor(25*darkness) + ',' + (0.9 + Math.random()*0.1) + ')';
+
+        frag.style.cssText = 
+          'position:absolute;' +
+          'left:' + x + 'px;' +
+          'top:' + y + 'px;' +
+          'width:' + w + 'px;' +
+          'height:' + h + 'px;' +
+          'background:' + color + ';' +
+          'backdrop-filter:blur(1px);' +
+          '--tx:' + (Math.cos(angle) * flyDist) + 'px;' +
+          '--ty:' + (Math.sin(angle) * flyDist) + 'px;' +
+          '--rot:' + rotation + 'deg;';
+
+        fragmentContainer.appendChild(frag);
+        fragments.push({el: frag, delay: Math.random() * 0.4});
       }
 
-      /* 第三阶段：马赛克分散飞散 */
+      /* 第三阶段：碎片消散 + 页面暗淡 */
       setTimeout(function(){
-        /* 页面内容渐隐 */
-        document.body.style.transition = 'opacity 0.4s ease';
-        document.body.style.opacity = '0.3';
+        /* 页面整体暗淡 */
+        document.body.style.transition = 'filter 0.8s ease, opacity 0.8s ease';
+        document.body.style.filter = 'brightness(0.05) contrast(2) saturate(0)';
+        document.body.style.opacity = '0';
 
-        /* 马赛克块飞散 */
-        tiles.forEach(function(t){
+        /* 碎片飞散消失 */
+        fragments.forEach(function(f){
           setTimeout(function(){
-            t.el.style.transition = 'transform 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease';
-            t.el.style.transform = 'translate(' + t.el.style.getPropertyValue('--tx') + ',' + 
-                                   t.el.style.getPropertyValue('--ty') + ') rotate(' + 
-                                   t.el.style.getPropertyValue('--rot') + ') scale(0)';
-            t.el.style.opacity = '0';
-          }, t.delay * 1000);
+            f.el.style.transition = 'transform 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.6s ease';
+            f.el.style.animation = 'fragmentFade 0.7s cubic-bezier(0.4,0,0.2,1) forwards';
+          }, f.delay * 1000);
         });
 
         /* 第四阶段：跳转 */
         setTimeout(function(){
           window.location.href = dest;
-        }, 900);
-      }, 400);
-    }, 600);
+        }, 850);
+      }, 300);
+    }, 400);
   });
 })();
 
