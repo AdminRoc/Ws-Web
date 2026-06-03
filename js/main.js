@@ -802,55 +802,107 @@ function initAutoActiveNav() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   全站搜索 — 点击按钮时：柔和光晕从按钮位置扩张覆盖全屏，然后跳转
+   全站搜索 — 点击按钮时：彩虹字体 + 马赛克分散消失效果
    ══════════════════════════════════════════════════════════ */
-document.addEventListener('click', function(e) {
-  var link = e.target.closest('.nav-serch-link');
-  if (!link) return;
-  e.preventDefault();
-  var dest = link.getAttribute('href') || 'serch.html';
+(function(){
+  /* 彩虹渐变定义 */
+  var rainbowGrad = 'linear-gradient(90deg,' +
+    '#ff1a3c 0%,#ff6600 14%,#ffdd00 28%,#33ff88 42%,' +
+    '#00ccff 57%,#6633ff 71%,#ff33cc 85%,#ff1a3c 100%)';
 
-  /* 获取按钮中心在视口中的位置 */
-  var rect = link.getBoundingClientRect();
-  var bx = rect.left + rect.width  / 2;
-  var by = rect.top  + rect.height / 2;
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('.nav-serch-link');
+    if (!link) return;
+    e.preventDefault();
+    var dest = link.getAttribute('href') || 'serch.html';
 
-  /* 计算对角线长度，确保光晕能完全覆盖屏幕 */
-  var screenDiag = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
-  var scaleNeeded = (screenDiag / Math.min(window.innerWidth, window.innerHeight)) * 1.5;
+    /* 第一阶段：彩虹字体效果 - 所有文字变彩虹色 */
+    var textElements = document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,span,a,li,td,th,label,button,input,div');
+    var rainbowEls = [];
+    textElements.forEach(function(el){
+      if(el.children.length === 0 && el.textContent.trim()){
+        var originalColor = window.getComputedStyle(el).color;
+        el.dataset.originalColor = originalColor;
+        el.style.background = rainbowGrad;
+        el.style.webkitBackgroundClip = 'text';
+        el.style.webkitTextFillColor = 'transparent';
+        el.style.backgroundClip = 'text';
+        el.style.animation = 'rainbowShift 0.8s linear infinite';
+        rainbowEls.push(el);
+      }
+    });
 
-  /* 创建柔和的光晕层：深色背景 + 中心高亮 */
-  var portal = document.createElement('div');
-  portal.style.cssText =
-    'position:fixed;inset:0;z-index:99999;pointer-events:all;' +
-    'background:radial-gradient(circle at ' + bx + 'px ' + by + 'px,' +
-    'rgba(0,212,255,0.95) 0%,' +           /* 中心：科技蓝 */
-    'rgba(0,100,180,0.85) 15%,' +          /* 过渡 */
-    'rgba(10,20,40,0.95) 40%,' +           /* 深色过渡 */
-    'rgba(5,10,20,1) 70%);' +              /* 边缘：深空黑 */
-  document.body.appendChild(portal);
+    /* 添加彩虹动画关键帧 */
+    var style = document.createElement('style');
+    style.textContent = '@keyframes rainbowShift{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}' +
+      '@keyframes mosaicFly{to{transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(0);opacity:0}}';
+    document.head.appendChild(style);
 
-  /* 初始状态：完全透明 */
-  portal.style.opacity = '0';
-  portal.style.transition = 'opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
+    /* 第二阶段：创建马赛克网格 */
+    setTimeout(function(){
+      var cols = 12, rows = 8;
+      var w = window.innerWidth / cols;
+      var h = window.innerHeight / rows;
+      var mosaicContainer = document.createElement('div');
+      mosaicContainer.style.cssText = 'position:fixed;inset:0;z-index:99998;pointer-events:none;overflow:hidden;';
+      document.body.appendChild(mosaicContainer);
 
-  /* 强制重绘 */
-  portal.offsetHeight;
+      var tiles = [];
+      for(var r = 0; r < rows; r++){
+        for(var c = 0; c < cols; c++){
+          var tile = document.createElement('div');
+          var centerX = window.innerWidth / 2;
+          var centerY = window.innerHeight / 2;
+          var tileX = c * w + w/2;
+          var tileY = r * h + h/2;
+          var angle = Math.atan2(tileY - centerY, tileX - centerX);
+          var dist = Math.sqrt(Math.pow(tileX - centerX, 2) + Math.pow(tileY - centerY, 2));
+          var flyDist = 200 + Math.random() * 300;
+          
+          tile.style.cssText = 
+            'position:absolute;' +
+            'left:' + (c * w) + 'px;' +
+            'top:' + (r * h) + 'px;' +
+            'width:' + (w + 1) + 'px;' +
+            'height:' + (h + 1) + 'px;' +
+            'background:rgba(5,10,25,0.92);' +
+            'border:1px solid rgba(0,212,255,0.15);' +
+            'box-shadow:inset 0 0 20px rgba(0,100,200,0.1);' +
+            'backdrop-filter:blur(2px);' +
+            '--tx:' + (Math.cos(angle) * flyDist) + 'px;' +
+            '--ty:' + (Math.sin(angle) * flyDist) + 'px;' +
+            '--rot:' + (Math.random() * 60 - 30) + 'deg;';
+          
+          mosaicContainer.appendChild(tile);
+          tiles.push({el: tile, delay: (dist / 1000) * 0.3 + Math.random() * 0.2});
+        }
+      }
 
-  /* 第一阶段：柔和淡入 */
-  portal.style.opacity = '1';
+      /* 第三阶段：马赛克分散飞散 */
+      setTimeout(function(){
+        /* 页面内容渐隐 */
+        document.body.style.transition = 'opacity 0.4s ease';
+        document.body.style.opacity = '0.3';
 
-  /* 第二阶段：短暂停留后跳转到搜索页 */
-  setTimeout(function() {
-    /* 添加轻微缩小效果作为过渡 */
-    portal.style.transition = 'opacity 0.2s ease-out';
-    portal.style.opacity = '0.3';
+        /* 马赛克块飞散 */
+        tiles.forEach(function(t){
+          setTimeout(function(){
+            t.el.style.transition = 'transform 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease';
+            t.el.style.transform = 'translate(' + t.el.style.getPropertyValue('--tx') + ',' + 
+                                   t.el.style.getPropertyValue('--ty') + ') rotate(' + 
+                                   t.el.style.getPropertyValue('--rot') + ') scale(0)';
+            t.el.style.opacity = '0';
+          }, t.delay * 1000);
+        });
 
-    setTimeout(function() {
-      window.location.href = dest;
-    }, 150);
-  }, 480);
-});
+        /* 第四阶段：跳转 */
+        setTimeout(function(){
+          window.location.href = dest;
+        }, 900);
+      }, 400);
+    }, 600);
+  });
+})();
 
 /* ══════════════════════════════════════════════════════════
    过渡页跳转（赛博风格 redirect.html）

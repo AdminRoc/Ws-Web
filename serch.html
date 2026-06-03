@@ -196,14 +196,76 @@ a{text-decoration:none;color:inherit;}
 
 
 
+<!-- ══ MOSAIC ENTRY EFFECT ══ -->
+<style>
+/* 马赛克入场效果 */
+.mosaic-overlay{position:fixed;inset:0;z-index:99999;pointer-events:none;display:grid;
+  grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(8,1fr);gap:1px;}
+.mosaic-tile{background:rgba(5,10,25,0.98);border:1px solid rgba(0,212,255,0.12);
+  box-shadow:inset 0 0 30px rgba(0,100,200,0.08);opacity:1;transform:scale(1);
+  animation:mosaicStack 0.7s cubic-bezier(0.4,0,0.2,1) forwards;}
+@keyframes mosaicStack{
+  0%{opacity:1;transform:scale(1);}
+  100%{opacity:0;transform:scale(0.3);}
+}
+/* html初始状态 - 配合马赛克效果 */
+html.mosaic-loading{animation:none !important;opacity:0;}
+html.mosaic-loaded{animation:pgIn .6s ease .1s both !important;}
+</style>
+
 <!-- ══ PAGE ENTRY ══ -->
 <script>
-window.addEventListener('load',function(){
-  setTimeout(function(){
-    document.getElementById('search-wrap').classList.add('ready');
-    setTimeout(function(){document.getElementById('search-input').focus();},80);
-  },200);
-});
+/* 马赛克堆叠入场效果 */
+(function(){
+  var cols = 12, rows = 8;
+  var overlay = document.createElement('div');
+  overlay.className = 'mosaic-overlay';
+  document.body.appendChild(overlay);
+
+  /* 创建马赛克网格 */
+  var tiles = [];
+  var centerCol = Math.floor(cols / 2);
+  var centerRow = Math.floor(rows / 2);
+
+  for(var r = 0; r < rows; r++){
+    for(var c = 0; c < cols; c++){
+      var tile = document.createElement('div');
+      tile.className = 'mosaic-tile';
+      /* 计算距离中心的距离，用于延迟动画 */
+      var dist = Math.sqrt(Math.pow(c - centerCol, 2) + Math.pow(r - centerRow, 2));
+      var delay = dist * 0.08 + Math.random() * 0.1;
+      tile.style.animationDelay = delay + 's';
+      overlay.appendChild(tile);
+      tiles.push({el: tile, delay: delay});
+    }
+  }
+
+  /* 页面初始隐藏 */
+  document.documentElement.classList.add('mosaic-loading');
+
+  window.addEventListener('load',function(){
+    /* 找到最晚的动画时间 */
+    var maxDelay = 0;
+    tiles.forEach(function(t){if(t.delay > maxDelay) maxDelay = t.delay;});
+
+    setTimeout(function(){
+      /* 显示页面内容 */
+      document.documentElement.classList.remove('mosaic-loading');
+      document.documentElement.classList.add('mosaic-loaded');
+
+      /* 移除马赛克层 */
+      setTimeout(function(){
+        if(overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      }, 800);
+
+      /* 显示搜索区域 */
+      setTimeout(function(){
+        document.getElementById('search-wrap').classList.add('ready');
+        setTimeout(function(){document.getElementById('search-input').focus();},80);
+      }, 300);
+    }, maxDelay * 1000 + 100);
+  });
+})();
 </script>
 
 <!-- ══ SEARCH INDEX ══ -->
