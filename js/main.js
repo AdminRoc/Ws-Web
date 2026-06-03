@@ -806,19 +806,26 @@ function initAutoActiveNav() {
    彩色扭曲 → 破碎消散 → 慢慢暗淡
    ══════════════════════════════════════════════════════════ */
 (function(){
+  var isTransitioning = false;
+
   document.addEventListener('click', function(e) {
     var link = e.target.closest('.nav-serch-link');
     if (!link) return;
     e.preventDefault();
+
+    /* 防止重复触发 */
+    if (isTransitioning) return;
+    isTransitioning = true;
+
     var dest = link.getAttribute('href') || 'serch.html';
 
     /* 添加故障动画关键帧 */
     var style = document.createElement('style');
+    style.id = 'glitch-style';
     style.textContent = 
       '@keyframes glitchColor{0%,100%{filter:hue-rotate(0deg) saturate(1)}25%{filter:hue-rotate(90deg) saturate(2)}50%{filter:hue-rotate(180deg) saturate(3)}75%{filter:hue-rotate(270deg) saturate(2)}}' +
       '@keyframes glitchShake{0%,100%{transform:translate(0)}20%{transform:translate(-3px,2px)}40%{transform:translate(3px,-2px)}60%{transform:translate(-2px,-3px)}80%{transform:translate(2px,3px)}}' +
-      '@keyframes fragmentFade{to{transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(0.5);opacity:0}}' +
-      '@keyframes dimOut{to{filter:brightness(0.1) contrast(1.5);opacity:0}}';
+      '@keyframes fragmentFade{to{transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(0.5);opacity:0}}';
     document.head.appendChild(style);
 
     /* 第一阶段：故障彩色效果 */
@@ -835,6 +842,7 @@ function initAutoActiveNav() {
     /* 第二阶段：创建随机碎片（无网格线） */
     setTimeout(function(){
       var fragmentContainer = document.createElement('div');
+      fragmentContainer.id = 'glitch-fragments';
       fragmentContainer.style.cssText = 'position:fixed;inset:0;z-index:99998;pointer-events:none;overflow:hidden;background:rgba(3,6,15,0.3)';
       document.body.appendChild(fragmentContainer);
 
@@ -886,14 +894,46 @@ function initAutoActiveNav() {
           }, f.delay * 1000);
         });
 
-        /* 第四阶段：跳转 */
+        /* 第四阶段：跳转 - 使用 replace 避免 history 记录中间状态 */
         setTimeout(function(){
-          window.location.href = dest;
+          window.location.replace(dest);
         }, 850);
       }, 300);
     }, 400);
   });
 })();
+
+/* ══════════════════════════════════════════════════════════
+   页面加载时重置样式 - 修复返回黑屏问题
+   ══════════════════════════════════════════════════════════ */
+window.addEventListener('pageshow', function(e) {
+  /* 重置 body 样式，确保从任何状态返回都正常显示 */
+  document.body.style.opacity = '';
+  document.body.style.filter = '';
+  document.body.style.animation = '';
+  document.body.style.transition = '';
+
+  /* 清理可能残留的动画元素 */
+  var fragments = document.getElementById('glitch-fragments');
+  if (fragments && fragments.parentNode) {
+    fragments.parentNode.removeChild(fragments);
+  }
+
+  /* 清理动画样式 */
+  var style = document.getElementById('glitch-style');
+  if (style && style.parentNode) {
+    style.parentNode.removeChild(style);
+  }
+
+  /* 重置所有子元素动画 */
+  var allEls = document.querySelectorAll('body > *');
+  allEls.forEach(function(el){
+    if(el.style) {
+      el.style.animation = '';
+      el.style.transition = '';
+    }
+  });
+});
 
 /* ══════════════════════════════════════════════════════════
    过渡页跳转（赛博风格 redirect.html）
