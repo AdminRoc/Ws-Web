@@ -355,31 +355,62 @@ function getRecs(n){
   try{var r=window[n];if(Array.isArray(r))return r;}catch(e){}
   try{var r=(0,eval)(n);if(Array.isArray(r))return r;}catch(e){}
   return null;}
-function recStr(r){return Object.values(r).filter(function(v){return typeof v==='string';}).join(' ');}
+
+/* 从记录对象提取所有可搜索字符串（含 avgRealTime、captureStatus 等特殊字段） */
+function recStr(r){
+  return Object.values(r).map(function(v){
+    if(typeof v==='string') return v;
+    if(Array.isArray(v)) return ''; /* 跳过 videoUrls 数组 */
+    return '';
+  }).join(' ');
+}
+
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function fuzzy(q,t){var tl=t.toLowerCase();return q.split(/\s+/).filter(Boolean).every(function(w){return tl.includes(w);});}
+
+/* 将查询字符串拆分为词列表（按空格，过滤空串，全部小写） */
+function parseWords(q){return q.toLowerCase().split(/\s+/).filter(Boolean);}
+
+/* 判断 words 中每个词是否都出现在 text（小写）中 */
+function allMatch(words,text){var t=text.toLowerCase();return words.every(function(w){return t.includes(w);});}
 
 function runSearch(raw){
-  var q=raw.trim().toLowerCase();if(!q)return[];
+  var q=raw.trim();if(!q)return[];
+  var words=parseWords(q);
+  if(!words.length)return[];
   var res=[],seen=new Set();
+
   IDX.forEach(function(e){
     var recs=getRecs(e.varName);if(!Array.isArray(recs))return;
-    var ts=[e.titleCn,e.titleEn,e.ctx,e.ctxEn].join(' ');
-    if(fuzzy(q,ts)){
+    /* 榜单维度的可搜字符串（标题+语言+子分类名） */
+    var titleStr=[e.titleCn,e.titleEn,e.ctx,e.ctxEn].join(' ');
+
+    /* ── 判断是否"纯标题命中"：所有词都在 titleStr 里 ── */
+    if(allMatch(words,titleStr)){
       var k='T|'+e.varName;if(seen.has(k))return;seen.add(k);
       res.push({page:e.page,titleCn:e.titleCn,titleEn:e.titleEn,ctx:e.ctx,ctxEn:e.ctxEn,
-        rows:recs.slice(0,3),matchIdx:-2,startRank:0,recCount:recs.length});return;}
+        rows:recs.slice(0,3),matchIdx:-2,startRank:0,recCount:recs.length});
+      return;}
+
+    /* ── 逐条数据检索：每个词必须出现在"榜单字符串 + 本行数据字符串"的联合文本中 ──
+       这样 "Nameless Kappa 单人"、"less 中断 solo" 等跨维度搜索都能命中 */
     recs.forEach(function(rec,idx){
-      if(!fuzzy(q,recStr(rec)))return;
+      var rowStr=recStr(rec);
+      var combined=titleStr+' '+rowStr;
+      if(!allMatch(words,combined))return;
       var k='D|'+e.varName+'|'+idx;if(seen.has(k))return;seen.add(k);
       var n=recs.length,start,mpos;
       if(idx===0){start=0;mpos=0;}
       else if(idx>=n-1){start=Math.max(0,n-3);mpos=idx-start;}
       else{start=idx-1;mpos=1;}
       res.push({page:e.page,titleCn:e.titleCn,titleEn:e.titleEn,ctx:e.ctx,ctxEn:e.ctxEn,
-        rows:recs.slice(start,start+3),matchIdx:mpos,startRank:start||0,recCount:recs.length});});});
+        rows:recs.slice(start,start+3),matchIdx:mpos,startRank:start||0,recCount:recs.length});
+    });
+  });
+
+  /* 按榜单数据条目数从多到少排列 */
   res.sort(function(a,b){return b.recCount-a.recCount;});
-  return res;}
+  return res;
+}
 
 /* ── exit: 先整体缩小到中心，再 CRT 关机效果 ── */
 var _navigating=false;
