@@ -380,78 +380,87 @@ function runSearch(raw){
   res.sort(function(a,b){return b.recCount-a.recCount;});
   return res;}
 
-/* ── exit: CRT 老式电视关机效果 ── */
+/* ── exit: 先整体缩小到中心，再 CRT 关机效果 ── */
 var _navigating=false;
 function playExitCollapse(dest){
   if(_navigating)return;_navigating=true;
 
-  var ov=document.createElement('canvas');
-  ov.style.cssText='position:fixed;inset:0;z-index:9999;pointer-events:all;';
-  ov.width=innerWidth;ov.height=innerHeight;
-  document.body.appendChild(ov);
-  var ctx=ov.getContext('2d');
-  var W=ov.width,H=ov.height,cy=H/2;
-  var DUR=1100,t0=null;
+  /* 第一步：页面整体缩小到中心（~480ms） */
+  var de=document.documentElement;
+  de.style.overflow='hidden';
+  de.style.transformOrigin='50% 50%';
+  de.style.transition='transform .45s cubic-bezier(.55,0,1,.6),opacity .3s ease .12s';
+  de.style.transform='scale(0.04)';
+  de.style.opacity='0';
 
-  function frame(now){
-    if(!t0)t0=now;
-    var el=now-t0,p=Math.min(el/DUR,1);
+  /* 第二步：缩小结束后叠加 CRT Canvas 效果 */
+  setTimeout(function(){
+    /* 重置 DOM 变换（canvas 接管画面） */
+    de.style.transition='none';
+    de.style.transform='';
+    de.style.opacity='';
+    de.style.overflow='';
 
-    /* Phase 1 (0→0.45): 画面整体向中心压缩变暗 */
-    if(p<0.45){
-      var fp=p/0.45; /* 0→1 */
-      ctx.fillStyle='rgba(3,5,14,'+fp+')';
-      ctx.fillRect(0,0,W,H);
-    }
-    /* Phase 2 (0.45→0.78): 全黑底 + 白色横条从中心出现并向内收缩 */
-    else if(p<0.78){
-      ctx.fillStyle='rgb(3,5,14)';
-      ctx.fillRect(0,0,W,H);
+    var ov=document.createElement('canvas');
+    ov.style.cssText='position:fixed;inset:0;z-index:9999;pointer-events:all;background:#03050e;';
+    ov.width=innerWidth; ov.height=innerHeight;
+    document.body.appendChild(ov);
+    var ctx=ov.getContext('2d');
+    var W=ov.width,H=ov.height,cy=H/2;
+    var DUR=1050,t0=null;
 
-      var bp=(p-0.45)/0.33; /* 0→1 */
-      var barH=Math.max(0, 68*(1-bp));
+    function frame(now){
+      if(!t0)t0=now;
+      var el=now-t0,p=Math.min(el/DUR,1);
 
-      if(barH>0.5){
-        /* 外层辉光 */
-        var grd=ctx.createLinearGradient(0,cy-barH*3,0,cy+barH*3);
-        grd.addColorStop(0,'rgba(255,255,255,0)');
-        grd.addColorStop(0.35,'rgba(180,220,255,'+(0.35*(1-bp))+')');
-        grd.addColorStop(0.5,'rgba(255,255,255,'+(0.88-bp*0.25)+')');
-        grd.addColorStop(0.65,'rgba(180,220,255,'+(0.35*(1-bp))+')');
-        grd.addColorStop(1,'rgba(255,255,255,0)');
-        ctx.fillStyle=grd;
-        ctx.fillRect(0,cy-barH*3,W,barH*6);
-
-        /* 实心白条 */
-        ctx.fillStyle='rgba(255,255,255,'+(0.96-bp*0.15)+')';
-        ctx.fillRect(0,cy-barH/2,W,barH);
+      /* Phase A (0→0.40): 全黑底 + 白色横条从全屏高度压缩至细线 */
+      if(p<0.40){
+        ctx.fillStyle='rgb(3,5,14)';
+        ctx.fillRect(0,0,W,H);
+        var bp=p/0.40;
+        var barH=Math.max(0,H*(1-bp)*0.5); /* 半高→0 */
+        if(barH>0.5){
+          /* 辉光 */
+          var grd=ctx.createLinearGradient(0,cy-barH*1.5,0,cy+barH*1.5);
+          grd.addColorStop(0,'rgba(255,255,255,0)');
+          grd.addColorStop(0.3,'rgba(180,225,255,'+(0.3*(1-bp))+')');
+          grd.addColorStop(0.5,'rgba(255,255,255,'+(0.9-bp*0.2)+')');
+          grd.addColorStop(0.7,'rgba(180,225,255,'+(0.3*(1-bp))+')');
+          grd.addColorStop(1,'rgba(255,255,255,0)');
+          ctx.fillStyle=grd;
+          ctx.fillRect(0,cy-barH*1.5,W,barH*3);
+          /* 实心白条 */
+          ctx.fillStyle='rgba(255,255,255,'+(0.96-bp*0.1)+')';
+          ctx.fillRect(0,cy-barH,W,barH*2);
+        }
       }
-    }
-    /* Phase 3 (0.78→1.0): 极细的白线慢慢消失（经典 CRT 尾光） */
-    else{
-      ctx.fillStyle='rgb(3,5,14)';
-      ctx.fillRect(0,0,W,H);
-
-      var lp=(p-0.78)/0.22; /* 0→1 */
-      var lineAlpha=Math.pow(1-lp,1.8);
-      if(lineAlpha>0.005){
-        /* 水平辉光晕 */
-        var lg=ctx.createLinearGradient(0,cy-28,0,cy+28);
-        lg.addColorStop(0,'rgba(255,255,255,0)');
-        lg.addColorStop(0.5,'rgba(220,240,255,'+(lineAlpha*0.55)+')');
-        lg.addColorStop(1,'rgba(255,255,255,0)');
-        ctx.fillStyle=lg;ctx.fillRect(0,cy-28,W,56);
-
-        /* 一像素亮线 */
-        ctx.fillStyle='rgba(255,255,255,'+lineAlpha+')';
-        ctx.fillRect(0,cy-1,W,2);
+      /* Phase B (0.40→0.78): 细白线收尾（CRT 尾光） */
+      else if(p<0.78){
+        ctx.fillStyle='rgb(3,5,14)';
+        ctx.fillRect(0,0,W,H);
+        var lp=(p-0.40)/0.38;
+        var la=Math.pow(1-lp,1.8);
+        if(la>0.004){
+          var lg=ctx.createLinearGradient(0,cy-30,0,cy+30);
+          lg.addColorStop(0,'rgba(255,255,255,0)');
+          lg.addColorStop(0.5,'rgba(220,240,255,'+(la*0.6)+')');
+          lg.addColorStop(1,'rgba(255,255,255,0)');
+          ctx.fillStyle=lg; ctx.fillRect(0,cy-30,W,60);
+          ctx.fillStyle='rgba(255,255,255,'+la+')';
+          ctx.fillRect(0,cy-1,W,2);
+        }
       }
-    }
+      /* Phase C (0.78→1.0): 纯黑 */
+      else{
+        ctx.fillStyle='rgb(3,5,14)';
+        ctx.fillRect(0,0,W,H);
+      }
 
-    if(el<DUR)requestAnimationFrame(frame);
-    else window.location.href=dest;
-  }
-  requestAnimationFrame(frame);
+      if(el<DUR)requestAnimationFrame(frame);
+      else window.location.href=dest;
+    }
+    requestAnimationFrame(frame);
+  }, 480);
 }
 
 /* ── render ── */
