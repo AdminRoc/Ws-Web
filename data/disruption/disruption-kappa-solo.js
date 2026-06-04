@@ -50,12 +50,6 @@ const disruptionKappaSoloRecords = [
     videoUrls:     ["https://www.bilibili.com/video/BV1u1gSzwENr?share_source=copy_web"]
   },
   {
-    clearTime:  "59:27.000",
-    playerId:   "MikuPrime",
-    uploadTime: "2025-10-05",
-    videoUrls:     ["https://www.bilibili.com/video/BV1aaxgzaEUu?share_source=copy_web"]
-  },
-  {
     clearTime:  "67:15.000",
     playerId:   "LastShao",
     uploadTime: "2024-12-02",
