@@ -37,12 +37,6 @@ const disruptionKappaDuoRecords = [
     videoUrls:     ["https://youtu.be/vaChoHOAjIg?si=hbEupx89kuGrFdjB"]
   },
   {
-    clearTime:  "43:08.000",
-    playerId:   "222zzz / MikuPrime",
-    uploadTime: "2025-10-12",
-    videoUrls:     ["https://b23.tv/BQsfARU"]
-  },
-  {
     clearTime:  "43:53.000",
     playerId:   "sakvayumika / RoniPrime",
     uploadTime: "2025-10-20",
