@@ -34,6 +34,12 @@ var exterminate_normal_narcissusRecords = [
     uploadTime: "2026-04-01",
     videoUrls:  ["https://www.youtube.com/watch?v=GpyZ0IrRpvA"],
   },
+  {
+    playerId:   "_Phobos",
+    clearTime:  "0:18.167",
+    uploadTime: "2026-06-04",
+    videoUrls:  ["https://www.youtube.com/watch?v=hwUZKZy_I1k"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
