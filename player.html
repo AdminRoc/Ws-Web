@@ -576,11 +576,8 @@ document.getElementById('share-btn').addEventListener('click', function(){
     rowData.push({e:e,finalName:finalName,nameEndX:nameEndX,dateStr:dateStr,dateStartX:actualDateStartX});
   });
 
-  /* uniform dot-leader length = shortest gap minus padding */
-  var minGap=Infinity;
-  rowData.forEach(function(r){var g=r.dateStartX-r.nameEndX-12;if(g>0&&g<minGap)minGap=g;});
-  if(minGap===Infinity||minGap<0)minGap=0;
-  var lineHalf=Math.max(0,minGap/2-4);
+  /* dot-leader: fixed 8px padding on both sides */
+  var LINE_PAD=8;
 
   /* ── Pass 2: draw all rows ── */
   rowData.forEach(function(r,i){
