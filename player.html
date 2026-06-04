@@ -543,7 +543,7 @@ document.getElementById('share-btn').addEventListener('click', function(){
   var sLine='上榜 '+entries.length+' 次';
   if(trophies>0)sLine+='  ·  🏆×'+trophies;
   var latestD=entries.reduce(function(a,e){var d=e.rec.uploadTime||'';return d>a?d:a;},'');
-  if(latestD)sLine+='  ·  最近 '+latestD;
+  if(latestD)sLine+='  ·  最近上榜时间：'+latestD;
   ctx.fillText(sLine,W/2,y+12);y+=22+10;
 
   /* divider */
@@ -556,10 +556,10 @@ document.getElementById('share-btn').addEventListener('click', function(){
   /* ── record rows ──
      Cols: #N  |  time  |  lb-name  |  date
      Widths: 46 | 106 | fill | 88  with 10px gap between each */
-  var C_RANK=lx, C_TIME=lx+42+8, C_DATE_W=76;
-  var C_DATE=rx-C_DATE_W;
+  var C_RANK=lx, C_TIME=lx+42+8, C_DATE_W=96;
+  var C_DATE_START=rx-C_DATE_W; /* fixed date column left edge */
   var C_NAME=C_TIME+100+8;
-  var NAME_W=C_DATE-8-C_NAME;
+  var NAME_W=C_DATE_START-8-C_NAME;
 
   /* ── Pass 1: measure all rows, collect gaps ── */
   ctx.font='400 13px Orbitron,sans-serif';ctx.letterSpacing='0.2px';
@@ -571,9 +571,9 @@ document.getElementById('share-btn').addEventListener('click', function(){
     var finalName=rawName+(full.length>rawName.length?'…':'');
     var nameEndX=C_NAME+ctx.measureText(finalName).width;
     var dateStr=e.rec.uploadTime||'';
-    var dateW=ctx.measureText(dateStr).width;
-    var dateStartX=rx-dateW;
-    rowData.push({e:e,finalName:finalName,nameEndX:nameEndX,dateStr:dateStr,dateW:dateW,dateStartX:dateStartX});
+    var dateTextW=ctx.measureText(dateStr).width;
+    var actualDateStartX=rx-dateTextW;
+    rowData.push({e:e,finalName:finalName,nameEndX:nameEndX,dateStr:dateStr,dateStartX:actualDateStartX});
   });
 
   /* uniform dot-leader length = shortest gap minus padding */
@@ -604,12 +604,13 @@ document.getElementById('share-btn').addEventListener('click', function(){
     ctx.fillStyle='rgba(255,255,255,0.85)';ctx.textAlign='left';
     ctx.fillText(r.finalName,C_NAME,ry+ROW_H*.62);
 
-    /* dot leader — uniform length, centred between name-end and date-start */
-    if(lineHalf>4){
-      var midX=(r.nameEndX+r.dateStartX)/2;
+    /* dot leader — equal LINE_PAD on both sides */
+    var lineX0=r.nameEndX+LINE_PAD;
+    var lineX1=r.dateStartX-LINE_PAD;
+    if(lineX1>lineX0+6){
       ctx.strokeStyle='rgba(255,255,255,0.38)';ctx.lineWidth=1;
       ctx.setLineDash([1,4]);
-      ctx.beginPath();ctx.moveTo(midX-lineHalf,ry+ROW_H*.62-4);ctx.lineTo(midX+lineHalf,ry+ROW_H*.62-4);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(lineX0,ry+ROW_H*.62-4);ctx.lineTo(lineX1,ry+ROW_H*.62-4);ctx.stroke();
       ctx.setLineDash([]);
     }
 
