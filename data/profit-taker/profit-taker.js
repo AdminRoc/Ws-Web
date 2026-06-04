@@ -259,6 +259,12 @@ const profitTakerRecords = [
     uploadTime: "2024-06-24",
     videoUrls:     ["https://youtu.be/GtkTw7tb8cI?si=5SIafs_A17zBSdhc"]
   },
+  {
+    clearTime:  "00:53.133",
+    playerId:   "Insomnia_fs",
+    uploadTime: "2026-06-03",
+    videoUrls:     ["https://www.youtube.com/watch?v=clTmtE3HKpk"]
+  },
   // ─── 在此处继续添加新条目 ───
   // {
   //   clearTime:  "MM:SS.mmm",

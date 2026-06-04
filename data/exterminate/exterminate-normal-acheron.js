@@ -41,6 +41,12 @@ var exterminate_normal_acheronRecords = [
     uploadTime: "2026-02-20",
     videoUrls:  ["https://www.youtube.com/watch?v=6r3H9vVnb44"],
   },
+  {
+    playerId:   "_Phobos",
+    clearTime:  "0:20.100",
+    uploadTime: "2026-06-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=GukvS4BNdjc"],
+  },
 ];
 /* ── 横幅提醒信息 ────────────────────────────────────────────
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
