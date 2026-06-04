@@ -103,6 +103,8 @@ function initMobileNav() {
   if (!hamburger) return;
 
   /* ── 全部菜单数据 ── */
+  /* ⚠️  维护提醒：如新增/修改榜单页面，需同步更新此数组，否则移动端菜单会缺项。
+       页面列表以 navigation 导航栏 HTML 为准（各 HTML 页面的 .site-nav 结构）。 */
   var MENU = [
     { cn: '中断竞速', sub: [
         { cn: '单人', href: 'disruption.html' },
@@ -934,7 +936,14 @@ function initAutoActiveNav() {
 var _glitchBusy = false;
 
 function _doGlitchNav(dest) {
+  /* 安全回退：若动画异常，2.5s 后强制跳转并重置状态 */
+  var _navFallback = setTimeout(function() {
+    try { document.body.style.filter = ''; } catch(e) {}
+    _glitchBusy = false;
+    window.location.href = dest;
+  }, 10000);
 
+  try {
 
     /* ══ 三阶段故障像素特效 ══
        Phase 1 (0→320ms):  CSS filter 让页面内容变为霓虹彩色 + 少量扫描线
@@ -1066,9 +1075,17 @@ function _doGlitchNav(dest) {
       }
 
       if(el<TOTAL){requestAnimationFrame(frame);}
-      else{document.body.style.filter='';window.location.href=dest;}
+      else{clearTimeout(_navFallback);document.body.style.filter='';window.location.href=dest;}
     }
     requestAnimationFrame(frame);
+
+  } catch(e) {
+    /* 动画异常：立即清理并直接跳转 */
+    clearTimeout(_navFallback);
+    try { document.body.style.filter = ''; } catch(e2) {}
+    _glitchBusy = false;
+    window.location.href = dest;
+  }
 }
 
 document.addEventListener('click', function(e) {

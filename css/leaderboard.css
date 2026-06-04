@@ -712,3 +712,8 @@
   .lb-title { gap: .5rem; }
   .lb-badge-wrap { margin-top: .15rem; }
 }
+
+/* ── 手机竖屏底部安全区留白（iOS 底部横条 / 安卓导航条） ── */
+@media (max-width: 480px) and (orientation: portrait) {
+  .lb-table-wrap { padding-bottom: env(safe-area-inset-bottom, 0px); }
+}
