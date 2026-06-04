@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>玩家主页 — WFSpeed.run</title>
 <link rel="icon" type="image/png" href="picture/websitelogo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +44,7 @@ a{text-decoration:none;color:inherit;}
 .back-btn:hover .en{opacity:1;}
 
 /* ── page wrap ── */
-.page-wrap{position:relative;z-index:10;padding:90px 0 80px;
+.page-wrap{position:relative;z-index:10;padding:90px 0 calc(80px + env(safe-area-inset-bottom,20px));
   min-height:100vh;display:flex;flex-direction:column;align-items:center;}
 
 /* ── player header ── */
@@ -655,10 +655,15 @@ document.getElementById('share-btn').addEventListener('click', function(){
     ctx.beginPath();ctx.moveTo(lx,yf);ctx.lineTo(rx,yf);ctx.stroke();
   }
 
-  document.fonts.ready.then(function(){
-    fetch('https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js')
-      .then(function(r){return r.blob();})
-      .then(function(wb){
+  /* GIF安全保护：10s内未完成则提示用户 */
+  var _gifTimeout=setTimeout(function(){
+    if(btn.disabled){btn.disabled=false;btn.innerHTML=origInner;alert('GIF生成超时（60秒），请重试');}
+  },60000);
+  var _fontsReady=(document&&document.fonts&&document.fonts.ready)?document.fonts.ready:Promise.resolve();
+  _fontsReady.then(function(){
+    return fetch('https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js');
+  }).then(function(r){return r.blob();})
+  .then(function(wb){
         var wURL=URL.createObjectURL(wb);
         var FRAMES=60,DELAY=25;
         var gif=new GIF({workers:4,quality:1,workerScript:wURL,width:W,height:H,repeat:0,background:'#030408'});
@@ -674,6 +679,7 @@ document.getElementById('share-btn').addEventListener('click', function(){
           a.download='WFSpeed_'+targetId.replace(/[^a-zA-Z0-9_-]/g,'_')+'_'+dateStr+'.gif';
           a.click();
           setTimeout(function(){URL.revokeObjectURL(a.href);},60000);
+          clearTimeout(_gifTimeout);
           btn.disabled=false;btn.innerHTML=origInner;
         });
         gif.render();
@@ -682,7 +688,6 @@ document.getElementById('share-btn').addEventListener('click', function(){
         btn.disabled=false;btn.innerHTML=origInner;
         alert('无法加载GIF渲染器：'+err.message);
       });
-  });
 });
 </script>
 </body>
