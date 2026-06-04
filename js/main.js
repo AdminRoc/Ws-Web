@@ -517,14 +517,14 @@ function getDomain(url) {
 .pp-row:hover { background: rgba(185,142,52,.10); color: rgba(215,172,65,.95); padding-left: 1.35rem; }
 .pp-row:hover::before { transform: translateX(420%) skewX(-15deg); }
 .pp-icon {
-  width: 22px; height: 22px; border-radius: 50%;
+  width: 26px; height: 26px; border-radius: 50%;
   background: rgba(185,142,52,.10); border: 1px solid rgba(185,142,52,.32);
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; font-size: .62rem; color: rgba(210,165,60,.88);
+  flex-shrink: 0; color: rgba(210,165,60,.88);
   transition: background .15s, box-shadow .15s;
 }
 .pp-row:hover .pp-icon { background: rgba(185,142,52,.22); box-shadow: 0 0 12px rgba(185,142,52,.5); color: #e8c060; }
-.pp-arr { font-size: .6rem; opacity: .3; flex-shrink: 0; margin-left: auto; transition: opacity .15s, transform .15s; }
+.pp-arr { font-size: .85rem; opacity: .45; flex-shrink: 0; margin-left: auto; transition: opacity .15s, transform .15s; display:flex; align-items:center; }
 .pp-row:hover .pp-arr { opacity: 1; transform: translateX(4px); }
 .lb-table td.player-col { cursor: pointer; line-height: 1; }
 .player-line1 { display: block; font-size: 1em; opacity: 1;   line-height: 1.7; }
@@ -580,10 +580,11 @@ function _ppScheduleHide() {
 function _showPlayerPopup(anchorEl, ids) {
   const p = _getPpPopup();
   _ppCancelHide();
-  let html = '<div class="pp-head">玩家主页</div>';
+  const idCardSvg = '<svg width="15" height="11" viewBox="0 0 15 11" fill="none" style="flex-shrink:0"><rect x=".5" y=".5" width="14" height="10" rx="1.8" stroke="currentColor" stroke-width="1"/><circle cx="4.5" cy="5" r="1.8" stroke="currentColor" stroke-width="1"/><line x1="8" y1="3.5" x2="13" y2="3.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><line x1="8" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><line x1="2.5" y1="8.5" x2="12.5" y2="8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>';
+  let html = '<div class="pp-head">'+idCardSvg+'玩家主页</div>';
   ids.forEach(id => {
     const safe = id.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-    html += '<div class="pp-row" data-pid="'+safe+'"><span class="pp-icon">&#x203A;</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+safe+'</span><span class="pp-arr">&#8594;</span></div>';
+    html += '<div class="pp-row" data-pid="'+safe+'"><span class="pp-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3.5 2L7 5l-3.5 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+safe+'</span><span class="pp-arr">&#8594;</span></div>';
   });
   p.innerHTML = html;
   p.querySelectorAll('.pp-row').forEach(row => {
