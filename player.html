@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>玩家主页 — WFSpeed.run</title>
+<link rel="icon" type="image/png" href="picture/websitelogo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Xszt';src:url('fonts/xszt.ttf') format('truetype');font-display:swap;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;}
+body{background:#030408;color:#b0cae8;min-height:100vh;overflow-x:hidden;
+  font-family:'Xszt','Orbitron',sans-serif;}
+a{text-decoration:none;color:inherit;}
+
+/* ── canvas / nebula ── */
+#star-cvs{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.nebula{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.nebula::before{content:'';position:absolute;width:80vw;height:80vw;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,50,200,.08) 0%,transparent 70%);
+  top:-28vw;left:-18vw;animation:nDrift 44s ease-in-out infinite alternate;filter:blur(60px);}
+.nebula::after{content:'';position:absolute;width:60vw;height:60vw;border-radius:50%;
+  background:radial-gradient(circle,rgba(100,0,200,.07) 0%,transparent 70%);
+  bottom:-12vw;right:-12vw;animation:nDrift 36s ease-in-out infinite alternate-reverse;filter:blur(65px);}
+@keyframes nDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(4vw,-4vw) scale(1.05)}}
+:root{--rb:linear-gradient(135deg,#ff1a3c 0%,#ff6600 14%,#ffdd00 28%,#33ff88 42%,#00ccff 57%,#6633ff 71%,#ff33cc 85%,#ff1a3c 100%);}
+/* Main rainbow: 8s (same as serch.html) */
+@keyframes hs{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}
+/* Dim rainbow for content: 16s, brightness 65% */
+@keyframes hsd{from{filter:saturate(.85) brightness(.9) hue-rotate(0deg)}to{filter:saturate(.85) brightness(.9) hue-rotate(360deg)}}
+
+/* ── back button ── */
+.back-btn{position:fixed;top:26px;left:28px;z-index:200;display:flex;align-items:center;
+  gap:8px;padding:8px 18px;border:1px solid rgba(0,212,255,.22);border-radius:6px;
+  background:rgba(0,212,255,.04);color:rgba(0,212,255,.6);font-size:.78rem;
+  letter-spacing:.1em;cursor:pointer;transition:color .3s,border-color .3s,box-shadow .3s;}
+.back-btn:hover{color:#00d4ff;border-color:rgba(0,212,255,.5);box-shadow:0 0 18px rgba(0,212,255,.2);}
+.back-lbl{display:inline-grid;place-items:center;min-width:2.2em;}
+.back-lbl .cn,.back-lbl .en{grid-area:1/1;transition:opacity .3s;white-space:nowrap;}
+.back-lbl .en{opacity:0;}
+.back-btn:hover .cn{opacity:0;}
+.back-btn:hover .en{opacity:1;}
+
+/* ── page wrap ── */
+.page-wrap{position:relative;z-index:10;padding:90px 0 80px;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+
+/* ── player header ── */
+.player-header{text-align:center;margin-bottom:52px;padding:0 24px;max-width:984px;width:100%;}
+.player-domain{font-size:clamp(1.1rem,2.4vw,1.5rem);letter-spacing:.55em;
+  text-transform:uppercase;margin-bottom:14px;
+  background:var(--rb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:hs 6.4s linear infinite;}
+.player-name{
+  font-size:clamp(3.2rem,7vw,5.4rem);font-weight:800;letter-spacing:.12em;
+  background:var(--rb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:hs 6.4s linear infinite;
+  word-break:break-all;line-height:1.35;padding-bottom:0.22em;}
+.player-stats{margin-top:20px;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;}
+.stat-badge{display:flex;align-items:center;gap:8px;padding:7px 18px;
+  border:1px solid rgba(0,212,255,.2);border-radius:20px;background:rgba(0,212,255,.05);
+  font-size:1.1rem;letter-spacing:.06em;color:rgba(176,202,232,.7);}
+.trophy-badge{display:flex;align-items:center;gap:8px;padding:7px 20px;
+  border:1px solid rgba(255,185,30,.35);border-radius:20px;
+  background:rgba(255,185,30,.07);font-size:1.15rem;letter-spacing:.06em;
+  color:rgba(255,205,80,.9);animation:trophyGlow 2.5s ease-in-out infinite alternate;}
+@keyframes trophyGlow{
+  from{box-shadow:0 0 8px rgba(255,185,30,.15);}
+  to{box-shadow:0 0 22px rgba(255,185,30,.45),0 0 45px rgba(255,185,30,.18);}}
+/* .trophy-icon removed — using emoji */
+
+/* ── share button ── */
+.share-btn{
+  position:fixed;top:26px;right:28px;z-index:200;
+  display:flex;align-items:center;gap:8px;padding:8px 18px;
+  border:1px solid rgba(0,212,255,.22);border-radius:6px;
+  background:rgba(0,212,255,.04);color:rgba(0,212,255,.6);font-size:.78rem;
+  letter-spacing:.1em;cursor:pointer;font-family:'Xszt','Orbitron',sans-serif;
+  transition:color .3s,border-color .3s,box-shadow .3s;}
+.share-btn:hover{color:#00d4ff;border-color:rgba(0,212,255,.5);box-shadow:0 0 18px rgba(0,212,255,.2);}
+.share-btn:disabled{opacity:.4;cursor:default;}
+
+/* ── results container ── */
+.results-wrap{width:min(984px,98vw);}
+
+/* ── leaderboard group ── */
+.lb-group{margin-bottom:24px;position:relative;border-radius:14px;isolation:isolate;}
+.lb-group::before{content:'';position:absolute;inset:0;border-radius:14px;padding:1.4px;
+  background:linear-gradient(135deg,#00d4ff,#8b5cf6,#00ffcc,#00d4ff);
+  background-size:300% 300%;animation:borderFlow 6s ease infinite;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;z-index:-1;}
+@keyframes borderFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.lb-group-inner{background:rgba(7,10,22,.95);border-radius:13px;overflow:hidden;}
+
+.lb-group-head{padding:13px 20px;border-bottom:1px solid rgba(0,212,255,.1);
+  display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+.lb-group-title-cn{font-size:1.22rem;font-weight:700;letter-spacing:.07em;
+  background:var(--rb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:hsd 2s linear infinite;}
+.lb-group-title-en{font-size:1.02rem;letter-spacing:.08em;color:rgba(176,202,232,.55);}
+.lb-group-ctx{font-size:.76rem;letter-spacing:.05em;color:rgba(0,212,255,.6);margin-top:3px;}
+
+.lb-entry{display:grid;grid-template-columns:3em 10em 1fr 6.5em;
+  column-gap:14px;padding:10px 20px;font-size:1.12rem;letter-spacing:.04em;color:#b0cae8;
+  border-bottom:1px solid rgba(0,212,255,.05);transition:background .2s;}
+.lb-entry:last-child{border-bottom:none;}
+.lb-entry>*{min-width:0;position:relative;z-index:1;isolation:isolate;}
+.lb-entry:hover{background:rgba(0,212,255,.04);}
+/* rank-1/2/3 colors handled by rainbow animation */
+.lb-rank{font-size:1.04rem;align-self:center;
+  background:var(--rb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:hsd 2s linear infinite;}
+.lb-time{font-weight:700;white-space:nowrap;
+  background:var(--rb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:hsd 2s linear infinite;}
+.lb-player{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  background:var(--rb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:hsd 2s linear infinite;}
+.lb-date{color:rgba(176,202,232,.58);font-size:1.02rem;text-align:right;white-space:nowrap;}
+/* eidolon extra col */
+.lb-entry.has-capture{grid-template-columns:3em 10em auto 1fr 6.5em;column-gap:14px;}
+.lb-capture{color:rgba(0,212,255,.65);font-size:1.06rem;white-space:nowrap;}
+
+/* ── loading / error / empty ── */
+.status-msg{text-align:center;padding:80px 0;color:rgba(0,212,255,.45);
+  font-size:1.18rem;letter-spacing:.14em;animation:loadPulse 1.2s ease-in-out infinite;}
+@keyframes loadPulse{0%,100%{opacity:.3}50%{opacity:1}}
+.error-msg{text-align:center;padding:80px 0;color:rgba(255,80,80,.6);
+  font-size:1.2rem;letter-spacing:.1em;}
+.no-records-msg{text-align:center;padding:80px 0;color:rgba(176,202,232,.3);
+  font-size:1.2rem;letter-spacing:.12em;line-height:2.2;}
+
+/* ── entry animation ── */
+.lb-group{transform:translateY(24px);opacity:0;
+  animation:groupSlide .5s cubic-bezier(.22,.68,0,1.2) forwards;}
+@keyframes groupSlide{to{transform:translateY(0);opacity:1;}}
+
+@media(max-width:600px){
+  .lb-entry{grid-template-columns:2.6em 7em 1fr 5em;column-gap:8px;font-size:1rem;}
+  .lb-entry.has-capture{grid-template-columns:2.6em 7em auto 1fr;column-gap:8px;}
+  .lb-date{display:none;}
+}
+</style>
+</head>
+<body>
+<canvas id="star-cvs"></canvas>
+<div class="nebula"></div>
+
+<a class="back-btn" onclick="history.length>1?history.back():(window.location.href='index.html')" href="javascript:void(0)">
+  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+    <path d="M9.5 3L5 7.5l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span class="back-lbl"><span class="cn">返回</span><span class="en">Back</span></span>
+</a>
+
+<button class="share-btn" id="share-btn" disabled>
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <circle cx="11" cy="2.5" r="1.8" stroke="currentColor" stroke-width="1.3"/>
+    <circle cx="11" cy="11.5" r="1.8" stroke="currentColor" stroke-width="1.3"/>
+    <circle cx="3" cy="7" r="1.8" stroke="currentColor" stroke-width="1.3"/>
+    <path d="M4.6 6.1L9.4 3.4M9.4 10.6L4.6 7.9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+  </svg>
+  生成分享卡片
+</button>
+
+<div class="page-wrap" id="page-wrap">
+  <div class="player-header" id="player-header">
+    <div class="player-domain">WFSpeed.run</div>
+    <div class="player-name" id="player-name">···</div>
+    <div class="player-stats" id="player-stats"></div>
+  </div>
+  <div class="results-wrap" id="results-wrap">
+    <div class="status-msg" id="status-msg">正在加载全站数据 · · ·</div>
+  </div>
+</div>
+
+<!-- star field -->
+<script>
+(function(){
+  var c=document.getElementById('star-cvs'),ctx=c.getContext('2d'),S=[];
+  function resize(){c.width=innerWidth;c.height=innerHeight;S=[];
+    for(var i=0;i<300;i++){var r=Math.random();
+      var col=r<.52?'255,255,255':r<.74?'180,215,255':r<.88?'255,220,160':'0,200,255';
+      S.push({x:Math.random()*c.width,y:Math.random()*c.height,sz:Math.random()*1.7+.2,
+        base:Math.random()*.5+.15,sp:Math.random()*.018+.003,ph:Math.random()*6.28,col:col});}}
+  function tick(){var t=performance.now()*.001;
+    ctx.fillStyle='#030408';ctx.fillRect(0,0,c.width,c.height);
+    S.forEach(function(s){var a=s.base*(.68+.32*Math.sin(t*s.sp*55+s.ph));
+      ctx.save();ctx.globalAlpha=a;ctx.fillStyle='rgba('+s.col+',1)';
+      ctx.beginPath();ctx.arc(s.x,s.y,s.sz,0,6.28);ctx.fill();ctx.restore();});
+    requestAnimationFrame(tick);}
+  window.addEventListener('resize',resize);resize();tick();
+})();
+</script>
+
+<!-- fade in -->
+<script>
+window.addEventListener('load',function(){
+  document.getElementById('page-wrap').style.transition='opacity .9s ease';
+  document.getElementById('page-wrap').style.opacity='1';
+});
+document.getElementById('page-wrap').style.opacity='0';
+</script>
+
+<!-- search index (same as serch.html) -->
+<script>
+var IDX=[];
+(function(){
+  function add(page,tcn,ten,ctx,cen,vn){IDX.push({page:page,titleCn:tcn,titleEn:ten,ctx:ctx,ctxEn:cen||'',varName:vn});}
+  var N='普通',S='钢铁',NO='Normal',ST='Steel';
+  var aM=[['alchemy','Alchemy'],['defection','Defection'],['defense','Defense'],['disruption','Disruption'],
+    ['excavation','Excavation'],['salvage','Salvage'],['interception','Interception'],['mirror-defense','Mirror Defense'],
+    ['survival','Survival'],['void-cascade','Void Cascade'],['void-flood','Void Flood'],['void-armageddon','Void Armageddon']];
+  aM.forEach(function(m){
+    add('arbitration.html','仲裁任务竞速排行榜','Arbitration Speedrun Leaderboard',
+      '1000生息精华 · '+m[0].replace(/-/g,' '),'1000 Vitus Essence · '+m[1],
+      'arbitration_vitus_'+m[0].replace(/-/g,'_')+'Records');
+    add('arbitration.html','仲裁任务竞速排行榜','Arbitration Speedrun Leaderboard',
+      '标准轮次竞速 · '+m[0].replace(/-/g,' '),'Standard Rounds · '+m[1],
+      'arbitration_rounds_'+m[0].replace(/-/g,'_')+'Records');});
+  [['effervo','Effervo'],['exequias','Exequias'],['exta','Exta'],['fossa','Fossa'],['hades','Hades'],
+    ['iliad','Iliad'],['jordas-golem','Jordas Golem'],['magnacidium','Magnacidium'],['merrow','Merrow'],
+    ['mutalist-alad-v','Mutalist Alad V'],['naamah','Naamah'],['oro','Oro'],['psamathe','Psamathe'],
+    ['tethys','Tethys'],['themisto','Themisto'],['titania','Titania'],['tolstoj','Tolstoj'],['war','War']].forEach(function(m){
+    [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+      add('assassination.html','刺杀竞速排行榜','Assassination Speedrun Leaderboard',
+        ct[0]+' · '+m[0].replace(/-/g,' '),ct[1]+' · '+m[1],'assassination_'+ct[2]+'_'+m[0].replace(/-/g,'_')+'Records');});});
+  add('assassination.html','刺杀竞速排行榜','Assassination Speedrun Leaderboard',S+' · The Fragmented One','Steel · The Fragmented One','assassination_steel_the_fragmented_oneRecords');
+  [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){add('cambire.html','元素转换竞速排行榜','Cambire Speedrun Leaderboard',ct[0],ct[1],'cambire_'+ct[2]+'Records');});
+  [['abaddon','Abaddon'],['ananke','Ananke'],['ara','Ara'],['ariel','Ariel'],['cassini','Cassini'],
+    ['copernicus','Copernicus'],['elion','Elion'],['galatea','Galatea'],['hepit','Hepit'],['horend','Horend'],
+    ['hydra','Hydra'],['isos','Isos'],['kobinn-west','Kobinn West'],['lex','Lex'],['mantle','Mantle'],
+    ['skyresh','Skyresh'],['ukko','Ukko'],['venera','Venera']].forEach(function(m){
+    add('capture.html','捕获竞速排行榜','Capture Speedrun Leaderboard',m[0].replace(/-/g,' '),m[1],'capture_'+m[0].replace(/-/g,'_')+'Records');});
+  [['caracol','Caracol'],['memphis','Memphis'],['yursa','Yursa']].forEach(function(m){
+    add('defection.html','叛逃任务竞速排行榜','Defection Speedrun Leaderboard',m[0],m[1],'defection_'+m[0]+'Records');});
+  [['akkad','Akkad'],['belenus','Belenus'],['casta','Casta'],['coba','Coba'],['gulliver','Gulliver'],
+    ['helene','Helene'],['hydron','Hydron'],['hyf','Hyf'],['io','Io'],['kadesh','Kadesh'],
+    ['kala-azar','Kala-Azar'],['lares','Lares'],['larzac','Larzac'],['lith','Lith'],['nabuk','Nabuk'],
+    ['outer','Outer'],['paimon','Paimon'],['proteus','Proteus'],['romula','Romula'],['sangeru','Sangeru'],
+    ['sechura','Sechura'],['seimeni','Seimeni'],['sinai','Sinai'],['spear','Spear'],['stephano','Stephano'],
+    ['stofler','Stofler'],['taranis','Taranis'],['tessera','Tessera']].forEach(function(m){
+    [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+      add('defense-relic.html','防御裂缝60轮竞速排行榜','Defense Relic 60-Wave Leaderboard',ct[0]+' · '+m[0].replace(/-/g,' '),ct[1]+' · '+m[1],'defense_relic_'+ct[2]+'_'+m[0].replace(/-/g,'_')+'Records');});});
+  [['Solo','单人','disruption.html','中断竞速排行榜','Disruption Speedrun'],
+   ['Duo','双人','disruption-duo.html','中断竞速排行榜','Disruption Speedrun'],
+   ['Multi','多人','disruption-multi.html','中断竞速排行榜','Disruption Speedrun']].forEach(function(md){
+    [['Apollo','Apollo'],['Armatus','Armatus'],['Kappa','Kappa'],['Tamu','Tamu'],['Ur','Ur']].forEach(function(m){
+      add(md[2],md[3],md[4],md[1]+' · '+m[0],md[0]+' · '+m[1],'disruption'+m[0]+md[0]+'Records');});});
+  [['Solo','单人'],['Duo','双人'],['Trio','三人'],['Quad','四人']].forEach(function(m){
+    add('eidolon.html','夜灵竞速排行榜（有限制）','Eidolon Speedrun Restricted',m[1],m[0],'eidolon'+m[0]+'Records');
+    add('eidolon-macro.html','夜灵竞速排行榜（无限制）','Eidolon Speedrun Unrestricted',m[1],m[0],'eidolonMacro'+m[0]+'Records');});
+  [['acheron','Acheron'],['adaro','Adaro'],['armaros','Armaros'],['baal','Baal'],['carpo','Carpo'],
+    ['dakata','Dakata'],['e-gate','E Gate'],['e-prime','E Prime'],['halako-perimeter','Halako Perimeter'],
+    ['hellas','Hellas'],['m-prime','M Prime'],['mariana','Mariana'],['mausoleum-east','Mausoleum East'],
+    ['montes','Montes'],['narcissus','Narcissus'],['nex','Nex'],['oxomoco','Oxomoco'],['pallas','Pallas'],
+    ['pantheon','Pantheon'],['phlegyas','Phlegyas'],['plato','Plato'],['puck','Puck'],
+    ['rhu-manor','Rhu Manor'],['roche','Roche'],['saxis','Saxis'],['sycorax','Sycorax'],['syrtis','Syrtis'],
+    ['telesto','Telesto'],['teshub','Teshub'],['ultor','Ultor']].forEach(function(m){
+    [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+      add('exterminate.html','歼灭竞速排行榜','Exterminate Speedrun Leaderboard',ct[0]+' · '+m[0].replace(/-/g,' '),ct[1]+' · '+m[1],'exterminate_'+ct[2]+'_'+m[0].replace(/-/g,'_')+'Records');});});
+  [{c:'1999歼灭',e:'1999 Exterminate',v:'hollvania_1999_exterminateRecords'},
+   {c:'传承种收割',e:'Legacyte Harvest',v:'hollvania_legacyte_harvestRecords'},
+   {c:'舞台防御',e:'Stage Defense',v:'hollvania_stage_defenseRecords'},
+   {c:'王者坦克',e:'Victory Plaza Apex',v:'victory_plaza_apexRecords'},
+   {c:'普通坦克',e:'Victory Plaza Normal',v:'victory_plaza_normalRecords'}].forEach(function(x){
+    add('hollvania.html','1999任务竞速排行榜','1999 Mission Speedrun Leaderboard',x.c,x.e,x.v);});
+  add('profit-taker.html','蜘蛛竞速排行榜（有限制）','Profit-Taker Speedrun Restricted','','','profitTakerRecords');
+  add('profit-taker-macro.html','蜘蛛竞速排行榜（无限制）','Profit-Taker Speedrun Unrestricted','','','profitTakerMacroRecords');
+  [['anthe','Anthe'],['brugia','Brugia'],['caliban','Caliban'],['caloris','Caloris'],['garus','Garus'],
+    ['linea','Linea'],['martialis','Martialis'],['metis','Metis'],['monolith','Monolith'],['naga','Naga'],
+    ['numa','Numa'],['nuovo','Nuovo'],['orias','Orias'],['pacific','Pacific'],['regna','Regna'],
+    ['triton','Triton'],['zeipel','Zeipel']].forEach(function(m){
+    add('rescue.html','救援竞速排行榜','Rescue Speedrun Leaderboard',m[0],m[1],'rescue_'+m[0]+'Records');});
+  [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+    add('ropalolyst.html','蝠力使竞速排行榜','Ropalolyst Speedrun Leaderboard',ct[0],ct[1],'ropalolyst_'+ct[2]+'Records');});
+  [['adrastea','Adrastea'],['ares','Ares'],['calypso','Calypso'],['cervantes','Cervantes'],['cypress','Cypress'],
+    ['desdemona','Desdemona'],['enceladus','Enceladus'],['formido','Formido'],['galilea','Galilea'],
+    ['gradivus','Gradivus'],['ishtar','Ishtar'],['ker','Ker'],['kokabiel','Kokabiel'],['koro','Koro'],
+    ['marduk','Marduk'],['naeglar','Naeglar'],['rusalka','Rusalka'],['sao','Sao'],['stribog','Stribog'],
+    ['terminus','Terminus'],['thebe','Thebe'],['thon','Thon']].forEach(function(m){
+    add('sabotage.html','破坏竞速排行榜','Sabotage Speedrun Leaderboard',m[0],m[1],'sabotage_'+m[0]+'Records');});
+  [['flexa','Flexa'],['h2-cloud','H2 Cloud'],['nsu-grid','NSU Grid'],['r9-cloud','R9 Cloud']].forEach(function(m){
+    [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+      add('skirmish.html','面纱前哨战竞速排行榜','Skirmish Speedrun Leaderboard',ct[0]+' · '+m[0].replace(/-/g,' ').toUpperCase(),ct[1]+' · '+m[1],'skirmish_'+ct[2]+'_'+m[0].replace(/-/g,'_')+'Records');});});
+  add('special-events.html','站内特殊活动竞速排行榜','Special Events Leaderboard','','','special_eventsRecords');
+  [{c:'执刑官猎杀',e:'Archon Hunt',v:'archon_huntRecords'},{c:'衰退室',e:'Netracell',v:'netracellRecords'},
+   {c:'获取阿耶檀识塑像',e:'Ayatan Capture',v:'ayatan_captureRecords'},{c:'有罪之人',e:'The Guilty',v:'the_guiltyRecords'},
+   {c:'二蜘蛛',e:'Exploiter Orb',v:'exploiterRecords'},{c:'氏族跑酷',e:'Obstacle Course',v:'obstacle_courseRecords'}].forEach(function(x){
+    add('special_challenge.html','特殊挑战竞速排行榜','Special Challenge Leaderboard',x.c,x.e,x.v);});
+  [['amalthea','Amalthea'],['arval','Arval'],['bode','Bode'],['cambria','Cambria'],['dione','Dione'],
+    ['kelpie','Kelpie'],['nereid','Nereid'],['oceanum','Oceanum'],['pago','Pago'],['rosalind','Rosalind'],
+    ['shklovsky','Shklovsky'],['suisei','Suisei'],['unda','Unda'],['valac','Valac']].forEach(function(m){
+    [['allow','允许破解器','Allow Codebreaker'],['ban','禁用破解器','Ban Codebreaker']].forEach(function(ct){
+      add('spy.html','间谍竞速排行榜','Spy Speedrun Leaderboard',ct[1]+' · '+m[0],ct[2]+' · '+m[1],'spy_'+ct[0]+'_'+m[0]+'Records');});});
+})();
+</script>
+
+<!-- data loader (same as serch.html) -->
+<script>
+var _loaded=false,_loading=false,_cbs=[];
+function loadData(cb){
+  if(_loaded){cb();return;}
+  _cbs.push(cb);if(_loading)return;_loading=true;
+  var f=[];
+  (function(){
+    var am=['alchemy','defection','defense','disruption','excavation','salvage','interception','mirror-defense','survival','void-cascade','void-flood','void-armageddon'];
+    am.forEach(function(m){f.push('data/arbitration/arbitration-vitus-'+m+'.js','data/arbitration/arbitration-rounds-'+m+'.js');});
+    ['effervo','exequias','exta','fossa','hades','iliad','jordas-golem','magnacidium','merrow','mutalist-alad-v','naamah','oro','psamathe','tethys','themisto','titania','tolstoj','war'].forEach(function(m){f.push('data/assassination/assassination-normal-'+m+'.js','data/assassination/assassination-steel-'+m+'.js');});
+    f.push('data/assassination/assassination-steel-the-fragmented-one.js','data/cambire/cambire-normal.js','data/cambire/cambire-steel.js');
+    ['abaddon','ananke','ara','ariel','cassini','copernicus','elion','galatea','hepit','horend','hydra','isos','kobinn-west','lex','mantle','skyresh','ukko','venera'].forEach(function(m){f.push('data/capture/capture-'+m+'.js');});
+    ['caracol','memphis','yursa'].forEach(function(m){f.push('data/defection/defection-'+m+'.js');});
+    ['akkad','belenus','casta','coba','gulliver','helene','hydron','hyf','io','kadesh','kala-azar','lares','larzac','lith','nabuk','outer','paimon','proteus','romula','sangeru','sechura','seimeni','sinai','spear','stephano','stofler','taranis','tessera'].forEach(function(m){f.push('data/defense-relic/defense-relic-normal-'+m+'.js','data/defense-relic/defense-relic-steel-'+m+'.js');});
+    ['apollo','armatus','kappa','tamu','ur'].forEach(function(m){['solo','duo','multi'].forEach(function(md){f.push('data/disruption/disruption-'+m+'-'+md+'.js');});});
+    ['solo','duo','trio','quad'].forEach(function(m){f.push('data/eidolon/eidolon-'+m+'.js','data/eidolon-macro/eidolon-macro-'+m+'.js');});
+    ['acheron','adaro','armaros','baal','carpo','dakata','e-gate','e-prime','halako-perimeter','hellas','m-prime','mariana','mausoleum-east','montes','narcissus','nex','oxomoco','pallas','pantheon','phlegyas','plato','puck','rhu-manor','roche','saxis','sycorax','syrtis','telesto','teshub','ultor'].forEach(function(m){f.push('data/exterminate/exterminate-normal-'+m+'.js','data/exterminate/exterminate-steel-'+m+'.js');});
+    ['1999-exterminate','legacyte-harvest','stage-defense','victory-plaza-apex','victory-plaza-normal'].forEach(function(m){f.push('data/hollvania/hollvania-'+m+'.js');});
+    f.push('data/profit-taker/profit-taker.js','data/profit-taker-macro/profit-taker-macro.js');
+    ['anthe','brugia','caliban','caloris','garus','linea','martialis','metis','monolith','naga','numa','nuovo','orias','pacific','regna','triton','zeipel'].forEach(function(m){f.push('data/rescue/rescue-'+m+'.js');});
+    f.push('data/ropalolyst/ropalolyst-normal.js','data/ropalolyst/ropalolyst-steel.js');
+    ['adrastea','ares','calypso','cervantes','cypress','desdemona','enceladus','formido','galilea','gradivus','ishtar','ker','kokabiel','koro','marduk','naeglar','rusalka','sao','stribog','terminus','thebe','thon'].forEach(function(m){f.push('data/sabotage/sabotage-'+m+'.js');});
+    ['flexa','h2-cloud','nsu-grid','r9-cloud'].forEach(function(m){f.push('data/skirmish/skirmish-normal-'+m+'.js','data/skirmish/skirmish-steel-'+m+'.js');});
+    f.push('data/special-events/special-events.js');
+    ['archon-hunt','ayatan-capture','exploiter','netracell','obstacle-course','the-guilty'].forEach(function(m){f.push('data/special_challenge/special-challenge-'+m+'.js');});
+    ['amalthea','arval','bode','cambria','dione','kelpie','nereid','oceanum','pago','rosalind','shklovsky','suisei','unda','valac'].forEach(function(m){f.push('data/spy/spy-allow-'+m+'.js','data/spy/spy-ban-'+m+'.js');});
+  })();
+  var bi=0,BATCH=40;
+  function nb(){
+    if(bi*BATCH>=f.length){_loaded=true;_loading=false;_cbs.forEach(function(c){c();});_cbs=[];return;}
+    var batch=f.slice(bi*BATCH,(bi+1)*BATCH);bi++;var done=0;
+    batch.forEach(function(src){var s=document.createElement('script');s.src=src;
+      s.onload=s.onerror=function(){if(++done===batch.length)nb();};document.head.appendChild(s);});}
+  nb();
+}
+</script>
+
+<!-- player logic -->
+<script>
+function getRecs(n){try{var r=window[n];if(Array.isArray(r))return r;}catch(e){}try{var r=(0,eval)(n);if(Array.isArray(r))return r;}catch(e){}return null;}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function parseMs(t){
+  if(!t)return Infinity;
+  var m=String(t).match(/^(\d+):(\d+)\.(\d+)$/);
+  if(m)return(+m[1])*60000+(+m[2])*1000+parseFloat('0.'+m[3])*1000;
+  return Infinity;
+}
+var CAP_RANK={'7×3':1,'6×3+2':2,'6×3+1':3,'6×3':4};
+function capW(s){return CAP_RANK[s]!==undefined?CAP_RANK[s]:99;}
+
+function sortRecs(recs){
+  if(!recs.length)return[];
+  if(recs[0].avgRealTime!==undefined){
+    return[...recs].sort(function(a,b){var cw=capW(a.captureStatus)-capW(b.captureStatus);return cw!==0?cw:parseMs(a.avgRealTime)-parseMs(b.avgRealTime);});}
+  return[...recs].sort(function(a,b){return parseMs(a.clearTime)-parseMs(b.clearTime);});
+}
+
+function playerIds(rec){
+  return(rec.playerId||'').split(' / ').map(function(s){return s.trim();}).filter(Boolean);
+}
+function matchesPlayer(rec,target){
+  var t=target.toLowerCase();
+  return playerIds(rec).some(function(id){return id.toLowerCase()===t;});
+}
+
+/* ── get player ID from URL ── */
+var params=new URLSearchParams(location.search);
+var targetId=params.get('id')||'';
+if(!targetId){
+  document.getElementById('player-name').textContent='无效的玩家ID';
+  document.getElementById('status-msg').className='error-msg';
+  document.getElementById('status-msg').textContent='请通过榜单页面的玩家名称入口访问此页面。';
+}else{
+  document.getElementById('player-name').textContent=targetId;
+  document.title=targetId+' — WFSpeed.run';
+
+  loadData(function(){
+    var allEntries=[];
+    IDX.forEach(function(e){
+      var recs=getRecs(e.varName);
+      if(!Array.isArray(recs)||!recs.length)return;
+      var sorted=sortRecs(recs);
+      sorted.forEach(function(rec,i){
+        if(!matchesPlayer(rec,targetId))return;
+        allEntries.push({page:e.page,titleCn:e.titleCn,titleEn:e.titleEn,ctx:e.ctx,ctxEn:e.ctxEn,rec:rec,rank:i+1});
+      });
+    });
+
+    renderPlayer(allEntries);
+  });
+}
+
+function renderPlayer(entries){
+  var wrap=document.getElementById('results-wrap');
+  var statsEl=document.getElementById('player-stats');
+  var statusEl=document.getElementById('status-msg');
+
+  if(!entries.length){
+    statusEl.className='no-records-msg';
+    statusEl.textContent='该玩家在全站暂无上榜记录\nNo records found across all leaderboards';
+    return;
+  }
+  statusEl.remove();
+
+  /* trophy count */
+  var trophies=entries.filter(function(e){return e.rank===1;}).length;
+  var latestDate=entries.reduce(function(acc,e){
+    var d=e.rec.uploadTime||'';return d>acc?d:acc;},'');
+
+  /* stats bar */
+  var statsHtml='<div class="stat-badge">上榜 '+entries.length+' 次</div>';
+  if(latestDate)statsHtml+='<div class="stat-badge">最近活跃 '+esc(latestDate)+'</div>';
+  if(trophies>0){
+    statsHtml+='<div class="trophy-badge" style="font-size:1.4rem;gap:4px">🏆<span style="font-size:1.1rem">×'+trophies+'</span></div>';
+  }
+  statsEl.innerHTML=statsHtml;
+
+  /* group by leaderboard */
+  var groupMap={};
+  var groupOrder=[];
+  entries.forEach(function(e){
+    var key=e.page+'||'+e.titleCn+'||'+e.ctx;
+    if(!groupMap[key]){groupMap[key]={page:e.page,titleCn:e.titleCn,titleEn:e.titleEn,ctx:e.ctx,ctxEn:e.ctxEn,items:[]};groupOrder.push(key);}
+    groupMap[key].items.push(e);
+  });
+
+  var frag=document.createDocumentFragment();
+  var delay=0;
+  groupOrder.forEach(function(key){
+    var g=groupMap[key];
+    var isEidolon=g.items.some(function(e){return e.rec.avgRealTime!==undefined;});
+
+    var div=document.createElement('div');
+    div.className='lb-group';
+    div.style.animationDelay=delay+'s';delay+=0.06;
+
+    var ctxStr=g.ctx?(g.ctx+(g.ctxEn?' / '+g.ctxEn:'')):'';
+    var inner='<div class="lb-group-inner"><div class="lb-group-head">'+
+      '<span class="lb-group-title-cn">'+esc(g.titleCn)+'</span>'+
+      '<span class="lb-group-title-en">'+esc(g.titleEn)+'</span>'+
+      '</div>'+
+      (ctxStr?'<div style="padding:4px 20px 10px;font-size:1.06rem;letter-spacing:.05em;color:rgba(0,212,255,.6)">'+esc(ctxStr)+'</div>':'')+
+      '<div>';
+
+    g.items.forEach(function(e){
+      var r=e.rec;
+      var rankCls=e.rank<=3?' rank-'+e.rank:'';
+      var time=r.avgRealTime||r.clearTime||'—';
+      if(isEidolon){
+        inner+='<div class="lb-entry has-capture'+rankCls+'">'+
+          '<span class="lb-rank">#'+e.rank+'</span>'+
+          '<span class="lb-time">'+esc(time)+'</span>'+
+          '<span class="lb-capture">'+esc(r.captureStatus||'—')+'</span>'+
+          '<span class="lb-player">'+esc(r.playerId||'—')+'</span>'+
+          '<span class="lb-date">'+esc(r.uploadTime||'—')+'</span>'+
+          '</div>';
+      }else{
+        inner+='<div class="lb-entry'+rankCls+'">'+
+          '<span class="lb-rank">#'+e.rank+'</span>'+
+          '<span class="lb-time">'+esc(time)+'</span>'+
+          '<span class="lb-player">'+esc(r.playerId||'—')+'</span>'+
+          '<span class="lb-date">'+esc(r.uploadTime||'—')+'</span>'+
+          '</div>';
+      }
+    });
+    inner+='</div></div>';
+    div.innerHTML=inner;
+
+    /* click card → navigate to leaderboard */
+    div.style.cursor='pointer';
+    div.addEventListener('click',function(){window.open(g.page,'_blank','noopener');});
+
+    frag.appendChild(div);
+  });
+  wrap.appendChild(frag);
+
+  /* enable share button */
+  document.getElementById('share-btn').disabled=false;
+  window._playerEntries=entries;
+  window._playerTrophies=trophies;
+}
+
+/* ── share card: pure Canvas v4 — tight 760px layout ── */
+document.getElementById('share-btn').addEventListener('click', function(){
+  if(!window._playerEntries||!window._playerEntries.length)return;
+  var entries=window._playerEntries;
+  var trophies=window._playerTrophies||0;
+  var btn=document.getElementById('share-btn');
+  btn.disabled=true;var origInner=btn.innerHTML;btn.textContent='生成中…';
+
+  /* ── constants ── */
+  var W=700, BORDER=6, PAD=30;
+  var ROW_H=50, maxE=Math.min(entries.length,16);
+  /* header: domain(22) + gap(10) + name(dynamic) + gap(10) + stats(22) + gap(10) + divider(1) + gap(16) */
+  var nSz=Math.min(56,Math.max(24,Math.floor(540/Math.max(targetId.length,1))));
+  var HEADER_H=22+10+Math.ceil(nSz*1.35)+10+22+10+1+16;
+  var H=BORDER*2+PAD*2+HEADER_H+maxE*ROW_H+32;
+
+  var cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  var ctx=cv.getContext('2d');
+
+  /* background + subtle grid */
+  ctx.fillStyle='#030408';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(0,212,255,0.04)';ctx.lineWidth=1;
+  for(var gx=0;gx<W;gx+=50){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,H);ctx.stroke();}
+  for(var gy=0;gy<H;gy+=50){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(W,gy);ctx.stroke();}
+
+  /* radial glow */
+  var gl=ctx.createRadialGradient(W/2,H*.28,0,W/2,H*.28,W*.55);
+  gl.addColorStop(0,'rgba(0,35,120,0.22)');gl.addColorStop(.5,'rgba(35,0,80,0.08)');gl.addColorStop(1,'transparent');
+  ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+
+  /* rainbow border (6px) */
+  var rbSt=['#ff1a3c','#ff6600','#ffdd00','#33ff88','#00ccff','#6633ff','#ff33cc','#ff1a3c'];
+  function rbG(x0,y0,x1,y1){var g=ctx.createLinearGradient(x0,y0,x1,y1);rbSt.forEach(function(c,i){g.addColorStop(i/7,c);});return g;}
+  ctx.fillStyle=rbG(0,0,W,0);ctx.fillRect(0,0,W,BORDER);
+  ctx.fillStyle=rbG(W,0,0,0);ctx.fillRect(0,H-BORDER,W,BORDER);
+  ctx.fillStyle=rbG(0,0,0,H);ctx.fillRect(0,0,BORDER,H);
+  ctx.fillStyle=rbG(0,H,0,0);ctx.fillRect(W-BORDER,0,BORDER,H);
+
+  var y=BORDER+PAD, lx=BORDER+PAD, cW=W-BORDER*2-PAD*2;
+  var rx=lx+cW; /* right edge */
+
+  /* domain */
+  ctx.font='500 12px Orbitron,sans-serif';ctx.letterSpacing='5px';
+  ctx.fillStyle='rgba(255,255,255,0.85)';ctx.textAlign='center';
+  ctx.fillText('WFSpeed.run',W/2,y+12);y+=22+10;
+
+  /* player ID rainbow */
+  ctx.font='800 '+nSz+'px Orbitron,sans-serif';ctx.letterSpacing='2px';
+  var ng=ctx.createLinearGradient(lx,0,rx,0);
+  rbSt.forEach(function(c,i){ng.addColorStop(i/7,c);});
+  ctx.fillStyle=ng;ctx.textAlign='center';
+  ctx.fillText(targetId,W/2,y+Math.ceil(nSz*.82));y+=Math.ceil(nSz*1.35)+10;
+
+  /* stats */
+  ctx.font='400 12px Orbitron,sans-serif';ctx.letterSpacing='0.8px';
+  ctx.fillStyle='rgba(255,255,255,0.85)';ctx.textAlign='center';
+  var sLine='上榜 '+entries.length+' 次';
+  if(trophies>0)sLine+='  ·  🏆×'+trophies;
+  var latestD=entries.reduce(function(a,e){var d=e.rec.uploadTime||'';return d>a?d:a;},'');
+  if(latestD)sLine+='  ·  最近 '+latestD;
+  ctx.fillText(sLine,W/2,y+12);y+=22+10;
+
+  /* divider */
+  var dg=ctx.createLinearGradient(lx,0,rx,0);
+  dg.addColorStop(0,'transparent');dg.addColorStop(.12,'rgba(0,212,255,.42)');
+  dg.addColorStop(.88,'rgba(139,92,246,.42)');dg.addColorStop(1,'transparent');
+  ctx.strokeStyle=dg;ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(lx,y);ctx.lineTo(rx,y);ctx.stroke();y+=16;
+
+  /* ── record rows ──
+     Cols: #N  |  time  |  lb-name  |  date
+     Widths: 46 | 106 | fill | 88  with 10px gap between each */
+  var C_RANK=lx, C_TIME=lx+42+8, C_DATE_W=76;
+  var C_DATE=rx-C_DATE_W;
+  var C_NAME=C_TIME+100+8;
+  var NAME_W=C_DATE-8-C_NAME;
+
+  /* ── Pass 1: measure all rows, collect gaps ── */
+  ctx.font='400 13px Orbitron,sans-serif';ctx.letterSpacing='0.2px';
+  var rowData=[];
+  entries.slice(0,maxE).forEach(function(e){
+    var rawName=e.titleCn.replace(/（[^）]*）/g,'')+(e.ctx?' · '+e.ctx:'');
+    while(rawName.length>2&&ctx.measureText(rawName+'…').width>NAME_W)rawName=rawName.slice(0,-1);
+    var full=(e.titleCn.replace(/（[^）]*）/g,'')+(e.ctx?' · '+e.ctx:''));
+    var finalName=rawName+(full.length>rawName.length?'…':'');
+    var nameEndX=C_NAME+ctx.measureText(finalName).width;
+    var dateStr=e.rec.uploadTime||'';
+    var dateW=ctx.measureText(dateStr).width;
+    var dateStartX=rx-dateW;
+    rowData.push({e:e,finalName:finalName,nameEndX:nameEndX,dateStr:dateStr,dateW:dateW,dateStartX:dateStartX});
+  });
+
+  /* uniform dot-leader length = shortest gap minus padding */
+  var minGap=Infinity;
+  rowData.forEach(function(r){var g=r.dateStartX-r.nameEndX-12;if(g>0&&g<minGap)minGap=g;});
+  if(minGap===Infinity||minGap<0)minGap=0;
+  var lineHalf=Math.max(0,minGap/2-4);
+
+  /* ── Pass 2: draw all rows ── */
+  rowData.forEach(function(r,i){
+    var ry=y+i*ROW_H;
+    if(i%2===0){ctx.fillStyle='rgba(0,212,255,0.025)';ctx.fillRect(BORDER,ry,W-BORDER*2,ROW_H);}
+
+    /* rank */
+    var rc=r.e.rank===1?'#ffd700':r.e.rank===2?'#c0c0c0':r.e.rank===3?'#cd7f32':'rgba(0,212,255,.55)';
+    ctx.font='700 13px Orbitron,sans-serif';ctx.letterSpacing='0.8px';
+    ctx.textAlign='left';ctx.fillStyle=rc;
+    ctx.fillText('#'+r.e.rank,C_RANK,ry+ROW_H*.62);
+
+    /* time */
+    var tg=ctx.createLinearGradient(C_TIME,0,C_TIME+100,0);
+    tg.addColorStop(0,'#33ff88');tg.addColorStop(.5,'#00ccff');tg.addColorStop(1,'#6699ff');
+    ctx.font='700 14px Orbitron,sans-serif';ctx.letterSpacing='0.3px';ctx.fillStyle=tg;
+    ctx.fillText(r.e.rec.avgRealTime||r.e.rec.clearTime||'—',C_TIME,ry+ROW_H*.62);
+
+    /* lb name */
+    ctx.font='400 13px Orbitron,sans-serif';ctx.letterSpacing='0.2px';
+    ctx.fillStyle='rgba(255,255,255,0.85)';ctx.textAlign='left';
+    ctx.fillText(r.finalName,C_NAME,ry+ROW_H*.62);
+
+    /* dot leader — uniform length, centred between name-end and date-start */
+    if(lineHalf>4){
+      var midX=(r.nameEndX+r.dateStartX)/2;
+      ctx.strokeStyle='rgba(255,255,255,0.38)';ctx.lineWidth=1;
+      ctx.setLineDash([1,4]);
+      ctx.beginPath();ctx.moveTo(midX-lineHalf,ry+ROW_H*.62-4);ctx.lineTo(midX+lineHalf,ry+ROW_H*.62-4);ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    /* date */
+    ctx.font='400 13px Orbitron,sans-serif';ctx.letterSpacing='0.2px';
+    ctx.fillStyle='rgba(255,255,255,0.85)';ctx.textAlign='right';
+    ctx.fillText(r.dateStr,rx,ry+ROW_H*.62);
+  });
+
+  y+=maxE*ROW_H+16;
+
+  /* footer divider */
+  var fdg=ctx.createLinearGradient(lx,0,rx,0);
+  fdg.addColorStop(0,'transparent');fdg.addColorStop(.1,'rgba(255,255,255,0.25)');
+  fdg.addColorStop(.9,'rgba(255,255,255,0.25)');fdg.addColorStop(1,'transparent');
+  ctx.strokeStyle=fdg;ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(lx,y);ctx.lineTo(rx,y);ctx.stroke();y+=14;
+
+  /* footer */
+  ctx.font='400 10px Orbitron,sans-serif';ctx.letterSpacing='2px';
+  ctx.fillStyle='rgba(255,255,255,0.85)';ctx.textAlign='center';
+  var now=new Date();
+  var ds=now.getFullYear()+'-'+(now.getMonth()+1).toString().padStart(2,'0')+'-'+now.getDate().toString().padStart(2,'0');
+  ctx.fillText('Generated by WFSpeed.run  ·  '+ds,W/2,y+14);
+
+  cv.toBlob(function(blob){
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='WFSpeed_'+targetId.replace(/[^a-zA-Z0-9_\-]/g,'_')+'_'+ds+'.png';
+    a.click();setTimeout(function(){URL.revokeObjectURL(a.href);},60000);
+    btn.disabled=false;btn.innerHTML=origInner;
+  },'image/png');
+});
+</script>
+</body>
+</html>

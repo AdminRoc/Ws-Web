@@ -379,9 +379,9 @@ function getDomain(url) {
   gap: .5rem;
   padding: .55rem 1rem;
   font-family: 'Orbitron', sans-serif;
-  font-size: .56rem;
+  font-size: .88rem;
   font-weight: 700;
-  letter-spacing: .22em;
+  letter-spacing: .14em;
   color: rgba(185,142,52,.65);
   text-transform: uppercase;
   border-bottom: 1px solid rgba(185,142,52,.14);
@@ -406,9 +406,9 @@ function getDomain(url) {
   text-decoration: none;
   color: rgba(185,155,90,.8);
   font-family: 'Orbitron', sans-serif;
-  font-size: .72rem;
+  font-size: .96rem;
   font-weight: 600;
-  letter-spacing: .1em;
+  letter-spacing: .06em;
   border-bottom: 1px solid rgba(185,142,52,.08);
   position: relative;
   overflow: hidden;
@@ -480,6 +480,55 @@ function getDomain(url) {
 
 /* 榜单行：有视频时显示指针 */
 .lb-table tbody tr[data-has-video] { cursor: pointer; }
+/* ── 玩家主页弹窗（暗金风格，与视频弹窗一致） ── */
+#pp-popup {
+  position: fixed; z-index: 99999; min-width: 210px; max-width: 320px;
+  pointer-events: auto; opacity: 0;
+  transform: translateY(-10px) scale(0.94);
+  transition: opacity .2s cubic-bezier(.22,.68,0,1.2), transform .2s cubic-bezier(.22,.68,0,1.2);
+  background: rgba(10,7,2,0.98); border: 1px solid rgba(185,142,52,.5);
+  border-radius: 4px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(185,142,52,.08), 0 20px 65px rgba(0,0,0,.98),
+              0 0 50px rgba(185,142,52,.18), inset 0 1px 0 rgba(185,142,52,.22);
+  backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); visibility: hidden;
+}
+#pp-popup.pp-show { visibility: visible; opacity: 1; transform: translateY(0) scale(1); }
+.pp-head {
+  display: flex; align-items: center; gap: .5rem; padding: .55rem 1rem;
+  font-family: 'Orbitron', sans-serif; font-size: .88rem; font-weight: 700;
+  letter-spacing: .12em; color: rgba(185,142,52,.65); text-transform: uppercase;
+  border-bottom: 1px solid rgba(185,142,52,.14);
+  background: linear-gradient(90deg, rgba(185,142,52,.08) 0%, rgba(140,95,20,.04) 100%);
+}
+.pp-row {
+  display: flex; align-items: center; gap: .7rem; padding: .62rem 1rem;
+  color: rgba(185,155,90,.8); font-family: 'Orbitron', sans-serif;
+  font-size: .96rem; font-weight: 600; letter-spacing: .05em;
+  border-bottom: 1px solid rgba(185,142,52,.08); cursor: pointer;
+  position: relative; overflow: hidden;
+  transition: background .15s ease, color .15s ease, padding-left .18s cubic-bezier(.22,.68,0,1.2);
+}
+.pp-row:last-child { border-bottom: none; }
+.pp-row::before {
+  content: ''; position: absolute; top: -20%; left: -10%; width: 38%; height: 140%;
+  background: linear-gradient(105deg, transparent 20%, rgba(185,142,52,.22) 50%, rgba(255,220,100,.08) 55%, transparent 80%);
+  transform: translateX(-200%) skewX(-15deg); transition: transform .38s ease; pointer-events: none;
+}
+.pp-row:hover { background: rgba(185,142,52,.10); color: rgba(215,172,65,.95); padding-left: 1.35rem; }
+.pp-row:hover::before { transform: translateX(420%) skewX(-15deg); }
+.pp-icon {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(185,142,52,.10); border: 1px solid rgba(185,142,52,.32);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: .62rem; color: rgba(210,165,60,.88);
+  transition: background .15s, box-shadow .15s;
+}
+.pp-row:hover .pp-icon { background: rgba(185,142,52,.22); box-shadow: 0 0 12px rgba(185,142,52,.5); color: #e8c060; }
+.pp-arr { font-size: .6rem; opacity: .3; flex-shrink: 0; margin-left: auto; transition: opacity .15s, transform .15s; }
+.pp-row:hover .pp-arr { opacity: 1; transform: translateX(4px); }
+.lb-table td.player-col { cursor: pointer; line-height: 1; }
+.player-line1 { display: block; font-size: 1em; opacity: 1;   line-height: 1.7; }
+.player-line2 { display: block; font-size: 1em; opacity: .55; line-height: 1.7; }
 `;
   document.head.appendChild(s);
 })();
@@ -508,6 +557,70 @@ function _scheduleHide() {
   }, 220);
 }
 
+/* ══════════════════════════════════════════════════════════
+   玩家主页弹窗
+   ══════════════════════════════════════════════════════════ */
+let _ppPopup = null, _ppHideTimer = null;
+
+function _getPpPopup() {
+  if (_ppPopup) return _ppPopup;
+  _ppPopup = document.createElement('div');
+  _ppPopup.id = 'pp-popup';
+  document.body.appendChild(_ppPopup);
+  _ppPopup.addEventListener('mouseenter', _ppCancelHide);
+  _ppPopup.addEventListener('mouseleave', _ppScheduleHide);
+  return _ppPopup;
+}
+function _ppCancelHide() { clearTimeout(_ppHideTimer); }
+function _ppScheduleHide() {
+  clearTimeout(_ppHideTimer);
+  _ppHideTimer = setTimeout(() => { if (_ppPopup) _ppPopup.classList.remove('pp-show'); }, 220);
+}
+
+function _showPlayerPopup(anchorEl, ids) {
+  const p = _getPpPopup();
+  _ppCancelHide();
+  let html = '<div class="pp-head">玩家主页</div>';
+  ids.forEach(id => {
+    const safe = id.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+    html += '<div class="pp-row" data-pid="'+safe+'"><span class="pp-icon">&#x203A;</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+safe+'</span><span class="pp-arr">&#8594;</span></div>';
+  });
+  p.innerHTML = html;
+  p.querySelectorAll('.pp-row').forEach(row => {
+    row.addEventListener('click', () => { if (row.dataset.pid) _navigateToPlayer(row.dataset.pid); });
+  });
+  p.classList.remove('pp-show');
+  p.style.visibility = 'hidden'; p.style.display = 'block';
+  const rect = anchorEl.getBoundingClientRect();
+  const vpW = window.innerWidth, vpH = window.innerHeight;
+  const popW = p.offsetWidth || 240, popH = p.offsetHeight || 100;
+  let left = rect.left + 12;
+  if (left + popW > vpW - 10) left = vpW - popW - 10;
+  if (left < 8) left = 8;
+  const below = vpH - rect.bottom;
+  let top = below >= popH + 10 ? rect.bottom + 6 : rect.top - popH - 6;
+  if (top < 4) top = 4;
+  p.style.left = left+'px'; p.style.top = top+'px';
+  p.style.display = ''; p.style.visibility = '';
+  requestAnimationFrame(() => requestAnimationFrame(() => p.classList.add('pp-show')));
+}
+
+function _bindPlayerCell(tr, rec) {
+  const playerTd = tr.querySelector('.player-col');
+  if (!playerTd || !rec.playerId) return;
+  // 多人ID按 ' / '（空格斜杠空格）拆分，trim去掉前后空格
+  const ids = rec.playerId.split(' / ').map(s => s.trim()).filter(Boolean);
+  if (!ids.length) return;
+  let enterTimer = null;
+  playerTd.addEventListener('mouseenter', () => {
+    enterTimer = setTimeout(() => _showPlayerPopup(playerTd, ids), 80);
+  });
+  playerTd.addEventListener('mouseleave', () => {
+    clearTimeout(enterTimer);
+    _ppScheduleHide();
+  });
+}
+
 /* 显示弹窗 */
 function _showPopup(anchorEl, urls, rec) {
   const p = _getPopup();
@@ -519,7 +632,7 @@ function _showPopup(anchorEl, urls, rec) {
     <div class="vp-head">
       <span class="vp-head-icon">
         <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-          <polygon points="1.5,1 8,4.5 1.5,8" fill="rgba(0,212,255,.9)"/>
+          <polygon points="1.5,1 8,4.5 1.5,8" fill="rgba(185,142,52,.9)"/>
         </svg>
       </span>
       视频录像&nbsp;·&nbsp;${urls.length}&nbsp;个视角
@@ -583,23 +696,26 @@ function _bindRow(tr, urls, rec) {
   if (!urls || !urls.length) return;
   tr.setAttribute('data-has-video', '1');
 
-  // 悬停：200ms 延迟显示（防止划过误触）
+  // 视频弹窗仅限时间列触发，避免与玩家主页弹窗冲突
+  const timeTd = tr.querySelector('.time-col');
+  const anchor = timeTd || tr;
+  anchor.style.cursor = 'pointer';
+
   let enterTimer = null;
-  tr.addEventListener('mouseenter', () => {
-    enterTimer = setTimeout(() => _showPopup(tr, urls, rec), 80);
+  anchor.addEventListener('mouseenter', () => {
+    enterTimer = setTimeout(() => _showPopup(anchor, urls, rec), 80);
   });
-  tr.addEventListener('mouseleave', () => {
+  anchor.addEventListener('mouseleave', () => {
     clearTimeout(enterTimer);
     _scheduleHide();
   });
 
-  // 点击：如果只有1个视角直接跳转；多视角点击也显示菜单
-  tr.addEventListener('click', (e) => {
-    if (e.target.closest('#vp-popup')) return; // 点击弹窗内部不处理
+  anchor.addEventListener('click', (e) => {
+    if (e.target.closest('#vp-popup')) return;
     if (urls.length === 1) {
       _vcShow(urls[0], rec, '视角 1');
     } else {
-      _showPopup(tr, urls, rec);
+      _showPopup(anchor, urls, rec);
     }
   });
 }
@@ -632,12 +748,13 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
 
     /* 无"录像"字，改为仅凭 cursor:pointer 暗示可点 */
     tr.innerHTML = `
-      <td class="rank-col"><span class="rank-badge">#${rank}</span></td>
-      <td class="time-col">${rec[timeField] || '—'}</td>
-      <td class="player-col">${rec.playerId || '—'}</td>
-      <td>${rec.uploadTime || '—'}</td>`;
+      <td class="rank-col" style="vertical-align:middle"><span class="rank-badge">#${rank}</span></td>
+      <td class="time-col" style="vertical-align:middle">${rec[timeField] || '—'}</td>
+      <td class="player-col" style="vertical-align:middle">${(rec.playerId2||rec.playerId3||rec.playerId4) ? '<span class="player-line1">'+(rec.playerId||'—')+'</span>' : (rec.playerId||'—')}${rec.playerId2 ? '<span class="player-line2">'+rec.playerId2+'</span>' : ''}${rec.playerId3 ? '<span class="player-line2">'+rec.playerId3+'</span>' : ''}${rec.playerId4 ? '<span class="player-line2">'+rec.playerId4+'</span>' : ''}</td>
+      <td style="vertical-align:middle">${rec.uploadTime || '—'}</td>`;
 
     _bindRow(tr, urls, rec);
+    _bindPlayerCell(tr, rec);
     tbody.appendChild(tr);
   });
 
@@ -681,6 +798,7 @@ function renderEidolonLeaderboard(records, tbodyId) {
       <td>${rec.uploadTime || '—'}</td>`;
 
     _bindRow(tr, urls, rec);
+    _bindPlayerCell(tr, rec);
     tbody.appendChild(tr);
   });
 
@@ -810,18 +928,12 @@ function initAutoActiveNav() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   全站搜索 — 像素化视觉褪色崩塌 过渡效果
-   纯 Canvas，无 CSS 动画，无闪烁
+   全站搜索 / 玩家主页 — 像素故障过渡动画（共享函数）
    ══════════════════════════════════════════════════════════ */
-(function(){
-  var _busy = false;
+var _glitchBusy = false;
 
-  document.addEventListener('click', function(e) {
-    var link = e.target.closest('.nav-serch-link');
-    if (!link || _busy) return;
-    e.preventDefault();
-    _busy = true;
-    var dest = link.getAttribute('href') || 'serch.html';
+function _doGlitchNav(dest) {
+
 
     /* ══ 三阶段故障像素特效 ══
        Phase 1 (0→320ms):  CSS filter 让页面内容变为霓虹彩色 + 少量扫描线
@@ -956,14 +1068,28 @@ function initAutoActiveNav() {
       else{document.body.style.filter='';window.location.href=dest;}
     }
     requestAnimationFrame(frame);
-  });
-})();
+}
+
+document.addEventListener('click', function(e) {
+  var link = e.target.closest('.nav-serch-link');
+  if (!link || _glitchBusy) return;
+  e.preventDefault();
+  _glitchBusy = true;
+  _doGlitchNav(link.getAttribute('href') || 'serch.html');
+});
+
+function _navigateToPlayer(playerId) {
+  if (_glitchBusy) return;
+  _glitchBusy = true;
+  _doGlitchNav('player.html?id=' + encodeURIComponent(playerId));
+}
   
 
 /* ══════════════════════════════════════════════════════════
    页面显示时重置样式（返回 / bfcache 恢复）
    ══════════════════════════════════════════════════════════ */
 window.addEventListener('pageshow', function() {
+  _glitchBusy = false;
   document.body.style.opacity = '';
   document.body.style.filter = '';
   document.body.style.animation = '';
