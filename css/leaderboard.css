@@ -226,7 +226,7 @@
 
 /* ── 前三名高亮 ── */
 /* 第 1 名：金色 */
-.lb-table tbody tr.rank-1 td { background: rgba(255,215,0,.04); }
+.lb-table tbody tr.rank-1 td { background: transparent; }
 .lb-table tbody tr.rank-1 .rank-badge {
   color: var(--c-gold);
   border-color: rgba(255,215,0,.5);
