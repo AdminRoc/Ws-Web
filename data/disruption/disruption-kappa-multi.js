@@ -13,8 +13,9 @@ const disruptionKappaMultiRecords = [
     videoUrls:     ["https://youtu.be/t3Mlmqae_Ow?si=_3-ChD4C-SxjwGv_"]
   },
   {
-    clearTime:  "35:38.000",
+    clearTime:  "35:38.000 🚧 [违规/作弊]",
     playerId:   "Endryx_Ow / sealmp4 / Gamer123169 / joanardo",
+    playerId2:   "无主机视角，且客机的敌人频繁瞬移，视为利用Tab作弊",
     uploadTime: "2026-01-17",
     videoUrls:     ["https://youtu.be/21h4oSgmDtE?si=y-FrDCMSNiDWyPU7"]
   },
@@ -33,6 +34,7 @@ const disruptionKappaMultiRecords = [
   {
     clearTime:  "38:06.000 🚧 [违规/作弊]",
     playerId:   "sealmp4 / Rouxka / Endryx_Ow / Gamer123169",
+    playerId2:   "无主机视角，且客机的敌人频繁瞬移，视为利用Tab作弊",
     uploadTime: "2025-03-16",
     videoUrls:     ["https://youtu.be/oRxoJHWJ6v8?si=oUDggf0L8E44ISVz"]
   },
