@@ -5,7 +5,7 @@
  *  playerId 多人用 / 分隔，例："A / B / C / D"
  * ════════════════════════════════════════════════════════════
  */
-const disruptionKappaMultiRecords = [
+var disruptionKappaMultiRecords = [
   {
     clearTime:  "35:06.000",
     playerId:   "NamelessDeity / yfoxyfan / -Yamarashi / Empress",

@@ -18,7 +18,7 @@
  *  └─────────────────────────────────────────────────────┘
  * ════════════════════════════════════════════════════════════
  */
-const profitTakerRecords = [
+var profitTakerRecords = [
 {
     clearTime:  "00:46.450",
     playerId:   "Endryx_Ow",

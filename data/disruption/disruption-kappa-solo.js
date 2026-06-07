@@ -3,7 +3,7 @@
  *  data/disruption-kappa-solo.js  —  中断竞速（Kappa·单人）数据文件
  *
  *  字段说明：
- *    clearTime  —— 结算时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
  *    playerId   —— 玩家 ID
  *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
  *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
@@ -12,7 +12,7 @@
  *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
  * ════════════════════════════════════════════════════════════
  */
-const disruptionKappaSoloRecords = [
+var disruptionKappaSoloRecords = [
   {
     clearTime:  "53:43.000",
     playerId:   "NamelessDeity",
