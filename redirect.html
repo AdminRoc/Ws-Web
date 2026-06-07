@@ -403,21 +403,24 @@ html,body { background: #0b0805; }
     'eidolon-macro.html':'夜灵竞速 有宏 · Eidolon Macro',
     'profit-taker.html':'大蜘蛛 无宏 · Profit-Taker',
     'profit-taker-macro.html':'大蜘蛛 有宏 · Profit-Taker Macro',
-    'exterminate.html':'消灭竞速 · Exterminate',
-    'assassination.html':'暗杀竞速 · Assassination',
-    'defense-relic.html':'防御遗物 · Defense Relic',
+    'exterminate.html':'歼灭竞速 · Exterminate',           /* BugA-fix */
+    'assassination.html':'刺杀竞速 · Assassination',       /* BugA-fix */
+    'defense-relic.html':'防御裂缝60轮 · Defense Relic',   /* BugA-fix */
     'capture.html':'捕获竞速 · Capture',
-    'rescue.html':'营救竞速 · Rescue',
+    'rescue.html':'救援竞速 · Rescue',                     /* BugA-fix */
     'sabotage.html':'破坏竞速 · Sabotage',
     'spy.html':'间谍竞速 · Spy',
-    'ropalolyst.html':'萝帕竞速 · Ropalolyst',
-    'exploiter.html':'开采者 · Exploiter',
-    'archon-hunt.html':'执政官狩猎 · Archon Hunt',
+    'ropalolyst.html':'蝠力使竞速 · Ropalolyst',           /* BugA-fix */
     'cambire.html':'Cambire 竞速',
-    'obstacle-course.html':'障碍赛 · Obstacle Course',
-    'the-guilty.html':'有罪者 · The Guilty',
-    'victory-plaza.html':'胜利广场 · Victory Plaza',
     'special-events.html':'特殊活动 · Special Events',
+    /* BugB-fix: 补充缺失的有效页面 */
+    'skirmish.html':'面纱前哨战竞速 · Skirmish',
+    'defection.html':'叛逃任务竞速 · Defection',
+    'arbitration.html':'仲裁任务竞速 · Arbitration',
+    'hollvania.html':'1999任务竞速 · Höllvania',
+    'special_challenge.html':'特殊挑战竞速 · Special Challenge',
+    /* 问题C-fix: 已删除5个不存在页面的死代码键 */
+    /* exploiter / archon-hunt / obstacle-course / the-guilty / victory-plaza */
   };
   var typeText = typeMap[from] || (from ? from.replace('.html','') : 'WFSpeed 竞速');
 
@@ -443,20 +446,22 @@ html,body { background: #0b0805; }
     dPlayer.style.display = 'flex';
     dPlayer.style.flexDirection = 'column';
     dPlayer.style.gap = '.25rem';
+    /* 问题F-fix: GRAD/r1/r2 提升至分支外，消除重复 var 声明 */
+    var GRAD = 'linear-gradient(115deg,#e8faff 0%,#00ffdc 40%,#c084fc 100%)';
+    var r1, r2;
     if(_players.length === 0){
       dPlayer.textContent = '未知玩家';
     } else if(_players.length <= 2){
       dPlayer.textContent = _players.join('  /  ');
     } else if(_players.length === 3){
       /* 必须给 span 设置独立渐变，否则继承 transparent 不可见 */
-      var GRAD = 'linear-gradient(115deg,#e8faff 0%,#00ffdc 40%,#c084fc 100%)';
-      var r1 = document.createElement('span');
+      r1 = document.createElement('span');
       r1.textContent = _players[0] + '  /  ' + _players[1];
       r1.style.background = GRAD;
       r1.style.webkitBackgroundClip = 'text';
       r1.style.webkitTextFillColor = 'transparent';
       r1.style.backgroundClip = 'text';
-      var r2 = document.createElement('span');
+      r2 = document.createElement('span');
       r2.textContent = _players[2];
       r2.style.background = GRAD;
       r2.style.webkitBackgroundClip = 'text';
@@ -465,14 +470,13 @@ html,body { background: #0b0805; }
       dPlayer.appendChild(r1);
       dPlayer.appendChild(r2);
     } else {
-      var GRAD = 'linear-gradient(115deg,#e8faff 0%,#00ffdc 40%,#c084fc 100%)';
-      var r1 = document.createElement('span');
+      r1 = document.createElement('span');
       r1.textContent = _players[0] + '  /  ' + _players[1];
       r1.style.background = GRAD;
       r1.style.webkitBackgroundClip = 'text';
       r1.style.webkitTextFillColor = 'transparent';
       r1.style.backgroundClip = 'text';
-      var r2 = document.createElement('span');
+      r2 = document.createElement('span');
       r2.textContent = _players[2] + '  /  ' + _players[3];
       r2.style.background = GRAD;
       r2.style.webkitBackgroundClip = 'text';
@@ -496,12 +500,13 @@ html,body { background: #0b0805; }
     if(dTimeEl)  dTimeEl.textContent=time;
   }
 
+  /* 问题G-fix: mtag 函数定义移至调用前，消除对函数声明提升的隐式依赖 */
+  function mtag(l,v){return '<div class="d-tag"><span class="d-tag-l">'+l+'</span><span class="d-tag-v">'+v+'</span></div>';}
   var mhtml='';
   if(cap)  mhtml+=mtag('捕获情况',cap);
   if(lbl)  mhtml+=mtag('当前视角',lbl);
   if(date) mhtml+=mtag('上传日期',date);
   if(dMeta) dMeta.innerHTML=mhtml;
-  function mtag(l,v){return '<div class="d-tag"><span class="d-tag-l">'+l+'</span><span class="d-tag-v">'+v+'</span></div>';}
 
   /* ── 进度环 ── */
   var t0=performance.now(), dur=stayMs*0.9;
