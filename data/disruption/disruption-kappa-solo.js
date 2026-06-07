@@ -85,13 +85,13 @@ const disruptionKappaSoloRecords = [
     uploadTime: "2026-05-13",
     videoUrls:     ["https://www.bilibili.com/video/BV1mV5y6GEEt/?spm_id_from=333.1387.homepage.video_card.click"]
   },
-  // ─── 在此处继续添加新条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "58:58.000",
+    playerId:   "oTonJleHue",
+    uploadTime: "2026-06-07",
+    videoUrls:     ["https://www.youtube.com/watch?v=kReZI7DHIwE"]
+  },
+
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

@@ -35,6 +35,12 @@ var rescue_regnaRecords = [
     uploadTime: "2022-08-01",
     videoUrls:  ["https://www.youtube.com/watch?v=BICQQ99J8Bk"],
   },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:19.733",
+    uploadTime: "2026-06-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=EeOFKCebZss"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
