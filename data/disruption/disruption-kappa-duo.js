@@ -5,7 +5,7 @@
  *  playerId 可填两位玩家，用 / 分隔，例："玩家A / 玩家B"
  * ════════════════════════════════════════════════════════════
  */
-const disruptionKappaDuoRecords = [
+var disruptionKappaDuoRecords = [
   {
     clearTime:  "38:28.000",
     playerId:   "NamelessDeity / Yamarashi",

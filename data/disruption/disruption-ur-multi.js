@@ -3,7 +3,7 @@
  *  data/disruption-ur-multi.js  —  中断竞速（Ur·多人）数据文件
  *
  *  字段说明：
- *    clearTime  —— 结算时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
  *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
  *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
  *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
@@ -12,7 +12,7 @@
  *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
  * ════════════════════════════════════════════════════════════
  */
-const disruptionUrMultiRecords = [
+var disruptionUrMultiRecords = [
   // ─── 在此处添加多人条目 ───
   // {
   //   clearTime:  "MM:SS.mmm",
