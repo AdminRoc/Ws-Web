@@ -29,6 +29,13 @@ var assassination_steel_tolstojRecords = [
     uploadTime: "2026-06-02",
     videoUrls:  ["https://www.youtube.com/watch?v=vhb8tI2ViPI"],
   },
+  {
+    playerId:   "_Phobos",
+    clearTime:  "3:49.267",
+    uploadTime: "2026-06-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=QwlPPpLl8so"],
+  },
+
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
