@@ -341,8 +341,7 @@
 .lb-tab-btn.lang-en .hover-text-swap .text-cn { opacity: 0; }
 .lb-tab-btn.lang-en .hover-text-swap .text-en { opacity: 1; }
 .lb-tab-btn:hover .hover-text-swap .text-cn { opacity: 0; }
-.lb-tab-btn:hover .hover-text-wrap .text-en { opacity: 1; }
-.lb-tab-btn:hover .hover-text-swap .text-en { opacity: 1; }
+.lb-tab-btn:hover .hover-text-swap .text-en { opacity: 1; } /* Bug2-fix: 删除了拼错的 .hover-text-wrap 冗余死代码行 */
 
 /* ══ map-tab-btn 双语叠层（适用含 .tab-cn/.tab-en 结构的按钮）══ */
 .map-tab-btn .tab-text {

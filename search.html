@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>全站搜索 — WFSpeed.run</title>
+<link rel="icon" type="image/png" href="picture/websitelogo.png">
+<style>
+@font-face{font-family:'Xszt';src:url('fonts/xszt.ttf') format('truetype');font-display:swap;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;font-family:'Xszt','Orbitron',sans-serif;}
+@keyframes pgIn{from{opacity:0}to{opacity:1}}
+html{font-size:16px;animation:pgIn .75s ease .05s both;}
+body{background:#030408;color:#b0cae8;min-height:100vh;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+
+#star-cvs{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.nebula{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.nebula::before{content:'';position:absolute;width:80vw;height:80vw;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,50,200,.08) 0%,transparent 70%);
+  top:-28vw;left:-18vw;animation:nDrift 44s ease-in-out infinite alternate;filter:blur(65px);}
+.nebula::after{content:'';position:absolute;width:60vw;height:60vw;border-radius:50%;
+  background:radial-gradient(circle,rgba(100,0,200,.07) 0%,transparent 70%);
+  bottom:-12vw;right:-12vw;animation:nDrift 36s ease-in-out infinite alternate-reverse;filter:blur(70px);}
+@keyframes nDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(4vw,-4vw) scale(1.05)}}
+
+/* ══ RAINBOW — hue-rotate is seamless by definition (0°=360°), no background-position seams ══ */
+:root{
+  --rb:linear-gradient(135deg,
+    #ff1a3c 0%,#ff6600 14%,#ffdd00 28%,#33ff88 42%,
+    #00ccff 57%,#6633ff 71%,#ff33cc 85%,#ff1a3c 100%);
+}
+/* main: 5.3s (50% faster) */
+@keyframes hs{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}
+/* card: 10.7s = 50% of main */
+@keyframes hsc{
+  from{filter:saturate(.65) brightness(.7) hue-rotate(0deg)}
+  to{filter:saturate(.65) brightness(.7) hue-rotate(360deg)}}
+
+/* ── back btn ── */
+.back-btn{position:fixed;top:26px;left:28px;z-index:200;display:flex;align-items:center;
+  gap:8px;padding:8px 18px;border:1px solid rgba(0,212,255,.22);border-radius:6px;
+  background:rgba(0,212,255,.04);color:rgba(0,212,255,.6);font-size:.78rem;
+  letter-spacing:.1em;cursor:pointer;transition:color .3s,border-color .3s,box-shadow .3s;}
+.back-btn:hover{color:#00d4ff;border-color:rgba(0,212,255,.5);box-shadow:0 0 18px rgba(0,212,255,.2);}
+.back-lbl{display:inline-grid;place-items:center;min-width:2.2em;}
+.back-lbl .cn,.back-lbl .en{grid-area:1/1;transition:opacity .3s;white-space:nowrap;}
+.back-lbl .en{opacity:0;}
+.back-btn:hover .cn{opacity:0;}
+.back-btn:hover .en{opacity:1;}
+
+/* ── search wrap ── */
+.search-wrap{position:fixed;left:50%;top:50%;transform:translate(-50%,-52%);
+  display:flex;flex-direction:column;align-items:center;gap:40px;width:100%;z-index:10;
+  opacity:0;pointer-events:none;
+  transition:top .8s cubic-bezier(.22,.68,0,1.2),transform .8s cubic-bezier(.22,.68,0,1.2),gap .55s ease;}
+.search-wrap.ready{opacity:1;pointer-events:auto;
+  transition:top .8s cubic-bezier(.22,.68,0,1.2),transform .8s cubic-bezier(.22,.68,0,1.2),
+             gap .55s ease,opacity 1s ease;}
+.search-wrap.moved{top:88px;transform:translateX(-50%);gap:16px;}
+.title-group{display:flex;flex-direction:column;align-items:center;gap:14px;}
+
+/* issue #1: seamless hue-rotate rainbow */
+.search-domain{
+  font-size:clamp(1rem,2.6vw,1.5rem);letter-spacing:.6em;text-transform:uppercase;white-space:nowrap;
+  background:var(--rb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:hs 5.3s linear infinite;
+  filter:hue-rotate(0deg); /* initial state for animation */
+  text-shadow:none;}
+.search-title{
+  font-size:clamp(3rem,7vw,5.5rem);font-weight:700;letter-spacing:.16em;
+  text-align:center;white-space:nowrap;
+  background:var(--rb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:hs 5.3s linear infinite;}
+
+/* search box: gradient border via padding + inner cover; hue-rotate on outer (inner is near-black so unaffected) */
+.search-box-outer{width:60%;border-radius:999px;padding:2px;
+  background:var(--rb);
+  animation:hs 5.3s linear infinite;
+  box-shadow:0 0 28px rgba(0,180,255,.15),0 0 55px rgba(130,60,255,.08);}
+.search-box-inner{display:flex;align-items:center;background:#06070c;
+  border-radius:999px;padding:0 16px 0 28px;height:60px;gap:8px;}
+.search-input{flex:1;background:none;border:none;outline:none;font-size:1rem;
+  letter-spacing:.06em;color:#e8f4ff;caret-color:#00d4ff;}
+.search-input::placeholder{color:rgba(0,212,255,.28);}
+.search-icon-btn{background:none;border:none;cursor:pointer;color:rgba(0,212,255,.6);
+  display:flex;align-items:center;justify-content:center;width:40px;height:40px;
+  border-radius:50%;flex-shrink:0;transition:color .25s,background .25s,box-shadow .25s;}
+.search-icon-btn:hover{color:#00d4ff;background:rgba(0,212,255,.1);box-shadow:0 0 14px rgba(0,212,255,.4);}
+
+/* ── results ── */
+.results-area{position:fixed;left:50%;transform:translateX(-50%);width:60%;
+  top:314px;bottom:0;overflow-y:auto;padding:0 0 calc(80px + env(safe-area-inset-bottom,20px));
+  display:flex;flex-direction:column;gap:14px;z-index:10;
+  opacity:0;pointer-events:none;transition:opacity .5s ease;
+  scrollbar-width:thin;scrollbar-color:rgba(0,212,255,.18) transparent;}
+.results-area.visible{opacity:1;pointer-events:auto;}
+.results-area::-webkit-scrollbar{width:4px;}
+.results-area::-webkit-scrollbar-thumb{background:rgba(0,212,255,.18);border-radius:2px;}
+
+.result-card{position:relative;border-radius:16px;cursor:pointer;isolation:isolate;
+  transform:translateY(32px);opacity:0;animation:cardSlide .52s cubic-bezier(.22,.68,0,1.2) forwards;}
+@keyframes cardSlide{to{transform:translateY(0);opacity:1;}}
+
+/* issue #2: card border — dimmer rainbow, 50% speed */
+.result-card::before{content:'';position:absolute;inset:0;border-radius:16px;padding:1.6px;
+  background:var(--rb);
+  animation:hsc 10.7s linear infinite;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;z-index:-1;}
+.result-inner{background:rgba(6,8,18,.95);border-radius:15px;overflow:hidden;transition:background .3s;}
+.result-card:hover .result-inner{background:rgba(0,160,255,.04);}
+
+/* card head — issue #6 sizes */
+.card-head{padding:15px 24px;border-bottom:1px solid rgba(0,212,255,.09);}
+.card-title-row{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
+/* issue #2: card title — dimmer rainbow, 50% speed */
+.card-page-title-cn{
+  font-size:1.12rem;font-weight:700;letter-spacing:.07em;
+  background:var(--rb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:hsc 10.7s linear infinite;white-space:nowrap;}
+.card-page-title-en{font-size:.82rem;letter-spacing:.08em;color:rgba(176,202,232,.3);white-space:nowrap;}
+.card-ctx{font-size:.92rem;letter-spacing:.05em;color:rgba(0,212,255,.58);margin-top:5px;}
+.card-rows{display:flex;flex-direction:column;}
+.card-row{display:grid;grid-template-columns:3em 1fr 2.2fr 6.5em;
+  padding:10px 24px;font-size:.94rem;letter-spacing:.04em;color:#b0cae8;
+  border-bottom:1px solid rgba(0,212,255,.04);transition:opacity .3s;}
+.card-row:last-child{border-bottom:none;}
+.card-row.dim{opacity:.2;}
+.card-rank{color:rgba(0,212,255,.4);font-size:.8rem;align-self:center;}
+.card-time{color:#00ffcc;font-weight:700;}
+.card-player{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e8f4ff;}
+.card-date{color:rgba(176,202,232,.4);font-size:.78rem;text-align:right;}
+.card-status{color:rgba(0,212,255,.65);font-size:.86rem;}
+.card-empty{padding:12px 24px;font-size:.9rem;color:rgba(176,202,232,.3);text-align:center;}
+.no-results{text-align:center;padding:60px 0 20px;color:rgba(176,202,232,.35);
+  font-size:.95rem;letter-spacing:.12em;line-height:2.4;}
+.search-loading{text-align:center;padding:60px 0 20px;color:rgba(0,212,255,.55);
+  font-size:.92rem;letter-spacing:.18em;animation:loadPulse 1.4s ease-in-out infinite;}
+@keyframes loadPulse{0%,100%{opacity:.25}50%{opacity:1}}
+
+@media(max-width:900px){.search-box-outer,.results-area{width:90%;}.search-domain{letter-spacing:.3em;}}
+</style>
+</head>
+<body>
+<canvas id="star-cvs"></canvas>
+<div class="nebula"></div>
+<a class="back-btn" onclick="if(history.length>1){history.back();}else{window.location.href='index.html';}" href="javascript:void(0)">
+  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+    <path d="M9.5 3L5 7.5l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span class="back-lbl"><span class="cn">返回</span><span class="en">Back</span></span>
+</a>
+
+<div class="search-wrap" id="search-wrap">
+  <div class="title-group">
+    <span class="search-domain">WFSpeed.run</span>
+    <h1 class="search-title">全站搜索</h1>
+  </div>
+  <div class="search-box-outer">
+    <div class="search-box-inner">
+      <input class="search-input" id="search-input" type="text"
+        placeholder="搜索玩家ID · 地图 · 时间 · 榜单名称…" autocomplete="off" spellcheck="false">
+      <button class="search-icon-btn" id="search-btn" aria-label="搜索">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M13 13L17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="results-area" id="results-area"></div>
+
+<!-- ══ STAR FIELD ══ -->
+<script>
+(function(){
+  var c=document.getElementById('star-cvs'),ctx=c.getContext('2d'),S=[];
+  function resize(){c.width=innerWidth;c.height=innerHeight;S=[];
+    for(var i=0;i<360;i++){var r=Math.random();
+      var col=r<.52?'255,255,255':r<.74?'180,215,255':r<.88?'255,220,160':'0,200,255';
+      S.push({x:Math.random()*c.width,y:Math.random()*c.height,sz:Math.random()*1.7+.2,
+        base:Math.random()*.5+.15,sp:Math.random()*.018+.003,ph:Math.random()*6.28,col:col});}}
+  function tick(){var t=performance.now()*.001;
+    ctx.fillStyle='#030408';ctx.fillRect(0,0,c.width,c.height);
+    S.forEach(function(s){var a=s.base*(.68+.32*Math.sin(t*s.sp*55+s.ph));
+      ctx.save();ctx.globalAlpha=a;ctx.fillStyle='rgba('+s.col+',1)';
+      ctx.beginPath();ctx.arc(s.x,s.y,s.sz,0,6.28);ctx.fill();ctx.restore();});
+    requestAnimationFrame(tick);}
+  window.addEventListener('resize',resize);resize();tick();
+})();
+</script>
+
+<!-- ══ PAGE ENTRY — 1秒淡入 ══ -->
+<script>
+(function(){
+  /* 页面加载完毕后 100ms 启动淡入，持续 1s */
+  window.addEventListener('load', function() {
+    setTimeout(function(){
+      document.getElementById('search-wrap').classList.add('ready');
+      setTimeout(function(){ document.getElementById('search-input').focus(); }, 80);
+    }, 100);
+  });
+})();
+</script>
+
+<!-- ══ SEARCH INDEX ══ -->
+<script>
+var IDX=[];
+(function(){
+  function add(page,tcn,ten,ctx,cen,vn){IDX.push({page:page,titleCn:tcn,titleEn:ten,ctx:ctx,ctxEn:cen||'',varName:vn});}
+  var N='普通',S='钢铁',NO='Normal',ST='Steel';
+  var aM=[['alchemy','Alchemy'],['defection','Defection'],['defense','Defense'],['disruption','Disruption'],
+    ['excavation','Excavation'],['salvage','Salvage'],['interception','Interception'],['mirror-defense','Mirror Defense'],
+    ['survival','Survival'],['void-cascade','Void Cascade'],['void-flood','Void Flood'],['void-armageddon','Void Armageddon']];
+  aM.forEach(function(m){
+    add('arbitration.html','仲裁任务竞速排行榜','Arbitration Speedrun Leaderboard',
+      '1000生息精华 · '+m[0].replace(/-/g,' '),'1000 Vitus Essence · '+m[1],
+      'arbitration_vitus_'+m[0].replace(/-/g,'_')+'Records');
+    add('arbitration.html','仲裁任务竞速排行榜','Arbitration Speedrun Leaderboard',
+      '标准轮次竞速 · '+m[0].replace(/-/g,' '),'Standard Rounds · '+m[1],
+      'arbitration_rounds_'+m[0].replace(/-/g,'_')+'Records');});
+  [['effervo','Effervo'],['exequias','Exequias'],['exta','Exta'],['fossa','Fossa'],['hades','Hades'],
+    ['iliad','Iliad'],['jordas-golem','Jordas Golem'],['magnacidium','Magnacidium'],['merrow','Merrow'],
+    ['mutalist-alad-v','Mutalist Alad V'],['naamah','Naamah'],['oro','Oro'],['psamathe','Psamathe'],
+    ['tethys','Tethys'],['themisto','Themisto'],['titania','Titania'],['tolstoj','Tolstoj'],['war','War']].forEach(function(m){
+    [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+      add('assassination.html','刺杀竞速排行榜','Assassination Speedrun Leaderboard',
+        ct[0]+' · '+m[0].replace(/-/g,' '),ct[1]+' · '+m[1],
+        'assassination_'+ct[2]+'_'+m[0].replace(/-/g,'_')+'Records');});});
+  add('assassination.html','刺杀竞速排行榜','Assassination Speedrun Leaderboard',
+    S+' · The Fragmented One','Steel · The Fragmented One','assassination_steel_the_fragmented_oneRecords');
+  [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+    add('cambire.html','元素转换竞速排行榜','Cambire Speedrun Leaderboard',ct[0],ct[1],'cambire_'+ct[2]+'Records');});
+  [['abaddon','Abaddon'],['ananke','Ananke'],['ara','Ara'],['ariel','Ariel'],['cassini','Cassini'],
+    ['copernicus','Copernicus'],['elion','Elion'],['galatea','Galatea'],['hepit','Hepit'],['horend','Horend'],
+    ['hydra','Hydra'],['isos','Isos'],['kobinn-west','Kobinn West'],['lex','Lex'],['mantle','Mantle'],
+    ['skyresh','Skyresh'],['ukko','Ukko'],['venera','Venera']].forEach(function(m){
+    add('capture.html','捕获竞速排行榜','Capture Speedrun Leaderboard',
+      m[0].replace(/-/g,' '),m[1],'capture_'+m[0].replace(/-/g,'_')+'Records');});
+  [['caracol','Caracol'],['memphis','Memphis'],['yursa','Yursa']].forEach(function(m){
+    add('defection.html','叛逃任务竞速排行榜','Defection Speedrun Leaderboard',m[0],m[1],'defection_'+m[0]+'Records');});
+  [['akkad','Akkad'],['belenus','Belenus'],['casta','Casta'],['coba','Coba'],['gulliver','Gulliver'],
+    ['helene','Helene'],['hydron','Hydron'],['hyf','Hyf'],['io','Io'],['kadesh','Kadesh'],
+    ['kala-azar','Kala-Azar'],['lares','Lares'],['larzac','Larzac'],['lith','Lith'],['nabuk','Nabuk'],
+    ['outer','Outer'],['paimon','Paimon'],['proteus','Proteus'],['romula','Romula'],['sangeru','Sangeru'],
+    ['sechura','Sechura'],['seimeni','Seimeni'],['sinai','Sinai'],['spear','Spear'],['stephano','Stephano'],
+    ['stofler','Stofler'],['taranis','Taranis'],['tessera','Tessera']].forEach(function(m){
+    [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+      add('defense-relic.html','防御裂缝60轮竞速排行榜','Defense Relic 60-Wave Leaderboard',
+        ct[0]+' · '+m[0].replace(/-/g,' '),ct[1]+' · '+m[1],
+        'defense_relic_'+ct[2]+'_'+m[0].replace(/-/g,'_')+'Records');});});
+  /* disruption: titleCn excludes 括号 suffix — displayed title is clean */
+  [['Solo','单人','disruption.html','中断竞速排行榜','Disruption Speedrun'],
+   ['Duo','双人','disruption-duo.html','中断竞速排行榜','Disruption Speedrun'],
+   ['Multi','多人','disruption-multi.html','中断竞速排行榜','Disruption Speedrun']].forEach(function(md){
+    [['Apollo','Apollo'],['Armatus','Armatus'],['Kappa','Kappa'],['Tamu','Tamu'],['Ur','Ur']].forEach(function(m){
+      add(md[2],md[3],md[4],md[1]+' · '+m[0],md[0]+' · '+m[1],'disruption'+m[0]+md[0]+'Records');});});
+  [['Solo','单人'],['Duo','双人'],['Trio','三人'],['Quad','四人']].forEach(function(m){
+    add('eidolon.html','夜灵竞速排行榜（有限制）','Eidolon Speedrun Restricted',m[1],m[0],'eidolon'+m[0]+'Records');
+    add('eidolon-macro.html','夜灵竞速排行榜（无限制）','Eidolon Speedrun Unrestricted',m[1],m[0],'eidolonMacro'+m[0]+'Records');});
+  [['acheron','Acheron'],['adaro','Adaro'],['armaros','Armaros'],['baal','Baal'],['carpo','Carpo'],
+    ['dakata','Dakata'],['e-gate','E Gate'],['e-prime','E Prime'],['halako-perimeter','Halako Perimeter'],
+    ['hellas','Hellas'],['m-prime','M Prime'],['mariana','Mariana'],['mausoleum-east','Mausoleum East'],
+    ['montes','Montes'],['narcissus','Narcissus'],['nex','Nex'],['oxomoco','Oxomoco'],['pallas','Pallas'],
+    ['pantheon','Pantheon'],['phlegyas','Phlegyas'],['plato','Plato'],['puck','Puck'],
+    ['rhu-manor','Rhu Manor'],['roche','Roche'],['saxis','Saxis'],['sycorax','Sycorax'],['syrtis','Syrtis'],
+    ['telesto','Telesto'],['teshub','Teshub'],['ultor','Ultor']].forEach(function(m){
+    [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+      add('exterminate.html','歼灭竞速排行榜','Exterminate Speedrun Leaderboard',
+        ct[0]+' · '+m[0].replace(/-/g,' '),ct[1]+' · '+m[1],
+        'exterminate_'+ct[2]+'_'+m[0].replace(/-/g,'_')+'Records');});});
+  [['1999歼灭','1999 Exterminate','hollvania_1999_exterminateRecords'],
+   ['传承种收割','Legacyte Harvest','hollvania_legacyte_harvestRecords'],
+   ['舞台防御','Stage Defense','hollvania_stage_defenseRecords'],
+   ['王者坦克','Victory Plaza Apex','victory_plaza_apexRecords'],
+   ['普通坦克','Victory Plaza Normal','victory_plaza_normalRecords']].forEach(function(e){
+    add('hollvania.html','1999任务竞速排行榜','1999 Mission Speedrun Leaderboard',e[0],e[1],e[2]);});
+  add('profit-taker.html','蜘蛛竞速排行榜（有限制）','Profit-Taker Speedrun Restricted','','','profitTakerRecords');
+  add('profit-taker-macro.html','蜘蛛竞速排行榜（无限制）','Profit-Taker Speedrun Unrestricted','','','profitTakerMacroRecords');
+  [['anthe','Anthe'],['brugia','Brugia'],['caliban','Caliban'],['caloris','Caloris'],['garus','Garus'],
+    ['linea','Linea'],['martialis','Martialis'],['metis','Metis'],['monolith','Monolith'],['naga','Naga'],
+    ['numa','Numa'],['nuovo','Nuovo'],['orias','Orias'],['pacific','Pacific'],['regna','Regna'],
+    ['triton','Triton'],['zeipel','Zeipel']].forEach(function(m){
+    add('rescue.html','救援竞速排行榜','Rescue Speedrun Leaderboard',m[0],m[1],'rescue_'+m[0]+'Records');});
+  [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+    add('ropalolyst.html','蝠力使竞速排行榜','Ropalolyst Speedrun Leaderboard',ct[0],ct[1],'ropalolyst_'+ct[2]+'Records');});
+  [['adrastea','Adrastea'],['ares','Ares'],['calypso','Calypso'],['cervantes','Cervantes'],['cypress','Cypress'],
+    ['desdemona','Desdemona'],['enceladus','Enceladus'],['formido','Formido'],['galilea','Galilea'],
+    ['gradivus','Gradivus'],['ishtar','Ishtar'],['ker','Ker'],['kokabiel','Kokabiel'],['koro','Koro'],
+    ['marduk','Marduk'],['naeglar','Naeglar'],['rusalka','Rusalka'],['sao','Sao'],['stribog','Stribog'],
+    ['terminus','Terminus'],['thebe','Thebe'],['thon','Thon']].forEach(function(m){
+    add('sabotage.html','破坏竞速排行榜','Sabotage Speedrun Leaderboard',m[0],m[1],'sabotage_'+m[0]+'Records');});
+  [['flexa','Flexa'],['h2-cloud','H2 Cloud'],['nsu-grid','NSU Grid'],['r9-cloud','R9 Cloud']].forEach(function(m){
+    [[N,NO,'normal'],[S,ST,'steel']].forEach(function(ct){
+      add('skirmish.html','面纱前哨战竞速排行榜','Skirmish Speedrun Leaderboard',
+        ct[0]+' · '+m[0].replace(/-/g,' ').toUpperCase(),ct[1]+' · '+m[1],
+        'skirmish_'+ct[2]+'_'+m[0].replace(/-/g,'_')+'Records');});});
+  add('special-events.html','站内特殊活动竞速排行榜','Special Events Leaderboard','','','special_eventsRecords');
+  [['执刑官猎杀','Archon Hunt','archon_huntRecords'],['衰退室','Netracell','netracellRecords'],
+   ['获取阿耶檀识塑像','Ayatan Capture','ayatan_captureRecords'],['有罪之人','The Guilty','the_guiltyRecords'],
+   ['二蜘蛛','Exploiter Orb','exploiterRecords'],['氏族跑酷','Obstacle Course','obstacle_courseRecords']].forEach(function(e){
+    add('special_challenge.html','特殊挑战竞速排行榜','Special Challenge Leaderboard',e[0],e[1],e[2]);});
+  [['amalthea','Amalthea'],['arval','Arval'],['bode','Bode'],['cambria','Cambria'],['dione','Dione'],
+    ['kelpie','Kelpie'],['nereid','Nereid'],['oceanum','Oceanum'],['pago','Pago'],['rosalind','Rosalind'],
+    ['shklovsky','Shklovsky'],['suisei','Suisei'],['unda','Unda'],['valac','Valac']].forEach(function(m){
+    [['allow','允许破解器','Allow Codebreaker'],['ban','禁用破解器','Ban Codebreaker']].forEach(function(ct){
+      add('spy.html','间谍竞速排行榜','Spy Speedrun Leaderboard',
+        ct[1]+' · '+m[0],ct[2]+' · '+m[1],'spy_'+ct[0]+'_'+m[0]+'Records');});});
+})();
+</script>
+
+<!-- ══ DATA LOADER ══ -->
+<script>
+var _loaded=false,_loading=false,_cbs=[];
+function loadData(cb){
+  if(_loaded){cb();return;}
+  _cbs.push(cb);if(_loading)return;_loading=true;
+  var f=[];
+  (function(){
+    var aM=['alchemy','defection','defense','disruption','excavation','salvage','interception','mirror-defense','survival','void-cascade','void-flood','void-armageddon'];
+    aM.forEach(function(m){f.push('data/arbitration/arbitration-vitus-'+m+'.js','data/arbitration/arbitration-rounds-'+m+'.js');});
+    ['effervo','exequias','exta','fossa','hades','iliad','jordas-golem','magnacidium','merrow','mutalist-alad-v','naamah','oro','psamathe','tethys','themisto','titania','tolstoj','war'].forEach(function(m){f.push('data/assassination/assassination-normal-'+m+'.js','data/assassination/assassination-steel-'+m+'.js');});
+    f.push('data/assassination/assassination-steel-the-fragmented-one.js','data/cambire/cambire-normal.js','data/cambire/cambire-steel.js');
+    ['abaddon','ananke','ara','ariel','cassini','copernicus','elion','galatea','hepit','horend','hydra','isos','kobinn-west','lex','mantle','skyresh','ukko','venera'].forEach(function(m){f.push('data/capture/capture-'+m+'.js');});
+    ['caracol','memphis','yursa'].forEach(function(m){f.push('data/defection/defection-'+m+'.js');});
+    ['akkad','belenus','casta','coba','gulliver','helene','hydron','hyf','io','kadesh','kala-azar','lares','larzac','lith','nabuk','outer','paimon','proteus','romula','sangeru','sechura','seimeni','sinai','spear','stephano','stofler','taranis','tessera'].forEach(function(m){f.push('data/defense-relic/defense-relic-normal-'+m+'.js','data/defense-relic/defense-relic-steel-'+m+'.js');});
+    ['apollo','armatus','kappa','tamu','ur'].forEach(function(m){['solo','duo','multi'].forEach(function(md){f.push('data/disruption/disruption-'+m+'-'+md+'.js');});});
+    ['solo','duo','trio','quad'].forEach(function(m){f.push('data/eidolon/eidolon-'+m+'.js','data/eidolon-macro/eidolon-macro-'+m+'.js');});
+    ['acheron','adaro','armaros','baal','carpo','dakata','e-gate','e-prime','halako-perimeter','hellas','m-prime','mariana','mausoleum-east','montes','narcissus','nex','oxomoco','pallas','pantheon','phlegyas','plato','puck','rhu-manor','roche','saxis','sycorax','syrtis','telesto','teshub','ultor'].forEach(function(m){f.push('data/exterminate/exterminate-normal-'+m+'.js','data/exterminate/exterminate-steel-'+m+'.js');});
+    ['1999-exterminate','legacyte-harvest','stage-defense','victory-plaza-apex','victory-plaza-normal'].forEach(function(m){f.push('data/hollvania/hollvania-'+m+'.js');});
+    f.push('data/profit-taker/profit-taker.js','data/profit-taker-macro/profit-taker-macro.js');
+    ['anthe','brugia','caliban','caloris','garus','linea','martialis','metis','monolith','naga','numa','nuovo','orias','pacific','regna','triton','zeipel'].forEach(function(m){f.push('data/rescue/rescue-'+m+'.js');});
+    f.push('data/ropalolyst/ropalolyst-normal.js','data/ropalolyst/ropalolyst-steel.js');
+    ['adrastea','ares','calypso','cervantes','cypress','desdemona','enceladus','formido','galilea','gradivus','ishtar','ker','kokabiel','koro','marduk','naeglar','rusalka','sao','stribog','terminus','thebe','thon'].forEach(function(m){f.push('data/sabotage/sabotage-'+m+'.js');});
+    ['flexa','h2-cloud','nsu-grid','r9-cloud'].forEach(function(m){f.push('data/skirmish/skirmish-normal-'+m+'.js','data/skirmish/skirmish-steel-'+m+'.js');});
+    f.push('data/special-events/special-events.js');
+    ['archon-hunt','ayatan-capture','exploiter','netracell','obstacle-course','the-guilty'].forEach(function(m){f.push('data/special_challenge/special-challenge-'+m+'.js');});
+    ['amalthea','arval','bode','cambria','dione','kelpie','nereid','oceanum','pago','rosalind','shklovsky','suisei','unda','valac'].forEach(function(m){f.push('data/spy/spy-allow-'+m+'.js','data/spy/spy-ban-'+m+'.js');});
+  })();
+  var bi=0,BATCH=40;
+  function nb(){
+    if(bi*BATCH>=f.length){_loaded=true;_loading=false;_cbs.forEach(function(c){c();});_cbs=[];return;}
+    var batch=f.slice(bi*BATCH,(bi+1)*BATCH);bi++;var done=0;
+    batch.forEach(function(src){var s=document.createElement('script');s.src=src;
+      s.onload=s.onerror=function(){if(++done===batch.length)nb();};document.head.appendChild(s);});}
+  nb();
+}
+</script>
+
+<!-- ══ SEARCH ENGINE + EXIT TUNNEL + UI ══ -->
+<script>
+function getRecs(n){
+  try{var r=window[n];if(Array.isArray(r))return r;}catch(e){}
+  try{var r=(0,eval)(n);if(Array.isArray(r))return r;}catch(e){}
+  return null;}
+
+/* 从记录对象提取所有可搜索字符串（含 avgRealTime、captureStatus 等特殊字段） */
+function recStr(r){
+  return Object.values(r).map(function(v){
+    if(typeof v==='string') return v;
+    if(Array.isArray(v)) return ''; /* 跳过 videoUrls 数组 */
+    return '';
+  }).join(' ');
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* 将查询字符串拆分为词列表（按空格，过滤空串，全部小写） */
+function parseWords(q){return q.toLowerCase().split(/\s+/).filter(Boolean);}
+
+/* 判断 words 中每个词是否都出现在 text（小写）中 */
+function allMatch(words,text){var t=text.toLowerCase();return words.every(function(w){return t.includes(w);});}
+
+function runSearch(raw){
+  var q=raw.trim();if(!q)return[];
+  var words=parseWords(q);
+  if(!words.length)return[];
+  var res=[],seen=new Set();
+
+  IDX.forEach(function(e){
+    var recs=getRecs(e.varName);if(!Array.isArray(recs))return;
+    /* 榜单维度的可搜字符串（标题+语言+子分类名） */
+    var titleStr=[e.titleCn,e.titleEn,e.ctx,e.ctxEn].join(' ');
+
+    /* ── 判断是否"纯标题命中"：所有词都在 titleStr 里 ── */
+    if(allMatch(words,titleStr)){
+      var k='T|'+e.varName;if(seen.has(k))return;seen.add(k);
+      res.push({page:e.page,titleCn:e.titleCn,titleEn:e.titleEn,ctx:e.ctx,ctxEn:e.ctxEn,
+        rows:recs.slice(0,3),matchIdx:-2,startRank:0,recCount:recs.length});
+      return;}
+
+    /* ── 逐条数据检索：每个词必须出现在"榜单字符串 + 本行数据字符串"的联合文本中 ──
+       这样 "Nameless Kappa 单人"、"less 中断 solo" 等跨维度搜索都能命中 */
+    recs.forEach(function(rec,idx){
+      var rowStr=recStr(rec);
+      var combined=titleStr+' '+rowStr;
+      if(!allMatch(words,combined))return;
+      var k='D|'+e.varName+'|'+idx;if(seen.has(k))return;seen.add(k);
+      var n=recs.length,start,mpos;
+      if(idx===0){start=0;mpos=0;}
+      else if(idx>=n-1){start=Math.max(0,n-3);mpos=idx-start;}
+      else{start=idx-1;mpos=1;}
+      res.push({page:e.page,titleCn:e.titleCn,titleEn:e.titleEn,ctx:e.ctx,ctxEn:e.ctxEn,
+        rows:recs.slice(start,start+3),matchIdx:mpos,startRank:start||0,recCount:recs.length});
+    });
+  });
+
+  /* 按榜单数据条目数从多到少排列 */
+  res.sort(function(a,b){return b.recCount-a.recCount;});
+  return res;
+}
+
+/* ── exit: 先整体缩小到中心，再 CRT 关机效果 ── */
+var _navigating=false;
+function playExitCollapse(dest){
+  if(_navigating)return;_navigating=true;
+
+  /* 问题D-fix: 原注释"1.8s"与实际值不符；动画约 1.53s，此处保守设 10s 防异常卡死 */
+  /* 安全回退：动画异常时约 10s 后强制导航 */
+  var _exitFallback=setTimeout(function(){
+    try{document.documentElement.style.cssText='';}catch(e){}
+    _navigating=false;
+    window.location.href=dest;
+  },10000);
+
+  try{
+  /* 第一步：页面整体缩小到中心（~480ms） */
+  var de=document.documentElement;
+  de.style.overflow='hidden';
+  de.style.transformOrigin='50% 50%';
+  de.style.transition='transform .45s cubic-bezier(.55,0,1,.6),opacity .3s ease .12s';
+  de.style.transform='scale(0.04)';
+  de.style.opacity='0';
+
+  /* 第二步：缩小结束后叠加 CRT Canvas 效果 */
+  setTimeout(function(){
+    /* 重置 DOM 变换（canvas 接管画面） */
+    de.style.transition='none';
+    de.style.transform='';
+    de.style.opacity='';
+    de.style.overflow='';
+
+    var ov=document.createElement('canvas');
+    ov.style.cssText='position:fixed;inset:0;z-index:9999;pointer-events:all;background:#03050e;';
+    ov.width=innerWidth; ov.height=innerHeight;
+    document.body.appendChild(ov);
+    var ctx=ov.getContext('2d');
+    var W=ov.width,H=ov.height,cy=H/2;
+    var DUR=1050,t0=null;
+
+    function frame(now){
+      if(!t0)t0=now;
+      var el=now-t0,p=Math.min(el/DUR,1);
+
+      /* Phase A (0→0.40): 全黑底 + 白色横条从全屏高度压缩至细线 */
+      if(p<0.40){
+        ctx.fillStyle='rgb(3,5,14)';
+        ctx.fillRect(0,0,W,H);
+        var bp=p/0.40;
+        var barH=Math.max(0,H*(1-bp)*0.5); /* 半高→0 */
+        if(barH>0.5){
+          /* 辉光 */
+          var grd=ctx.createLinearGradient(0,cy-barH*1.5,0,cy+barH*1.5);
+          grd.addColorStop(0,'rgba(255,255,255,0)');
+          grd.addColorStop(0.3,'rgba(180,225,255,'+(0.3*(1-bp))+')');
+          grd.addColorStop(0.5,'rgba(255,255,255,'+(0.9-bp*0.2)+')');
+          grd.addColorStop(0.7,'rgba(180,225,255,'+(0.3*(1-bp))+')');
+          grd.addColorStop(1,'rgba(255,255,255,0)');
+          ctx.fillStyle=grd;
+          ctx.fillRect(0,cy-barH*1.5,W,barH*3);
+          /* 实心白条 */
+          ctx.fillStyle='rgba(255,255,255,'+(0.96-bp*0.1)+')';
+          ctx.fillRect(0,cy-barH,W,barH*2);
+        }
+      }
+      /* Phase B (0.40→0.78): 细白线收尾（CRT 尾光） */
+      else if(p<0.78){
+        ctx.fillStyle='rgb(3,5,14)';
+        ctx.fillRect(0,0,W,H);
+        var lp=(p-0.40)/0.38;
+        var la=Math.pow(1-lp,1.8);
+        if(la>0.004){
+          var lg=ctx.createLinearGradient(0,cy-30,0,cy+30);
+          lg.addColorStop(0,'rgba(255,255,255,0)');
+          lg.addColorStop(0.5,'rgba(220,240,255,'+(la*0.6)+')');
+          lg.addColorStop(1,'rgba(255,255,255,0)');
+          ctx.fillStyle=lg; ctx.fillRect(0,cy-30,W,60);
+          ctx.fillStyle='rgba(255,255,255,'+la+')';
+          ctx.fillRect(0,cy-1,W,2);
+        }
+      }
+      /* Phase C (0.78→1.0): 纯黑 */
+      else{
+        ctx.fillStyle='rgb(3,5,14)';
+        ctx.fillRect(0,0,W,H);
+      }
+
+      if(el<DUR)requestAnimationFrame(frame);
+      else window.location.href=dest;
+    }
+    requestAnimationFrame(frame);
+  }, 480);
+  }catch(err){clearTimeout(_exitFallback);_navigating=false;window.location.href=dest;}
+}
+
+/* ── render ── */
+function renderResults(results){
+  var area=document.getElementById('results-area');
+  area.classList.remove('visible');area.innerHTML='';area.offsetHeight;
+  if(!results||results.length===0){
+    area.innerHTML='<div class="no-results">· 未找到相关结果 ·<br><span style="font-size:.8rem">No results found</span></div>';
+    area.classList.add('visible');return;}
+  /* 结果数量提示 */
+  var countDiv=document.createElement('div');
+  countDiv.style.cssText='text-align:center;font-size:.74rem;letter-spacing:.14em;color:rgba(0,212,255,.42);padding:4px 0 2px;';
+  countDiv.textContent='找到 '+results.length+' 条相关榜单数据';
+  area.appendChild(countDiv);
+  var frag=document.createDocumentFragment(),delay=0;
+  results.forEach(function(r){
+    var card=document.createElement('div');
+    card.className='result-card';card.style.animationDelay=delay+'s';delay+=0.05;
+    card.dataset.dest=r.page;
+    var ctxStr=r.ctx?(r.ctx+(r.ctxEn?' / '+r.ctxEn:'')):'';
+    var inner='<div class="result-inner"><div class="card-head">'+
+      '<div class="card-title-row">'+
+      '<span class="card-page-title-cn">'+esc(r.titleCn)+'</span>'+
+      '<span class="card-page-title-en">'+esc(r.titleEn)+'</span>'+
+      '</div>'+(ctxStr?'<div class="card-ctx">'+esc(ctxStr)+'</div>':'')+
+      '</div><div class="card-rows">';
+    if(r.rows.length===0){inner+='<div class="card-empty">暂无记录 / No records</div>';}
+    else{r.rows.forEach(function(rec,ri){
+      var dim=(r.matchIdx===-2)||(r.matchIdx>=0&&ri!==r.matchIdx);
+      var time=rec.clearTime||rec.avgRealTime||'—';
+      var player=rec.playerId||'—';var date=rec.uploadTime||'—';
+      if(rec.captureStatus){
+        inner+='<div class="card-row'+(dim?' dim':'')+'">'+
+          '<span class="card-rank">#'+(r.startRank+ri+1)+'</span>'+
+          '<span class="card-time">'+esc(time)+'</span>'+
+          '<span class="card-status">'+esc(rec.captureStatus)+'</span>'+
+          '<span class="card-player">'+esc(player)+'</span></div>';
+      }else{
+        inner+='<div class="card-row'+(dim?' dim':'')+'">'+
+          '<span class="card-rank">#'+(r.startRank+ri+1)+'</span>'+
+          '<span class="card-time">'+esc(time)+'</span>'+
+          '<span class="card-player">'+esc(player)+'</span>'+
+          '<span class="card-date">'+esc(date)+'</span></div>';}});}
+    inner+='</div></div>';card.innerHTML=inner;
+    card.addEventListener('click',function(){playExitCollapse(card.dataset.dest);});
+    frag.appendChild(card);});
+  area.appendChild(frag);area.classList.add('visible');}
+
+/* ── UI — issue #4: loading displays for random 2.5–5s ── */
+var wrap=document.getElementById('search-wrap');
+var inp=document.getElementById('search-input');
+var movedUp=false;
+
+window.addEventListener('resize',function(){
+  if(movedUp){var box=document.querySelector('.search-box-outer');
+    if(box)document.getElementById('results-area').style.top=(box.getBoundingClientRect().bottom+14)+'px';}
+});
+function _updateResultsTop(){
+  var box=document.querySelector('.search-box-outer');
+  if(box){var t=box.getBoundingClientRect().bottom+14;
+    if(t>60)document.getElementById('results-area').style.top=t+'px';}
+}
+
+function doSearch(){
+  var term=inp.value.trim();if(!term)return;
+  var area=document.getElementById('results-area');
+  var minMs=2500+Math.random()*2500;
+  var dataReady=false,timerReady=false,pendingRes=null;
+  function tryShow(){if(dataReady&&timerReady){renderResults(pendingRes);inp.focus();}}
+
+  if(!movedUp){
+    movedUp=true;wrap.classList.add('moved');
+    /* 首次搜索：等动画稳定后再显示加载提示，避免位置跳变 */
+    area.classList.remove('visible');area.innerHTML='';
+    setTimeout(function(){
+      _updateResultsTop();
+      area.innerHTML='<div class="search-loading">正在搜索全站数据 · · ·</div>';
+      area.offsetHeight;area.classList.add('visible');
+    },870);
+  }else{
+    /* 后续搜索：立即更新位置并显示 */
+    _updateResultsTop();
+    area.classList.remove('visible');
+    area.innerHTML='<div class="search-loading">正在搜索全站数据 · · ·</div>';
+    area.offsetHeight;area.classList.add('visible');
+  }
+
+  loadData(function(){pendingRes=runSearch(term);dataReady=true;tryShow();});
+  setTimeout(function(){timerReady=true;tryShow();},minMs);
+}
+
+document.getElementById('search-btn').addEventListener('click',doSearch);
+inp.addEventListener('keydown',function(e){if(e.key==='Enter')doSearch();});
+</script>
+</body>
+</html>

@@ -9,6 +9,7 @@ class StarField {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
     if (!this.canvas) return;
+    if (getComputedStyle(this.canvas).display === 'none') return;  /* Bug3-fix: 跳过被 CSS 隐藏的 canvas */
     this.ctx    = this.canvas.getContext('2d');
     this.stars  = [];
     this.shoots = [];
@@ -952,6 +953,7 @@ function _doGlitchNav(dest) {
     ══════════════════════════════════════════════════════════ */
     var W=innerWidth, H=innerHeight;
     var cv=document.createElement('canvas');
+    cv.setAttribute('data-glitch-canvas','1');  /* 问题6-fix: 标记故障动画 canvas，供 pageshow 清理 */
     cv.style.cssText='position:fixed;inset:0;z-index:99999;pointer-events:all;';
     cv.width=W; cv.height=H;
     document.body.appendChild(cv);
@@ -1093,7 +1095,7 @@ document.addEventListener('click', function(e) {
   if (!link || _glitchBusy) return;
   e.preventDefault();
   _glitchBusy = true;
-  _doGlitchNav(link.getAttribute('href') || 'serch.html');
+  _doGlitchNav(link.getAttribute('href') || 'search.html');  /* 问题9-fix: 同步文件名修正 */
 });
 
 function _navigateToPlayer(playerId) {
@@ -1113,7 +1115,7 @@ window.addEventListener('pageshow', function() {
   document.body.style.animation = '';
   document.body.style.transition = '';
   /* 清理残留 canvas 遮罩（匹配所有高层级固定覆盖层） */
-  document.querySelectorAll('canvas[style*="z-index:99999"],canvas[style*="z-index: 99999"],canvas[style*="z-index:9999"],canvas[style*="z-index: 9999"]').forEach(function(c) {
+  document.querySelectorAll('canvas[data-glitch-canvas]').forEach(function(c) {  /* 问题6-fix: 用属性选择器替代脆弱的 style 字符串匹配 */
     if (c.parentNode) c.parentNode.removeChild(c);
   });
 });

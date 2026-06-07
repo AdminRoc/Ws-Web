@@ -26,7 +26,7 @@ a{text-decoration:none;color:inherit;}
   bottom:-12vw;right:-12vw;animation:nDrift 36s ease-in-out infinite alternate-reverse;filter:blur(65px);}
 @keyframes nDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(4vw,-4vw) scale(1.05)}}
 :root{--rb:linear-gradient(135deg,#ff1a3c 0%,#ff6600 14%,#ffdd00 28%,#33ff88 42%,#00ccff 57%,#6633ff 71%,#ff33cc 85%,#ff1a3c 100%);}
-/* Main rainbow: 8s (same as serch.html) */
+/* Main rainbow: 6.4s */ /* 问题7-fix: 注释与实际值同步 */
 @keyframes hs{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}
 /* Dim rainbow for content: 16s, brightness 65% */
 @keyframes hsd{from{filter:saturate(.85) brightness(.9) hue-rotate(0deg)}to{filter:saturate(.85) brightness(.9) hue-rotate(360deg)}}
@@ -206,7 +206,7 @@ window.addEventListener('load',function(){
 document.getElementById('page-wrap').style.opacity='0';
 </script>
 
-<!-- search index (same as serch.html) -->
+<!-- search index (same as search.html) -->
 <script>
 var IDX=[];
 (function(){
@@ -300,7 +300,7 @@ var IDX=[];
 })();
 </script>
 
-<!-- data loader (same as serch.html) -->
+<!-- data loader (same as search.html) -->
 <script>
 var _loaded=false,_loading=false,_cbs=[];
 function loadData(cb){
@@ -342,7 +342,8 @@ function loadData(cb){
 <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js"></script>
 <!-- player logic -->
 <script>
-function getRecs(n){try{var r=window[n];if(Array.isArray(r))return r;}catch(e){}try{var r=(0,eval)(n);if(Array.isArray(r))return r;}catch(e){}return null;}
+/* 问题H-fix: 移除间接 eval，window[n] 已完全覆盖全部数据访问场景 */
+function getRecs(n){try{var r=window[n];if(Array.isArray(r))return r;}catch(e){}return null;}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 function parseMs(t){
