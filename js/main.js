@@ -770,6 +770,7 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
 /* ══════════════════════════════════════════════════════════
    8. 榜单渲染：夜灵类
    ══════════════════════════════════════════════════════════ */
+/* 捕获情况权重：数值越小排名越前；仅在 avgRealTime 相同时作为次要依据 */
 const CAPTURE_RANK = { '7×3':1,'6×3+2':2,'6×3+1':3,'6×3':4 };
 function captureWeight(s) { return CAPTURE_RANK[s] !== undefined ? CAPTURE_RANK[s] : 99; }
 
@@ -777,9 +778,10 @@ function renderEidolonLeaderboard(records, tbodyId) {
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
 
+  /* 排名逻辑：avgRealTime 升序为第一依据；仅时间完全相同时，捕获情况权重更高者排前 */
   const sorted = [...records].sort((a,b) => {
-    const cw = captureWeight(a.captureStatus) - captureWeight(b.captureStatus);
-    return cw !== 0 ? cw : parseTimeMs(a.avgRealTime) - parseTimeMs(b.avgRealTime);
+    const timeDiff = parseTimeMs(a.avgRealTime) - parseTimeMs(b.avgRealTime);
+    return timeDiff !== 0 ? timeDiff : captureWeight(a.captureStatus) - captureWeight(b.captureStatus);
   });
 
   if (!sorted.length) {

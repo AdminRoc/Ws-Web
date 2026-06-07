@@ -352,13 +352,15 @@ function parseMs(t){
   if(m)return(+m[1])*60000+(+m[2])*1000+parseFloat('0.'+m[3])*1000;
   return Infinity;
 }
+/* 捕获情况权重：数值越小排名越前；仅在 avgRealTime 相同时作为次要依据 */
 var CAP_RANK={'7×3':1,'6×3+2':2,'6×3+1':3,'6×3':4};
 function capW(s){return CAP_RANK[s]!==undefined?CAP_RANK[s]:99;}
 
 function sortRecs(recs){
   if(!recs.length)return[];
   if(recs[0].avgRealTime!==undefined){
-    return[...recs].sort(function(a,b){var cw=capW(a.captureStatus)-capW(b.captureStatus);return cw!==0?cw:parseMs(a.avgRealTime)-parseMs(b.avgRealTime);});}
+    /* 夜灵：avgRealTime 升序为主，捕获情况权重为次 */
+    return[...recs].sort(function(a,b){var td=parseMs(a.avgRealTime)-parseMs(b.avgRealTime);return td!==0?td:capW(a.captureStatus)-capW(b.captureStatus);});}
   return[...recs].sort(function(a,b){return parseMs(a.clearTime)-parseMs(b.clearTime);});
 }
 
