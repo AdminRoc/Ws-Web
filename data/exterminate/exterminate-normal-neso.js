@@ -22,5 +22,16 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_nesoRecords = [
-
+    {
+       playerId:   "Jagdtor",
+       clearTime:  "0:15.833",
+       uploadTime: "2026-05-09",
+       videoUrls:  ["https://www.youtube.com/watch?v=dgstIUxm6mM"],
+    },
+    {
+       playerId:   "Salat",
+       clearTime:  "0:26.000",
+       uploadTime: "2025-03-03",
+       videoUrls:  ["https://www.youtube.com/watch?v=IA6v-KQWH1E"],
+    },
 ];
