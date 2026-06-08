@@ -22,30 +22,36 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_oxomocoRecords = [
-{
-  playerId:   "NamelessDeity",
-  clearTime:  "0:32.000",
-  uploadTime: "2026-02-07",
-  videoUrls:  ["https://www.youtube.com/watch?v=NY-Gj0VOH9M"],
-},
-{
-  playerId:   "RoniPrime",
-  clearTime:  "0:38.000",
-  uploadTime: "2026-02-05",
-  videoUrls:  ["https://www.youtube.com/watch?v=379RqeLDsbY"],
-},
-{
-  playerId:   "Salat",
-  clearTime:  "0:47.000",
-  uploadTime: "2026-01-07",
-  videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
-},
-{
-  playerId:   "Clarn",
-  clearTime:  "4:58.000",
-  uploadTime: "2026-02-21",
-  videoUrls:  ["https://www.youtube.com/watch?v=xc3o0kprJjc"],
-},
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:32.000",
+    uploadTime: "2026-02-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=NY-Gj0VOH9M"],
+  },
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "0:38.000",
+    uploadTime: "2026-02-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=379RqeLDsbY"],
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:47.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
+  },
+  {
+    playerId:   "Clarn",
+    clearTime:  "4:58.000",
+    uploadTime: "2026-02-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=xc3o0kprJjc"],
+  },
+  {
+    playerId:   "FrostMainer",
+    clearTime:  "0:28.000",
+    uploadTime: "2026-06-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=MhfHN7pNQxk"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

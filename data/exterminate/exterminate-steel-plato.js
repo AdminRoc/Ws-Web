@@ -34,6 +34,12 @@ var exterminate_steel_platoRecords = [
     uploadTime: "2026-01-09",
     videoUrls:  ["https://www.youtube.com/watch?v=-EEa8VbAhmA"],
   },
+  {
+    playerId:   "FrostMainer",
+    clearTime:  "0:32.000",
+    uploadTime: "2026-06-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=I5iFFDB94J0"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
