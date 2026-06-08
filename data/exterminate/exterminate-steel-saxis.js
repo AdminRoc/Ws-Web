@@ -23,7 +23,7 @@
 
 var exterminate_steel_saxisRecords = [
   {
-    playerId:   "kkV357",
+    playerId:   "FrostMainer",
     clearTime:  "0:17.000",
     uploadTime: "2026-05-22",
     videoUrls:  ["https://www.youtube.com/watch?v=_OV-wMY9mVQ"],
