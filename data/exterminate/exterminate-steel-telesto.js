@@ -23,7 +23,7 @@
 
 var exterminate_steel_telestoRecords = [
   {
-    playerId:   "kkV357",
+    playerId:   "FrostMainer",
     clearTime:  "0:33.000",
     uploadTime: "2026-05-20",
     videoUrls:  ["https://www.youtube.com/watch?v=QZvcq2lBzXE"],

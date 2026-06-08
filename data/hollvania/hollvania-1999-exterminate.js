@@ -23,7 +23,7 @@
 
 var hollvania_1999_exterminateRecords = [
   {
-    playerId:   "kkV357",
+    playerId:   "FrostMainer",
     clearTime:  "0:52.000",
     uploadTime: "2026-05-19",
     videoUrls:  ["https://www.youtube.com/watch?v=Gqnyvtrijho"],

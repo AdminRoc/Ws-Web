@@ -23,7 +23,7 @@
 
 var exterminate_steel_nexRecords = [
   {
-    playerId:   "kkV357",
+    playerId:   "FrostMainer",
     clearTime:  "0:38.000",
     uploadTime: "2026-05-16",
     videoUrls:  ["https://www.youtube.com/watch?v=zpbN1ncEEm4"],
