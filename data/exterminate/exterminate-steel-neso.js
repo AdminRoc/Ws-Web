@@ -22,5 +22,23 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_steel_nesoRecords = [
+    {
+       playerId:   "FrostMainer",
+       clearTime:  "0:33.000",
+       uploadTime: "2026-06-08",
+       videoUrls:  ["https://www.youtube.com/watch?v=CKCC_zWd4nM"],
+    },
+    {
+       playerId:   "NamelessDeity",
+       clearTime:  "0:44.000",
+       uploadTime: "2026-02-10",
+       videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
+    },
+    {
+       playerId:   "Salat",
+       clearTime:  "0:54.000",
+       uploadTime: "2026-01-07",
+       videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
+    },
 
 ];
