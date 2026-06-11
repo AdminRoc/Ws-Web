@@ -41,6 +41,13 @@ var capture_cassiniRecords = [
     uploadTime: "2021-01-20",
     videoUrls:  ["https://www.youtube.com/watch?v=69DdM6vhXQs"],
   },
+  {
+    playerId:   "FrostMainer",
+    clearTime:  "0:25.000",
+    uploadTime: "2026-06-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=cBht9QzIUrw"],
+  },
+
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
