@@ -310,6 +310,9 @@
 
   function loadBoard() {
     var key = _curCat + '||' + _curMap;
+    /* 本页独特规则：选中"单小时生息精华数量"时，主标题切换为专属名称（与次次级选项无关） */
+    var titleEl = document.querySelector('.lb-title');
+    if (titleEl) titleEl.textContent = (_curCat === '单小时生息精华数量') ? '仲裁任务单小时生息精华排行榜' : '仲裁任务竞速排行榜';
     renderTimeLeaderboard(_allData[key] ? _allData[key]() : [], 'lb-tbody', 'clearTime');
     var noticeEl = document.getElementById('arb-notice');
     var noticeText = _noticeMap[key] ? _noticeMap[key]() : '';
