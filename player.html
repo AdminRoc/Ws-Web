@@ -136,7 +136,8 @@ a{text-decoration:none;color:inherit;}
 
 /* ── 等待加载画面（load overlay）── */
 #load-overlay{position:fixed;inset:0;z-index:150;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:26px;padding:0 18px;
+  align-items:center;justify-content:center;gap:clamp(14px,2.8vh,28px);
+  width:100vw;height:100vh;height:100dvh;overflow:hidden;padding:0 4vw;
   background:radial-gradient(circle at 50% 42%,rgba(6,14,34,.97) 0%,rgba(2,3,8,.985) 70%);
   opacity:0;animation:loIn 1s ease .12s forwards;}
 @keyframes loIn{from{opacity:0;filter:blur(8px);transform:scale(1.03);}
@@ -163,57 +164,121 @@ a{text-decoration:none;color:inherit;}
   background:linear-gradient(to bottom,transparent,rgba(0,212,255,.07),rgba(0,212,255,.2),transparent);
   animation:loScan 3.2s linear infinite;}
 @keyframes loScan{from{top:-90px;}to{top:100%;}}
-/* 核心多环 */
-.lo-core{position:relative;width:150px;height:150px;flex-shrink:0;}
+/* 核心多环：尺寸随视口 vmin 缩放，环距与Logo均按百分比固定，缩放不破版 */
+.lo-core{position:relative;width:clamp(170px,30vmin,300px);height:clamp(170px,30vmin,300px);flex-shrink:0;}
 .lo-ring{position:absolute;border-radius:50%;}
-.lo-ring1{inset:0;border:2px solid transparent;border-top-color:#00d4ff;
-  border-right-color:rgba(0,212,255,.25);animation:loSpin 1.6s linear infinite;
-  box-shadow:0 0 26px rgba(0,212,255,.22),inset 0 0 18px rgba(0,212,255,.08);}
-.lo-ring2{inset:16px;border:2px solid transparent;border-bottom-color:#8b5cf6;
-  border-left-color:rgba(139,92,246,.28);animation:loSpin 2.4s linear infinite reverse;}
-.lo-ring3{inset:34px;border:1.5px dashed rgba(0,255,204,.45);animation:loSpin 7s linear infinite;}
-.lo-nucleus{position:absolute;inset:56px;border-radius:50%;
-  background:radial-gradient(circle,#7af7ff 0%,#00d4ff 38%,rgba(0,80,160,0) 75%);
-  animation:loPulse 1.5s ease-in-out infinite;}
+.lo-ring1{inset:0;border:2px solid transparent;border-top-color:#e8c264;
+  border-right-color:rgba(212,168,74,.28);animation:loSpin 1.6s linear infinite;
+  box-shadow:0 0 26px rgba(212,168,74,.25),inset 0 0 18px rgba(212,168,74,.08);}
+.lo-ring2{inset:7%;border:2px solid transparent;border-bottom-color:#a87b2a;
+  border-left-color:rgba(168,123,42,.32);animation:loSpin 2.4s linear infinite reverse;}
+.lo-ring3{inset:15%;border:1.5px dashed rgba(255,200,80,.45);animation:loSpin 7s linear infinite;}
+/* 中心 WS Logo：黑底经 screen 混合融入暗背景，金色部分呼吸发光 */
+.lo-logo{position:absolute;inset:17%;width:66%;height:66%;
+  border-radius:50%;object-fit:cover;mix-blend-mode:screen;pointer-events:none;
+  animation:loLogoPulse 2.4s ease-in-out infinite;}
 @keyframes loSpin{to{transform:rotate(360deg);}}
-@keyframes loPulse{0%,100%{transform:scale(.76);opacity:.65;}50%{transform:scale(1.08);opacity:1;}}
+@keyframes loLogoPulse{
+  0%,100%{transform:scale(.94);filter:drop-shadow(0 0 8px rgba(255,200,80,.3)) brightness(.95);}
+  50%{transform:scale(1.04);filter:drop-shadow(0 0 22px rgba(255,200,80,.7)) brightness(1.18);}}
 /* 故障标题 */
 .lo-title{position:relative;font-family:'Orbitron','Xszt',sans-serif;
-  font-size:clamp(1.15rem,3.4vw,1.75rem);font-weight:800;letter-spacing:.42em;text-indent:.42em;
-  color:#dff4ff;text-shadow:0 0 18px rgba(0,212,255,.55);text-align:center;}
-.lo-title::before,.lo-title::after{content:attr(data-text);position:absolute;inset:0;
-  letter-spacing:inherit;text-indent:inherit;pointer-events:none;}
-.lo-title::before{color:rgba(0,255,255,.85);clip-path:inset(0 0 55% 0);
-  animation:loGlitch 2.6s steps(1,jump-none) infinite;}
-.lo-title::after{color:rgba(255,0,255,.75);clip-path:inset(58% 0 0 0);
-  animation:loGlitch 3.1s steps(1,jump-none) infinite reverse;}
-@keyframes loGlitch{0%,86%,100%{transform:translate(0,0);}
-  88%{transform:translate(-3px,1px);}92%{transform:translate(3px,-1px);}96%{transform:translate(-2px,-1px);}}
+  font-size:clamp(1.1rem,3.4vmin,1.9rem);font-weight:800;letter-spacing:.42em;text-indent:.42em;
+  text-align:center;white-space:nowrap;color:#d4a84a;}
+/* ── 暗金材质 ⇄ 赛博电子 风格渐变（3.5s 一程，交叉淡变往复） ──
+   双层同文精准重叠：金层为竖向金属质感渐变；赛博层为霓虹辉光+RGB色散的电子样式。
+   两层 opacity 反相过渡，整段文字在两种"材质"间整体渐变 */
+.lo-sweep-wrap{position:relative;display:inline-block;}
+.ls-gold{color:#d4a84a;
+  background-image:linear-gradient(180deg,#f6e27a 0%,#d4a84a 36%,#8a6a23 54%,#e8c264 76%,#6f5417 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  text-shadow:0 1px 2px rgba(60,40,0,.55);
+  animation:loStyleGold 3.5s ease-in-out forwards;}
+.ls-cyber{position:absolute;left:0;top:0;width:100%;
+  color:#9be8ff;
+  text-shadow:
+    0 0 6px rgba(0,212,255,.95),
+    0 0 16px rgba(0,212,255,.55),
+    0 0 34px rgba(139,92,246,.45),
+    1.5px 0 0 rgba(255,0,200,.5),
+    -1.5px 0 0 rgba(0,255,255,.5);
+  opacity:0;
+  animation:loStyleCyber 3.5s ease-in-out forwards,
+            loNeonFlick 2.1s linear 2.25s infinite,
+            loCyberJitter 2.4s steps(1,end) 2.25s infinite;}
+/* 单程过渡：前1/3驻留暗金，中段交叉淡变，到达赛博态后保持（forwards）。
+   蓝色在约2.24s（64%处）完全显现，故障动画延迟2.25s无缝接管，蓝字不会"裸奔" */
+@keyframes loStyleGold{0%,36%{opacity:1;}64%,100%{opacity:0;}}
+@keyframes loStyleCyber{0%,36%{opacity:0;}64%,100%{opacity:1;}}
+/* ── 以下故障动画均延迟2.25s（蓝色成形瞬间）启动，持续到载入画面消散 ── */
+/* 霓虹灯管failing闪烁 */
+@keyframes loNeonFlick{
+  0%,50%,100%{filter:brightness(1);}
+  54%{filter:brightness(1.4);}
+  57%{filter:brightness(.6);}
+  61%{filter:brightness(1.3);}
+  65%{filter:brightness(1);}
+  82%{filter:brightness(.75);}
+  86%{filter:brightness(1.2);}}
+/* 整体信号抖动：偶发的位移+斜切，steps(1)产生数字式突变 */
+@keyframes loCyberJitter{
+  0%,16%,38%,60%,82%,100%{transform:translate(0,0) skewX(0);}
+  6%{transform:translate(-3px,1px) skewX(-3deg);}
+  10%{transform:translate(3px,-1px) skewX(2deg);}
+  44%{transform:translate(2px,1px) skewX(1.5deg);}
+  50%{transform:translate(-2px,-1px) skewX(-2deg);}
+  68%{transform:translate(3px,0) skewX(2.5deg);}
+  74%{transform:translate(-2px,1px) skewX(-1.5deg);}}
+/* RGB分离切片：青色上半幅 / 品红下半幅，错位残影窗口加宽至肉眼明显可见 */
+.ls-cyber::before,.ls-cyber::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;
+  text-shadow:none;opacity:0;pointer-events:none;}
+.ls-cyber::before{color:rgba(0,255,255,.9);clip-path:inset(0 0 52% 0);
+  animation:loSliceA 2.3s steps(1,end) 2.25s infinite;}
+.ls-cyber::after{color:rgba(255,0,220,.85);clip-path:inset(55% 0 0 0);
+  animation:loSliceB 2.9s steps(1,end) 2.25s infinite;}
+@keyframes loSliceA{
+  0%,14%,42%,58%,86%,100%{opacity:0;transform:translate(0,0);}
+  6%{opacity:.9;transform:translate(-6px,2px);}
+  10%{opacity:.8;transform:translate(4px,-1px);}
+  48%{opacity:.9;transform:translate(6px,-2px);}
+  52%{opacity:.65;transform:translate(-4px,1px);}
+  78%{opacity:.85;transform:translate(-5px,0);}
+  82%{opacity:.6;transform:translate(3px,2px);}}
+@keyframes loSliceB{
+  0%,18%,46%,64%,90%,100%{opacity:0;transform:translate(0,0);}
+  8%{opacity:.85;transform:translate(5px,-2px);}
+  13%{opacity:.7;transform:translate(-3px,1px);}
+  52%{opacity:.85;transform:translate(-6px,2px);}
+  57%{opacity:.6;transform:translate(4px,0);}
+  82%{opacity:.8;transform:translate(4px,1px);}
+  86%{opacity:.55;transform:translate(-3px,-1px);}}
 /* 副标题 + 呼吸点 */
-.lo-sub{font-size:1.05rem;letter-spacing:.16em;color:rgba(176,202,232,.85);text-align:center;}
-.lo-d{display:inline-block;margin-left:.3em;animation:loDot 1.4s ease-in-out infinite;}
+.lo-sub{font-size:clamp(.9rem,2.3vmin,1.15rem);letter-spacing:.16em;text-align:center;color:#d4a84a;}
+.lo-d{display:inline-block;margin-left:.3em;animation:loDot 1.4s ease-in-out infinite;
+  color:#a78bfa;}
 .lo-d:nth-child(2){animation-delay:.22s;}
 .lo-d:nth-child(3){animation-delay:.44s;}
 @keyframes loDot{0%,100%{opacity:.15;transform:translateY(0);}50%{opacity:1;transform:translateY(-3px);}}
 /* 流光进度条 */
-.lo-bar{width:min(320px,70vw);height:3px;border-radius:2px;overflow:hidden;
-  background:rgba(0,212,255,.12);}
+.lo-bar{width:clamp(220px,38vmin,360px);max-width:80vw;height:3px;border-radius:2px;overflow:hidden;
+  background:rgba(0,212,255,.12);flex-shrink:0;}
 .lo-bar span{display:block;height:100%;width:40%;border-radius:2px;
   background:linear-gradient(90deg,transparent,#00d4ff,#8b5cf6,transparent);
   animation:loBar 1.6s cubic-bezier(.45,.05,.55,.95) infinite;}
 @keyframes loBar{from{transform:translateX(-110%);}to{transform:translateX(290%);}}
 /* 右上角按钮提示 */
-.lo-tip{display:flex;align-items:center;gap:8px;margin-top:4px;padding:9px 22px;
+.lo-tip{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;
+  padding:clamp(7px,1.2vmin,10px) clamp(14px,2.6vmin,24px);max-width:88vw;
   border:1px solid rgba(255,185,30,.32);border-radius:20px;background:rgba(255,185,30,.06);
-  font-size:.94rem;letter-spacing:.07em;color:rgba(255,205,80,.9);text-align:center;
+  font-size:clamp(.78rem,2vmin,.96rem);letter-spacing:.07em;color:rgba(255,205,80,.9);text-align:center;
   animation:loTipGlow 2.4s ease-in-out infinite alternate;}
+/* 胶囊内文字采用 lo-sweep-wrap 双层过渡，容器自身背景不受影响 */
 @keyframes loTipGlow{from{box-shadow:0 0 6px rgba(255,185,30,.1);}
   to{box-shadow:0 0 18px rgba(255,185,30,.38),0 0 36px rgba(255,185,30,.12);}}
-@media(max-width:600px){
-  .lo-core{width:118px;height:118px;}
-  .lo-ring2{inset:13px;}.lo-ring3{inset:27px;}.lo-nucleus{inset:44px;}
-  .lo-sub{font-size:.95rem;}
-  .lo-tip{font-size:.84rem;padding:8px 16px;}
+/* 横屏矮视口（如手机横置）：压缩核心占比，保证整组内容仍在一屏内 */
+@media(max-height:560px){
+  .lo-core{width:clamp(120px,24vmin,200px);height:clamp(120px,24vmin,200px);}
+  #load-overlay{gap:clamp(8px,1.8vh,16px);}
 }
 
 /* ── entry animation ── */
@@ -240,12 +305,12 @@ a{text-decoration:none;color:inherit;}
     <div class="lo-ring lo-ring1"></div>
     <div class="lo-ring lo-ring2"></div>
     <div class="lo-ring lo-ring3"></div>
-    <div class="lo-nucleus"></div>
+    <img class="lo-logo" src="picture/WS-logo-2.png" alt="WS">
   </div>
-  <div class="lo-title" data-text="DATA LOADING">DATA LOADING</div>
-  <div class="lo-sub">数据正在加载中，请您耐心等待<span class="lo-d">·</span><span class="lo-d">·</span><span class="lo-d">·</span></div>
+  <div class="lo-title"><span class="lo-sweep-wrap"><span class="ls-gold">DATA LOADING</span><span class="ls-cyber" data-text="DATA LOADING" aria-hidden="true">DATA LOADING</span></span></div>
+  <div class="lo-sub"><span class="lo-sweep-wrap"><span class="ls-gold">数据正在加载中，请您耐心等待</span><span class="ls-cyber" data-text="数据正在加载中，请您耐心等待" aria-hidden="true">数据正在加载中，请您耐心等待</span></span><span class="lo-d">·</span><span class="lo-d">·</span><span class="lo-d">·</span></div>
   <div class="lo-bar"><span></span></div>
-  <div class="lo-tip">✦ 加载完成后，可使用右上角的分享按钮，生成动态图片 ↗</div>
+  <div class="lo-tip"><span class="lo-sweep-wrap"><span class="ls-gold">✦ 加载完成后，可使用右上角的分享按钮，生成动态图片 ↗</span><span class="ls-cyber" data-text="✦ 加载完成后，可使用右上角的分享按钮，生成动态图片 ↗" aria-hidden="true">✦ 加载完成后，可使用右上角的分享按钮，生成动态图片 ↗</span></span></div>
 </div>
 
 <a class="back-btn" onclick="history.length>1?history.back():(window.location.href='index.html')" href="javascript:void(0)">
@@ -466,7 +531,7 @@ function matchesPlayer(rec,target){
   return playerIds(rec).some(function(id){return id.toLowerCase()===t;});
 }
 
-/* ── 等待加载画面控制：加载完成且至少展示3秒后扭曲消散 ── */
+/* ── 等待加载画面控制：加载完成且至少展示3.5秒（覆盖一次完整的暗金→赛博过渡）后扭曲消散 ── */
 var _loShownAt=performance.now();
 function _revealPageWrap(){
   var pw=document.getElementById('page-wrap');
@@ -477,7 +542,7 @@ function dismissLoadOverlay(){
   if(!lo){_revealPageWrap();return;}
   if(lo._closing)return;
   lo._closing=true;
-  var wait=Math.max(0,3000-(performance.now()-_loShownAt));
+  var wait=Math.max(0,3500-(performance.now()-_loShownAt));
   setTimeout(function(){
     lo.classList.add('lo-close');
     setTimeout(function(){
