@@ -358,7 +358,7 @@
     var noticeEl = document.getElementById('arb-notice');
     var noticeText = _noticeMap[key] ? _noticeMap[key]() : '';
     if (noticeText && noticeText.trim()) {
-      noticeEl.style.display = 'flex';
+      noticeEl.style.display = 'grid';   /* 与 global.css 的 .lb-tip grid 布局配套 */
       document.getElementById('arb-notice-text').textContent = noticeText;
     } else { noticeEl.style.display = 'none'; }
     /* 标准横幅：读取数据文件中的 Notice_cn / Notice_en（悬停切换英文） */

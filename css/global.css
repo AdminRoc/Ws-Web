@@ -1404,11 +1404,16 @@ img { display: block; max-width: 100%; }
 }
 
 
-/* lb-tip 提示样式 */
+/* lb-tip 提示样式
+   布局说明：grid 双列（图标列 auto + 文本列 1fr），中/英两个 span 堆叠在文本列同一格，
+   格子高度自动取两者较高者 —— 修复英文行数多于中文时第三行溢出框体下边缘的bug。
+   裸文本实例（无span包裹的静态提示）作为匿名 grid item 自动落入文本列，布局不变。
+   注意：JS 显示该框时必须设 display:'grid'（与此布局配套，勿再用 'flex'） */
 .lb-tip {
-  display: flex;
-  align-items: flex-start;
-  gap: .6rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: .6rem;
+  align-items: start;
   margin: .8rem 0 1.4rem;
   padding: .7rem 1.1rem;
   border-radius: var(--r-md);
@@ -1418,35 +1423,34 @@ img { display: block; max-width: 100%; }
   font-size: .82rem;
   color: rgba(255,215,0,.85);
   letter-spacing: .04em;
-  line-height: 1.6;
+  line-height: 1.5; /* 行间距≈字体高度的50% */
 }
 .lb-tip-icon {
-  flex-shrink: 0;
+  grid-row: 1;
+  grid-column: 1;
   font-size: 1rem;
   margin-top: .05rem;
   margin-right: .2rem;
 }
 
-/* ── lb-tip-cn 和 lb-tip-en 双语切换容器 ── */
+/* ── lb-tip-cn 和 lb-tip-en 双语切换容器（同格堆叠，opacity 切换） ── */
 .lb-tip-cn,
 .lb-tip-en {
-  flex: 1;
+  grid-row: 1;
+  grid-column: 2;
   overflow-wrap: break-word;
   word-break: break-word;
   white-space: normal;
   transition: opacity .3s ease;
-  position: relative;
+  line-height: 1.5;
 }
 .lb-tip-cn {
   opacity: 1;
 }
 .lb-tip-en {
-  position: absolute;
-  inset: .7rem 1.1rem .7rem 3.8rem;
   opacity: 0;
   font-style: italic;
   color: rgba(255,215,0,.75);
-  display: block;
   pointer-events: none;
 }
 

@@ -878,7 +878,7 @@ function _updatePageNotice(dataFn) {
     } catch(e) {}
   }
   if (cn && cn.trim()) {
-    el.style.display = 'flex';
+    el.style.display = 'grid';   /* 与 global.css 的 .lb-tip grid 布局配套 */
     var cnEl = document.getElementById('notice-cn');
     var enEl = document.getElementById('notice-en');
     if (cnEl) cnEl.textContent = cn;
