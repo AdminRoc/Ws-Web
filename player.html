@@ -134,6 +134,88 @@ a{text-decoration:none;color:inherit;}
 .no-records-msg{text-align:center;padding:80px 0;color:rgba(176,202,232,.3);
   font-size:1.2rem;letter-spacing:.12em;line-height:2.2;}
 
+/* ── 等待加载画面（load overlay）── */
+#load-overlay{position:fixed;inset:0;z-index:150;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:26px;padding:0 18px;
+  background:radial-gradient(circle at 50% 42%,rgba(6,14,34,.97) 0%,rgba(2,3,8,.985) 70%);
+  opacity:0;animation:loIn 1s ease .12s forwards;}
+@keyframes loIn{from{opacity:0;filter:blur(8px);transform:scale(1.03);}
+  to{opacity:1;filter:blur(0);transform:scale(1);}}
+#load-overlay.lo-close{animation:loOut .9s cubic-bezier(.55,0,.85,.36) forwards;pointer-events:none;}
+@keyframes loOut{
+  0%{opacity:1;transform:skewX(0deg) scale(1);filter:blur(0) hue-rotate(0deg);}
+  28%{opacity:.95;transform:skewX(7deg) scale(1.02);filter:blur(1px) hue-rotate(50deg);}
+  52%{opacity:.8;transform:skewX(-12deg) scaleY(.94);filter:blur(3px) hue-rotate(140deg);}
+  78%{opacity:.4;transform:skewX(15deg) scale(1.08,.85);filter:blur(8px) hue-rotate(230deg);}
+  100%{opacity:0;transform:skewX(22deg) scale(1.16,.7);filter:blur(16px) hue-rotate(330deg);}
+}
+/* 网格背景 */
+.lo-grid{position:absolute;inset:0;pointer-events:none;opacity:.28;
+  background:linear-gradient(rgba(0,212,255,.13) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,255,.13) 1px,transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 75%);
+  mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 75%);
+  animation:loGridMove 6s linear infinite;}
+@keyframes loGridMove{from{background-position:0 0,0 0;}to{background-position:0 48px,48px 0;}}
+/* 扫描光带 */
+.lo-scan{position:absolute;left:0;right:0;height:90px;top:-90px;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(0,212,255,.07),rgba(0,212,255,.2),transparent);
+  animation:loScan 3.2s linear infinite;}
+@keyframes loScan{from{top:-90px;}to{top:100%;}}
+/* 核心多环 */
+.lo-core{position:relative;width:150px;height:150px;flex-shrink:0;}
+.lo-ring{position:absolute;border-radius:50%;}
+.lo-ring1{inset:0;border:2px solid transparent;border-top-color:#00d4ff;
+  border-right-color:rgba(0,212,255,.25);animation:loSpin 1.6s linear infinite;
+  box-shadow:0 0 26px rgba(0,212,255,.22),inset 0 0 18px rgba(0,212,255,.08);}
+.lo-ring2{inset:16px;border:2px solid transparent;border-bottom-color:#8b5cf6;
+  border-left-color:rgba(139,92,246,.28);animation:loSpin 2.4s linear infinite reverse;}
+.lo-ring3{inset:34px;border:1.5px dashed rgba(0,255,204,.45);animation:loSpin 7s linear infinite;}
+.lo-nucleus{position:absolute;inset:56px;border-radius:50%;
+  background:radial-gradient(circle,#7af7ff 0%,#00d4ff 38%,rgba(0,80,160,0) 75%);
+  animation:loPulse 1.5s ease-in-out infinite;}
+@keyframes loSpin{to{transform:rotate(360deg);}}
+@keyframes loPulse{0%,100%{transform:scale(.76);opacity:.65;}50%{transform:scale(1.08);opacity:1;}}
+/* 故障标题 */
+.lo-title{position:relative;font-family:'Orbitron','Xszt',sans-serif;
+  font-size:clamp(1.15rem,3.4vw,1.75rem);font-weight:800;letter-spacing:.42em;text-indent:.42em;
+  color:#dff4ff;text-shadow:0 0 18px rgba(0,212,255,.55);text-align:center;}
+.lo-title::before,.lo-title::after{content:attr(data-text);position:absolute;inset:0;
+  letter-spacing:inherit;text-indent:inherit;pointer-events:none;}
+.lo-title::before{color:rgba(0,255,255,.85);clip-path:inset(0 0 55% 0);
+  animation:loGlitch 2.6s steps(1,jump-none) infinite;}
+.lo-title::after{color:rgba(255,0,255,.75);clip-path:inset(58% 0 0 0);
+  animation:loGlitch 3.1s steps(1,jump-none) infinite reverse;}
+@keyframes loGlitch{0%,86%,100%{transform:translate(0,0);}
+  88%{transform:translate(-3px,1px);}92%{transform:translate(3px,-1px);}96%{transform:translate(-2px,-1px);}}
+/* 副标题 + 呼吸点 */
+.lo-sub{font-size:1.05rem;letter-spacing:.16em;color:rgba(176,202,232,.85);text-align:center;}
+.lo-d{display:inline-block;margin-left:.3em;animation:loDot 1.4s ease-in-out infinite;}
+.lo-d:nth-child(2){animation-delay:.22s;}
+.lo-d:nth-child(3){animation-delay:.44s;}
+@keyframes loDot{0%,100%{opacity:.15;transform:translateY(0);}50%{opacity:1;transform:translateY(-3px);}}
+/* 流光进度条 */
+.lo-bar{width:min(320px,70vw);height:3px;border-radius:2px;overflow:hidden;
+  background:rgba(0,212,255,.12);}
+.lo-bar span{display:block;height:100%;width:40%;border-radius:2px;
+  background:linear-gradient(90deg,transparent,#00d4ff,#8b5cf6,transparent);
+  animation:loBar 1.6s cubic-bezier(.45,.05,.55,.95) infinite;}
+@keyframes loBar{from{transform:translateX(-110%);}to{transform:translateX(290%);}}
+/* 右上角按钮提示 */
+.lo-tip{display:flex;align-items:center;gap:8px;margin-top:4px;padding:9px 22px;
+  border:1px solid rgba(255,185,30,.32);border-radius:20px;background:rgba(255,185,30,.06);
+  font-size:.94rem;letter-spacing:.07em;color:rgba(255,205,80,.9);text-align:center;
+  animation:loTipGlow 2.4s ease-in-out infinite alternate;}
+@keyframes loTipGlow{from{box-shadow:0 0 6px rgba(255,185,30,.1);}
+  to{box-shadow:0 0 18px rgba(255,185,30,.38),0 0 36px rgba(255,185,30,.12);}}
+@media(max-width:600px){
+  .lo-core{width:118px;height:118px;}
+  .lo-ring2{inset:13px;}.lo-ring3{inset:27px;}.lo-nucleus{inset:44px;}
+  .lo-sub{font-size:.95rem;}
+  .lo-tip{font-size:.84rem;padding:8px 16px;}
+}
+
 /* ── entry animation ── */
 .lb-group{transform:translateY(24px);opacity:0;
   animation:groupSlide .5s cubic-bezier(.22,.68,0,1.2) forwards;}
@@ -149,6 +231,22 @@ a{text-decoration:none;color:inherit;}
 <body>
 <canvas id="star-cvs"></canvas>
 <div class="nebula"></div>
+
+<!-- ── 等待加载画面：数据加载完成且至少展示3秒后扭曲消散 ── -->
+<div id="load-overlay" aria-hidden="true">
+  <div class="lo-grid"></div>
+  <div class="lo-scan"></div>
+  <div class="lo-core">
+    <div class="lo-ring lo-ring1"></div>
+    <div class="lo-ring lo-ring2"></div>
+    <div class="lo-ring lo-ring3"></div>
+    <div class="lo-nucleus"></div>
+  </div>
+  <div class="lo-title" data-text="DATA LOADING">DATA LOADING</div>
+  <div class="lo-sub">数据正在加载中，请您耐心等待<span class="lo-d">·</span><span class="lo-d">·</span><span class="lo-d">·</span></div>
+  <div class="lo-bar"><span></span></div>
+  <div class="lo-tip">✦ 加载完成后，可使用右上角按钮生成专属动态分享图片 ↗</div>
+</div>
 
 <a class="back-btn" onclick="history.length>1?history.back():(window.location.href='index.html')" href="javascript:void(0)">
   <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
@@ -372,6 +470,19 @@ function matchesPlayer(rec,target){
   return playerIds(rec).some(function(id){return id.toLowerCase()===t;});
 }
 
+/* ── 等待加载画面控制：加载完成且至少展示3秒后扭曲消散 ── */
+var _loShownAt=performance.now();
+function dismissLoadOverlay(){
+  var lo=document.getElementById('load-overlay');
+  if(!lo||lo._closing)return;
+  lo._closing=true;
+  var wait=Math.max(0,3000-(performance.now()-_loShownAt));
+  setTimeout(function(){
+    lo.classList.add('lo-close');
+    setTimeout(function(){if(lo.parentNode)lo.parentNode.removeChild(lo);},950);
+  },wait);
+}
+
 /* ── get player ID from URL ── */
 var params=new URLSearchParams(location.search);
 var targetId=params.get('id')||'';
@@ -379,6 +490,7 @@ if(!targetId){
   document.getElementById('player-name').textContent='无效的玩家ID';
   document.getElementById('status-msg').className='error-msg';
   document.getElementById('status-msg').textContent='请通过榜单页面的玩家名称入口访问此页面。';
+  dismissLoadOverlay();
 }else{
   document.getElementById('player-name').textContent=targetId;
   document.title=targetId+' — WFSpeed.run';
@@ -400,6 +512,7 @@ if(!targetId){
 }
 
 function renderPlayer(entries){
+  dismissLoadOverlay();
   var wrap=document.getElementById('results-wrap');
   var statsEl=document.getElementById('player-stats');
   var statusEl=document.getElementById('status-msg');
