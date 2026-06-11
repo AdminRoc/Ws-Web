@@ -27,5 +27,5 @@ var arbitration_rounds_mirror_defenseRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var arbitration_rounds_mirror_defenseNotice_cn = "";
-var arbitration_rounds_mirror_defenseNotice_en = "";
+var arbitration_rounds_mirror_defenseNotice_cn = "  【镜像防御这一游戏模式，几乎无法干预完成的总时间，故暂时不接收标准轮次竞速的成绩提交】";
+var arbitration_rounds_mirror_defenseNotice_en = "  [Mirror Defense offers almost no way to influence the total completion time, so Confirmed Rounds Racing submissions are temporarily not accepted for this mode]";

@@ -179,8 +179,8 @@
       <span class="lb-tip-en" id="notice-en" style="opacity:0;transition:opacity .3s ease;font-style:italic;color:rgba(255,215,0,.75);"></span>
     </div>
     <div class="lb-tabs" id="lb-tabs">
-      <button class="lb-tab-btn active" data-cat="1000生息精华">
-        <span class="hover-text-swap"><span class="text-cn">1000 生息精华</span><span class="text-en">1000 Vitus Essence</span></span>
+      <button class="lb-tab-btn active" data-cat="单小时生息精华数量">
+        <span class="hover-text-swap"><span class="text-cn">单小时生息精华数量</span><span class="text-en">Vitus Essence Per Hour</span></span>
       </button>
       <button class="lb-tab-btn" data-cat="标准轮次筞速">
         <span class="hover-text-swap"><span class="text-cn">标准轮次竞速</span><span class="text-en">Confirmed Rounds Racing</span></span>
@@ -229,18 +229,18 @@
   </footer>
 </div>
 <script src="js/main.js"></script>
-<script src="data/arbitration/arbitration-vitus-alchemy.js"></script>
-<script src="data/arbitration/arbitration-vitus-defection.js"></script>
-<script src="data/arbitration/arbitration-vitus-defense.js"></script>
-<script src="data/arbitration/arbitration-vitus-disruption.js"></script>
-<script src="data/arbitration/arbitration-vitus-excavation.js"></script>
-<script src="data/arbitration/arbitration-vitus-salvage.js"></script>
-<script src="data/arbitration/arbitration-vitus-interception.js"></script>
-<script src="data/arbitration/arbitration-vitus-mirror-defense.js"></script>
-<script src="data/arbitration/arbitration-vitus-survival.js"></script>
-<script src="data/arbitration/arbitration-vitus-void-cascade.js"></script>
-<script src="data/arbitration/arbitration-vitus-void-flood.js"></script>
-<script src="data/arbitration/arbitration-vitus-void-armageddon.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-alchemy.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-defection.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-defense.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-disruption.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-excavation.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-salvage.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-interception.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-mirror-defense.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-survival.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-void-cascade.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-void-flood.js"></script>
+<script src="data/arbitration/arbitration-hourly-vitus-void-armageddon.js"></script>
 <script src="data/arbitration/arbitration-rounds-alchemy.js"></script>
 <script src="data/arbitration/arbitration-rounds-defection.js"></script>
 <script src="data/arbitration/arbitration-rounds-defense.js"></script>
@@ -255,18 +255,18 @@
 <script src="data/arbitration/arbitration-rounds-void-armageddon.js"></script>
 <script>
   var _allData = {
-    "1000生息精华||Alchemy": function(){return arbitration_vitus_alchemyRecords;},
-    "1000生息精华||Defection": function(){return arbitration_vitus_defectionRecords;},
-    "1000生息精华||Defense": function(){return arbitration_vitus_defenseRecords;},
-    "1000生息精华||Disruption": function(){return arbitration_vitus_disruptionRecords;},
-    "1000生息精华||Excavation": function(){return arbitration_vitus_excavationRecords;},
-    "1000生息精华||Salvage": function(){return arbitration_vitus_salvageRecords;},
-    "1000生息精华||Interception": function(){return arbitration_vitus_interceptionRecords;},
-    "1000生息精华||Mirror Defense": function(){return arbitration_vitus_mirror_defenseRecords;},
-    "1000生息精华||Survival": function(){return arbitration_vitus_survivalRecords;},
-    "1000生息精华||Void Cascade": function(){return arbitration_vitus_void_cascadeRecords;},
-    "1000生息精华||Void Flood": function(){return arbitration_vitus_void_floodRecords;},
-    "1000生息精华||Void Armageddon": function(){return arbitration_vitus_void_armageddonRecords;},
+    "单小时生息精华数量||Alchemy": function(){return arbitration_hourly_vitus_alchemyRecords;},
+    "单小时生息精华数量||Defection": function(){return arbitration_hourly_vitus_defectionRecords;},
+    "单小时生息精华数量||Defense": function(){return arbitration_hourly_vitus_defenseRecords;},
+    "单小时生息精华数量||Disruption": function(){return arbitration_hourly_vitus_disruptionRecords;},
+    "单小时生息精华数量||Excavation": function(){return arbitration_hourly_vitus_excavationRecords;},
+    "单小时生息精华数量||Salvage": function(){return arbitration_hourly_vitus_salvageRecords;},
+    "单小时生息精华数量||Interception": function(){return arbitration_hourly_vitus_interceptionRecords;},
+    "单小时生息精华数量||Mirror Defense": function(){return arbitration_hourly_vitus_mirror_defenseRecords;},
+    "单小时生息精华数量||Survival": function(){return arbitration_hourly_vitus_survivalRecords;},
+    "单小时生息精华数量||Void Cascade": function(){return arbitration_hourly_vitus_void_cascadeRecords;},
+    "单小时生息精华数量||Void Flood": function(){return arbitration_hourly_vitus_void_floodRecords;},
+    "单小时生息精华数量||Void Armageddon": function(){return arbitration_hourly_vitus_void_armageddonRecords;},
     "标准轮次筞速||Alchemy": function(){return arbitration_rounds_alchemyRecords;},
     "标准轮次筞速||Defection": function(){return arbitration_rounds_defectionRecords;},
     "标准轮次筞速||Defense": function(){return arbitration_rounds_defenseRecords;},
@@ -281,18 +281,18 @@
     "标准轮次筞速||Void Armageddon": function(){return arbitration_rounds_void_armageddonRecords;},
   };
   var _noticeMap = {
-    "1000生息精华||Alchemy": function(){return typeof arbitration_vitus_alchemyNotice!=='undefined'?arbitration_vitus_alchemyNotice:'';},
-    "1000生息精华||Defection": function(){return typeof arbitration_vitus_defectionNotice!=='undefined'?arbitration_vitus_defectionNotice:'';},
-    "1000生息精华||Defense": function(){return typeof arbitration_vitus_defenseNotice!=='undefined'?arbitration_vitus_defenseNotice:'';},
-    "1000生息精华||Disruption": function(){return typeof arbitration_vitus_disruptionNotice!=='undefined'?arbitration_vitus_disruptionNotice:'';},
-    "1000生息精华||Excavation": function(){return typeof arbitration_vitus_excavationNotice!=='undefined'?arbitration_vitus_excavationNotice:'';},
-    "1000生息精华||Salvage": function(){return typeof arbitration_vitus_salvageNotice!=='undefined'?arbitration_vitus_salvageNotice:'';},
-    "1000生息精华||Interception": function(){return typeof arbitration_vitus_interceptionNotice!=='undefined'?arbitration_vitus_interceptionNotice:'';},
-    "1000生息精华||Mirror Defense": function(){return typeof arbitration_vitus_mirror_defenseNotice!=='undefined'?arbitration_vitus_mirror_defenseNotice:'';},
-    "1000生息精华||Survival": function(){return typeof arbitration_vitus_survivalNotice!=='undefined'?arbitration_vitus_survivalNotice:'';},
-    "1000生息精华||Void Cascade": function(){return typeof arbitration_vitus_void_cascadeNotice!=='undefined'?arbitration_vitus_void_cascadeNotice:'';},
-    "1000生息精华||Void Flood": function(){return typeof arbitration_vitus_void_floodNotice!=='undefined'?arbitration_vitus_void_floodNotice:'';},
-    "1000生息精华||Void Armageddon": function(){return typeof arbitration_vitus_void_armageddonNotice!=='undefined'?arbitration_vitus_void_armageddonNotice:'';},
+    "单小时生息精华数量||Alchemy": function(){return typeof arbitration_hourly_vitus_alchemyNotice!=='undefined'?arbitration_hourly_vitus_alchemyNotice:'';},
+    "单小时生息精华数量||Defection": function(){return typeof arbitration_hourly_vitus_defectionNotice!=='undefined'?arbitration_hourly_vitus_defectionNotice:'';},
+    "单小时生息精华数量||Defense": function(){return typeof arbitration_hourly_vitus_defenseNotice!=='undefined'?arbitration_hourly_vitus_defenseNotice:'';},
+    "单小时生息精华数量||Disruption": function(){return typeof arbitration_hourly_vitus_disruptionNotice!=='undefined'?arbitration_hourly_vitus_disruptionNotice:'';},
+    "单小时生息精华数量||Excavation": function(){return typeof arbitration_hourly_vitus_excavationNotice!=='undefined'?arbitration_hourly_vitus_excavationNotice:'';},
+    "单小时生息精华数量||Salvage": function(){return typeof arbitration_hourly_vitus_salvageNotice!=='undefined'?arbitration_hourly_vitus_salvageNotice:'';},
+    "单小时生息精华数量||Interception": function(){return typeof arbitration_hourly_vitus_interceptionNotice!=='undefined'?arbitration_hourly_vitus_interceptionNotice:'';},
+    "单小时生息精华数量||Mirror Defense": function(){return typeof arbitration_hourly_vitus_mirror_defenseNotice!=='undefined'?arbitration_hourly_vitus_mirror_defenseNotice:'';},
+    "单小时生息精华数量||Survival": function(){return typeof arbitration_hourly_vitus_survivalNotice!=='undefined'?arbitration_hourly_vitus_survivalNotice:'';},
+    "单小时生息精华数量||Void Cascade": function(){return typeof arbitration_hourly_vitus_void_cascadeNotice!=='undefined'?arbitration_hourly_vitus_void_cascadeNotice:'';},
+    "单小时生息精华数量||Void Flood": function(){return typeof arbitration_hourly_vitus_void_floodNotice!=='undefined'?arbitration_hourly_vitus_void_floodNotice:'';},
+    "单小时生息精华数量||Void Armageddon": function(){return typeof arbitration_hourly_vitus_void_armageddonNotice!=='undefined'?arbitration_hourly_vitus_void_armageddonNotice:'';},
     "标准轮次筞速||Alchemy": function(){return typeof arbitration_rounds_alchemyNotice!=='undefined'?arbitration_rounds_alchemyNotice:'';},
     "标准轮次筞速||Defection": function(){return typeof arbitration_rounds_defectionNotice!=='undefined'?arbitration_rounds_defectionNotice:'';},
     "标准轮次筞速||Defense": function(){return typeof arbitration_rounds_defenseNotice!=='undefined'?arbitration_rounds_defenseNotice:'';},
@@ -306,7 +306,7 @@
     "标准轮次筞速||Void Flood": function(){return typeof arbitration_rounds_void_floodNotice!=='undefined'?arbitration_rounds_void_floodNotice:'';},
     "标准轮次筞速||Void Armageddon": function(){return typeof arbitration_rounds_void_armageddonNotice!=='undefined'?arbitration_rounds_void_armageddonNotice:'';},
   };
-  var _curCat = '1000生息精华', _curMap = 'Alchemy';
+  var _curCat = '单小时生息精华数量', _curMap = 'Alchemy';
 
   function loadBoard() {
     var key = _curCat + '||' + _curMap;
@@ -317,6 +317,8 @@
       noticeEl.style.display = 'flex';
       document.getElementById('arb-notice-text').textContent = noticeText;
     } else { noticeEl.style.display = 'none'; }
+    /* 标准横幅：读取数据文件中的 Notice_cn / Notice_en（悬停切换英文） */
+    _updatePageNotice(_allData[key]);
     history.replaceState(null,'','#'+encodeURIComponent(_curCat)+'--'+encodeURIComponent(_curMap));
   }
 

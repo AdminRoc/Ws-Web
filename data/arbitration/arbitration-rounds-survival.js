@@ -27,5 +27,5 @@ var arbitration_rounds_survivalRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var arbitration_rounds_survivalNotice_cn = "";
-var arbitration_rounds_survivalNotice_en = "";
+var arbitration_rounds_survivalNotice_cn = "  【暂定的标准轮次时间为：60分钟】（在任务全程期间，主动放弃拾取生息精华的次数不得超过3次）";
+var arbitration_rounds_survivalNotice_en = "  [Tentative standard duration: 60 minutes] (Throughout the entire mission, deliberately forgoing Vitus Essence pickups is allowed no more than 3 times)";

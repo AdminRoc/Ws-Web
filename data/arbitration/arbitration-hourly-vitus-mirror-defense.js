@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════════════════
  *  仲裁任务 竞速排行榜  /  Arbitration Speedrun Leaderboard
- *  子分类：1000生息精华 · 叛逃 / 1000 Vitus Essence · Defection
- *  数据文件：arbitration-vitus-defection.js
+ *  子分类：单小时生息精华数量 · 镜像防御 / Vitus Essence Per Hour · Mirror Defense
+ *  数据文件：arbitration-hourly-vitus-mirror-defense.js
  *  ┌──────────────────────────────────────────────────────┐
  *  │  字段说明：                                          │
  *  │    playerId  —— 玩家 ID（昵称）                      │
@@ -13,11 +13,11 @@
  *  └──────────────────────────────────────────────────────┘
  *
  *  添加/修改记录方法：
- *  在下方 arbitration_vitus_defectionRecords 数组中新增一个对象；
- *  在 arbitration_vitus_defectionNotice 中填写提醒信息（可留空）。
+ *  在下方 arbitration_hourly_vitus_mirror_defenseRecords 数组中新增一个对象；
+ *  在 arbitration_hourly_vitus_mirror_defenseNotice 中填写提醒信息（可留空）。
  * ════════════════════════════════════════════════════════════ */
 
-var arbitration_vitus_defectionRecords = [
+var arbitration_hourly_vitus_mirror_defenseRecords = [
   /* 暂无记录 */
 ];
 
@@ -27,5 +27,5 @@ var arbitration_vitus_defectionRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var arbitration_vitus_defectionNotice_cn = "";
-var arbitration_vitus_defectionNotice_en = "";
+var arbitration_hourly_vitus_mirror_defenseNotice_cn = "";
+var arbitration_hourly_vitus_mirror_defenseNotice_en = "";

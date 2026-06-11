@@ -27,5 +27,5 @@ var arbitration_rounds_excavationRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var arbitration_rounds_excavationNotice_cn = "";
-var arbitration_rounds_excavationNotice_en = "";
+var arbitration_rounds_excavationNotice_cn = "  【暂定的标准轮次为：20轮】（在任务全程期间，主动放弃拾取生息精华的次数不得超过3次）";
+var arbitration_rounds_excavationNotice_en = "  [Tentative standard rounds: 20] (Throughout the entire mission, deliberately forgoing Vitus Essence pickups is allowed no more than 3 times)";

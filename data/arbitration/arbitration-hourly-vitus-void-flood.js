@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════════════════
  *  仲裁任务 竞速排行榜  /  Arbitration Speedrun Leaderboard
- *  子分类：1000生息精华 · 资源回收 / 1000 Vitus Essence · Salvage
- *  数据文件：arbitration-vitus-salvage.js
+ *  子分类：单小时生息精华数量 · 虚空洪流 / Vitus Essence Per Hour · Void Flood
+ *  数据文件：arbitration-hourly-vitus-void-flood.js
  *  ┌──────────────────────────────────────────────────────┐
  *  │  字段说明：                                          │
  *  │    playerId  —— 玩家 ID（昵称）                      │
@@ -13,11 +13,11 @@
  *  └──────────────────────────────────────────────────────┘
  *
  *  添加/修改记录方法：
- *  在下方 arbitration_vitus_salvageRecords 数组中新增一个对象；
- *  在 arbitration_vitus_salvageNotice 中填写提醒信息（可留空）。
+ *  在下方 arbitration_hourly_vitus_void_floodRecords 数组中新增一个对象；
+ *  在 arbitration_hourly_vitus_void_floodNotice 中填写提醒信息（可留空）。
  * ════════════════════════════════════════════════════════════ */
 
-var arbitration_vitus_salvageRecords = [
+var arbitration_hourly_vitus_void_floodRecords = [
   /* 暂无记录 */
 ];
 
@@ -27,5 +27,5 @@ var arbitration_vitus_salvageRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var arbitration_vitus_salvageNotice_cn = "";
-var arbitration_vitus_salvageNotice_en = "";
+var arbitration_hourly_vitus_void_floodNotice_cn = "";
+var arbitration_hourly_vitus_void_floodNotice_en = "";

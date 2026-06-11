@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════════════════
  *  仲裁任务 竞速排行榜  /  Arbitration Speedrun Leaderboard
- *  子分类：1000生息精华 · 虚空决战 / 1000 Vitus Essence · Void Armageddon
- *  数据文件：arbitration-vitus-void-armageddon.js
+ *  子分类：单小时生息精华数量 · 叛逃 / Vitus Essence Per Hour · Defection
+ *  数据文件：arbitration-hourly-vitus-defection.js
  *  ┌──────────────────────────────────────────────────────┐
  *  │  字段说明：                                          │
  *  │    playerId  —— 玩家 ID（昵称）                      │
@@ -13,11 +13,11 @@
  *  └──────────────────────────────────────────────────────┘
  *
  *  添加/修改记录方法：
- *  在下方 arbitration_vitus_void_armageddonRecords 数组中新增一个对象；
- *  在 arbitration_vitus_void_armageddonNotice 中填写提醒信息（可留空）。
+ *  在下方 arbitration_hourly_vitus_defectionRecords 数组中新增一个对象；
+ *  在 arbitration_hourly_vitus_defectionNotice 中填写提醒信息（可留空）。
  * ════════════════════════════════════════════════════════════ */
 
-var arbitration_vitus_void_armageddonRecords = [
+var arbitration_hourly_vitus_defectionRecords = [
   /* 暂无记录 */
 ];
 
@@ -27,5 +27,5 @@ var arbitration_vitus_void_armageddonRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var arbitration_vitus_void_armageddonNotice_cn = "";
-var arbitration_vitus_void_armageddonNotice_en = "";
+var arbitration_hourly_vitus_defectionNotice_cn = "";
+var arbitration_hourly_vitus_defectionNotice_en = "";
