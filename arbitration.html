@@ -206,7 +206,7 @@
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">
-        <thead><tr><th>排名</th><th>时间</th><th>玩家 ID</th><th>提交日期</th></tr></thead>
+        <thead><tr><th>排名</th><th id="arb-col2-th">时间</th><th>玩家 ID</th><th>提交日期</th></tr></thead>
         <tbody id="lb-tbody"></tbody>
       </table>
       <div class="lb-stats" id="lb-stats"></div>
@@ -308,12 +308,53 @@
   };
   var _curCat = '单小时生息精华数量', _curMap = 'Alchemy';
 
+  /* ── 本页专用：单小时生息精华"数量榜"渲染器 ──
+     数据结构为 排名 / 数量 / 玩家ID / 提交日期；按数量(essenceCount)降序排名。
+     仅供"单小时生息精华数量"次级使用，不影响 main.js 与任何其他榜单 */
+  function renderVitusCountBoard(records, tbodyId) {
+    var tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    var toNum = function(v){ var n = parseFloat(String(v == null ? '' : v).replace(/[^0-9.]/g,'')); return isNaN(n) ? -Infinity : n; };
+    var sorted = (records || []).slice().sort(function(a,b){ return toNum(b.essenceCount) - toNum(a.essenceCount); });
+    if (!sorted.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:38px 0;color:rgba(176,202,232,.4);letter-spacing:.1em;">暂无记录 / No records yet</td></tr>';
+      var st0 = document.getElementById('lb-stats'); if (st0) st0.textContent = '';
+      return;
+    }
+    tbody.innerHTML = '';
+    sorted.forEach(function(rec, idx){
+      var rank = idx + 1;
+      var urls = getVideoUrls(rec);
+      var tr = document.createElement('tr');
+      if (rank <= 3) tr.classList.add('rank-' + rank);
+      tr.innerHTML =
+        '<td class="rank-col" style="vertical-align:middle"><span class="rank-badge">#' + rank + '</span></td>' +
+        '<td class="time-col" style="vertical-align:middle">' + (rec.essenceCount != null && rec.essenceCount !== '' ? rec.essenceCount : '—') + '</td>' +
+        '<td class="player-col" style="vertical-align:middle">' + ((rec.playerId2||rec.playerId3||rec.playerId4) ? '<span class="player-line1">'+(rec.playerId||'—')+'</span>' : (rec.playerId||'—')) + (rec.playerId2 ? '<span class="player-line2">'+rec.playerId2+'</span>' : '') + (rec.playerId3 ? '<span class="player-line2">'+rec.playerId3+'</span>' : '') + (rec.playerId4 ? '<span class="player-line2">'+rec.playerId4+'</span>' : '') + '</td>' +
+        '<td style="vertical-align:middle">' + (rec.uploadTime || '—') + '</td>';
+      _bindRow(tr, urls, rec);
+      _bindPlayerCell(tr, rec);
+      tbody.appendChild(tr);
+    });
+    var stats = document.getElementById('lb-stats');
+    if (stats) stats.textContent = '共 ' + sorted.length + ' 条记录';
+    animateTableRows(document.getElementById(tbodyId));
+  }
+
   function loadBoard() {
     var key = _curCat + '||' + _curMap;
+    var isHourlyVitus = (_curCat === '单小时生息精华数量');
     /* 本页独特规则：选中"单小时生息精华数量"时，主标题切换为专属名称（与次次级选项无关） */
     var titleEl = document.querySelector('.lb-title');
-    if (titleEl) titleEl.textContent = (_curCat === '单小时生息精华数量') ? '仲裁任务单小时生息精华排行榜' : '仲裁任务竞速排行榜';
-    renderTimeLeaderboard(_allData[key] ? _allData[key]() : [], 'lb-tbody', 'clearTime');
+    if (titleEl) titleEl.textContent = isHourlyVitus ? '仲裁任务单小时生息精华排行榜' : '仲裁任务竞速排行榜';
+    /* 第二列表头随次级切换：数量榜显示"数量"，其余显示"时间" */
+    var col2 = document.getElementById('arb-col2-th');
+    if (col2) col2.textContent = isHourlyVitus ? '数量' : '时间';
+    if (isHourlyVitus) {
+      renderVitusCountBoard(_allData[key] ? _allData[key]() : [], 'lb-tbody');
+    } else {
+      renderTimeLeaderboard(_allData[key] ? _allData[key]() : [], 'lb-tbody', 'clearTime');
+    }
     var noticeEl = document.getElementById('arb-notice');
     var noticeText = _noticeMap[key] ? _noticeMap[key]() : '';
     if (noticeText && noticeText.trim()) {
