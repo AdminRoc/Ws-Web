@@ -245,7 +245,7 @@ a{text-decoration:none;color:inherit;}
   <div class="lo-title" data-text="DATA LOADING">DATA LOADING</div>
   <div class="lo-sub">数据正在加载中，请您耐心等待<span class="lo-d">·</span><span class="lo-d">·</span><span class="lo-d">·</span></div>
   <div class="lo-bar"><span></span></div>
-  <div class="lo-tip">✦ 加载完成后，可使用右上角按钮生成专属动态分享图片 ↗</div>
+  <div class="lo-tip">✦ 加载完成后，可使用右上角的分享按钮，生成动态图片 ↗</div>
 </div>
 
 <a class="back-btn" onclick="history.length>1?history.back():(window.location.href='index.html')" href="javascript:void(0)">
@@ -295,12 +295,8 @@ a{text-decoration:none;color:inherit;}
 })();
 </script>
 
-<!-- fade in -->
+<!-- fade in: 页面主体保持隐藏，等待画面消散后由 dismissLoadOverlay 统一显示 -->
 <script>
-window.addEventListener('load',function(){
-  document.getElementById('page-wrap').style.transition='opacity .9s ease';
-  document.getElementById('page-wrap').style.opacity='1';
-});
 document.getElementById('page-wrap').style.opacity='0';
 </script>
 
@@ -472,14 +468,22 @@ function matchesPlayer(rec,target){
 
 /* ── 等待加载画面控制：加载完成且至少展示3秒后扭曲消散 ── */
 var _loShownAt=performance.now();
+function _revealPageWrap(){
+  var pw=document.getElementById('page-wrap');
+  if(pw){pw.style.transition='opacity .9s ease';pw.style.opacity='1';}
+}
 function dismissLoadOverlay(){
   var lo=document.getElementById('load-overlay');
-  if(!lo||lo._closing)return;
+  if(!lo){_revealPageWrap();return;}
+  if(lo._closing)return;
   lo._closing=true;
   var wait=Math.max(0,3000-(performance.now()-_loShownAt));
   setTimeout(function(){
     lo.classList.add('lo-close');
-    setTimeout(function(){if(lo.parentNode)lo.parentNode.removeChild(lo);},950);
+    setTimeout(function(){
+      if(lo.parentNode)lo.parentNode.removeChild(lo);
+      _revealPageWrap();
+    },950);
   },wait);
 }
 
