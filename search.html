@@ -216,8 +216,8 @@ var IDX=[];
     ['survival','Survival'],['void-cascade','Void Cascade'],['void-flood','Void Flood'],['void-armageddon','Void Armageddon']];
   aM.forEach(function(m){
     add('arbitration.html','仲裁任务竞速排行榜','Arbitration Speedrun Leaderboard',
-      '1000生息精华 · '+m[0].replace(/-/g,' '),'1000 Vitus Essence · '+m[1],
-      'arbitration_vitus_'+m[0].replace(/-/g,'_')+'Records');
+      '单小时生息精华数量 · '+m[0].replace(/-/g,' '),'Vitus Essence Per Hour · '+m[1],
+      'arbitration_hourly_vitus_'+m[0].replace(/-/g,'_')+'Records');
     add('arbitration.html','仲裁任务竞速排行榜','Arbitration Speedrun Leaderboard',
       '标准轮次竞速 · '+m[0].replace(/-/g,' '),'Standard Rounds · '+m[1],
       'arbitration_rounds_'+m[0].replace(/-/g,'_')+'Records');});
@@ -320,7 +320,7 @@ function loadData(cb){
   var f=[];
   (function(){
     var aM=['alchemy','defection','defense','disruption','excavation','salvage','interception','mirror-defense','survival','void-cascade','void-flood','void-armageddon'];
-    aM.forEach(function(m){f.push('data/arbitration/arbitration-vitus-'+m+'.js','data/arbitration/arbitration-rounds-'+m+'.js');});
+    aM.forEach(function(m){f.push('data/arbitration/arbitration-hourly-vitus-'+m+'.js','data/arbitration/arbitration-rounds-'+m+'.js');});
     ['effervo','exequias','exta','fossa','hades','iliad','jordas-golem','magnacidium','merrow','mutalist-alad-v','naamah','oro','psamathe','tethys','themisto','titania','tolstoj','war'].forEach(function(m){f.push('data/assassination/assassination-normal-'+m+'.js','data/assassination/assassination-steel-'+m+'.js');});
     f.push('data/assassination/assassination-steel-the-fragmented-one.js','data/cambire/cambire-normal.js','data/cambire/cambire-steel.js');
     ['abaddon','ananke','ara','ariel','cassini','copernicus','elion','galatea','hepit','horend','hydra','isos','kobinn-west','lex','mantle','skyresh','ukko','venera'].forEach(function(m){f.push('data/capture/capture-'+m+'.js');});
