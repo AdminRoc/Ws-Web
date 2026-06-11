@@ -41,6 +41,12 @@ var exterminate_normal_adaroRecords = [
     uploadTime: "2021-02-27",
     videoUrls:  ["https://www.youtube.com/watch?v=Cyh5xTP9JU8"],
   },
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:35.000",
+    uploadTime: "2025-12-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=7gfKnBOjNIs","https://www.youtube.com/watch?v=gxNIumY2Hag"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
