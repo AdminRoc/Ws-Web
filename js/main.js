@@ -1137,3 +1137,20 @@ function _vcShow(url, rec, lbl) {
   q.push('from=' + encodeURIComponent((location.pathname.split('/').pop()) || 'index.html'));
   window.open('redirect.html?' + q.join('&'), '_blank', 'noopener');
 }
+
+/* ══════════════════════════════════════════════════════════
+   隐蔽预加载：个人主页(player.html)载入画面所需的 WS Logo
+   页面主资源加载完毕后延迟执行，不占用首屏带宽；
+   仅在内存中持有 Image 对象，不插入DOM、不影响任何页面样式与逻辑
+   ══════════════════════════════════════════════════════════ */
+(function() {
+  var _wsLogoHolder = null;   /* 保持引用，防止被GC后缓存失效 */
+  function preloadWsLogo() {
+    if (_wsLogoHolder) return;
+    _wsLogoHolder = new Image();
+    _wsLogoHolder.decoding = 'async';
+    _wsLogoHolder.src = 'picture/WS-logo-2.png';
+  }
+  if (document.readyState === 'complete') { setTimeout(preloadWsLogo, 200); }
+  else { window.addEventListener('load', function() { setTimeout(preloadWsLogo, 200); }); }
+})();

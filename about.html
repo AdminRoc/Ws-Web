@@ -821,7 +821,23 @@
   var imgBtns = document.querySelectorAll('.img-btn');
   
   if (!modal || !imgElement || !imgBtns.length) return;
-  
+
+  /* ── 隐蔽预加载：页面主资源加载完毕后，提前缓存三张证据图片 ──
+     仅在内存中持有 Image 对象，不插入DOM、不影响页面样式与首屏加载 */
+  var _preloadedImgs = [];
+  function preloadGalleryImages() {
+    imgBtns.forEach(function(btn) {
+      var name = btn.getAttribute('data-img');
+      if (!name) return;
+      var im = new Image();
+      im.decoding = 'async';
+      im.src = 'picture/' + name;
+      _preloadedImgs.push(im);   /* 保持引用，防止被GC后缓存失效 */
+    });
+  }
+  if (document.readyState === 'complete') { preloadGalleryImages(); }
+  else { window.addEventListener('load', preloadGalleryImages); }
+
   // 点击按钮显示图片
   imgBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
