@@ -57,7 +57,7 @@ a{text-decoration:none;color:inherit;}
   font-size:clamp(3.2rem,7vw,5.4rem);font-weight:800;letter-spacing:.12em;
   background:var(--rb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   animation:hs 6.4s linear infinite;
-  word-break:break-all;line-height:1.35;padding-bottom:0.22em;}
+  white-space:nowrap;line-height:1.35;padding-bottom:0.22em;}
 .player-stats{margin-top:20px;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;}
 .stat-badge{display:flex;align-items:center;gap:8px;padding:7px 18px;
   border:1px solid rgba(0,212,255,.2);border-radius:20px;background:rgba(0,212,255,.05);
@@ -552,6 +552,22 @@ function dismissLoadOverlay(){
   },wait);
 }
 
+/* ── 长ID自适应：宽度上限不变，按需缩小字号保证单行显示、绝不换行 ── */
+function fitPlayerName(){
+  var el=document.getElementById('player-name');
+  if(!el)return;
+  el.style.fontSize='';               /* 还原为CSS clamp初值后重新测量 */
+  var fs=parseFloat(getComputedStyle(el).fontSize);
+  var guard=0;
+  while(el.scrollWidth>el.clientWidth+1&&fs>16&&guard++<48){
+    fs*=0.94;
+    el.style.fontSize=fs+'px';
+  }
+}
+window.addEventListener('resize',fitPlayerName);
+/* 自定义字体(Xszt)就绪后字宽会变化，需复测 */
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitPlayerName);
+
 /* ── get player ID from URL ── */
 var params=new URLSearchParams(location.search);
 var targetId=params.get('id')||'';
@@ -559,10 +575,12 @@ if(!targetId){
   document.getElementById('player-name').textContent='无效的玩家ID';
   document.getElementById('status-msg').className='error-msg';
   document.getElementById('status-msg').textContent='请通过榜单页面的玩家名称入口访问此页面。';
+  fitPlayerName();
   dismissLoadOverlay();
 }else{
   document.getElementById('player-name').textContent=targetId;
   document.title=targetId+' — WFSpeed.run';
+  fitPlayerName();
 
   loadData(function(){
     var allEntries=[];
