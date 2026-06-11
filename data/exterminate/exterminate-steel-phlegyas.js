@@ -34,6 +34,12 @@ var exterminate_steel_phlegyasRecords = [
     uploadTime: "2026-02-10",
     videoUrls:  ["https://www.youtube.com/watch?v=l3aW41nsVh0"],
   },
+  {
+    playerId:   "FrostMainer",
+    clearTime:  "0:23.000",
+    uploadTime: "2026-06-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=f5m6XsshD-M"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

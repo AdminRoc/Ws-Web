@@ -40,6 +40,12 @@ var capture_anankeRecords = [
     uploadTime: "2024-03-05",
     videoUrls:  ["https://www.youtube.com/watch?v=QUnusKryTy0"],
   },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:17.617",
+    uploadTime: "2026-06-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=mEN2xiMisHc"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

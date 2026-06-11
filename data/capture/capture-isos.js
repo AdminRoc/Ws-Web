@@ -25,9 +25,9 @@ var capture_isosRecords = [
 
   {
   playerId:   "Salat",
-  clearTime:  "0:21.233",
-  uploadTime: "2025-12-03",
-  videoUrls:  ["https://www.youtube.com/watch?v=t4m5yxsw6Oo"],
+  clearTime:  "0:20.517",
+  uploadTime: "2026-06-09",
+  videoUrls:  ["https://www.youtube.com/watch?v=_c9DC9nPnig"],
 },
 {
   playerId:   "Mortar",

@@ -47,6 +47,12 @@ var exterminate_steel_adaroRecords = [
     uploadTime: "2026-01-07",
     videoUrls:  ["https://www.youtube.com/watch?v=B5XHqdMt7oQ"],
   },
+  {
+    playerId:   "FrostMainer",
+    clearTime:  "0:40.000",
+    uploadTime: "2026-06-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=5tafvW8rkSI"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

@@ -34,6 +34,12 @@ var exterminate_steel_puckRecords = [
     uploadTime: "2026-01-07",
     videoUrls:  ["https://www.youtube.com/watch?v=ws3wMH24tVo"],
   },
+  {
+    playerId:   "FrostMainer",
+    clearTime:  "1:05.000",
+    uploadTime: "2026-06-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=5pHjFD1dBrk"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
