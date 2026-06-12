@@ -32,7 +32,7 @@ var disruptionKappaMultiRecords = [
     videoUrls:     ["https://youtu.be/6Feq9lDbIcw?si=wSeMMY2srMK7i8Dq"]
   },
   {
-    clearTime:  "38:06.000 🚧 [违规/作弊]",
+    clearTime:  "38:06.000 [违规]",
     playerId:   "sealmp4 / Rouxka / Endryx_Ow / Gamer123169",
     playerId2:   "无主机视角，且客机的敌人频繁瞬移，视为利用Tab作弊",
     uploadTime: "2025-03-16",
