@@ -19,14 +19,14 @@
  * ════════════════════════════════════════════════════════════
  */
 var eidolonMacroDuoRecords = [
-  // ─── 在此处继续添加新条目 ───
-  // {
-  //   avgRealTime:   "MM:SS.mmm",
-  //   captureStatus: "3T",
-  //   playerId:      "玩家A / 玩家B",
-  //   uploadTime:    "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  
+  {
+  avgRealTime:   "07:44.938",
+  captureStatus: "6×3",
+  playerId:      "吖吖酱 / Sara-",
+  uploadTime:    "2026-06-12",
+  videoUrls:     ["https://www.bilibili.com/video/BV1NsGp6BEtN"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
