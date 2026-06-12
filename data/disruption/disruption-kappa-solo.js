@@ -91,7 +91,12 @@ var disruptionKappaSoloRecords = [
     uploadTime: "2026-06-07",
     videoUrls:     ["https://www.youtube.com/watch?v=kReZI7DHIwE"]
   },
-
+  {
+    clearTime:  "68:39.000",
+    playerId:   "涂涂是个大笨蛋",
+    uploadTime: "2026-06-12",
+    videoUrls:     ["https://www.bilibili.com/video/BV1TsYmz7EzS"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
