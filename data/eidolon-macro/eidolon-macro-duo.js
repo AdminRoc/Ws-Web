@@ -34,4 +34,4 @@ var eidolonMacroDuoRecords = [
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
 var eidolonMacroDuoNotice_cn = "玩家 ‘吖吖酱 / Sara-’ 所提交的纪录，涉嫌使用AHK工具进行作弊，且该玩家在提交记录时故意欺瞒自身情况，根据本站的作弊处理原则，现将该记录标记为 [作弊]，并将该玩家提交的全部信息永久公示，点击榜单底部按钮即可查看";
-var eidolonMacroDuoNotice_en = "The record submitted by player "吖吖酱 / Sara-" is suspected of cheating using AHK tools. Furthermore, the player intentionally concealed their circumstances when submitting the record. In accordance with our site’s anti-cheat policy, this record has been marked as [Cheating], and all information submitted by this player is now permanently public. Click the button at the bottom of the leaderboard to view.";
+var eidolonMacroDuoNotice_en = "The record submitted by player ‘吖吖酱 / Sara-’ is suspected of cheating using AHK tools. Furthermore, the player intentionally concealed their circumstances when submitting the record. In accordance with our site’s anti-cheat policy, this record has been marked as [Cheating], and all information submitted by this player is now permanently public. Click the button at the bottom of the leaderboard to view.";
