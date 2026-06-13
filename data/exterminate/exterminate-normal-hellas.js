@@ -34,6 +34,12 @@ var exterminate_normal_hellasRecords = [
     uploadTime: "2026-02-12",
     videoUrls:  ["https://www.youtube.com/watch?v=UteD9L7NGjo"],
   },
+  {
+    playerId:   "Jagdtor / Txdo",
+    clearTime:  "0:39.000",
+    uploadTime: "2026-06-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=xL8GaB1mcnw"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
