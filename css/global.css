@@ -690,15 +690,18 @@ img { display: block; max-width: 100%; }
 }
 .site-footer a,
 .site-footer p {
-  color: var(--c-text);
+  color: rgba(176, 202, 232, 0.55);
   font-size: .88rem;
   font-family: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', sans-serif;
   letter-spacing: .06em;
   display: block;
   line-height: 2;
-  transition: color var(--ease-fast);
+  transition: color var(--ease-fast), text-shadow var(--ease-fast);
 }
-.site-footer a:hover { color: var(--c-text2); }
+.site-footer a:hover {
+  color: #e8c264;
+  text-shadow: 0 0 8px rgba(232,194,100,.75), 0 0 20px rgba(232,194,100,.38);
+}
 .site-footer p a { display: inline; }
 .site-footer p:last-child { margin-top: .8em; }
 
