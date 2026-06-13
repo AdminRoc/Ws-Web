@@ -34,6 +34,12 @@ var exterminate_normal_marianaRecords = [
     uploadTime: "2026-04-25",
     videoUrls:  ["https://www.youtube.com/watch?v=uN4-mLZ_i88"],
   },
+  {
+    playerId:   "Jagdtor / Txdo",
+    clearTime:  "0:40.000",
+    uploadTime: "2026-06-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=em83Vkt3rh4"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

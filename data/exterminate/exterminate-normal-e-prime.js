@@ -47,6 +47,12 @@ var exterminate_normal_e_primeRecords = [
     uploadTime: "2026-01-17",
     videoUrls:  ["https://www.youtube.com/watch?v=Jegk4bwH-fg"],
   },
+  {
+    playerId:   "Jagdtor / Txdo",
+    clearTime:  "0:37.000",
+    uploadTime: "2026-06-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=dPKnAniDfRI"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
