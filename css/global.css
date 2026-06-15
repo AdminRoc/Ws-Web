@@ -704,6 +704,19 @@ img { display: block; max-width: 100%; }
 }
 .site-footer p a { display: inline; }
 .site-footer p:last-child { margin-top: .8em; }
+.beian-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+}
+.beian-row a { display: inline; }
+.beian-icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
 
 /* ══════════════════════════════════════════════════════════
    移动端响应式（≤860px）
