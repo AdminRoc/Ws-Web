@@ -8,8 +8,13 @@
   <link rel="icon" href="picture/WS-logo-2.png">
 </head>
 <body>
+  <style>
+    .ws-back-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.32rem .9rem;font-family:'XSZT','Microsoft YaHei',monospace;font-size:.72rem;letter-spacing:.08em;color:#5fd0e8;border:1px solid rgba(95,208,232,.35);border-radius:4px;background:rgba(95,208,232,.06);cursor:pointer;text-decoration:none;white-space:nowrap;transition:color .3s,border-color .3s,background .3s,box-shadow .3s;}
+    .ws-back-btn:hover{color:#b0efff;border-color:rgba(95,208,232,.7);background:rgba(95,208,232,.14);box-shadow:0 0 10px rgba(95,208,232,.5),0 0 22px rgba(95,208,232,.25);}
+  </style>
   <nav class="site-nav">
     <div class="nav-inner">
+      <a id="ws-back-btn" class="ws-back-btn" href="../disruption-multi.html">←&nbsp;竞速榜单</a>
       <div class="nav-logo">
         <span class="logo-main">SUPER&nbsp;EELOG</span>
       </div>
@@ -21,6 +26,9 @@
     </div>
     <div class="nav-glow"></div>
   </nav>
+  <script>
+    (function(){var busy=false;function glitchBack(url){if(busy)return;busy=true;var b=document.body;b.style.transition='filter .15s,opacity .15s';b.style.filter='hue-rotate(90deg) saturate(5) brightness(2)';b.style.opacity='0.8';setTimeout(function(){b.style.filter='hue-rotate(200deg) contrast(4) invert(0.35)';b.style.opacity='0.45';},180);setTimeout(function(){b.style.filter='hue-rotate(290deg) saturate(8) brightness(3)';b.style.opacity='0.2';},360);setTimeout(function(){window.location.href=url;},540);}document.getElementById('ws-back-btn').addEventListener('click',function(e){e.preventDefault();glitchBack('../disruption-multi.html');});})();
+  </script>
 
   <main>
     <section id="dropzone">
