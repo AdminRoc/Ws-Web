@@ -1100,6 +1100,14 @@ document.addEventListener('click', function(e) {
   _doGlitchNav(link.getAttribute('href') || 'search.html');  /* 问题9-fix: 同步文件名修正 */
 });
 
+document.addEventListener('click', function(e) {
+  var link = e.target.closest('.log-btn');
+  if (!link || _glitchBusy) return;
+  e.preventDefault();
+  _glitchBusy = true;
+  _doGlitchNav(link.getAttribute('href') || 'eelog.html');
+});
+
 function _navigateToPlayer(playerId) {
   if (_glitchBusy) return;
   _glitchBusy = true;

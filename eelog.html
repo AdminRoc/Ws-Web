@@ -4,31 +4,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SUPER EELOG — Warframe EE.log 分析器</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="picture/WS-logo-2.png">
+  <link rel="stylesheet" href="log/css/style.css">
+  <link rel="icon" href="log/picture/WS-logo-2.png">
+  <style>
+    /* ── 回到竞速榜单按钮（不修改 log/css/style.css） ── */
+    .ws-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .32rem .9rem;
+      font-family: 'XSZT', 'Microsoft YaHei', monospace;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      color: #5fd0e8;
+      border: 1px solid rgba(95,208,232,.35);
+      border-radius: 4px;
+      background: rgba(95,208,232,.06);
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color .3s, border-color .3s, background .3s, box-shadow .3s;
+    }
+    .ws-back-btn:hover {
+      color: #b0efff;
+      border-color: rgba(95,208,232,.7);
+      background: rgba(95,208,232,.14);
+      box-shadow: 0 0 10px rgba(95,208,232,.5), 0 0 22px rgba(95,208,232,.25);
+    }
+    .ws-back-btn .back-arrow { font-style: normal; opacity: .8; }
+  </style>
 </head>
 <body>
 
-  <style>
-    .ws-back-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.32rem .9rem;font-family:'XSZT','Microsoft YaHei',monospace;font-size:.72rem;letter-spacing:.08em;color:#5fd0e8;border:1px solid rgba(95,208,232,.35);border-radius:4px;background:rgba(95,208,232,.06);cursor:pointer;text-decoration:none;white-space:nowrap;transition:color .3s,border-color .3s,background .3s,box-shadow .3s;}
-    .ws-back-btn:hover{color:#b0efff;border-color:rgba(95,208,232,.7);background:rgba(95,208,232,.14);box-shadow:0 0 10px rgba(95,208,232,.5),0 0 22px rgba(95,208,232,.25);}
-  </style>
   <nav class="site-nav">
     <div class="nav-inner">
-      <a id="ws-back-btn" class="ws-back-btn" href="../disruption-multi.html">←&nbsp;竞速榜单</a>
+      <a id="ws-back-btn" class="ws-back-btn" href="disruption-multi.html">
+        <span class="back-arrow">←</span>竞速榜单
+      </a>
       <div class="nav-logo">
         <span class="logo-main">SUPER&nbsp;EELOG</span>
       </div>
       <div class="nav-links">
-        <a href="analyzer.html" class="nav-link primary">分析器</a>
+        <a href="log/analyzer.html" class="nav-link primary">分析器</a>
         <a href="https://wfspeed.run/" class="nav-link speed" target="_blank" rel="noopener">查看竞速榜单</a>
       </div>
     </div>
     <div class="nav-glow"></div>
   </nav>
-  <script>
-    (function(){var busy=false;function glitchBack(url){if(busy)return;busy=true;var b=document.body;b.style.transition='filter .15s,opacity .15s';b.style.filter='hue-rotate(90deg) saturate(5) brightness(2)';b.style.opacity='0.8';setTimeout(function(){b.style.filter='hue-rotate(200deg) contrast(4) invert(0.35)';b.style.opacity='0.45';},180);setTimeout(function(){b.style.filter='hue-rotate(290deg) saturate(8) brightness(3)';b.style.opacity='0.2';},360);setTimeout(function(){window.location.href=url;},540);}document.getElementById('ws-back-btn').addEventListener('click',function(e){e.preventDefault();glitchBack('../disruption-multi.html');});})();
-  </script>
 
   <section class="home-hero">
     <div class="hero-scan"></div>
@@ -37,12 +59,12 @@
       <h1 class="hero-title">SUPER&nbsp;EELOG</h1>
       <p class="hero-desc">四大任务类型精准解析<br>完全本地运行 · 零依赖 · 不上传任何文件</p>
       <div class="hero-nav-grid">
-        <a href="analyzer.html?tab=eidolon" class="htag htag-0">夜灵</a>
-        <a href="analyzer.html?tab=disruption" class="htag htag-1">中断</a>
-        <a href="analyzer.html?tab=profitTaker" class="htag htag-2">蜘蛛</a>
-        <a href="analyzer.html?tab=arbitration" class="htag htag-3">仲裁</a>
+        <a href="log/analyzer.html?tab=eidolon" class="htag htag-0">夜灵</a>
+        <a href="log/analyzer.html?tab=disruption" class="htag htag-1">中断</a>
+        <a href="log/analyzer.html?tab=profitTaker" class="htag htag-2">蜘蛛</a>
+        <a href="log/analyzer.html?tab=arbitration" class="htag htag-3">仲裁</a>
       </div>
-      <a href="analyzer.html" class="hero-cta">
+      <a href="log/analyzer.html" class="hero-cta">
         <span class="cta-text">开始分析</span>
         <span class="cta-arrow">→</span>
       </a>
@@ -147,7 +169,7 @@
         </div>
       </div>
       <div class="usage-cta">
-        <a href="analyzer.html" class="hero-cta">
+        <a href="log/analyzer.html" class="hero-cta">
           <span class="cta-text">打开分析器</span>
           <span class="cta-arrow">→</span>
         </a>
@@ -166,12 +188,12 @@
         <span class="footer-notice">本页面由 CSC 联盟创建并使用</span>
       </div>
       <div class="footer-links">
-        <a href="analyzer.html" class="footer-link">分析器</a>
+        <a href="log/analyzer.html" class="footer-link">分析器</a>
         <a href="https://wfspeed.run/" class="footer-link" target="_blank" rel="noopener">竞速榜单</a>
       </div>
       <div class="footer-beian">
         <a href="https://beian.miit.gov.cn/" target="_self" rel="noopener">沪ICP备2022033368号</a>
-        <img src="picture/gongan-beian.png" alt="公安备案" class="footer-beian-icon">
+        <img src="log/picture/gongan-beian.png" alt="公安备案" class="footer-beian-icon">
         <a href="https://beian.mps.gov.cn/#/query/webSearch?code=31015102000215" rel="noreferrer" target="_blank">沪公网安备31015102000215号</a>
       </div>
       <div class="footer-copy">特此声明：本站是纯公益性质，且首页的彩虹风格不代表支持性少数群体，望知悉</div>
@@ -181,6 +203,32 @@
     </div>
   </footer>
 
-  <script src="js/cursor.js"></script>
+  <script src="log/js/cursor.js"></script>
+  <script>
+    (function() {
+      var busy = false;
+      function glitchBack(url) {
+        if (busy) return;
+        busy = true;
+        var b = document.body;
+        b.style.transition = 'filter .15s, opacity .15s';
+        b.style.filter = 'hue-rotate(90deg) saturate(5) brightness(2)';
+        b.style.opacity = '0.8';
+        setTimeout(function() {
+          b.style.filter = 'hue-rotate(200deg) contrast(4) invert(0.35)';
+          b.style.opacity = '0.45';
+        }, 180);
+        setTimeout(function() {
+          b.style.filter = 'hue-rotate(290deg) saturate(8) brightness(3)';
+          b.style.opacity = '0.2';
+        }, 360);
+        setTimeout(function() { window.location.href = url; }, 540);
+      }
+      document.getElementById('ws-back-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        glitchBack('disruption-multi.html');
+      });
+    })();
+  </script>
 </body>
 </html>
