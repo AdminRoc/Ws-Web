@@ -14,6 +14,22 @@
   <!-- FontFaceObserver 字体加载监测库 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.3.0/fontfaceobserver.standalone.min.js"></script>
   <style>
+    @font-face {
+      font-family: 'YouranXiaokai';
+      src: url('fonts/youranxiaokai.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    /* 首页三个主按钮中文字使用游染小楷，字号+5级，line-height锁定原值防止按钮撑大 */
+    .hero-btn .text-cn {
+      font-family: 'YouranXiaokai', '微软雅黑', sans-serif;
+      display: inline-block;
+      font-size: 1.55rem;
+      line-height: 1.05rem;
+      vertical-align: middle;
+    }
+
     /* ── Futurak 字体加载前隐藏（防止闪烁） ── */
     body.fonts-loading .hero-word,
     body.fonts-loading .logo-title,

@@ -1,0 +1,58 @@
+name: 更新世界状态周期数据
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'   # 每 5 分钟执行一次
+  workflow_dispatch:          # 支持手动触发
+
+jobs:
+  update-cycles:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: 拉取世界周期数据并生成 JSON
+        run: |
+          mkdir -p data
+
+          fetch_ep() {
+            curl -sf --max-time 15 \
+              "https://api.warframestat.us/pc/${1}?language=en" || echo "null"
+          }
+
+          cetus=$(fetch_ep cetusCycle)
+          vallis=$(fetch_ep vallisCycle)
+          cambion=$(fetch_ep cambionCycle)
+          zariman=$(fetch_ep zarimanCycle)
+          duviri=$(fetch_ep duviriCycle)
+
+          # 用 jq 拼装 JSON，fetchedAt 记录本次拉取时刻（UTC）
+          # 注意：各周期的 expiry 是 DE 服务器下发的绝对时间戳，与拉取时刻无关
+          jq -n \
+            --arg      fetchedAt    "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            --argjson  cetusCycle   "$cetus"   \
+            --argjson  vallisCycle  "$vallis"  \
+            --argjson  cambionCycle "$cambion" \
+            --argjson  zarimanCycle "$zariman" \
+            --argjson  duviriCycle  "$duviri"  \
+            '{
+              fetchedAt:    $fetchedAt,
+              cetusCycle:   $cetusCycle,
+              vallisCycle:  $vallisCycle,
+              cambionCycle: $cambionCycle,
+              zarimanCycle: $zarimanCycle,
+              duviriCycle:  $duviriCycle
+            }' > data/worldstate-cycles.json
+
+      - name: 提交并推送（无变化时跳过）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/worldstate-cycles.json
+          git diff --staged --quiet || \
+            git commit -m "data: update worldstate cycles [skip ci]"
+          git push
