@@ -867,7 +867,7 @@
     .ws-bounty-jobs { padding: .5rem 0; }
     .ws-bounty-job {
       display: grid;
-      grid-template-columns: 80px 1fr auto;
+      grid-template-columns: max-content 1fr auto;
       align-items: center;
       gap: .5rem;
       padding: .54rem 1rem;
@@ -2474,10 +2474,15 @@
 
   /* GitHub Actions 每 5 分钟预拉取的世界周期快照（专供大陆用户兜底）
      时间戳说明：API 返回的 expiry 是绝对时间戳，与拉取时刻无关，精度不受 5 分钟间隔影响 */
-  var CYCLES_KEYS = ['cetusCycle','vallisCycle','cambionCycle','zarimanCycle','duviriCycle'];
-  var CYCLES_FALLBACK_URLS = [
-    'https://raw.githubusercontent.com/AdminRoc/Ws-Web/main/data/worldstate-cycles.json',
-    'https://cdn.jsdelivr.net/gh/AdminRoc/Ws-Web@main/data/worldstate-cycles.json'
+  var WS_FALLBACK_KEYS = [
+    'cetusCycle','vallisCycle','cambionCycle','zarimanCycle','duviriCycle',
+    'fissures','sortie','archonHunt','nightwave',
+    'steelPath','voidTrader','invasions','syndicates',
+    'dailyDeals','tenetWeapons','codaWeapons'
+  ];
+  var WS_FALLBACK_URLS = [
+    'https://raw.githubusercontent.com/AdminRoc/Ws-Web/main/data/worldstate-all.json',
+    'https://cdn.jsdelivr.net/gh/AdminRoc/Ws-Web@main/data/worldstate-all.json'
   ];
 
   function getRawWS() {
@@ -2744,15 +2749,15 @@
     /* 节点数据表：缓存 7 天 */
     var regP    = _exportRegions ? Promise.resolve() : loadExportRegions();
 
-    /* 世界周期 GitHub 快照兜底：与 apiP/rawP 并发；仅填充仍为空的键，不覆盖 API 数据 */
-    var cyclesP = fetchFirstOk(CYCLES_FALLBACK_URLS).then(function (data) {
+    /* GitHub 快照全量兜底：与 apiP/rawP 并发；仅填充仍为空的键，不覆盖 API 数据 */
+    var fallbackP = fetchFirstOk(WS_FALLBACK_URLS).then(function (data) {
       if (!data) return;
-      CYCLES_KEYS.forEach(function (k) {
+      WS_FALLBACK_KEYS.forEach(function (k) {
         if (data[k] && !D[k]) D[k] = data[k];
       });
     });
 
-    return Promise.all([apiP, rawP, cyclesP, arbP, dictP, bountyP, regP]);
+    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, bountyP, regP]);
   }
 
   /* ══ 渲染：世界周期 ══ */
