@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-17T13:18:48Z",
+  "fetchedAt": "2026-06-17T13:24:12Z",
   "cetusCycle": {
     "id": "cetusCycle1781703900000",
     "activation": "2026-06-17T12:05:00.000Z",
     "expiry": "2026-06-17T13:45:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "27m 1s",
+    "timeLeft": "21m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781703900000",
     "activation": "2026-06-17T12:05:00.000Z",
     "expiry": "2026-06-17T13:45:00.000Z",
-    "timeLeft": "27m 1s",
+    "timeLeft": "21m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-17T14:35:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 16m 55s"
+    "timeLeft": "1h 10m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781704800000",
@@ -119,21 +119,6 @@
       "tierNum": 3,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a328a9eeaafe6cd218ce5b1",
-      "activation": "2026-06-17T11:53:02.234Z",
-      "expiry": "2026-06-17T13:18:19.837Z",
-      "node": "Titan (Saturn)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Titan (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a328a9eeaafe6cd218ce5b2",
@@ -739,7 +724,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "4d 10h 41m 58s",
+    "remaining": "4d 10h 35m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -961,9 +946,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -6680,
+      "count": -6783,
       "requiredRuns": 45000,
-      "completion": 42.57777777777778,
+      "completion": 42.46333333333333,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1047,9 +1032,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -12460,
+      "count": -12554,
       "requiredRuns": 48000,
-      "completion": 37.020833333333336,
+      "completion": 36.922916666666666,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1084,9 +1069,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -23057,
+      "count": -23195,
       "requiredRuns": 30000,
-      "completion": 23.143333333333338,
+      "completion": 22.683333333333334,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1336,9 +1321,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6874,
+      "count": -6991,
       "requiredRuns": 30000,
-      "completion": 77.08666666666667,
+      "completion": 76.69666666666667,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1356,7 +1341,7 @@
       "originalPrice": 150,
       "salePrice": 120,
       "total": 300,
-      "sold": 0,
+      "sold": 1,
       "discount": 20
     }
   ],
