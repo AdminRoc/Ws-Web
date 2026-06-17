@@ -23,7 +23,7 @@ MANUAL = {
     'Bishamo Helmet Blueprint':    'Bishamo 头盔蓝图',
     'Bishamo Greaves Blueprint':   'Bishamo 护腿蓝图',
     # 突击修正条件（固定集合，warframestat.us 组合字符串，dict 里找不到）
-    'Eximus Stronghold':           '精英战士要塞',
+    'Eximus Stronghold':           '卓越者大本营',
     'Shielded Enemies':            '护盾敌方',
     'Armored Enemies':             '护甲敌方',
     'Augmented Enemy Armor':       '增强敌方护甲',
