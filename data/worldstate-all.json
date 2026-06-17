@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-17T13:24:12Z",
+  "fetchedAt": "2026-06-17T13:26:45Z",
   "cetusCycle": {
     "id": "cetusCycle1781703900000",
     "activation": "2026-06-17T12:05:00.000Z",
     "expiry": "2026-06-17T13:45:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "21m 1s",
+    "timeLeft": "19m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781703900000",
     "activation": "2026-06-17T12:05:00.000Z",
     "expiry": "2026-06-17T13:45:00.000Z",
-    "timeLeft": "21m 1s",
+    "timeLeft": "19m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-17T14:35:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 10m 55s"
+    "timeLeft": "1h 8m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781704800000",
@@ -85,21 +85,6 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Laomedeia (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a328756b9edaf65848ce5b2",
-      "activation": "2026-06-17T11:39:02.919Z",
-      "expiry": "2026-06-17T13:24:45.399Z",
-      "node": "Hepit (Void)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Hepit (Void)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -724,7 +709,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "4d 10h 35m 58s",
+    "remaining": "4d 10h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -946,9 +931,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -6783,
+      "count": -6837,
       "requiredRuns": 45000,
-      "completion": 42.46333333333333,
+      "completion": 42.40333333333333,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1032,9 +1017,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -12554,
+      "count": -12634,
       "requiredRuns": 48000,
-      "completion": 36.922916666666666,
+      "completion": 36.83958333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1069,9 +1054,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -23195,
+      "count": -23275,
       "requiredRuns": 30000,
-      "completion": 22.683333333333334,
+      "completion": 22.416666666666664,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1321,9 +1306,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6991,
+      "count": -7060,
       "requiredRuns": 30000,
-      "completion": 76.69666666666667,
+      "completion": 76.46666666666665,
       "completed": false,
       "rewardTypes": [
         "mutalist"
