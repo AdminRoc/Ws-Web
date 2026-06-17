@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="fonts-loading">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -34,26 +34,27 @@
     }
 
     /* ── Futurak 字体加载前隐藏（防止闪烁） ── */
-    body.fonts-loading .hero-word,
-    body.fonts-loading .logo-title,
-    body.fonts-loading .hero-domain,
-    body.fonts-loading .hero-btn,
-    body.fonts-loading .principle-card h3,
-    body.fonts-loading .lb-title,
-    body.fonts-loading .card-title,
-    body.fonts-loading .lb-card-title {
+    /* html.fonts-loading 在 <html> 标签上直接写死，浏览器第一帧即生效 */
+    html.fonts-loading .hero-word,
+    html.fonts-loading .logo-title,
+    html.fonts-loading .hero-domain,
+    html.fonts-loading .hero-btn,
+    html.fonts-loading .principle-card h3,
+    html.fonts-loading .lb-title,
+    html.fonts-loading .card-title,
+    html.fonts-loading .lb-card-title {
       visibility: hidden;
       opacity: 0;
     }
     /* 字体加载完毕后平滑显示 */
-    body.fonts-loaded .hero-word,
-    body.fonts-loaded .logo-title,
-    body.fonts-loaded .hero-domain,
-    body.fonts-loaded .hero-btn,
-    body.fonts-loaded .principle-card h3,
-    body.fonts-loaded .lb-title,
-    body.fonts-loaded .card-title,
-    body.fonts-loaded .lb-card-title {
+    html.fonts-loaded .hero-word,
+    html.fonts-loaded .logo-title,
+    html.fonts-loaded .hero-domain,
+    html.fonts-loaded .hero-btn,
+    html.fonts-loaded .principle-card h3,
+    html.fonts-loaded .lb-title,
+    html.fonts-loaded .card-title,
+    html.fonts-loaded .lb-card-title {
       visibility: visible;
       opacity: 1;
       transition: opacity 0.4s ease;
@@ -785,33 +786,22 @@
 (function() {
   'use strict';
   
-  /* 页面加载时立即设置为 fonts-loading 状态，隐藏 Futurak 相关元素 */
-  document.documentElement.className = 'fonts-loading';
-  document.body.classList.add('fonts-loading');
+  /* <html class="fonts-loading"> 已在标签上直接写死，此处无需重复设置 */
+  var _html = document.documentElement;
 
-  /* 确保 FontFaceObserver 库已加载 */
+  function _reveal() {
+    _html.classList.remove('fonts-loading');
+    _html.classList.add('fonts-loaded');
+  }
+
   if (typeof FontFaceObserver !== 'undefined') {
-    /* 监听 Futurak 字体的加载 */
-    var futurakFont = new FontFaceObserver('Futurak', {
-      weight: 'normal',
-      style: 'normal'
-    });
-
-    /* 设置加载超时为 5 秒，防止网络缓慢时无限等待 */
-    futurakFont.load(null, 5000).then(function() {
-      /* 字体加载成功 - 移除隐藏状态，显示所有使用 Futurak 的元素 */
-      document.body.classList.remove('fonts-loading');
-      document.body.classList.add('fonts-loaded');
-    }).catch(function(error) {
-      /* 字体加载超时或失败 - 仍然显示内容（使用备用字体） */
-      document.body.classList.remove('fonts-loading');
-      document.body.classList.add('fonts-loaded');
-      console.warn('Futurak font loading failed or timed out:', error);
+    var futurakFont = new FontFaceObserver('Futurak', { weight: 'normal', style: 'normal' });
+    futurakFont.load(null, 5000).then(_reveal).catch(function(err) {
+      console.warn('Futurak font loading failed or timed out:', err);
+      _reveal();
     });
   } else {
-    /* FontFaceObserver 库未加载 - 直接显示（降级处理） */
-    document.body.classList.remove('fonts-loading');
-    document.body.classList.add('fonts-loaded');
+    _reveal();
   }
 })();
 </script>
