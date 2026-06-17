@@ -135,7 +135,12 @@ function initMobileNav() {
     { cn: '叛逃任务',       href: 'defection.html' },
     { cn: '仲裁任务',       href: 'arbitration.html' },
     { cn: '站内特殊活动',   href: 'special-events.html' },
-    { cn: '关于本站',       href: 'about.html' }
+    { cn: '关于本站',       href: 'about.html' },
+    { cn: '功能扩展', sub: [
+        { cn: '全站搜索',  href: 'search.html',    feature: true },
+        { cn: '世界状态',  href: 'worldstate.html', feature: true },
+        { cn: '日志解析',  href: 'eelog.html',      feature: true }
+    ]}
   ];
 
   var currentPage = (location.pathname.split('/').pop() || 'index.html')
@@ -177,7 +182,7 @@ function initMobileNav() {
 
       item.sub.forEach(function(s) {
         var a = document.createElement('a');
-        a.className = 'mnd-sub-item';
+        a.className = 'mnd-sub-item' + (s.feature ? ' nav-feature-link' : '');
         a.href = s.href;
         a.textContent = s.cn;
         if (s.href === currentPage) a.classList.add('mnd-active');
@@ -1106,6 +1111,14 @@ document.addEventListener('click', function(e) {
   e.preventDefault();
   _glitchBusy = true;
   _doGlitchNav(link.getAttribute('href') || 'eelog.html');
+});
+
+document.addEventListener('click', function(e) {
+  var link = e.target.closest('.nav-feature-link');
+  if (!link || _glitchBusy) return;
+  e.preventDefault();
+  _glitchBusy = true;
+  _doGlitchNav(link.getAttribute('href'));
 });
 
 function _navigateToPlayer(playerId) {
