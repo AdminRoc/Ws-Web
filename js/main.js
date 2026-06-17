@@ -1165,13 +1165,29 @@ function _vcShow(url, rec, lbl) {
    仅在内存中持有 Image 对象，不插入DOM、不影响任何页面样式与逻辑
    ══════════════════════════════════════════════════════════ */
 (function() {
-  var _wsLogoHolder = null;   /* 保持引用，防止被GC后缓存失效 */
-  function preloadWsLogo() {
-    if (_wsLogoHolder) return;
-    _wsLogoHolder = new Image();
-    _wsLogoHolder.decoding = 'async';
-    _wsLogoHolder.src = 'picture/WS-logo-2.png';
+  var _wsLogoHolder = null;
+  var _fontPrefetched = false;
+
+  function preloadAssets() {
+    /* WS Logo（player.html 载入画面用）*/
+    if (!_wsLogoHolder) {
+      _wsLogoHolder = new Image();
+      _wsLogoHolder.decoding = 'async';
+      _wsLogoHolder.src = 'picture/WS-logo-2.png';
+    }
+    /* xszt.ttf（player.html / search.html 字体，2.4MB，用 <link prefetch> 交给浏览器低优先级下载）*/
+    if (!_fontPrefetched) {
+      _fontPrefetched = true;
+      var lnk = document.createElement('link');
+      lnk.rel = 'prefetch';
+      lnk.as  = 'font';
+      lnk.type = 'font/ttf';
+      lnk.crossOrigin = 'anonymous';
+      lnk.href = 'fonts/xszt.ttf';
+      document.head.appendChild(lnk);
+    }
   }
-  if (document.readyState === 'complete') { setTimeout(preloadWsLogo, 200); }
-  else { window.addEventListener('load', function() { setTimeout(preloadWsLogo, 200); }); }
+
+  if (document.readyState === 'complete') { setTimeout(preloadAssets, 200); }
+  else { window.addEventListener('load', function() { setTimeout(preloadAssets, 200); }); }
 })();
