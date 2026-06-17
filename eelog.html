@@ -389,16 +389,23 @@
     var _t0      = Date.now();
     var MIN_MS   = 900; /* 加载屏最短展示时长，避免一闪而过 */
 
+    var CLOSE_MS = 750; /* 与 @keyframes elOut 时长一致 */
+
     function _dismiss() {
       var wait = Math.max(0, MIN_MS - (Date.now() - _t0));
       setTimeout(function() {
+        /* 第一步：触发 overlay 关闭动画 */
         if (_overlay) _overlay.classList.add('el-close');
-        _html.classList.remove('fonts-loading');
-        _html.classList.add('fonts-loaded');
-        /* overlay 动画结束后移除 DOM */
+
+        /* 第二步：等 overlay 完全消失后，再渐显页面内容 */
         setTimeout(function() {
-          if (_overlay && _overlay.parentNode) _overlay.parentNode.removeChild(_overlay);
-        }, 800);
+          _html.classList.remove('fonts-loading');
+          _html.classList.add('fonts-loaded');
+          /* 第三步：内容渐显动画结束后移除 overlay DOM */
+          setTimeout(function() {
+            if (_overlay && _overlay.parentNode) _overlay.parentNode.removeChild(_overlay);
+          }, 650);
+        }, CLOSE_MS);
       }, wait);
     }
 
