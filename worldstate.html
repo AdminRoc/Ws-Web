@@ -2484,6 +2484,10 @@
     'https://raw.githubusercontent.com/AdminRoc/Ws-Web/main/data/worldstate-all.json',
     'https://cdn.jsdelivr.net/gh/AdminRoc/Ws-Web@main/data/worldstate-all.json'
   ];
+  var WS_ITEM_ZH_URLS = [
+    'https://raw.githubusercontent.com/AdminRoc/Ws-Web/main/data/item-names-zh.json',
+    'https://cdn.jsdelivr.net/gh/AdminRoc/Ws-Web@main/data/item-names-zh.json'
+  ];
 
   function getRawWS() {
     if (_rawWS && Date.now() - _rawWSTs < RAW_WS_TTL) return Promise.resolve(_rawWS);
@@ -2757,7 +2761,16 @@
       });
     });
 
-    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, bountyP, regP]);
+    /* 补充物品中文名称字典：合并进 _dict，供 tr() 统一查询 */
+    var itemZhP = fetchFirstOk(WS_ITEM_ZH_URLS).then(function (data) {
+      if (!data) return;
+      if (!_dict) _dict = {};
+      Object.keys(data).forEach(function (k) {
+        if (!_dict[k]) _dict[k] = data[k];
+      });
+    });
+
+    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, bountyP, regP]);
   }
 
   /* ══ 渲染：世界周期 ══ */
@@ -3060,14 +3073,14 @@
     el.innerHTML =
       '<div class="ws-sp-current">' +
         '<span class="ws-sp-label">本周奖励</span>' +
-        '<span class="ws-sp-reward">' + (cur.name || '--') + '</span>' +
+        '<span class="ws-sp-reward">' + (tr(cur.name) || '--') + '</span>' +
         '<span class="ws-sp-cost">' + (cur.cost || '--') + ' 精华</span>' +
         '<span class="ws-sp-timer" id="wt-sp"></span>' +
       '</div>' +
       (eg.length ?
         '<div class="ws-sp-evergreens">' +
           eg.map(function (item) {
-            return '<div class="ws-sp-item"><span>' + (item.name || '--') +
+            return '<div class="ws-sp-item"><span>' + (tr(item.name) || '--') +
               '</span><span class="ws-sp-cost-sm">' + (item.cost || '--') + ' 精华</span></div>';
           }).join('') +
         '</div>' : '');
