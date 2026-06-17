@@ -883,7 +883,7 @@
       font-family: 'Orbitron', sans-serif;
       white-space: nowrap;
     }
-    .ws-bj-type { color: var(--ws-text); flex: 1; }
+    .ws-bj-type { color: var(--ws-text); min-width: 0; overflow-wrap: break-word; }
     .ws-bj-rep  { color: var(--ws-text-dim); font-size: .78rem; text-align: right; white-space: nowrap; }
     .ws-bounty-rot {
       font-size: .7rem; font-family: 'Orbitron', sans-serif;
@@ -2472,6 +2472,14 @@
     'https://api.warframe.com/cdn/worldState.php'
   ];
 
+  /* GitHub Actions 每 5 分钟预拉取的世界周期快照（专供大陆用户兜底）
+     时间戳说明：API 返回的 expiry 是绝对时间戳，与拉取时刻无关，精度不受 5 分钟间隔影响 */
+  var CYCLES_KEYS = ['cetusCycle','vallisCycle','cambionCycle','zarimanCycle','duviriCycle'];
+  var CYCLES_FALLBACK_URLS = [
+    'https://raw.githubusercontent.com/AdminRoc/Ws-Web/main/data/worldstate-cycles.json',
+    'https://cdn.jsdelivr.net/gh/AdminRoc/Ws-Web@main/data/worldstate-cycles.json'
+  ];
+
   function getRawWS() {
     if (_rawWS && Date.now() - _rawWSTs < RAW_WS_TTL) return Promise.resolve(_rawWS);
     function tryNext(i) {
@@ -2736,7 +2744,15 @@
     /* 节点数据表：缓存 7 天 */
     var regP    = _exportRegions ? Promise.resolve() : loadExportRegions();
 
-    return Promise.all([apiP, rawP, arbP, dictP, bountyP, regP]);
+    /* 世界周期 GitHub 快照兜底：与 apiP/rawP 并发；仅填充仍为空的键，不覆盖 API 数据 */
+    var cyclesP = fetchFirstOk(CYCLES_FALLBACK_URLS).then(function (data) {
+      if (!data) return;
+      CYCLES_KEYS.forEach(function (k) {
+        if (data[k] && !D[k]) D[k] = data[k];
+      });
+    });
+
+    return Promise.all([apiP, rawP, cyclesP, arbP, dictP, bountyP, regP]);
   }
 
   /* ══ 渲染：世界周期 ══ */
