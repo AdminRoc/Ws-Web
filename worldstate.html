@@ -1522,9 +1522,91 @@
       .ws-spl-corner--tl, .ws-spl-corner--bl { left: 1.2rem; }
       .ws-spl-corner--tr, .ws-spl-corner--br { right: 1.2rem; }
     }
+
+    /* ══ 网络提示横幅 ══ */
+    #ws-notice {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 8888;
+      width: min(580px, 90vw);
+      padding: 1.1rem 1.6rem;
+      background: rgba(8, 5, 1, 0.97);
+      border: 1px solid rgba(185,142,52,.52);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(185,142,52,.07),
+        0 16px 60px rgba(0,0,0,.92),
+        0 0 44px rgba(185,142,52,.14),
+        inset 0 1px 0 rgba(185,142,52,.22);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .75s ease;
+    }
+    #ws-notice.ws-nb-show { opacity: 1; pointer-events: auto; }
+    /* 流光扫描 */
+    #ws-notice::before {
+      content: '';
+      position: absolute;
+      top: -30%; left: -65%;
+      width: 42%; height: 160%;
+      background: linear-gradient(108deg,
+        transparent 18%,
+        rgba(212,168,74,.2) 50%,
+        rgba(255,220,100,.07) 57%,
+        transparent 76%);
+      transform: skewX(-12deg);
+      animation: wsNbShimmer 3.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes wsNbShimmer { 0%{left:-65%;} 100%{left:120%;} }
+    /* 顶部金线呼吸 */
+    #ws-notice::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(212,168,74,.7) 30%,
+        rgba(255,225,100,.5) 50%,
+        rgba(212,168,74,.4) 70%,
+        transparent);
+      animation: wsNbTopline 2.2s ease-in-out infinite alternate;
+    }
+    @keyframes wsNbTopline { from{opacity:.35;} to{opacity:1;} }
+    .ws-nb-body {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+    }
+    .ws-nb-icon {
+      flex-shrink: 0;
+      margin-top: .08em;
+      font-size: 1.05rem;
+      color: rgba(212,168,74,.75);
+    }
+    .ws-nb-text {
+      margin: 0;
+      font-size: .9rem;
+      line-height: 1.72;
+      color: rgba(212,168,74,.8);
+      letter-spacing: .03em;
+    }
   </style>
 </head>
 <body>
+
+<!-- ══ 网络提示横幅（进入10s后渐显，停留6s后渐隐） ══ -->
+<div id="ws-notice" role="alert" aria-live="polite">
+  <div class="ws-nb-body">
+    <span class="ws-nb-icon">⚠</span>
+    <p class="ws-nb-text">由于本站当前静态部署于 GitHub，当您处于中国大陆网络环境时，本页面的数据更新周期将长达十分钟，对此带来的不便请您见谅。</p>
+  </div>
+</div>
 
 <!-- ══ 世界状态 · 战术接入界面 ══ -->
 <div id="ws-splash" aria-hidden="true" role="status" aria-label="正在加载世界状态数据">
@@ -3730,6 +3812,23 @@
   });
   document.addEventListener('keydown', function(e) { if (e.key==='Escape') closePanel(); });
   window.addEventListener('resize', function() { if (isOpen) resizePanelCanvas(); });
+})();
+</script>
+
+<script>
+/* ── 网络提示横幅：10s 后渐显，停留 6s 后渐隐 ── */
+(function () {
+  setTimeout(function () {
+    var nb = document.getElementById('ws-notice');
+    if (!nb) return;
+    nb.classList.add('ws-nb-show');
+    setTimeout(function () {
+      nb.classList.remove('ws-nb-show');
+      setTimeout(function () {
+        if (nb.parentNode) nb.parentNode.removeChild(nb);
+      }, 800);
+    }, 6000);
+  }, 10000);
 })();
 </script>
 
