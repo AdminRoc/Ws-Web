@@ -25,9 +25,9 @@ var capture_elionRecords = [
 
   {
     playerId:   "Salat",
-    clearTime:  "0:17.400",
-    uploadTime: "2025-05-29",
-    videoUrls:  ["https://www.youtube.com/watch?v=6pzTV-qjR_o"],
+    clearTime:  "0:16.633",
+    uploadTime: "2026-06-13",
+    videoUrls:  ["https://www.youtube.com/watch?v=RF5Jtfa_DYs"],
   },
   {
     playerId:   "L1ndell",
