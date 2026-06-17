@@ -3,7 +3,7 @@
  * 字体：xszt.ttf（像素中文字体） */
 @font-face {
   font-family: 'XSZT';
-  src: url('../fonts/xszt.ttf') format('truetype');
+  src: url('../../fonts/xszt.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: block;
