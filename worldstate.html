@@ -2992,7 +2992,7 @@
         '<span class="ws-mr-num">' + (i + 1) + '</span>' +
         '<span class="ws-mr-node">' + trLocation(v.node || '--') + '</span>' +
         '<span class="ws-mr-type">' + trLocation(v.missionType || '--') + '</span>' +
-        (v.modifier ? '<span class="ws-mr-modifier">' + v.modifier + '</span>' : '') +
+        (v.modifier ? '<span class="ws-mr-modifier">' + (tr(v.modifier) || v.modifier) + '</span>' : '') +
         '</div>';
     }).join('');
     el.innerHTML =
@@ -3132,8 +3132,8 @@
       if (!side || !side.reward) return '';
       var parts = [];
       if (side.reward.credits) parts.push(side.reward.credits.toLocaleString() + ' 点数');
-      (side.reward.items || []).forEach(function (it) { parts.push(it); });
-      (side.reward.countedItems || []).forEach(function (ci) { parts.push(ci.count + '× ' + ci.type); });
+      (side.reward.items || []).forEach(function (it) { parts.push(tr(it) || it); });
+      (side.reward.countedItems || []).forEach(function (ci) { parts.push(ci.count + '× ' + (tr(ci.type) || ci.type)); });
       return parts.join(', ');
     }
 
