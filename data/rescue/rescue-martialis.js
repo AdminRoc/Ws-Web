@@ -24,9 +24,9 @@
 var rescue_martialisRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:19.266",
-    uploadTime: "2026-01-11",
-    videoUrls:  ["https://www.youtube.com/watch?v=mmjNEEn2tjs"],
+    clearTime:  "0:18.933",
+    uploadTime: "2026-06-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=dSkEJmqUvJs"],
   },
   {
     playerId:   "PrimedDarkeN",

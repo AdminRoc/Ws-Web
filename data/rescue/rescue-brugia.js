@@ -30,9 +30,9 @@ var rescue_brugiaRecords = [
   },
   {
     playerId:   "Salat",
-    clearTime:  "0:23.750",
-    uploadTime: "2025-12-03",
-    videoUrls:  ["https://www.youtube.com/watch?v=DAhv0NQARmE"],
+    clearTime:  "0:22.100",
+    uploadTime: "2026-06-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=UAGi9kinVg0"],
   },
   {
     playerId:   "PrimedDarkeN",
