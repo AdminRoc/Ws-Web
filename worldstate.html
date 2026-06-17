@@ -1,0 +1,3169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Warframe 实时世界状态 — WFSpeed.run">
+  <title>世界状态 — Warframe Speed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="picture/websitelogo.png">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/leaderboard.css">
+  <style>
+    /* ── 导航 hover 文字交换（各页面共用） ── */
+    .hover-text-swap { position: relative; display: inline-block; }
+    .hover-text-swap .text-cn { display: inline; transition: opacity .3s ease; }
+    .hover-text-swap .text-en {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      white-space: nowrap; opacity: 0;
+      transition: opacity .3s ease;
+      font-size: clamp(.5rem,1.2vw,.8em);
+      pointer-events: none;
+    }
+    .nav-item:hover > a .hover-text-swap .text-cn { opacity: 0; }
+    .nav-item:hover > a .hover-text-swap .text-en { opacity: 1; }
+    .nav-dropdown-menu a:hover .hover-text-swap .text-cn { opacity: 0; }
+    .nav-dropdown-menu a:hover .hover-text-swap .text-en { opacity: 1; }
+    .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-cn { opacity: 0; }
+    .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-en { opacity: 1; }
+    .nav-submit:hover .hover-text-swap .text-cn { opacity: 0; }
+    .nav-submit:hover .hover-text-swap .text-en { opacity: 1; }
+    .nav-more-mobile { display: none; }
+    @media screen and (max-width: 860px) { .nav-more-mobile { display: flex !important; } }
+
+    /* ══════════════════════════════════════════════
+       世界状态页面专属样式 — 暗金风格
+       ══════════════════════════════════════════════ */
+
+    /* ── CSS 变量：暗金调色板 ── */
+    :root {
+      --ws-gold:        #c9a432;
+      --ws-gold-bright: #e2c060;
+      --ws-gold-dim:    rgba(201,164,50,.45);
+      --ws-gold-glow:   rgba(201,164,50,.18);
+      --ws-gold-line:   rgba(201,164,50,.28);
+      --ws-card-bg:     rgba(16,12,7,.88);
+      --ws-card-border: rgba(201,164,50,.2);
+      --ws-panel-bg:    rgba(22,16,9,.92);
+      --ws-text:        rgba(230,210,168,.92);
+      --ws-text-dim:    rgba(175,148,100,.62);
+      --ws-sep:         rgba(201,164,50,.1);
+    }
+
+    .ws-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: calc(70px + 1.8rem) 1.5rem 5rem;
+      letter-spacing: .04em;
+      line-height: 1.6;
+    }
+
+    /* ── 页面标题区 ── */
+    .ws-page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.8rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--ws-gold-line);
+      position: relative;
+    }
+    .ws-page-header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 120px; height: 2px;
+      background: linear-gradient(90deg, var(--ws-gold), transparent);
+    }
+    .ws-page-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.4rem, 2.8vw, 2rem);
+      font-weight: 800;
+      letter-spacing: .16em;
+      color: var(--ws-gold-bright);
+      text-shadow: 0 0 24px rgba(201,164,50,.4), 0 0 60px rgba(201,164,50,.12);
+    }
+    .ws-page-title span {
+      font-size: .55em;
+      color: var(--ws-text-dim);
+      margin-left: .8rem;
+      letter-spacing: .14em;
+      font-weight: 600;
+    }
+    .ws-page-meta { display: flex; align-items: center; gap: .9rem; }
+    .ws-last-update {
+      font-family: var(--f-sci);
+      font-size: .88rem;
+      color: var(--ws-gold);
+      letter-spacing: .05em;
+    }
+    .ws-refresh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .45rem 1.1rem;
+      font-family: var(--f-sci);
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: var(--ws-gold);
+      border: 1px solid var(--ws-gold-dim);
+      border-radius: 2px;
+      background: rgba(201,164,50,.06);
+      cursor: pointer;
+      transition: all .3s ease;
+    }
+    .ws-refresh-btn:hover:not(:disabled) {
+      background: rgba(201,164,50,.14);
+      border-color: var(--ws-gold);
+      color: var(--ws-gold-bright);
+      box-shadow: 0 0 12px rgba(201,164,50,.35);
+    }
+    .ws-refresh-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .ws-loading-dot {
+      display: none;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--ws-gold);
+      animation: wsDotPulse .8s ease-in-out infinite alternate;
+    }
+    @keyframes wsDotPulse { from { opacity: .3; } to { opacity: 1; } }
+
+    /* ── 章节容器 ── */
+    .ws-section { margin-bottom: 3rem; }
+    .ws-section-hd {
+      display: flex;
+      align-items: baseline;
+      gap: .7rem;
+      margin-bottom: 1.1rem;
+      padding-bottom: .65rem;
+      border-bottom: 1px solid var(--ws-gold-line);
+      position: relative;
+    }
+    .ws-section-hd::before {
+      content: '◈';
+      font-size: .75rem;
+      color: var(--ws-gold);
+      flex-shrink: 0;
+      align-self: center;
+    }
+    .ws-section-hd::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 60px; height: 1px;
+      background: var(--ws-gold);
+    }
+    .ws-section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .98rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      color: var(--ws-gold-bright);
+      text-shadow: 0 0 10px rgba(201,164,50,.25);
+      text-transform: uppercase;
+    }
+    .ws-section-en {
+      font-family: var(--f-sci);
+      font-size: .78rem;
+      color: var(--ws-text-dim);
+      letter-spacing: .1em;
+    }
+
+    /* ── 通用卡片 ── */
+    .ws-card {
+      background: var(--ws-card-bg);
+      border: 1px solid var(--ws-card-border);
+      border-radius: 2px;
+      padding: 1rem 1.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .ws-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ws-gold-dim), transparent);
+      pointer-events: none;
+    }
+    .ws-empty {
+      color: var(--ws-text-dim);
+      font-family: var(--f-sci);
+      font-size: .92rem;
+      letter-spacing: .08em;
+      padding: 1.4rem 0;
+      text-align: center;
+    }
+    .ws-err { color: rgba(255,90,90,.75); }
+    /* 括号单独使用微软雅黑，其余字体保持原样 */
+    .ws-br { font-family: 'Microsoft YaHei', '微软雅黑', 'PingFang SC', 'Noto Sans SC', sans-serif; }
+
+    /* ══ 世界周期 ══ */
+    .ws-cycles-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    .ws-cycle-card {
+      background: var(--ws-card-bg);
+      border: 1px solid var(--ws-card-border);
+      border-radius: 2px;
+      padding: 1.1rem 1.2rem 1.3rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .ws-cycle-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ws-gold-dim), transparent);
+      pointer-events: none;
+    }
+    .ws-cycle-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 55% at 50% -10%, rgba(201,164,50,.06), transparent 65%);
+      pointer-events: none;
+    }
+    .ws-cycle-card:hover {
+      border-color: rgba(201,164,50,.38);
+      box-shadow: 0 0 20px rgba(201,164,50,.08), inset 0 0 30px rgba(201,164,50,.04);
+    }
+    .ws-cycle-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .84rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: var(--ws-text-dim);
+      margin-bottom: .7rem;
+    }
+    .ws-cycle-en { font-size: .66rem; opacity: .7; display: block; margin-top: .15rem; }
+    .ws-cycle-state {
+      font-family: var(--f-sci);
+      font-size: 1.18rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      margin-bottom: .5rem;
+      transition: color .3s;
+    }
+    .ws-cycle-timer {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .88rem;
+      color: var(--ws-text-dim);
+      letter-spacing: .07em;
+    }
+    .ws-cycle-timer::before { content: '⏱ '; font-size: .7em; opacity: .7; }
+
+    /* ══ 虚空裂缝 ══ */
+    .ws-fissure-tabs {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    .ws-ftab {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .45rem 1.1rem;
+      font-family: var(--f-sci);
+      font-size: .88rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: var(--ws-text-dim);
+      border: 1px solid rgba(201,164,50,.12);
+      border-radius: 2px;
+      background: transparent;
+      cursor: pointer;
+      transition: all .25s ease;
+    }
+    .ws-ftab.active {
+      color: var(--ws-gold-bright);
+      border-color: var(--ws-gold-dim);
+      background: rgba(201,164,50,.08);
+      box-shadow: 0 0 8px rgba(201,164,50,.12);
+    }
+    .ws-ftab:hover:not(.active) {
+      color: var(--ws-text);
+      border-color: rgba(201,164,50,.22);
+    }
+    .ws-ftab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px; height: 20px;
+      padding: 0 5px;
+      border-radius: 10px;
+      font-size: .75rem;
+      background: rgba(201,164,50,.15);
+      color: var(--ws-gold);
+    }
+    .ws-fissures-panel { display: none; }
+    .ws-fissures-panel.active { display: block; }
+    .ws-fissure-row {
+      display: grid;
+      grid-template-columns: 90px 1fr 1fr 1fr 5.5rem;
+      align-items: center;
+      gap: .7rem;
+      padding: .88rem .95rem;
+      border-bottom: 1px solid var(--ws-sep);
+      font-family: var(--f-sci);
+      font-size: .92rem;
+      line-height: 1.6;
+      transition: background .2s;
+    }
+    .ws-fissure-row:last-child { border-bottom: none; }
+    .ws-fissure-row:hover { background: rgba(201,164,50,.04); }
+    .ws-ftier {
+      display: inline-block;
+      padding: .2rem .6rem;
+      border: 1px solid;
+      border-radius: 2px;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .ws-fnode { color: var(--ws-text); }
+    .ws-fmission { color: var(--ws-text-dim); }
+    .ws-fenemy { color: var(--ws-text-dim); font-size: .85rem; }
+    .ws-ftimer {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .8rem;
+      color: var(--ws-gold);
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    /* ══ 双列布局 ══ */
+    .ws-dual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.6rem;
+    }
+
+    /* ══ 仲裁 ══ */
+    .ws-arb-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      background: var(--ws-card-bg);
+      border: 1px solid rgba(201,164,50,.25);
+      border-radius: 2px;
+      padding: 1.2rem 1.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .ws-arb-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ws-gold-dim), transparent);
+    }
+    .ws-arb-node {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ws-gold-bright);
+      letter-spacing: .08em;
+      margin-bottom: .5rem;
+      text-shadow: 0 0 10px rgba(201,164,50,.2);
+    }
+    .ws-arb-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      align-items: center;
+    }
+    .ws-arb-type, .ws-arb-enemy {
+      font-family: var(--f-sci);
+      font-size: .92rem;
+      letter-spacing: .05em;
+    }
+    .ws-arb-type { color: var(--ws-text); }
+    .ws-arb-enemy { color: var(--ws-text-dim); }
+    .ws-arb-flag {
+      font-family: var(--f-sci);
+      font-size: .84rem;
+      color: #b07fd4;
+      letter-spacing: .06em;
+    }
+    .ws-arb-timer-wrap { text-align: right; flex-shrink: 0; }
+    .ws-arb-label {
+      display: block;
+      font-family: var(--f-sci);
+      font-size: .78rem;
+      color: var(--ws-text-dim);
+      margin-bottom: .3rem;
+      letter-spacing: .05em;
+    }
+    .ws-arb-timer {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ws-gold-bright);
+    }
+
+    /* ══ 突击 / 执刑官猎杀 ══ */
+    .ws-mission-card {
+      background: var(--ws-card-bg);
+      border: 1px solid var(--ws-card-border);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .ws-mission-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ws-gold-dim), transparent);
+      pointer-events: none;
+    }
+    .ws-mission-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .8rem 1.1rem;
+      background: rgba(201,164,50,.07);
+      border-bottom: 1px solid var(--ws-gold-line);
+    }
+    .ws-mission-boss {
+      font-family: var(--f-sci);
+      font-size: .96rem;
+      font-weight: 700;
+      color: var(--ws-gold-bright);
+      letter-spacing: .06em;
+    }
+    .ws-mission-timer {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .8rem;
+      color: var(--ws-gold);
+    }
+    .ws-mission-row {
+      display: grid;
+      grid-template-columns: 24px 1fr 1fr;
+      align-items: center;
+      gap: .6rem;
+      padding: .8rem 1.1rem;
+      border-bottom: 1px solid var(--ws-sep);
+      font-family: var(--f-sci);
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+    .ws-mission-row:last-child { border-bottom: none; }
+    .ws-mr-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(201,164,50,.12);
+      border: 1px solid rgba(201,164,50,.3);
+      font-size: .7rem;
+      color: var(--ws-gold);
+      font-family: 'Orbitron', sans-serif;
+    }
+    .ws-mr-node { color: var(--ws-text); }
+    .ws-mr-type { color: var(--ws-text-dim); }
+    .ws-mr-modifier {
+      grid-column: 2 / -1;
+      font-size: .82rem;
+      color: rgba(230,175,60,.75);
+      padding-top: .12rem;
+    }
+
+    /* ══ 星际商人 Baro ══ */
+    .ws-baro-hd {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      flex-wrap: wrap;
+      padding: 1.1rem 1.4rem;
+      border-radius: 2px;
+      margin-bottom: .9rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .ws-baro-active {
+      background: rgba(201,164,50,.08);
+      border: 1px solid rgba(201,164,50,.3);
+      box-shadow: 0 0 24px rgba(201,164,50,.08), inset 0 0 40px rgba(201,164,50,.04);
+    }
+    .ws-baro-away {
+      background: rgba(80,90,120,.07);
+      border: 1px solid rgba(120,130,160,.15);
+    }
+    .ws-baro-active::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ws-gold), transparent);
+    }
+    .ws-baro-status {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+    }
+    .ws-baro-active .ws-baro-status {
+      color: var(--ws-gold-bright);
+      text-shadow: 0 0 14px rgba(201,164,50,.4);
+    }
+    .ws-baro-away .ws-baro-status { color: var(--ws-text-dim); }
+    .ws-baro-loc {
+      font-family: var(--f-sci);
+      font-size: .95rem;
+      color: var(--ws-text);
+    }
+    .ws-baro-tw {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      font-family: var(--f-sci);
+      font-size: .9rem;
+      color: var(--ws-text-dim);
+      margin-left: auto;
+    }
+    .ws-baro-t {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .95rem;
+      color: var(--ws-gold-bright);
+    }
+    .ws-baro-inv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: .55rem;
+    }
+    .ws-baro-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .55rem .85rem;
+      background: rgba(201,164,50,.05);
+      border: 1px solid rgba(201,164,50,.12);
+      border-radius: 2px;
+      font-family: var(--f-sci);
+      font-size: .88rem;
+      gap: .6rem;
+      transition: border-color .2s, background .2s;
+    }
+    .ws-baro-item:hover { border-color: rgba(201,164,50,.28); background: rgba(201,164,50,.09); }
+    .ws-bi-name { color: var(--ws-text); flex: 1; }
+    .ws-bi-cost { color: rgba(201,164,50,.8); white-space: nowrap; font-size: .8rem; }
+
+    /* ══ 钢铁之路 ══ */
+    .ws-sp-current {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      flex-wrap: wrap;
+      background: rgba(180,60,80,.07);
+      border: 1px solid rgba(200,80,100,.18);
+      border-radius: 2px;
+      padding: 1rem 1.3rem;
+      margin-bottom: .9rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .ws-sp-current::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,80,100,.5), transparent);
+    }
+    .ws-sp-label {
+      font-family: var(--f-sci);
+      font-size: .82rem;
+      color: var(--ws-text-dim);
+      letter-spacing: .08em;
+    }
+    .ws-sp-reward {
+      font-family: var(--f-sci);
+      font-size: 1rem;
+      color: #e85070;
+      font-weight: 700;
+    }
+    .ws-sp-cost { font-family: var(--f-sci); font-size: .88rem; color: var(--ws-text-dim); }
+    .ws-sp-timer {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .88rem;
+      color: rgba(220,80,100,.9);
+      margin-left: auto;
+    }
+    .ws-sp-evergreens {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: .45rem;
+    }
+    .ws-sp-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .48rem .82rem;
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(201,164,50,.1);
+      border-radius: 2px;
+      font-family: var(--f-sci);
+      font-size: .88rem;
+      color: var(--ws-text);
+      gap: .6rem;
+      transition: border-color .2s;
+    }
+    .ws-sp-item:hover { border-color: rgba(201,164,50,.22); }
+    .ws-sp-cost-sm { color: var(--ws-text-dim); font-size: .8rem; white-space: nowrap; }
+
+    /* ══ 夜浪 ══ */
+    .ws-nw-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1rem;
+    }
+    .ws-nw-group {
+      background: var(--ws-card-bg);
+      border: 1px solid var(--ws-card-border);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .ws-nw-group::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ws-gold-dim), transparent);
+      pointer-events: none;
+    }
+    .ws-nw-group-title {
+      padding: .58rem 1rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      color: var(--ws-gold);
+      background: rgba(201,164,50,.07);
+      border-bottom: 1px solid var(--ws-gold-line);
+    }
+    .ws-nw-challenge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .7rem;
+      padding: .8rem 1rem;
+      border-bottom: 1px solid var(--ws-sep);
+      font-family: var(--f-sci);
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+    .ws-nw-challenge:last-child { border-bottom: none; }
+    .ws-nw-elite { background: rgba(140,70,180,.05); }
+    .ws-nw-title { color: var(--ws-text); flex: 1; line-height: 1.4; }
+    .ws-nw-rep { color: var(--ws-gold); white-space: nowrap; font-size: .8rem; }
+
+    /* ══ 入侵 ══ */
+    .ws-inv-list { display: flex; flex-direction: column; gap: .6rem; }
+    .ws-inv-row {
+      background: var(--ws-card-bg);
+      border: 1px solid var(--ws-card-border);
+      border-radius: 2px;
+      padding: .85rem 1.1rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+    .ws-inv-row::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ws-gold-dim), transparent);
+    }
+    .ws-inv-row:hover { border-color: rgba(201,164,50,.3); }
+    .ws-inv-node {
+      font-family: var(--f-sci);
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--ws-text);
+      margin-bottom: .55rem;
+    }
+    .ws-inv-vs {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      margin-bottom: .55rem;
+      flex-wrap: wrap;
+    }
+    .ws-inv-side {
+      display: flex;
+      flex-direction: column;
+      gap: .22rem;
+      flex: 1;
+      min-width: 120px;
+    }
+    .ws-inv-faction {
+      font-family: var(--f-sci);
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--ws-text-dim);
+    }
+    .ws-inv-reward {
+      font-family: var(--f-sci);
+      font-size: .84rem;
+      color: var(--ws-gold);
+    }
+    .ws-inv-divider {
+      font-family: var(--f-sci);
+      font-size: .82rem;
+      color: var(--ws-text-dim);
+      padding: 0 .2rem;
+      flex-shrink: 0;
+      text-align: center;
+      min-width: 2rem;
+    }
+    .ws-inv-vs .ws-inv-side:last-child { text-align: right; }
+    .ws-inv-progress { display: flex; align-items: center; gap: .7rem; }
+    .ws-inv-bar {
+      flex: 1;
+      height: 5px;
+      background: rgba(201,164,50,.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .ws-inv-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #5090d0, #c98030);
+      border-radius: 2px;
+      transition: width .5s ease;
+    }
+    .ws-inv-pct {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .78rem;
+      color: var(--ws-text-dim);
+      white-space: nowrap;
+    }
+
+    /* ══ 仲裁：推荐标签 & 预览列表 ══ */
+    .ws-arb-badge {
+      display: inline-block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      padding: .18rem .55rem;
+      border-radius: 2px;
+      margin-bottom: .55rem;
+    }
+    .ws-arb-badge-t3 {
+      background: rgba(255,165,0,.15);
+      color: #ffb347;
+      border: 1px solid rgba(255,165,0,.45);
+      box-shadow: 0 0 8px rgba(255,165,0,.2);
+    }
+    .ws-arb-badge-t2 {
+      background: rgba(201,164,50,.12);
+      color: var(--ws-gold-bright);
+      border: 1px solid rgba(201,164,50,.35);
+    }
+    .ws-arb-badge-t1 {
+      background: rgba(180,210,100,.1);
+      color: #b4d264;
+      border: 1px solid rgba(180,210,100,.3);
+    }
+    .ws-arb-upcoming-hd {
+      font-family: var(--f-sci);
+      font-size: .78rem;
+      color: var(--ws-text-dim);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 1rem 0 .5rem;
+      padding-top: .8rem;
+      border-top: 1px solid var(--ws-sep);
+    }
+    .ws-arb-upcoming { display: flex; flex-direction: column; gap: .3rem; }
+    .ws-arb-urow {
+      display: grid;
+      grid-template-columns: 72px 110px 1fr auto;
+      align-items: center;
+      gap: .6rem;
+      padding: .45rem .7rem;
+      background: rgba(201,164,50,.04);
+      border: 1px solid var(--ws-sep);
+      border-radius: 2px;
+      font-family: var(--f-sci);
+      font-size: .86rem;
+    }
+    .ws-arb-utime {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+    .ws-arb-udate {
+      font-size: .8rem;
+      color: var(--ws-gold);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      letter-spacing: .18em;
+    }
+    .ws-arb-uhour {
+      font-size: .74rem;
+      color: var(--ws-text-dim);
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: .14em;
+    }
+    .ws-arb-unode { color: var(--ws-text); font-weight: 600; }
+    .ws-arb-umeta { color: var(--ws-text-dim); font-size: .82rem; text-align: right; }
+
+    /* ══ 赏金任务 Bounties ══ */
+    .ws-bounty-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .ws-bounty-syndicate {
+      background: var(--ws-card-bg);
+      border: 1px solid var(--ws-card-border);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .ws-bounty-syndicate::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ws-gold-dim), transparent);
+      pointer-events: none;
+    }
+    .ws-bounty-syn-hd {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .5rem;
+      padding: .75rem 1rem;
+      background: rgba(201,164,50,.06);
+      border-bottom: 1px solid var(--ws-gold-line);
+    }
+    .ws-bounty-syn-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--ws-gold-bright);
+      letter-spacing: .06em;
+    }
+    .ws-bounty-syn-en {
+      font-family: var(--f-sci);
+      font-size: .72rem;
+      color: var(--ws-text-dim);
+      letter-spacing: .06em;
+    }
+    .ws-bounty-timer {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .75rem;
+      color: var(--ws-gold);
+      margin-left: auto;
+    }
+    .ws-bounty-jobs { padding: .5rem 0; }
+    .ws-bounty-job {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: .5rem;
+      padding: .54rem 1rem;
+      border-bottom: 1px solid var(--ws-sep);
+      font-family: var(--f-sci);
+      font-size: .84rem;
+      line-height: 1.6;
+    }
+    .ws-bounty-job:last-child { border-bottom: none; }
+    .ws-bj-lvl {
+      font-size: .78rem;
+      color: var(--ws-gold);
+      font-family: 'Orbitron', sans-serif;
+      white-space: nowrap;
+    }
+    .ws-bj-type { color: var(--ws-text); flex: 1; }
+    .ws-bj-rep  { color: var(--ws-text-dim); font-size: .78rem; text-align: right; white-space: nowrap; }
+    .ws-bounty-rot {
+      font-size: .7rem; font-family: 'Orbitron', sans-serif;
+      color: var(--ws-gold); letter-spacing: .06em; margin-left: auto;
+    }
+    .ws-bj-ally {
+      font-size: .72rem; color: var(--ws-gold); white-space: nowrap;
+      background: rgba(201,164,50,.1); border: 1px solid rgba(201,164,50,.3);
+      border-radius: 3px; padding: 0 .35em;
+      letter-spacing: .12em;
+    }
+
+    /* ══ 响应式 ══ */
+    @media (max-width: 1200px) {
+      .ws-cycles-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 860px) {
+      .ws-cycles-grid { grid-template-columns: repeat(2, 1fr); }
+      .ws-dual { grid-template-columns: 1fr; }
+      .ws-fissure-row { grid-template-columns: 82px 1fr 5rem; }
+      .ws-fmission, .ws-fenemy { display: none; }
+      .ws-baro-inv-grid { grid-template-columns: 1fr; }
+      .ws-nw-groups { grid-template-columns: 1fr; }
+      .ws-bounty-list { grid-template-columns: 1fr; }
+      .ws-arb-urow { grid-template-columns: 72px 1fr; }
+      .ws-arb-utime { display: none; }
+      .ws-arb-umeta { text-align: left; }
+    }
+    @media (max-width: 560px) {
+      .ws-cycles-grid { grid-template-columns: repeat(2, 1fr); }
+      .ws-main { padding: 1rem 1rem 4rem; }
+    }
+
+    /* ══ Darvo 特惠 ══ */
+    .ws-darvo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: .6rem;
+    }
+    .ws-darvo-item {
+      background: rgba(201,164,50,.05);
+      border: 1px solid rgba(201,164,50,.14);
+      border-radius: 2px;
+      padding: .8rem 1rem;
+      transition: border-color .2s, background .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .ws-darvo-item:hover { border-color: rgba(201,164,50,.3); background: rgba(201,164,50,.09); }
+    .ws-darvo-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ws-gold-dim), transparent);
+      pointer-events: none;
+    }
+    .ws-darvo-name {
+      font-family: var(--f-sci);
+      font-size: .95rem;
+      color: var(--ws-text);
+      margin-bottom: .5rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+    .ws-darvo-meta {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-bottom: .35rem;
+    }
+    .ws-darvo-sale {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--ws-gold-bright);
+    }
+    .ws-darvo-orig {
+      font-family: var(--f-sci);
+      font-size: .8rem;
+      color: var(--ws-text-dim);
+      text-decoration: line-through;
+    }
+    .ws-darvo-disc {
+      font-family: var(--f-sci);
+      font-size: .76rem;
+      color: #4ade80;
+      background: rgba(74,222,128,.1);
+      border: 1px solid rgba(74,222,128,.28);
+      border-radius: 2px;
+      padding: .06rem .38rem;
+    }
+    .ws-darvo-timer {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .74rem;
+      color: var(--ws-text-dim);
+    }
+    .ws-darvo-timer::before { content: '⏱ '; font-size: .7em; opacity: .65; }
+
+    /* ══ 武器轮换（信条 / 终幕）══ */
+    .ws-weap-hd {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .6rem;
+      padding: .8rem 1.1rem;
+      background: rgba(201,164,50,.06);
+      border: 1px solid rgba(201,164,50,.18);
+      border-bottom: 1px solid var(--ws-gold-line);
+      border-radius: 2px 2px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .ws-weap-hd::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ws-gold-dim), transparent);
+    }
+    .ws-weap-batch {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .92rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: var(--ws-gold-bright);
+    }
+    .ws-weap-cycle {
+      font-family: var(--f-sci);
+      font-size: .8rem;
+      color: var(--ws-text-dim);
+    }
+    .ws-weap-tw {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      margin-left: auto;
+      font-family: var(--f-sci);
+      font-size: .8rem;
+      color: var(--ws-text-dim);
+    }
+    .ws-weap-t {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .84rem;
+      color: var(--ws-gold);
+    }
+    .ws-weap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: .5rem;
+      padding: .75rem;
+      background: var(--ws-card-bg);
+      border: 1px solid var(--ws-card-border);
+      border-top: none;
+      border-radius: 0 0 2px 2px;
+    }
+    .ws-weap-item {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .55rem .8rem;
+      background: rgba(201,164,50,.04);
+      border: 1px solid rgba(201,164,50,.1);
+      border-radius: 2px;
+      font-family: var(--f-sci);
+      font-size: .88rem;
+      transition: border-color .2s;
+    }
+    .ws-weap-item:hover { border-color: rgba(201,164,50,.25); background: rgba(201,164,50,.08); }
+    .ws-weap-iname { flex: 1; display: flex; flex-direction: column; gap: .06rem; }
+    .ws-weap-zh { color: var(--ws-text); font-size: .9rem; font-weight: 600; line-height: 1.3; }
+    .ws-weap-en { color: var(--ws-text-dim); font-size: .74rem; line-height: 1.3; }
+    .ws-weap-elem {
+      font-size: .75rem;
+      padding: .1rem .42rem;
+      border-radius: 2px;
+      white-space: nowrap;
+      font-weight: 700;
+      font-family: var(--f-sci);
+    }
+    .ws-el-fire  { color:#ff7043; background:rgba(255,112,67,.12); border:1px solid rgba(255,112,67,.3); }
+    .ws-el-ice   { color:#4fc3f7; background:rgba(79,195,247,.12); border:1px solid rgba(79,195,247,.3); }
+    .ws-el-elec  { color:#ffd740; background:rgba(255,215,64,.12); border:1px solid rgba(255,215,64,.3); }
+    .ws-el-toxic { color:#69f0ae; background:rgba(105,240,174,.12); border:1px solid rgba(105,240,174,.3); }
+    .ws-el-mag   { color:#ce93d8; background:rgba(206,147,216,.12); border:1px solid rgba(206,147,216,.3); }
+    .ws-el-imp   { color:#b0bec5; background:rgba(176,190,197,.12); border:1px solid rgba(176,190,197,.3); }
+    .ws-el-rad   { color:#f9a825; background:rgba(249,168,37,.12); border:1px solid rgba(249,168,37,.3); }
+    .ws-el-def   { color:var(--ws-gold); background:rgba(201,164,50,.12); border:1px solid rgba(201,164,50,.3); }
+    .ws-weap-pct { color:var(--ws-gold); font-size:.8rem; white-space:nowrap; }
+
+    /* ══ 快速导航浮窗 ══ */
+    .ws-quicknav {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      /* 整体边框 — logo + 文字在同一个 pill 里 */
+      background: rgba(14,10,5,.96);
+      border: 1.5px solid rgba(201,164,50,.52);
+      border-radius: 28px;
+      padding: 4px 14px 4px 4px;
+      box-shadow: 0 0 18px rgba(201,164,50,.28), 0 4px 18px rgba(0,0,0,.55);
+      transition: background .2s, border-color .2s, box-shadow .2s;
+      /* 放大 10% */
+      transform: scale(1.1);
+      transform-origin: bottom right;
+    }
+    .ws-quicknav:hover {
+      background: rgba(25,18,6,.97);
+      border-color: rgba(201,164,50,.82);
+      box-shadow: 0 0 24px rgba(201,164,50,.48), 0 4px 22px rgba(0,0,0,.6);
+    }
+    /* 透明桥接层：防止鼠标从控件移向菜单时因 gap 导致 hover 丢失 */
+    .ws-quicknav::before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      right: 0;
+      height: .7rem;
+    }
+    .ws-qn-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .ws-qn-label {
+      padding-left: .7rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: var(--ws-gold-bright);
+      white-space: nowrap;
+    }
+    .ws-qn-menu {
+      position: absolute;
+      bottom: calc(100% + .5rem);
+      right: 0;
+      min-width: 158px;
+      background: rgba(14,10,5,.97);
+      border: 1px solid var(--ws-gold-line);
+      border-radius: 4px;
+      padding: .3rem 0;
+      box-shadow: 0 -8px 32px rgba(0,0,0,.55), 0 0 0 1px rgba(201,164,50,.06);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity .18s ease, transform .18s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .ws-quicknav:hover .ws-qn-menu,
+    .ws-quicknav.ws-qn-open .ws-qn-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .ws-qn-menu a {
+      display: block;
+      padding: .46rem 1.05rem;
+      font-family: var(--f-sci);
+      font-size: .85rem;
+      color: var(--ws-text);
+      text-decoration: none;
+      letter-spacing: .04em;
+      white-space: nowrap;
+      transition: background .12s, color .12s;
+    }
+    .ws-qn-menu a:hover { background: rgba(201,164,50,.1); color: var(--ws-gold-bright); }
+    .ws-qn-sep { height: 1px; background: var(--ws-sep); margin: .22rem .55rem; }
+    /* 快速导航锚点偏移：补偿顶部固定导航栏 70px + 余量 */
+    [id^="ws-sec-"] { scroll-margin-top: 84px; }
+    @media (max-width: 560px) {
+      .ws-quicknav { bottom: 1.2rem; right: .8rem; }
+      .ws-qn-label { font-size: .64rem; }
+      .ws-qn-logo { width: 34px; height: 34px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+<div class="nebula-bg"></div>
+
+<div class="page-wrap ws-page">
+
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="https://wfspeed.run">
+        <span class="logo-title">Warframe Speed</span>
+        <span class="logo-domain">→ WFSPEED.RUN</span>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item has-dropdown">
+          <a href="disruption.html" target="_self" rel="noopener">
+            <span class="hover-text-swap">
+              <span class="text-cn">中断竞速榜单</span>
+              <span class="text-en">Disruption</span>
+            </span>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="disruption.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">单人</span><span class="text-en">Solo</span></span></a>
+            <a href="disruption-duo.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">双人</span><span class="text-en">Duo</span></span></a>
+            <a href="disruption-multi.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">多人</span><span class="text-en">Multi</span></span></a>
+          </div>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="eidolon.html" target="_self" rel="noopener">
+            <span class="hover-text-swap">
+              <span class="text-cn">夜灵竞速榜单</span>
+              <span class="text-en">Eidolon</span>
+            </span>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="eidolon.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">有限制</span><span class="text-en">Restricted</span></span></a>
+            <a href="eidolon-macro.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">无限制</span><span class="text-en">Non-restricted</span></span></a>
+          </div>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="profit-taker.html" target="_self" rel="noopener">
+            <span class="hover-text-swap">
+              <span class="text-cn">蜘蛛竞速榜单</span>
+              <span class="text-en">Profit-Taker</span>
+            </span>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="profit-taker.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">有限制</span><span class="text-en">Restricted</span></span></a>
+            <a href="profit-taker-macro.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">无限制</span><span class="text-en">Non-restricted</span></span></a>
+          </div>
+        </div>
+        <button class="nav-more-btn" id="nav-more-btn" aria-label="更多榜单"><span class="nm-wrap"><span class="nm-cn">更多榜单</span><span class="nm-en">Others</span></span></button>
+        <div class="nav-item">
+          <a href="about.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">关于本站</span><span class="text-en">About</span></span></a>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="#" onclick="return false;">
+            <span class="hover-text-swap">
+              <span class="text-cn">功能扩展</span>
+              <span class="text-en">Tools</span>
+            </span>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="search.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">全站搜索</span><span class="text-en">Search</span></span></a>
+            <a href="worldstate.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">世界状态</span><span class="text-en">World State</span></span></a>
+            <a href="eelog.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">日志解析</span><span class="text-en">EE.LOG</span></span></a>
+          </div>
+        </div>
+        <!-- 移动端：更多榜单 -->
+        <button class="nav-more-mobile" id="nav-more-mobile" aria-label="更多榜单">更多榜单</button>
+        <div class="mob-more-panel" id="mob-more-panel">
+          <a href="capture.html" target="_self" rel="noopener">捕获</a>
+          <a href="exterminate.html" target="_self" rel="noopener">歼灭</a>
+          <a href="rescue.html" target="_self" rel="noopener">救援</a>
+          <a href="sabotage.html" target="_self" rel="noopener">破坏</a>
+          <a href="spy.html" target="_self" rel="noopener">间谍</a>
+          <a href="assassination.html" target="_self" rel="noopener">刺杀</a>
+          <a href="special_challenge.html" target="_self" rel="noopener">特殊挑战</a>
+          <a href="defense-relic.html" target="_self" rel="noopener">防御裂缝60轮</a>
+          <a href="cambire.html" target="_self" rel="noopener">元素转换</a>
+          <a href="hollvania.html" target="_self" rel="noopener">1999 任务</a>
+          <a href="ropalolyst.html" target="_self" rel="noopener">蝠力使</a>
+          <a href="skirmish.html" target="_self" rel="noopener">面纱前哨战</a>
+          <a href="defection.html" target="_self" rel="noopener">叛逃任务</a>
+          <a href="arbitration.html" target="_self" rel="noopener">仲裁任务</a>
+          <a href="special-events.html" target="_self" rel="noopener">站内特殊活动</a>
+        </div>
+      </div>
+      <div class="nav-rules-wrap">
+        <a class="nav-rules" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FPmFYdf0gXoR8EBxIY6dcr3UKn0f&title=%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99%E6%80%BB%E8%A7%88&from=worldstate.html" target="_blank" rel="noopener"><span class="hover-text-swap"><span class="text-cn">查看提交规则</span><span class="text-en">Rules</span></span></a>
+        <div class="nav-rules-dropdown">
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FT65jdhc61ohAOSxHopTcpOd8njc&title=%E4%B8%AD%E6%96%AD%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=worldstate.html" target="_blank" rel="noopener">中断竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FUxmXdbcHUoo0iCxQUXccUMTNncf&title=%E5%A4%9C%E7%81%B5%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=worldstate.html" target="_blank" rel="noopener">夜灵竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FJCBfdkdJpoAfkgxD37ic1VVcnkf&title=%E8%9C%98%E8%9B%9B%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=worldstate.html" target="_blank" rel="noopener">蜘蛛竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FAaMCdHX7Toa8hrxah1DcMQnJnNe&title=%E6%9B%B4%E5%A4%9A%E7%AB%9E%E9%80%9F%E9%A1%B9%E7%9B%AE&from=worldstate.html" target="_blank" rel="noopener">更多项目</a>
+        </div>
+      </div>
+      <a class="nav-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=worldstate.html" target="_blank" rel="noopener"><span class="hover-text-swap"><span class="text-cn">提交成绩</span><span class="text-en">Submit</span></span></a>
+      <button class="nav-hamburger" aria-label="打开菜单">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══ 超级导航面板 ══ -->
+  <div class="super-nav-overlay" id="super-nav-overlay" style="display:none;opacity:0;transition:opacity .35s ease;"></div>
+  <div class="super-nav-panel" id="super-nav-panel">
+    <div class="snav-scan-v"></div><div class="snav-scan-v"></div><div class="snav-scan-v"></div>
+    <div class="super-nav-grid">
+      <div class="super-nav-row">
+        <a class="snav-btn" href="capture.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">捕获</span><span class="snav-en">Capture</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="exterminate.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">歼灭</span><span class="snav-en">Exterminate</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="rescue.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">救援</span><span class="snav-en">Rescue</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="sabotage.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">破坏</span><span class="snav-en">Sabotage</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="spy.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">间谍</span><span class="snav-en">Spy</span></div><span class="snav-btmglow"></span></a>
+      </div>
+      <div class="super-nav-row">
+        <a class="snav-btn" href="assassination.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">刺杀</span><span class="snav-en">Assassination</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="special_challenge.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">特殊挑战</span><span class="snav-en">Special Challenge</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="defense-relic.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">防御裂缝60轮</span><span class="snav-en">Defense Relic</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="cambire.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">元素转换</span><span class="snav-en">Cambire</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="hollvania.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">1999 任务</span><span class="snav-en">Höllvania</span></div><span class="snav-btmglow"></span></a>
+      </div>
+      <div class="super-nav-row">
+        <a class="snav-btn" href="ropalolyst.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">蝠力使</span><span class="snav-en">Ropalolyst</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="skirmish.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">面纱前哨战</span><span class="snav-en">Skirmish</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="defection.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">叛逃任务</span><span class="snav-en">Defection</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="arbitration.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">仲裁任务</span><span class="snav-en">Arbitration</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="special-events.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">站内特殊活动</span><span class="snav-en">Special Events</span></div><span class="snav-btmglow"></span></a>
+      </div>
+    </div>
+  </div>
+
+  <main class="ws-main">
+
+    <!-- ══ 页面标题 ══ -->
+    <div class="ws-page-header">
+      <div class="ws-page-title">
+        世界状态
+        <span>WORLD STATE</span>
+      </div>
+      <div class="ws-page-meta">
+        <span class="ws-last-update" id="ws-last-update">--</span>
+        <span class="ws-loading-dot" id="ws-loading"></span>
+        <button class="ws-refresh-btn" id="ws-refresh">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M10.5 6A4.5 4.5 0 1 1 6 1.5c1.2 0 2.3.47 3.12 1.24L10.5 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M10.5 1.5V4H8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          立即刷新数据
+        </button>
+      </div>
+    </div>
+
+    <!-- ══ 1. 世界周期 ══ -->
+    <section id="ws-sec-cycles" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">世界周期</span>
+        <span class="ws-section-en">World Cycles</span>
+      </div>
+      <div class="ws-cycles-grid" id="ws-cycles">
+        <div class="ws-cycle-card"><div class="ws-empty">加载中…</div></div>
+        <div class="ws-cycle-card"><div class="ws-empty">加载中…</div></div>
+        <div class="ws-cycle-card"><div class="ws-empty">加载中…</div></div>
+        <div class="ws-cycle-card"><div class="ws-empty">加载中…</div></div>
+        <div class="ws-cycle-card"><div class="ws-empty">加载中…</div></div>
+      </div>
+    </section>
+
+    <!-- ══ 2. 突击 & 执刑官猎杀 ══ -->
+    <div id="ws-sec-sortie" class="ws-dual" style="margin-bottom: 2.8rem;">
+      <section class="ws-section" style="margin-bottom:0">
+        <div class="ws-section-hd">
+          <span class="ws-section-title">突击</span>
+          <span class="ws-section-en">Sortie</span>
+        </div>
+        <div id="ws-sortie"><div class="ws-empty">加载中…</div></div>
+      </section>
+      <section class="ws-section" style="margin-bottom:0">
+        <div class="ws-section-hd">
+          <span class="ws-section-title">执刑官猎杀</span>
+          <span class="ws-section-en">Archon Hunt</span>
+        </div>
+        <div id="ws-archon"><div class="ws-empty">加载中…</div></div>
+      </section>
+    </div>
+
+    <!-- ══ 3. 奸商 ══ -->
+    <section id="ws-sec-baro" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">奸商</span>
+        <span class="ws-section-en">Baro Ki'Teer</span>
+      </div>
+      <div id="ws-baro"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 4. 虚空裂缝 ══ -->
+    <section id="ws-sec-fissures" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">虚空裂缝</span>
+        <span class="ws-section-en">Void Fissures</span>
+      </div>
+      <div class="ws-fissure-tabs">
+        <button class="ws-ftab active" data-type="normal">普通 <span class="ws-ftab-count" id="fc-normal">--</span></button>
+        <button class="ws-ftab" data-type="hard">钢铁之路 <span class="ws-ftab-count" id="fc-hard">--</span></button>
+        <button class="ws-ftab" data-type="storm">航道星舰 <span class="ws-ftab-count" id="fc-storm">--</span></button>
+      </div>
+      <div class="ws-card" style="padding: 0;">
+        <div class="ws-fissures-panel active" id="ws-fissures-normal"><div class="ws-empty">加载中…</div></div>
+        <div class="ws-fissures-panel" id="ws-fissures-hard"><div class="ws-empty">加载中…</div></div>
+        <div class="ws-fissures-panel" id="ws-fissures-storm"><div class="ws-empty">加载中…</div></div>
+      </div>
+    </section>
+
+    <!-- ══ 5. 重要赏金任务 ══ -->
+    <section id="ws-sec-bounties" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">重要赏金任务</span>
+        <span class="ws-section-en">Bounties</span>
+      </div>
+      <div id="ws-bounties"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 6. 仲裁 ══ -->
+    <section id="ws-sec-arb" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">仲裁</span>
+        <span class="ws-section-en">Arbitration</span>
+      </div>
+      <div id="ws-arbitration"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 7. 钢铁之路 ══ -->
+    <section id="ws-sec-sp" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">钢铁之路</span>
+        <span class="ws-section-en">Steel Path</span>
+      </div>
+      <div id="ws-steelpath"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 8. Darvo 特惠 ══ -->
+    <section id="ws-sec-darvo" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">Darvo 特惠</span>
+        <span class="ws-section-en">Daily Deals</span>
+      </div>
+      <div id="ws-darvo"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 9. 信条武器轮换 ══ -->
+    <section id="ws-sec-tenet" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">信条武器轮换</span>
+        <span class="ws-section-en">Tenet Weapons</span>
+      </div>
+      <div id="ws-tenet"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 10. 终幕武器轮换 ══ -->
+    <section id="ws-sec-coda" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">终幕武器轮换</span>
+        <span class="ws-section-en">Coda Weapons</span>
+      </div>
+      <div id="ws-coda"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 11. 午夜电波 ══ -->
+    <section id="ws-sec-nw" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">午夜电波</span>
+        <span class="ws-section-en">Nightwave</span>
+      </div>
+      <div id="ws-nightwave"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 12. 入侵 ══ -->
+    <section id="ws-sec-inv" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">入侵</span>
+        <span class="ws-section-en">Invasions</span>
+      </div>
+      <div id="ws-invasions"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+  </main>
+
+  <!-- ══ 快速导航浮窗 ══ -->
+  <div class="ws-quicknav" id="ws-quicknav">
+    <img class="ws-qn-logo" src="picture/WS-logo-2.png" alt="WS">
+    <span class="ws-qn-label">快速导航</span>
+    <div class="ws-qn-menu">
+      <a href="#ws-sec-cycles">世界周期</a>
+      <a href="#ws-sec-sortie">突击 · 执刑官猎杀</a>
+      <a href="#ws-sec-baro">奸商</a>
+      <div class="ws-qn-sep"></div>
+      <a href="#ws-sec-fissures">虚空裂缝</a>
+      <a href="#ws-sec-bounties">重要赏金任务</a>
+      <a href="#ws-sec-arb">仲裁</a>
+      <a href="#ws-sec-sp">钢铁之路</a>
+      <div class="ws-qn-sep"></div>
+      <a href="#ws-sec-darvo">Darvo 特惠</a>
+      <a href="#ws-sec-tenet">信条武器轮换</a>
+      <a href="#ws-sec-coda">终幕武器轮换</a>
+      <div class="ws-qn-sep"></div>
+      <a href="#ws-sec-nw">午夜电波</a>
+      <a href="#ws-sec-inv">入侵</a>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="beian-row"><a href="https://beian.miit.gov.cn/" target="_self" rel="noopener">沪ICP备2022033368号</a><img src="picture/gongan-beian.png" alt="公安备案" class="beian-icon"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=31015102000215" rel="noreferrer" target="_blank">沪公网安备31015102000215号</a></div>
+    <p>Copyright &copy; 2026 CSC Alliance All Rights Reserved.</p>
+    <p>特此声明：本站是纯公益性质，且首页的彩虹风格不代表支持性少数群体，望知悉</p>
+    <p>特别鸣谢：<a href="https://space.bilibili.com/147628438" target="_blank" rel="noopener">@&thinsp;兔子</a>、<a href="https://space.bilibili.com/627291901" target="_blank" rel="noopener">@&thinsp;Eas1on</a>、<a href="https://space.bilibili.com/1807185535" target="_blank" rel="noopener">@&thinsp;纸折折鸾</a>、<a href="https://space.bilibili.com/204443734" target="_blank" rel="noopener">@&thinsp;七一</a>、<a href="https://space.bilibili.com/1797156588" target="_blank" rel="noopener">@&thinsp;MC83</a></p>
+  </footer>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var API  = 'https://api.warframestat.us/pc/';
+  var LANG = 'language=zh';
+
+  /* ── 裂缝等级颜色 ── */
+  var TIER_COLOR = {
+    Lith: '#cd7f32', Meso: '#b0b8c4', Neo: '#ffd700',
+    Axi: '#e8d5a3', Requiem: '#9b59b6', Omnia: '#e879f9'
+  };
+  var TIER_ORD = { Lith: 1, Meso: 2, Neo: 3, Axi: 4, Requiem: 5, Omnia: 6 };
+
+  /* ── 仲裁任务类型/阵营 中文对照 ── */
+  var MZ = {
+    /* ── 常规任务 ── */
+    'Exterminate':             '歼灭',
+    'Extermination':           '歼灭',
+    'Capture':                 '捕获',
+    'Rescue':                  '救援',
+    'Sabotage':                '破坏',
+    'Spy':                     '间谍',
+    'Mobile Defense':          '移动防御',
+    'Defense':                 '防御',
+    'Survival':                '生存',
+    'Excavation':              '发掘',
+    'Interception':            '拦截',
+    'Disruption':              '中断',
+    'Defection':               '叛逃',
+    'Assassination':           '刺杀',
+    'Hijack':                  '劫持',
+    'Hive':                    '巢穴',
+    'Infested Salvage':        '感染净化',
+    'Mirror Defense':          '镜像防御',
+    'Dual Defense':            '双重防御',
+    /* ── 黑暗地带 ── */
+    'Dark Sector Defense':     '黑暗地带 · 防御',
+    'Dark Sector Survival':    '黑暗地带 · 生存',
+    'Dark Sector Defection':   '黑暗地带 · 叛逃',
+    'Dark Sector Excavation':  '黑暗地带 · 发掘',
+    'Dark Sector Disruption':  '黑暗地带 · 中断',
+    /* ── 虚空 / 扎里曼 ── */
+    'Void Flood':              '虚空洪流',
+    'Void Cascade':            '虚空瀑布',
+    'Void Eclipse':            '虚空蚀',
+    /* ── 星际战舰 Railjack ── */
+    'Volatile':                '易爆',
+    'Assault':                 '突袭',
+    'Rush':                    '强攻',
+    'Orphix':                  'Orphix',
+    'Armageddon':              '末日审判',
+    /* ── 特殊 ── */
+    'Alchemy':                 '元素转换'
+  };
+  /* 仲裁阵营直接用英文名，不另行翻译 */
+  var FZ = {
+    'Grineer':    'Grineer',
+    'Corpus':     'Corpus',
+    'Infested':   'Infested',
+    'Orokin':     'Orokin',
+    'Crossfire':  'Crossfire',
+    'The Murmur': 'The Murmur'
+  };
+
+  /* 武器附加元素：中文名 & CSS 类 */
+  var ELEM_ZH = {
+    'Fire': '火焰', 'Heat': '火焰',
+    'Cold': '冰冻', 'Freeze': '冰冻', 'Ice': '冰冻',
+    'Electricity': '电击', 'Electric': '电击', 'Lightning': '电击',
+    'Toxin': '毒素', 'Toxic': '毒素', 'Poison': '毒素',
+    'Magnetic': '磁力',
+    'Impact': '冲击',
+    'Blast': '爆炸',
+    'Radiation': '辐射',
+    'Corrosive': '腐蚀',
+    'Gas': '毒气',
+    'Viral': '病毒',
+    'Slash': '切割',
+    'Puncture': '穿刺'
+  };
+  var ELEM_CSS = {
+    'Fire': 'ws-el-fire', 'Heat': 'ws-el-fire',
+    'Cold': 'ws-el-ice', 'Freeze': 'ws-el-ice', 'Ice': 'ws-el-ice',
+    'Electricity': 'ws-el-elec', 'Electric': 'ws-el-elec', 'Lightning': 'ws-el-elec',
+    'Toxin': 'ws-el-toxic', 'Toxic': 'ws-el-toxic', 'Poison': 'ws-el-toxic',
+    'Magnetic': 'ws-el-mag',
+    'Impact': 'ws-el-imp',
+    'Radiation': 'ws-el-rad'
+  };
+  function elemZh(e)  { return ELEM_ZH[e]  || e || ''; }
+  function elemCss(e) { return ELEM_CSS[e] || 'ws-el-def'; }
+
+  /* 星球/地区中文名兜底表（dict 未收录时使用） */
+  var PLANET_ZH = {
+    'Mercury': '水星',      'Venus': '金星',       'Earth': '地球',
+    'Mars': '火星',         'Phobos': '火卫一',    'Deimos': '火卫二',
+    'Ceres': '谷神星',      'Jupiter': '木星',     'Europa': '欧罗巴',
+    'Saturn': '土星',       'Uranus': '天王星',    'Neptune': '海王星',
+    'Pluto': '冥王星',      'Sedna': '塞德娜',     'Eris': '阋神星',
+    'Lua': '月球',          'Void': '虚空',        'Zariman': '扎里曼',
+    'Kuva Fortress': '赤毒要塞', 'Duviri': '双衍王境', 'Railjack': '星际战舰',
+    'Orokin Derelict': '古纪遗迹',
+    'Veil': '面纱', 'Veil Proxima': '面纱比邻星域'
+  };
+
+  /**
+   * 翻译位置/节点字符串。处理以下格式：
+   *   - 已含汉字 → 直接返回
+   *   - SolNode ID → resolveNode()
+   *   - 字典直接命中 → 字典结果
+   *   - MZ 任务类型表命中 → 中文
+   *   - "节点名 (星球名)" → 分别翻译再拼接
+   *   - 单独星球名 → PLANET_ZH
+   */
+  function trLocation(str) {
+    if (!str || str === '--') return str || '--';
+    if (/[一-鿿]/.test(str)) return str;          /* 已是中文 */
+    if (/^SolNode\d+$/.test(str))    return resolveNode(str); /* SolNode ID */
+    /* PLANET_ZH 优先于 dict，防止远程字典更新后覆盖手动校正的星球译名 */
+    if (PLANET_ZH[str]) return PLANET_ZH[str];
+    var mz = MZ[str];
+    if (mz) return mz;                                     /* 任务类型表 */
+    var d = tr(str);
+    if (d !== str) return d;                               /* dict 命中 */
+    /* "节点名 (星球名)" 格式 */
+    var m = str.match(/^(.+?)\s*\((.+?)\)\s*$/);
+    if (m) {
+      var node   = m[1].trim();
+      var planet = m[2].trim();
+      var nz = PLANET_ZH[node]   || (tr(node)   !== node   ? tr(node)   : node);
+      var pz = PLANET_ZH[planet] || (tr(planet) !== planet ? tr(planet) : planet);
+      return nz + ' (' + pz + ')';
+    }
+    return str;
+  }
+
+  /* ── 仲裁节点数据表 [节点名, 星球, 任务类型, 阵营] ── */
+  var ARB_NODES = {
+    SolNode6:  ['Despina','Neptune','Excavation','Corpus'],
+    SolNode16: ['Augustus','Mars','Excavation','Grineer'],
+    SolNode17: ['Proteus','Neptune','Defense','Corpus'],
+    SolNode18: ['Rhea','Saturn','Interception','Grineer'],
+    SolNode21: ['Narcissus','Pluto','Extermination','Corpus'],
+    SolNode23: ['Cytherean','Venus','Interception','Corpus'],
+    SolNode26: ['Lith','Earth','Defense','Grineer'],
+    SolNode39: ['Everest','Earth','Excavation','Grineer'],
+    SolNode43: ['Cerberus','Pluto','Interception','Corpus'],
+    SolNode64: ['Umbriel','Uranus','Interception','Grineer'],
+    SolNode72: ['Outer Terminus','Pluto','Defense','Corpus'],
+    SolNode85: ['Gaia','Earth','Interception','Grineer'],
+    SolNode101:['Kiliken','Venus','Excavation','Corpus'],
+    SolNode106:['Alator','Mars','Interception','Grineer'],
+    SolNode118:['Laomedeia','Neptune','Disruption','Corpus'],
+    SolNode122:['Stephano','Uranus','Defense','Grineer'],
+    SolNode123:['V Prime','Venus','Survival','Corpus'],
+    SolNode146:['Draco','Ceres','Survival','Grineer'],
+    SolNode147:['Cinxia','Ceres','Interception','Grineer'],
+    SolNode149:['Casta','Ceres','Defense','Grineer'],
+    SolNode172:['Xini','Eris','Interception','Infested'],
+    SolNode187:['Selkie','Sedna','Survival','Grineer'],
+    SolNode195:['Hydron','Sedna','Defense','Grineer'],
+    SolNode211:['Paimon','Europa','Defense','Corpus'],
+    SolNode216:['Valefor','Europa','Excavation','Corpus'],
+    SolNode224:['Odin','Mercury','Interception','Grineer'],
+    SolNode230:['Everview Arc','Zariman','Void Flood','Crossfire'],
+    SolNode302:['Tycho','Lua','Survival','Corpus'],
+    SolNode305:['Stöfler','Lua','Defense','Grineer'],
+    SolNode308:['Apollo','Lua','Disruption','Corpus'],
+    SolNode402:['Taranis','Void','Defense','Orokin'],
+    SolNode405:['Ani','Void','Survival','Orokin'],
+    SolNode408:['Belenus','Void','Defense','Orokin'],
+    SolNode412:['Mithra','Void','Interception','Orokin'],
+    SolNode450:['Tyana Pass','Mars','Mirror Defense','Crossfire'],
+    SolNode707:['Hyf','Deimos','Defense','Infested'],
+    SolNode711:['Terrorem','Deimos','Survival','Infested'],
+    SolNode718:['Cambire','Deimos','Alchemy','The Murmur'],
+    ClanNode0: ['Romula','Venus','Dark Sector Defense','Infested'],
+    ClanNode1: ['Malva','Venus','Dark Sector Survival','Infested'],
+    ClanNode2: ['Coba','Earth','Dark Sector Defense','Infested'],
+    ClanNode3: ['Tikal','Earth','Dark Sector Excavation','Infested'],
+    ClanNode4: ['Sinai','Jupiter','Dark Sector Defense','Infested'],
+    ClanNode5: ['Cameria','Jupiter','Dark Sector Survival','Infested'],
+    ClanNode6: ['Larzac','Europa','Dark Sector Defense','Infested'],
+    ClanNode7: ['Cholistan','Europa','Dark Sector Excavation','Infested'],
+    ClanNode8: ['Kadesh','Mars','Dark Sector Defense','Infested'],
+    ClanNode9: ['Wahiba','Mars','Dark Sector Survival','Infested'],
+    ClanNode10:['Memphis','Phobos','Dark Sector Defection','Infested'],
+    ClanNode11:['Zeugma','Phobos','Dark Sector Survival','Infested'],
+    ClanNode12:['Caracol','Saturn','Dark Sector Defection','Infested'],
+    ClanNode13:['Piscinas','Saturn','Dark Sector Survival','Infested'],
+    ClanNode14:['Amarna','Sedna','Dark Sector Survival','Infested'],
+    ClanNode15:['Sangeru','Sedna','Dark Sector Defense','Infested'],
+    ClanNode16:['Ur','Uranus','Dark Sector Disruption','Infested'],
+    ClanNode17:['Assur','Uranus','Dark Sector Survival','Infested'],
+    ClanNode18:['Akkad','Eris','Dark Sector Defense','Infested'],
+    ClanNode19:['Zabala','Eris','Dark Sector Survival','Infested'],
+    ClanNode20:['Yursa','Neptune','Dark Sector Defection','Infested'],
+    ClanNode21:['Kelashin','Neptune','Dark Sector Survival','Infested'],
+    ClanNode22:['Seimeni','Ceres','Dark Sector Defense','Infested'],
+    ClanNode23:['Gabii','Ceres','Dark Sector Survival','Infested'],
+    ClanNode24:['Sechura','Pluto','Dark Sector Defense','Infested'],
+    ClanNode25:['Hieracon','Pluto','Dark Sector Excavation','Infested'],
+    SettlementNode3: ['Stickney','Phobos','Survival','Corpus'],
+    SettlementNode11:['Gulliver','Phobos','Defense','Corpus'],
+    /* 补全 v2 时刻表中出现的其余节点 */
+    SolNode22: ['Tessera','Venus','Defense','Corpus'],
+    SolNode25: ['Callisto','Jupiter','Interception','Corpus'],
+    SolNode30: ['Olympus','Mars','Defense','Grineer'],
+    SolNode42: ['Helene','Saturn','Defense','Grineer'],
+    SolNode46: ['Spear','Mars','Defense','Grineer'],
+    SolNode81: ['Palus','Pluto','Survival','Corpus'],
+    SolNode87: ['Ganymede','Jupiter','Defense','Corpus'],
+    SolNode94: ['Apollodorus','Mercury','Survival','Infested'],
+    SolNode96: ['Titan','Saturn','Survival','Grineer'],
+    SolNode100:['Elara','Jupiter','Survival','Corpus'],
+    SolNode125:['Io','Jupiter','Defense','Corpus'],
+    SolNode130:['Lares','Mercury','Defense','Infested'],
+    SolNode164:['Kala-azar','Eris','Defense','Infested'],
+    SolNode166:['Nimus','Eris','Survival','Infested'],
+    SolNode167:['Oestrus','Eris','Infested Salvage','Infested'],
+    SolNode177:['Kappa','Sedna','Defense','Grineer'],
+    SolNode185:['Berehynia','Sedna','Interception','Grineer'],
+    SolNode212:['Paimon B','Europa','Defense','Corpus'],
+    SolNode232:['Everview Arc B','Zariman','Void Cascade','Grineer'],
+    SolNode233:['Everview Arc C','Zariman','Armageddon','Grineer'],
+    SolNode309:['Yuvarium','Moon','Void Eclipse','Orokin'],
+    SolNode409:['Void Node','Void','Survival','Orokin'],
+    SolNode719:['Deimos Node','Deimos','Dual Defense','The Murmur']
+  };
+
+  /* ── 仲裁推荐等级表（3=最高 / 2=次高 / 1=推荐，来自 warframe-arbitration 项目） ── */
+  var TIER_MAP = {};
+  (function () {
+    var t = {
+      3: ['SolNode450','SolNode106','SolNode25','SolNode64'],
+      2: ['SolNode23','SolNode172','SolNode719','SolNode147'],
+      1: ['SolNode224','SolNode167','SolNode412','SolNode211']
+    };
+    [3,2,1].forEach(function (lv) {
+      t[lv].forEach(function (n) { TIER_MAP[n] = lv; });
+    });
+  }());
+  var TIER_LABEL = { 3: '强烈推荐', 2: '比较推荐', 1: '推荐' };
+  var TIER_CSS   = { 3: 'ws-arb-badge-t3', 2: 'ws-arb-badge-t2', 1: 'ws-arb-badge-t1' };
+
+  /* ══ 重要赏金任务（守望者 / 科维兽 / 六人组）
+     数据源：oracle.browse.wf/bounty-cycle（服务器侧解算 Seed）
+     ══ */
+  var BOUNTY_CYCLE_URL   = 'https://oracle.browse.wf/bounty-cycle';
+  var EXPORT_REGIONS_URL = 'https://browse.wf/warframe-public-export-plus/ExportRegions.json';
+  var EXPORT_REGIONS_LS  = 'wf_export_regions';
+  var BOUNTY_CYCLE_LS    = 'wf_bounty_cycle';
+
+  /* 固定等级段（每个集团每档赏金的敌人等级，不随轮次变化） */
+  var BOUNTY_LVLS = {
+    ZarimanSyndicate:    [[50,55],[60,65],[70,75],[90,95],[110,115]],
+    EntratiLabSyndicate: [[55,60],[65,70],[75,80],[95,100],[115,120]],
+    HexSyndicate:        [[65,70],[75,80],[85,90],[95,100],[105,110],[115,120],[125,130]]
+  };
+  var BOUNTY_META = {
+    ZarimanSyndicate:    { zh: '守望者', en: 'The Holdfasts' },
+    EntratiLabSyndicate: { zh: '科维兽', en: 'Cavia' },
+    HexSyndicate:        { zh: '六人组', en: 'The Hex' }
+  };
+  /* 六人组同伴名称（末段路径 → 显示名） */
+  var HEX_ALLIES = {
+    AoiAllyAgent: 'Aoi', AmirAllyAgent: 'Amir', ArthurAllyAgent: 'Arthur',
+    EleanorAllyAgent: 'Eleanor', LettieAllyAgent: 'Lettie', QuincyAllyAgent: 'Quincy'
+  };
+
+  var _bountyCycle   = null;
+  var _exportRegions = null;
+
+  function loadBountyCycle() {
+    /* 若缓存未过期则直接用 */
+    try {
+      var raw = localStorage.getItem(BOUNTY_CYCLE_LS);
+      if (raw) {
+        var obj = JSON.parse(raw);
+        if (obj && obj.data && Date.now() < obj.data.expiry) {
+          _bountyCycle = obj.data;
+          return Promise.resolve();
+        }
+      }
+    } catch (e) {}
+    return fetch(BOUNTY_CYCLE_URL)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; })
+      .then(function (data) {
+        if (!data || !data.bounties) return;
+        _bountyCycle = data;
+        try { localStorage.setItem(BOUNTY_CYCLE_LS, JSON.stringify({ data: data })); } catch (e) {}
+      });
+  }
+
+  function loadExportRegions() {
+    try {
+      var raw = localStorage.getItem(EXPORT_REGIONS_LS);
+      if (raw) {
+        var obj = JSON.parse(raw);
+        if (obj && Date.now() - obj.ts < 7 * 86400000) {
+          _exportRegions = obj.data;
+          return Promise.resolve();
+        }
+      }
+    } catch (e) {}
+    return fetch(EXPORT_REGIONS_URL)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; })
+      .then(function (data) {
+        if (!data) return;
+        _exportRegions = data;
+        try { localStorage.setItem(EXPORT_REGIONS_LS, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
+      });
+  }
+
+  /* 节点 ID → 显示名（使用 ExportRegions + dict 翻译） */
+  function resolveNode(nodeId) {
+    if (_exportRegions && _exportRegions[nodeId]) {
+      var n = _exportRegions[nodeId];
+      var name    = (_dict && _dict[n.name])        ? _dict[n.name]        : (n.name.split('/').pop());
+      var mission = (_dict && _dict[n.missionName]) ? _dict[n.missionName] : (MZ[n.missionName] || '');
+      return mission ? (name + ' · ' + mission) : name;
+    }
+    if (ARB_NODES[nodeId]) {
+      var info = ARB_NODES[nodeId];
+      return tr(info[0]) + ' (' + (PLANET_ZH[info[1]] || tr(info[1])) + ')';
+    }
+    return tr(nodeId);
+  }
+
+  /**
+   * 按顺序尝试多个 URL，返回第一个成功的 JSON 响应。
+   * 用于应对中国大陆封锁 raw.githubusercontent.com 的情况：
+   *   1. GitHub raw（国际网络首选）
+   *   2. jsDelivr CDN（在大陆有节点，通常可访问）
+   *   3. 若全部失败返回 null，调用方再决定是否使用过期缓存
+   */
+  function fetchFirstOk(urls) {
+    function tryNext(i) {
+      if (i >= urls.length) return Promise.resolve(null);
+      return fetch(urls[i])
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { return d !== null ? d : tryNext(i + 1); })
+        .catch(function ()  { return tryNext(i + 1); });
+    }
+    return tryNext(0);
+  }
+
+  /* ── 中文字典（calamity-inc/warframe-public-export-plus），7 天缓存 ── */
+  var _dict = null;
+  var DICT_URLS = [
+    'https://raw.githubusercontent.com/calamity-inc/warframe-public-export-plus/refs/heads/senpai/dict.zh.json',
+    'https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@senpai/dict.zh.json'
+  ];
+  var DICT_LS_KEY = 'wf_dict_zh';
+  var DICT_TTL    = 7 * 86400 * 1000;
+
+  /* 翻译函数：在字典中查找 key，找不到返回原 key */
+  function tr(key) {
+    if (!key) return '';
+    return (_dict && _dict[key]) ? _dict[key] : key;
+  }
+
+  /* 任务类型翻译：MZ 手动表优先于远程字典，防止字典更新覆盖校正后的译名 */
+  function trMission(type) {
+    if (!type) return '';
+    if (MZ[type]) return MZ[type];
+    var d = tr(type);
+    return d !== type ? d : type;
+  }
+
+  function loadDict() {
+    try {
+      var raw = localStorage.getItem(DICT_LS_KEY);
+      if (raw) {
+        var obj = JSON.parse(raw);
+        if (obj && Date.now() - obj.ts < DICT_TTL) { _dict = obj.data; return Promise.resolve(); }
+      }
+    } catch (e) {}
+    return fetchFirstOk(DICT_URLS).then(function (data) {
+      if (!data) {
+        /* 全部 URL 失败：尝试使用过期缓存（离线兜底） */
+        try {
+          var stale = localStorage.getItem(DICT_LS_KEY);
+          if (stale) { var so = JSON.parse(stale); if (so && so.data) _dict = so.data; }
+        } catch (e) {}
+        return;
+      }
+      _dict = data;
+      try { localStorage.setItem(DICT_LS_KEY, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
+    });
+  }
+
+  /* ── 仲裁时刻表 v2（warframe-arbitration 项目，100k+ 条目，约 11 年覆盖） ── */
+  var _arbV2 = null;
+  var ARB_V2_URLS = [
+    'https://raw.githubusercontent.com/wxhn1225/warframe-arbitration/main/web/public/data/arbys.schedule.v2.json',
+    'https://cdn.jsdelivr.net/gh/wxhn1225/warframe-arbitration@main/web/public/data/arbys.schedule.v2.json'
+  ];
+  var ARB_V2_LS_KEY = 'wf_arbv2';
+  var ARB_V2_TTL    = 7 * 86400 * 1000;
+
+  function loadArbSchedule() {
+    try {
+      var raw = localStorage.getItem(ARB_V2_LS_KEY);
+      if (raw) {
+        var obj = JSON.parse(raw);
+        if (obj && Date.now() - obj.ts < ARB_V2_TTL) { _arbV2 = obj.data; return Promise.resolve(); }
+      }
+    } catch (e) {}
+    return fetchFirstOk(ARB_V2_URLS).then(function (data) {
+      if (!data || !data.seq || !data.nodes) {
+        /* 全部失败：尝试过期缓存 */
+        try {
+          var stale = localStorage.getItem(ARB_V2_LS_KEY);
+          if (stale) { var so = JSON.parse(stale); if (so && so.data && so.data.seq) _arbV2 = so.data; }
+        } catch (e) {}
+        return;
+      }
+      _arbV2 = data;
+      try { localStorage.setItem(ARB_V2_LS_KEY, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
+    });
+  }
+
+  function getArbNodeAt(tsSec) {
+    if (!_arbV2) return null;
+    var idx = Math.floor((tsSec - _arbV2.startTs) / _arbV2.stepSec);
+    if (idx < 0 || idx >= _arbV2.seq.length) return null;
+    return _arbV2.nodes[_arbV2.seq[idx]] || null;
+  }
+
+  function getCurrentArbSlot() {
+    var slotSec = Math.floor(Date.now() / 3600000) * 3600;
+    var nodeId = getArbNodeAt(slotSec);
+    if (!nodeId) return null;
+    return { node: nodeId, nextMs: (slotSec + 3600) * 1000, slotSec: slotSec };
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     多数据源兜底：oracle.browse.wf/worldState.json
+     → api.warframe.com/cdn/worldState.php
+     当 api.warframestat.us 因网络问题（如中国大陆屏蔽）失败时自动切换
+     ══════════════════════════════════════════════════════════ */
+  var _rawWS = null;
+  var _rawWSTs = 0;
+  var RAW_WS_TTL = 60000; /* 1 分钟，与主轮询同步 */
+  var RAW_WS_URLS = [
+    'https://oracle.browse.wf/worldState.json',
+    'https://api.warframe.com/cdn/worldState.php'
+  ];
+
+  function getRawWS() {
+    if (_rawWS && Date.now() - _rawWSTs < RAW_WS_TTL) return Promise.resolve(_rawWS);
+    function tryNext(i) {
+      if (i >= RAW_WS_URLS.length) return Promise.resolve(null);
+      return fetch(RAW_WS_URLS[i])
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { return d ? d : tryNext(i + 1); })
+        .catch(function () { return tryNext(i + 1); });
+    }
+    return tryNext(0).then(function (d) {
+      if (d) { _rawWS = d; _rawWSTs = Date.now(); }
+      return d;
+    });
+  }
+
+  function _rd(v) { /* parseRawDate: MongoDB extended JSON → ISO string */
+    if (!v) return null;
+    if (typeof v === 'string') return v;
+    var d = v['$date'];
+    if (!d) return null;
+    if (typeof d === 'number') return new Date(d).toISOString();
+    if (typeof d === 'string') return new Date(d).toISOString();
+    var n = d['$numberLong'];
+    return n ? new Date(parseInt(n)).toISOString() : null;
+  }
+
+  /* 从 raw worldState 提取各端点数据，形状与 warframestat.us 返回一致 */
+  function fromRawWS(ws) {
+    var out = {};
+    if (!ws) return out;
+
+    /* 世界周期 */
+    if (ws.CetusCycle) {
+      out.cetusCycle = { isDay: !!ws.CetusCycle.isDay, expiry: _rd(ws.CetusCycle.expiry) };
+    }
+    if (ws.VallisCycle) {
+      out.vallisCycle = { isWarm: !!ws.VallisCycle.isWarm, expiry: _rd(ws.VallisCycle.expiry) };
+    }
+    if (ws.CambionCycle) {
+      out.cambionCycle = {
+        active: (ws.CambionCycle.active || ws.CambionCycle.Active || '').toLowerCase(),
+        expiry: _rd(ws.CambionCycle.expiry)
+      };
+    }
+    if (ws.ZarimanCycle) {
+      out.zarimanCycle = { isCorpus: !!ws.ZarimanCycle.isCorpus, expiry: _rd(ws.ZarimanCycle.expiry) };
+    }
+    if (ws.DuviriCycle) {
+      out.duviriCycle = {
+        state: (ws.DuviriCycle.state || ws.DuviriCycle.State || '').toLowerCase(),
+        expiry: _rd(ws.DuviriCycle.expiry)
+      };
+    }
+
+    /* 奸商 Baro Ki'Teer */
+    var vts = ws.VoidTraders;
+    if (Array.isArray(vts) && vts.length) {
+      var vt = vts[0];
+      var act  = _rd(vt.Activation);
+      var exp  = _rd(vt.Expiry);
+      var now  = Date.now();
+      var live = act && exp && new Date(act).getTime() <= now && new Date(exp).getTime() > now;
+      out.voidTrader = {
+        active: !!live,
+        location: vt.Node || '',
+        activation: act,
+        expiry: exp,
+        inventory: (vt.Manifest || []).map(function (m) {
+          var name = (m.ItemType || '').split('/').pop().replace(/([A-Z])/g, ' $1').trim() || '--';
+          return { item: name, ducats: m.PrimePrice || 0, credits: m.RegularPrice || 0 };
+        })
+      };
+    }
+
+    /* 重要赏金任务：仅提取守望者 / 科维兽 / 六人组 三个集团 */
+    var BOUNTY_TAGS = {
+      zariman:  { keys: ['zariman','holdfast'],     label: '守望者', en: 'The Holdfasts' },
+      cavia:    { keys: ['cavia'],                  label: '科维兽', en: 'Cavia' },
+      hex:      { keys: ['hex','1999'],             label: '六人组', en: 'The Hex' }
+    };
+    if (Array.isArray(ws.SyndicateMissions)) {
+      var now2   = Date.now();
+      var bounts = [];
+      ws.SyndicateMissions.forEach(function (sm) {
+        if (!sm.Jobs || !sm.Jobs.length) return;
+        var exp2 = _rd(sm.Expiry);
+        if (exp2 && new Date(exp2).getTime() < now2) return;
+        var tag  = (sm.Tag || '').toLowerCase();
+        var meta = null;
+        Object.keys(BOUNTY_TAGS).forEach(function (k) {
+          if (!meta) {
+            BOUNTY_TAGS[k].keys.forEach(function (kw) {
+              if (!meta && tag.indexOf(kw) >= 0) meta = BOUNTY_TAGS[k];
+            });
+          }
+        });
+        if (!meta) return; /* 非目标集团，跳过 */
+        bounts.push({
+          id:     sm.Tag || '',
+          name:   meta.label,
+          en:     meta.en,
+          expiry: exp2,
+          jobs:   sm.Jobs.map(function (j, idx) {
+            var path  = j.jobType || '';
+            var label = (_dict && path && _dict[path]) ? _dict[path] : null;
+            if (!label) {
+              var parts = path.split('/').filter(Boolean);
+              var seg   = parts[parts.length - 1] || '';
+              label = (_dict && seg && _dict[seg]) ? _dict[seg] : null;
+              if (!label) {
+                var greek = { alpha:'Ⅰ', beta:'Ⅱ', gamma:'Ⅲ', delta:'Ⅳ', epsilon:'Ⅴ', zeta:'Ⅵ' };
+                label = '赏金 ' + (idx + 1);
+                var lo = seg.toLowerCase();
+                Object.keys(greek).forEach(function (gk) {
+                  if (lo.indexOf(gk) >= 0) label = '赏金 ' + greek[gk];
+                });
+              }
+            }
+            return {
+              type:            label,
+              minEnemyLevel:   j.minEnemyLevel || 0,
+              maxEnemyLevel:   j.maxEnemyLevel || 0,
+              standingStages:  j.xpAmounts || j.standingStages || []
+            };
+          })
+        });
+      });
+      if (bounts.length) out.bounties = bounts;
+    }
+
+    return out;
+  }
+
+  /* ── 倒计时 ── */
+  var _timers = [];
+  function clearTimers() { _timers.forEach(clearInterval); _timers = []; }
+
+  /* showDays=true 时始终显示天数（用于奸商）；超过 24h 时自动显示天数
+     expiredText 为倒计时归零后显示的文本，默认"即将刷新" */
+  function countdown(el, expiryMs, showDays, expiredText) {
+    if (!el) return;
+    var msg = expiredText || '即将刷新';
+    function tick() {
+      var diff = expiryMs - Date.now();
+      if (diff <= 0) { el.textContent = msg; return; }
+      var days = (diff >= 86400000 || showDays) ? Math.floor(diff / 86400000) : 0;
+      var rem  = diff - days * 86400000;
+      var h    = Math.floor(rem / 3600000);
+      var m    = Math.floor((rem % 3600000) / 60000);
+      var s    = Math.floor((rem % 60000) / 1000);
+      var str  = '';
+      if (days) str += days + 'd ';
+      if (days || h) str += (days && h < 10 ? '0' : '') + h + 'h ';
+      str += (m < 10 ? '0' : '') + m + 'm ' + (s < 10 ? '0' : '') + s + 's';
+      el.textContent = str;
+    }
+    tick();
+    _timers.push(setInterval(tick, 1000));
+  }
+
+  /* ── API 响应 localStorage 缓存（减少 429 / 数据不可用） ── */
+  var CACHE_TTL = {
+    cetusCycle: 30, vallisCycle: 30, cambionCycle: 30,
+    zarimanCycle: 30, duviriCycle: 30,
+    fissures: 60, invasions: 120,
+    sortie: 3600, archonHunt: 3600, nightwave: 3600,
+    steelPath: 3600, voidTrader: 300, syndicates: 1800,
+    dailyDeals: 3600, tenetWeapons: 14400, codaWeapons: 14400
+  }; /* 单位：秒 */
+
+  function cacheGet(key) {
+    try {
+      var raw = localStorage.getItem('wf_ep_' + key);
+      if (!raw) return null;
+      var obj = JSON.parse(raw);
+      /* 超出 TTL 后不再用于主渲染，但 API 失败时仍可用作兜底 */
+      if (Date.now() / 1000 - obj.ts > (CACHE_TTL[key] || 60) * 4) return null;
+      return obj.data;
+    } catch (e) { return null; }
+  }
+
+  function cacheFresh(key) {
+    try {
+      var raw = localStorage.getItem('wf_ep_' + key);
+      if (!raw) return null;
+      var obj = JSON.parse(raw);
+      if (Date.now() / 1000 - obj.ts > (CACHE_TTL[key] || 60)) return null;
+      return obj.data;
+    } catch (e) { return null; }
+  }
+
+  function cacheSet(key, data) {
+    try {
+      localStorage.setItem('wf_ep_' + key, JSON.stringify({ ts: Math.floor(Date.now() / 1000), data: data }));
+    } catch (e) { /* quota exceeded — 忽略 */ }
+  }
+
+  /* ── 数据存储 ── */
+  var D = {};
+
+  function fetchOne(ep) {
+    return fetch(API + ep + '?' + LANG)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data !== null && data !== undefined) {
+          cacheSet(ep, data);
+          return data;
+        }
+        /* API 返回非 2xx：回退到旧缓存 */
+        return cacheGet(ep);
+      })
+      .catch(function () {
+        /* 网络错误：回退到旧缓存 */
+        return cacheGet(ep);
+      });
+  }
+
+  /* 从 rawWS 数据中能填充的键（syndicates 不在列，避免覆盖 API 数据；bounties 单独处理） */
+  var RAW_WS_KEYS = ['cetusCycle','vallisCycle','cambionCycle','zarimanCycle','duviriCycle','voidTrader'];
+
+  function fetchAll() {
+    var eps = [
+      'cetusCycle','vallisCycle','cambionCycle','zarimanCycle','duviriCycle',
+      'fissures','sortie','archonHunt','nightwave',
+      'steelPath','voidTrader','invasions','syndicates',
+      'dailyDeals','tenetWeapons','codaWeapons'
+    ];
+    /* 先用新鲜缓存立即填充 D，避免闪烁"数据不可用" */
+    eps.forEach(function (k) {
+      var fresh = cacheFresh(k);
+      if (fresh !== null) D[k] = fresh;
+    });
+
+    /* warframestat.us API（可能被中国大陆屏蔽） */
+    var apiP = Promise.all(eps.map(fetchOne)).then(function (res) {
+      eps.forEach(function (k, i) { if (res[i] !== null) D[k] = res[i]; });
+    });
+
+    /* raw worldState 兜底：与 apiP 并发 */
+    var rawP = getRawWS().then(function (ws) {
+      if (!ws) return;
+      var parsed = fromRawWS(ws);
+      /* 世界周期 / Baro：仅在 API 未返回时才填充 */
+      RAW_WS_KEYS.forEach(function (k) {
+        if (parsed[k] !== undefined && (D[k] === undefined || D[k] === null)) {
+          D[k] = parsed[k];
+        }
+      });
+      /* 守望者 / 科维兽 / 六人组：始终从 raw WS 取，不依赖 warframestat.us syndicates */
+      if (parsed.bounties && parsed.bounties.length) {
+        D.bounties = parsed.bounties;
+      }
+    }).catch(function () { /* 网络不通时静默忽略 */ });
+
+    /* 仲裁 v2 时刻表：缓存 7 天，只在首次或失效时重新拉取 */
+    var arbP    = _arbV2 ? Promise.resolve() : loadArbSchedule();
+    /* 中文字典：缓存 7 天 */
+    var dictP   = _dict  ? Promise.resolve() : loadDict();
+    /* 赏金任务轮次：缓存至轮次到期 */
+    var bountyP = (_bountyCycle && Date.now() < _bountyCycle.expiry)
+                    ? Promise.resolve() : loadBountyCycle();
+    /* 节点数据表：缓存 7 天 */
+    var regP    = _exportRegions ? Promise.resolve() : loadExportRegions();
+
+    return Promise.all([apiP, rawP, arbP, dictP, bountyP, regP]);
+  }
+
+  /* ══ 渲染：世界周期 ══ */
+  function renderCycles() {
+    var wrap = document.getElementById('ws-cycles');
+    if (!wrap) return;
+
+    var defs = [
+      {
+        key: 'cetusCycle', name: '希图斯', en: 'Cetus',
+        state: function (d) { return d.isDay ? '白天' : '夜晚'; },
+        color: function (d) { return d.isDay ? '#f6c264' : '#4a9eff'; }
+      },
+      {
+        key: 'vallisCycle', name: '奥布山谷', en: 'Orb Vallis',
+        state: function (d) { return d.isWarm ? '温暖' : '寒冷'; },
+        color: function (d) { return d.isWarm ? '#ff8f6b' : '#6bc5ff'; }
+      },
+      {
+        key: 'cambionCycle', name: '魔胎之境', en: 'Cambion Drift',
+        state: function (d) {
+          var a = (d.active || '').toLowerCase();
+          return a === 'fass' ? 'Fass' : 'Vome';
+        },
+        color: function (d) {
+          var a = (d.active || '').toLowerCase();
+          return a === 'fass' ? '#ff6b3d' : '#8b5cf6';
+        }
+      },
+      {
+        key: 'zarimanCycle', name: '扎里曼', en: 'Zariman',
+        /* isCorpus=true 时显示 Grineer，已由用户校准 */
+        state: function (d) { return d.isCorpus ? 'Grineer' : 'Corpus'; },
+        color: function (d) { return d.isCorpus ? '#e87038' : '#3b82f6'; }
+      },
+      {
+        key: 'duviriCycle', name: '双衍王境', en: 'Duviri',
+        state: function (d) {
+          var moods = { joy:'喜悦', anger:'愤怒', envy:'嫉妒', sorrow:'悲伤', fear:'恐惧' };
+          return moods[(d.state || '').toLowerCase()] || (d.state || '未知');
+        },
+        color: function (d) {
+          var c = { joy:'#f6c264', anger:'#ff4a4a', envy:'#a855f7', sorrow:'#4a9eff', fear:'#6b7280' };
+          return c[(d.state || '').toLowerCase()] || '#b0b8c4';
+        }
+      }
+    ];
+
+    wrap.innerHTML = '';
+    defs.forEach(function (def, idx) {
+      var card = document.createElement('div');
+      card.className = 'ws-cycle-card';
+      var d = D[def.key];
+      if (!d) {
+        card.innerHTML =
+          '<div class="ws-cycle-name">' + def.name +
+          ' <span class="ws-cycle-en">' + def.en + '</span></div>' +
+          '<div class="ws-cycle-state ws-err" style="font-size:.85rem">数据不可用</div>';
+      } else {
+        var tid = 'wct' + idx;
+        card.innerHTML =
+          '<div class="ws-cycle-name">' + def.name +
+          ' <span class="ws-cycle-en">' + def.en + '</span></div>' +
+          '<div class="ws-cycle-state" style="color:' + def.color(d) + '">' + def.state(d) + '</div>' +
+          '<div class="ws-cycle-timer" id="' + tid + '"></div>';
+        if (d.expiry) countdown(card.querySelector('#' + tid), new Date(d.expiry).getTime());
+      }
+      wrap.appendChild(card);
+    });
+  }
+
+  /* ══ 渲染：虚空裂缝 ══ */
+  function renderFissures() {
+    var all = D.fissures;
+    var normal = [], hard = [], storm = [];
+    if (Array.isArray(all)) {
+      all.forEach(function (f) {
+        if (f.expired) return;
+        if (f.isStorm)     storm.push(f);
+        else if (f.isHard) hard.push(f);
+        else               normal.push(f);
+      });
+    }
+    function byTier(a, b) { return (TIER_ORD[a.tier] || 9) - (TIER_ORD[b.tier] || 9); }
+    normal.sort(byTier); hard.sort(byTier); storm.sort(byTier);
+
+    ['normal','hard','storm'].forEach(function (k) {
+      var el = document.getElementById('fc-' + k);
+      if (el) el.textContent = { normal: normal.length, hard: hard.length, storm: storm.length }[k];
+    });
+    renderFissureList('ws-fissures-normal', normal);
+    renderFissureList('ws-fissures-hard',   hard);
+    renderFissureList('ws-fissures-storm',  storm);
+  }
+
+  function renderFissureList(id, arr) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (!arr.length) { el.innerHTML = '<div class="ws-empty">当前无此类裂缝</div>'; return; }
+    /* 用面板类型作前缀（n/h/s），避免三个面板 i=0,1,2… 产生跨面板 ID 冲突 */
+    var pfx = id.replace('ws-fissures-', '').charAt(0);
+    el.innerHTML = arr.map(function (f, i) {
+      var c   = TIER_COLOR[f.tier] || '#b0cae8';
+      var tid = 'wf-' + pfx + '-' + i;
+      return '<div class="ws-fissure-row">' +
+        '<span class="ws-ftier" style="color:' + c + ';border-color:' + c + '">' + (f.tier || '--') + '</span>' +
+        '<span class="ws-fnode">'    + trLocation(f.node        || '--') + '</span>' +
+        '<span class="ws-fmission">' + trLocation(f.missionType || '--') + '</span>' +
+        '<span class="ws-fenemy">'   + (FZ[f.enemy] || f.enemy || '--') + '</span>' +
+        '<span class="ws-ftimer" id="' + tid + '"></span>' +
+        '</div>';
+    }).join('');
+    arr.forEach(function (f, i) {
+      var tid = 'wf-' + pfx + '-' + i;
+      var te  = document.getElementById(tid);
+      if (!te) return;
+      if (f.expiry) {
+        countdown(te, new Date(f.expiry).getTime(), false, '正在消失');
+      } else {
+        te.textContent = '正在消失';
+      }
+    });
+  }
+
+  /* ══ 渲染：仲裁（v2 时刻表 + 7 天推荐预览） ══ */
+  function renderArbitration() {
+    var el = document.getElementById('ws-arbitration');
+    if (!el) return;
+
+    var cur = getCurrentArbSlot();
+
+    /* ── 当前仲裁卡片 ── */
+    var curHTML = '';
+    if (cur) {
+      var info    = ARB_NODES[cur.node];
+      var tier    = TIER_MAP[cur.node] || null;
+      var nodeName = info ? tr(info[0]) + ' (' + (PLANET_ZH[info[1]] || tr(info[1])) + ')' : cur.node;
+      var mType    = info ? trMission(info[2]) : '--';
+      var faction  = info ? (FZ[info[3]] || info[3]) : '--';
+      curHTML =
+        '<div class="ws-arb-card">' +
+          (tier ? '<span class="ws-arb-badge ' + TIER_CSS[tier] + '">' + TIER_LABEL[tier] + '</span>' : '') +
+          '<div class="ws-arb-main">' +
+            '<div class="ws-arb-node">' + nodeName + '</div>' +
+            '<div class="ws-arb-meta">' +
+              '<span class="ws-arb-type">' + mType + '</span>' +
+              '<span class="ws-arb-enemy"> · ' + faction + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="ws-arb-timer-wrap">' +
+            '<span class="ws-arb-label">下次轮换</span>' +
+            '<span class="ws-arb-timer" id="wt-arb"></span>' +
+          '</div>' +
+        '</div>';
+    } else if (!_arbV2) {
+      curHTML =
+        '<div class="ws-arb-card" style="border-color:rgba(201,164,50,.08)">' +
+          '<div class="ws-empty" style="padding:.5rem 0">时刻表加载中…</div>' +
+        '</div>';
+    } else {
+      curHTML =
+        '<div class="ws-arb-card" style="border-color:rgba(201,164,50,.08)">' +
+          '<div class="ws-empty" style="padding:.5rem 0">当前时间不在时刻表覆盖范围内</div>' +
+        '</div>';
+    }
+
+    /* ── 未来 7 天 S / A+ / A 推荐 ── */
+    var upHTML = '';
+    if (_arbV2 && cur) {
+      var upcoming = [];
+      for (var i = 1; i <= 168; i++) {
+        var futSec = cur.slotSec + i * 3600;
+        var nid    = getArbNodeAt(futSec);
+        if (!nid) break;
+        var t = TIER_MAP[nid];
+        if (t === 3 || t === 2 || t === 1) {
+          upcoming.push({ ts: futSec, nodeId: nid, tier: t });
+        }
+      }
+      if (upcoming.length) {
+        upHTML = '<div class="ws-arb-upcoming-hd">未来 7 天 · 推荐任务</div>' +
+          '<div class="ws-arb-upcoming">' +
+          upcoming.map(function (u) {
+            var ni   = ARB_NODES[u.nodeId];
+            var dt   = new Date(u.ts * 1000);
+            var mo   = dt.getMonth() + 1;
+            var da   = dt.getDate();
+            var hh   = dt.getHours();
+            var mm   = dt.getMinutes();
+            var nm   = ni ? tr(ni[0]) + ' (' + (PLANET_ZH[ni[1]] || tr(ni[1])) + ')' : u.nodeId;
+            var mt   = ni ? trMission(ni[2]) : '--';
+            var fc   = ni ? (FZ[ni[3]] || ni[3]) : '--';
+            return '<div class="ws-arb-urow">' +
+              '<span class="ws-arb-badge ' + TIER_CSS[u.tier] + '">' + TIER_LABEL[u.tier] + '</span>' +
+              '<span class="ws-arb-utime">' +
+                '<span class="ws-arb-udate">' + mo + '/' + da + '</span>' +
+                '<span class="ws-arb-uhour">' + (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm + '</span>' +
+              '</span>' +
+              '<span class="ws-arb-unode">' + nm + '</span>' +
+              '<span class="ws-arb-umeta">' + mt + ' · ' + fc + '</span>' +
+            '</div>';
+          }).join('') +
+          '</div>';
+      }
+    }
+
+    el.innerHTML = curHTML + upHTML;
+    if (cur) countdown(document.getElementById('wt-arb'), cur.nextMs);
+  }
+
+  /* ══ 渲染：突击 ══ */
+  function renderSortie() {
+    var el = document.getElementById('ws-sortie');
+    if (!el) return;
+    var d = D.sortie;
+    if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
+    var rows = (d.variants || []).map(function (v, i) {
+      return '<div class="ws-mission-row">' +
+        '<span class="ws-mr-num">' + (i + 1) + '</span>' +
+        '<span class="ws-mr-node">' + trLocation(v.node || '--') + '</span>' +
+        '<span class="ws-mr-type">' + trLocation(v.missionType || '--') + '</span>' +
+        (v.modifier ? '<span class="ws-mr-modifier">' + v.modifier + '</span>' : '') +
+        '</div>';
+    }).join('');
+    el.innerHTML =
+      '<div class="ws-mission-card">' +
+        '<div class="ws-mission-hd">' +
+          '<span class="ws-mission-boss">' + (d.boss || '--') + '</span>' +
+          '<span class="ws-mission-timer" id="wt-sortie"></span>' +
+        '</div>' + rows + '</div>';
+    if (d.expiry) countdown(document.getElementById('wt-sortie'), new Date(d.expiry).getTime());
+  }
+
+  /* ══ 渲染：执刑官猎杀 ══ */
+  function renderArchon() {
+    var el = document.getElementById('ws-archon');
+    if (!el) return;
+    var d = D.archonHunt;
+    if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
+    var rows = (d.missions || []).map(function (m, i) {
+      return '<div class="ws-mission-row">' +
+        '<span class="ws-mr-num">' + (i + 1) + '</span>' +
+        '<span class="ws-mr-node">' + trLocation(m.node || '--') + '</span>' +
+        '<span class="ws-mr-type">' + trLocation(m.type || '--') + '</span>' +
+        '</div>';
+    }).join('');
+    el.innerHTML =
+      '<div class="ws-mission-card">' +
+        '<div class="ws-mission-hd">' +
+          '<span class="ws-mission-boss">' + (d.boss || '--') + '</span>' +
+          '<span class="ws-mission-timer" id="wt-archon"></span>' +
+        '</div>' + rows + '</div>';
+    if (d.expiry) countdown(document.getElementById('wt-archon'), new Date(d.expiry).getTime());
+  }
+
+  /* ══ 渲染：星际商人 ══ */
+  function renderBaro() {
+    var el = document.getElementById('ws-baro');
+    if (!el) return;
+    var d = D.voidTrader;
+    if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
+    var active      = d.active;
+    var inv         = d.inventory || [];
+    var hdCls       = active ? 'ws-baro-active' : 'ws-baro-away';
+    var status      = active ? '✦ 已抵达' : '⏳ 前往中';
+    var timerLabel  = active ? '离开倒计时：' : '到达倒计时：';
+    var timerTarget = active ? d.expiry : d.activation;
+
+    var invHTML = (active && inv.length) ?
+      '<div class="ws-baro-inv-grid">' +
+        inv.slice(0, 30).map(function (item) {
+          return '<div class="ws-baro-item">' +
+            '<span class="ws-bi-name">' + (item.item || '--') + '</span>' +
+            '<span class="ws-bi-cost">' + (item.ducats || 0) + ' 金质 + ' +
+              (item.credits || 0).toLocaleString() + ' 点数</span>' +
+            '</div>';
+        }).join('') +
+      '</div>' : (active ? '<div class="ws-empty">商人背包暂无物品数据</div>' : '');
+
+    el.innerHTML =
+      '<div class="ws-baro-hd ' + hdCls + '">' +
+        '<div class="ws-baro-status">' + status + '</div>' +
+        '<div class="ws-baro-loc">地点：' + trLocation(d.location || '--') + '</div>' +
+        '<div class="ws-baro-tw">' +
+          '<span>' + timerLabel + '</span>' +
+          '<span class="ws-baro-t" id="wt-baro"></span>' +
+        '</div>' +
+      '</div>' + invHTML;
+    if (timerTarget) countdown(document.getElementById('wt-baro'), new Date(timerTarget).getTime(), true);
+  }
+
+  /* ══ 渲染：钢铁之路 ══ */
+  function renderSteelPath() {
+    var el = document.getElementById('ws-steelpath');
+    if (!el) return;
+    var d = D.steelPath;
+    if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
+    var cur = d.currentReward || {};
+    var eg  = d.evergreens   || [];
+    el.innerHTML =
+      '<div class="ws-sp-current">' +
+        '<span class="ws-sp-label">本周奖励</span>' +
+        '<span class="ws-sp-reward">' + (cur.name || '--') + '</span>' +
+        '<span class="ws-sp-cost">' + (cur.cost || '--') + ' 精华</span>' +
+        '<span class="ws-sp-timer" id="wt-sp"></span>' +
+      '</div>' +
+      (eg.length ?
+        '<div class="ws-sp-evergreens">' +
+          eg.map(function (item) {
+            return '<div class="ws-sp-item"><span>' + (item.name || '--') +
+              '</span><span class="ws-sp-cost-sm">' + (item.cost || '--') + ' 精华</span></div>';
+          }).join('') +
+        '</div>' : '');
+    if (d.expiry) countdown(document.getElementById('wt-sp'), new Date(d.expiry).getTime());
+  }
+
+  /* ══ 渲染：午夜电波 ══ */
+  function renderNightwave() {
+    var el = document.getElementById('ws-nightwave');
+    if (!el) return;
+    var d = D.nightwave;
+    if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
+    var all    = d.activeChallenges || [];
+    var perm   = all.filter(function (c) { return c.isPermanent; });
+    var temp   = all.filter(function (c) { return !c.isPermanent; });
+    var daily  = temp.filter(function (c) { return c.isDaily; });
+    var elite  = temp.filter(function (c) { return !c.isDaily && c.isElite; });
+    var weekly = temp.filter(function (c) { return !c.isDaily && !c.isElite; });
+
+    function cRow(c) {
+      return '<div class="ws-nw-challenge' + (c.isElite ? ' ws-nw-elite' : '') + '">' +
+        '<span class="ws-nw-title">' + (c.title || c.desc || '--') + '</span>' +
+        '<span class="ws-nw-rep">+' + (c.reputation || 0).toLocaleString() + '</span>' +
+        '</div>';
+    }
+    function group(title, arr) {
+      if (!arr.length) return '';
+      return '<div class="ws-nw-group"><div class="ws-nw-group-title">' + title + '</div>' +
+        arr.map(cRow).join('') + '</div>';
+    }
+
+    var html = group('每日挑战', daily) + group('每周挑战', weekly) +
+               group('精英挑战', elite) + group('常驻挑战', perm);
+    el.innerHTML = html ?
+      '<div class="ws-nw-groups">' + html + '</div>' :
+      '<div class="ws-empty">当前无午夜电波活动</div>';
+  }
+
+  /* ══ 渲染：入侵 ══ */
+  function renderInvasions() {
+    var el = document.getElementById('ws-invasions');
+    if (!el) return;
+    var inv = D.invasions;
+    if (!Array.isArray(inv)) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
+    var active = inv.filter(function (i) { return !i.completed; });
+    if (!active.length) { el.innerHTML = '<div class="ws-empty">当前无活跃入侵</div>'; return; }
+
+    function reward(side) {
+      if (!side || !side.reward) return '';
+      var parts = [];
+      if (side.reward.credits) parts.push(side.reward.credits.toLocaleString() + ' 点数');
+      (side.reward.items || []).forEach(function (it) { parts.push(it); });
+      (side.reward.countedItems || []).forEach(function (ci) { parts.push(ci.count + '× ' + ci.type); });
+      return parts.join(', ');
+    }
+
+    el.innerHTML = '<div class="ws-inv-list">' + active.map(function (inv) {
+      var comp = Math.max(0, Math.min(100, Math.round(inv.completion || 0)));
+      return '<div class="ws-inv-row">' +
+        '<div class="ws-inv-node">' + trLocation(inv.node || '--') + '</div>' +
+        '<div class="ws-inv-vs">' +
+          '<span class="ws-inv-side">' +
+            '<span class="ws-inv-faction">' + ((inv.attacker || {}).faction || '--') + '</span>' +
+            '<span class="ws-inv-reward">' + reward(inv.attacker) + '</span>' +
+          '</span>' +
+          '<span class="ws-inv-divider">vs</span>' +
+          '<span class="ws-inv-side">' +
+            '<span class="ws-inv-faction">' + ((inv.defender || {}).faction || '--') + '</span>' +
+            '<span class="ws-inv-reward">' + reward(inv.defender) + '</span>' +
+          '</span>' +
+        '</div>' +
+        '<div class="ws-inv-progress">' +
+          '<div class="ws-inv-bar"><div class="ws-inv-fill" style="width:' + (50 + comp / 2) + '%"></div></div>' +
+          '<span class="ws-inv-pct">' + comp + '%</span>' +
+        '</div>' +
+        '</div>';
+    }).join('') + '</div>';
+  }
+
+  /* ══ 渲染：重要赏金任务（守望者 / 科维兽 / 六人组）
+     数据来自 oracle.browse.wf/bounty-cycle（服务器侧解算 Seed） ══ */
+  function renderBounties() {
+    var el = document.getElementById('ws-bounties');
+    if (!el) return;
+    if (!_bountyCycle || !_bountyCycle.bounties) {
+      el.innerHTML = '<div class="ws-empty">赏金数据加载中…</div>';
+      return;
+    }
+
+    var rot    = _bountyCycle.rot || '';
+    var expiry = _bountyCycle.expiry; /* ms */
+    var tags   = ['ZarimanSyndicate', 'EntratiLabSyndicate', 'HexSyndicate'];
+
+    var html = '<div class="ws-bounty-list">';
+    tags.forEach(function (tag) {
+      var meta = BOUNTY_META[tag];
+      var jobs = (_bountyCycle.bounties[tag] || []);
+      var lvls = BOUNTY_LVLS[tag] || [];
+      var tid  = 'wt-bounty-' + tag;
+
+      html +=
+        '<div class="ws-bounty-syndicate">' +
+          '<div class="ws-bounty-syn-hd">' +
+            '<span class="ws-bounty-syn-name">' + meta.zh + '</span>' +
+            '<span class="ws-bounty-syn-en">'   + meta.en + '</span>' +
+            '<span class="ws-bounty-timer" id="' + tid + '"></span>' +
+          '</div>' +
+          '<div class="ws-bounty-jobs">';
+
+      jobs.forEach(function (j, idx) {
+        var range   = lvls[idx] ? lvls[idx][0] + '–' + lvls[idx][1] : '--';
+        var name    = resolveNode(j.node);
+        var allyRaw = j.ally ? j.ally.split('/').pop() : null;
+        var ally    = allyRaw ? (HEX_ALLIES[allyRaw] || allyRaw) : null;
+        html +=
+          '<div class="ws-bounty-job">' +
+            '<span class="ws-bj-lvl">Lv ' + range + '</span>' +
+            '<span class="ws-bj-type">' + name + '</span>' +
+            (ally ? '<span class="ws-bj-ally">' + ally + '</span>' : '') +
+          '</div>';
+      });
+
+      html += '</div></div>';
+    });
+
+    html += '</div>';
+    el.innerHTML = html;
+    tags.forEach(function (tag) {
+      countdown(document.getElementById('wt-bounty-' + tag), expiry);
+    });
+  }
+
+  /* 将页面内所有纯文本中的 ( ) 括号包裹在 .ws-br 中，令其使用微软雅黑字体 */
+  function fixBrackets(root) {
+    var tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var nodes = [];
+    while (tw.nextNode()) nodes.push(tw.currentNode);
+    nodes.forEach(function (node) {
+      if (!/[()]/.test(node.data)) return;
+      var frag = document.createDocumentFragment();
+      node.data.split(/([()])/).forEach(function (part) {
+        if (part === '(' || part === ')') {
+          var s = document.createElement('span');
+          s.className = 'ws-br';
+          s.textContent = part;
+          frag.appendChild(s);
+        } else if (part) {
+          frag.appendChild(document.createTextNode(part));
+        }
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+
+  /* ── 武器轮换计算常量 ──
+     以 2026-06-16/17 wfhub.top 实测数据为锚点（轮换均在 00:00 UTC 整点）。
+     Tenet 第 0 组（Livia/Grigori/Ferrox/Exec/Agendus）于 2026-06-16T00:00Z 开始；
+     Coda  批次 A                                     于 2026-06-17T00:00Z 开始。
+     两者均为 4 天 / 批次。 */
+  var FOUR_DAYS_MS  = 345600000; /* 4 * 86400 * 1000 */
+  var TENET_EPOCH   = 1781568000000; /* 2026-06-16T00:00:00Z */
+  var CODA_EPOCH    = 1781654400000; /* 2026-06-17T00:00:00Z */
+
+  /* 信条武器 — 3 组 × 5 件，Group 0 经实测确认，Groups 1-2 为推算顺序。
+     附加元素 % 每轮随机生成，无法本地推算，仅展示武器名。 */
+  var TENET_GROUPS = [
+    /* Group 0 — 经实测确认，元素与 % 均为截图数据 */
+    [
+      { name: 'Tenet Livia',        elem: 'Electricity', pct: 55.5 },
+      { name: 'Tenet Grigori',      elem: 'Fire',        pct: 51.5 },
+      { name: 'Tenet Ferrox',       elem: 'Toxin',       pct: 27.1 },
+      { name: 'Tenet Exec',         elem: 'Cold',        pct: 25.6 },
+      { name: 'Tenet Agendus',      elem: 'Magnetic',    pct: 25.3 }
+    ],
+    /* Group 1 — 推算顺序，元素 % 待实测补充 */
+    [
+      { name: 'Tenet Arca Plasmor', elem: '', pct: 0 },
+      { name: 'Tenet Cycron',       elem: '', pct: 0 },
+      { name: 'Tenet Detron',       elem: '', pct: 0 },
+      { name: 'Tenet Diplos',       elem: '', pct: 0 },
+      { name: 'Tenet Envoy',        elem: '', pct: 0 }
+    ],
+    /* Group 2 — 推算顺序，元素 % 待实测补充 */
+    [
+      { name: 'Tenet Flux Rifle',   elem: '', pct: 0 },
+      { name: 'Tenet Plinx',        elem: '', pct: 0 },
+      { name: 'Tenet Spirex',       elem: '', pct: 0 },
+      { name: 'Tenet Tetra',        elem: '', pct: 0 },
+      { name: 'Tenet Tombfinger',   elem: '', pct: 0 }
+    ]
+  ];
+
+  /* 终幕武器 — 批次 A/B，7 件/批次。批次 A 数据经实测确认（元素 % 固定）。
+     批次 B 数据如已知可在此补充。 */
+  var CODA_BATCHES = [
+    {
+      label: 'A',
+      weapons: [
+        { name: 'Dual Coda Torxica',  elem: 'Cold',        pct: 47   },
+        { name: 'Coda Motovore',     elem: 'Magnetic',    pct: 37.4 },
+        { name: 'Coda Sporothrix',   elem: 'Cold',        pct: 37   },
+        { name: 'Coda Catabolyst',   elem: 'Electricity', pct: 31   },
+        { name: 'Coda Hema',         elem: 'Impact',      pct: 29   },
+        { name: 'Coda Pox',          elem: 'Magnetic',    pct: 28.1 },
+        { name: 'Coda Mire',         elem: 'Cold',        pct: 25   }
+      ]
+    },
+    {
+      label: 'B',
+      weapons: [] /* 待补充实测数据 */
+    }
+  ];
+
+  /* 武器中文名对照 — 来源：warframe-public-export-plus/dict.zh.json 官方字典 */
+  var WEAPON_ZH = {
+    /* 信条 (Tenet) — 姐妹武器 */
+    'Tenet Livia':          '信条·莉薇娅',
+    'Tenet Grigori':        '信条·格里高利',
+    'Tenet Ferrox':         '信条·铁晶磁轨炮',
+    'Tenet Exec':           '信条·枢密',
+    'Tenet Agendus':        '信条·集议',
+    'Tenet Arca Plasmor':   '信条·弧电离子枪',
+    'Tenet Cycron':         '信条·循环离子枪',
+    'Tenet Detron':         '信条·德特昂',
+    'Tenet Diplos':         '信条·纵横双枪',
+    'Tenet Envoy':          '信条·典客',
+    'Tenet Flux Rifle':     '信条·通量步枪',
+    'Tenet Plinx':          '信条·漫射者',
+    'Tenet Spirex':         '信条·斯派克斯',
+    'Tenet Tetra':          '信条·特拉',
+    /* 终幕 (Coda) */
+    'Dual Coda Torxica':    '终幕·孢蚀双枪',
+    'Coda Motovore':        '终幕·噬轮',
+    'Coda Sporothrix':      '终幕·孢丝感染枪',
+    'Coda Catabolyst':      '终幕·异化者',
+    'Coda Hema':            '终幕·血肢',
+    'Coda Pox':             '终幕·脓痘',
+    'Coda Mire':            '终幕·米尔'
+  };
+
+  /* 生成武器条目 HTML（中文名在上，英文名在下） */
+  function weapItemHtml(name, elem, pct) {
+    var zh = WEAPON_ZH[name] || '';
+    var nameHtml = zh
+      ? '<span class="ws-weap-iname"><span class="ws-weap-zh">' + zh + '</span><span class="ws-weap-en">' + name + '</span></span>'
+      : '<span class="ws-weap-iname ws-weap-zh">' + name + '</span>';
+    return '<div class="ws-weap-item">' + nameHtml +
+      (elem ? '<span class="ws-weap-elem ' + elemCss(elem) + '">' + elemZh(elem) + '</span>' : '') +
+      (pct  ? '<span class="ws-weap-pct">' + pct + '</span>' : '') +
+    '</div>';
+  }
+
+  /* ══ 渲染：Darvo 特惠 ══ */
+  function renderDarvo() {
+    var el = document.getElementById('ws-darvo');
+    if (!el) return;
+    var deals = D.dailyDeals;
+    if (!Array.isArray(deals) || !deals.length) {
+      el.innerHTML = '<div class="ws-empty">今日暂无特惠</div>';
+      return;
+    }
+    el.innerHTML = '<div class="ws-darvo-grid">' +
+      deals.map(function (deal, i) {
+        return '<div class="ws-darvo-item">' +
+          '<div class="ws-darvo-name">' + (tr(deal.item) || deal.item || '--') + '</div>' +
+          '<div class="ws-darvo-meta">' +
+            '<span class="ws-darvo-sale">' + (deal.salePrice || 0).toLocaleString() + ' ₱</span>' +
+            (deal.originalPrice ? '<span class="ws-darvo-orig">' + deal.originalPrice.toLocaleString() + ' ₱</span>' : '') +
+            (deal.discount ? '<span class="ws-darvo-disc">-' + deal.discount + '%</span>' : '') +
+          '</div>' +
+          (deal.expiry ? '<div class="ws-darvo-timer" id="wt-dv-' + i + '"></div>' : '') +
+        '</div>';
+      }).join('') +
+    '</div>';
+    deals.forEach(function (deal, i) {
+      if (deal.expiry) countdown(document.getElementById('wt-dv-' + i), new Date(deal.expiry).getTime());
+    });
+  }
+
+  /* ══ 渲染：信条武器轮换 (Tenet Weapons) ══ */
+  function renderTenetWeapons() {
+    var el = document.getElementById('ws-tenet');
+    if (!el) return;
+
+    /* API 数据优先（端点可用时自动启用）*/
+    var apiData = D.tenetWeapons;
+    if (Array.isArray(apiData) && apiData.length) {
+      var apiExpiry = apiData[0] && apiData[0].expiry ? new Date(apiData[0].expiry).getTime() : null;
+      el.innerHTML =
+        '<div class="ws-weap-hd">' +
+          '<span class="ws-weap-batch">Ergo Glast 当前轮换</span>' +
+          '<span class="ws-weap-cycle">每 4 天轮换</span>' +
+          (apiExpiry ? '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-tenet"></span></div>' : '') +
+        '</div>' +
+        '<div class="ws-weap-grid">' +
+          apiData.map(function (w) {
+            var e = w.element || w.damage || '';
+            var pct = w.elementalDamage != null ? (+w.elementalDamage).toFixed(1) + '%' : '';
+            return weapItemHtml(w.name || '--', e, pct);
+          }).join('') +
+        '</div>';
+      if (apiExpiry) countdown(document.getElementById('wt-tenet'), apiExpiry, true);
+      return;
+    }
+
+    /* 本地推算：4 天周期，Group 0 = 2026-06-16T00:00Z 实测 */
+    var now     = Date.now();
+    var idx     = Math.floor((now - TENET_EPOCH) / FOUR_DAYS_MS);
+    var gIdx    = ((idx % TENET_GROUPS.length) + TENET_GROUPS.length) % TENET_GROUPS.length;
+    var group   = TENET_GROUPS[gIdx];
+    var nextMs  = TENET_EPOCH + (idx + 1) * FOUR_DAYS_MS;
+
+    var hasElem = group.some(function (w) { return w.elem; });
+    el.innerHTML =
+      '<div class="ws-weap-hd">' +
+        '<span class="ws-weap-batch">Ergo Glast 当前轮换</span>' +
+        '<span class="ws-weap-cycle">每 4 天 00:00 UTC 轮换一次祖灵伤害加成' +
+          (hasElem ? '' : ' · 附加元素 % 随机，请以游戏内为准') + '</span>' +
+        '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-tenet"></span></div>' +
+      '</div>' +
+      '<div class="ws-weap-grid">' +
+        group.map(function (w) {
+          return weapItemHtml(w.name, w.elem, w.pct ? w.pct.toFixed(1) + '%' : '');
+        }).join('') +
+      '</div>';
+    countdown(document.getElementById('wt-tenet'), nextMs, true);
+  }
+
+  /* ══ 渲染：终幕武器轮换 (Coda Weapons) ══ */
+  function renderCodaWeapons() {
+    var el = document.getElementById('ws-coda');
+    if (!el) return;
+
+    /* API 数据优先（端点可用时自动启用）*/
+    var apiData    = D.codaWeapons;
+    var apiWeapons = Array.isArray(apiData) ? apiData : (apiData && apiData.weapons ? apiData.weapons : null);
+    if (apiWeapons && apiWeapons.length) {
+      var apiBatch  = apiData && !Array.isArray(apiData) && apiData.batch ? apiData.batch : null;
+      var apiExpiry = apiData && !Array.isArray(apiData) && apiData.expiry
+                      ? new Date(apiData.expiry).getTime()
+                      : (Array.isArray(apiData) && apiData[0] && apiData[0].expiry
+                          ? new Date(apiData[0].expiry).getTime() : null);
+      var apiNext   = apiBatch ? String.fromCharCode(apiBatch.charCodeAt(0) + 1) : null;
+      el.innerHTML =
+        '<div class="ws-weap-hd">' +
+          '<span class="ws-weap-batch">' + (apiBatch ? '当前批次 ' + apiBatch : '当前批次') + '</span>' +
+          '<span class="ws-weap-cycle">每 4 天轮换' + (apiNext ? '，下次为批次 ' + apiNext : '') + '</span>' +
+          (apiExpiry ? '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-coda"></span></div>' : '') +
+        '</div>' +
+        '<div class="ws-weap-grid">' +
+          apiWeapons.map(function (w) {
+            var e = w.element || w.damage || '';
+            var pct = w.elementalDamage != null ? (+w.elementalDamage).toFixed(1) + '%' : '';
+            return weapItemHtml(w.name || '--', e, pct);
+          }).join('') +
+        '</div>';
+      if (apiExpiry) countdown(document.getElementById('wt-coda'), apiExpiry, true);
+      return;
+    }
+
+    /* 本地推算：4 天周期，批次 A = 2026-06-17T00:00Z 实测 */
+    var now    = Date.now();
+    var idx    = Math.floor((now - CODA_EPOCH) / FOUR_DAYS_MS);
+    var bIdx   = ((idx % CODA_BATCHES.length) + CODA_BATCHES.length) % CODA_BATCHES.length;
+    var batch  = CODA_BATCHES[bIdx];
+    var nBatch = CODA_BATCHES[(bIdx + 1) % CODA_BATCHES.length];
+    var nextMs = CODA_EPOCH + (idx + 1) * FOUR_DAYS_MS;
+
+    el.innerHTML =
+      '<div class="ws-weap-hd">' +
+        '<span class="ws-weap-batch">当前批次 ' + batch.label + '</span>' +
+        '<span class="ws-weap-cycle">每 4 天轮换，下次为批次 ' + nBatch.label + '</span>' +
+        '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-coda"></span></div>' +
+      '</div>' +
+      (batch.weapons.length
+        ? '<div class="ws-weap-grid">' +
+            batch.weapons.map(function (w) {
+              return weapItemHtml(w.name, w.elem, w.pct.toFixed(1) + '%');
+            }).join('') +
+          '</div>'
+        : '<div class="ws-empty">批次 ' + batch.label + ' 数据待补充</div>'
+      );
+    countdown(document.getElementById('wt-coda'), nextMs, true);
+  }
+
+  /* ── 渲染总入口 ── */
+  function renderAll() {
+    clearTimers();
+    renderCycles();
+    renderFissures();
+    renderArbitration();
+    renderSortie();
+    renderArchon();
+    renderBaro();
+    renderSteelPath();
+    renderDarvo();
+    renderTenetWeapons();
+    renderCodaWeapons();
+    renderNightwave();
+    renderInvasions();
+    renderBounties();
+    var main = document.querySelector('.ws-main');
+    if (main) fixBrackets(main);
+    var upd = document.getElementById('ws-last-update');
+    if (upd) upd.textContent = '更新: ' + new Date().toLocaleTimeString('zh-CN');
+  }
+
+  function setLoading(v) {
+    var btn = document.getElementById('ws-refresh');
+    var dot = document.getElementById('ws-loading');
+    if (btn) btn.disabled = v;
+    if (dot) dot.style.display = v ? 'inline-block' : 'none';
+  }
+
+  function initTabs() {
+    document.querySelectorAll('.ws-ftab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.ws-ftab').forEach(function (t) { t.classList.remove('active'); });
+        document.querySelectorAll('.ws-fissures-panel').forEach(function (p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        var panel = document.getElementById('ws-fissures-' + tab.dataset.type);
+        if (panel) panel.classList.add('active');
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    initTabs();
+
+    /* 先用 localStorage 缓存立即渲染，消除首屏"加载中"闪烁 */
+    var eps = [
+      'cetusCycle','vallisCycle','cambionCycle','zarimanCycle','duviriCycle',
+      'fissures','sortie','archonHunt','nightwave',
+      'steelPath','voidTrader','invasions','syndicates',
+      'dailyDeals','tenetWeapons','codaWeapons'
+    ];
+    var hasCached = false;
+    eps.forEach(function (k) { var c = cacheGet(k); if (c) { D[k] = c; hasCached = true; } });
+    /* 仲裁 v2 时刻表也尝试从缓存恢复 */
+    try {
+      var arbRaw = localStorage.getItem(ARB_V2_LS_KEY);
+      if (arbRaw) {
+        var arbObj = JSON.parse(arbRaw);
+        if (arbObj && Date.now() - arbObj.ts < ARB_V2_TTL) _arbV2 = arbObj.data;
+      }
+    } catch (e) {}
+    /* 中文字典从缓存恢复 */
+    try {
+      var dictRaw = localStorage.getItem(DICT_LS_KEY);
+      if (dictRaw) {
+        var dictObj = JSON.parse(dictRaw);
+        if (dictObj && Date.now() - dictObj.ts < DICT_TTL) _dict = dictObj.data;
+      }
+    } catch (e) {}
+    /* 赏金轮次从缓存恢复（检查是否已过期） */
+    try {
+      var bcRaw = localStorage.getItem(BOUNTY_CYCLE_LS);
+      if (bcRaw) {
+        var bcObj = JSON.parse(bcRaw);
+        if (bcObj && bcObj.data && Date.now() < bcObj.data.expiry) _bountyCycle = bcObj.data;
+      }
+    } catch (e) {}
+    /* 节点数据表从缓存恢复 */
+    try {
+      var erRaw = localStorage.getItem(EXPORT_REGIONS_LS);
+      if (erRaw) {
+        var erObj = JSON.parse(erRaw);
+        if (erObj && Date.now() - erObj.ts < 7 * 86400000) _exportRegions = erObj.data;
+      }
+    } catch (e) {}
+    if (hasCached || _arbV2) renderAll();
+
+    setLoading(true);
+    fetchAll().then(function () { setLoading(false); renderAll(); });
+
+    /* 每 90 秒刷新 API 数据（避免频繁触发 429）；v2 时刻表 7 天缓存自动维护 */
+    setInterval(function () {
+      fetchAll().then(renderAll);
+    }, 90000);
+
+    var btn = document.getElementById('ws-refresh');
+    if (btn) btn.addEventListener('click', function () {
+      setLoading(true);
+      fetchAll().then(function () { setLoading(false); renderAll(); });
+    });
+
+    /* 快速导航浮窗：点击切换展开，点击外部收起 */
+    var qn = document.getElementById('ws-quicknav');
+    if (qn) {
+      var _qnTimer = null;
+      qn.addEventListener('mouseenter', function () {
+        clearTimeout(_qnTimer);
+        qn.classList.add('ws-qn-open');
+      });
+      qn.addEventListener('mouseleave', function () {
+        _qnTimer = setTimeout(function () { qn.classList.remove('ws-qn-open'); }, 150);
+      });
+      qn.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') {
+          setTimeout(function () { qn.classList.remove('ws-qn-open'); }, 120);
+          return;
+        }
+        e.stopPropagation();
+        qn.classList.toggle('ws-qn-open');
+      });
+      document.addEventListener('click', function (e) {
+        if (!qn.contains(e.target)) qn.classList.remove('ws-qn-open');
+      });
+    }
+  });
+
+})();
+</script>
+
+<script>
+/* ── 超级导航面板（更多榜单） ── */
+(function() {
+  var panel   = document.getElementById('super-nav-panel');
+  var overlay = document.getElementById('super-nav-overlay');
+  var btn     = document.getElementById('nav-more-btn');
+  if (!panel || !btn) return;
+
+  var isOpen = false;
+  var langTimer = null;
+  var bgCanvas = null, bgCtx = null, bgAnim = null, bgParticles = [];
+
+  function initPanelCanvas() {
+    if (bgCanvas) return;
+    bgCanvas = document.createElement('canvas');
+    bgCanvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;opacity:.55;';
+    bgCanvas.className = 'snav-bg-canvas';
+    panel.insertBefore(bgCanvas, panel.firstChild);
+    bgCtx = bgCanvas.getContext('2d');
+    resizePanelCanvas(); spawnPanelParticles(); animatePanelCanvas();
+  }
+  function resizePanelCanvas() {
+    if (!bgCanvas) return;
+    bgCanvas.width  = panel.offsetWidth  || window.innerWidth;
+    bgCanvas.height = panel.offsetHeight || 200;
+  }
+  function spawnPanelParticles() {
+    bgParticles = [];
+    var W = bgCanvas.width, H = bgCanvas.height;
+    var PAL = ['#00d4ff','#8b5cf6','#00ffcc','#60a5fa','#f0abfc'];
+    for (var i = 0; i < 55; i++) {
+      bgParticles.push({ x:Math.random()*W, y:Math.random()*H, r:.5+Math.random()*1.8,
+        vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.25,
+        col:PAL[Math.floor(Math.random()*PAL.length)], a:Math.random(), da:.004+Math.random()*.008 });
+    }
+  }
+  function animatePanelCanvas() {
+    if (!bgCtx) return;
+    bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+    var W = bgCanvas.width, H = bgCanvas.height;
+    bgParticles.forEach(function(p) {
+      p.x += p.vx; p.y += p.vy; p.a += p.da;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      var alpha = .15 + .55 * Math.abs(Math.sin(p.a));
+      bgCtx.save(); bgCtx.globalAlpha = alpha;
+      bgCtx.fillStyle = p.col; bgCtx.shadowColor = p.col; bgCtx.shadowBlur = p.r * 5;
+      bgCtx.beginPath(); bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2); bgCtx.fill(); bgCtx.restore();
+    });
+    bgAnim = requestAnimationFrame(animatePanelCanvas);
+  }
+  function destroyPanelCanvas() {
+    if (bgAnim) { cancelAnimationFrame(bgAnim); bgAnim = null; }
+    if (bgCanvas) { bgCanvas.remove(); bgCanvas = null; bgCtx = null; }
+    bgParticles = [];
+  }
+  function burst() {
+    var rect = btn.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2, cy = rect.bottom + 2;
+    var c = document.createElement('canvas');
+    c.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9998;';
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    document.body.appendChild(c);
+    var ctx = c.getContext('2d');
+    var PAL = ['#00d4ff','#8b5cf6','#00ffcc','#ffffff','#60a5fa','#f0abfc','#a78bfa','#00ff88','#ff6b9d'];
+    var pts = [];
+    for (var i = 0; i < 60; i++) {
+      var a = (i/60)*Math.PI*2+(Math.random()-.5)*.5, spd = 70+Math.random()*180;
+      pts.push({ x:cx, y:cy, vx:Math.cos(a)*spd, vy:Math.sin(a)*spd-55,
+        r:1.2+Math.random()*4.0, col:PAL[i%PAL.length], life:1,
+        decay:.013+Math.random()*.016, trail:[], spark:Math.random()<.3 });
+    }
+    var last = performance.now();
+    function frame(now) {
+      var dt = Math.min((now - last)/1000, .05); last = now;
+      ctx.clearRect(0, 0, c.width, c.height);
+      var alive = false;
+      pts.forEach(function(p) {
+        if (p.life <= 0) return;
+        p.trail.push({x:p.x, y:p.y, a:p.life});
+        if (p.trail.length > 8) p.trail.shift();
+        p.vx *= .96; p.vy += 240*dt; p.x += p.vx*dt; p.y += p.vy*dt; p.life -= p.decay; alive = true;
+        for (var t = 1; t < p.trail.length; t++) {
+          ctx.save(); ctx.globalAlpha = p.trail[t].a*.4*(t/p.trail.length);
+          ctx.strokeStyle = p.col; ctx.lineWidth = p.r*.55; ctx.lineCap = 'round';
+          ctx.shadowColor = p.col; ctx.shadowBlur = p.r*3;
+          ctx.beginPath(); ctx.moveTo(p.trail[t-1].x,p.trail[t-1].y);
+          ctx.lineTo(p.trail[t].x,p.trail[t].y); ctx.stroke(); ctx.restore();
+        }
+        ctx.save(); ctx.globalAlpha = Math.max(0,p.life);
+        ctx.shadowColor = p.col; ctx.shadowBlur = p.r*7; ctx.fillStyle = p.col;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); ctx.restore();
+      });
+      if (alive) requestAnimationFrame(frame); else c.remove();
+    }
+    requestAnimationFrame(frame);
+  }
+  function ripple() {
+    var r = document.createElement('span');
+    r.style.cssText = ['position:absolute','inset:0','border-radius:inherit','pointer-events:none',
+      'background:conic-gradient(from 0deg,#00d4ff,#8b5cf6,#00ffcc,#f0abfc,#00d4ff)',
+      'opacity:.6','transform:scale(0)','transition:transform .6s ease,opacity .6s ease'].join(';');
+    btn.style.position = 'relative'; btn.style.overflow = 'hidden'; btn.appendChild(r);
+    requestAnimationFrame(function() { r.style.transform='scale(4)'; r.style.opacity='0'; });
+    setTimeout(function() { r.remove(); }, 650);
+  }
+  function openPanel() {
+    if (isOpen) return; isOpen = true;
+    ripple(); burst();
+    btn.classList.add('open'); panel.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(function() { overlay.style.opacity = '1'; });
+    if (!langTimer) langTimer = setInterval(function() { panel.classList.toggle('lang-en'); }, 3000);
+    setTimeout(function() { initPanelCanvas(); resizePanelCanvas(); }, 80);
+  }
+  function closePanel() {
+    if (!isOpen) return; isOpen = false;
+    btn.classList.remove('open'); panel.classList.remove('open');
+    overlay.style.opacity = '0';
+    setTimeout(function() { if (!isOpen) overlay.style.display = 'none'; }, 430);
+    clearInterval(langTimer); langTimer = null;
+    setTimeout(function() { panel.classList.remove('lang-en'); }, 320);
+    setTimeout(destroyPanelCanvas, 450);
+  }
+  btn.addEventListener('click', function(e) { e.stopPropagation(); isOpen ? closePanel() : openPanel(); });
+  overlay.addEventListener('click', closePanel);
+  document.addEventListener('click', function(e) {
+    if (isOpen && !panel.contains(e.target) && !btn.contains(e.target)) closePanel();
+  });
+  document.addEventListener('keydown', function(e) { if (e.key==='Escape') closePanel(); });
+  window.addEventListener('resize', function() { if (isOpen) resizePanelCanvas(); });
+})();
+</script>
+
+</body>
+</html>
