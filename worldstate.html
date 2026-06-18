@@ -2854,6 +2854,62 @@
     return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, bountyP, regP]);
   }
 
+  /* ══ 世界周期数学推算 ══
+     当 fallback JSON 的 expiry 已过期时，按已知游戏固定半周期步进至下一个有效 expiry。
+     Duviri 情绪顺序非固定数学规律，不做推算。                                         */
+  var _CYCLE_HALF = {
+    /* 希图斯：白天 ~100min，夜晚 ~50min。expiry 指当前状态结束时刻，
+       过期后下一相位 = 当前状态的"对立"状态。                            */
+    cetusCycle: function (d) {
+      return d.isDay
+        ? [{ms: 2999625, s: {isDay: false}}, {ms: 5999250, s: {isDay: true}}]
+        : [{ms: 5999250, s: {isDay: true}},  {ms: 2999625, s: {isDay: false}}];
+    },
+    /* 奥布山谷：寒冷 ~16.7min，温暖 ~10min */
+    vallisCycle: function (d) {
+      return d.isWarm
+        ? [{ms: 1000000, s: {isWarm: false}}, {ms: 600000, s: {isWarm: true}}]
+        : [{ms: 600000,  s: {isWarm: true}},  {ms: 1000000, s: {isWarm: false}}];
+    },
+    /* 魔胎之境：Fass/Vome 各 60min，对称 */
+    cambionCycle: function (d) {
+      var isFass = (d.active || '').toLowerCase() === 'fass';
+      return isFass
+        ? [{ms: 3600000, s: {active: 'vome'}}, {ms: 3600000, s: {active: 'fass'}}]
+        : [{ms: 3600000, s: {active: 'fass'}}, {ms: 3600000, s: {active: 'vome'}}];
+    },
+    /* 扎里曼：Grineer/Corpus 各 15min，对称 */
+    zarimanCycle: function (d) {
+      return d.isCorpus
+        ? [{ms: 900000, s: {isCorpus: false}}, {ms: 900000, s: {isCorpus: true}}]
+        : [{ms: 900000, s: {isCorpus: true}},  {ms: 900000, s: {isCorpus: false}}];
+    }
+  };
+
+  function _advanceCycle(d, key) {
+    if (!d || !d.expiry) return d;
+    var halfFn = _CYCLE_HALF[key];
+    if (!halfFn) return d;
+    var exp = new Date(d.expiry).getTime();
+    if (exp > Date.now()) return d; // 未过期，直接用
+    var phases = halfFn(d);
+    var elapsed = Date.now() - exp;
+    var i = 0;
+    while (elapsed >= 0) {
+      var ph = phases[i % phases.length];
+      if (elapsed < ph.ms) {
+        var updated = {};
+        for (var k in d) if (Object.prototype.hasOwnProperty.call(d, k)) updated[k] = d[k];
+        for (var sk in ph.s) if (Object.prototype.hasOwnProperty.call(ph.s, sk)) updated[sk] = ph.s[sk];
+        updated.expiry = new Date(Date.now() + (ph.ms - elapsed)).toISOString();
+        return updated;
+      }
+      elapsed -= ph.ms;
+      i++;
+    }
+    return d;
+  }
+
   /* ══ 渲染：世界周期 ══ */
   function renderCycles() {
     var wrap = document.getElementById('ws-cycles');
@@ -2904,7 +2960,7 @@
     defs.forEach(function (def, idx) {
       var card = document.createElement('div');
       card.className = 'ws-cycle-card';
-      var d = D[def.key];
+      var d = _advanceCycle(D[def.key], def.key);
       if (!d) {
         card.innerHTML =
           '<div class="ws-cycle-name">' + def.name +
