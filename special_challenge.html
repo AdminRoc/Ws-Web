@@ -187,6 +187,7 @@
       <button class="lb-tab-btn" data-cat="有罪之人"><span class="hover-text-swap"><span class="text-cn">有罪之人</span><span class="text-en">The Guilty</span></span></button>
       <button class="lb-tab-btn" data-cat="二蜘蛛"><span class="hover-text-swap"><span class="text-cn">二蜘蛛</span><span class="text-en">Exploiter</span></span></button>
       <button class="lb-tab-btn" data-cat="氏族跑酷"><span class="hover-text-swap"><span class="text-cn">氏族跑酷</span><span class="text-en">Obstacle Course</span></span></button>
+      <button class="lb-tab-btn" data-cat="霍瓦尼亚摩托车比赛"><span class="hover-text-swap"><span class="text-cn">霍瓦尼亚摩托车比赛</span><span class="text-en">Ollie's Crash Course</span></span></button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">
@@ -224,6 +225,7 @@
 <script src="data/special_challenge/special-challenge-the-guilty.js"></script>
 <script src="data/special_challenge/special-challenge-exploiter.js"></script>
 <script src="data/special_challenge/special-challenge-obstacle-course.js"></script>
+<script src="data/special_challenge/special-challenge-ollies-crash-course.js"></script>
 <script>
   var _catData = {
     "执刑官猎杀": function(){return archon_huntRecords;},
@@ -232,6 +234,7 @@
     "有罪之人": function(){return the_guiltyRecords;},
     "二蜘蛛": function(){return exploiterRecords;},
     "氏族跑酷": function(){return obstacle_courseRecords;},
+    "霍瓦尼亚摩托车比赛": function(){return ollies_crash_courseRecords;},
   };
   function loadCat(c) {
     renderTimeLeaderboard(_catData[c] ? _catData[c]() : [], 'lb-tbody', 'clearTime');

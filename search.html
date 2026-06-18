@@ -300,7 +300,8 @@ var IDX=[];
   add('special-events.html','站内特殊活动竞速排行榜','Special Events Leaderboard','','','special_eventsRecords');
   [['执刑官猎杀','Archon Hunt','archon_huntRecords'],['衰退室','Netracell','netracellRecords'],
    ['获取阿耶檀识塑像','Ayatan Capture','ayatan_captureRecords'],['有罪之人','The Guilty','the_guiltyRecords'],
-   ['二蜘蛛','Exploiter Orb','exploiterRecords'],['氏族跑酷','Obstacle Course','obstacle_courseRecords']].forEach(function(e){
+   ['二蜘蛛','Exploiter Orb','exploiterRecords'],['氏族跑酷','Obstacle Course','obstacle_courseRecords'],
+   ['霍瓦尼亚摩托车比赛',"Ollie's Crash Course",'ollies_crash_courseRecords']].forEach(function(e){
     add('special_challenge.html','特殊挑战竞速排行榜','Special Challenge Leaderboard',e[0],e[1],e[2]);});
   [['amalthea','Amalthea'],['arval','Arval'],['bode','Bode'],['cambria','Cambria'],['dione','Dione'],
     ['kelpie','Kelpie'],['nereid','Nereid'],['oceanum','Oceanum'],['pago','Pago'],['rosalind','Rosalind'],
@@ -336,7 +337,7 @@ function loadData(cb){
     ['adrastea','ares','calypso','cervantes','cypress','desdemona','enceladus','formido','galilea','gradivus','ishtar','ker','kokabiel','koro','marduk','naeglar','rusalka','sao','stribog','terminus','thebe','thon'].forEach(function(m){f.push('data/sabotage/sabotage-'+m+'.js');});
     ['flexa','h2-cloud','nsu-grid','r9-cloud'].forEach(function(m){f.push('data/skirmish/skirmish-normal-'+m+'.js','data/skirmish/skirmish-steel-'+m+'.js');});
     f.push('data/special-events/special-events.js');
-    ['archon-hunt','ayatan-capture','exploiter','netracell','obstacle-course','the-guilty'].forEach(function(m){f.push('data/special_challenge/special-challenge-'+m+'.js');});
+    ['archon-hunt','ayatan-capture','exploiter','netracell','obstacle-course','ollies-crash-course','the-guilty'].forEach(function(m){f.push('data/special_challenge/special-challenge-'+m+'.js');});
     ['amalthea','arval','bode','cambria','dione','kelpie','nereid','oceanum','pago','rosalind','shklovsky','suisei','unda','valac'].forEach(function(m){f.push('data/spy/spy-allow-'+m+'.js','data/spy/spy-ban-'+m+'.js');});
   })();
   var bi=0,BATCH=40;
