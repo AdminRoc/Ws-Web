@@ -449,7 +449,8 @@ var IDX=[];
   add('special-events.html','站内特殊活动竞速排行榜','Special Events Leaderboard','','','special_eventsRecords');
   [{c:'执刑官猎杀',e:'Archon Hunt',v:'archon_huntRecords'},{c:'衰退室',e:'Netracell',v:'netracellRecords'},
    {c:'获取阿耶檀识塑像',e:'Ayatan Capture',v:'ayatan_captureRecords'},{c:'有罪之人',e:'The Guilty',v:'the_guiltyRecords'},
-   {c:'二蜘蛛',e:'Exploiter Orb',v:'exploiterRecords'},{c:'氏族跑酷',e:'Obstacle Course',v:'obstacle_courseRecords'}].forEach(function(x){
+   {c:'二蜘蛛',e:'Exploiter Orb',v:'exploiterRecords'},{c:'氏族跑酷',e:'Obstacle Course',v:'obstacle_courseRecords'},
+   {c:'霍瓦尼亚摩托车比赛',e:"Ollie's Crash Course",v:'ollies_crash_courseRecords'}].forEach(function(x){
     add('special_challenge.html','特殊挑战竞速排行榜','Special Challenge Leaderboard',x.c,x.e,x.v);});
   [['amalthea','Amalthea'],['arval','Arval'],['bode','Bode'],['cambria','Cambria'],['dione','Dione'],
     ['kelpie','Kelpie'],['nereid','Nereid'],['oceanum','Oceanum'],['pago','Pago'],['rosalind','Rosalind'],
@@ -484,7 +485,7 @@ function loadData(cb){
     ['adrastea','ares','calypso','cervantes','cypress','desdemona','enceladus','formido','galilea','gradivus','ishtar','ker','kokabiel','koro','marduk','naeglar','rusalka','sao','stribog','terminus','thebe','thon'].forEach(function(m){f.push('data/sabotage/sabotage-'+m+'.js');});
     ['flexa','h2-cloud','nsu-grid','r9-cloud'].forEach(function(m){f.push('data/skirmish/skirmish-normal-'+m+'.js','data/skirmish/skirmish-steel-'+m+'.js');});
     f.push('data/special-events/special-events.js');
-    ['archon-hunt','ayatan-capture','exploiter','netracell','obstacle-course','the-guilty'].forEach(function(m){f.push('data/special_challenge/special-challenge-'+m+'.js');});
+    ['archon-hunt','ayatan-capture','exploiter','netracell','obstacle-course','ollies-crash-course','the-guilty'].forEach(function(m){f.push('data/special_challenge/special-challenge-'+m+'.js');});
     ['amalthea','arval','bode','cambria','dione','kelpie','nereid','oceanum','pago','rosalind','shklovsky','suisei','unda','valac'].forEach(function(m){f.push('data/spy/spy-allow-'+m+'.js','data/spy/spy-ban-'+m+'.js');});
   })();
   var bi=0,BATCH=40;
