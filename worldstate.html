@@ -2883,6 +2883,15 @@
       return d.isCorpus
         ? [{ms: 900000, s: {isCorpus: false}}, {ms: 900000, s: {isCorpus: true}}]
         : [{ms: 900000, s: {isCorpus: true}},  {ms: 900000, s: {isCorpus: false}}];
+    },
+    /* 双衍王境：5种情绪按固定顺序循环，每种持续 2h（7200000ms） */
+    duviriCycle: function (d) {
+      var ORDER = ['joy', 'anger', 'envy', 'sorrow', 'fear'];
+      var cur = ORDER.indexOf((d.state || '').toLowerCase());
+      if (cur === -1) cur = 0;
+      return ORDER.map(function (_, i) {
+        return {ms: 7200000, s: {state: ORDER[(cur + 1 + i) % ORDER.length]}};
+      });
     }
   };
 
