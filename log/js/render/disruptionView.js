@@ -27,6 +27,8 @@ WF.disruptionView = (function () {
     if (rec.name) hero.appendChild(_st('任务地图', rec.name, ''));
     container.appendChild(hero);
 
+    WF.squadMixin.renderSquad(container, rec);
+
     // ── 每轮耗时条形图（概览） ────────────────────────────────
     const maxDur = Math.max(...rec.rounds.map(r => r.duration));
     const barH = 6, gap = 2, w = 760;

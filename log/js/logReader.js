@@ -16,6 +16,7 @@ WF.logReader = (function () {
     'Game successfully connected to:', 'Current time:', 'ExtractionTimer.lua: EOM:',
     'EndOfMatch.lua', 'TopMenu.lua: Abort', 'ThemedSquadOverlay.lua',
     'SS_WAITING_FOR_PLAYERS', 'GameRulesImpl',
+    'AddSquadMember:', 'Player name changed to',
     // 夜灵 Eidolon
     'EidolonLandscape', "It's nighttime!", 'Teralyst Captured', 'Teralyst Killed',
     'Eidolon spawning SUCCESS', 'streaming to layer', 'LEVEL LOADER DONE', 'DefaultArcanePickup',

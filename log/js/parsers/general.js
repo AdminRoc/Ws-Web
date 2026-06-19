@@ -139,6 +139,7 @@ WF.GeneralParser = (function () {
     let pendingSync = null;  // buffered before 'connected'
     let _sessionOffset = 0;    // 多会话绝对排序偏移（由 logReader 传入）
     let _sessionAnchor = null; // 当前会话 wall-clock 锚点（由 logReader 传入）
+    const sq = WF.squadMixin.create();
 
     function reset() { m = null; }
 
@@ -159,8 +160,9 @@ WF.GeneralParser = (function () {
         endlessType:      null,       // 'defense'|'loopDefense'|'survival'|'interception'
         waves:            [],         // defense / loopDefense wave records (pushed by closeCurrentWave)
         currentWave:      null,       // open defense/loopDefense wave
-        survivalSegs:     [],         // [{tier, startT, endT, duration}] for survival
+        survivalSegs:     [],         // [{tier, startT, endT, duration, spawned}] for survival
         survivalSegStart: null,       // start of current survival segment
+        survivalSegSpawned: 0,        // enemy spawn count for the segment currently in progress
         interSegs:        [],         // [{round, startT, endT, duration}] for interception
         interSegStart:    null,       // start of current interception segment
         // ── Kill / spawn totals ──
@@ -231,12 +233,14 @@ WF.GeneralParser = (function () {
         // Totals
         kills:           m.kills,
         spawned:         m.spawned,
+        squadInfo:       sq.getSquadInfo(),
       });
       reset();
     }
 
     return {
       feed(t, line, sessionOffset, sessionAnchor) {
+        sq.feed(line);
         // 跟踪会话信息（用于跨会话绝对排序和日期计算）
         if (sessionOffset !== undefined) _sessionOffset = sessionOffset;
         if (sessionAnchor !== undefined) _sessionAnchor = sessionAnchor;
@@ -467,8 +471,10 @@ WF.GeneralParser = (function () {
               startT:   segStart,
               endT:     t,
               duration: t - segStart,
+              spawned:  m.survivalSegSpawned,
             });
-            m.survivalSegStart = t;
+            m.survivalSegStart    = t;
+            m.survivalSegSpawned  = 0;
           }
           return;
         }

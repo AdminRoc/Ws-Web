@@ -1,19 +1,23 @@
-/* 入口：文件上传、解析调度、Tab 路由
+﻿/* 入口：文件上传、解析调度、Tab 路由
  * 大文件（≥ LARGE_THRESHOLD）走 scanAsync 分块扫描，UI 保持响应并显示进度 */
 (function () {
   const U = WF.utils;
 
   const TABS = [
-    { id: 'eidolon',     label: '夜灵',  en: 'EIDOLON',       view: () => WF.eidolonView,     empty: '未找到满足 6×3 条件的夜灵捕获记录' },
-    { id: 'disruption',  label: '中断',  en: 'DISRUPTION',    view: () => WF.disruptionView,  empty: '未找到完成 ≥45 轮且成功结算的中断任务（需房主日志）' },
-    { id: 'profitTaker', label: '大蜘蛛', en: 'PROFIT-TAKER', view: () => WF.profitTakerView, empty: '未找到完整的 Profit-Taker 击杀记录' },
-    { id: 'arbitration', label: '仲裁',  en: 'ARBITRATION',   view: () => WF.arbitrationView, empty: '未找到有效的仲裁任务记录（需房主日志，时长 ≥60 秒）' },
-    { id: 'general',     label: '通用',  en: 'GENERAL',       view: () => WF.generalView,     empty: '未找到有效的通用任务记录（仅记录正常结算、非大厅/PVP 任务）' },
+    { id: 'profile',     label: '个人信息', en: 'PROFILE',       special: true },
+    { id: 'eidolon',     label: '夜灵',    en: 'EIDOLON',       view: () => WF.eidolonView,     empty: '未找到满足 6×3 条件的夜灵捕获记录' },
+    { id: 'disruption',  label: '中断',    en: 'DISRUPTION',    view: () => WF.disruptionView,  empty: '未找到完成 ≥45 轮且成功结算的中断任务（需房主日志）' },
+    { id: 'profitTaker', label: '大蜘蛛',  en: 'PROFIT-TAKER',  view: () => WF.profitTakerView, empty: '未找到完整的 Profit-Taker 击杀记录' },
+    { id: 'arbitration', label: '仲裁',    en: 'ARBITRATION',   view: () => WF.arbitrationView, empty: '未找到有效的仲裁任务记录（需房主日志，时长 ≥60 秒）' },
+    { id: 'general',     label: '通用',    en: 'GENERAL',       view: () => WF.generalView,     empty: '未找到有效的通用任务记录（仅记录正常结算、非大厅/PVP 任务）' },
   ];
 
   const _urlTab = new URLSearchParams(window.location.search).get('tab');
-  const _initTab = TABS.find((t) => t.id === _urlTab) ? _urlTab : 'eidolon';
-  let state = { results: null, clock: null, activeTab: _initTab };
+  const _initTab = TABS.find((t) => t.id === _urlTab) ? _urlTab : 'disruption';
+  let state = {
+    results: null, clock: null, activeTab: _initTab,
+    profileState: { accountId: null, playerName: null, profileJson: null },
+  };
   const $ = (id) => document.getElementById(id);
 
   function init() {
@@ -95,6 +99,18 @@
           };
           state.clock = clock;
 
+          // 每次新上传都重置个人资料状态，避免旧数据/旧 loading 状态阻塞新流程
+          state.profileState = { accountId: null, playerName: null, profileJson: null };
+
+          // 从 EE.log 提取账号 ID（格式："Logged in DisplayName (accountId)"）
+          const loginM = text.match(/Logged in ([^(]+)\(([a-f0-9]{16,})\)/i);
+          if (loginM) {
+            state.profileState.accountId  = loginM[2].trim();
+            // 白名单：只保留名字合法字符，彻底移除 Warframe 日志中任何未知后缀
+            state.profileState.playerName = loginM[1]
+              .replace(/[^\w\-. #|À-ɏ一-鿿぀-ヿ가-힯]/g, '').trim();
+          }
+
           const ms = (performance.now() - t0).toFixed(0);
           const r = state.results;
           statusEl.innerHTML =
@@ -104,11 +120,18 @@
             (clock.approx && clock.available ? '<br><span class="muted">日志内无系统时间行，绝对时间按文件修改时间估算（前缀 ≈）</span>' : '');
 
           document.body.classList.add('has-data');
-          const urlTabHasData = _urlTab && state.results[_urlTab] && state.results[_urlTab].length;
-          const firstWithData = urlTabHasData
-            ? TABS.find((t) => t.id === _urlTab)
-            : (TABS.find((t) => state.results[t.id].length) || TABS[0]);
-          switchTab(firstWithData.id);
+
+          if (state.activeTab === 'profile') {
+            _showProfileGuide();
+          } else {
+            const nonSpecial = TABS.filter((t) => !t.special);
+            const urlTabHasData = _urlTab && !TABS.find((t) => t.id === _urlTab)?.special
+              && state.results[_urlTab] && state.results[_urlTab].length;
+            const firstWithData = urlTabHasData
+              ? TABS.find((t) => t.id === _urlTab)
+              : (nonSpecial.find((t) => state.results[t.id].length) || nonSpecial[0]);
+            switchTab(firstWithData.id);
+          }
         } catch (err) {
           statusEl.textContent = `结果处理失败：${err.message}`;
           console.error(err);
@@ -141,8 +164,10 @@
     document.querySelectorAll('.tab-btn').forEach((b) => {
       b.classList.toggle('active', b.dataset.tab === state.activeTab);
       const badge = b.querySelector('.tab-count');
+      const tabDef = TABS.find((t) => t.id === b.dataset.tab);
+      if (tabDef && tabDef.special) { badge.style.display = 'none'; return; }
       if (state.results) {
-        const n = state.results[b.dataset.tab].length;
+        const n = (state.results[b.dataset.tab] || []).length;
         badge.textContent = String(n);
         badge.style.display = '';
         badge.classList.toggle('zero', n === 0);
@@ -150,14 +175,27 @@
     });
   }
 
+  /* 个人资料获取：通过剪贴板引导用户自行复制 Warframe API JSON
+   * （Warframe API 直接禁止跨域访问，代理方案均已失效） */
+  function _showProfileGuide() {
+    /* 不做任何网络请求，直接显示剪贴板引导面板 */
+    if (state.activeTab === 'profile') WF.profileView.render($('detail'), state.profileState);
+  }
+
   function switchTab(tabId) {
     state.activeTab = tabId;
+    document.body.classList.toggle('profile-active', tabId === 'profile');
     updateTabBar();
 
     const listBox   = $('record-list');
     const detailBox = $('detail');
     listBox.innerHTML   = '';
     detailBox.innerHTML = '';
+
+    if (tabId === 'profile') {
+      _showProfileGuide();
+      return;
+    }
 
     if (!state.results) {
       detailBox.appendChild(U.el('div', 'empty-state', '上传 EE.log 后在此查看分析结果'));

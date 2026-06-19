@@ -52,6 +52,8 @@ WF.arbitrationView = (function () {
     topRow.appendChild(meta);
     container.appendChild(topRow);
 
+    WF.squadMixin.renderSquad(container, rec);
+
     /* ─── 第二行：8 格核心指标 ─── */
     const grid = U.el('div', 'arb-metrics-grid');
     const metrics = [

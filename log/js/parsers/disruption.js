@@ -72,6 +72,7 @@ WF.DisruptionParser = (function () {
     const records = [];
     let mission = null;
     let roundStartT = null;
+    const sq = WF.squadMixin.create();
 
     function reset() { mission = null; roundStartT = null; }
 
@@ -135,6 +136,7 @@ WF.DisruptionParser = (function () {
 
     return {
       feed(t, line) {
+        sq.feed(line);
         if (line.indexOf(PAT.connected) !== -1) {
           newMission(t);
           return;
@@ -277,6 +279,7 @@ WF.DisruptionParser = (function () {
               successConduits: successConds, totalConduits: totalConds,
               perfScore: ps, perfGrade: pg,
               killEvents: mission.killEvents,
+              squadInfo: sq.getSquadInfo(),
             });
           }
           reset();
