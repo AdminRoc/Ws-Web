@@ -1,0 +1,9 @@
+# 本文件仅在使用 wrangler CLI 部署时需要。
+# 如果走 Cloudflare Dashboard 纯网页操作（推荐），不需要这个文件，
+# Cron Trigger 直接在网页的 Settings → Triggers 里手动添加即可。
+name = "wfspeed-worldstate-trigger"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+[triggers]
+crons = ["1 * * * *"]
