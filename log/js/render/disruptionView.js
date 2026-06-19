@@ -42,11 +42,15 @@ WF.disruptionView = (function () {
       if (i % 5 === 4 || i === 0) svg += `<text x="44" y="${y + barH}" class="bar-label" text-anchor="end">${r.index}</text>`;
     });
     svg += '</svg>';
-    const chartBox = U.el('div', 'chart-box');
-    chartBox.innerHTML = svg;
+    const chartBox = U.el('div', 'chart-box dis-tl-wrap');
+    chartBox.appendChild(U.el('div', 'dis-tl-title', '每轮耗时概览'));
+    chartBox.appendChild(U.el('div', 'dis-tl-sub', '每条横条对应一轮，长度 = 本轮耗时；绿色为本轮导管全部守住，红色为存在失守'));
+    const chartSvg = U.el('div');
+    chartSvg.innerHTML = svg;
+    chartBox.appendChild(chartSvg);
     container.appendChild(chartBox);
 
-    // ── 插钥匙时间轴（HTML div，天然填满容器宽度，圆点不拉伸） ─
+    // ── 导管情况图（HTML div，天然填满容器宽度，圆点不拉伸） ─
     const hasInsertTiming = rec.rounds.some(r =>
       r.conduits.length > 0 && r.conduits.some(c => c.insertRelT != null)
     );
@@ -55,7 +59,8 @@ WF.disruptionView = (function () {
     );
     if (hasConduitTiming) {
       const tlWrap = U.el('div', 'chart-box dis-tl-wrap');
-      tlWrap.appendChild(U.el('div', 'dis-tl-title', '插钥匙时间轴（每轮 · 相对本轮战斗起点）'));
+      tlWrap.appendChild(U.el('div', 'dis-tl-title', '导管情况图'));
+      tlWrap.appendChild(U.el('div', 'dis-tl-sub', '每行对应一轮任务；横轴为该轮战斗时长的进度（0%=本轮战斗开始，100%=本轮战斗结束）；圆点为导管插入/守护结果事件，位置即事发时刻，颜色含义见下方图例，悬停可查看精确时间与效果'));
 
       const rows = U.el('div', 'dis-tl-rows');
       rec.rounds.forEach((r, i) => {
@@ -100,6 +105,11 @@ WF.disruptionView = (function () {
     container.appendChild(_buildKillChart(rec));
 
     // ── 轮次详情表格 ─────────────────────────────────────────
+    const tblSection = U.el('div', 'chart-box dis-tl-wrap');
+    tblSection.appendChild(U.el('div', 'dis-tl-title', '中断任务进程总览'));
+    tblSection.appendChild(U.el('div', 'dis-tl-sub', '逐轮明细：本轮/累计耗时、导管守护结果与击杀/生成数'));
+    container.appendChild(tblSection);
+
     const tbl = U.el('table', 'round-table');
     tbl.innerHTML = '<thead><tr><th>轮次</th><th>本轮耗时</th><th>累计耗时</th><th>导管</th><th>击杀 / 生成</th></tr></thead>';
 
@@ -140,7 +150,7 @@ WF.disruptionView = (function () {
 
     const tblWrap = U.el('div', 'table-wrap');
     tblWrap.appendChild(tbl);
-    container.appendChild(tblWrap);
+    tblSection.appendChild(tblWrap);
 
     container.appendChild(U.el('div', 'note',
       '每轮信息依赖任务房主（Host）日志。击杀/生成均限于轮次战斗期间（ModeState=3→4）。折线图可点击全屏查看；悬停标记可见精确时间戳。'));

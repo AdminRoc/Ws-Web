@@ -272,6 +272,8 @@ body.profile-active #detail-wrap {
 .round-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
 .round-no { color: var(--c-teal); font-size: 16px; letter-spacing: 2px; }
 .round-dur { font-size: 23px; color: var(--c-gold); text-shadow: 0 0 12px rgba(255, 182, 72, 0.3); }
+.pt-phase-dur { font-size: 16px; color: var(--c-gold); text-shadow: 0 0 12px rgba(255, 182, 72, 0.3); }
+.pt-cum-time { font-size: 23px; font-weight: 600; }
 
 .seg-bar { display: flex; height: 12px; border-radius: 4px; overflow: hidden; background: rgba(255, 255, 255, 0.05); }
 .seg { height: 100%; min-width: 3px; }
@@ -749,7 +751,12 @@ body.profile-active #detail-wrap {
 }
 /* ================= 中断·传导体时间轴（HTML div 版，无 SVG 拉伸问题） ================= */
 .dis-tl-wrap { margin-top: 18px; }
-.dis-tl-title { font-size: 13px; letter-spacing: 2px; color: var(--c-text2); margin-bottom: 10px; }
+.dis-tl-title {
+  font-size: 14px; letter-spacing: 3px; color: var(--c-teal);
+  margin-bottom: 6px; padding-bottom: 8px;
+  border-bottom: 1px solid rgba(95,208,232,0.15);
+}
+.dis-tl-sub { font-size: 11px; color: var(--c-text2); letter-spacing: 0.5px; line-height: 1.6; margin-bottom: 10px; }
 .dis-tl-rows { padding: 2px 0; }
 .dis-tl-row { display: flex; align-items: center; height: 14px; margin-bottom: 5px; }
 .dis-tl-rownum { width: 44px; flex-shrink: 0; font-size: 9px; color: var(--c-text2);
