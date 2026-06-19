@@ -1,6 +1,8 @@
 window.WF = window.WF || {};
 WF.SOL_NODES = {
   // ===== 地球 (Earth) =====
+  'SolNode0': 'SolNode0 (Ancient Retribution - Sentient)',
+
   'SolNode1': 'Coba, 地球 (防御 - Infested)',
   'SolNode2': 'Tikal, 地球 (挖掘 - Infested)',
   'SolNode3': 'Lith, 地球 (防御 - Grineer)',
@@ -238,6 +240,17 @@ WF.SOL_NODES = {
   'SolNode201': 'Tamu, Kuva要塞 (防御 - Grineer)',
   'SolNode202': 'Koro, Kuva要塞 (歼灭 - Grineer)',
 
+  // ===== Ropalolyst & 坚固要塞新节点 =====
+  'SolNode740': 'The Ropalolyst, 木星 (暗杀 - Sentient)',
+  'SolNode741': 'Koro, 坚固要塞 (Assault - Grineer)',
+  'SolNode742': 'Nabuk, 坚固要塞 (防御 - Grineer)',
+  'SolNode743': 'Rotuma, 坚固要塞 (移动防御 - Grineer)',
+  'SolNode744': 'Taveuni, 坚固要塞 (生存 - Grineer)',
+  'SolNode745': 'Tamu, 坚固要塞 (中断 - Grineer)',
+  'SolNode746': 'Dakata, 坚固要塞 (歼灭 - Grineer)',
+  'SolNode747': 'Pago, 坚固要塞 (间谍 - Grineer)',
+  'SolNode748': 'Garus, 坚固要塞 (救援 - Grineer)',
+
   // ===== Lua (月球) =====
   'SolNode203': 'Copernicus, Lua (间谍 - Grineer)',
   'SolNode204': 'Pavlov, Lua (间谍 - Corpus)',
@@ -265,6 +278,25 @@ WF.SOL_NODES = {
   'SolNode222': 'Hyena Pack, 海王星 (歼灭 - Corpus)',
   'SolNode223': 'Mutalist Alad V, 厄里斯 (刺杀 - Infested)',
   'SolNode224': 'Lephantis, 火卫二 (刺杀 - Infested)',
+
+  // ===== 代摩斯新节点 (Deimos New Nodes) =====
+  'SolNode706': 'Horend, 代摩斯 (捕获 - Infested)',
+  'SolNode707': 'Hyf, 代摩斯 (防御 - Infested)',
+  'SolNode708': 'Phlegyas, 代摩斯 (歼灭 - Infested)',
+  'SolNode709': 'Dirus, 代摩斯 (移动防御 - Infested)',
+  'SolNode710': 'Formido, 代摩斯 (破坏 - Infested)',
+  'SolNode711': 'Terrorem, 代摩斯 (生存 - Infested)',
+  'SolNode712': 'Magnacidium, 代摩斯 (暗杀 - Infested)',
+  'SolNode713': 'Exequias, 代摩斯 (暗杀 - Infested)',
+  'SolNode714': 'Sanctum Anatomica, 代摩斯 (中继站 - Tenno)',
+  'SolNode715': 'Effervo, 代摩斯 (暗杀 - The Murmur)',
+  'SolNode716': 'Nex, 代摩斯 (歼灭 - The Murmur)',
+  'SolNode717': 'Persto, 代摩斯 (生存 - The Murmur)',
+  'SolNode718': 'Cambire, 代摩斯 (炼金 - The Murmur)',
+  'SolNode719': 'Munio, 代摩斯 (Mirror Defense - The Murmur)',
+  'SolNode720': 'Testudo, 代摩斯 (网灵细胞 - The Murmur)',
+  'SolNode721': 'Armatus, 代摩斯 (中断 - The Murmur)',
+  'SolNode723': 'Brutus, 天王星 (Ascension - Corpus)',
 
   // ===== 更多标准节点 =====
   'SolNode225': 'Viver, 厄里斯 (劫持 - Corpus)',
@@ -306,12 +338,29 @@ WF.SOL_NODES = {
 
   // ===== Boss / 特殊任务节点 =====
   'SolNode250': 'Mutalist Alad V, 厄里斯 (刺杀 - Infested)',
+  'SolNode251': 'Dark Refactory, 代摩斯 (The Perita Rebellion - Anarch)',
 
   // ===== 额外节点 =====
   'SolNode300': 'Kuva要塞 (歼灭 - Grineer)',
   'SolNode301': 'Kuva要塞 (生存 - Grineer)',
+  // ===== 露娜新节点 (Lua New Nodes) =====
+  'SolNode302': 'Tycho, 露娜(Lua) (生存 - Corpus)',
+  'SolNode304': 'Copernicus, 露娜(Lua) (捕获 - Corpus)',
+  'SolNode305': 'Stöfler, 露娜(Lua) (防御 - Grineer)',
+  'SolNode306': 'Pavlov, 露娜(Lua) (间谍 - Crossfire)',
 
   // ===== Railjack / 前哨站节点 =====
+
+  // ===== 飞翼任务 (Archwing) =====
+  'SolNode901': 'Caduceus (Ancient Retribution - Sentient)',
+  'SolNode902': 'Montes, 金星 (Extermination (Archwing) - Corpus)',
+  'SolNode903': 'Erpo, 地球 (Mobile Defense (Archwing) - Grineer)',
+  'SolNode904': 'Syrtis, 火星 (Extermination (Archwing) - Grineer)',
+  'SolNode905': 'Galilea, 木星 (Sabotage (Archwing) - Corpus)',
+  'SolNode906': 'Pandora, 土星 (Pursuit (Archwing) - Grineer)',
+  'SolNode907': 'Caelus, 天王星 (Interception (Archwing) - Grineer)',
+  'SolNode908': 'Salacia, 海王星 (Mobile Defense (Archwing) - Corpus)',
+
   'CrewBattleNode501': 'Kasio’s Rest, 地球近轨 (前哨战 - Grineer)',
   'CrewBattleNode502': 'Sover Strait, 地球近轨 (前哨战 - Grineer)',
   'CrewBattleNode503': 'Iota Temple, 地球近轨 (前哨战 - Grineer)',
@@ -453,8 +502,20 @@ WF.SOL_NODES = {
   'SolNode402': 'Orokin Derelict (歼灭 - Infested)',
   'SolNode403': 'Orokin Derelict (捕获 - Infested)',
   'SolNode404': 'Orokin Derelict (刺杀 - Infested)',
+  'SolNode405': 'Ani, 虚空 (生存 - Orokin)',
+  'SolNode406': 'Ukko, 虚空 (捕获 - Orokin)',
+  'SolNode407': 'Oxomoco, 虚空 (歼灭 - Orokin)',
+  'SolNode408': 'Belenus, 虚空 (防御 - Orokin)',
+  'SolNode409': 'Mot, 虚空 (生存 - Orokin)',
+  'SolNode410': 'Aten, 虚空 (移动防御 - Orokin)',
+  'SolNode411': 'Marduk, 虚空 (破坏 - Orokin)',
+  'SolNode412': 'Mithra, 虚空 (拦截 - Orokin)',
+  'SolNode413': 'SolNode413, 虚空 (Ancient Retribution - Corrupted)',
 
   // ===== 扎里曼 (Zariman) =====
+
+  // ===== 火星镜像防御 (Mirror Defense) =====
+  'SolNode450': 'Tyana Pass, 火星 (Mirror Defense - Crossfire)',
   'ZarimanNode1': '扎里曼 (歼灭 - Grineer)',
   'ZarimanNode2': '扎里曼 (防御 - Corpus)',
   'ZarimanNode3': '扎里曼 (生存 - Grineer)',
