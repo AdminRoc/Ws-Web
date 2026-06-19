@@ -28,6 +28,9 @@ WF.generalView = (function () {
     }
     container.appendChild(hero);
 
+    // ── 队伍成员 ──────────────────────────────────────────────
+    WF.squadMixin.renderSquad(container, rec);
+
     // ── 时间节点详情 ──────────────────────────────────────────
     const timingBox = U.el('div', 'gen-timing-box');
     timingBox.appendChild(U.el('div', 'gen-timing-title', '时间节点'));

@@ -34,6 +34,8 @@ WF.profitTakerView = (function () {
     ].forEach(([l, v, c]) => hero.appendChild(_st(l, v, c)));
     container.appendChild(hero);
 
+    WF.squadMixin.renderSquad(container, rec);
+
     const tot = rec.totalDuration;
     const bw = U.el('div', 'chart-box pt-bar-wrap');
     bw.appendChild(U.el('div', 'pt-bar-label', '全程时间轴'));

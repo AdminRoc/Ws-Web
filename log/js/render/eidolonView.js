@@ -24,6 +24,8 @@ WF.eidolonView = (function () {
     hero.appendChild(stat('完整小轮', `${rec.completeCount}`, ''));
     container.appendChild(hero);
 
+    WF.squadMixin.renderSquad(container, rec);
+
     container.appendChild(U.el('div', 'note',
       '计时口径与 idalon.com “real time” 一致：起点 = 夜晚开始，终点 = 水力使赋能掉落在地（捕获判定后约 15 秒）。'));
 
@@ -99,6 +101,7 @@ WF.eidolonView = (function () {
       });
       container.appendChild(box);
     }
+
   }
 
   function stat(label, value, cls) {
