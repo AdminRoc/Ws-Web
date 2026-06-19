@@ -1,9 +1,9 @@
 name: 更新世界状态全量数据
 
 on:
-  schedule:
-    - cron: '*/10 * * * *'  # 每 10 分钟执行一次
-  workflow_dispatch:          # 支持手动触发
+  # 定时触发已迁移至 Cloudflare Workers Cron Triggers（见 cloudflare-worker/），
+  # 每小时调用一次本工作流的 workflow_dispatch，比 GitHub 自带的 schedule 更可靠。
+  workflow_dispatch:          # 支持手动 / 外部触发
 
 jobs:
   update-worldstate:

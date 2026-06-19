@@ -2107,6 +2107,18 @@
   var API  = 'https://api.warframestat.us/pc/';
   var LANG = 'language=zh';
 
+  /* 带超时的 fetch：大陆网络下 api.warframestat.us / raw.githubusercontent.com 等域名
+     常被墙而不是直接失败连接，而是长时间挂起（数十秒甚至更久）才报错或永不返回，
+     导致多数据源兜底链迟迟轮不到能用的源，只能用过期缓存 + 周期数学推算补，
+     推算次数一多就会偏离真实状态。这里给每次请求设置较短超时，挂起立即判定失败，
+     尽快切换到下一个候选源（如 jsdelivr）。 */
+  function fetchT(url, ms) {
+    var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var opts = ctrl ? { signal: ctrl.signal } : {};
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, ms || 5000) : null;
+    return fetch(url, opts).finally(function () { if (timer) clearTimeout(timer); });
+  }
+
   /* ── 裂缝等级颜色 ── */
   var TIER_COLOR = {
     Lith: '#cd7f32', Meso: '#b0b8c4', Neo: '#ffd700',
@@ -2455,7 +2467,7 @@
   function fetchFirstOk(urls) {
     function tryNext(i) {
       if (i >= urls.length) return Promise.resolve(null);
-      return fetch(urls[i])
+      return fetchT(urls[i], 5000)
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) { return d !== null ? d : tryNext(i + 1); })
         .catch(function ()  { return tryNext(i + 1); });
@@ -2587,7 +2599,7 @@
     if (_rawWS && Date.now() - _rawWSTs < RAW_WS_TTL) return Promise.resolve(_rawWS);
     function tryNext(i) {
       if (i >= RAW_WS_URLS.length) return Promise.resolve(null);
-      return fetch(RAW_WS_URLS[i])
+      return fetchT(RAW_WS_URLS[i], 5000)
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) { return d ? d : tryNext(i + 1); })
         .catch(function () { return tryNext(i + 1); });
@@ -2784,7 +2796,7 @@
   var D = {};
 
   function fetchOne(ep) {
-    return fetch(API + ep + '?' + LANG)
+    return fetchT(API + ep + '?' + LANG, 5000)
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) {
         if (data !== null && data !== undefined) {
