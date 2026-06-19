@@ -24,11 +24,15 @@
       font-style: normal;
       font-display: swap;
     }
-    /* 首页三个主按钮中文字使用游染小楷，字号+5级，line-height锁定原值防止按钮撑大 */
+    /* 首页三个主按钮中文字：字高 = 框高 × 80%
+       框高 = 2×clamp(1rem,2vh,1.6rem) + 1.05rem(locked line-height)
+       字高 ≈ font-size × 0.88（游染小楷 em 填充率）
+       → font-size = (2×padding + 1.05rem) × 0.8 / 0.88 = 2×padding×0.909 + 0.955rem
+       padding 随 vh 变化段：font-size ≈ calc(3.636vh + 0.955rem) */
     .hero-btn .text-cn {
       font-family: 'YouranXiaokai', '微软雅黑', sans-serif;
       display: inline-block;
-      font-size: 1.85rem;
+      font-size: clamp(2.8rem, calc(3.636vh + 0.955rem), 3.4rem);
       line-height: 1.05rem;
       vertical-align: middle;
     }
