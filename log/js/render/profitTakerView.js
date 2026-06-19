@@ -36,6 +36,11 @@ WF.profitTakerView = (function () {
 
     WF.squadMixin.renderSquad(container, rec);
 
+    if (rec.bugged) {
+      container.appendChild(U.el('div', 'note',
+        '⚠ 本次记录检测到单阶段断腿次数 > 4，大概率存在阶段重置等日志异常，以下断腿/护盾分段数据可能不准确。'));
+    }
+
     const tot = rec.totalDuration;
     const bw = U.el('div', 'chart-box pt-bar-wrap');
     bw.appendChild(U.el('div', 'pt-bar-label', '全程时间轴'));
@@ -64,12 +69,18 @@ WF.profitTakerView = (function () {
     container.appendChild(bw);
 
     const grid = U.el('div', 'phase-grid');
+    let cumulative = rec.flightTime || 0;
     rec.phases.forEach((p) => {
+      cumulative += p.totalTime || 0;
       const card = U.el('div', 'phase-card');
 
       const hd = U.el('div', 'round-head');
       hd.appendChild(U.el('span', 'round-no', `阶段 ${p.number}`));
-      hd.appendChild(U.el('span', 'round-dur', U.fmtDuration(p.totalTime)));
+      const durWrap = U.el('span', 'pt-phase-dur');
+      durWrap.appendChild(document.createTextNode(U.fmtDuration(p.totalTime) + ' / '));
+      const cumEl = U.el('span', 'pt-cum-time', U.fmtDuration(cumulative));
+      durWrap.appendChild(cumEl);
+      hd.appendChild(durWrap);
       card.appendChild(hd);
 
       const pb = U.el('div', 'seg-bar');

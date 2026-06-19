@@ -112,6 +112,7 @@ WF.ProfitTakerParser = (function () {
           body: run.phases.reduce((s, p) => s + p.bodyTime, 0),
           pylon: run.phases.reduce((s, p) => s + p.pylonTime, 0),
         },
+        bugged: run.bugged === true,
         squadInfo: sq.getSquadInfo(),
       });
       run = null;
