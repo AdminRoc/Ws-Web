@@ -177,13 +177,24 @@ WF.generalView = (function () {
     section.appendChild(U.el('div', 'gen-section-title',
       `生存奖励档次（共 ${segs.length} 档）`));
 
-    const totalDur = segs.reduce((s, sg) => s + (sg.duration || 0), 0);
-    const avgDur   = totalDur / segs.length;
-    const statRow  = U.el('div', 'hero-row');
-    statRow.appendChild(_st('奖励档数', String(segs.length), 'accent'));
-    statRow.appendChild(_st('档均时长', U.fmtDuration(avgDur), ''));
-    statRow.appendChild(_st('生存总时长', U.fmtDurationLong(totalDur), ''));
+    const totalDur     = segs.reduce((s, sg) => s + (sg.duration || 0), 0);
+    const totalSpawned = segs.reduce((s, sg) => s + (sg.spawned  || 0), 0);
+    const avgDur       = totalDur / segs.length;
+    const hasSpawnData = totalSpawned > 0;   // false on client logs (no OnAgentCreated)
+
+    const statRow = U.el('div', 'hero-row');
+    statRow.appendChild(_st('奖励档数',   String(segs.length),          'accent'));
+    statRow.appendChild(_st('档均时长',   U.fmtDuration(avgDur),        ''));
+    statRow.appendChild(_st('生存总时长', U.fmtDurationLong(totalDur),  ''));
+    if (hasSpawnData)
+      statRow.appendChild(_st('本局生成（近似）', String(totalSpawned), ''));
     section.appendChild(statRow);
+
+    if (!hasSpawnData) {
+      const hint = U.el('div', 'gen-hint');
+      hint.textContent = '生成数据需要主机日志（OnAgentCreated）；客户端日志无此信息。';
+      section.appendChild(hint);
+    }
 
     // 时长条形图（每档可视化）
     const maxDur = Math.max(...segs.map(sg => sg.duration || 0), 1);
@@ -193,8 +204,9 @@ WF.generalView = (function () {
     segs.forEach((sg, i) => {
       const bw = Math.max(2, ((sg.duration || 0) / maxDur) * (svgW - 60));
       const y  = i * (barH + barGap);
+      const spawnTip = hasSpawnData ? ` | 生成 ${sg.spawned || 0}` : '';
       svg += `<rect x="50" y="${y}" width="${bw}" height="${barH}" rx="2" class="bar-ok">` +
-        `<title>第 ${sg.tier} 档：${U.fmtDuration(sg.duration)}</title></rect>`;
+        `<title>第 ${sg.tier} 档：${U.fmtDuration(sg.duration)}${spawnTip}</title></rect>`;
       svg += `<text x="44" y="${y + barH}" class="bar-label" text-anchor="end">${sg.tier}</text>`;
     });
     svg += '</svg>';
@@ -205,17 +217,23 @@ WF.generalView = (function () {
     // 档次明细表
     const timeBase = rec.firstFrameT != null ? rec.firstFrameT : rec.startT;
     const tbl = U.el('table', 'round-table');
-    tbl.innerHTML = '<thead><tr><th>档次</th><th>开始（相对首帧）</th><th>结束（相对首帧）</th><th>本档时长</th><th>累计生存</th></tr></thead>';
+    const spawnTh = hasSpawnData ? '<th>生成（近似）</th>' : '';
+    tbl.innerHTML = `<thead><tr><th>档次</th><th>开始（相对首帧）</th><th>结束（相对首帧）</th><th>本档时长</th><th>累计生存</th>${spawnTh}</tr></thead>`;
     const tbody = U.el('tbody');
     let cumulative = 0;
     segs.forEach(sg => {
       cumulative += sg.duration || 0;
       const tr = U.el('tr');
-      tr.appendChild(U.el('td', 'td-idx', `第 ${sg.tier} 档`));
+      tr.appendChild(U.el('td', 'td-idx',  `第 ${sg.tier} 档`));
       tr.appendChild(U.el('td', 'td-mono', U.fmtDuration(sg.startT - timeBase)));
       tr.appendChild(U.el('td', 'td-mono', sg.endT != null ? U.fmtDuration(sg.endT - timeBase) : '—'));
       tr.appendChild(U.el('td', 'td-mono', sg.duration != null ? U.fmtDuration(sg.duration) : '—'));
       tr.appendChild(U.el('td', 'td-mono', U.fmtDurationLong(cumulative)));
+      if (hasSpawnData) {
+        const spawnTd = U.el('td', 'td-mono');
+        spawnTd.textContent = String(sg.spawned || 0);
+        tr.appendChild(spawnTd);
+      }
       tbody.appendChild(tr);
     });
     tbl.appendChild(tbody);

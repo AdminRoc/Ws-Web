@@ -490,6 +490,7 @@ WF.GeneralParser = (function () {
           if (!skip) {
             m.spawned++;
             if (m.currentWave) m.currentWave.spawned++;
+            else if (m.endlessType === 'survival') m.survivalSegSpawned++;
           }
           return;
         }
