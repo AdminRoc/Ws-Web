@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T14:21:15Z",
+  "fetchedAt": "2026-06-20T14:26:14Z",
   "cetusCycle": {
     "id": "cetusCycle1781967840000",
     "activation": "2026-06-20T14:14:00.000Z",
     "expiry": "2026-06-20T15:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781967840000",
     "activation": "2026-06-20T14:14:00.000Z",
     "expiry": "2026-06-20T15:04:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T15:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "42m 55s"
+    "timeLeft": "37m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1781971200000",
@@ -70,21 +70,6 @@
       "isHard": true
     },
     {
-      "id": "6a368c3e81b9838a638ce5b1",
-      "activation": "2026-06-20T12:49:02.700Z",
-      "expiry": "2026-06-20T14:41:08.366Z",
-      "node": "Everview Arc (Zariman)",
-      "missionType": "Void Flood",
-      "missionTypeKey": "Void Flood",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Everview Arc (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a368c3e81b9838a638ce5b2",
       "activation": "2026-06-20T12:49:02.700Z",
       "expiry": "2026-06-20T14:34:56.744Z",
@@ -94,6 +79,21 @@
       "enemy": "The Murmur",
       "enemyKey": "The Murmur",
       "nodeKey": "Persto (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a368c3e81b9838a638ce5b1",
+      "activation": "2026-06-20T12:49:02.700Z",
+      "expiry": "2026-06-20T14:41:08.366Z",
+      "node": "Everview Arc (Zariman)",
+      "missionType": "Void Flood",
+      "missionTypeKey": "Void Flood",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Everview Arc (Zariman)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -130,21 +130,6 @@
       "isHard": false
     },
     {
-      "id": "6a368ed24229aa407a8ce5b3",
-      "activation": "2026-06-20T13:00:02.892Z",
-      "expiry": "2026-06-20T14:45:23.435Z",
-      "node": "Mariana (Earth)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Mariana (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a368ed24229aa407a8ce5b1",
       "activation": "2026-06-20T13:00:02.892Z",
       "expiry": "2026-06-20T14:55:36.598Z",
@@ -160,19 +145,19 @@
       "isHard": true
     },
     {
-      "id": "6a368fc3711f73c5d28ce5b1",
-      "activation": "2026-06-20T13:04:03.202Z",
-      "expiry": "2026-06-20T14:38:01.217Z",
-      "node": "Umbriel (Uranus)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
+      "id": "6a368ed24229aa407a8ce5b3",
+      "activation": "2026-06-20T13:00:02.892Z",
+      "expiry": "2026-06-20T14:45:23.435Z",
+      "node": "Mariana (Earth)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Umbriel (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
+      "nodeKey": "Mariana (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": false,
-      "isHard": false
+      "isHard": true
     },
     {
       "id": "6a368fc3711f73c5d28ce5b2",
@@ -184,6 +169,21 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Abaddon (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a368fc3711f73c5d28ce5b1",
+      "activation": "2026-06-20T13:04:03.202Z",
+      "expiry": "2026-06-20T14:38:01.217Z",
+      "node": "Umbriel (Uranus)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Umbriel (Uranus)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -203,36 +203,6 @@
       "tierNum": 4,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a3690760294599bd68ce5b2",
-      "activation": "2026-06-20T13:07:02.598Z",
-      "expiry": "2026-06-20T14:23:55.102Z",
-      "node": "Oxomoco (Void)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Oxomoco (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3690ee6cc50aca768ce5b2",
-      "activation": "2026-06-20T13:09:02.260Z",
-      "expiry": "2026-06-20T14:21:38.952Z",
-      "node": "Hydra (Pluto)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Hydra (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a36912a0b75e578188ce5b1",
@@ -807,7 +777,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 9h 38m 58s",
+    "remaining": "1d 9h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1343,9 +1313,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -20238,
+      "count": -20315,
       "requiredRuns": 42000,
-      "completion": 25.907142857142855,
+      "completion": 25.815476190476193,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1393,9 +1363,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 14091,
+      "count": 14245,
       "requiredRuns": 33000,
-      "completion": 71.35000000000001,
+      "completion": 71.58333333333333,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1583,42 +1553,6 @@
       ]
     },
     {
-      "id": "6a36624ada5421c3388ce5b7",
-      "activation": "2026-06-20T09:50:01.759Z",
-      "node": "Shklovsky (Phobos)",
-      "nodeKey": "Shklovsky (Phobos)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -33456,
-      "requiredRuns": 35000,
-      "completion": 4.411428571428566,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
-      ]
-    },
-    {
       "id": "6a36624ada5421c3388ce5b8",
       "activation": "2026-06-20T09:50:01.759Z",
       "node": "Monolith (Phobos)",
@@ -1646,12 +1580,48 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -22722,
+      "count": -23585,
       "requiredRuns": 41000,
-      "completion": 44.58048780487805,
+      "completion": 42.47560975609757,
       "completed": false,
       "rewardTypes": [
         "fieldron"
+      ]
+    },
+    {
+      "id": "6a36624ada5421c3388ce5b7",
+      "activation": "2026-06-20T09:50:01.759Z",
+      "node": "Shklovsky (Phobos)",
+      "nodeKey": "Shklovsky (Phobos)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 2,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -34205,
+      "requiredRuns": 35000,
+      "completion": 2.2714285714285687,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
       ]
     },
     {
@@ -1682,9 +1652,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4365,
+      "count": -4543,
       "requiredRuns": 30000,
-      "completion": 85.45,
+      "completion": 84.85666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1718,9 +1688,45 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -11346,
+      "count": -12374,
       "requiredRuns": 49000,
-      "completion": 76.84489795918368,
+      "completion": 74.7469387755102,
+      "completed": false,
+      "rewardTypes": [
+        "detonite"
+      ]
+    },
+    {
+      "id": "6a3695da32944573938ce5b2",
+      "activation": "2026-06-20T13:30:01.882Z",
+      "node": "Titan (Saturn)",
+      "nodeKey": "Titan (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -324,
+      "requiredRuns": 44000,
+      "completion": 99.26363636363637,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1754,48 +1760,12 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -430,
+      "count": -511,
       "requiredRuns": 39000,
-      "completion": 98.8974358974359,
+      "completion": 98.6897435897436,
       "completed": false,
       "rewardTypes": [
         "mutagen"
-      ]
-    },
-    {
-      "id": "6a3695da32944573938ce5b2",
-      "activation": "2026-06-20T13:30:01.882Z",
-      "node": "Titan (Saturn)",
-      "nodeKey": "Titan (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -291,
-      "requiredRuns": 44000,
-      "completion": 99.33863636363637,
-      "completed": false,
-      "rewardTypes": [
-        "detonite"
       ]
     }
   ],
