@@ -2538,9 +2538,16 @@
   var DICT_LS_KEY = 'wf_dict_zh';
   var DICT_TTL    = 7 * 86400 * 1000;
 
-  /* 翻译函数：在字典中查找 key，找不到返回原 key */
+  /* 物品名手动校正表：dict.zh.json 查不到或译名有误时在此补充，
+     优先于远程字典，防止字典更新覆盖校正后的译名 */
+  var ITEM_ZH_OVERRIDE = {
+    'Guardian Title': '魔丸称号',
+  };
+
+  /* 翻译函数：手动表优先，其次查远程字典，都找不到返回原 key */
   function tr(key) {
     if (!key) return '';
+    if (ITEM_ZH_OVERRIDE[key]) return ITEM_ZH_OVERRIDE[key];
     return (_dict && _dict[key]) ? _dict[key] : key;
   }
 
