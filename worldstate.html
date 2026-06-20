@@ -2709,8 +2709,11 @@
       out.vallisCycle = { isWarm: !!ws.VallisCycle.isWarm, expiry: _rd(ws.VallisCycle.expiry) };
     }
     if (ws.CambionCycle) {
+      /* 统一输出 state 字段（与 warframestat.us / _CYCLE_HALF / renderCycles 保持一致），
+         兼容原始数据可能用的 active/Active/state/State 几种大小写写法 */
       out.cambionCycle = {
-        active: (ws.CambionCycle.active || ws.CambionCycle.Active || '').toLowerCase(),
+        state: (ws.CambionCycle.state || ws.CambionCycle.State ||
+                ws.CambionCycle.active || ws.CambionCycle.Active || '').toLowerCase(),
         expiry: _rd(ws.CambionCycle.expiry)
       };
     }
@@ -2968,12 +2971,14 @@
         ? [{ms: 1000000, s: {isWarm: false}}, {ms: 600000, s: {isWarm: true}}]
         : [{ms: 600000,  s: {isWarm: true}},  {ms: 1000000, s: {isWarm: false}}];
     },
-    /* 魔胎之境：Fass/Vome 各 60min，对称 */
+    /* 魔胎之境：现在与希图斯白天/夜晚周期完全同步（同一组 activation/expiry），
+       不再是独立的 60/60 对称循环。Fass≈白天(100min)，Vome≈夜晚(50min)。
+       字段名是 state，不是 active —— 之前读错字段名导致永远判断为 Vome。 */
     cambionCycle: function (d) {
-      var isFass = (d.active || '').toLowerCase() === 'fass';
+      var isFass = (d.state || '').toLowerCase() === 'fass';
       return isFass
-        ? [{ms: 3600000, s: {active: 'vome'}}, {ms: 3600000, s: {active: 'fass'}}]
-        : [{ms: 3600000, s: {active: 'fass'}}, {ms: 3600000, s: {active: 'vome'}}];
+        ? [{ms: 2999625, s: {state: 'vome'}}, {ms: 5999250, s: {state: 'fass'}}]
+        : [{ms: 5999250, s: {state: 'fass'}}, {ms: 2999625, s: {state: 'vome'}}];
     },
     /* 扎里曼：Grineer/Corpus 各 15min，对称 */
     zarimanCycle: function (d) {
@@ -3034,12 +3039,13 @@
       },
       {
         key: 'cambionCycle', name: '魔胎之境', en: 'Cambion Drift',
+        /* 字段名是 state，不是 active（API 实际返回 {state:"vome"|"fass"}） */
         state: function (d) {
-          var a = (d.active || '').toLowerCase();
+          var a = (d.state || '').toLowerCase();
           return a === 'fass' ? 'Fass' : 'Vome';
         },
         color: function (d) {
-          var a = (d.active || '').toLowerCase();
+          var a = (d.state || '').toLowerCase();
           return a === 'fass' ? '#ff6b3d' : '#8b5cf6';
         }
       },
