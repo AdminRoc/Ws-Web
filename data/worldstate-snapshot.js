@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-20T23:01:15Z",
+  "fetchedAt": "2026-06-20T23:06:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782000840000",
     "activation": "2026-06-20T22:34:00.000Z",
     "expiry": "2026-06-21T00:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 13m 0s",
+    "timeLeft": "1h 9m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782000840000",
     "activation": "2026-06-20T22:34:00.000Z",
     "expiry": "2026-06-21T00:14:00.000Z",
-    "timeLeft": "1h 13m 0s",
+    "timeLeft": "1h 9m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T01:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 2m 55s"
+    "timeLeft": "1h 58m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782000000000",
@@ -315,17 +315,32 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3708b26fa03c2b698ce5b2",
-      "activation": "2026-06-20T22:20:03.353Z",
-      "expiry": "2026-06-20T23:50:03.353Z",
-      "node": "Beacon Shield Ring (Venus)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
+      "id": "6a371bae4a129522a78ce5b1",
+      "activation": "2026-06-20T23:01:02.746Z",
+      "expiry": "2026-06-21T00:18:43.904Z",
+      "node": "V Prime (Venus)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Beacon Shield Ring (Venus)",
+      "nodeKey": "V Prime (Venus)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3708b26fa03c2b698ce5b4",
+      "activation": "2026-06-20T22:20:03.356Z",
+      "expiry": "2026-06-20T23:50:03.356Z",
+      "node": "Nu-gua Mines (Neptune)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Nu-gua Mines (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": true,
       "isHard": false
     },
@@ -360,32 +375,17 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3708b26fa03c2b698ce5b4",
-      "activation": "2026-06-20T22:20:03.356Z",
-      "expiry": "2026-06-20T23:50:03.356Z",
-      "node": "Nu-gua Mines (Neptune)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
+      "id": "6a3708b26fa03c2b698ce5b2",
+      "activation": "2026-06-20T22:20:03.353Z",
+      "expiry": "2026-06-20T23:50:03.353Z",
+      "node": "Beacon Shield Ring (Venus)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Nu-gua Mines (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3708b26fa03c2b698ce5b5",
-      "activation": "2026-06-20T22:20:03.358Z",
-      "expiry": "2026-06-20T23:50:03.358Z",
-      "node": "Fenton's Field (Pluto)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Fenton's Field (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
+      "nodeKey": "Beacon Shield Ring (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -399,6 +399,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "H-2 Cloud (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3708b26fa03c2b698ce5b5",
+      "activation": "2026-06-20T22:20:03.358Z",
+      "expiry": "2026-06-20T23:50:03.358Z",
+      "node": "Fenton's Field (Pluto)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Fenton's Field (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -662,7 +677,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 58m 58s",
+    "remaining": "1d 54m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1198,9 +1213,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -28607,
+      "count": -28596,
       "requiredRuns": 42000,
-      "completion": 15.94404761904762,
+      "completion": 15.957142857142859,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1248,9 +1263,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 25088,
+      "count": 25083,
       "requiredRuns": 33000,
-      "completion": 88.0121212121212,
+      "completion": 88.00454545454545,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1330,42 +1345,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a36624ada5421c3388ce5b8",
-      "activation": "2026-06-20T09:50:01.759Z",
-      "node": "Monolith (Phobos)",
-      "nodeKey": "Monolith (Phobos)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Fieldron",
-              "key": "Fieldron"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -41827,
-      "requiredRuns": 41000,
-      "completion": -2.017073170731698,
-      "completed": true,
-      "rewardTypes": [
-        "fieldron"
-      ]
-    },
-    {
       "id": "6a36624ada5421c3388ce5b7",
       "activation": "2026-06-20T09:50:01.759Z",
       "node": "Shklovsky (Phobos)",
@@ -1402,6 +1381,42 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
+      "id": "6a36624ada5421c3388ce5b8",
+      "activation": "2026-06-20T09:50:01.759Z",
+      "node": "Monolith (Phobos)",
+      "nodeKey": "Monolith (Phobos)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -41827,
+      "requiredRuns": 41000,
+      "completion": -2.017073170731698,
+      "completed": true,
+      "rewardTypes": [
+        "fieldron"
+      ]
+    },
+    {
       "id": "6a3684468d6a6180158ce5b1",
       "activation": "2026-06-20T12:15:01.797Z",
       "node": "Iliad (Phobos)",
@@ -1429,9 +1444,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -20136,
+      "count": -20202,
       "requiredRuns": 30000,
-      "completion": 32.879999999999995,
+      "completion": 32.66,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1474,42 +1489,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a3695da32944573938ce5b2",
-      "activation": "2026-06-20T13:30:01.882Z",
-      "node": "Titan (Saturn)",
-      "nodeKey": "Titan (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -44341,
-      "requiredRuns": 44000,
-      "completion": -0.7749999999999924,
-      "completed": true,
-      "rewardTypes": [
-        "detonite"
-      ]
-    },
-    {
       "id": "6a3695da32944573938ce5b1",
       "activation": "2026-06-20T13:30:01.882Z",
       "node": "Numa (Saturn)",
@@ -1543,6 +1522,42 @@ window.WF_WS_SNAPSHOT = {
       "completed": true,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a3695da32944573938ce5b2",
+      "activation": "2026-06-20T13:30:01.882Z",
+      "node": "Titan (Saturn)",
+      "nodeKey": "Titan (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -44341,
+      "requiredRuns": 44000,
+      "completion": -0.7749999999999924,
+      "completed": true,
+      "rewardTypes": [
+        "detonite"
       ]
     },
     {
@@ -6204,7 +6219,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 10,
       "salePrice": 9,
       "total": 200,
-      "sold": 94,
+      "sold": 95,
       "discount": 10
     }
   ],
