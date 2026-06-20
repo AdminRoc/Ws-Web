@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-20T15:56:15Z",
+  "fetchedAt": "2026-06-20T16:01:18Z",
   "cetusCycle": {
     "id": "cetusCycle1781973840000",
     "activation": "2026-06-20T15:04:00.000Z",
     "expiry": "2026-06-20T16:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1781973840000",
     "activation": "2026-06-20T15:04:00.000Z",
     "expiry": "2026-06-20T16:44:00.000Z",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,31 +34,16 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-20T17:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 37m 54s"
+    "timeLeft": "1h 32m 54s"
   },
   "duviriCycle": {
-    "id": "duviriCyclesorrow1781971200000",
-    "activation": "2026-06-20T14:00:00.000Z",
-    "expiry": "2026-06-20T16:00:00.000Z",
-    "state": "sorrow",
+    "id": "duviriCyclefear1781978400000",
+    "activation": "2026-06-20T16:00:00.000Z",
+    "expiry": "2026-06-20T18:00:00.000Z",
+    "state": "fear",
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a36a0df3d90357a648ce5b2",
-      "activation": "2026-06-20T14:17:03.170Z",
-      "expiry": "2026-06-20T15:57:15.539Z",
-      "node": "Taranis (Void)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Taranis (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a36a3366f8c2ee3188ce5b1",
       "activation": "2026-06-20T14:27:02.607Z",
@@ -86,21 +71,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Proteus (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a36a3366f8c2ee3188ce5b5",
-      "activation": "2026-06-20T14:27:02.607Z",
-      "expiry": "2026-06-20T15:56:48.577Z",
-      "node": "Nuovo (Ceres)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nuovo (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
       "isStorm": false,
       "isHard": true
     },
@@ -360,111 +330,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3698331b7ec9f0928ce5b2",
-      "activation": "2026-06-20T14:20:03.353Z",
-      "expiry": "2026-06-20T15:50:03.353Z",
-      "node": "Beacon Shield Ring (Venus)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Beacon Shield Ring (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3698331b7ec9f0928ce5b5",
-      "activation": "2026-06-20T14:20:03.358Z",
-      "expiry": "2026-06-20T15:50:03.358Z",
-      "node": "Profit Margin (Pluto)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Profit Margin (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3698331b7ec9f0928ce5b6",
-      "activation": "2026-06-20T14:20:03.360Z",
-      "expiry": "2026-06-20T15:50:03.360Z",
-      "node": "H-2 Cloud (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "H-2 Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3698331b7ec9f0928ce5b3",
-      "activation": "2026-06-20T14:20:03.355Z",
-      "expiry": "2026-06-20T15:50:03.355Z",
-      "node": "Mordo Cluster (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Mordo Cluster (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3698331b7ec9f0928ce5b1",
-      "activation": "2026-06-20T14:20:03.351Z",
-      "expiry": "2026-06-20T15:50:03.351Z",
-      "node": "Ogal Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Ogal Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3698331b7ec9f0928ce5b4",
-      "activation": "2026-06-20T14:20:03.356Z",
-      "expiry": "2026-06-20T15:50:03.356Z",
-      "node": "Nu-gua Mines (Neptune)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Nu-gua Mines (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a36a643453139b2628ce5b4",
-      "activation": "2026-06-20T15:20:03.356Z",
-      "expiry": "2026-06-20T16:50:03.356Z",
-      "node": "Enkidu Ice Drifts (Neptune)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Enkidu Ice Drifts (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a36a643453139b2628ce5b1",
       "activation": "2026-06-20T15:20:03.351Z",
       "expiry": "2026-06-20T16:50:03.351Z",
@@ -476,21 +341,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Iota Temple (Earth)",
       "tier": "Lith",
       "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a36a643453139b2628ce5b6",
-      "activation": "2026-06-20T15:20:03.360Z",
-      "expiry": "2026-06-20T16:50:03.360Z",
-      "node": "Flexa (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Flexa (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -510,6 +360,36 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
+      "id": "6a36a643453139b2628ce5b3",
+      "activation": "2026-06-20T15:20:03.355Z",
+      "expiry": "2026-06-20T16:50:03.355Z",
+      "node": "Vand Cluster (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Vand Cluster (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a36a643453139b2628ce5b6",
+      "activation": "2026-06-20T15:20:03.360Z",
+      "expiry": "2026-06-20T16:50:03.360Z",
+      "node": "Flexa (Veil)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Flexa (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a36a643453139b2628ce5b5",
       "activation": "2026-06-20T15:20:03.358Z",
       "expiry": "2026-06-20T16:50:03.358Z",
@@ -525,17 +405,17 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a36a643453139b2628ce5b3",
-      "activation": "2026-06-20T15:20:03.355Z",
-      "expiry": "2026-06-20T16:50:03.355Z",
-      "node": "Vand Cluster (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Vand Cluster (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
+      "id": "6a36a643453139b2628ce5b4",
+      "activation": "2026-06-20T15:20:03.356Z",
+      "expiry": "2026-06-20T16:50:03.356Z",
+      "node": "Enkidu Ice Drifts (Neptune)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Enkidu Ice Drifts (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": true,
       "isHard": false
     }
@@ -585,40 +465,40 @@ window.WF_WS_SNAPSHOT = {
     }
   ],
   "sortie": {
-    "id": "6a3563ff68d6f92ad78ce5b2",
-    "activation": "2026-06-19T16:00:00.000Z",
-    "expiry": "2026-06-20T16:00:00.000Z",
+    "id": "6a36b57e78d538ec458ce5b1",
+    "activation": "2026-06-20T16:00:00.000Z",
+    "expiry": "2026-06-21T16:00:00.000Z",
     "rewardPool": "Sortie Rewards",
     "variants": [
       {
-        "missionType": "Defection",
-        "missionTypeKey": "Defection",
-        "modifier": "Augmented Enemy Armor",
-        "modifierDescription": "Enemies have Improved/Added armor. Corrosive Projection effects are halved.",
-        "node": "Helene (Saturn)",
-        "nodeKey": "Helene (Saturn)"
+        "missionType": "Extermination",
+        "missionTypeKey": "Extermination",
+        "modifier": "Eximus Stronghold",
+        "modifierDescription": "Eximus units have a much higher spawn rate in this mission. Some of their auras stack.",
+        "node": "Horend (Deimos)",
+        "nodeKey": "Horend (Deimos)"
       },
       {
         "missionType": "Rescue",
         "missionTypeKey": "Rescue",
-        "modifier": "Eximus Stronghold",
-        "modifierDescription": "Eximus units have a much higher spawn rate in this mission. Some of their auras stack.",
-        "node": "Alator (Mars)",
-        "nodeKey": "Alator (Mars)"
+        "modifier": "Augmented Enemy Armor",
+        "modifierDescription": "Enemies have Improved/Added armor. Corrosive Projection effects are halved.",
+        "node": "Valac (Europa)",
+        "nodeKey": "Valac (Europa)"
       },
       {
-        "missionType": "Spy",
-        "missionTypeKey": "Spy",
-        "modifier": "Energy Reduction",
-        "modifierDescription": "Maximum Warframe Energy capacity is quartered. Energy Siphon is less effective.",
-        "node": "Cambria (Earth)",
-        "nodeKey": "Cambria (Earth)"
+        "missionType": "Mobile Defense",
+        "missionTypeKey": "Mobile Defense",
+        "modifier": "Enemy Elemental Enhancement: Magnetic",
+        "modifierDescription": "Enemies deal increased Magnetic damage and also have increased Immunity to said damage type.",
+        "node": "Venera (Venus)",
+        "nodeKey": "Venera (Venus)"
       }
     ],
     "missions": [],
-    "boss": "General Sargas Ruk",
-    "faction": "Grineer",
-    "factionKey": "Grineer"
+    "boss": "Lephantis",
+    "faction": "Infestation",
+    "factionKey": "Infestation"
   },
   "archonHunt": {
     "id": "6a2f3cfeb21d7bc4638ce5b1",
@@ -797,7 +677,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 8h 3m 58s",
+    "remaining": "1d 7h 58m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1333,9 +1213,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -21733,
+      "count": -21824,
       "requiredRuns": 42000,
-      "completion": 24.12738095238095,
+      "completion": 24.01904761904762,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1383,9 +1263,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 16091,
+      "count": 16162,
       "requiredRuns": 33000,
-      "completion": 74.38030303030303,
+      "completion": 74.4878787878788,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1564,9 +1444,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -39132,
+      "count": -40012,
       "requiredRuns": 41000,
-      "completion": 4.556097560975614,
+      "completion": 2.4097560975609778,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1636,9 +1516,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -7509,
+      "count": -7685,
       "requiredRuns": 30000,
-      "completion": 74.97,
+      "completion": 74.38333333333334,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1672,9 +1552,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -30543,
+      "count": -31546,
       "requiredRuns": 49000,
-      "completion": 37.667346938775516,
+      "completion": 35.6204081632653,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1708,9 +1588,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -875,
+      "count": -909,
       "requiredRuns": 44000,
-      "completion": 98.01136363636364,
+      "completion": 97.93409090909091,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1744,9 +1624,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1684,
+      "count": -1743,
       "requiredRuns": 39000,
-      "completion": 95.68205128205129,
+      "completion": 95.53076923076922,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1755,333 +1635,6 @@ window.WF_WS_SNAPSHOT = {
   ],
   "syndicates": null,
   "syndicateMissions": [
-    {
-      "id": "1781971140000ArbitersSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Arbiters of Hexis",
-      "syndicateKey": "Arbiters of Hexis",
-      "nodes": [
-        "Odin (Mercury)",
-        "Eurasia (Earth)",
-        "Amalthea (Jupiter)",
-        "Baal (Europa)",
-        "Minthe (Pluto)",
-        "Calypso (Saturn)",
-        "Ker (Ceres)"
-      ],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000CephalonSudaSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Cephalon Suda",
-      "syndicateKey": "Cephalon Suda",
-      "nodes": [
-        "Venera (Venus)",
-        "Elion (Mercury)",
-        "Kokabiel (Europa)",
-        "Cervantes (Earth)",
-        "Umbriel (Uranus)",
-        "Laomedeia (Neptune)",
-        "Keeler (Saturn)"
-      ],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000EventSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Operations Syndicate",
-      "syndicateKey": "Operations Syndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000KahlSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Kahl's Garrison",
-      "syndicateKey": "Kahl's Garrison",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000NecraloidSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Necraloid",
-      "syndicateKey": "Necraloid",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000NewLokaSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "New Loka",
-      "syndicateKey": "New Loka",
-      "nodes": [
-        "Aphrodite (Venus)",
-        "Arval (Mars)",
-        "Thebe (Jupiter)",
-        "M Prime (Mercury)",
-        "Stephano (Uranus)",
-        "Aten (Void)",
-        "Anthe (Saturn)"
-      ],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000NightcapJournalSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "NightcapJournalSyndicate",
-      "syndicateKey": "NightcapJournalSyndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000PerrinSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Perrin Sequence",
-      "syndicateKey": "Perrin Sequence",
-      "nodes": [
-        "Pantheon (Mercury)",
-        "Pacific (Earth)",
-        "Callisto (Jupiter)",
-        "Cinxia (Ceres)",
-        "Hydron (Sedna)",
-        "Cypress (Pluto)",
-        "Brugia (Eris)"
-      ],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000QuillsSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Quills",
-      "syndicateKey": "Quills",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegion2Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "The Emissary",
-      "syndicateKey": "The Emissary",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegion3Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Glassmaker",
-      "syndicateKey": "Glassmaker",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission10Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "RadioLegionIntermission10Syndicate",
-      "syndicateKey": "RadioLegionIntermission10Syndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission11Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "RadioLegionIntermission11Syndicate",
-      "syndicateKey": "RadioLegionIntermission11Syndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission12Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "RadioLegionIntermission12Syndicate",
-      "syndicateKey": "RadioLegionIntermission12Syndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission13Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "RadioLegionIntermission13Syndicate",
-      "syndicateKey": "RadioLegionIntermission13Syndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission14Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "RadioLegionIntermission14Syndicate",
-      "syndicateKey": "RadioLegionIntermission14Syndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission15Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "RadioLegionIntermission15Syndicate",
-      "syndicateKey": "RadioLegionIntermission15Syndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission2Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Intermission II",
-      "syndicateKey": "Intermission II",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission3Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Intermission III",
-      "syndicateKey": "Intermission III",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission4Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Nora's Choice",
-      "syndicateKey": "Nora's Choice",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission5Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Nora's Mix Volume 1",
-      "syndicateKey": "Nora's Mix Volume 1",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission6Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Nora's Mix Volume 2",
-      "syndicateKey": "Nora's Mix Volume 2",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission7Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "RadioLegionIntermission7Syndicate",
-      "syndicateKey": "RadioLegionIntermission7Syndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission8Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "RadioLegionIntermission8Syndicate",
-      "syndicateKey": "RadioLegionIntermission8Syndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermission9Syndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "RadioLegionIntermission9Syndicate",
-      "syndicateKey": "RadioLegionIntermission9Syndicate",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionIntermissionSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Intermission",
-      "syndicateKey": "Intermission",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RadioLegionSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "The Wolf of Saturn Six",
-      "syndicateKey": "The Wolf of Saturn Six",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000RedVeilSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Red Veil",
-      "syndicateKey": "Red Veil",
-      "nodes": [
-        "Oxomoco (Void)",
-        "Rhea (Saturn)",
-        "Lares (Mercury)",
-        "Olympus (Mars)",
-        "Saxis (Eris)",
-        "Roche (Phobos)",
-        "Marid (Sedna)"
-      ],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000SteelMeridianSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Steel Meridian",
-      "syndicateKey": "Steel Meridian",
-      "nodes": [
-        "Ishtar (Venus)",
-        "Oceanum (Pluto)",
-        "Sorath (Europa)",
-        "Augustus (Mars)",
-        "Xini (Eris)",
-        "Carpo (Jupiter)",
-        "Proteus (Neptune)"
-      ],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000VentKidsSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Vent Kids",
-      "syndicateKey": "Vent Kids",
-      "nodes": [],
-      "jobs": []
-    },
-    {
-      "id": "1781971140000VoxSyndicate",
-      "activation": "2026-06-19T15:59:02.251Z",
-      "expiry": "2026-06-20T15:59:00.000Z",
-      "syndicate": "Vox Solaris",
-      "syndicateKey": "Vox Solaris",
-      "nodes": [],
-      "jobs": []
-    },
     {
       "id": "1781976887064CetusSyndicate",
       "activation": "2026-06-20T15:04:48.190Z",
@@ -6363,6 +5916,333 @@ window.WF_WS_SNAPSHOT = {
       "syndicateKey": "The Holdfasts",
       "nodes": [],
       "jobs": []
+    },
+    {
+      "id": "1782057540000ArbitersSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Arbiters of Hexis",
+      "syndicateKey": "Arbiters of Hexis",
+      "nodes": [
+        "Tharsis (Mars)",
+        "Pacific (Earth)",
+        "Formido (Deimos)",
+        "Dione (Saturn)",
+        "Linea (Venus)",
+        "Io (Jupiter)",
+        "Acheron (Pluto)"
+      ],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000CephalonSudaSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Cephalon Suda",
+      "syndicateKey": "Cephalon Suda",
+      "nodes": [
+        "Eurasia (Earth)",
+        "Spear (Mars)",
+        "Morax (Europa)",
+        "Metis (Jupiter)",
+        "Skyresh (Phobos)",
+        "Nimus (Eris)",
+        "Hepit (Void)"
+      ],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000EventSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Operations Syndicate",
+      "syndicateKey": "Operations Syndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000KahlSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Kahl's Garrison",
+      "syndicateKey": "Kahl's Garrison",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000NecraloidSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Necraloid",
+      "syndicateKey": "Necraloid",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000NewLokaSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "New Loka",
+      "syndicateKey": "New Loka",
+      "nodes": [
+        "E Gate (Venus)",
+        "Elion (Mercury)",
+        "Everest (Earth)",
+        "Carpo (Jupiter)",
+        "Arval (Mars)",
+        "Mot (Void)",
+        "Sao (Neptune)"
+      ],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000NightcapJournalSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "NightcapJournalSyndicate",
+      "syndicateKey": "NightcapJournalSyndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000PerrinSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Perrin Sequence",
+      "syndicateKey": "Perrin Sequence",
+      "nodes": [
+        "Aphrodite (Venus)",
+        "Suisei (Mercury)",
+        "Elara (Jupiter)",
+        "Martialis (Mars)",
+        "Regna (Pluto)",
+        "Oxomoco (Void)",
+        "Lex (Ceres)"
+      ],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000QuillsSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Quills",
+      "syndicateKey": "Quills",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegion2Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "The Emissary",
+      "syndicateKey": "The Emissary",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegion3Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Glassmaker",
+      "syndicateKey": "Glassmaker",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission10Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "RadioLegionIntermission10Syndicate",
+      "syndicateKey": "RadioLegionIntermission10Syndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission11Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "RadioLegionIntermission11Syndicate",
+      "syndicateKey": "RadioLegionIntermission11Syndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission12Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "RadioLegionIntermission12Syndicate",
+      "syndicateKey": "RadioLegionIntermission12Syndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission13Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "RadioLegionIntermission13Syndicate",
+      "syndicateKey": "RadioLegionIntermission13Syndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission14Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "RadioLegionIntermission14Syndicate",
+      "syndicateKey": "RadioLegionIntermission14Syndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission15Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "RadioLegionIntermission15Syndicate",
+      "syndicateKey": "RadioLegionIntermission15Syndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission2Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Intermission II",
+      "syndicateKey": "Intermission II",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission3Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Intermission III",
+      "syndicateKey": "Intermission III",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission4Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Nora's Choice",
+      "syndicateKey": "Nora's Choice",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission5Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Nora's Mix Volume 1",
+      "syndicateKey": "Nora's Mix Volume 1",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission6Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Nora's Mix Volume 2",
+      "syndicateKey": "Nora's Mix Volume 2",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission7Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "RadioLegionIntermission7Syndicate",
+      "syndicateKey": "RadioLegionIntermission7Syndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission8Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "RadioLegionIntermission8Syndicate",
+      "syndicateKey": "RadioLegionIntermission8Syndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermission9Syndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "RadioLegionIntermission9Syndicate",
+      "syndicateKey": "RadioLegionIntermission9Syndicate",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionIntermissionSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Intermission",
+      "syndicateKey": "Intermission",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RadioLegionSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "The Wolf of Saturn Six",
+      "syndicateKey": "The Wolf of Saturn Six",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000RedVeilSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Red Veil",
+      "syndicateKey": "Red Veil",
+      "nodes": [
+        "Vallis (Mars)",
+        "Boethius (Mercury)",
+        "Cervantes (Earth)",
+        "Phlegyas (Deimos)",
+        "Amalthea (Jupiter)",
+        "Hydron (Sedna)",
+        "Palus (Pluto)"
+      ],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000SteelMeridianSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Steel Meridian",
+      "syndicateKey": "Steel Meridian",
+      "nodes": [
+        "Olympus (Mars)",
+        "Tessera (Venus)",
+        "Lares (Mercury)",
+        "Callisto (Jupiter)",
+        "Oceanum (Pluto)",
+        "Ani (Void)",
+        "Neso (Neptune)"
+      ],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000VentKidsSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Vent Kids",
+      "syndicateKey": "Vent Kids",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782057540000VoxSyndicate",
+      "activation": "2026-06-20T15:59:02.938Z",
+      "expiry": "2026-06-21T15:59:00.000Z",
+      "syndicate": "Vox Solaris",
+      "syndicateKey": "Vox Solaris",
+      "nodes": [],
+      "jobs": []
     }
   ],
   "dailyDeals": [
@@ -6375,7 +6255,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 121,
+      "sold": 122,
       "discount": 40
     }
   ],
