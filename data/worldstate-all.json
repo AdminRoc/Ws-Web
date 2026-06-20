@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T09:01:17Z",
+  "fetchedAt": "2026-06-20T09:06:16Z",
   "cetusCycle": {
     "id": "cetusCycle1781946840000",
     "activation": "2026-06-20T07:34:00.000Z",
     "expiry": "2026-06-20T09:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "12m 59s",
+    "timeLeft": "8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781946840000",
     "activation": "2026-06-20T07:34:00.000Z",
     "expiry": "2026-06-20T09:14:00.000Z",
-    "timeLeft": "12m 59s",
+    "timeLeft": "8m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T10:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 2m 53s"
+    "timeLeft": "57m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1781949600000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a36426aadf9e559b18ce5b1",
-      "activation": "2026-06-20T07:34:02.797Z",
-      "expiry": "2026-06-20T09:03:38.347Z",
-      "node": "Saxis (Eris)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Saxis (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a364576a843e5f6618ce5b1",
       "activation": "2026-06-20T07:47:02.764Z",
@@ -126,21 +111,6 @@
       "nodeKey": "Naga (Sedna)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a364756ec5d6be2bd8ce5b2",
-      "activation": "2026-06-20T07:55:02.370Z",
-      "expiry": "2026-06-20T09:04:52.858Z",
-      "node": "Aphrodite (Venus)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Aphrodite (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
       "isStorm": false,
       "isHard": true
     },
@@ -672,7 +642,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 14h 58m 57s",
+    "remaining": "1d 14h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1208,9 +1178,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -14968,
+      "count": -15055,
       "requiredRuns": 42000,
-      "completion": 32.180952380952384,
+      "completion": 32.07738095238095,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1258,9 +1228,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 7605,
+      "count": 7678,
       "requiredRuns": 33000,
-      "completion": 61.52272727272727,
+      "completion": 61.633333333333326,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1295,9 +1265,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -28803,
+      "count": -28906,
       "requiredRuns": 30000,
-      "completion": 3.9900000000000047,
+      "completion": 3.6466666666666647,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1439,9 +1409,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8684,
+      "count": -9526,
       "requiredRuns": 41000,
-      "completion": 78.81951219512196,
+      "completion": 76.76585365853659,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1475,9 +1445,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -797,
+      "count": -831,
       "requiredRuns": 31000,
-      "completion": 97.42903225806452,
+      "completion": 97.31935483870969,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -6106,7 +6076,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 79,
+      "sold": 80,
       "discount": 40
     }
   ],
