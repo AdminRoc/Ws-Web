@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-20T05:31:14Z",
+  "fetchedAt": "2026-06-20T05:36:15Z",
   "cetusCycle": {
     "id": "cetusCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 13m 0s",
+    "timeLeft": "1h 8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1781932380000",
-    "activation": "2026-06-20T05:13:00.000Z",
-    "expiry": "2026-06-20T05:33:28.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1781933580000",
+    "activation": "2026-06-20T05:33:00.000Z",
+    "expiry": "2026-06-20T05:40:08.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
-    "timeLeft": "1h 13m 0s",
+    "timeLeft": "1h 8m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T07:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 2m 55s"
+    "timeLeft": "1h 57m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1781935200000",
@@ -145,21 +145,6 @@
       "isHard": true
     },
     {
-      "id": "6a36169687c7c7abc18ce5b2",
-      "activation": "2026-06-20T04:27:02.560Z",
-      "expiry": "2026-06-20T05:31:20.541Z",
-      "node": "Telesto (Saturn)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Telesto (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a36169687c7c7abc18ce5b3",
       "activation": "2026-06-20T04:27:02.560Z",
       "expiry": "2026-06-20T06:04:19.584Z",
@@ -205,21 +190,6 @@
       "isHard": false
     },
     {
-      "id": "6a36174a50f25d869f8ce5b4",
-      "activation": "2026-06-20T04:30:02.583Z",
-      "expiry": "2026-06-20T06:16:24.839Z",
-      "node": "Cypress (Pluto)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cypress (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a36174a50f25d869f8ce5b3",
       "activation": "2026-06-20T04:30:02.583Z",
       "expiry": "2026-06-20T05:49:10.785Z",
@@ -229,6 +199,21 @@
       "enemy": "Orokin",
       "enemyKey": "Orokin",
       "nodeKey": "Aten (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a36174a50f25d869f8ce5b4",
+      "activation": "2026-06-20T04:30:02.583Z",
+      "expiry": "2026-06-20T06:16:24.839Z",
+      "node": "Cypress (Pluto)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cypress (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -280,21 +265,6 @@
       "isHard": false
     },
     {
-      "id": "6a361bfa53c1ddcb278ce5b2",
-      "activation": "2026-06-20T04:50:02.306Z",
-      "expiry": "2026-06-20T06:06:46.116Z",
-      "node": "Martialis (Mars)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Martialis (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a361bfa53c1ddcb278ce5b1",
       "activation": "2026-06-20T04:50:02.306Z",
       "expiry": "2026-06-20T06:27:55.313Z",
@@ -304,6 +274,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "E Prime (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a361bfa53c1ddcb278ce5b2",
+      "activation": "2026-06-20T04:50:02.306Z",
+      "expiry": "2026-06-20T06:06:46.116Z",
+      "node": "Martialis (Mars)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Martialis (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -355,15 +340,15 @@
       "isHard": true
     },
     {
-      "id": "6a361eca35b847647a8ce5b1",
+      "id": "6a361eca35b847647a8ce5b3",
       "activation": "2026-06-20T05:02:02.943Z",
-      "expiry": "2026-06-20T06:36:48.918Z",
-      "node": "Gaia (Earth)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
+      "expiry": "2026-06-20T06:03:11.567Z",
+      "node": "Augustus (Mars)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Gaia (Earth)",
+      "nodeKey": "Augustus (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -385,17 +370,47 @@
       "isHard": false
     },
     {
-      "id": "6a361eca35b847647a8ce5b3",
+      "id": "6a361eca35b847647a8ce5b1",
       "activation": "2026-06-20T05:02:02.943Z",
-      "expiry": "2026-06-20T06:03:11.567Z",
-      "node": "Augustus (Mars)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
+      "expiry": "2026-06-20T06:36:48.918Z",
+      "node": "Gaia (Earth)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Augustus (Mars)",
+      "nodeKey": "Gaia (Earth)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a362686be32e799378ce5b1",
+      "activation": "2026-06-20T05:35:02.397Z",
+      "expiry": "2026-06-20T07:03:48.285Z",
+      "node": "Everview Arc (Zariman)",
+      "missionType": "Void Flood",
+      "missionTypeKey": "Void Flood",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Everview Arc (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a362686be32e799378ce5b2",
+      "activation": "2026-06-20T05:35:02.397Z",
+      "expiry": "2026-06-20T07:09:21.972Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
       "isStorm": false,
       "isHard": false
     },
@@ -837,7 +852,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 18h 28m 58s",
+    "remaining": "1d 18h 23m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1373,9 +1388,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -11704,
+      "count": -11794,
       "requiredRuns": 42000,
-      "completion": 36.06666666666667,
+      "completion": 35.95952380952381,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1423,9 +1438,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 3970,
+      "count": 4022,
       "requiredRuns": 33000,
-      "completion": 56.015151515151516,
+      "completion": 56.093939393939394,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1460,9 +1475,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -23984,
+      "count": -24093,
       "requiredRuns": 30000,
-      "completion": 20.053333333333335,
+      "completion": 19.689999999999998,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -6328,7 +6343,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 59,
+      "sold": 60,
       "discount": 40
     }
   ],
