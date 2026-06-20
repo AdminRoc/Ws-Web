@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T07:01:17Z",
+  "fetchedAt": "2026-06-20T07:06:15Z",
   "cetusCycle": {
     "id": "cetusCycle1781940840000",
     "activation": "2026-06-20T06:44:00.000Z",
     "expiry": "2026-06-20T07:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "32m 56s",
+    "timeLeft": "28m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781940840000",
     "activation": "2026-06-20T06:44:00.000Z",
     "expiry": "2026-06-20T07:34:00.000Z",
-    "timeLeft": "32m 56s",
+    "timeLeft": "28m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T07:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "32m 51s"
+    "timeLeft": "27m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1781942400000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a362686be32e799378ce5b1",
-      "activation": "2026-06-20T05:35:02.397Z",
-      "expiry": "2026-06-20T07:03:48.285Z",
-      "node": "Everview Arc (Zariman)",
-      "missionType": "Void Flood",
-      "missionTypeKey": "Void Flood",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Everview Arc (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a362686be32e799378ce5b2",
       "activation": "2026-06-20T05:35:02.397Z",
@@ -190,21 +175,6 @@
       "isHard": true
     },
     {
-      "id": "6a363023a3cd000a368ce5b2",
-      "activation": "2026-06-20T06:16:02.997Z",
-      "expiry": "2026-06-20T07:56:31.263Z",
-      "node": "Sharpless (Phobos)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sharpless (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a363023a3cd000a368ce5b1",
       "activation": "2026-06-20T06:16:02.997Z",
       "expiry": "2026-06-20T07:31:06.471Z",
@@ -220,17 +190,17 @@
       "isHard": true
     },
     {
-      "id": "6a36309ae25f9aa46e8ce5b2",
-      "activation": "2026-06-20T06:18:02.589Z",
-      "expiry": "2026-06-20T08:14:04.476Z",
-      "node": "Pago (Kuva Fortress)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pago (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
+      "id": "6a363023a3cd000a368ce5b2",
+      "activation": "2026-06-20T06:16:02.997Z",
+      "expiry": "2026-06-20T07:56:31.263Z",
+      "node": "Sharpless (Phobos)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sharpless (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": false,
       "isHard": true
     },
@@ -244,6 +214,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Tamu (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a36309ae25f9aa46e8ce5b2",
+      "activation": "2026-06-20T06:18:02.589Z",
+      "expiry": "2026-06-20T08:14:04.476Z",
+      "node": "Pago (Kuva Fortress)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Pago (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -265,21 +250,6 @@
       "isHard": true
     },
     {
-      "id": "6a36318a631eede6d28ce5b3",
-      "activation": "2026-06-20T06:22:02.742Z",
-      "expiry": "2026-06-20T07:39:35.017Z",
-      "node": "Neso (Neptune)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Neso (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a36318a631eede6d28ce5b2",
       "activation": "2026-06-20T06:22:02.742Z",
       "expiry": "2026-06-20T08:17:26.100Z",
@@ -289,6 +259,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Stephano (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a36318a631eede6d28ce5b3",
+      "activation": "2026-06-20T06:22:02.742Z",
+      "expiry": "2026-06-20T07:39:35.017Z",
+      "node": "Neso (Neptune)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Neso (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -385,6 +370,21 @@
       "isHard": false
     },
     {
+      "id": "6a3637a3148e643ee68ce5b2",
+      "activation": "2026-06-20T06:48:03.020Z",
+      "expiry": "2026-06-20T07:54:24.091Z",
+      "node": "Tuvul Commons (Zariman)",
+      "missionType": "Void Cascade",
+      "missionTypeKey": "Void Cascade",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Tuvul Commons (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
       "id": "6a3637a3148e643ee68ce5b1",
       "activation": "2026-06-20T06:48:03.020Z",
       "expiry": "2026-06-20T08:41:11.043Z",
@@ -400,19 +400,19 @@
       "isHard": true
     },
     {
-      "id": "6a3637a3148e643ee68ce5b2",
-      "activation": "2026-06-20T06:48:03.020Z",
-      "expiry": "2026-06-20T07:54:24.091Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
+      "id": "6a363b9ee1323cafd38ce5b1",
+      "activation": "2026-06-20T07:05:02.304Z",
+      "expiry": "2026-06-20T08:18:43.202Z",
+      "node": "Everview Arc (Zariman)",
+      "missionType": "Void Flood",
+      "missionTypeKey": "Void Flood",
       "enemy": "Crossfire",
       "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
+      "nodeKey": "Everview Arc (Zariman)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
-      "isHard": true
+      "isHard": false
     },
     {
       "id": "6a3623038320c36cea8ce5b3",
@@ -762,7 +762,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 16h 58m 54s",
+    "remaining": "1d 16h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1298,9 +1298,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -13120,
+      "count": -13229,
       "requiredRuns": 42000,
-      "completion": 34.38095238095238,
+      "completion": 34.25119047619047,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1348,9 +1348,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 5479,
+      "count": 5525,
       "requiredRuns": 33000,
-      "completion": 58.30151515151515,
+      "completion": 58.371212121212125,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1385,9 +1385,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -26141,
+      "count": -26253,
       "requiredRuns": 30000,
-      "completion": 12.863333333333337,
+      "completion": 12.490000000000002,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1565,9 +1565,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -120,
+      "count": -201,
       "requiredRuns": 41000,
-      "completion": 99.70731707317073,
+      "completion": 99.50975609756098,
       "completed": false,
       "rewardTypes": [
         "fieldron"
