@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T11:06:15Z",
+  "fetchedAt": "2026-06-20T11:11:14Z",
   "cetusCycle": {
     "id": "cetusCycle1781955840000",
     "activation": "2026-06-20T10:04:00.000Z",
     "expiry": "2026-06-20T11:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781955840000",
     "activation": "2026-06-20T10:04:00.000Z",
     "expiry": "2026-06-20T11:44:00.000Z",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T12:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 27m 55s"
+    "timeLeft": "1h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781956800000",
@@ -49,21 +49,6 @@
       "enemy": "Orokin",
       "enemyKey": "Orokin",
       "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a365b4295afae7e418ce5b2",
-      "activation": "2026-06-20T09:20:02.332Z",
-      "expiry": "2026-06-20T11:09:46.803Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -171,21 +156,6 @@
       "nodeKey": "Tiwaz (Void)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a366377701c5439788ce5b1",
-      "activation": "2026-06-20T09:55:03.183Z",
-      "expiry": "2026-06-20T11:07:50.255Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
       "isStorm": false,
       "isHard": true
     },
@@ -340,17 +310,77 @@
       "isHard": true
     },
     {
-      "id": "6a365ff2dc7e8f9aaf8ce5b4",
-      "activation": "2026-06-20T10:20:03.356Z",
-      "expiry": "2026-06-20T11:50:03.356Z",
-      "node": "Enkidu Ice Drifts (Neptune)",
+      "id": "6a367456277b5f7dca8ce5b1",
+      "activation": "2026-06-20T11:07:02.703Z",
+      "expiry": "2026-06-20T13:02:50.242Z",
+      "node": "Pago (Kuva Fortress)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Pago (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a367456277b5f7dca8ce5b3",
+      "activation": "2026-06-20T11:07:02.703Z",
+      "expiry": "2026-06-20T13:04:43.828Z",
+      "node": "Hellas (Mars)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Hellas (Mars)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a367456277b5f7dca8ce5b2",
+      "activation": "2026-06-20T11:07:02.703Z",
+      "expiry": "2026-06-20T12:56:51.595Z",
+      "node": "Tamu (Kuva Fortress)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Tamu (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a365ff2dc7e8f9aaf8ce5b5",
+      "activation": "2026-06-20T10:20:03.358Z",
+      "expiry": "2026-06-20T11:50:03.358Z",
+      "node": "Peregrine Axis (Pluto)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Peregrine Axis (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a365ff2dc7e8f9aaf8ce5b6",
+      "activation": "2026-06-20T10:20:03.360Z",
+      "expiry": "2026-06-20T11:50:03.360Z",
+      "node": "Lu-yan (Veil)",
       "missionType": "Survival",
       "missionTypeKey": "Survival",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Enkidu Ice Drifts (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
+      "nodeKey": "Lu-yan (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -385,21 +415,6 @@
       "isHard": false
     },
     {
-      "id": "6a365ff2dc7e8f9aaf8ce5b5",
-      "activation": "2026-06-20T10:20:03.358Z",
-      "expiry": "2026-06-20T11:50:03.358Z",
-      "node": "Peregrine Axis (Pluto)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Peregrine Axis (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a365ff2dc7e8f9aaf8ce5b2",
       "activation": "2026-06-20T10:20:03.353Z",
       "expiry": "2026-06-20T11:50:03.353Z",
@@ -415,17 +430,17 @@
       "isHard": false
     },
     {
-      "id": "6a365ff2dc7e8f9aaf8ce5b6",
-      "activation": "2026-06-20T10:20:03.360Z",
-      "expiry": "2026-06-20T11:50:03.360Z",
-      "node": "Lu-yan (Veil)",
+      "id": "6a365ff2dc7e8f9aaf8ce5b4",
+      "activation": "2026-06-20T10:20:03.356Z",
+      "expiry": "2026-06-20T11:50:03.356Z",
+      "node": "Enkidu Ice Drifts (Neptune)",
       "missionType": "Survival",
       "missionTypeKey": "Survival",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Lu-yan (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
+      "nodeKey": "Enkidu Ice Drifts (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": true,
       "isHard": false
     }
@@ -687,7 +702,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 12h 53m 58s",
+    "remaining": "1d 12h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1223,9 +1238,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -16890,
+      "count": -16953,
       "requiredRuns": 42000,
-      "completion": 29.892857142857142,
+      "completion": 29.81785714285714,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1273,9 +1288,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 9904,
+      "count": 10019,
       "requiredRuns": 33000,
-      "completion": 65.0060606060606,
+      "completion": 65.18030303030304,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1454,9 +1469,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29977,
+      "count": -30821,
       "requiredRuns": 41000,
-      "completion": 26.885365853658538,
+      "completion": 24.826829268292684,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1490,9 +1505,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -11512,
+      "count": -12171,
       "requiredRuns": 31000,
-      "completion": 62.86451612903225,
+      "completion": 60.73870967741936,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1526,9 +1541,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -2536,
+      "count": -3369,
       "requiredRuns": 35000,
-      "completion": 92.75428571428571,
+      "completion": 90.37428571428572,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1562,9 +1577,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -752,
+      "count": -777,
       "requiredRuns": 41000,
-      "completion": 98.16585365853658,
+      "completion": 98.10487804878049,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -6193,7 +6208,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 87,
+      "sold": 88,
       "discount": 40
     }
   ],
