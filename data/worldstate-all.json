@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T06:01:15Z",
+  "fetchedAt": "2026-06-20T06:06:17Z",
   "cetusCycle": {
     "id": "cetusCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T07:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 32m 55s"
+    "timeLeft": "1h 27m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1781942400000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a361133783821ec1d8ce5b2",
-      "activation": "2026-06-20T04:04:03.072Z",
-      "expiry": "2026-06-20T06:03:49.986Z",
-      "node": "Lex (Ceres)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Lex (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3614b706598c7b288ce5b1",
       "activation": "2026-06-20T04:19:02.985Z",
@@ -79,21 +64,6 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Casta (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a36169687c7c7abc18ce5b3",
-      "activation": "2026-06-20T04:27:02.560Z",
-      "expiry": "2026-06-20T06:04:19.584Z",
-      "node": "Monolith (Phobos)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Monolith (Phobos)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -160,21 +130,6 @@
       "isHard": true
     },
     {
-      "id": "6a3619df3e89556f5f8ce5b1",
-      "activation": "2026-06-20T04:41:03.111Z",
-      "expiry": "2026-06-20T06:01:02.109Z",
-      "node": "Oceanum (Pluto)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Oceanum (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a361bfa53c1ddcb278ce5b2",
       "activation": "2026-06-20T04:50:02.306Z",
       "expiry": "2026-06-20T06:06:46.116Z",
@@ -220,21 +175,6 @@
       "isHard": true
     },
     {
-      "id": "6a361d9e936328040f8ce5b1",
-      "activation": "2026-06-20T04:57:02.556Z",
-      "expiry": "2026-06-20T06:02:37.486Z",
-      "node": "Nereid (Neptune)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Nereid (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a361d9e936328040f8ce5b2",
       "activation": "2026-06-20T04:57:02.556Z",
       "expiry": "2026-06-20T06:26:49.782Z",
@@ -274,21 +214,6 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Tessera (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a361eca35b847647a8ce5b3",
-      "activation": "2026-06-20T05:02:02.943Z",
-      "expiry": "2026-06-20T06:03:11.567Z",
-      "node": "Augustus (Mars)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Augustus (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -415,36 +340,6 @@
       "isHard": false
     },
     {
-      "id": "6a3619a279a7d502028ce5b6",
-      "activation": "2026-06-20T05:20:03.360Z",
-      "expiry": "2026-06-20T06:50:03.360Z",
-      "node": "Flexa (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Flexa (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3619a279a7d502028ce5b1",
-      "activation": "2026-06-20T05:20:03.351Z",
-      "expiry": "2026-06-20T06:50:03.351Z",
-      "node": "Iota Temple (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Iota Temple (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3619a279a7d502028ce5b4",
       "activation": "2026-06-20T05:20:03.356Z",
       "expiry": "2026-06-20T06:50:03.356Z",
@@ -486,6 +381,36 @@
       "nodeKey": "Vand Cluster (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3619a279a7d502028ce5b6",
+      "activation": "2026-06-20T05:20:03.360Z",
+      "expiry": "2026-06-20T06:50:03.360Z",
+      "node": "Flexa (Veil)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Flexa (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3619a279a7d502028ce5b1",
+      "activation": "2026-06-20T05:20:03.351Z",
+      "expiry": "2026-06-20T06:50:03.351Z",
+      "node": "Iota Temple (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Iota Temple (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -762,7 +687,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 17h 58m 58s",
+    "remaining": "1d 17h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1298,9 +1223,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -12242,
+      "count": -12315,
       "requiredRuns": 42000,
-      "completion": 35.42619047619048,
+      "completion": 35.339285714285715,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1348,9 +1273,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 4388,
+      "count": 4439,
       "requiredRuns": 33000,
-      "completion": 56.64848484848485,
+      "completion": 56.72575757575758,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1385,48 +1310,12 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -24672,
+      "count": -24797,
       "requiredRuns": 30000,
-      "completion": 17.759999999999998,
+      "completion": 17.343333333333334,
       "completed": false,
       "rewardTypes": [
         "detonite"
-      ]
-    },
-    {
-      "id": "6a35306e1a240ff4ea8ce5b4",
-      "activation": "2026-06-19T12:05:01.884Z",
-      "node": "Titan (Saturn)",
-      "nodeKey": "Titan (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -45759,
-      "requiredRuns": 45000,
-      "completion": -1.6866666666666585,
-      "completed": true,
-      "rewardTypes": [
-        "mutagen"
       ]
     },
     {
