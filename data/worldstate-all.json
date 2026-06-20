@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T04:21:15Z",
+  "fetchedAt": "2026-06-20T04:26:17Z",
   "cetusCycle": {
     "id": "cetusCycle1781931840000",
     "activation": "2026-06-20T04:14:00.000Z",
     "expiry": "2026-06-20T05:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781931840000",
     "activation": "2026-06-20T04:14:00.000Z",
     "expiry": "2026-06-20T05:04:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T05:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "42m 55s"
+    "timeLeft": "37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1781935200000",
@@ -39,36 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a35fdbe5b1e3ebe418ce5b2",
-      "activation": "2026-06-20T02:41:02.229Z",
-      "expiry": "2026-06-20T04:23:53.748Z",
-      "node": "Oxomoco (Void)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Oxomoco (Void)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a35feae684d348eee8ce5b2",
-      "activation": "2026-06-20T02:45:02.495Z",
-      "expiry": "2026-06-20T04:25:00.903Z",
-      "node": "Koro (Kuva Fortress)",
-      "missionType": "Assault",
-      "missionTypeKey": "Assault",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Koro (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a35feae684d348eee8ce5b3",
       "activation": "2026-06-20T02:45:02.495Z",
@@ -807,7 +777,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 19h 38m 58s",
+    "remaining": "1d 19h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1343,9 +1313,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -10785,
+      "count": -10846,
       "requiredRuns": 42000,
-      "completion": 37.160714285714285,
+      "completion": 37.08809523809524,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1393,9 +1363,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 2968,
+      "count": 3036,
       "requiredRuns": 33000,
-      "completion": 54.4969696969697,
+      "completion": 54.6,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1430,9 +1400,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -22393,
+      "count": -22517,
       "requiredRuns": 30000,
-      "completion": 25.356666666666673,
+      "completion": 24.943333333333328,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1646,9 +1616,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27344,
+      "count": -28042,
       "requiredRuns": 32000,
-      "completion": 14.549999999999997,
+      "completion": 12.368749999999995,
       "completed": false,
       "rewardTypes": [
         "fieldron"
