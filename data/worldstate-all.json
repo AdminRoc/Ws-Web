@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T10:46:17Z",
+  "fetchedAt": "2026-06-20T10:51:15Z",
   "cetusCycle": {
     "id": "cetusCycle1781955840000",
     "activation": "2026-06-20T10:04:00.000Z",
     "expiry": "2026-06-20T11:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "58m 0s",
+    "timeLeft": "53m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781955840000",
     "activation": "2026-06-20T10:04:00.000Z",
     "expiry": "2026-06-20T11:44:00.000Z",
-    "timeLeft": "58m 0s",
+    "timeLeft": "53m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T12:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 47m 55s"
+    "timeLeft": "1h 42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781956800000",
@@ -141,21 +141,6 @@
       "nodeKey": "Metis (Jupiter)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a365b7ead39cb29158ce5b1",
-      "activation": "2026-06-20T09:21:02.301Z",
-      "expiry": "2026-06-20T10:46:49.402Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
       "isStorm": false,
       "isHard": false
     },
@@ -852,7 +837,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 13h 13m 58s",
+    "remaining": "1d 13h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1388,9 +1373,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -16559,
+      "count": -16643,
       "requiredRuns": 42000,
-      "completion": 30.286904761904765,
+      "completion": 30.186904761904763,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1438,9 +1423,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 9563,
+      "count": 9639,
       "requiredRuns": 33000,
-      "completion": 64.48939393939393,
+      "completion": 64.60454545454546,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1619,9 +1604,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -26606,
+      "count": -27446,
       "requiredRuns": 41000,
-      "completion": 35.10731707317073,
+      "completion": 33.05853658536585,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1655,9 +1640,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8746,
+      "count": -9420,
       "requiredRuns": 31000,
-      "completion": 71.78709677419354,
+      "completion": 69.61290322580645,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1691,9 +1676,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -622,
+      "count": -660,
       "requiredRuns": 41000,
-      "completion": 98.4829268292683,
+      "completion": 98.39024390243902,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1727,9 +1712,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -814,
+      "count": -887,
       "requiredRuns": 35000,
-      "completion": 97.67428571428572,
+      "completion": 97.46571428571428,
       "completed": false,
       "rewardTypes": [
         "mutagen"
