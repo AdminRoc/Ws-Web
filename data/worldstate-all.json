@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T11:36:17Z",
+  "fetchedAt": "2026-06-20T11:41:15Z",
   "cetusCycle": {
     "id": "cetusCycle1781955840000",
     "activation": "2026-06-20T10:04:00.000Z",
     "expiry": "2026-06-20T11:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781955840000",
     "activation": "2026-06-20T10:04:00.000Z",
     "expiry": "2026-06-20T11:44:00.000Z",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T12:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "57m 54s"
+    "timeLeft": "52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781956800000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a36619609f9ca70628ce5b1",
-      "activation": "2026-06-20T09:47:02.300Z",
-      "expiry": "2026-06-20T11:39:00.256Z",
-      "node": "Mithra (Void)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Mithra (Void)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a36689e07e10acb8d8ce5b2",
       "activation": "2026-06-20T10:17:02.644Z",
@@ -807,7 +792,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 12h 23m 58s",
+    "remaining": "1d 12h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1343,9 +1328,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -17424,
+      "count": -17497,
       "requiredRuns": 42000,
-      "completion": 29.25714285714286,
+      "completion": 29.170238095238098,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1393,9 +1378,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 10655,
+      "count": 10779,
       "requiredRuns": 33000,
-      "completion": 66.14393939393939,
+      "completion": 66.33181818181818,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1574,9 +1559,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -35074,
+      "count": -35964,
       "requiredRuns": 41000,
-      "completion": 14.453658536585367,
+      "completion": 12.282926829268293,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1610,48 +1595,12 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15459,
+      "count": -16133,
       "requiredRuns": 31000,
-      "completion": 50.13225806451614,
+      "completion": 47.95806451612903,
       "completed": false,
       "rewardTypes": [
         "mutalist"
-      ]
-    },
-    {
-      "id": "6a36624ada5421c3388ce5b7",
-      "activation": "2026-06-20T09:50:01.759Z",
-      "node": "Shklovsky (Phobos)",
-      "nodeKey": "Shklovsky (Phobos)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -7453,
-      "requiredRuns": 35000,
-      "completion": 78.7057142857143,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
       ]
     },
     {
@@ -1682,12 +1631,84 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -968,
+      "count": -994,
       "requiredRuns": 41000,
-      "completion": 97.6390243902439,
+      "completion": 97.57560975609756,
       "completed": false,
       "rewardTypes": [
         "fieldron"
+      ]
+    },
+    {
+      "id": "6a36624ada5421c3388ce5b7",
+      "activation": "2026-06-20T09:50:01.759Z",
+      "node": "Shklovsky (Phobos)",
+      "nodeKey": "Shklovsky (Phobos)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 2,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -8257,
+      "requiredRuns": 35000,
+      "completion": 76.40857142857142,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
+      "id": "6a3665ce912c7a27578ce5b1",
+      "activation": "2026-06-20T11:44:59.151Z",
+      "node": "Enceladus (Saturn)",
+      "nodeKey": "Enceladus (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": 0,
+      "requiredRuns": 49000,
+      "completion": 100,
+      "completed": false,
+      "rewardTypes": [
+        "detonite"
       ]
     }
   ],
@@ -6313,7 +6334,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 93,
+      "sold": 95,
       "discount": 40
     }
   ],
