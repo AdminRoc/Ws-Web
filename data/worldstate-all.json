@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T04:51:14Z",
+  "fetchedAt": "2026-06-20T04:56:14Z",
   "cetusCycle": {
     "id": "cetusCycle1781931840000",
     "activation": "2026-06-20T04:14:00.000Z",
     "expiry": "2026-06-20T05:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "13m 1s",
+    "timeLeft": "8m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781931840000",
     "activation": "2026-06-20T04:14:00.000Z",
     "expiry": "2026-06-20T05:04:00.000Z",
-    "timeLeft": "13m 1s",
+    "timeLeft": "8m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T05:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "12m 55s"
+    "timeLeft": "7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1781935200000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a36014374340bd6ac8ce5b2",
-      "activation": "2026-06-20T02:56:03.069Z",
-      "expiry": "2026-06-20T04:54:57.871Z",
-      "node": "Tharsis (Mars)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Tharsis (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a360797aea2371c138ce5b1",
       "activation": "2026-06-20T03:23:03.066Z",
@@ -852,7 +837,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 19h 8m 58s",
+    "remaining": "1d 19h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1388,9 +1373,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -11111,
+      "count": -11170,
       "requiredRuns": 42000,
-      "completion": 36.772619047619045,
+      "completion": 36.702380952380956,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1438,9 +1423,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 3342,
+      "count": 3418,
       "requiredRuns": 33000,
-      "completion": 55.06363636363636,
+      "completion": 55.17878787878788,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1475,46 +1460,10 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -23075,
+      "count": -23181,
       "requiredRuns": 30000,
-      "completion": 23.083333333333332,
+      "completion": 22.729999999999993,
       "completed": false,
-      "rewardTypes": [
-        "detonite"
-      ]
-    },
-    {
-      "id": "6a35306e1a240ff4ea8ce5b3",
-      "activation": "2026-06-19T12:05:01.884Z",
-      "node": "Numa (Saturn)",
-      "nodeKey": "Numa (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -40150,
-      "requiredRuns": 40000,
-      "completion": -0.374999999999992,
-      "completed": true,
       "rewardTypes": [
         "detonite"
       ]
@@ -1553,6 +1502,42 @@
       "completed": true,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a35306e1a240ff4ea8ce5b3",
+      "activation": "2026-06-19T12:05:01.884Z",
+      "node": "Numa (Saturn)",
+      "nodeKey": "Numa (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -40150,
+      "requiredRuns": 40000,
+      "completion": -0.374999999999992,
+      "completed": true,
+      "rewardTypes": [
+        "detonite"
       ]
     },
     {
@@ -1691,9 +1676,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -31436,
+      "count": -32133,
       "requiredRuns": 32000,
-      "completion": 1.7625000000000002,
+      "completion": -0.41562500000000835,
       "completed": false,
       "rewardTypes": [
         "fieldron"
