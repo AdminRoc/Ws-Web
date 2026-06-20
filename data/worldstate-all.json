@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T12:06:16Z",
+  "fetchedAt": "2026-06-20T12:11:15Z",
   "cetusCycle": {
     "id": "cetusCycle1781958840000",
     "activation": "2026-06-20T11:44:00.000Z",
     "expiry": "2026-06-20T12:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "28m 0s",
+    "timeLeft": "23m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781958840000",
     "activation": "2026-06-20T11:44:00.000Z",
     "expiry": "2026-06-20T12:34:00.000Z",
-    "timeLeft": "28m 0s",
+    "timeLeft": "23m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T12:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "27m 55s"
+    "timeLeft": "22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1781964000000",
@@ -126,21 +126,6 @@
       "nodeKey": "Larissa (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a36736671feb2cbe78ce5b1",
-      "activation": "2026-06-20T11:03:02.506Z",
-      "expiry": "2026-06-20T12:07:35.956Z",
-      "node": "Everview Arc (Zariman)",
-      "missionType": "Void Flood",
-      "missionTypeKey": "Void Flood",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Everview Arc (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
       "isStorm": false,
       "isHard": true
     },
@@ -702,7 +687,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 11h 53m 58s",
+    "remaining": "1d 11h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1238,9 +1223,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -18053,
+      "count": -18148,
       "requiredRuns": 42000,
-      "completion": 28.508333333333336,
+      "completion": 28.395238095238096,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1288,9 +1273,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 11367,
+      "count": 11473,
       "requiredRuns": 33000,
-      "completion": 67.22272727272727,
+      "completion": 67.38333333333333,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1433,9 +1418,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -40340,
+      "count": -41198,
       "requiredRuns": 41000,
-      "completion": 1.609756097560977,
+      "completion": -0.4829268292682931,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1469,48 +1454,12 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -19479,
+      "count": -20139,
       "requiredRuns": 31000,
-      "completion": 37.16451612903226,
+      "completion": 35.035483870967745,
       "completed": false,
       "rewardTypes": [
         "mutalist"
-      ]
-    },
-    {
-      "id": "6a36624ada5421c3388ce5b8",
-      "activation": "2026-06-20T09:50:01.759Z",
-      "node": "Monolith (Phobos)",
-      "nodeKey": "Monolith (Phobos)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Fieldron",
-              "key": "Fieldron"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -1122,
-      "requiredRuns": 41000,
-      "completion": 97.26341463414634,
-      "completed": false,
-      "rewardTypes": [
-        "fieldron"
       ]
     },
     {
@@ -1541,12 +1490,48 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -12166,
+      "count": -12976,
       "requiredRuns": 35000,
-      "completion": 65.24,
+      "completion": 62.925714285714285,
       "completed": false,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a36624ada5421c3388ce5b8",
+      "activation": "2026-06-20T09:50:01.759Z",
+      "node": "Monolith (Phobos)",
+      "nodeKey": "Monolith (Phobos)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -1164,
+      "requiredRuns": 41000,
+      "completion": 97.1609756097561,
+      "completed": false,
+      "rewardTypes": [
+        "fieldron"
       ]
     },
     {
@@ -1577,9 +1562,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -175,
+      "count": -222,
       "requiredRuns": 49000,
-      "completion": 99.64285714285714,
+      "completion": 99.54693877551021,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -6208,7 +6193,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 98,
+      "sold": 99,
       "discount": 40
     }
   ],
