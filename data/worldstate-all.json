@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T14:01:17Z",
+  "fetchedAt": "2026-06-20T14:06:15Z",
   "cetusCycle": {
     "id": "cetusCycle1781964840000",
     "activation": "2026-06-20T12:34:00.000Z",
     "expiry": "2026-06-20T14:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781964840000",
     "activation": "2026-06-20T12:34:00.000Z",
     "expiry": "2026-06-20T14:14:00.000Z",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T15:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 2m 55s"
+    "timeLeft": "57m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1781971200000",
@@ -115,21 +115,6 @@
       "isHard": false
     },
     {
-      "id": "6a368b8ac54e3a42608ce5b1",
-      "activation": "2026-06-20T12:46:02.800Z",
-      "expiry": "2026-06-20T14:05:23.233Z",
-      "node": "Elara (Jupiter)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Elara (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a368c3e81b9838a638ce5b2",
       "activation": "2026-06-20T12:49:02.700Z",
       "expiry": "2026-06-20T14:34:56.744Z",
@@ -205,21 +190,6 @@
       "isHard": false
     },
     {
-      "id": "6a368e9676c7e317ab8ce5b2",
-      "activation": "2026-06-20T12:59:02.613Z",
-      "expiry": "2026-06-20T14:01:08.078Z",
-      "node": "Pacific (Earth)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pacific (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a368ed24229aa407a8ce5b1",
       "activation": "2026-06-20T13:00:02.892Z",
       "expiry": "2026-06-20T14:55:36.598Z",
@@ -274,21 +244,6 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Abaddon (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a368fc3711f73c5d28ce5b3",
-      "activation": "2026-06-20T13:04:03.202Z",
-      "expiry": "2026-06-20T14:05:28.562Z",
-      "node": "Proteus (Neptune)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Proteus (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -732,7 +687,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 9h 58m 58s",
+    "remaining": "1d 9h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1268,9 +1223,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -19819,
+      "count": -19925,
       "requiredRuns": 42000,
-      "completion": 26.405952380952378,
+      "completion": 26.279761904761905,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1318,9 +1273,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 13682,
+      "count": 13779,
       "requiredRuns": 33000,
-      "completion": 70.73030303030303,
+      "completion": 70.87727272727274,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1508,42 +1463,6 @@
       ]
     },
     {
-      "id": "6a36624ada5421c3388ce5b8",
-      "activation": "2026-06-20T09:50:01.759Z",
-      "node": "Monolith (Phobos)",
-      "nodeKey": "Monolith (Phobos)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Fieldron",
-              "key": "Fieldron"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -19243,
-      "requiredRuns": 41000,
-      "completion": 53.06585365853659,
-      "completed": false,
-      "rewardTypes": [
-        "fieldron"
-      ]
-    },
-    {
       "id": "6a36624ada5421c3388ce5b7",
       "activation": "2026-06-20T09:50:01.759Z",
       "node": "Shklovsky (Phobos)",
@@ -1571,12 +1490,48 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -30411,
+      "count": -31171,
       "requiredRuns": 35000,
-      "completion": 13.111428571428574,
+      "completion": 10.940000000000005,
       "completed": false,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a36624ada5421c3388ce5b8",
+      "activation": "2026-06-20T09:50:01.759Z",
+      "node": "Monolith (Phobos)",
+      "nodeKey": "Monolith (Phobos)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -20117,
+      "requiredRuns": 41000,
+      "completion": 50.93414634146342,
+      "completed": false,
+      "rewardTypes": [
+        "fieldron"
       ]
     },
     {
@@ -1607,9 +1562,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -3774,
+      "count": -3911,
       "requiredRuns": 30000,
-      "completion": 87.42,
+      "completion": 86.96333333333334,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1643,45 +1598,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -7299,
+      "count": -8306,
       "requiredRuns": 49000,
-      "completion": 85.10408163265306,
-      "completed": false,
-      "rewardTypes": [
-        "detonite"
-      ]
-    },
-    {
-      "id": "6a3695da32944573938ce5b2",
-      "activation": "2026-06-20T13:30:01.882Z",
-      "node": "Titan (Saturn)",
-      "nodeKey": "Titan (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -214,
-      "requiredRuns": 44000,
-      "completion": 99.51363636363637,
+      "completion": 83.04897959183674,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1715,12 +1634,48 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -169,
+      "count": -249,
       "requiredRuns": 39000,
-      "completion": 99.56666666666666,
+      "completion": 99.36153846153846,
       "completed": false,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a3695da32944573938ce5b2",
+      "activation": "2026-06-20T13:30:01.882Z",
+      "node": "Titan (Saturn)",
+      "nodeKey": "Titan (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -233,
+      "requiredRuns": 44000,
+      "completion": 99.47045454545454,
+      "completed": false,
+      "rewardTypes": [
+        "detonite"
       ]
     }
   ],
