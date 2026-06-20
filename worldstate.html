@@ -2659,13 +2659,15 @@
     'steelPath','voidTrader','vaultTrader','invasions','syndicates','syndicateMissions','alerts',
     'dailyDeals','tenetWeapons','codaWeapons'
   ];
+  /* 改为同源相对路径：用户既然已经打开了 wfspeed.run 这个页面，就一定能访问
+     同一个域名下的静态文件，不需要绕道 raw.githubusercontent.com / jsdelivr 去读
+     git 仓库内容——那条路径只要本仓库转为私有就会 404（参考仲裁时刻表的教训），
+     而 Pages 发布出来的页面本身不受仓库可见性影响，相对路径永远有效。 */
   var WS_FALLBACK_URLS = [
-    'https://raw.githubusercontent.com/AdminRoc/Ws-Web/main/data/worldstate-all.json',
-    'https://cdn.jsdelivr.net/gh/AdminRoc/Ws-Web@main/data/worldstate-all.json'
+    'data/worldstate-all.json'
   ];
   var WS_ITEM_ZH_URLS = [
-    'https://raw.githubusercontent.com/AdminRoc/Ws-Web/main/data/item-names-zh.json',
-    'https://cdn.jsdelivr.net/gh/AdminRoc/Ws-Web@main/data/item-names-zh.json'
+    'data/item-names-zh.json'
   ];
 
   function getRawWS() {
