@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-20T21:31:16Z",
+  "fetchedAt": "2026-06-20T21:36:16Z",
   "cetusCycle": {
     "id": "cetusCycle1781991840000",
     "activation": "2026-06-20T20:04:00.000Z",
     "expiry": "2026-06-20T21:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "13m 1s",
+    "timeLeft": "9m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1781989980000",
-    "activation": "2026-06-20T21:13:00.000Z",
-    "expiry": "2026-06-20T21:33:28.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1781991180000",
+    "activation": "2026-06-20T21:33:00.000Z",
+    "expiry": "2026-06-20T21:40:08.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1781991840000",
     "activation": "2026-06-20T20:04:00.000Z",
     "expiry": "2026-06-20T21:44:00.000Z",
-    "timeLeft": "13m 1s",
+    "timeLeft": "9m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-20T22:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 2m 55s"
+    "timeLeft": "58m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781992800000",
@@ -44,21 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a36f053afa5aa76d18ce5b1",
-      "activation": "2026-06-20T19:56:03.281Z",
-      "expiry": "2026-06-20T21:32:58.963Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a36f10649d4fc1c508ce5b1",
       "activation": "2026-06-20T19:59:02.355Z",
@@ -403,6 +388,21 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 6,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3706976ca05223de8ce5b1",
+      "activation": "2026-06-20T21:31:03.049Z",
+      "expiry": "2026-06-20T22:46:47.872Z",
+      "node": "Ishtar (Venus)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Ishtar (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a36ec930f07e1b3af8ce5b1",
@@ -842,7 +842,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 2h 28m 58s",
+    "remaining": "1d 2h 24m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1378,9 +1378,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -27142,
+      "count": -27147,
       "requiredRuns": 42000,
-      "completion": 17.688095238095237,
+      "completion": 17.682142857142857,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1428,9 +1428,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 23399,
+      "count": 23398,
       "requiredRuns": 33000,
-      "completion": 85.4530303030303,
+      "completion": 85.45151515151514,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1645,9 +1645,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17566,
+      "count": -17632,
       "requiredRuns": 30000,
-      "completion": 41.446666666666665,
+      "completion": 41.22666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1789,9 +1789,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -42236,
+      "count": -42276,
       "requiredRuns": 46000,
-      "completion": 8.18260869565217,
+      "completion": 8.095652173913049,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -6441,7 +6441,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 10,
       "salePrice": 9,
       "total": 200,
-      "sold": 62,
+      "sold": 64,
       "discount": 10
     }
   ],
