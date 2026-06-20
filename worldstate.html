@@ -3361,6 +3361,29 @@
     });
   }
 
+  /* 瓦奇娅"组合包"类商品的真实中文名查找：vaultTrader 接口给的 uniqueName
+     形如 .../MegaPrimeVault/MPVEquinoxPrimeSinglePack，跟 dict.zh.json 实际收录的
+     /Lotus/Language/PrimeStore/MPVEquinoxPrimeVaultName 不是同一套路径，但把末段的
+     SinglePack/DualPack 后缀换成 VaultName 后缀、套进 PrimeStore 命名空间，两边能对上
+     ——已用真实数据验证过 SinglePack/DualPack 两种情况都命中。命中的译名里战甲/武器
+     专有名词本来就保留英文（如"Equinox Prime 组合包"），符合"专有名词不硬翻"的原则；
+     查不到（比如单独的战甲本体、武器、饰品等非组合包条目）就老实显示清理过格式的英文名，
+     不编造。 */
+  function _varziaItemZh(item) {
+    var uniqueName = item.uniqueName || '';
+    var seg = uniqueName.split('/').pop() || '';
+    var core = seg;
+    ['SinglePack', 'DualPack'].forEach(function (suf) {
+      if (core.slice(-suf.length) === suf) core = core.slice(0, -suf.length);
+    });
+    if (core !== seg) {
+      var key = '/Lotus/Language/PrimeStore/' + core + 'VaultName';
+      var zh = tr(key);
+      if (zh !== key) return zh;
+    }
+    return _cleanVarziaItemName(item.item);
+  }
+
   /* ══ 渲染：瓦奇娅（复用奸商卡片样式）══
      vaultTrader 端点不像 voidTrader 那样直接给 active 布尔值，需要自己用
      activation/expiry 跟当前时间比较算出来；物品的 credits/aya/regalAya 都不可靠
@@ -3385,7 +3408,7 @@
       '<div class="ws-baro-inv-grid">' +
         inv.slice(0, 60).map(function (item) {
           return '<div class="ws-baro-item">' +
-            '<span class="ws-bi-name">' + _cleanVarziaItemName(item.item) + '</span>' +
+            '<span class="ws-bi-name">' + _varziaItemZh(item) + '</span>' +
             '</div>';
         }).join('') +
       '</div>' : (active ? '<div class="ws-empty">商人背包暂无物品数据</div>' : '');
