@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-20T13:11:16Z",
+  "fetchedAt": "2026-06-20T13:16:16Z",
   "cetusCycle": {
     "id": "cetusCycle1781964840000",
     "activation": "2026-06-20T12:34:00.000Z",
     "expiry": "2026-06-20T14:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 3m 0s",
+    "timeLeft": "58m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1781960760000",
-    "activation": "2026-06-20T13:06:00.000Z",
-    "expiry": "2026-06-20T13:13:28.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1781961180000",
+    "activation": "2026-06-20T13:13:00.000Z",
+    "expiry": "2026-06-20T13:33:28.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1781964840000",
     "activation": "2026-06-20T12:34:00.000Z",
     "expiry": "2026-06-20T14:14:00.000Z",
-    "timeLeft": "1h 3m 0s",
+    "timeLeft": "58m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T15:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 52m 55s"
+    "timeLeft": "1h 47m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1781964000000",
@@ -39,51 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a36772685b2c5f5768ce5b1",
-      "activation": "2026-06-20T11:19:02.588Z",
-      "expiry": "2026-06-20T13:11:57.535Z",
-      "node": "Taranis (Void)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Taranis (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a367df27ffd3def338ce5b1",
-      "activation": "2026-06-20T11:48:02.229Z",
-      "expiry": "2026-06-20T13:13:52.616Z",
-      "node": "Mithra (Void)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Mithra (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3681774a924f8ade8ce5b1",
-      "activation": "2026-06-20T12:03:03.011Z",
-      "expiry": "2026-06-20T13:14:05.128Z",
-      "node": "Yuvarium (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a36840b03277da8e48ce5b1",
       "activation": "2026-06-20T12:14:02.987Z",
@@ -533,6 +488,96 @@
       "tierNum": 3,
       "isStorm": true,
       "isHard": false
+    },
+    {
+      "id": "6a368a238f5ca9973c8ce5b1",
+      "activation": "2026-06-20T13:20:03.351Z",
+      "expiry": "2026-06-20T14:50:03.351Z",
+      "node": "Korm's Belt (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Korm's Belt (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a368a238f5ca9973c8ce5b6",
+      "activation": "2026-06-20T13:20:03.360Z",
+      "expiry": "2026-06-20T14:50:03.360Z",
+      "node": "R-9 Cloud (Veil)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "R-9 Cloud (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a368a238f5ca9973c8ce5b3",
+      "activation": "2026-06-20T13:20:03.355Z",
+      "expiry": "2026-06-20T14:50:03.355Z",
+      "node": "Lupal Pass (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Lupal Pass (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a368a238f5ca9973c8ce5b4",
+      "activation": "2026-06-20T13:20:03.356Z",
+      "expiry": "2026-06-20T14:50:03.356Z",
+      "node": "Brom Cluster (Neptune)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Brom Cluster (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a368a238f5ca9973c8ce5b2",
+      "activation": "2026-06-20T13:20:03.353Z",
+      "expiry": "2026-06-20T14:50:03.353Z",
+      "node": "Bifrost Echo (Venus)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Bifrost Echo (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a368a238f5ca9973c8ce5b5",
+      "activation": "2026-06-20T13:20:03.358Z",
+      "expiry": "2026-06-20T14:50:03.358Z",
+      "node": "Peregrine Axis (Pluto)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Peregrine Axis (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
     }
   ],
   "alerts": [
@@ -792,7 +837,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 10h 48m 58s",
+    "remaining": "1d 10h 43m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1328,9 +1373,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -19016,
+      "count": -19114,
       "requiredRuns": 42000,
-      "completion": 27.361904761904764,
+      "completion": 27.245238095238093,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1378,9 +1423,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 12652,
+      "count": 12752,
       "requiredRuns": 33000,
-      "completion": 69.16969696969697,
+      "completion": 69.32121212121211,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1559,48 +1604,12 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28223,
+      "count": -28933,
       "requiredRuns": 31000,
-      "completion": 8.958064516129028,
+      "completion": 6.667741935483873,
       "completed": false,
       "rewardTypes": [
         "mutalist"
-      ]
-    },
-    {
-      "id": "6a36624ada5421c3388ce5b8",
-      "activation": "2026-06-20T09:50:01.759Z",
-      "node": "Monolith (Phobos)",
-      "nodeKey": "Monolith (Phobos)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Fieldron",
-              "key": "Fieldron"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -10674,
-      "requiredRuns": 41000,
-      "completion": 73.96585365853659,
-      "completed": false,
-      "rewardTypes": [
-        "fieldron"
       ]
     },
     {
@@ -1631,12 +1640,48 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -22543,
+      "count": -23353,
       "requiredRuns": 35000,
-      "completion": 35.59142857142857,
+      "completion": 33.27714285714286,
       "completed": false,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a36624ada5421c3388ce5b8",
+      "activation": "2026-06-20T09:50:01.759Z",
+      "node": "Monolith (Phobos)",
+      "nodeKey": "Monolith (Phobos)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -11579,
+      "requiredRuns": 41000,
+      "completion": 71.75853658536586,
+      "completed": false,
+      "rewardTypes": [
+        "fieldron"
       ]
     },
     {
@@ -1667,9 +1712,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1978,
+      "count": -2154,
       "requiredRuns": 30000,
-      "completion": 93.40666666666667,
+      "completion": 92.82000000000001,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1703,9 +1748,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1002,
+      "count": -1046,
       "requiredRuns": 49000,
-      "completion": 97.95510204081633,
+      "completion": 97.86530612244898,
       "completed": false,
       "rewardTypes": [
         "detonite"
