@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-20T21:41:17Z",
+  "fetchedAt": "2026-06-20T21:46:14Z",
   "cetusCycle": {
-    "id": "cetusCycle1781991840000",
-    "activation": "2026-06-20T20:04:00.000Z",
-    "expiry": "2026-06-20T21:44:00.000Z",
-    "isDay": true,
-    "state": "day",
-    "timeLeft": "3m 1s",
+    "id": "cetusCycle1781994840000",
+    "activation": "2026-06-20T21:44:00.000Z",
+    "expiry": "2026-06-20T22:34:00.000Z",
+    "isDay": false,
+    "state": "night",
+    "timeLeft": "48m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -22,11 +22,11 @@ window.WF_WS_SNAPSHOT = {
     "state": "cold"
   },
   "cambionCycle": {
-    "id": "cambionCycle1781991840000",
-    "activation": "2026-06-20T20:04:00.000Z",
-    "expiry": "2026-06-20T21:44:00.000Z",
-    "timeLeft": "3m 1s",
-    "state": "fass"
+    "id": "cambionCycle1781994840000",
+    "activation": "2026-06-20T21:44:00.000Z",
+    "expiry": "2026-06-20T22:34:00.000Z",
+    "timeLeft": "48m 1s",
+    "state": "vome"
   },
   "zarimanCycle": {
     "id": "zarimanCycle1781994840000",
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-20T22:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "52m 55s"
+    "timeLeft": "47m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781992800000",
@@ -44,21 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a36f5f2e9539e62ff8ce5b1",
-      "activation": "2026-06-20T20:20:02.522Z",
-      "expiry": "2026-06-20T21:44:39.929Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a36f5f2e9539e62ff8ce5b2",
       "activation": "2026-06-20T20:20:02.522Z",
@@ -133,21 +118,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 4,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a36fa2bdbf9da53868ce5b1",
-      "activation": "2026-06-20T20:38:03.050Z",
-      "expiry": "2026-06-20T21:45:44.267Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a36fa2bdbf9da53868ce5b2",
@@ -827,7 +797,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 2h 18m 58s",
+    "remaining": "1d 2h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1363,9 +1333,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -27313,
+      "count": -27417,
       "requiredRuns": 42000,
-      "completion": 17.48452380952381,
+      "completion": 17.360714285714284,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1413,9 +1383,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 23608,
+      "count": 23705,
       "requiredRuns": 33000,
-      "completion": 85.76969696969697,
+      "completion": 85.91666666666666,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1531,42 +1501,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a36624ada5421c3388ce5b7",
-      "activation": "2026-06-20T09:50:01.759Z",
-      "node": "Shklovsky (Phobos)",
-      "nodeKey": "Shklovsky (Phobos)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -35008,
-      "requiredRuns": 35000,
-      "completion": -0.022857142857146684,
-      "completed": true,
-      "rewardTypes": [
-        "mutagen"
-      ]
-    },
-    {
       "id": "6a36624ada5421c3388ce5b8",
       "activation": "2026-06-20T09:50:01.759Z",
       "node": "Monolith (Phobos)",
@@ -1603,6 +1537,42 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
+      "id": "6a36624ada5421c3388ce5b7",
+      "activation": "2026-06-20T09:50:01.759Z",
+      "node": "Shklovsky (Phobos)",
+      "nodeKey": "Shklovsky (Phobos)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 2,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -35008,
+      "requiredRuns": 35000,
+      "completion": -0.022857142857146684,
+      "completed": true,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
       "id": "6a3684468d6a6180158ce5b1",
       "activation": "2026-06-20T12:15:01.797Z",
       "node": "Iliad (Phobos)",
@@ -1630,9 +1600,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17855,
+      "count": -18010,
       "requiredRuns": 30000,
-      "completion": 40.483333333333334,
+      "completion": 39.96666666666666,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1675,42 +1645,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a3695da32944573938ce5b1",
-      "activation": "2026-06-20T13:30:01.882Z",
-      "node": "Numa (Saturn)",
-      "nodeKey": "Numa (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -39111,
-      "requiredRuns": 39000,
-      "completion": -0.28461538461539426,
-      "completed": true,
-      "rewardTypes": [
-        "mutagen"
-      ]
-    },
-    {
       "id": "6a3695da32944573938ce5b2",
       "activation": "2026-06-20T13:30:01.882Z",
       "node": "Titan (Saturn)",
@@ -1747,6 +1681,42 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
+      "id": "6a3695da32944573938ce5b1",
+      "activation": "2026-06-20T13:30:01.882Z",
+      "node": "Numa (Saturn)",
+      "nodeKey": "Numa (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 1,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -39111,
+      "requiredRuns": 39000,
+      "completion": -0.28461538461539426,
+      "completed": true,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
       "id": "6a36bdb2636f61265c8ce5b1",
       "activation": "2026-06-20T16:20:02.044Z",
       "node": "Cassini (Saturn)",
@@ -1774,9 +1744,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -44179,
+      "count": -45158,
       "requiredRuns": 46000,
-      "completion": 3.958695652173916,
+      "completion": 1.830434782608692,
       "completed": false,
       "rewardTypes": [
         "detonite"
