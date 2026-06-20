@@ -65,11 +65,24 @@ jobs:
       - name: 补充物品中文名称字典（查询汇集 Wiki API）
         run: python3 .github/scripts/lookup_names.py
 
+      - name: 生成可直接 <script> 内嵌的快照（零网络兜底，不需要任何 fetch）
+        run: |
+          {
+            echo "/* 由 worldstate-cycles workflow 自动生成，请勿手动编辑。"
+            echo "   与本目录下的 worldstate-all.json 内容完全一致，唯一区别是"
+            echo "   这份是可以直接被 <script> 标签加载执行的 JS，不需要任何网络请求"
+            echo "   就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，"
+            echo "   甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */"
+            printf 'window.WF_WS_SNAPSHOT = '
+            cat data/worldstate-all.json
+            printf ';\n'
+          } > data/worldstate-snapshot.js
+
       - name: 提交并推送（无变化时跳过）
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/worldstate-all.json data/item-names-zh.json
+          git add data/worldstate-all.json data/worldstate-snapshot.js data/item-names-zh.json
           git diff --staged --quiet || \
             git commit -m "data: update worldstate-all [skip ci]"
           git push
