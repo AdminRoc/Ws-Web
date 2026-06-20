@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T05:46:14Z",
+  "fetchedAt": "2026-06-20T05:51:17Z",
   "cetusCycle": {
     "id": "cetusCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "58m 0s",
+    "timeLeft": "53m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
-    "timeLeft": "58m 0s",
+    "timeLeft": "53m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T07:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 47m 55s"
+    "timeLeft": "1h 42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1781935200000",
@@ -130,21 +130,6 @@
       "isHard": false
     },
     {
-      "id": "6a36174a50f25d869f8ce5b3",
-      "activation": "2026-06-20T04:30:02.583Z",
-      "expiry": "2026-06-20T05:49:10.785Z",
-      "node": "Aten (Void)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Aten (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a36174a50f25d869f8ce5b4",
       "activation": "2026-06-20T04:30:02.583Z",
       "expiry": "2026-06-20T06:16:24.839Z",
@@ -175,21 +160,6 @@
       "isHard": true
     },
     {
-      "id": "6a361966dd49bf0c278ce5b2",
-      "activation": "2026-06-20T04:39:02.957Z",
-      "expiry": "2026-06-20T05:46:27.670Z",
-      "node": "Taveuni (Kuva Fortress)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Taveuni (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3619df3e89556f5f8ce5b1",
       "activation": "2026-06-20T04:41:03.111Z",
       "expiry": "2026-06-20T06:01:02.109Z",
@@ -205,21 +175,6 @@
       "isHard": false
     },
     {
-      "id": "6a361bfa53c1ddcb278ce5b1",
-      "activation": "2026-06-20T04:50:02.306Z",
-      "expiry": "2026-06-20T06:27:55.313Z",
-      "node": "E Prime (Earth)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "E Prime (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a361bfa53c1ddcb278ce5b2",
       "activation": "2026-06-20T04:50:02.306Z",
       "expiry": "2026-06-20T06:06:46.116Z",
@@ -229,6 +184,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Martialis (Mars)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a361bfa53c1ddcb278ce5b1",
+      "activation": "2026-06-20T04:50:02.306Z",
+      "expiry": "2026-06-20T06:27:55.313Z",
+      "node": "E Prime (Earth)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "E Prime (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -280,15 +250,15 @@
       "isHard": true
     },
     {
-      "id": "6a361eca35b847647a8ce5b3",
+      "id": "6a361eca35b847647a8ce5b1",
       "activation": "2026-06-20T05:02:02.943Z",
-      "expiry": "2026-06-20T06:03:11.567Z",
-      "node": "Augustus (Mars)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
+      "expiry": "2026-06-20T06:36:48.918Z",
+      "node": "Gaia (Earth)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Augustus (Mars)",
+      "nodeKey": "Gaia (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -310,15 +280,15 @@
       "isHard": false
     },
     {
-      "id": "6a361eca35b847647a8ce5b1",
+      "id": "6a361eca35b847647a8ce5b3",
       "activation": "2026-06-20T05:02:02.943Z",
-      "expiry": "2026-06-20T06:36:48.918Z",
-      "node": "Gaia (Earth)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
+      "expiry": "2026-06-20T06:03:11.567Z",
+      "node": "Augustus (Mars)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Gaia (Earth)",
+      "nodeKey": "Augustus (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -807,7 +777,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 18h 13m 58s",
+    "remaining": "1d 18h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1343,9 +1313,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -11946,
+      "count": -12023,
       "requiredRuns": 42000,
-      "completion": 35.778571428571425,
+      "completion": 35.686904761904756,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1393,9 +1363,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 4178,
+      "count": 4247,
       "requiredRuns": 33000,
-      "completion": 56.33030303030303,
+      "completion": 56.43484848484849,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1430,9 +1400,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -24329,
+      "count": -24448,
       "requiredRuns": 30000,
-      "completion": 18.90333333333334,
+      "completion": 18.50666666666667,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -6298,7 +6268,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 62,
+      "sold": 63,
       "discount": 40
     }
   ],
