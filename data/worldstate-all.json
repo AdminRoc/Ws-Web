@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T01:21:15Z",
+  "fetchedAt": "2026-06-20T01:26:15Z",
   "cetusCycle": {
     "id": "cetusCycle1781919840000",
     "activation": "2026-06-20T00:04:00.000Z",
     "expiry": "2026-06-20T01:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "23m 1s",
+    "timeLeft": "18m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781919840000",
     "activation": "2026-06-20T00:04:00.000Z",
     "expiry": "2026-06-20T01:44:00.000Z",
-    "timeLeft": "23m 1s",
+    "timeLeft": "18m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T02:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 12m 55s"
+    "timeLeft": "1h 7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781920800000",
@@ -53,21 +53,6 @@
       "tierNum": 6,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a35d5abd86489784c8ce5b1",
-      "activation": "2026-06-19T23:50:03.005Z",
-      "expiry": "2026-06-20T01:25:04.491Z",
-      "node": "Arval (Mars)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Arval (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a35d5e65c4b2b138e8ce5b1",
@@ -366,6 +351,36 @@
       "nodeKey": "Pallas (Ceres)",
       "tier": "Meso",
       "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a35eafeec22838bd98ce5b1",
+      "activation": "2026-06-20T01:21:02.502Z",
+      "expiry": "2026-06-20T03:00:35.441Z",
+      "node": "Tessera (Venus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Tessera (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a35eafeec22838bd98ce5b2",
+      "activation": "2026-06-20T01:21:02.502Z",
+      "expiry": "2026-06-20T02:36:49.636Z",
+      "node": "E Prime (Earth)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "E Prime (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": false,
       "isHard": true
     },
@@ -807,7 +822,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 22h 38m 58s",
+    "remaining": "1d 22h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1379,9 +1394,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -8002,
+      "count": -8076,
       "requiredRuns": 42000,
-      "completion": 40.47380952380952,
+      "completion": 40.385714285714286,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1429,9 +1444,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 589,
+      "count": 617,
       "requiredRuns": 33000,
-      "completion": 50.89242424242424,
+      "completion": 50.93484848484848,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1538,46 +1553,10 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -18579,
+      "count": -18676,
       "requiredRuns": 30000,
-      "completion": 38.07000000000001,
+      "completion": 37.74666666666666,
       "completed": false,
-      "rewardTypes": [
-        "detonite"
-      ]
-    },
-    {
-      "id": "6a35306e1a240ff4ea8ce5b3",
-      "activation": "2026-06-19T12:05:01.884Z",
-      "node": "Numa (Saturn)",
-      "nodeKey": "Numa (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -40150,
-      "requiredRuns": 40000,
-      "completion": -0.374999999999992,
-      "completed": true,
       "rewardTypes": [
         "detonite"
       ]
@@ -1616,6 +1595,42 @@
       "completed": true,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a35306e1a240ff4ea8ce5b3",
+      "activation": "2026-06-19T12:05:01.884Z",
+      "node": "Numa (Saturn)",
+      "nodeKey": "Numa (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -40150,
+      "requiredRuns": 40000,
+      "completion": -0.374999999999992,
+      "completed": true,
+      "rewardTypes": [
+        "detonite"
       ]
     },
     {
@@ -1718,9 +1733,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29568,
+      "count": -30595,
       "requiredRuns": 47000,
-      "completion": 37.089361702127654,
+      "completion": 34.90425531914894,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1754,9 +1769,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -2991,
+      "count": -3665,
       "requiredRuns": 32000,
-      "completion": 90.653125,
+      "completion": 88.546875,
       "completed": false,
       "rewardTypes": [
         "fieldron"
