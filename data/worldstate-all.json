@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-20T23:51:15Z",
+  "fetchedAt": "2026-06-20T23:56:16Z",
   "cetusCycle": {
     "id": "cetusCycle1782000840000",
     "activation": "2026-06-20T22:34:00.000Z",
     "expiry": "2026-06-21T00:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "23m 0s",
+    "timeLeft": "19m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1781999160000",
-    "activation": "2026-06-20T23:46:00.000Z",
-    "expiry": "2026-06-20T23:53:28.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1781999580000",
+    "activation": "2026-06-20T23:53:00.000Z",
+    "expiry": "2026-06-21T00:13:28.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782000840000",
     "activation": "2026-06-20T22:34:00.000Z",
     "expiry": "2026-06-21T00:14:00.000Z",
-    "timeLeft": "23m 0s",
+    "timeLeft": "19m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T01:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 12m 55s"
+    "timeLeft": "1h 8m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782000000000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a370cebca217fef588ce5b1",
-      "activation": "2026-06-20T21:58:03.085Z",
-      "expiry": "2026-06-20T23:52:45.179Z",
-      "node": "Xini (Eris)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Xini (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a37137b2fb82c477f8ce5b1",
       "activation": "2026-06-20T22:26:03.001Z",
@@ -220,21 +205,6 @@
       "isHard": true
     },
     {
-      "id": "6a371fe7902983942e8ce5b2",
-      "activation": "2026-06-20T23:19:03.038Z",
-      "expiry": "2026-06-21T00:23:58.986Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a371fe7902983942e8ce5b3",
       "activation": "2026-06-20T23:19:03.038Z",
       "expiry": "2026-06-21T00:54:59.426Z",
@@ -244,6 +214,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a371fe7902983942e8ce5b2",
+      "activation": "2026-06-20T23:19:03.038Z",
+      "expiry": "2026-06-21T00:23:58.986Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -848,7 +833,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 8m 58s",
+    "remaining": "1d 4m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1384,9 +1369,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -29358,
+      "count": -29376,
       "requiredRuns": 42000,
-      "completion": 15.050000000000002,
+      "completion": 15.02857142857143,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1434,9 +1419,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 26064,
+      "count": 26082,
       "requiredRuns": 33000,
-      "completion": 89.49090909090908,
+      "completion": 89.51818181818182,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1615,9 +1600,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21520,
+      "count": -21625,
       "requiredRuns": 30000,
-      "completion": 28.266666666666662,
+      "completion": 27.916666666666668,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1795,9 +1780,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -2,
+      "count": -62,
       "requiredRuns": 48000,
-      "completion": 99.99583333333332,
+      "completion": 99.87083333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
