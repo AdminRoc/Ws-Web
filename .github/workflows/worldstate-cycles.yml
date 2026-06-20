@@ -41,6 +41,7 @@ jobs:
               zarimanCycle: .zarimanCycle,
               duviriCycle:  .duviriCycle,
               fissures:     .fissures,
+              alerts:       .alerts,
               sortie:       .sortie,
               archonHunt:   .archonHunt,
               nightwave:    .nightwave,

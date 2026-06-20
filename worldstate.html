@@ -411,6 +411,51 @@
       color: var(--ws-gold-bright);
     }
 
+    /* ══ 警报 ══ */
+    .ws-alert-list { display: flex; flex-direction: column; gap: .6rem; }
+    .ws-alert-row {
+      background: var(--ws-card-bg);
+      border: 1px solid rgba(229,75,75,.28);
+      border-left: 3px solid #e54b4b;
+      border-radius: 2px;
+      padding: .8rem 1.1rem;
+    }
+    .ws-alert-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .6rem;
+    }
+    .ws-alert-node {
+      font-family: var(--f-sci);
+      font-size: .94rem;
+      font-weight: 700;
+      color: var(--ws-text);
+    }
+    .ws-alert-timer {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .78rem;
+      color: #e58a8a;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .ws-alert-meta {
+      font-family: var(--f-sci);
+      font-size: .82rem;
+      color: var(--ws-text-dim);
+      margin-top: .3rem;
+    }
+    .ws-alert-rewards { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .55rem; }
+    .ws-alert-chip {
+      font-family: var(--f-sci);
+      font-size: .8rem;
+      color: var(--ws-gold-bright);
+      background: rgba(201,164,50,.1);
+      border: 1px solid var(--ws-gold-line);
+      border-radius: 999px;
+      padding: .2rem .65rem;
+    }
+
     /* ══ 突击 / 执刑官猎杀 ══ */
     .ws-mission-card {
       background: var(--ws-card-bg);
@@ -1976,6 +2021,15 @@
       <div id="ws-baro"><div class="ws-empty">加载中…</div></div>
     </section>
 
+    <!-- ══ 警报 ══ -->
+    <section id="ws-sec-alerts" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">警报</span>
+        <span class="ws-section-en">Alerts</span>
+      </div>
+      <div id="ws-alerts"><div class="ws-empty">加载中…</div></div>
+    </section>
+
     <!-- ══ 4. 虚空裂缝 ══ -->
     <section id="ws-sec-fissures" class="ws-section">
       <div class="ws-section-hd">
@@ -2583,7 +2637,7 @@
   var WS_FALLBACK_KEYS = [
     'cetusCycle','vallisCycle','cambionCycle','zarimanCycle','duviriCycle',
     'fissures','sortie','archonHunt','nightwave',
-    'steelPath','voidTrader','invasions','syndicates',
+    'steelPath','voidTrader','invasions','syndicates','alerts',
     'dailyDeals','tenetWeapons','codaWeapons'
   ];
   var WS_FALLBACK_URLS = [
@@ -2759,7 +2813,7 @@
   var CACHE_TTL = {
     cetusCycle: 30, vallisCycle: 30, cambionCycle: 30,
     zarimanCycle: 30, duviriCycle: 30,
-    fissures: 60, invasions: 120,
+    fissures: 60, invasions: 120, alerts: 120,
     sortie: 3600, archonHunt: 3600, nightwave: 3600,
     steelPath: 3600, voidTrader: 300, syndicates: 1800,
     dailyDeals: 3600, tenetWeapons: 14400, codaWeapons: 14400
@@ -2819,7 +2873,7 @@
     var eps = [
       'cetusCycle','vallisCycle','cambionCycle','zarimanCycle','duviriCycle',
       'fissures','sortie','archonHunt','nightwave',
-      'steelPath','voidTrader','invasions','syndicates',
+      'steelPath','voidTrader','invasions','syndicates','alerts',
       'dailyDeals','tenetWeapons','codaWeapons'
     ];
     /* 先用新鲜缓存立即填充 D，避免闪烁"数据不可用" */
@@ -3290,6 +3344,44 @@
       '<div class="ws-empty">当前无午夜电波活动</div>';
   }
 
+  /* ══ 渲染：警报 ══ */
+  function renderAlerts() {
+    var el = document.getElementById('ws-alerts');
+    if (!el) return;
+    var list = D.alerts;
+    if (!Array.isArray(list)) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
+    var active = list.filter(function (a) { return a.active !== false; });
+    if (!active.length) { el.innerHTML = '<div class="ws-empty">当前无活跃警报</div>'; return; }
+
+    el.innerHTML = '<div class="ws-alert-list">' + active.map(function (a, i) {
+      var m   = a.mission || {};
+      var rw  = m.reward  || {};
+      var lvl = (m.minEnemyLevel != null && m.maxEnemyLevel != null)
+        ? ('Lv. ' + m.minEnemyLevel + '-' + m.maxEnemyLevel) : '';
+      var chips = [];
+      if (rw.credits) chips.push('<span class="ws-alert-chip">' + rw.credits.toLocaleString() + ' 现金</span>');
+      (rw.items || []).forEach(function (it) {
+        chips.push('<span class="ws-alert-chip">' + (tr(it) || it) + '</span>');
+      });
+      (rw.countedItems || []).forEach(function (ci) {
+        chips.push('<span class="ws-alert-chip">' + ci.count + '× ' + (tr(ci.type) || ci.type) + '</span>');
+      });
+      return '<div class="ws-alert-row">' +
+        '<div class="ws-alert-hd">' +
+          '<span class="ws-alert-node">' + trLocation(m.node || '--') + '</span>' +
+          '<span class="ws-alert-timer" id="wt-alert-' + i + '"></span>' +
+        '</div>' +
+        '<div class="ws-alert-meta">' + trLocation(m.type || '--') + ' · ' + (m.faction || '--') +
+          (lvl ? ' · ' + lvl : '') + '</div>' +
+        (chips.length ? '<div class="ws-alert-rewards">' + chips.join('') + '</div>' : '') +
+        '</div>';
+    }).join('') + '</div>';
+
+    active.forEach(function (a, i) {
+      if (a.expiry) countdown(document.getElementById('wt-alert-' + i), new Date(a.expiry).getTime(), true);
+    });
+  }
+
   /* ══ 渲染：入侵 ══ */
   function renderInvasions() {
     var el = document.getElementById('ws-invasions');
@@ -3646,6 +3738,7 @@
     renderSortie();
     renderArchon();
     renderBaro();
+    renderAlerts();
     renderSteelPath();
     renderDarvo();
     renderTenetWeapons();
@@ -3685,7 +3778,7 @@
     var eps = [
       'cetusCycle','vallisCycle','cambionCycle','zarimanCycle','duviriCycle',
       'fissures','sortie','archonHunt','nightwave',
-      'steelPath','voidTrader','invasions','syndicates',
+      'steelPath','voidTrader','invasions','syndicates','alerts',
       'dailyDeals','tenetWeapons','codaWeapons'
     ];
     var hasCached = false;

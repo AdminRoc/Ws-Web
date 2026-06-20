@@ -2,7 +2,8 @@
  * 部署方式：Cloudflare Dashboard → Workers & Pages → 创建 Worker → 粘贴本文件内容
  * 需要的 Secret：GH_TOKEN（在 Worker 设置里加密变量，值为 GitHub Fine-grained Token，
  *                权限范围：仅 AdminRoc/Ws-Web 仓库，Actions: Read and write）
- * Cron Trigger：1 * * * *（每小时第1分钟，自然包含 00:01 UTC = 北京时间 08:01）
+ * Cron Trigger：1,11,21,31,41,51 * * * *（每10分钟一次，
+ *               自然包含 00:01 UTC = 北京时间 08:01）
  */
 export default {
   async scheduled(event, env, ctx) {
