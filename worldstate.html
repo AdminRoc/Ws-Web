@@ -2719,7 +2719,14 @@
       };
     }
     if (ws.ZarimanCycle) {
-      out.zarimanCycle = { isCorpus: !!ws.ZarimanCycle.isCorpus, expiry: _rd(ws.ZarimanCycle.expiry) };
+      /* 统一输出 state 字符串（跟 warframestat.us 对齐：isCorpus=true → corpus，
+         isCorpus=false → grineer）。raw WS 目前实际不返回 ZarimanCycle（测试时为
+         null），这段是防御性兼容，万一以后恢复返回也不会再错位。 */
+      out.zarimanCycle = {
+        state: (ws.ZarimanCycle.state || ws.ZarimanCycle.State ||
+                (ws.ZarimanCycle.isCorpus ? 'corpus' : 'grineer')).toLowerCase(),
+        expiry: _rd(ws.ZarimanCycle.expiry)
+      };
     }
     if (ws.DuviriCycle) {
       out.duviriCycle = {
@@ -2993,11 +3000,12 @@
         ? [{ms: 2999625, s: {isDay: false}}, {ms: 5999250, s: {isDay: true}}]
         : [{ms: 5999250, s: {isDay: true}},  {ms: 2999625, s: {isDay: false}}];
     },
-    /* 奥布山谷：寒冷 ~16.7min，温暖 ~10min */
+    /* 奥布山谷：寒冷 20min（1200000ms），温暖 6分40秒（400000ms），
+       一个完整冷热循环 26分40秒——用户已确认的权威数值。 */
     vallisCycle: function (d) {
       return d.isWarm
-        ? [{ms: 1000000, s: {isWarm: false}}, {ms: 600000, s: {isWarm: true}}]
-        : [{ms: 600000,  s: {isWarm: true}},  {ms: 1000000, s: {isWarm: false}}];
+        ? [{ms: 1200000, s: {isWarm: false}}, {ms: 400000,  s: {isWarm: true}}]
+        : [{ms: 400000,  s: {isWarm: true}},  {ms: 1200000, s: {isWarm: false}}];
     },
     /* 魔胎之境：现在与希图斯白天/夜晚周期完全同步（同一组 activation/expiry），
        不再是独立的 60/60 对称循环。Fass≈白天(100min)，Vome≈夜晚(50min)。
@@ -3008,11 +3016,14 @@
         ? [{ms: 2999625, s: {state: 'vome'}}, {ms: 5999250, s: {state: 'fass'}}]
         : [{ms: 5999250, s: {state: 'fass'}}, {ms: 2999625, s: {state: 'vome'}}];
     },
-    /* 扎里曼：Grineer/Corpus 各 15min，对称 */
+    /* 扎里曼：Grineer/Corpus 各 150min（9000000ms），对称——用户已确认的权威数值，
+       此前误用15min导致严重错位，现已订正。统一用 state 字符串判断，
+       不用 isCorpus（实测该字段语义跟显示逻辑是反的，见 renderCycles 里的说明）。 */
     zarimanCycle: function (d) {
-      return d.isCorpus
-        ? [{ms: 900000, s: {isCorpus: false}}, {ms: 900000, s: {isCorpus: true}}]
-        : [{ms: 900000, s: {isCorpus: true}},  {ms: 900000, s: {isCorpus: false}}];
+      var isCorpus = (d.state || '').toLowerCase() === 'corpus';
+      return isCorpus
+        ? [{ms: 9000000, s: {state: 'grineer'}}, {ms: 9000000, s: {state: 'corpus'}}]
+        : [{ms: 9000000, s: {state: 'corpus'}},  {ms: 9000000, s: {state: 'grineer'}}];
     },
     /* 双衍王境：5种情绪按固定顺序循环，每种持续 2h（7200000ms） */
     duviriCycle: function (d) {
@@ -3079,9 +3090,11 @@
       },
       {
         key: 'zarimanCycle', name: '扎里曼', en: 'Zariman',
-        /* isCorpus=true 时显示 Grineer，已由用户校准 */
-        state: function (d) { return d.isCorpus ? 'Grineer' : 'Corpus'; },
-        color: function (d) { return d.isCorpus ? '#e87038' : '#3b82f6'; }
+        /* 实测 API 数据核对过：isCorpus=false 对应 state="grineer"，
+           之前 "isCorpus ? Grineer : Corpus" 这个映射是反的，直接改用
+           明确的 state 字符串判断，不再依赖容易搞反的布尔字段。 */
+        state: function (d) { return (d.state || '').toLowerCase() === 'corpus' ? 'Corpus' : 'Grineer'; },
+        color: function (d) { return (d.state || '').toLowerCase() === 'corpus' ? '#3b82f6' : '#e87038'; }
       },
       {
         key: 'duviriCycle', name: '双衍王境', en: 'Duviri',
