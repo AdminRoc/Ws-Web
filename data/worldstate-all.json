@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-20T10:26:16Z",
+  "fetchedAt": "2026-06-20T10:31:15Z",
   "cetusCycle": {
     "id": "cetusCycle1781955840000",
     "activation": "2026-06-20T10:04:00.000Z",
     "expiry": "2026-06-20T11:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 18m 0s",
+    "timeLeft": "1h 13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1781949960000",
-    "activation": "2026-06-20T10:06:00.000Z",
-    "expiry": "2026-06-20T10:26:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1781951160000",
+    "activation": "2026-06-20T10:26:00.000Z",
+    "expiry": "2026-06-20T10:33:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1781955840000",
     "activation": "2026-06-20T10:04:00.000Z",
     "expiry": "2026-06-20T11:44:00.000Z",
-    "timeLeft": "1h 18m 0s",
+    "timeLeft": "1h 13m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T12:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 7m 55s"
+    "timeLeft": "2h 2m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781956800000",
@@ -130,21 +130,6 @@
       "isHard": true
     },
     {
-      "id": "6a365b7ead39cb29158ce5b1",
-      "activation": "2026-06-20T09:21:02.301Z",
-      "expiry": "2026-06-20T10:46:49.402Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a365b7ead39cb29158ce5b2",
       "activation": "2026-06-20T09:21:02.301Z",
       "expiry": "2026-06-20T10:57:40.048Z",
@@ -156,6 +141,21 @@
       "nodeKey": "Metis (Jupiter)",
       "tier": "Meso",
       "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a365b7ead39cb29158ce5b1",
+      "activation": "2026-06-20T09:21:02.301Z",
+      "expiry": "2026-06-20T10:46:49.402Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nabuk (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
       "isStorm": false,
       "isHard": false
     },
@@ -175,21 +175,6 @@
       "isHard": false
     },
     {
-      "id": "6a365c6e54ea319c658ce5b2",
-      "activation": "2026-06-20T09:25:02.554Z",
-      "expiry": "2026-06-20T11:00:58.847Z",
-      "node": "Tamu (Kuva Fortress)",
-      "missionType": "Disruption",
-      "missionTypeKey": "Disruption",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Tamu (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a365c6e54ea319c658ce5b1",
       "activation": "2026-06-20T09:25:02.554Z",
       "expiry": "2026-06-20T11:11:32.208Z",
@@ -199,6 +184,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Koro (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a365c6e54ea319c658ce5b2",
+      "activation": "2026-06-20T09:25:02.554Z",
+      "expiry": "2026-06-20T11:00:58.847Z",
+      "node": "Tamu (Kuva Fortress)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Tamu (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -250,21 +250,6 @@
       "isHard": false
     },
     {
-      "id": "6a36619609f9ca70628ce5b2",
-      "activation": "2026-06-20T09:47:02.300Z",
-      "expiry": "2026-06-20T11:00:59.649Z",
-      "node": "Umbriel (Uranus)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Umbriel (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a36619609f9ca70628ce5b3",
       "activation": "2026-06-20T09:47:02.300Z",
       "expiry": "2026-06-20T11:10:36.230Z",
@@ -280,17 +265,17 @@
       "isHard": false
     },
     {
-      "id": "6a36619609f9ca70628ce5b4",
+      "id": "6a36619609f9ca70628ce5b2",
       "activation": "2026-06-20T09:47:02.300Z",
-      "expiry": "2026-06-20T10:58:58.707Z",
-      "node": "Hellas (Mars)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
+      "expiry": "2026-06-20T11:00:59.649Z",
+      "node": "Umbriel (Uranus)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Hellas (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
+      "nodeKey": "Umbriel (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": false,
       "isHard": false
     },
@@ -304,6 +289,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Cambria (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a36619609f9ca70628ce5b4",
+      "activation": "2026-06-20T09:47:02.300Z",
+      "expiry": "2026-06-20T10:58:58.707Z",
+      "node": "Hellas (Mars)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Hellas (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -822,7 +822,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 13h 33m 58s",
+    "remaining": "1d 13h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1358,9 +1358,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -16311,
+      "count": -16373,
       "requiredRuns": 42000,
-      "completion": 30.58214285714286,
+      "completion": 30.508333333333336,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1408,9 +1408,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 9205,
+      "count": 9277,
       "requiredRuns": 33000,
-      "completion": 63.94696969696969,
+      "completion": 64.05606060606061,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1589,9 +1589,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23228,
+      "count": -24070,
       "requiredRuns": 41000,
-      "completion": 43.34634146341464,
+      "completion": 41.29268292682927,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1625,48 +1625,12 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6105,
+      "count": -6781,
       "requiredRuns": 31000,
-      "completion": 80.30645161290323,
+      "completion": 78.1258064516129,
       "completed": false,
       "rewardTypes": [
         "mutalist"
-      ]
-    },
-    {
-      "id": "6a36624ada5421c3388ce5b7",
-      "activation": "2026-06-20T09:50:01.759Z",
-      "node": "Shklovsky (Phobos)",
-      "nodeKey": "Shklovsky (Phobos)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -420,
-      "requiredRuns": 35000,
-      "completion": 98.8,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
       ]
     },
     {
@@ -1697,12 +1661,48 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -435,
+      "count": -520,
       "requiredRuns": 41000,
-      "completion": 98.9390243902439,
+      "completion": 98.73170731707317,
       "completed": false,
       "rewardTypes": [
         "fieldron"
+      ]
+    },
+    {
+      "id": "6a36624ada5421c3388ce5b7",
+      "activation": "2026-06-20T09:50:01.759Z",
+      "node": "Shklovsky (Phobos)",
+      "nodeKey": "Shklovsky (Phobos)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 2,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -486,
+      "requiredRuns": 35000,
+      "completion": 98.61142857142858,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
       ]
     }
   ],
@@ -6328,7 +6328,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 83,
+      "sold": 84,
       "discount": 40
     }
   ],
