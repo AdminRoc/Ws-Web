@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-20T05:06:17Z",
+  "fetchedAt": "2026-06-20T05:11:16Z",
   "cetusCycle": {
     "id": "cetusCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1781930760000",
-    "activation": "2026-06-20T04:46:00.000Z",
-    "expiry": "2026-06-20T05:06:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1781931960000",
+    "activation": "2026-06-20T05:06:00.000Z",
+    "expiry": "2026-06-20T05:13:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T07:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 27m 55s"
+    "timeLeft": "2h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1781935200000",
@@ -39,36 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a360797aea2371c138ce5b1",
-      "activation": "2026-06-20T03:23:03.066Z",
-      "expiry": "2026-06-20T05:06:25.825Z",
-      "node": "Ares (Mars)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Ares (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a360f521c5e7c20168ce5b1",
-      "activation": "2026-06-20T03:56:02.951Z",
-      "expiry": "2026-06-20T05:26:47.817Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a360f521c5e7c20168ce5b2",
       "activation": "2026-06-20T03:56:02.951Z",
@@ -85,15 +55,15 @@
       "isHard": true
     },
     {
-      "id": "6a360f521c5e7c20168ce5b3",
+      "id": "6a360f521c5e7c20168ce5b1",
       "activation": "2026-06-20T03:56:02.951Z",
-      "expiry": "2026-06-20T05:07:29.226Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
+      "expiry": "2026-06-20T05:26:47.817Z",
+      "node": "Tuvul Commons (Zariman)",
+      "missionType": "Void Cascade",
+      "missionTypeKey": "Void Cascade",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Tuvul Commons (Zariman)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -265,21 +235,6 @@
       "isHard": false
     },
     {
-      "id": "6a36174a50f25d869f8ce5b4",
-      "activation": "2026-06-20T04:30:02.583Z",
-      "expiry": "2026-06-20T06:16:24.839Z",
-      "node": "Cypress (Pluto)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cypress (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a36174a50f25d869f8ce5b3",
       "activation": "2026-06-20T04:30:02.583Z",
       "expiry": "2026-06-20T05:49:10.785Z",
@@ -289,6 +244,21 @@
       "enemy": "Orokin",
       "enemyKey": "Orokin",
       "nodeKey": "Aten (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a36174a50f25d869f8ce5b4",
+      "activation": "2026-06-20T04:30:02.583Z",
+      "expiry": "2026-06-20T06:16:24.839Z",
+      "node": "Cypress (Pluto)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cypress (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -340,21 +310,6 @@
       "isHard": false
     },
     {
-      "id": "6a361bfa53c1ddcb278ce5b2",
-      "activation": "2026-06-20T04:50:02.306Z",
-      "expiry": "2026-06-20T06:06:46.116Z",
-      "node": "Martialis (Mars)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Martialis (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a361bfa53c1ddcb278ce5b1",
       "activation": "2026-06-20T04:50:02.306Z",
       "expiry": "2026-06-20T06:27:55.313Z",
@@ -364,6 +319,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "E Prime (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a361bfa53c1ddcb278ce5b2",
+      "activation": "2026-06-20T04:50:02.306Z",
+      "expiry": "2026-06-20T06:06:46.116Z",
+      "node": "Martialis (Mars)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Martialis (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -415,15 +385,15 @@
       "isHard": true
     },
     {
-      "id": "6a361eca35b847647a8ce5b1",
+      "id": "6a361eca35b847647a8ce5b3",
       "activation": "2026-06-20T05:02:02.943Z",
-      "expiry": "2026-06-20T06:36:48.918Z",
-      "node": "Gaia (Earth)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
+      "expiry": "2026-06-20T06:03:11.567Z",
+      "node": "Augustus (Mars)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Gaia (Earth)",
+      "nodeKey": "Augustus (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -445,15 +415,15 @@
       "isHard": false
     },
     {
-      "id": "6a361eca35b847647a8ce5b3",
+      "id": "6a361eca35b847647a8ce5b1",
       "activation": "2026-06-20T05:02:02.943Z",
-      "expiry": "2026-06-20T06:03:11.567Z",
-      "node": "Augustus (Mars)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
+      "expiry": "2026-06-20T06:36:48.918Z",
+      "node": "Gaia (Earth)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Augustus (Mars)",
+      "nodeKey": "Gaia (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -807,7 +777,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 18h 53m 58s",
+    "remaining": "1d 18h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1343,9 +1313,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -11302,
+      "count": -11370,
       "requiredRuns": 42000,
-      "completion": 36.5452380952381,
+      "completion": 36.464285714285715,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1393,9 +1363,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 3557,
+      "count": 3635,
       "requiredRuns": 33000,
-      "completion": 55.38939393939394,
+      "completion": 55.50757575757576,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1430,9 +1400,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -23381,
+      "count": -23504,
       "requiredRuns": 30000,
-      "completion": 22.063333333333336,
+      "completion": 21.653333333333336,
       "completed": false,
       "rewardTypes": [
         "detonite"
