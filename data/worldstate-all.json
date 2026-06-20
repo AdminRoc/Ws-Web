@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T12:26:16Z",
+  "fetchedAt": "2026-06-20T12:31:14Z",
   "cetusCycle": {
     "id": "cetusCycle1781958840000",
     "activation": "2026-06-20T11:44:00.000Z",
     "expiry": "2026-06-20T12:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781958840000",
     "activation": "2026-06-20T11:44:00.000Z",
     "expiry": "2026-06-20T12:34:00.000Z",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T12:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "7m 55s"
+    "timeLeft": "2m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1781964000000",
@@ -199,21 +199,6 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Calypso (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a36788f65980a9d1e8ce5b1",
-      "activation": "2026-06-20T11:25:03.162Z",
-      "expiry": "2026-06-20T12:28:29.019Z",
-      "node": "Casta (Ceres)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Casta (Ceres)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -747,7 +732,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 11h 33m 58s",
+    "remaining": "1d 11h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1283,9 +1268,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -18414,
+      "count": -18505,
       "requiredRuns": 42000,
-      "completion": 28.07857142857143,
+      "completion": 27.9702380952381,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1333,9 +1318,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 11815,
+      "count": 11937,
       "requiredRuns": 33000,
-      "completion": 67.90151515151514,
+      "completion": 68.08636363636363,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1514,9 +1499,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -22133,
+      "count": -22824,
       "requiredRuns": 31000,
-      "completion": 28.603225806451615,
+      "completion": 26.374193548387094,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1550,9 +1535,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -2942,
+      "count": -3804,
       "requiredRuns": 41000,
-      "completion": 92.82439024390244,
+      "completion": 90.72195121951219,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1586,9 +1571,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15318,
+      "count": -16095,
       "requiredRuns": 35000,
-      "completion": 56.23428571428571,
+      "completion": 54.01428571428571,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1622,9 +1607,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -306,
+      "count": -531,
       "requiredRuns": 30000,
-      "completion": 98.98,
+      "completion": 98.22999999999999,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1658,9 +1643,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -432,
+      "count": -508,
       "requiredRuns": 49000,
-      "completion": 99.11836734693877,
+      "completion": 98.96326530612245,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -10592,7 +10577,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 100,
+      "sold": 101,
       "discount": 40
     }
   ],
