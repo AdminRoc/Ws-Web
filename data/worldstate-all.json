@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T06:41:16Z",
+  "fetchedAt": "2026-06-20T06:46:14Z",
   "cetusCycle": {
-    "id": "cetusCycle1781937840000",
-    "activation": "2026-06-20T05:04:00.000Z",
-    "expiry": "2026-06-20T06:44:00.000Z",
-    "isDay": true,
-    "state": "day",
-    "timeLeft": "3m 0s",
+    "id": "cetusCycle1781940840000",
+    "activation": "2026-06-20T06:44:00.000Z",
+    "expiry": "2026-06-20T07:34:00.000Z",
+    "isDay": false,
+    "state": "night",
+    "timeLeft": "48m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -17,11 +17,11 @@
     "state": "cold"
   },
   "cambionCycle": {
-    "id": "cambionCycle1781937840000",
-    "activation": "2026-06-20T05:04:00.000Z",
-    "expiry": "2026-06-20T06:44:00.000Z",
-    "timeLeft": "3m 0s",
-    "state": "fass"
+    "id": "cambionCycle1781940840000",
+    "activation": "2026-06-20T06:44:00.000Z",
+    "expiry": "2026-06-20T07:34:00.000Z",
+    "timeLeft": "48m 0s",
+    "state": "vome"
   },
   "zarimanCycle": {
     "id": "zarimanCycle1781940840000",
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T07:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "52m 55s"
+    "timeLeft": "47m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1781942400000",
@@ -837,7 +837,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 17h 18m 58s",
+    "remaining": "1d 17h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1373,9 +1373,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -12767,
+      "count": -12840,
       "requiredRuns": 42000,
-      "completion": 34.80119047619048,
+      "completion": 34.714285714285715,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1423,9 +1423,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 5006,
+      "count": 5139,
       "requiredRuns": 33000,
-      "completion": 57.584848484848486,
+      "completion": 57.78636363636364,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1460,9 +1460,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -25664,
+      "count": -25778,
       "requiredRuns": 30000,
-      "completion": 14.45333333333333,
+      "completion": 14.073333333333338,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -6292,7 +6292,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 65,
+      "sold": 67,
       "discount": 40
     }
   ],
