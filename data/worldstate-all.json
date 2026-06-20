@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T08:41:16Z",
+  "fetchedAt": "2026-06-20T08:46:16Z",
   "cetusCycle": {
     "id": "cetusCycle1781946840000",
     "activation": "2026-06-20T07:34:00.000Z",
     "expiry": "2026-06-20T09:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "33m 0s",
+    "timeLeft": "28m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781946840000",
     "activation": "2026-06-20T07:34:00.000Z",
     "expiry": "2026-06-20T09:14:00.000Z",
-    "timeLeft": "33m 0s",
+    "timeLeft": "28m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T10:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 22m 55s"
+    "timeLeft": "1h 17m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1781949600000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a3637a3148e643ee68ce5b1",
-      "activation": "2026-06-20T06:48:03.020Z",
-      "expiry": "2026-06-20T08:41:11.043Z",
-      "node": "Yuvarium (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a36426aadf9e559b18ce5b1",
       "activation": "2026-06-20T07:34:02.797Z",
@@ -85,21 +70,6 @@
       "isHard": false
     },
     {
-      "id": "6a3645b313e5e838468ce5b1",
-      "activation": "2026-06-20T07:48:03.013Z",
-      "expiry": "2026-06-20T08:48:46.863Z",
-      "node": "Taveuni (Kuva Fortress)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Taveuni (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3645b313e5e838468ce5b2",
       "activation": "2026-06-20T07:48:03.013Z",
       "expiry": "2026-06-20T09:25:25.689Z",
@@ -109,6 +79,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Dakata (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3645b313e5e838468ce5b1",
+      "activation": "2026-06-20T07:48:03.013Z",
+      "expiry": "2026-06-20T08:48:46.863Z",
+      "node": "Taveuni (Kuva Fortress)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Taveuni (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -385,6 +370,21 @@
       "isHard": false
     },
     {
+      "id": "6a3635c2853a55787e8ce5b4",
+      "activation": "2026-06-20T07:20:03.356Z",
+      "expiry": "2026-06-20T08:50:03.356Z",
+      "node": "Enkidu Ice Drifts (Neptune)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Enkidu Ice Drifts (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a3635c2853a55787e8ce5b3",
       "activation": "2026-06-20T07:20:03.355Z",
       "expiry": "2026-06-20T08:50:03.355Z",
@@ -415,21 +415,6 @@
       "isHard": false
     },
     {
-      "id": "6a3635c2853a55787e8ce5b4",
-      "activation": "2026-06-20T07:20:03.356Z",
-      "expiry": "2026-06-20T08:50:03.356Z",
-      "node": "Enkidu Ice Drifts (Neptune)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Enkidu Ice Drifts (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3635c2853a55787e8ce5b6",
       "activation": "2026-06-20T07:20:03.360Z",
       "expiry": "2026-06-20T08:50:03.360Z",
@@ -441,21 +426,6 @@
       "nodeKey": "R-9 Cloud (Veil)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3643d34c76cebe3b8ce5b2",
-      "activation": "2026-06-20T08:20:03.353Z",
-      "expiry": "2026-06-20T09:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -490,21 +460,6 @@
       "isHard": false
     },
     {
-      "id": "6a3643d34c76cebe3b8ce5b6",
-      "activation": "2026-06-20T08:20:03.360Z",
-      "expiry": "2026-06-20T09:50:03.360Z",
-      "node": "Calabash (Veil)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Calabash (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3643d34c76cebe3b8ce5b4",
       "activation": "2026-06-20T08:20:03.356Z",
       "expiry": "2026-06-20T09:50:03.356Z",
@@ -531,6 +486,36 @@
       "nodeKey": "Fenton's Field (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3643d34c76cebe3b8ce5b6",
+      "activation": "2026-06-20T08:20:03.360Z",
+      "expiry": "2026-06-20T09:50:03.360Z",
+      "node": "Calabash (Veil)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Calabash (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3643d34c76cebe3b8ce5b2",
+      "activation": "2026-06-20T08:20:03.353Z",
+      "expiry": "2026-06-20T09:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Orvin-Haarc (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     }
@@ -792,7 +777,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 15h 18m 58s",
+    "remaining": "1d 15h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1328,9 +1313,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -14637,
+      "count": -14713,
       "requiredRuns": 42000,
-      "completion": 32.574999999999996,
+      "completion": 32.484523809523814,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1378,9 +1363,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 7238,
+      "count": 7358,
       "requiredRuns": 33000,
-      "completion": 60.96666666666667,
+      "completion": 61.148484848484856,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1415,9 +1400,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -28367,
+      "count": -28468,
       "requiredRuns": 30000,
-      "completion": 5.443333333333333,
+      "completion": 5.106666666666671,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1559,9 +1544,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5295,
+      "count": -6143,
       "requiredRuns": 41000,
-      "completion": 87.08536585365853,
+      "completion": 85.0170731707317,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1595,9 +1580,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -519,
+      "count": -582,
       "requiredRuns": 31000,
-      "completion": 98.3258064516129,
+      "completion": 98.12258064516129,
       "completed": false,
       "rewardTypes": [
         "mutalist"
