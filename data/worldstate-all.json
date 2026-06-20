@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-20T05:36:15Z",
+  "fetchedAt": "2026-06-20T05:41:17Z",
   "cetusCycle": {
     "id": "cetusCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 8m 0s",
+    "timeLeft": "1h 3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1781933580000",
-    "activation": "2026-06-20T05:33:00.000Z",
-    "expiry": "2026-06-20T05:40:08.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1781934000000",
+    "activation": "2026-06-20T05:40:00.000Z",
+    "expiry": "2026-06-20T06:00:08.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
-    "timeLeft": "1h 8m 0s",
+    "timeLeft": "1h 3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T07:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 57m 55s"
+    "timeLeft": "1h 52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1781935200000",
@@ -81,21 +81,6 @@
       "nodeKey": "Lex (Ceres)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a36129ae46d9fb1338ce5b1",
-      "activation": "2026-06-20T04:10:02.258Z",
-      "expiry": "2026-06-20T05:39:26.644Z",
-      "node": "Circulus (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Circulus (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
       "isStorm": false,
       "isHard": false
     },
@@ -413,6 +398,21 @@
       "tierNum": 6,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3627765ccbadd2b68ce5b1",
+      "activation": "2026-06-20T05:39:02.653Z",
+      "expiry": "2026-06-20T06:53:01.659Z",
+      "node": "Cambire (Deimos)",
+      "missionType": "Alchemy",
+      "missionTypeKey": "Alchemy",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Cambire (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a360b93301431dbbe8ce5b1",
@@ -852,7 +852,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 18h 23m 58s",
+    "remaining": "1d 18h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1388,9 +1388,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -11794,
+      "count": -11872,
       "requiredRuns": 42000,
-      "completion": 35.95952380952381,
+      "completion": 35.86666666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1438,9 +1438,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 4022,
+      "count": 4089,
       "requiredRuns": 33000,
-      "completion": 56.093939393939394,
+      "completion": 56.195454545454545,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1475,10 +1475,46 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -24093,
+      "count": -24216,
       "requiredRuns": 30000,
-      "completion": 19.689999999999998,
+      "completion": 19.279999999999998,
       "completed": false,
+      "rewardTypes": [
+        "detonite"
+      ]
+    },
+    {
+      "id": "6a35306e1a240ff4ea8ce5b3",
+      "activation": "2026-06-19T12:05:01.884Z",
+      "node": "Numa (Saturn)",
+      "nodeKey": "Numa (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -40150,
+      "requiredRuns": 40000,
+      "completion": -0.374999999999992,
+      "completed": true,
       "rewardTypes": [
         "detonite"
       ]
@@ -1517,42 +1553,6 @@
       "completed": true,
       "rewardTypes": [
         "mutagen"
-      ]
-    },
-    {
-      "id": "6a35306e1a240ff4ea8ce5b3",
-      "activation": "2026-06-19T12:05:01.884Z",
-      "node": "Numa (Saturn)",
-      "nodeKey": "Numa (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -40150,
-      "requiredRuns": 40000,
-      "completion": -0.374999999999992,
-      "completed": true,
-      "rewardTypes": [
-        "detonite"
       ]
     },
     {
@@ -6343,7 +6343,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 60,
+      "sold": 61,
       "discount": 40
     }
   ],
