@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T05:21:14Z",
+  "fetchedAt": "2026-06-20T05:26:14Z",
   "cetusCycle": {
     "id": "cetusCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 23m 0s",
+    "timeLeft": "1h 18m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
-    "timeLeft": "1h 23m 0s",
+    "timeLeft": "1h 18m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T07:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 12m 55s"
+    "timeLeft": "2h 7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1781935200000",
@@ -40,21 +40,6 @@
   },
   "fissures": [
     {
-      "id": "6a360f521c5e7c20168ce5b2",
-      "activation": "2026-06-20T03:56:02.951Z",
-      "expiry": "2026-06-20T05:44:00.647Z",
-      "node": "Yuvarium (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a360f521c5e7c20168ce5b1",
       "activation": "2026-06-20T03:56:02.951Z",
       "expiry": "2026-06-20T05:26:47.817Z",
@@ -64,6 +49,21 @@
       "enemy": "Crossfire",
       "enemyKey": "Crossfire",
       "nodeKey": "Tuvul Commons (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a360f521c5e7c20168ce5b2",
+      "activation": "2026-06-20T03:56:02.951Z",
+      "expiry": "2026-06-20T05:44:00.647Z",
+      "node": "Yuvarium (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Yuvarium (Lua)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -235,21 +235,6 @@
       "isHard": false
     },
     {
-      "id": "6a36174a50f25d869f8ce5b3",
-      "activation": "2026-06-20T04:30:02.583Z",
-      "expiry": "2026-06-20T05:49:10.785Z",
-      "node": "Aten (Void)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Aten (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a36174a50f25d869f8ce5b4",
       "activation": "2026-06-20T04:30:02.583Z",
       "expiry": "2026-06-20T06:16:24.839Z",
@@ -259,6 +244,21 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Cypress (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a36174a50f25d869f8ce5b3",
+      "activation": "2026-06-20T04:30:02.583Z",
+      "expiry": "2026-06-20T05:49:10.785Z",
+      "node": "Aten (Void)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Aten (Void)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -310,21 +310,6 @@
       "isHard": false
     },
     {
-      "id": "6a361bfa53c1ddcb278ce5b1",
-      "activation": "2026-06-20T04:50:02.306Z",
-      "expiry": "2026-06-20T06:27:55.313Z",
-      "node": "E Prime (Earth)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "E Prime (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a361bfa53c1ddcb278ce5b2",
       "activation": "2026-06-20T04:50:02.306Z",
       "expiry": "2026-06-20T06:06:46.116Z",
@@ -334,6 +319,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Martialis (Mars)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a361bfa53c1ddcb278ce5b1",
+      "activation": "2026-06-20T04:50:02.306Z",
+      "expiry": "2026-06-20T06:27:55.313Z",
+      "node": "E Prime (Earth)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "E Prime (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -385,15 +385,15 @@
       "isHard": true
     },
     {
-      "id": "6a361eca35b847647a8ce5b3",
+      "id": "6a361eca35b847647a8ce5b1",
       "activation": "2026-06-20T05:02:02.943Z",
-      "expiry": "2026-06-20T06:03:11.567Z",
-      "node": "Augustus (Mars)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
+      "expiry": "2026-06-20T06:36:48.918Z",
+      "node": "Gaia (Earth)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Augustus (Mars)",
+      "nodeKey": "Gaia (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -415,33 +415,18 @@
       "isHard": false
     },
     {
-      "id": "6a361eca35b847647a8ce5b1",
+      "id": "6a361eca35b847647a8ce5b3",
       "activation": "2026-06-20T05:02:02.943Z",
-      "expiry": "2026-06-20T06:36:48.918Z",
-      "node": "Gaia (Earth)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
+      "expiry": "2026-06-20T06:03:11.567Z",
+      "node": "Augustus (Mars)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Gaia (Earth)",
+      "nodeKey": "Augustus (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a360b93301431dbbe8ce5b2",
-      "activation": "2026-06-20T04:20:03.353Z",
-      "expiry": "2026-06-20T05:50:03.353Z",
-      "node": "Luckless Expanse (Venus)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Luckless Expanse (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
       "isHard": false
     },
     {
@@ -475,21 +460,6 @@
       "isHard": false
     },
     {
-      "id": "6a360b93301431dbbe8ce5b4",
-      "activation": "2026-06-20T04:20:03.356Z",
-      "expiry": "2026-06-20T05:50:03.356Z",
-      "node": "Brom Cluster (Neptune)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Brom Cluster (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a360b93301431dbbe8ce5b3",
       "activation": "2026-06-20T04:20:03.355Z",
       "expiry": "2026-06-20T05:50:03.355Z",
@@ -505,6 +475,21 @@
       "isHard": false
     },
     {
+      "id": "6a360b93301431dbbe8ce5b4",
+      "activation": "2026-06-20T04:20:03.356Z",
+      "expiry": "2026-06-20T05:50:03.356Z",
+      "node": "Brom Cluster (Neptune)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Brom Cluster (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a360b93301431dbbe8ce5b6",
       "activation": "2026-06-20T04:20:03.360Z",
       "expiry": "2026-06-20T05:50:03.360Z",
@@ -516,6 +501,51 @@
       "nodeKey": "Nsu Grid (Veil)",
       "tier": "Axi",
       "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a360b93301431dbbe8ce5b2",
+      "activation": "2026-06-20T04:20:03.353Z",
+      "expiry": "2026-06-20T05:50:03.353Z",
+      "node": "Luckless Expanse (Venus)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Luckless Expanse (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3619a279a7d502028ce5b6",
+      "activation": "2026-06-20T05:20:03.360Z",
+      "expiry": "2026-06-20T06:50:03.360Z",
+      "node": "Flexa (Veil)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Flexa (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3619a279a7d502028ce5b1",
+      "activation": "2026-06-20T05:20:03.351Z",
+      "expiry": "2026-06-20T06:50:03.351Z",
+      "node": "Iota Temple (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Iota Temple (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -561,36 +591,6 @@
       "nodeKey": "Vand Cluster (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3619a279a7d502028ce5b6",
-      "activation": "2026-06-20T05:20:03.360Z",
-      "expiry": "2026-06-20T06:50:03.360Z",
-      "node": "Flexa (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Flexa (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3619a279a7d502028ce5b1",
-      "activation": "2026-06-20T05:20:03.351Z",
-      "expiry": "2026-06-20T06:50:03.351Z",
-      "node": "Iota Temple (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Iota Temple (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -867,7 +867,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 18h 38m 58s",
+    "remaining": "1d 18h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1403,9 +1403,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -11521,
+      "count": -11620,
       "requiredRuns": 42000,
-      "completion": 36.284523809523805,
+      "completion": 36.16666666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1453,9 +1453,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 3814,
+      "count": 3894,
       "requiredRuns": 33000,
-      "completion": 55.77878787878788,
+      "completion": 55.89999999999999,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1490,9 +1490,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -23730,
+      "count": -23869,
       "requiredRuns": 30000,
-      "completion": 20.899999999999995,
+      "completion": 20.43666666666667,
       "completed": false,
       "rewardTypes": [
         "detonite"
