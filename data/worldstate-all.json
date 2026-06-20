@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-20T11:51:15Z",
+  "fetchedAt": "2026-06-20T11:56:15Z",
   "cetusCycle": {
     "id": "cetusCycle1781958840000",
     "activation": "2026-06-20T11:44:00.000Z",
     "expiry": "2026-06-20T12:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1781955960000",
-    "activation": "2026-06-20T11:46:00.000Z",
-    "expiry": "2026-06-20T11:53:28.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1781956380000",
+    "activation": "2026-06-20T11:53:00.000Z",
+    "expiry": "2026-06-20T12:13:28.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1781958840000",
     "activation": "2026-06-20T11:44:00.000Z",
     "expiry": "2026-06-20T12:34:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T12:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "42m 55s"
+    "timeLeft": "37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781956800000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a36689e07e10acb8d8ce5b2",
-      "activation": "2026-06-20T10:17:02.644Z",
-      "expiry": "2026-06-20T11:52:22.783Z",
-      "node": "Brugia (Eris)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Brugia (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a366e7ad703f1663f8ce5b1",
       "activation": "2026-06-20T10:42:02.415Z",
@@ -807,7 +792,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 12h 8m 58s",
+    "remaining": "1d 12h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1343,9 +1328,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -17678,
+      "count": -17819,
       "requiredRuns": 42000,
-      "completion": 28.954761904761906,
+      "completion": 28.786904761904765,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1393,9 +1378,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 10991,
+      "count": 11108,
       "requiredRuns": 33000,
-      "completion": 66.6530303030303,
+      "completion": 66.83030303030303,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1538,9 +1523,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -37721,
+      "count": -38604,
       "requiredRuns": 41000,
-      "completion": 7.997560975609752,
+      "completion": 5.843902439024395,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1574,9 +1559,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17486,
+      "count": -18143,
       "requiredRuns": 31000,
-      "completion": 43.59354838709677,
+      "completion": 41.47419354838709,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1610,9 +1595,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1046,
+      "count": -1075,
       "requiredRuns": 41000,
-      "completion": 97.44878048780488,
+      "completion": 97.3780487804878,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1646,9 +1631,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9857,
+      "count": -10612,
       "requiredRuns": 35000,
-      "completion": 71.83714285714285,
+      "completion": 69.67999999999999,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1682,9 +1667,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -13,
+      "count": -72,
       "requiredRuns": 49000,
-      "completion": 99.9734693877551,
+      "completion": 99.85306122448979,
       "completed": false,
       "rewardTypes": [
         "detonite"
