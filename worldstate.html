@@ -2021,16 +2021,6 @@
       <div id="ws-baro"><div class="ws-empty">加载中…</div></div>
     </section>
 
-    <!-- ══ 瓦奇娅 ══ -->
-    <section id="ws-sec-varzia" class="ws-section">
-      <div class="ws-section-hd">
-        <!-- 译名经用户确认游戏客户端实际称呼，见 data/wf-translations.json 的 MISC -->
-        <span class="ws-section-title">瓦奇娅</span>
-        <span class="ws-section-en">Varzia · Prime重生</span>
-      </div>
-      <div id="ws-varzia"><div class="ws-empty">加载中…</div></div>
-    </section>
-
     <!-- ══ 警报 ══ -->
     <section id="ws-sec-alerts" class="ws-section">
       <div class="ws-section-hd">
@@ -2121,6 +2111,16 @@
       <div id="ws-nightwave"><div class="ws-empty">加载中…</div></div>
     </section>
 
+    <!-- ══ 瓦奇娅 ══ -->
+    <section id="ws-sec-varzia" class="ws-section">
+      <div class="ws-section-hd">
+        <!-- 译名经用户确认游戏客户端实际称呼，见 data/wf-translations.json 的 MISC -->
+        <span class="ws-section-title">瓦奇娅</span>
+        <span class="ws-section-en">Varzia · Prime重生</span>
+      </div>
+      <div id="ws-varzia"><div class="ws-empty">加载中…</div></div>
+    </section>
+
     <!-- ══ 12. 入侵 ══ -->
     <section id="ws-sec-inv" class="ws-section">
       <div class="ws-section-hd">
@@ -2140,6 +2140,7 @@
       <a href="#ws-sec-cycles">世界周期</a>
       <a href="#ws-sec-sortie">突击 · 执刑官猎杀</a>
       <a href="#ws-sec-baro">奸商</a>
+      <a href="#ws-sec-alerts">警报</a>
       <div class="ws-qn-sep"></div>
       <a href="#ws-sec-fissures">虚空裂缝</a>
       <a href="#ws-sec-bounties">重要赏金任务</a>
@@ -2151,6 +2152,7 @@
       <a href="#ws-sec-coda">终幕武器轮换</a>
       <div class="ws-qn-sep"></div>
       <a href="#ws-sec-nw">午夜电波</a>
+      <a href="#ws-sec-varzia">瓦奇娅</a>
       <a href="#ws-sec-inv">入侵</a>
     </div>
   </div>
@@ -2587,11 +2589,15 @@
     });
   }
 
-  /* ── 仲裁时刻表 v2（warframe-arbitration 项目，100k+ 条目，约 11 年覆盖） ── */
+  /* ── 仲裁时刻表 v2（原数据来自 wxhn1225/warframe-arbitration 项目，覆盖到 2029-10，
+     schema:2，nodes 为纯 SolNode ID 字符串数组，seq 是下标索引）。
+     该仓库后来转为私有，直接读 git 内容的 raw.githubusercontent.com / jsdelivr 都会 404；
+     即便当时还能从其 GitHub Pages 站点读到，那也是别人的站点，随时可能下线/删除/改版。
+     为避免这份数据彻底丢失，已完整下载并提交进本仓库 data/arbitration-schedule-v2.json，
+     不再依赖任何外部地址。 */
   var _arbV2 = null;
   var ARB_V2_URLS = [
-    'https://raw.githubusercontent.com/wxhn1225/warframe-arbitration/main/web/public/data/arbys.schedule.v2.json',
-    'https://cdn.jsdelivr.net/gh/wxhn1225/warframe-arbitration@main/web/public/data/arbys.schedule.v2.json'
+    'data/arbitration-schedule-v2.json'
   ];
   var ARB_V2_LS_KEY = 'wf_arbv2';
   var ARB_V2_TTL    = 7 * 86400 * 1000;
@@ -3297,13 +3303,29 @@
     if (timerTarget) countdown(document.getElementById('wt-baro'), new Date(timerTarget).getTime(), true);
   }
 
-  /* ══ 渲染：Varzia（复用奸商卡片样式，价格字段视 API 实际返回内容显示，不假设固定货币种类） ══ */
+  /* 把 API 返回的 "M P V Equinox Prime Single Pack" 这种逐字母拆空格的畸形名还原成
+     "MPV Equinox Prime Single Pack"（warframestat.us 对 vaultTrader 物品名的已知格式问题） */
+  function _cleanVarziaItemName(name) {
+    if (!name) return '--';
+    return name.replace(/\b(?:[A-Z]\s+){1,}[A-Z]\b/g, function (m) {
+      return m.replace(/\s+/g, '');
+    });
+  }
+
+  /* ══ 渲染：瓦奇娅（复用奸商卡片样式）══
+     vaultTrader 端点不像 voidTrader 那样直接给 active 布尔值，需要自己用
+     activation/expiry 跟当前时间比较算出来；物品的 credits/aya/regalAya 都不可靠
+     （这批数据普遍为 null 或明显不是真实购买价），故只展示物品名，不展示价格，
+     避免显示错误/无意义的金额误导用户。 */
   function renderVarzia() {
     var el = document.getElementById('ws-varzia');
     if (!el) return;
     var d = D.vaultTrader;
     if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
-    var active      = d.active;
+    var now         = Date.now();
+    var actMs       = d.activation ? new Date(d.activation).getTime() : 0;
+    var expMs       = d.expiry ? new Date(d.expiry).getTime() : 0;
+    var active      = !!(actMs && expMs && actMs <= now && now < expMs);
     var inv         = d.inventory || [];
     var hdCls       = active ? 'ws-baro-active' : 'ws-baro-away';
     var status      = active ? '✦ 已抵达' : '⏳ 前往中';
@@ -3312,14 +3334,9 @@
 
     var invHTML = (active && inv.length) ?
       '<div class="ws-baro-inv-grid">' +
-        inv.slice(0, 40).map(function (item) {
-          var cost = [];
-          if (item.credits)  cost.push(item.credits.toLocaleString() + ' 点数');
-          if (item.aya)      cost.push(item.aya + ' Aya');
-          if (item.regalAya) cost.push(item.regalAya + ' Regal Aya');
+        inv.slice(0, 60).map(function (item) {
           return '<div class="ws-baro-item">' +
-            '<span class="ws-bi-name">' + (tr(item.item) || item.item || '--') + '</span>' +
-            (cost.length ? '<span class="ws-bi-cost">' + cost.join(' + ') + '</span>' : '') +
+            '<span class="ws-bi-name">' + _cleanVarziaItemName(item.item) + '</span>' +
             '</div>';
         }).join('') +
       '</div>' : (active ? '<div class="ws-empty">商人背包暂无物品数据</div>' : '');
@@ -3327,6 +3344,7 @@
     el.innerHTML =
       '<div class="ws-baro-hd ' + hdCls + '">' +
         '<div class="ws-baro-status">' + status + '</div>' +
+        (d.location ? '<div class="ws-baro-loc">地点：' + trLocation(d.location) + '</div>' : '') +
         '<div class="ws-baro-tw">' +
           '<span>' + timerLabel + '</span>' +
           '<span class="ws-baro-t" id="wt-varzia"></span>' +
