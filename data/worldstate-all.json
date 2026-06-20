@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-20T13:06:15Z",
+  "fetchedAt": "2026-06-20T13:11:16Z",
   "cetusCycle": {
     "id": "cetusCycle1781964840000",
     "activation": "2026-06-20T12:34:00.000Z",
     "expiry": "2026-06-20T14:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 8m 0s",
+    "timeLeft": "1h 3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1781959560000",
-    "activation": "2026-06-20T12:46:00.000Z",
-    "expiry": "2026-06-20T13:06:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1781960760000",
+    "activation": "2026-06-20T13:06:00.000Z",
+    "expiry": "2026-06-20T13:13:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1781964840000",
     "activation": "2026-06-20T12:34:00.000Z",
     "expiry": "2026-06-20T14:14:00.000Z",
-    "timeLeft": "1h 8m 0s",
+    "timeLeft": "1h 3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T15:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 57m 54s"
+    "timeLeft": "1h 52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1781964000000",
@@ -53,21 +53,6 @@
       "tierNum": 4,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a367aaa6b16bcb6398ce5b1",
-      "activation": "2026-06-20T11:34:02.969Z",
-      "expiry": "2026-06-20T13:08:30.064Z",
-      "node": "Kokabiel (Europa)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Kokabiel (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a367df27ffd3def338ce5b1",
@@ -385,34 +370,79 @@
       "isHard": false
     },
     {
-      "id": "6a367c13edf5f940de8ce5b5",
-      "activation": "2026-06-20T12:20:03.356Z",
-      "expiry": "2026-06-20T13:50:03.356Z",
-      "node": "Sovereign Grasp (Neptune)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sovereign Grasp (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
+      "id": "6a3690760294599bd68ce5b1",
+      "activation": "2026-06-20T13:07:02.598Z",
+      "expiry": "2026-06-20T14:59:14.138Z",
+      "node": "Hydron (Sedna)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Hydron (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3690760294599bd68ce5b2",
+      "activation": "2026-06-20T13:07:02.598Z",
+      "expiry": "2026-06-20T14:23:55.102Z",
+      "node": "Oxomoco (Void)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Oxomoco (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3690ee6cc50aca768ce5b1",
+      "activation": "2026-06-20T13:09:02.260Z",
+      "expiry": "2026-06-20T14:11:46.540Z",
+      "node": "Naga (Sedna)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Naga (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
       "isHard": false
     },
     {
-      "id": "6a367c13edf5f940de8ce5b3",
-      "activation": "2026-06-20T12:20:03.353Z",
-      "expiry": "2026-06-20T13:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
+      "id": "6a3690ee6cc50aca768ce5b2",
+      "activation": "2026-06-20T13:09:02.260Z",
+      "expiry": "2026-06-20T14:21:38.952Z",
+      "node": "Hydra (Pluto)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
+      "nodeKey": "Hydra (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a36912a0b75e578188ce5b1",
+      "activation": "2026-06-20T13:10:02.642Z",
+      "expiry": "2026-06-20T15:03:14.218Z",
+      "node": "Circulus (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a367c13edf5f940de8ce5b4",
@@ -471,6 +501,36 @@
       "nodeKey": "Calabash (Veil)",
       "tier": "Axi",
       "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a367c13edf5f940de8ce5b3",
+      "activation": "2026-06-20T12:20:03.353Z",
+      "expiry": "2026-06-20T13:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Orvin-Haarc (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a367c13edf5f940de8ce5b5",
+      "activation": "2026-06-20T12:20:03.356Z",
+      "expiry": "2026-06-20T13:50:03.356Z",
+      "node": "Sovereign Grasp (Neptune)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sovereign Grasp (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": true,
       "isHard": false
     }
@@ -732,7 +792,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 10h 53m 58s",
+    "remaining": "1d 10h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1268,9 +1328,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -18918,
+      "count": -19016,
       "requiredRuns": 42000,
-      "completion": 27.47857142857143,
+      "completion": 27.361904761904764,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1318,9 +1378,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 12591,
+      "count": 12652,
       "requiredRuns": 33000,
-      "completion": 69.07727272727273,
+      "completion": 69.16969696969697,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1499,9 +1559,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27523,
+      "count": -28223,
       "requiredRuns": 31000,
-      "completion": 11.21612903225806,
+      "completion": 8.958064516129028,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1535,9 +1595,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9786,
+      "count": -10674,
       "requiredRuns": 41000,
-      "completion": 76.13170731707316,
+      "completion": 73.96585365853659,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1571,9 +1631,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21749,
+      "count": -22543,
       "requiredRuns": 35000,
-      "completion": 37.86000000000001,
+      "completion": 35.59142857142857,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1607,9 +1667,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1823,
+      "count": -1978,
       "requiredRuns": 30000,
-      "completion": 93.92333333333333,
+      "completion": 93.40666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1643,9 +1703,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -958,
+      "count": -1002,
       "requiredRuns": 49000,
-      "completion": 98.04489795918367,
+      "completion": 97.95510204081633,
       "completed": false,
       "rewardTypes": [
         "detonite"
