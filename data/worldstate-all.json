@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T06:36:14Z",
+  "fetchedAt": "2026-06-20T06:41:16Z",
   "cetusCycle": {
     "id": "cetusCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781937840000",
     "activation": "2026-06-20T05:04:00.000Z",
     "expiry": "2026-06-20T06:44:00.000Z",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T07:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "57m 55s"
+    "timeLeft": "52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1781942400000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a361eca35b847647a8ce5b1",
-      "activation": "2026-06-20T05:02:02.943Z",
-      "expiry": "2026-06-20T06:36:48.918Z",
-      "node": "Gaia (Earth)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Gaia (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a362686be32e799378ce5b1",
       "activation": "2026-06-20T05:35:02.397Z",
@@ -415,6 +400,36 @@
       "isHard": false
     },
     {
+      "id": "6a3619a279a7d502028ce5b6",
+      "activation": "2026-06-20T05:20:03.360Z",
+      "expiry": "2026-06-20T06:50:03.360Z",
+      "node": "Flexa (Veil)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Flexa (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3619a279a7d502028ce5b1",
+      "activation": "2026-06-20T05:20:03.351Z",
+      "expiry": "2026-06-20T06:50:03.351Z",
+      "node": "Iota Temple (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Iota Temple (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a3619a279a7d502028ce5b4",
       "activation": "2026-06-20T05:20:03.356Z",
       "expiry": "2026-06-20T06:50:03.356Z",
@@ -460,36 +475,6 @@
       "isHard": false
     },
     {
-      "id": "6a3619a279a7d502028ce5b6",
-      "activation": "2026-06-20T05:20:03.360Z",
-      "expiry": "2026-06-20T06:50:03.360Z",
-      "node": "Flexa (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Flexa (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3619a279a7d502028ce5b1",
-      "activation": "2026-06-20T05:20:03.351Z",
-      "expiry": "2026-06-20T06:50:03.351Z",
-      "node": "Iota Temple (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Iota Temple (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3619a279a7d502028ce5b5",
       "activation": "2026-06-20T05:20:03.358Z",
       "expiry": "2026-06-20T06:50:03.358Z",
@@ -501,21 +486,6 @@
       "nodeKey": "Fenton's Field (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3623038320c36cea8ce5b3",
-      "activation": "2026-06-20T06:20:03.353Z",
-      "expiry": "2026-06-20T07:50:03.353Z",
-      "node": "Bifrost Echo (Venus)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Bifrost Echo (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -535,6 +505,21 @@
       "isHard": false
     },
     {
+      "id": "6a3623038320c36cea8ce5b3",
+      "activation": "2026-06-20T06:20:03.353Z",
+      "expiry": "2026-06-20T07:50:03.353Z",
+      "node": "Bifrost Echo (Venus)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Bifrost Echo (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a3623038320c36cea8ce5b4",
       "activation": "2026-06-20T06:20:03.355Z",
       "expiry": "2026-06-20T07:50:03.355Z",
@@ -546,21 +531,6 @@
       "nodeKey": "Kasio's Rest (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3623038320c36cea8ce5b6",
-      "activation": "2026-06-20T06:20:03.358Z",
-      "expiry": "2026-06-20T07:50:03.358Z",
-      "node": "Seven Sirens (Pluto)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Seven Sirens (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -589,6 +559,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "H-2 Cloud (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3623038320c36cea8ce5b6",
+      "activation": "2026-06-20T06:20:03.358Z",
+      "expiry": "2026-06-20T07:50:03.358Z",
+      "node": "Seven Sirens (Pluto)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Seven Sirens (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -852,7 +837,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 17h 23m 58s",
+    "remaining": "1d 17h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1388,9 +1373,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -12691,
+      "count": -12767,
       "requiredRuns": 42000,
-      "completion": 34.891666666666666,
+      "completion": 34.80119047619048,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1438,9 +1423,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 4885,
+      "count": 5006,
       "requiredRuns": 33000,
-      "completion": 57.40151515151515,
+      "completion": 57.584848484848486,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1475,9 +1460,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -25552,
+      "count": -25664,
       "requiredRuns": 30000,
-      "completion": 14.826666666666666,
+      "completion": 14.45333333333333,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1623,6 +1608,42 @@
       "requiredRuns": 32000,
       "completion": -0.521875000000005,
       "completed": true,
+      "rewardTypes": [
+        "fieldron"
+      ]
+    },
+    {
+      "id": "6a361f7eb78b7fc5ab8ce5b1",
+      "activation": "2026-06-20T06:43:18.903Z",
+      "node": "Stickney (Phobos)",
+      "nodeKey": "Stickney (Phobos)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": 0,
+      "requiredRuns": 41000,
+      "completion": 100,
+      "completed": false,
       "rewardTypes": [
         "fieldron"
       ]
@@ -6271,7 +6292,7 @@
       "originalPrice": 75,
       "salePrice": 45,
       "total": 300,
-      "sold": 64,
+      "sold": 65,
       "discount": 40
     }
   ],
