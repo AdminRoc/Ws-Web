@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T01:46:17Z",
+  "fetchedAt": "2026-06-20T01:51:16Z",
   "cetusCycle": {
     "id": "cetusCycle1781922840000",
     "activation": "2026-06-20T01:44:00.000Z",
     "expiry": "2026-06-20T02:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "48m 1s",
+    "timeLeft": "43m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781922840000",
     "activation": "2026-06-20T01:44:00.000Z",
     "expiry": "2026-06-20T02:34:00.000Z",
-    "timeLeft": "48m 1s",
+    "timeLeft": "43m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T02:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "47m 55s"
+    "timeLeft": "42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781920800000",
@@ -837,7 +837,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 22h 13m 58s",
+    "remaining": "1d 22h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1409,9 +1409,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -8331,
+      "count": -8414,
       "requiredRuns": 42000,
-      "completion": 40.082142857142856,
+      "completion": 39.983333333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1459,9 +1459,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 731,
+      "count": 808,
       "requiredRuns": 33000,
-      "completion": 51.10757575757576,
+      "completion": 51.224242424242426,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1532,9 +1532,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -19080,
+      "count": -19185,
       "requiredRuns": 30000,
-      "completion": 36.4,
+      "completion": 36.050000000000004,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1712,9 +1712,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -34503,
+      "count": -35484,
       "requiredRuns": 47000,
-      "completion": 26.589361702127658,
+      "completion": 24.50212765957447,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1748,9 +1748,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6406,
+      "count": -7072,
       "requiredRuns": 32000,
-      "completion": 79.98125,
+      "completion": 77.9,
       "completed": false,
       "rewardTypes": [
         "fieldron"
