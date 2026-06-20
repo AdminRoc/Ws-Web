@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T12:41:16Z",
+  "fetchedAt": "2026-06-20T12:46:17Z",
   "cetusCycle": {
     "id": "cetusCycle1781964840000",
     "activation": "2026-06-20T12:34:00.000Z",
     "expiry": "2026-06-20T14:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 33m 0s",
+    "timeLeft": "1h 28m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781964840000",
     "activation": "2026-06-20T12:34:00.000Z",
     "expiry": "2026-06-20T14:14:00.000Z",
-    "timeLeft": "1h 33m 0s",
+    "timeLeft": "1h 28m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T15:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 22m 55s"
+    "timeLeft": "2h 17m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1781964000000",
@@ -53,21 +53,6 @@
       "tierNum": 2,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a3671fecd8a4f7e048ce5b1",
-      "activation": "2026-06-20T10:57:02.965Z",
-      "expiry": "2026-06-20T12:41:56.527Z",
-      "node": "Larissa (Neptune)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Larissa (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a367456277b5f7dca8ce5b1",
@@ -306,6 +291,21 @@
       "nodeKey": "Sao (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a368ad692a980e3fe8ce5b1",
+      "activation": "2026-06-20T12:43:02.960Z",
+      "expiry": "2026-06-20T14:31:58.163Z",
+      "node": "Keeler (Saturn)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Keeler (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": false,
       "isHard": true
     },
@@ -747,7 +747,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 11h 18m 58s",
+    "remaining": "1d 11h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1283,9 +1283,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -18625,
+      "count": -18717,
       "requiredRuns": 42000,
-      "completion": 27.827380952380953,
+      "completion": 27.717857142857145,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1333,9 +1333,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 12070,
+      "count": 12160,
       "requiredRuns": 33000,
-      "completion": 68.28787878787878,
+      "completion": 68.42424242424242,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1514,9 +1514,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -24171,
+      "count": -24824,
       "requiredRuns": 31000,
-      "completion": 22.029032258064518,
+      "completion": 19.922580645161293,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1550,9 +1550,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5511,
+      "count": -6363,
       "requiredRuns": 41000,
-      "completion": 86.55853658536586,
+      "completion": 84.48048780487805,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1586,9 +1586,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17711,
+      "count": -18498,
       "requiredRuns": 35000,
-      "completion": 49.39714285714286,
+      "completion": 47.14857142857143,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1622,9 +1622,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -984,
+      "count": -1174,
       "requiredRuns": 30000,
-      "completion": 96.72,
+      "completion": 96.08666666666666,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1658,9 +1658,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -652,
+      "count": -713,
       "requiredRuns": 49000,
-      "completion": 98.66938775510205,
+      "completion": 98.54489795918367,
       "completed": false,
       "rewardTypes": [
         "detonite"
