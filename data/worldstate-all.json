@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T01:51:16Z",
+  "fetchedAt": "2026-06-20T01:56:15Z",
   "cetusCycle": {
     "id": "cetusCycle1781922840000",
     "activation": "2026-06-20T01:44:00.000Z",
     "expiry": "2026-06-20T02:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "43m 1s",
+    "timeLeft": "38m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781922840000",
     "activation": "2026-06-20T01:44:00.000Z",
     "expiry": "2026-06-20T02:34:00.000Z",
-    "timeLeft": "43m 1s",
+    "timeLeft": "38m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T02:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "42m 55s"
+    "timeLeft": "37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1781920800000",
@@ -100,21 +100,6 @@
       "isHard": true
     },
     {
-      "id": "6a35e3bbffbee462f88ce5b2",
-      "activation": "2026-06-20T00:50:03.118Z",
-      "expiry": "2026-06-20T01:52:53.732Z",
-      "node": "Unda (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Unda (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a35e3bbffbee462f88ce5b1",
       "activation": "2026-06-20T00:50:03.118Z",
       "expiry": "2026-06-20T02:12:30.623Z",
@@ -145,21 +130,6 @@
       "isHard": true
     },
     {
-      "id": "6a35e46ef73515ead78ce5b1",
-      "activation": "2026-06-20T00:53:02.190Z",
-      "expiry": "2026-06-20T02:45:38.067Z",
-      "node": "Larissa (Neptune)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Larissa (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a35e46ef73515ead78ce5b2",
       "activation": "2026-06-20T00:53:02.190Z",
       "expiry": "2026-06-20T02:33:59.028Z",
@@ -184,6 +154,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Umbriel (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a35e46ef73515ead78ce5b1",
+      "activation": "2026-06-20T00:53:02.190Z",
+      "expiry": "2026-06-20T02:45:38.067Z",
+      "node": "Larissa (Neptune)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Larissa (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -250,21 +235,6 @@
       "isHard": true
     },
     {
-      "id": "6a35e7f2ae75b049d88ce5b3",
-      "activation": "2026-06-20T01:08:02.797Z",
-      "expiry": "2026-06-20T02:58:45.838Z",
-      "node": "Pallas (Ceres)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pallas (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a35e7f2ae75b049d88ce5b2",
       "activation": "2026-06-20T01:08:02.797Z",
       "expiry": "2026-06-20T02:27:42.939Z",
@@ -274,6 +244,21 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Monolith (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a35e7f2ae75b049d88ce5b3",
+      "activation": "2026-06-20T01:08:02.797Z",
+      "expiry": "2026-06-20T02:58:45.838Z",
+      "node": "Pallas (Ceres)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Pallas (Ceres)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -310,21 +295,6 @@
       "isHard": true
     },
     {
-      "id": "6a35ec2ae7d289e9b78ce5b2",
-      "activation": "2026-06-20T01:26:02.514Z",
-      "expiry": "2026-06-20T02:49:48.095Z",
-      "node": "Taveuni (Kuva Fortress)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Taveuni (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a35ec2ae7d289e9b78ce5b1",
       "activation": "2026-06-20T01:26:02.514Z",
       "expiry": "2026-06-20T02:33:45.894Z",
@@ -334,6 +304,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Koro (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a35ec2ae7d289e9b78ce5b2",
+      "activation": "2026-06-20T01:26:02.514Z",
+      "expiry": "2026-06-20T02:49:48.095Z",
+      "node": "Taveuni (Kuva Fortress)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Taveuni (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -837,7 +822,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 22h 8m 58s",
+    "remaining": "1d 22h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1409,9 +1394,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -8414,
+      "count": -8483,
       "requiredRuns": 42000,
-      "completion": 39.983333333333334,
+      "completion": 39.90119047619047,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1459,9 +1444,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 808,
+      "count": 881,
       "requiredRuns": 33000,
-      "completion": 51.224242424242426,
+      "completion": 51.334848484848486,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1532,10 +1517,46 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -19185,
+      "count": -19294,
       "requiredRuns": 30000,
-      "completion": 36.050000000000004,
+      "completion": 35.68666666666667,
       "completed": false,
+      "rewardTypes": [
+        "detonite"
+      ]
+    },
+    {
+      "id": "6a35306e1a240ff4ea8ce5b3",
+      "activation": "2026-06-19T12:05:01.884Z",
+      "node": "Numa (Saturn)",
+      "nodeKey": "Numa (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -40150,
+      "requiredRuns": 40000,
+      "completion": -0.374999999999992,
+      "completed": true,
       "rewardTypes": [
         "detonite"
       ]
@@ -1574,42 +1595,6 @@
       "completed": true,
       "rewardTypes": [
         "mutagen"
-      ]
-    },
-    {
-      "id": "6a35306e1a240ff4ea8ce5b3",
-      "activation": "2026-06-19T12:05:01.884Z",
-      "node": "Numa (Saturn)",
-      "nodeKey": "Numa (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -40150,
-      "requiredRuns": 40000,
-      "completion": -0.374999999999992,
-      "completed": true,
-      "rewardTypes": [
-        "detonite"
       ]
     },
     {
@@ -1712,9 +1697,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -35484,
+      "count": -36488,
       "requiredRuns": 47000,
-      "completion": 24.50212765957447,
+      "completion": 22.365957446808515,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1748,9 +1733,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -7072,
+      "count": -7734,
       "requiredRuns": 32000,
-      "completion": 77.9,
+      "completion": 75.83125,
       "completed": false,
       "rewardTypes": [
         "fieldron"
