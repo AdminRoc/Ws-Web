@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-20T03:06:14Z",
+  "fetchedAt": "2026-06-20T03:11:17Z",
   "cetusCycle": {
     "id": "cetusCycle1781928840000",
     "activation": "2026-06-20T02:34:00.000Z",
     "expiry": "2026-06-20T04:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 8m 1s",
+    "timeLeft": "1h 3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1781928840000",
     "activation": "2026-06-20T02:34:00.000Z",
     "expiry": "2026-06-20T04:14:00.000Z",
-    "timeLeft": "1h 8m 1s",
+    "timeLeft": "1h 3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-20T05:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 57m 55s"
+    "timeLeft": "1h 52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1781928000000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a35ee46a06912649a8ce5b1",
-      "activation": "2026-06-20T01:35:02.422Z",
-      "expiry": "2026-06-20T03:05:35.074Z",
-      "node": "Yuvarium (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a35eefb31ad7a84938ce5b1",
       "activation": "2026-06-20T01:38:03.025Z",
@@ -70,21 +55,6 @@
       "isHard": true
     },
     {
-      "id": "6a35f422adc6401d6f8ce5b2",
-      "activation": "2026-06-20T02:00:02.455Z",
-      "expiry": "2026-06-20T03:18:05.869Z",
-      "node": "Berehynia (Sedna)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Berehynia (Sedna)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a35f422adc6401d6f8ce5b1",
       "activation": "2026-06-20T02:00:02.455Z",
       "expiry": "2026-06-20T03:37:40.030Z",
@@ -94,6 +64,21 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Cypress (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a35f422adc6401d6f8ce5b2",
+      "activation": "2026-06-20T02:00:02.455Z",
+      "expiry": "2026-06-20T03:18:05.869Z",
+      "node": "Berehynia (Sedna)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Berehynia (Sedna)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -160,6 +145,21 @@
       "isHard": true
     },
     {
+      "id": "6a35f603a8166850fe8ce5b2",
+      "activation": "2026-06-20T02:08:03.106Z",
+      "expiry": "2026-06-20T03:27:52.529Z",
+      "node": "Mantle (Earth)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Mantle (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
       "id": "6a35f603a8166850fe8ce5b1",
       "activation": "2026-06-20T02:08:03.106Z",
       "expiry": "2026-06-20T03:25:29.704Z",
@@ -184,21 +184,6 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Ara (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a35f603a8166850fe8ce5b2",
-      "activation": "2026-06-20T02:08:03.106Z",
-      "expiry": "2026-06-20T03:27:52.529Z",
-      "node": "Mantle (Earth)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Mantle (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -235,21 +220,6 @@
       "isHard": false
     },
     {
-      "id": "6a35fdbe5b1e3ebe418ce5b1",
-      "activation": "2026-06-20T02:41:02.229Z",
-      "expiry": "2026-06-20T04:16:33.280Z",
-      "node": "Sao (Neptune)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sao (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a35fdbe5b1e3ebe418ce5b2",
       "activation": "2026-06-20T02:41:02.229Z",
       "expiry": "2026-06-20T04:23:53.748Z",
@@ -265,17 +235,17 @@
       "isHard": false
     },
     {
-      "id": "6a35feae684d348eee8ce5b1",
-      "activation": "2026-06-20T02:45:02.495Z",
-      "expiry": "2026-06-20T03:47:29.847Z",
-      "node": "Pago (Kuva Fortress)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pago (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
+      "id": "6a35fdbe5b1e3ebe418ce5b1",
+      "activation": "2026-06-20T02:41:02.229Z",
+      "expiry": "2026-06-20T04:16:33.280Z",
+      "node": "Sao (Neptune)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sao (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": false,
       "isHard": false
     },
@@ -289,6 +259,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Koro (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a35feae684d348eee8ce5b1",
+      "activation": "2026-06-20T02:45:02.495Z",
+      "expiry": "2026-06-20T03:47:29.847Z",
+      "node": "Pago (Kuva Fortress)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Pago (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -340,21 +325,6 @@
       "isHard": true
     },
     {
-      "id": "6a36014374340bd6ac8ce5b2",
-      "activation": "2026-06-20T02:56:03.069Z",
-      "expiry": "2026-06-20T04:54:57.871Z",
-      "node": "Tharsis (Mars)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Tharsis (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a36014374340bd6ac8ce5b3",
       "activation": "2026-06-20T02:56:03.069Z",
       "expiry": "2026-06-20T04:28:10.143Z",
@@ -364,6 +334,21 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "E Gate (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a36014374340bd6ac8ce5b2",
+      "activation": "2026-06-20T02:56:03.069Z",
+      "expiry": "2026-06-20T04:54:57.871Z",
+      "node": "Tharsis (Mars)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Tharsis (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -732,7 +717,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1d 20h 53m 58s",
+    "remaining": "1d 20h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1304,9 +1289,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -9680,
+      "count": -9751,
       "requiredRuns": 42000,
-      "completion": 38.476190476190474,
+      "completion": 38.391666666666666,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1354,9 +1339,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 1947,
+      "count": 2040,
       "requiredRuns": 33000,
-      "completion": 52.949999999999996,
+      "completion": 53.090909090909086,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1427,9 +1412,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -20755,
+      "count": -20854,
       "requiredRuns": 30000,
-      "completion": 30.81666666666667,
+      "completion": 30.48666666666666,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1643,9 +1628,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17138,
+      "count": -17797,
       "requiredRuns": 32000,
-      "completion": 46.443749999999994,
+      "completion": 44.384375,
       "completed": false,
       "rewardTypes": [
         "fieldron"
