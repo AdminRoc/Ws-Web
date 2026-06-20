@@ -2167,6 +2167,7 @@
 
 <script src="js/main.js"></script>
 <script src="js/wf-translations.js"></script>
+<script src="data/worldstate-snapshot.js"></script>
 <script>
 (function () {
   'use strict';
@@ -2861,6 +2862,21 @@
   /* ── 数据存储 ── */
   var D = {};
 
+  /* 零网络兜底：data/worldstate-snapshot.js 是 Action 每 5 分钟生成的快照，
+     以 <script> 标签直接加载（不是 fetch），所以即便 api.warframestat.us、
+     所有镜像、甚至同源的相对路径请求全部不可用（比如用 file:// 协议本地打开），
+     这份数据依然能在页面刚加载时就立即可用。后面的实时/兜底请求成功后会
+     用更新的数据覆盖这里的内容，这里只是保证"至少有数据，且不超过5分钟旧"。 */
+  if (window.WF_WS_SNAPSHOT) {
+    Object.keys(window.WF_WS_SNAPSHOT).forEach(function (k) {
+      if (k !== 'fetchedAt') D[k] = window.WF_WS_SNAPSHOT[k];
+    });
+  }
+  var _snapshotFetchedAt = window.WF_WS_SNAPSHOT && window.WF_WS_SNAPSHOT.fetchedAt;
+  /* 'live'：本轮至少有一个真实网络请求成功；'snapshot'：全部失败，只剩内嵌快照；
+     'none'：连内嵌快照都没有（理论上不会发生，除非这个 js 文件本身丢失） */
+  var _wsDataSource = null;
+
   function fetchOne(ep) {
     return fetchT(API + ep + '?' + LANG, 5000)
       .then(function (r) { return r.ok ? r.json() : null; })
@@ -2894,14 +2910,19 @@
       if (fresh !== null) D[k] = fresh;
     });
 
+    /* 标记本次 fetchAll 是否真的拿到了"现在"的数据（而不是单纯依赖快照/缓存），
+       供 renderAll() 给用户一个诚实的数据新鲜度提示 */
+    var gotLiveData = false;
+
     /* warframestat.us API（可能被中国大陆屏蔽） */
     var apiP = Promise.all(eps.map(fetchOne)).then(function (res) {
-      eps.forEach(function (k, i) { if (res[i] !== null) D[k] = res[i]; });
+      eps.forEach(function (k, i) { if (res[i] !== null) { D[k] = res[i]; gotLiveData = true; } });
     });
 
     /* raw worldState 兜底：与 apiP 并发 */
     var rawP = getRawWS().then(function (ws) {
       if (!ws) return;
+      gotLiveData = true;
       var parsed = fromRawWS(ws);
       /* 世界周期 / Baro：仅在 API 未返回时才填充 */
       RAW_WS_KEYS.forEach(function (k) {
@@ -2925,9 +2946,13 @@
     /* 节点数据表：缓存 7 天 */
     var regP    = _exportRegions ? Promise.resolve() : loadExportRegions();
 
-    /* GitHub 快照全量兜底：与 apiP/rawP 并发；仅填充仍为空的键，不覆盖 API 数据 */
+    /* 同源快照全量兜底（与 apiP/rawP 并发）：仅填充仍为空的键，不覆盖 API 数据。
+       这是发起一次真正的网络请求重新拿同源文件，跟"开页面时内嵌的 WF_WS_SNAPSHOT"
+       不是一回事——能成功说明至少同源网络是通的，所以也算 gotLiveData。 */
     var fallbackP = fetchFirstOk(WS_FALLBACK_URLS).then(function (data) {
       if (!data) return;
+      gotLiveData = true;
+      if (data.fetchedAt) _snapshotFetchedAt = data.fetchedAt;
       WS_FALLBACK_KEYS.forEach(function (k) {
         if (data[k] && !D[k]) D[k] = data[k];
       });
@@ -2951,6 +2976,9 @@
         var derived = _bountiesFromSyndicateMissions(D.syndicateMissions);
         if (derived.length) D.bounties = derived;
       }
+      /* 本轮一个网络请求都没成功 → 用户看到的内容完全来自页面加载时内嵌的快照，
+         这个状态必须诚实告知，而不是显示"刚刚更新"误导用户 */
+      _wsDataSource = gotLiveData ? 'live' : (_snapshotFetchedAt ? 'snapshot' : 'none');
     });
   }
 
@@ -3824,7 +3852,20 @@
     var main = document.querySelector('.ws-main');
     if (main) fixBrackets(main);
     var upd = document.getElementById('ws-last-update');
-    if (upd) upd.textContent = '更新: ' + new Date().toLocaleTimeString('zh-CN');
+    if (upd) {
+      if (_wsDataSource === 'snapshot' && _snapshotFetchedAt) {
+        var snapTime = new Date(_snapshotFetchedAt).toLocaleTimeString('zh-CN');
+        upd.textContent = '⚠ 网络不可用，显示的是本地校准快照（' + snapTime + '）';
+        upd.title = '当前未能连接到任何实时数据源（warframestat.us / oracle.browse.wf / 同源镜像），' +
+          '以下内容来自项目每 5 分钟自动校准并内嵌进页面的快照，可能与真实状态有最多几分钟的偏差。';
+      } else if (_wsDataSource === 'none') {
+        upd.textContent = '⚠ 暂无可用数据';
+        upd.title = '内嵌快照缺失且所有网络请求均失败，请检查网络或稍后刷新。';
+      } else {
+        upd.textContent = '更新: ' + new Date().toLocaleTimeString('zh-CN');
+        upd.title = '';
+      }
+    }
   }
 
   function setLoading(v) {
@@ -3856,7 +3897,10 @@
       'steelPath','voidTrader','vaultTrader','invasions','syndicates','syndicateMissions','alerts',
       'dailyDeals','tenetWeapons','codaWeapons'
     ];
-    var hasCached = false;
+    /* window.WF_WS_SNAPSHOT 在文件最开头已经把 D 填过一遍了（零网络兜底），
+       这里同样算作"已有缓存"，让首屏立即用快照渲染，不用空等 fetchAll() 跑完
+       那几秒超时才显示内容 —— 之后 fetchAll() 成功的话还是会用更新的数据覆盖。 */
+    var hasCached = !!_snapshotFetchedAt;
     eps.forEach(function (k) { var c = cacheGet(k); if (c) { D[k] = c; hasCached = true; } });
     /* 仲裁 v2 时刻表也尝试从缓存恢复 */
     try {
