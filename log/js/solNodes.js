@@ -1,10 +1,9 @@
 window.WF = window.WF || {};
 /* SolNode 节点中文映射 — 完全由 WFCD/warframe-worldstate-data 的 solNodes.json 权威数据生成
-   行星名优先采用 dict.zh.json 官方依据；dict 缺失但用户已确认游戏客户端实际译名的
-   （Deimos=火卫二/Veil=面纱/Zariman=扎里曼/Lua=月球）按用户提供的客户端实名采用。
-   任务类型仅在能找到明确依据时翻译，否则保留英文原名，不做猜测式硬翻译。
+   行星名/任务类型译名来自 data/wf-translations.json（与世界状态模块共用），
+   仅在该文件收录时才翻译为中文，否则保留英文原名，不做猜测式硬翻译。
    节点ID来源：https://github.com/WFCD/warframe-worldstate-data/blob/master/data/solNodes.json
-   中文释义来源：https://github.com/calamity-inc/warframe-public-export-plus (dict.zh.json) */
+   生成脚本：.github/scripts/gen_solnodes.py */
 WF.SOL_NODES = {
   "SolNode0": "SolNode0 (Ancient Retribution - Sentient)",
   "ZarimanHub": "Chrysalith, 扎里曼 (中继站 - Tenno)",

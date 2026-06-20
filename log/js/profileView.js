@@ -1042,10 +1042,15 @@ WF.profileView = (function () {
 
   function _itemName(path){
     if(!path)return'';
+    /* 共享手动校正表（与世界状态模块共用，见 js/wf-translations.js）优先，
+       兼容完整路径或末段短名两种形式 */
+    var ov = window.WF_TR && window.WF_TR.ITEM_OVERRIDE;
+    if(ov && ov[path]) return ov[path];
     var zh = WF.I18N_ZH && WF.I18N_ZH[path];
     if(zh)return zh;
     var parts=path.split('/');
     var raw=parts[parts.length-1]||parts[parts.length-2]||'';
+    if(ov && ov[raw]) return ov[raw];
     return raw.replace(/([a-z])([A-Z])/g,'$1 $2').replace(/([A-Z]+)([A-Z][a-z])/g,'$1 $2');
   }
 

@@ -2,8 +2,14 @@ name: 更新世界状态全量数据
 
 on:
   # 定时触发已迁移至 Cloudflare Workers Cron Triggers（见 cloudflare-worker/），
-  # 每小时调用一次本工作流的 workflow_dispatch，比 GitHub 自带的 schedule 更可靠。
+  # 每5分钟调用一次本工作流的 workflow_dispatch，比 GitHub 自带的 schedule 更可靠。
   workflow_dispatch:          # 支持手动 / 外部触发
+
+# 触发频率提高后，若上一次运行（含 git push）还没结束就被下一次触发，
+# 排队而非并行执行，避免两个运行同时 git push 导致冲突。
+concurrency:
+  group: worldstate-update
+  cancel-in-progress: false
 
 jobs:
   update-worldstate:
@@ -47,8 +53,10 @@ jobs:
               nightwave:    .nightwave,
               steelPath:    .steelPath,
               voidTrader:   .voidTrader,
+              vaultTrader:  .vaultTrader,
               invasions:    .invasions,
               syndicates:   .syndicates,
+              syndicateMissions: .syndicateMissions,
               dailyDeals:   .dailyDeals,
               tenetWeapons: .tenetWeapons,
               codaWeapons:  .codaWeapons
