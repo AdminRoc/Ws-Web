@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T00:31:14Z",
+  "fetchedAt": "2026-06-21T00:36:17Z",
   "cetusCycle": {
     "id": "cetusCycle1782003840000",
     "activation": "2026-06-21T00:14:00.000Z",
     "expiry": "2026-06-21T01:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "33m 1s",
+    "timeLeft": "29m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782003840000",
     "activation": "2026-06-21T00:14:00.000Z",
     "expiry": "2026-06-21T01:04:00.000Z",
-    "timeLeft": "33m 1s",
+    "timeLeft": "29m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T01:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "32m 55s"
+    "timeLeft": "28m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782007200000",
@@ -44,36 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a371a46f67f17cd8e8ce5b2",
-      "activation": "2026-06-20T22:55:02.801Z",
-      "expiry": "2026-06-21T00:34:17.224Z",
-      "node": "Thebe (Jupiter)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Thebe (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a371cdae693d839ad8ce5b1",
-      "activation": "2026-06-20T23:06:02.505Z",
-      "expiry": "2026-06-21T00:32:00.235Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a371cdae693d839ad8ce5b2",
       "activation": "2026-06-20T23:06:02.505Z",
@@ -345,15 +315,15 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a37308aebafd129408ce5b3",
+      "id": "6a37308aebafd129408ce5b2",
       "activation": "2026-06-21T00:30:02.724Z",
-      "expiry": "2026-06-21T01:55:33.213Z",
-      "node": "Io (Jupiter)",
+      "expiry": "2026-06-21T01:37:03.753Z",
+      "node": "Gulliver (Phobos)",
       "missionType": "Defense",
       "missionTypeKey": "Defense",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Io (Jupiter)",
+      "nodeKey": "Gulliver (Phobos)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -375,32 +345,32 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a37308aebafd129408ce5b2",
+      "id": "6a37308aebafd129408ce5b3",
       "activation": "2026-06-21T00:30:02.724Z",
-      "expiry": "2026-06-21T01:37:03.753Z",
-      "node": "Gulliver (Phobos)",
+      "expiry": "2026-06-21T01:55:33.213Z",
+      "node": "Io (Jupiter)",
       "missionType": "Defense",
       "missionTypeKey": "Defense",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Gulliver (Phobos)",
+      "nodeKey": "Io (Jupiter)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
       "isHard": true
     },
     {
-      "id": "6a3716c2263aa44b4b8ce5b1",
-      "activation": "2026-06-20T23:20:03.351Z",
-      "expiry": "2026-06-21T00:50:03.351Z",
-      "node": "Bendar Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Bendar Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
+      "id": "6a3716c2263aa44b4b8ce5b5",
+      "activation": "2026-06-20T23:20:03.358Z",
+      "expiry": "2026-06-21T00:50:03.358Z",
+      "node": "Profit Margin (Pluto)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Profit Margin (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -420,36 +390,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3716c2263aa44b4b8ce5b2",
-      "activation": "2026-06-20T23:20:03.353Z",
-      "expiry": "2026-06-21T00:50:03.353Z",
-      "node": "Luckless Expanse (Venus)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Luckless Expanse (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3716c2263aa44b4b8ce5b5",
-      "activation": "2026-06-20T23:20:03.358Z",
-      "expiry": "2026-06-21T00:50:03.358Z",
-      "node": "Profit Margin (Pluto)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Profit Margin (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3716c2263aa44b4b8ce5b4",
       "activation": "2026-06-20T23:20:03.356Z",
       "expiry": "2026-06-21T00:50:03.356Z",
@@ -461,6 +401,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Enkidu Ice Drifts (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3716c2263aa44b4b8ce5b2",
+      "activation": "2026-06-20T23:20:03.353Z",
+      "expiry": "2026-06-21T00:50:03.353Z",
+      "node": "Luckless Expanse (Venus)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Luckless Expanse (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -480,15 +435,15 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3724d3f657af64778ce5b1",
-      "activation": "2026-06-21T00:20:03.351Z",
-      "expiry": "2026-06-21T01:50:03.351Z",
-      "node": "Iota Temple (Earth)",
+      "id": "6a3716c2263aa44b4b8ce5b1",
+      "activation": "2026-06-20T23:20:03.351Z",
+      "expiry": "2026-06-21T00:50:03.351Z",
+      "node": "Bendar Cluster (Earth)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Iota Temple (Earth)",
+      "nodeKey": "Bendar Cluster (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": true,
@@ -510,21 +465,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3724d3f657af64778ce5b3",
-      "activation": "2026-06-21T00:20:03.355Z",
-      "expiry": "2026-06-21T01:50:03.355Z",
-      "node": "Nodo Gap (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nodo Gap (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3724d3f657af64778ce5b6",
       "activation": "2026-06-21T00:20:03.360Z",
       "expiry": "2026-06-21T01:50:03.360Z",
@@ -536,6 +476,36 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Nsu Grid (Veil)",
       "tier": "Axi",
       "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3724d3f657af64778ce5b1",
+      "activation": "2026-06-21T00:20:03.351Z",
+      "expiry": "2026-06-21T01:50:03.351Z",
+      "node": "Iota Temple (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Iota Temple (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3724d3f657af64778ce5b3",
+      "activation": "2026-06-21T00:20:03.355Z",
+      "expiry": "2026-06-21T01:50:03.355Z",
+      "node": "Nodo Gap (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nodo Gap (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": true,
       "isHard": false
     },
@@ -827,7 +797,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "23h 28m 58s",
+    "remaining": "23h 24m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1363,9 +1333,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -30029,
+      "count": -30028,
       "requiredRuns": 42000,
-      "completion": 14.251190476190478,
+      "completion": 14.25238095238095,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1413,9 +1383,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 26856,
+      "count": 26860,
       "requiredRuns": 33000,
-      "completion": 90.69090909090909,
+      "completion": 90.6969696969697,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1558,9 +1528,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -22613,
+      "count": -22673,
       "requiredRuns": 30000,
-      "completion": 24.62333333333333,
+      "completion": 24.423333333333332,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1738,9 +1708,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -492,
+      "count": -540,
       "requiredRuns": 48000,
-      "completion": 98.97500000000001,
+      "completion": 98.875,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -6369,7 +6339,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 10,
       "salePrice": 9,
       "total": 200,
-      "sold": 119,
+      "sold": 121,
       "discount": 10
     }
   ],
