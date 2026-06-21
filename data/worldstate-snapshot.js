@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T20:36:21Z",
+  "fetchedAt": "2026-06-21T20:41:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782075840000",
     "activation": "2026-06-21T20:14:00.000Z",
     "expiry": "2026-06-21T21:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "28m 1s",
+    "timeLeft": "23m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782073200000",
-    "activation": "2026-06-21T20:20:00.000Z",
-    "expiry": "2026-06-21T20:40:08.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782074400000",
+    "activation": "2026-06-21T20:40:00.000Z",
+    "expiry": "2026-06-21T20:46:48.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782075840000",
     "activation": "2026-06-21T20:14:00.000Z",
     "expiry": "2026-06-21T21:04:00.000Z",
-    "timeLeft": "28m 1s",
+    "timeLeft": "23m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T21:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "27m 55s"
+    "timeLeft": "22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782079200000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a383a52661722125d8ce5b2",
-      "activation": "2026-06-21T19:24:02.305Z",
-      "expiry": "2026-06-21T20:36:10.866Z",
-      "node": "Stickney (Phobos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Stickney (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a383a52661722125d8ce5b1",
       "activation": "2026-06-21T19:24:02.305Z",
@@ -803,7 +788,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "3h 23m 58s",
+    "remaining": "3h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1389,9 +1374,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 30104,
+      "count": 30271,
       "requiredRuns": 33000,
-      "completion": 95.61212121212121,
+      "completion": 95.86515151515151,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1426,9 +1411,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29113,
+      "count": -29252,
       "requiredRuns": 30000,
-      "completion": 2.956666666666663,
+      "completion": 2.4933333333333363,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1606,9 +1591,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -12887,
+      "count": -12994,
       "requiredRuns": 30000,
-      "completion": 57.04333333333334,
+      "completion": 56.68666666666666,
       "completed": false,
       "rewardTypes": [
         "fieldron"
