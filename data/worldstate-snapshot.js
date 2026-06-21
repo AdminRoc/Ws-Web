@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T12:41:16Z",
+  "fetchedAt": "2026-06-21T12:46:15Z",
   "cetusCycle": {
-    "id": "cetusCycle1782045840000",
-    "activation": "2026-06-21T11:04:00.000Z",
-    "expiry": "2026-06-21T12:44:00.000Z",
-    "isDay": true,
-    "state": "day",
-    "timeLeft": "3m 0s",
+    "id": "cetusCycle1782048840000",
+    "activation": "2026-06-21T12:44:00.000Z",
+    "expiry": "2026-06-21T13:34:00.000Z",
+    "isDay": false,
+    "state": "night",
+    "timeLeft": "49m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -22,11 +22,11 @@ window.WF_WS_SNAPSHOT = {
     "state": "warm"
   },
   "cambionCycle": {
-    "id": "cambionCycle1782045840000",
-    "activation": "2026-06-21T11:04:00.000Z",
-    "expiry": "2026-06-21T12:44:00.000Z",
-    "timeLeft": "3m 0s",
-    "state": "fass"
+    "id": "cambionCycle1782048840000",
+    "activation": "2026-06-21T12:44:00.000Z",
+    "expiry": "2026-06-21T13:34:00.000Z",
+    "timeLeft": "49m 0s",
+    "state": "vome"
   },
   "zarimanCycle": {
     "id": "zarimanCycle1782048840000",
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T13:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "52m 54s"
+    "timeLeft": "48m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782050400000",
@@ -44,36 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a37c2cad201d87c508ce5b1",
-      "activation": "2026-06-21T10:54:02.850Z",
-      "expiry": "2026-06-21T12:42:01.145Z",
-      "node": "Proteus (Neptune)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Proteus (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a37c4e71242731bf68ce5b1",
-      "activation": "2026-06-21T11:03:03.054Z",
-      "expiry": "2026-06-21T12:41:08.702Z",
-      "node": "Yuvarium (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a37c4e71242731bf68ce5b2",
       "activation": "2026-06-21T11:03:03.054Z",
@@ -842,7 +812,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "11h 18m 58s",
+    "remaining": "11h 14m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1478,9 +1448,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 13336,
+      "count": 13451,
       "requiredRuns": 33000,
-      "completion": 70.2060606060606,
+      "completion": 70.38030303030303,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1587,9 +1557,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17231,
+      "count": -17311,
       "requiredRuns": 30000,
-      "completion": 42.56333333333333,
+      "completion": 42.296666666666674,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1659,9 +1629,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -25751,
+      "count": -25822,
       "requiredRuns": 37000,
-      "completion": 30.4027027027027,
+      "completion": 30.210810810810806,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1695,9 +1665,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27056,
+      "count": -27133,
       "requiredRuns": 36000,
-      "completion": 24.84444444444445,
+      "completion": 24.630555555555556,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1731,9 +1701,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9532,
+      "count": -9579,
       "requiredRuns": 37000,
-      "completion": 74.23783783783784,
+      "completion": 74.11081081081082,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1767,9 +1737,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1119,
+      "count": -1183,
       "requiredRuns": 30000,
-      "completion": 96.27,
+      "completion": 96.05666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
