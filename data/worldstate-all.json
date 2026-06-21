@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-21T22:56:21Z",
+  "fetchedAt": "2026-06-21T23:01:26Z",
   "cetusCycle": {
     "id": "cetusCycle1782084840000",
     "activation": "2026-06-21T22:44:00.000Z",
     "expiry": "2026-06-21T23:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "37m 59s",
+    "timeLeft": "32m 55s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782082380000",
-    "activation": "2026-06-21T22:53:00.000Z",
-    "expiry": "2026-06-21T23:00:08.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782082800000",
+    "activation": "2026-06-21T23:00:00.000Z",
+    "expiry": "2026-06-21T23:20:08.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782084840000",
     "activation": "2026-06-21T22:44:00.000Z",
     "expiry": "2026-06-21T23:34:00.000Z",
-    "timeLeft": "37m 59s",
+    "timeLeft": "32m 55s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T23:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "37m 53s"
+    "timeLeft": "32m 50s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782086400000",
@@ -61,21 +61,6 @@
   },
   "fissures": [
     {
-      "id": "6a38532abcb81aa7f68ce5b1",
-      "activation": "2026-06-21T21:10:02.600Z",
-      "expiry": "2026-06-21T22:58:05.755Z",
-      "node": "Armaros (Europa)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Armaros (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a38541a95e0e875cf8ce5b1",
       "activation": "2026-06-21T21:14:02.967Z",
       "expiry": "2026-06-21T23:01:41.870Z",
@@ -87,21 +72,6 @@
       "nodeKey": "Xini (Eris)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a38550af51827486b8ce5b3",
-      "activation": "2026-06-21T21:18:02.680Z",
-      "expiry": "2026-06-21T22:59:21.470Z",
-      "node": "Bode (Ceres)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Bode (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
       "isStorm": false,
       "isHard": false
     },
@@ -391,93 +361,33 @@
       "isHard": false
     },
     {
-      "id": "6a384c22198cc9ac4a8ce5b1",
-      "activation": "2026-06-21T21:20:03.351Z",
-      "expiry": "2026-06-21T22:50:03.351Z",
-      "node": "Ogal Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Ogal Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a384c22198cc9ac4a8ce5b5",
-      "activation": "2026-06-21T21:20:03.358Z",
-      "expiry": "2026-06-21T22:50:03.358Z",
-      "node": "Seven Sirens (Pluto)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Seven Sirens (Pluto)",
+      "id": "6a386c3fb54ab9de958ce5b1",
+      "activation": "2026-06-21T22:57:03.182Z",
+      "expiry": "2026-06-22T00:39:34.569Z",
+      "node": "Solium (Eris)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Solium (Eris)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": true,
+      "isStorm": false,
       "isHard": false
     },
     {
-      "id": "6a384c22198cc9ac4a8ce5b6",
-      "activation": "2026-06-21T21:20:03.360Z",
-      "expiry": "2026-06-21T22:50:03.360Z",
-      "node": "R-9 Cloud (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "R-9 Cloud (Veil)",
+      "id": "6a386c3fb54ab9de958ce5b2",
+      "activation": "2026-06-21T22:57:03.182Z",
+      "expiry": "2026-06-22T00:50:26.208Z",
+      "node": "Minthe (Pluto)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Minthe (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a384c22198cc9ac4a8ce5b4",
-      "activation": "2026-06-21T21:20:03.356Z",
-      "expiry": "2026-06-21T22:50:03.356Z",
-      "node": "Brom Cluster (Neptune)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Brom Cluster (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a384c22198cc9ac4a8ce5b3",
-      "activation": "2026-06-21T21:20:03.355Z",
-      "expiry": "2026-06-21T22:50:03.355Z",
-      "node": "Nodo Gap (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nodo Gap (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a384c22198cc9ac4a8ce5b2",
-      "activation": "2026-06-21T21:20:03.353Z",
-      "expiry": "2026-06-21T22:50:03.353Z",
-      "node": "Luckless Expanse (Venus)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Luckless Expanse (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
+      "isStorm": false,
       "isHard": false
     },
     {
@@ -828,7 +738,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1h 3m 57s",
+    "remaining": "58m 53s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1464,9 +1374,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -77,
+      "count": -81,
       "requiredRuns": 49000,
-      "completion": 49.92142857142857,
+      "completion": 49.91734693877551,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1681,9 +1591,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -16295,
+      "count": -16422,
       "requiredRuns": 30000,
-      "completion": 45.68333333333333,
+      "completion": 45.26,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1717,9 +1627,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -30,
+      "count": -115,
       "requiredRuns": 43000,
-      "completion": 99.93023255813954,
+      "completion": 99.73255813953489,
       "completed": false,
       "rewardTypes": [
         "fieldron"
