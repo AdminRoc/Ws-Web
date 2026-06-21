@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T16:51:16Z",
+  "fetchedAt": "2026-06-21T16:56:16Z",
   "cetusCycle": {
     "id": "cetusCycle1782063840000",
     "activation": "2026-06-21T16:04:00.000Z",
     "expiry": "2026-06-21T17:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "53m 1s",
+    "timeLeft": "48m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782063840000",
     "activation": "2026-06-21T16:04:00.000Z",
     "expiry": "2026-06-21T17:44:00.000Z",
-    "timeLeft": "53m 1s",
+    "timeLeft": "48m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T18:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 42m 55s"
+    "timeLeft": "1h 37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782064800000",
@@ -44,21 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a37fceaa6e77aa9c78ce5b1",
-      "activation": "2026-06-21T15:02:02.918Z",
-      "expiry": "2026-06-21T16:53:18.875Z",
-      "node": "Pacific (Earth)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pacific (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a38012267953ac5018ce5b1",
       "activation": "2026-06-21T15:20:02.203Z",
@@ -752,7 +737,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "7h 8m 58s",
+    "remaining": "7h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1388,9 +1373,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 22307,
+      "count": 22477,
       "requiredRuns": 33000,
-      "completion": 83.79848484848485,
+      "completion": 84.05606060606061,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1497,9 +1482,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23856,
+      "count": -23971,
       "requiredRuns": 30000,
-      "completion": 20.479999999999997,
+      "completion": 20.096666666666664,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1677,9 +1662,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -7541,
+      "count": -7697,
       "requiredRuns": 30000,
-      "completion": 74.86333333333333,
+      "completion": 74.34333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
