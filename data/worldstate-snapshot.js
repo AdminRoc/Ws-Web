@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T23:36:27Z",
+  "fetchedAt": "2026-06-21T23:41:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782090840000",
     "activation": "2026-06-21T23:34:00.000Z",
     "expiry": "2026-06-22T01:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 37m 58s",
+    "timeLeft": "1h 32m 56s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782090840000",
     "activation": "2026-06-21T23:34:00.000Z",
     "expiry": "2026-06-22T01:14:00.000Z",
-    "timeLeft": "1h 37m 58s",
+    "timeLeft": "1h 32m 56s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T02:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 27m 52s"
+    "timeLeft": "2h 22m 51s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782086400000",
@@ -65,36 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a385ae6181d52fe928ce5b2",
-      "activation": "2026-06-21T21:43:02.661Z",
-      "expiry": "2026-06-21T23:39:10.118Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a385bd639106c856d8ce5b1",
-      "activation": "2026-06-21T21:47:02.917Z",
-      "expiry": "2026-06-21T23:38:31.928Z",
-      "node": "Spear (Mars)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Spear (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3862defa7d1d34238ce5b2",
       "activation": "2026-06-21T22:17:02.596Z",
@@ -908,7 +878,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "23m 56s",
+    "remaining": "18m 54s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1494,9 +1464,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -209,
+      "count": -224,
       "requiredRuns": 49000,
-      "completion": 49.78673469387755,
+      "completion": 49.77142857142857,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1711,9 +1681,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17131,
+      "count": -17232,
       "requiredRuns": 30000,
-      "completion": 42.896666666666675,
+      "completion": 42.559999999999995,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1747,9 +1717,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -541,
+      "count": -637,
       "requiredRuns": 43000,
-      "completion": 98.74186046511628,
+      "completion": 98.51860465116279,
       "completed": false,
       "rewardTypes": [
         "fieldron"
