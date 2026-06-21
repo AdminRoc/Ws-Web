@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T17:16:14Z",
+  "fetchedAt": "2026-06-21T17:21:15Z",
   "cetusCycle": {
     "id": "cetusCycle1782063840000",
     "activation": "2026-06-21T16:04:00.000Z",
     "expiry": "2026-06-21T17:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "28m 1s",
+    "timeLeft": "23m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782063840000",
     "activation": "2026-06-21T16:04:00.000Z",
     "expiry": "2026-06-21T17:44:00.000Z",
-    "timeLeft": "28m 1s",
+    "timeLeft": "23m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T18:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 17m 55s"
+    "timeLeft": "1h 12m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782064800000",
@@ -44,36 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a38028bd0cb0ab8a28ce5b2",
-      "activation": "2026-06-21T15:26:03.050Z",
-      "expiry": "2026-06-21T17:16:29.663Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3802c6175dfc8ab88ce5b1",
-      "activation": "2026-06-21T15:27:02.390Z",
-      "expiry": "2026-06-21T17:16:41.021Z",
-      "node": "Spear (Mars)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Spear (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a38060eb98565484c8ce5b2",
       "activation": "2026-06-21T15:41:02.572Z",
@@ -105,21 +75,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a380abe0ce67cda0d8ce5b4",
-      "activation": "2026-06-21T16:01:02.507Z",
-      "expiry": "2026-06-21T17:52:59.201Z",
-      "node": "Sao (Neptune)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sao (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a380abe0ce67cda0d8ce5b3",
       "activation": "2026-06-21T16:01:02.507Z",
       "expiry": "2026-06-21T18:00:50.306Z",
@@ -129,6 +84,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Orias (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a380abe0ce67cda0d8ce5b4",
+      "activation": "2026-06-21T16:01:02.507Z",
+      "expiry": "2026-06-21T17:52:59.201Z",
+      "node": "Sao (Neptune)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sao (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -225,21 +195,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a381a7234f8847c468ce5b1",
-      "activation": "2026-06-21T17:08:02.818Z",
-      "expiry": "2026-06-21T18:20:27.546Z",
-      "node": "Dakata (Kuva Fortress)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Dakata (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a381a7234f8847c468ce5b2",
       "activation": "2026-06-21T17:08:02.818Z",
       "expiry": "2026-06-21T18:08:32.567Z",
@@ -249,6 +204,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Tamu (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a381a7234f8847c468ce5b1",
+      "activation": "2026-06-21T17:08:02.818Z",
+      "expiry": "2026-06-21T18:20:27.546Z",
+      "node": "Dakata (Kuva Fortress)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Dakata (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -752,7 +722,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "6h 43m 58s",
+    "remaining": "6h 38m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1388,9 +1358,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 23170,
+      "count": 23321,
       "requiredRuns": 33000,
-      "completion": 85.10606060606061,
+      "completion": 85.3348484848485,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1425,9 +1395,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -24501,
+      "count": -24628,
       "requiredRuns": 30000,
-      "completion": 18.330000000000002,
+      "completion": 17.90666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1605,9 +1575,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8173,
+      "count": -8278,
       "requiredRuns": 30000,
-      "completion": 72.75666666666667,
+      "completion": 72.40666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
