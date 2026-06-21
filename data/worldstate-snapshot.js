@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T16:06:15Z",
+  "fetchedAt": "2026-06-21T16:11:16Z",
   "cetusCycle": {
     "id": "cetusCycle1782063840000",
     "activation": "2026-06-21T16:04:00.000Z",
     "expiry": "2026-06-21T17:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 38m 1s",
+    "timeLeft": "1h 33m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782063840000",
     "activation": "2026-06-21T16:04:00.000Z",
     "expiry": "2026-06-21T17:44:00.000Z",
-    "timeLeft": "1h 38m 1s",
+    "timeLeft": "1h 33m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T18:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 27m 55s"
+    "timeLeft": "2h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782064800000",
@@ -44,21 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a37f25eb2941896288ce5b1",
-      "activation": "2026-06-21T14:17:02.914Z",
-      "expiry": "2026-06-21T16:05:33.463Z",
-      "node": "Stephano (Uranus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Stephano (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a37f2d630ba8d3f768ce5b1",
       "activation": "2026-06-21T14:19:02.474Z",
@@ -133,21 +118,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 4,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a37fddab37f6415db8ce5b2",
-      "activation": "2026-06-21T15:06:02.610Z",
-      "expiry": "2026-06-21T16:09:03.568Z",
-      "node": "Gulliver (Phobos)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Gulliver (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a37fddab37f6415db8ce5b1",
@@ -356,6 +326,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Orias (Europa)",
       "tier": "Neo",
       "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a380c626d26db8a8f8ce5b1",
+      "activation": "2026-06-21T16:08:02.550Z",
+      "expiry": "2026-06-21T17:46:36.154Z",
+      "node": "Sharpless (Phobos)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sharpless (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": false,
       "isHard": true
     },
@@ -707,7 +692,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "7h 53m 58s",
+    "remaining": "7h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1343,9 +1328,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 20623,
+      "count": 20839,
       "requiredRuns": 33000,
-      "completion": 81.2469696969697,
+      "completion": 81.57424242424243,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1452,9 +1437,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -22686,
+      "count": -22839,
       "requiredRuns": 30000,
-      "completion": 24.380000000000003,
+      "completion": 23.87,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1632,9 +1617,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6322,
+      "count": -6485,
       "requiredRuns": 30000,
-      "completion": 78.92666666666666,
+      "completion": 78.38333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
