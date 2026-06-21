@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-21T23:21:22Z",
+  "fetchedAt": "2026-06-21T23:31:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782084840000",
     "activation": "2026-06-21T22:44:00.000Z",
     "expiry": "2026-06-21T23:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "12m 52s",
+    "timeLeft": "2m 56s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782084000000",
-    "activation": "2026-06-21T23:20:00.000Z",
-    "expiry": "2026-06-21T23:26:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782084360000",
+    "activation": "2026-06-21T23:26:00.000Z",
+    "expiry": "2026-06-21T23:46:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782084840000",
     "activation": "2026-06-21T22:44:00.000Z",
     "expiry": "2026-06-21T23:34:00.000Z",
-    "timeLeft": "12m 52s",
+    "timeLeft": "2m 56s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T23:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "12m 46s"
+    "timeLeft": "2m 51s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782086400000",
@@ -106,36 +106,6 @@
       "isHard": false
     },
     {
-      "id": "6a385c4ede63b42e388ce5b1",
-      "activation": "2026-06-21T21:49:02.504Z",
-      "expiry": "2026-06-21T23:22:58.820Z",
-      "node": "Brugia (Eris)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Brugia (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a386266c8c7e9226a8ce5b1",
-      "activation": "2026-06-21T22:15:02.409Z",
-      "expiry": "2026-06-21T23:23:42.540Z",
-      "node": "Yuvarium (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3862defa7d1d34238ce5b2",
       "activation": "2026-06-21T22:17:02.596Z",
       "expiry": "2026-06-22T00:06:39.081Z",
@@ -145,21 +115,6 @@
       "enemy": "Orokin",
       "enemyKey": "Orokin",
       "nodeKey": "Ukko (Void)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3862defa7d1d34238ce5b1",
-      "activation": "2026-06-21T22:17:02.596Z",
-      "expiry": "2026-06-21T23:27:27.640Z",
-      "node": "Valac (Europa)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Valac (Europa)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -888,7 +843,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "38m 50s",
+    "remaining": "28m 54s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1474,9 +1429,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -148,
+      "count": -191,
       "requiredRuns": 49000,
-      "completion": 49.84897959183673,
+      "completion": 49.80510204081633,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1691,9 +1646,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -16830,
+      "count": -17030,
       "requiredRuns": 30000,
-      "completion": 43.89999999999999,
+      "completion": 43.233333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1727,9 +1682,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -410,
+      "count": -480,
       "requiredRuns": 43000,
-      "completion": 99.04651162790698,
+      "completion": 98.88372093023256,
       "completed": false,
       "rewardTypes": [
         "fieldron"
