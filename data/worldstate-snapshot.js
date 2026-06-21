@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T11:26:15Z",
+  "fetchedAt": "2026-06-21T11:31:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782045840000",
     "activation": "2026-06-21T11:04:00.000Z",
     "expiry": "2026-06-21T12:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 19m 0s",
+    "timeLeft": "1h 13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782040800000",
-    "activation": "2026-06-21T11:20:00.000Z",
-    "expiry": "2026-06-21T11:26:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782041160000",
+    "activation": "2026-06-21T11:26:00.000Z",
+    "expiry": "2026-06-21T11:46:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782045840000",
     "activation": "2026-06-21T11:04:00.000Z",
     "expiry": "2026-06-21T12:44:00.000Z",
-    "timeLeft": "1h 19m 0s",
+    "timeLeft": "1h 13m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T13:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 8m 54s"
+    "timeLeft": "2h 2m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782043200000",
@@ -328,6 +328,21 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 1,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a37cafe6fc8ca63d08ce5b1",
+      "activation": "2026-06-21T11:29:02.908Z",
+      "expiry": "2026-06-21T12:37:27.425Z",
+      "node": "Circulus (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a37b172c5572e86a48ce5b1",
@@ -767,7 +782,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "12h 34m 58s",
+    "remaining": "12h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1403,9 +1418,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 10784,
+      "count": 11056,
       "requiredRuns": 33000,
-      "completion": 66.33939393939394,
+      "completion": 66.75151515151515,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1512,9 +1527,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15339,
+      "count": -15535,
       "requiredRuns": 30000,
-      "completion": 48.870000000000005,
+      "completion": 48.21666666666666,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1548,9 +1563,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27822,
+      "count": -29443,
       "requiredRuns": 40000,
-      "completion": 30.445,
+      "completion": 26.3925,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1584,9 +1599,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -13036,
+      "count": -14569,
       "requiredRuns": 37000,
-      "completion": 64.76756756756757,
+      "completion": 60.62432432432432,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1620,9 +1635,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -14782,
+      "count": -16288,
       "requiredRuns": 36000,
-      "completion": 58.9388888888889,
+      "completion": 54.75555555555556,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1656,9 +1671,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1443,
+      "count": -1646,
       "requiredRuns": 37000,
-      "completion": 96.1,
+      "completion": 95.55135135135136,
       "completed": false,
       "rewardTypes": [
         "mutagen"
