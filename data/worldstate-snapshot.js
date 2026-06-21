@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T05:31:18Z",
+  "fetchedAt": "2026-06-21T05:36:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782021840000",
     "activation": "2026-06-21T05:14:00.000Z",
     "expiry": "2026-06-21T06:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "33m 0s",
+    "timeLeft": "29m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782018780000",
-    "activation": "2026-06-21T05:13:00.000Z",
-    "expiry": "2026-06-21T05:33:28.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782019980000",
+    "activation": "2026-06-21T05:33:00.000Z",
+    "expiry": "2026-06-21T05:40:08.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782021840000",
     "activation": "2026-06-21T05:14:00.000Z",
     "expiry": "2026-06-21T06:04:00.000Z",
-    "timeLeft": "33m 0s",
+    "timeLeft": "29m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T06:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "32m 55s"
+    "timeLeft": "28m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782021600000",
@@ -44,21 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a375baaa6b494798d8ce5b2",
-      "activation": "2026-06-21T03:34:02.681Z",
-      "expiry": "2026-06-21T05:31:13.268Z",
-      "node": "Numa (Saturn)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Numa (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a375eb623902a7b588ce5b3",
       "activation": "2026-06-21T03:47:02.888Z",
@@ -73,21 +58,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a3761ff0f185142278ce5b1",
-      "activation": "2026-06-21T04:01:03.083Z",
-      "expiry": "2026-06-21T05:31:20.211Z",
-      "node": "Tamu (Kuva Fortress)",
-      "missionType": "Disruption",
-      "missionTypeKey": "Disruption",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Tamu (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a376546232e7bc9ef8ce5b1",
@@ -842,7 +812,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "18h 28m 58s",
+    "remaining": "18h 24m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1378,9 +1348,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -35086,
+      "count": -35088,
       "requiredRuns": 42000,
-      "completion": 8.230952380952383,
+      "completion": 8.22857142857143,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1428,9 +1398,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 32971,
+      "count": 32974,
       "requiredRuns": 33000,
-      "completion": 99.9560606060606,
+      "completion": 99.96060606060607,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1681,9 +1651,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6482,
+      "count": -6572,
       "requiredRuns": 30000,
-      "completion": 78.39333333333333,
+      "completion": 78.09333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
