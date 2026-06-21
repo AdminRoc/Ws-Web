@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-21T19:21:14Z",
+  "fetchedAt": "2026-06-21T19:26:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782072840000",
     "activation": "2026-06-21T18:34:00.000Z",
     "expiry": "2026-06-21T20:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "53m 1s",
+    "timeLeft": "48m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782072840000",
     "activation": "2026-06-21T18:34:00.000Z",
     "expiry": "2026-06-21T20:14:00.000Z",
-    "timeLeft": "53m 1s",
+    "timeLeft": "48m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T21:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 42m 55s"
+    "timeLeft": "1h 37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782072000000",
@@ -121,21 +121,6 @@
       "isHard": true
     },
     {
-      "id": "6a3825b2bc1feef2428ce5b1",
-      "activation": "2026-06-21T17:56:02.478Z",
-      "expiry": "2026-06-21T19:25:21.763Z",
-      "node": "Stephano (Uranus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Stephano (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3825b2bc1feef2428ce5b3",
       "activation": "2026-06-21T17:56:02.478Z",
       "expiry": "2026-06-21T19:33:49.078Z",
@@ -175,21 +160,6 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Cassini (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a382a26716774d1388ce5b1",
-      "activation": "2026-06-21T18:15:02.415Z",
-      "expiry": "2026-06-21T19:23:33.481Z",
-      "node": "Elara (Jupiter)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Elara (Jupiter)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -391,6 +361,36 @@
       "isHard": true
     },
     {
+      "id": "6a383a52661722125d8ce5b1",
+      "activation": "2026-06-21T19:24:02.305Z",
+      "expiry": "2026-06-21T20:48:05.800Z",
+      "node": "Bode (Ceres)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Bode (Ceres)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a383a52661722125d8ce5b2",
+      "activation": "2026-06-21T19:24:02.305Z",
+      "expiry": "2026-06-21T20:36:10.866Z",
+      "node": "Stickney (Phobos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Stickney (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
       "id": "6a3821f39e250282958ce5b5",
       "activation": "2026-06-21T18:20:03.358Z",
       "expiry": "2026-06-21T19:50:03.358Z",
@@ -400,51 +400,6 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Fenton's Field (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3821f39e250282958ce5b2",
-      "activation": "2026-06-21T18:20:03.353Z",
-      "expiry": "2026-06-21T19:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3821f39e250282958ce5b3",
-      "activation": "2026-06-21T18:20:03.355Z",
-      "expiry": "2026-06-21T19:50:03.355Z",
-      "node": "Kasio's Rest (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Kasio's Rest (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3821f39e250282958ce5b6",
-      "activation": "2026-06-21T18:20:03.360Z",
-      "expiry": "2026-06-21T19:50:03.360Z",
-      "node": "Nsu Grid (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nsu Grid (Veil)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -466,6 +421,21 @@
       "isHard": false
     },
     {
+      "id": "6a3821f39e250282958ce5b6",
+      "activation": "2026-06-21T18:20:03.360Z",
+      "expiry": "2026-06-21T19:50:03.360Z",
+      "node": "Nsu Grid (Veil)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nsu Grid (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a3821f39e250282958ce5b1",
       "activation": "2026-06-21T18:20:03.351Z",
       "expiry": "2026-06-21T19:50:03.351Z",
@@ -481,17 +451,47 @@
       "isHard": false
     },
     {
-      "id": "6a383002e03bc62e8f8ce5b3",
-      "activation": "2026-06-21T19:20:03.353Z",
-      "expiry": "2026-06-21T20:50:03.353Z",
-      "node": "Beacon Shield Ring (Venus)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
+      "id": "6a3821f39e250282958ce5b3",
+      "activation": "2026-06-21T18:20:03.355Z",
+      "expiry": "2026-06-21T19:50:03.355Z",
+      "node": "Kasio's Rest (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Kasio's Rest (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3821f39e250282958ce5b2",
+      "activation": "2026-06-21T18:20:03.353Z",
+      "expiry": "2026-06-21T19:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Beacon Shield Ring (Venus)",
+      "nodeKey": "Orvin-Haarc (Venus)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a383002e03bc62e8f8ce5b6",
+      "activation": "2026-06-21T19:20:03.358Z",
+      "expiry": "2026-06-21T20:50:03.358Z",
+      "node": "Peregrine Axis (Pluto)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Peregrine Axis (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -511,15 +511,15 @@
       "isHard": false
     },
     {
-      "id": "6a383002e03bc62e8f8ce5b2",
-      "activation": "2026-06-21T19:20:03.351Z",
-      "expiry": "2026-06-21T20:50:03.351Z",
-      "node": "Bendar Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Bendar Cluster (Earth)",
+      "id": "6a383002e03bc62e8f8ce5b3",
+      "activation": "2026-06-21T19:20:03.353Z",
+      "expiry": "2026-06-21T20:50:03.353Z",
+      "node": "Beacon Shield Ring (Venus)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Beacon Shield Ring (Venus)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": true,
@@ -541,6 +541,21 @@
       "isHard": false
     },
     {
+      "id": "6a383002e03bc62e8f8ce5b2",
+      "activation": "2026-06-21T19:20:03.351Z",
+      "expiry": "2026-06-21T20:50:03.351Z",
+      "node": "Bendar Cluster (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Bendar Cluster (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a383002e03bc62e8f8ce5b7",
       "activation": "2026-06-21T19:20:03.360Z",
       "expiry": "2026-06-21T20:50:03.360Z",
@@ -550,21 +565,6 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Numina (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a383002e03bc62e8f8ce5b6",
-      "activation": "2026-06-21T19:20:03.358Z",
-      "expiry": "2026-06-21T20:50:03.358Z",
-      "node": "Peregrine Axis (Pluto)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Peregrine Axis (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -828,7 +828,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "4h 38m 58s",
+    "remaining": "4h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1414,9 +1414,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 27476,
+      "count": 27623,
       "requiredRuns": 33000,
-      "completion": 91.63030303030303,
+      "completion": 91.85303030303031,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1451,9 +1451,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27402,
+      "count": -27519,
       "requiredRuns": 30000,
-      "completion": 8.66,
+      "completion": 8.27,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1631,9 +1631,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -11138,
+      "count": -11261,
       "requiredRuns": 30000,
-      "completion": 62.873333333333335,
+      "completion": 62.46333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
