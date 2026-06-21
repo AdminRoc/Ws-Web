@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T20:21:19Z",
+  "fetchedAt": "2026-06-21T20:26:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782075840000",
     "activation": "2026-06-21T20:14:00.000Z",
     "expiry": "2026-06-21T21:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "43m 1s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782075840000",
     "activation": "2026-06-21T20:14:00.000Z",
     "expiry": "2026-06-21T21:04:00.000Z",
-    "timeLeft": "43m 1s",
+    "timeLeft": "38m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T21:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "42m 55s"
+    "timeLeft": "37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782079200000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a383002e03bc62e8f8ce5b1",
-      "activation": "2026-06-21T18:40:02.468Z",
-      "expiry": "2026-06-21T20:24:33.555Z",
-      "node": "Yuvarium (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a38321ee05b6f1a0a8ce5b1",
       "activation": "2026-06-21T18:49:02.857Z",
@@ -364,6 +349,21 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 6,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3848626fb21ab03b8ce5b1",
+      "activation": "2026-06-21T20:24:02.333Z",
+      "expiry": "2026-06-21T22:19:50.821Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a383002e03bc62e8f8ce5b3",
@@ -803,7 +803,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "3h 38m 58s",
+    "remaining": "3h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1389,9 +1389,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 29566,
+      "count": 29739,
       "requiredRuns": 33000,
-      "completion": 94.7969696969697,
+      "completion": 95.0590909090909,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1426,9 +1426,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28777,
+      "count": -28886,
       "requiredRuns": 30000,
-      "completion": 4.076666666666662,
+      "completion": 3.713333333333335,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1606,9 +1606,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -12542,
+      "count": -12660,
       "requiredRuns": 30000,
-      "completion": 58.19333333333334,
+      "completion": 57.800000000000004,
       "completed": false,
       "rewardTypes": [
         "fieldron"
