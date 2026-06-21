@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T20:51:20Z",
+  "fetchedAt": "2026-06-21T20:56:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782075840000",
     "activation": "2026-06-21T20:14:00.000Z",
     "expiry": "2026-06-21T21:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "13m 1s",
+    "timeLeft": "8m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782075840000",
     "activation": "2026-06-21T20:14:00.000Z",
     "expiry": "2026-06-21T21:04:00.000Z",
-    "timeLeft": "13m 1s",
+    "timeLeft": "8m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T21:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "12m 55s"
+    "timeLeft": "7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782079200000",
@@ -773,7 +773,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "3h 8m 58s",
+    "remaining": "3h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1359,9 +1359,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 30595,
+      "count": 30644,
       "requiredRuns": 33000,
-      "completion": 96.35606060606061,
+      "completion": 96.43030303030304,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1396,9 +1396,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29470,
+      "count": -29532,
       "requiredRuns": 30000,
-      "completion": 1.766666666666672,
+      "completion": 1.5599999999999947,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1576,9 +1576,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -13194,
+      "count": -13248,
       "requiredRuns": 30000,
-      "completion": 56.02,
+      "completion": 55.84,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -10512,6 +10512,18 @@ window.WF_WS_SNAPSHOT = {
       "total": 200,
       "sold": 200,
       "discount": 10
+    },
+    {
+      "id": "CorpusMinigun1782169200000",
+      "activation": "2026-06-21T21:00:00.000Z",
+      "expiry": "2026-06-22T23:00:00.000Z",
+      "item": "Cestra",
+      "uniqueName": "/Lotus/StoreItems/Weapons/Corpus/Pistols/CorpusMinigun/CorpusMinigun",
+      "originalPrice": 175,
+      "salePrice": 87,
+      "total": 80,
+      "sold": 0,
+      "discount": 50
     }
   ],
   "tenetWeapons": null,
