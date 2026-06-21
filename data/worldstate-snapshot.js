@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T06:26:14Z",
+  "fetchedAt": "2026-06-21T06:31:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782027840000",
     "activation": "2026-06-21T06:04:00.000Z",
     "expiry": "2026-06-21T07:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 19m 0s",
+    "timeLeft": "1h 13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782021960000",
-    "activation": "2026-06-21T06:06:00.000Z",
-    "expiry": "2026-06-21T06:26:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782023160000",
+    "activation": "2026-06-21T06:26:00.000Z",
+    "expiry": "2026-06-21T06:33:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782027840000",
     "activation": "2026-06-21T06:04:00.000Z",
     "expiry": "2026-06-21T07:44:00.000Z",
-    "timeLeft": "1h 19m 0s",
+    "timeLeft": "1h 13m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T08:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 8m 55s"
+    "timeLeft": "2h 2m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782028800000",
@@ -44,36 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a376fd217d107b99f8ce5b2",
-      "activation": "2026-06-21T05:00:02.955Z",
-      "expiry": "2026-06-21T06:28:41.790Z",
-      "node": "Kelpie (Sedna)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Kelpie (Sedna)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3770c28e2a92355d8ce5b1",
-      "activation": "2026-06-21T05:04:02.886Z",
-      "expiry": "2026-06-21T07:00:31.500Z",
-      "node": "Venera (Venus)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Venera (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3770c28e2a92355d8ce5b2",
       "activation": "2026-06-21T05:04:02.886Z",
@@ -90,19 +60,19 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3770c28e2a92355d8ce5b3",
+      "id": "6a3770c28e2a92355d8ce5b1",
       "activation": "2026-06-21T05:04:02.886Z",
-      "expiry": "2026-06-21T06:28:28.190Z",
-      "node": "Martialis (Mars)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Martialis (Mars)",
+      "expiry": "2026-06-21T07:00:31.500Z",
+      "node": "Venera (Venus)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Venera (Venus)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
-      "isHard": true
+      "isHard": false
     },
     {
       "id": "6a377626b981a29a598ce5b1",
@@ -375,21 +345,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a378383acbf5c876c8ce5b1",
-      "activation": "2026-06-21T06:24:03.187Z",
-      "expiry": "2026-06-21T07:33:11.357Z",
-      "node": "Cypress (Pluto)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cypress (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a378383acbf5c876c8ce5b2",
       "activation": "2026-06-21T06:24:03.187Z",
       "expiry": "2026-06-21T07:37:50.706Z",
@@ -401,6 +356,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Tessera (Venus)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a378383acbf5c876c8ce5b1",
+      "activation": "2026-06-21T06:24:03.187Z",
+      "expiry": "2026-06-21T07:33:11.357Z",
+      "node": "Cypress (Pluto)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cypress (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": false,
       "isHard": true
     },
@@ -842,7 +812,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "17h 34m 58s",
+    "remaining": "17h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1378,9 +1348,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -36153,
+      "count": -36333,
       "requiredRuns": 42000,
-      "completion": 6.960714285714287,
+      "completion": 6.74642857142857,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1478,9 +1448,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 1278,
+      "count": 1594,
       "requiredRuns": 33000,
-      "completion": 51.93636363636364,
+      "completion": 52.415151515151514,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1524,42 +1494,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a3695da32944573938ce5b1",
-      "activation": "2026-06-20T13:30:01.882Z",
-      "node": "Numa (Saturn)",
-      "nodeKey": "Numa (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -39111,
-      "requiredRuns": 39000,
-      "completion": -0.28461538461539426,
-      "completed": true,
-      "rewardTypes": [
-        "mutagen"
-      ]
-    },
-    {
       "id": "6a3695da32944573938ce5b2",
       "activation": "2026-06-20T13:30:01.882Z",
       "node": "Titan (Saturn)",
@@ -1593,6 +1527,42 @@ window.WF_WS_SNAPSHOT = {
       "completed": true,
       "rewardTypes": [
         "detonite"
+      ]
+    },
+    {
+      "id": "6a3695da32944573938ce5b1",
+      "activation": "2026-06-20T13:30:01.882Z",
+      "node": "Numa (Saturn)",
+      "nodeKey": "Numa (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 1,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -39111,
+      "requiredRuns": 39000,
+      "completion": -0.28461538461539426,
+      "completed": true,
+      "rewardTypes": [
+        "mutagen"
       ]
     },
     {
@@ -1695,9 +1665,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8233,
+      "count": -8417,
       "requiredRuns": 30000,
-      "completion": 72.55666666666667,
+      "completion": 71.94333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1731,9 +1701,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15,
+      "count": -123,
       "requiredRuns": 40000,
-      "completion": 99.9625,
+      "completion": 99.6925,
       "completed": false,
       "rewardTypes": [
         "fieldron"
