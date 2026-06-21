@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T10:11:38Z",
+  "fetchedAt": "2026-06-21T10:16:17Z",
   "cetusCycle": {
-    "id": "cetusCycle1782036840000",
-    "activation": "2026-06-21T08:34:00.000Z",
-    "expiry": "2026-06-21T10:14:00.000Z",
-    "isDay": true,
-    "state": "day",
-    "timeLeft": "4m 32s",
+    "id": "cetusCycle1782039840000",
+    "activation": "2026-06-21T10:14:00.000Z",
+    "expiry": "2026-06-21T11:04:00.000Z",
+    "isDay": false,
+    "state": "night",
+    "timeLeft": "49m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -22,11 +22,11 @@ window.WF_WS_SNAPSHOT = {
     "state": "cold"
   },
   "cambionCycle": {
-    "id": "cambionCycle1782036840000",
-    "activation": "2026-06-21T08:34:00.000Z",
-    "expiry": "2026-06-21T10:14:00.000Z",
-    "timeLeft": "4m 32s",
-    "state": "fass"
+    "id": "cambionCycle1782039840000",
+    "activation": "2026-06-21T10:14:00.000Z",
+    "expiry": "2026-06-21T11:04:00.000Z",
+    "timeLeft": "49m 0s",
+    "state": "vome"
   },
   "zarimanCycle": {
     "id": "zarimanCycle1782039840000",
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T11:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "54m 26s"
+    "timeLeft": "48m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782043200000",
@@ -330,15 +330,60 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a37a362fa2e537e768ce5b2",
-      "activation": "2026-06-21T09:20:03.353Z",
-      "expiry": "2026-06-21T10:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
+      "id": "6a37b8b6b0a52504b78ce5b1",
+      "activation": "2026-06-21T10:11:02.436Z",
+      "expiry": "2026-06-21T11:21:03.891Z",
+      "node": "Oxomoco (Void)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Oxomoco (Void)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a37b8b6b0a52504b78ce5b2",
+      "activation": "2026-06-21T10:11:02.436Z",
+      "expiry": "2026-06-21T11:48:45.960Z",
+      "node": "Armaros (Europa)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
+      "nodeKey": "Armaros (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a37b92e5d5602b95e8ce5b1",
+      "activation": "2026-06-21T10:13:02.323Z",
+      "expiry": "2026-06-21T11:45:51.317Z",
+      "node": "Mot (Void)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Mot (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37a362fa2e537e768ce5b1",
+      "activation": "2026-06-21T09:20:03.351Z",
+      "expiry": "2026-06-21T10:50:03.351Z",
+      "node": "Ogal Cluster (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Ogal Cluster (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": true,
@@ -360,6 +405,21 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
+      "id": "6a37a362fa2e537e768ce5b2",
+      "activation": "2026-06-21T09:20:03.353Z",
+      "expiry": "2026-06-21T10:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Orvin-Haarc (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a37a362fa2e537e768ce5b4",
       "activation": "2026-06-21T09:20:03.356Z",
       "expiry": "2026-06-21T10:50:03.356Z",
@@ -371,21 +431,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Enkidu Ice Drifts (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a37a362fa2e537e768ce5b1",
-      "activation": "2026-06-21T09:20:03.351Z",
-      "expiry": "2026-06-21T10:50:03.351Z",
-      "node": "Ogal Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Ogal Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -677,7 +722,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "13h 50m 30s",
+    "remaining": "13h 44m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1213,9 +1258,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -40675,
+      "count": -40787,
       "requiredRuns": 42000,
-      "completion": 1.5773809523809523,
+      "completion": 1.444047619047617,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1313,9 +1358,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 8510,
+      "count": 8709,
       "requiredRuns": 33000,
-      "completion": 62.89393939393939,
+      "completion": 63.195454545454545,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1422,9 +1467,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -13529,
+      "count": -13658,
       "requiredRuns": 30000,
-      "completion": 54.90333333333333,
+      "completion": 54.47333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1458,9 +1503,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15192,
+      "count": -16086,
       "requiredRuns": 40000,
-      "completion": 62.019999999999996,
+      "completion": 59.785,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1494,9 +1539,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -956,
+      "count": -1761,
       "requiredRuns": 37000,
-      "completion": 97.41621621621621,
+      "completion": 95.24054054054054,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1530,9 +1575,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -3276,
+      "count": -4031,
       "requiredRuns": 36000,
-      "completion": 90.9,
+      "completion": 88.80277777777778,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1566,9 +1611,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": 0,
+      "count": -35,
       "requiredRuns": 37000,
-      "completion": 100,
+      "completion": 99.9054054054054,
       "completed": false,
       "rewardTypes": [
         "mutagen"
