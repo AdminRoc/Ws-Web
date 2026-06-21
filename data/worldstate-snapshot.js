@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T04:21:14Z",
+  "fetchedAt": "2026-06-21T04:26:16Z",
   "cetusCycle": {
     "id": "cetusCycle1782018840000",
     "activation": "2026-06-21T03:34:00.000Z",
     "expiry": "2026-06-21T05:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "53m 0s",
+    "timeLeft": "49m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782018840000",
     "activation": "2026-06-21T03:34:00.000Z",
     "expiry": "2026-06-21T05:14:00.000Z",
-    "timeLeft": "53m 0s",
+    "timeLeft": "49m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T06:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 42m 55s"
+    "timeLeft": "1h 38m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782021600000",
@@ -44,36 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a374ec6020ca3e0ab8ce5b1",
-      "activation": "2026-06-21T02:39:02.617Z",
-      "expiry": "2026-06-21T04:21:16.036Z",
-      "node": "Pago (Kuva Fortress)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pago (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3751d3da557ca14b8ce5b2",
-      "activation": "2026-06-21T02:52:03.172Z",
-      "expiry": "2026-06-21T04:23:05.420Z",
-      "node": "Tiwaz (Void)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Tiwaz (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3751d3da557ca14b8ce5b1",
       "activation": "2026-06-21T02:52:03.172Z",
@@ -812,7 +782,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "19h 38m 58s",
+    "remaining": "19h 34m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1348,9 +1318,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -33957,
+      "count": -33956,
       "requiredRuns": 42000,
-      "completion": 9.575,
+      "completion": 9.576190476190478,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1398,9 +1368,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 31480,
+      "count": 31491,
       "requiredRuns": 33000,
-      "completion": 97.6969696969697,
+      "completion": 97.71363636363637,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1435,9 +1405,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28985,
+      "count": -29032,
       "requiredRuns": 30000,
-      "completion": 3.383333333333338,
+      "completion": 3.2266666666666666,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1615,9 +1585,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -40034,
+      "count": -40047,
       "requiredRuns": 48000,
-      "completion": 16.59583333333333,
+      "completion": 16.568749999999998,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1651,9 +1621,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4444,
+      "count": -4487,
       "requiredRuns": 30000,
-      "completion": 85.18666666666667,
+      "completion": 85.04333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
