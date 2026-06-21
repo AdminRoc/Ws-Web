@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T11:41:16Z",
+  "fetchedAt": "2026-06-21T11:46:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782045840000",
     "activation": "2026-06-21T11:04:00.000Z",
     "expiry": "2026-06-21T12:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 3m 0s",
+    "timeLeft": "59m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782045840000",
     "activation": "2026-06-21T11:04:00.000Z",
     "expiry": "2026-06-21T12:44:00.000Z",
-    "timeLeft": "1h 3m 0s",
+    "timeLeft": "59m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T13:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 52m 54s"
+    "timeLeft": "1h 48m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782043200000",
@@ -75,21 +75,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a37b9e2d830a6c6d48ce5b1",
-      "activation": "2026-06-21T10:16:02.656Z",
-      "expiry": "2026-06-21T11:43:24.416Z",
-      "node": "Cypress (Pluto)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cypress (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a37b9e2d830a6c6d48ce5b2",
       "activation": "2026-06-21T10:16:02.656Z",
       "expiry": "2026-06-21T12:13:55.145Z",
@@ -118,21 +103,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 5,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a37bda25b656818638ce5b1",
-      "activation": "2026-06-21T10:32:02.868Z",
-      "expiry": "2026-06-21T11:41:45.702Z",
-      "node": "Eurasia (Earth)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Eurasia (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a37be1a1d0f1cd9a88ce5b1",
@@ -358,6 +328,66 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 1,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a37cdce9bf9d1fdb18ce5b2",
+      "activation": "2026-06-21T11:41:02.283Z",
+      "expiry": "2026-06-21T13:15:08.623Z",
+      "node": "Minthe (Pluto)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Minthe (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37cdce9bf9d1fdb18ce5b1",
+      "activation": "2026-06-21T11:41:02.283Z",
+      "expiry": "2026-06-21T13:12:54.444Z",
+      "node": "Belenus (Void)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Belenus (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37ce834fa23ee3268ce5b1",
+      "activation": "2026-06-21T11:44:03.143Z",
+      "expiry": "2026-06-21T13:09:38.637Z",
+      "node": "Taranis (Void)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Taranis (Void)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a37ce834fa23ee3268ce5b2",
+      "activation": "2026-06-21T11:44:03.143Z",
+      "expiry": "2026-06-21T12:56:56.694Z",
+      "node": "Larissa (Neptune)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Larissa (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a37b172c5572e86a48ce5b1",
@@ -797,7 +827,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "12h 18m 58s",
+    "remaining": "12h 14m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1433,9 +1463,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 11426,
+      "count": 11505,
       "requiredRuns": 33000,
-      "completion": 67.31212121212121,
+      "completion": 67.43181818181819,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1542,9 +1572,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15759,
+      "count": -15822,
       "requiredRuns": 30000,
-      "completion": 47.47,
+      "completion": 47.260000000000005,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1578,9 +1608,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -31088,
+      "count": -31133,
       "requiredRuns": 40000,
-      "completion": 22.28,
+      "completion": 22.167499999999997,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1614,9 +1644,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -16167,
+      "count": -16227,
       "requiredRuns": 37000,
-      "completion": 56.30540540540541,
+      "completion": 56.14324324324325,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1650,9 +1680,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17867,
+      "count": -17966,
       "requiredRuns": 36000,
-      "completion": 50.36944444444445,
+      "completion": 50.09444444444444,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1686,9 +1716,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1887,
+      "count": -1984,
       "requiredRuns": 37000,
-      "completion": 94.89999999999999,
+      "completion": 94.63783783783784,
       "completed": false,
       "rewardTypes": [
         "mutagen"
