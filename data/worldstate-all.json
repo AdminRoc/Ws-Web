@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-21T07:41:16Z",
+  "fetchedAt": "2026-06-21T07:46:16Z",
   "cetusCycle": {
-    "id": "cetusCycle1782027840000",
-    "activation": "2026-06-21T06:04:00.000Z",
-    "expiry": "2026-06-21T07:44:00.000Z",
-    "isDay": true,
-    "state": "day",
-    "timeLeft": "3m 0s",
+    "id": "cetusCycle1782030840000",
+    "activation": "2026-06-21T07:44:00.000Z",
+    "expiry": "2026-06-21T08:34:00.000Z",
+    "isDay": false,
+    "state": "night",
+    "timeLeft": "49m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -17,11 +17,11 @@
     "state": "cold"
   },
   "cambionCycle": {
-    "id": "cambionCycle1782027840000",
-    "activation": "2026-06-21T06:04:00.000Z",
-    "expiry": "2026-06-21T07:44:00.000Z",
-    "timeLeft": "3m 0s",
-    "state": "fass"
+    "id": "cambionCycle1782030840000",
+    "activation": "2026-06-21T07:44:00.000Z",
+    "expiry": "2026-06-21T08:34:00.000Z",
+    "timeLeft": "49m 0s",
+    "state": "vome"
   },
   "zarimanCycle": {
     "id": "zarimanCycle1782030840000",
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T08:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "52m 55s"
+    "timeLeft": "48m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782028800000",
@@ -336,6 +336,51 @@
       "nodeKey": "Tamu (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a379606f59e320ffc8ce5b1",
+      "activation": "2026-06-21T07:43:02.200Z",
+      "expiry": "2026-06-21T08:47:38.696Z",
+      "node": "Cambire (Deimos)",
+      "missionType": "Alchemy",
+      "missionTypeKey": "Alchemy",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Cambire (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a379606f59e320ffc8ce5b3",
+      "activation": "2026-06-21T07:43:02.200Z",
+      "expiry": "2026-06-21T08:46:50.429Z",
+      "node": "Yuvarium (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Yuvarium (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a379606f59e320ffc8ce5b2",
+      "activation": "2026-06-21T07:43:02.200Z",
+      "expiry": "2026-06-21T08:50:40.989Z",
+      "node": "Everview Arc (Zariman)",
+      "missionType": "Void Flood",
+      "missionTypeKey": "Void Flood",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Everview Arc (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
       "isStorm": false,
       "isHard": true
     },
@@ -777,7 +822,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "16h 18m 58s",
+    "remaining": "16h 14m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1313,9 +1358,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -37756,
+      "count": -37771,
       "requiredRuns": 42000,
-      "completion": 5.052380952380952,
+      "completion": 5.034523809523811,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1413,9 +1458,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 3819,
+      "count": 3912,
       "requiredRuns": 33000,
-      "completion": 55.78636363636363,
+      "completion": 55.92727272727272,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1459,42 +1504,6 @@
       ]
     },
     {
-      "id": "6a3695da32944573938ce5b2",
-      "activation": "2026-06-20T13:30:01.882Z",
-      "node": "Titan (Saturn)",
-      "nodeKey": "Titan (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -44341,
-      "requiredRuns": 44000,
-      "completion": -0.7749999999999924,
-      "completed": true,
-      "rewardTypes": [
-        "detonite"
-      ]
-    },
-    {
       "id": "6a3695da32944573938ce5b1",
       "activation": "2026-06-20T13:30:01.882Z",
       "node": "Numa (Saturn)",
@@ -1528,6 +1537,42 @@
       "completed": true,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a3695da32944573938ce5b2",
+      "activation": "2026-06-20T13:30:01.882Z",
+      "node": "Titan (Saturn)",
+      "nodeKey": "Titan (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -44341,
+      "requiredRuns": 44000,
+      "completion": -0.7749999999999924,
+      "completed": true,
+      "rewardTypes": [
+        "detonite"
       ]
     },
     {
@@ -1630,9 +1675,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -10063,
+      "count": -10114,
       "requiredRuns": 30000,
-      "completion": 66.45666666666668,
+      "completion": 66.28666666666668,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1666,9 +1711,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1025,
+      "count": -1063,
       "requiredRuns": 40000,
-      "completion": 97.4375,
+      "completion": 97.3425,
       "completed": false,
       "rewardTypes": [
         "fieldron"
