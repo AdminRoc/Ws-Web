@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-21T15:41:15Z",
+  "fetchedAt": "2026-06-21T15:46:15Z",
   "cetusCycle": {
     "id": "cetusCycle1782057840000",
     "activation": "2026-06-21T15:14:00.000Z",
     "expiry": "2026-06-21T16:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "23m 1s",
+    "timeLeft": "18m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782057840000",
     "activation": "2026-06-21T15:14:00.000Z",
     "expiry": "2026-06-21T16:04:00.000Z",
-    "timeLeft": "23m 1s",
+    "timeLeft": "18m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T16:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "22m 55s"
+    "timeLeft": "17m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782057600000",
@@ -39,21 +39,6 @@
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a37ecfaa5f2fee7b38ce5b1",
-      "activation": "2026-06-21T13:54:02.396Z",
-      "expiry": "2026-06-21T15:45:39.013Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a37f25eb2941896288ce5b1",
       "activation": "2026-06-21T14:17:02.914Z",
@@ -325,15 +310,75 @@
       "isHard": false
     },
     {
-      "id": "6a37e9b2e33547463d8ce5b2",
-      "activation": "2026-06-21T14:20:03.353Z",
-      "expiry": "2026-06-21T15:50:03.353Z",
-      "node": "Bifrost Echo (Venus)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
+      "id": "6a38060eb98565484c8ce5b2",
+      "activation": "2026-06-21T15:41:02.572Z",
+      "expiry": "2026-06-21T17:24:34.963Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38060eb98565484c8ce5b1",
+      "activation": "2026-06-21T15:41:02.572Z",
+      "expiry": "2026-06-21T16:49:43.271Z",
+      "node": "Tuvul Commons (Zariman)",
+      "missionType": "Void Cascade",
+      "missionTypeKey": "Void Cascade",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Tuvul Commons (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38060eb98565484c8ce5b3",
+      "activation": "2026-06-21T15:41:02.572Z",
+      "expiry": "2026-06-21T17:14:13.305Z",
+      "node": "Circulus (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37e9b2e33547463d8ce5b4",
+      "activation": "2026-06-21T14:20:03.356Z",
+      "expiry": "2026-06-21T15:50:03.356Z",
+      "node": "Sovereign Grasp (Neptune)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Bifrost Echo (Venus)",
+      "nodeKey": "Sovereign Grasp (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a37e9b2e33547463d8ce5b1",
+      "activation": "2026-06-21T14:20:03.351Z",
+      "expiry": "2026-06-21T15:50:03.351Z",
+      "node": "Ogal Cluster (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Ogal Cluster (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": true,
@@ -355,6 +400,21 @@
       "isHard": false
     },
     {
+      "id": "6a37e9b2e33547463d8ce5b2",
+      "activation": "2026-06-21T14:20:03.353Z",
+      "expiry": "2026-06-21T15:50:03.353Z",
+      "node": "Bifrost Echo (Venus)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Bifrost Echo (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a37e9b2e33547463d8ce5b5",
       "activation": "2026-06-21T14:20:03.358Z",
       "expiry": "2026-06-21T15:50:03.358Z",
@@ -366,36 +426,6 @@
       "nodeKey": "Seven Sirens (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a37e9b2e33547463d8ce5b1",
-      "activation": "2026-06-21T14:20:03.351Z",
-      "expiry": "2026-06-21T15:50:03.351Z",
-      "node": "Ogal Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Ogal Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a37e9b2e33547463d8ce5b4",
-      "activation": "2026-06-21T14:20:03.356Z",
-      "expiry": "2026-06-21T15:50:03.356Z",
-      "node": "Sovereign Grasp (Neptune)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sovereign Grasp (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
       "isStorm": true,
       "isHard": false
     },
@@ -415,15 +445,15 @@
       "isHard": false
     },
     {
-      "id": "6a37f7c2e789beec4b8ce5b3",
-      "activation": "2026-06-21T15:20:03.353Z",
-      "expiry": "2026-06-21T16:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
+      "id": "6a37f7c2e789beec4b8ce5b2",
+      "activation": "2026-06-21T15:20:03.351Z",
+      "expiry": "2026-06-21T16:50:03.351Z",
+      "node": "Bendar Cluster (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Bendar Cluster (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": true,
@@ -445,15 +475,30 @@
       "isHard": false
     },
     {
-      "id": "6a37f7c2e789beec4b8ce5b2",
-      "activation": "2026-06-21T15:20:03.351Z",
-      "expiry": "2026-06-21T16:50:03.351Z",
-      "node": "Bendar Cluster (Earth)",
+      "id": "6a37f7c2e789beec4b8ce5b7",
+      "activation": "2026-06-21T15:20:03.360Z",
+      "expiry": "2026-06-21T16:50:03.360Z",
+      "node": "R-9 Cloud (Veil)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Bendar Cluster (Earth)",
+      "nodeKey": "R-9 Cloud (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a37f7c2e789beec4b8ce5b3",
+      "activation": "2026-06-21T15:20:03.353Z",
+      "expiry": "2026-06-21T16:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Orvin-Haarc (Venus)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": true,
@@ -484,21 +529,6 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Fenton's Field (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a37f7c2e789beec4b8ce5b7",
-      "activation": "2026-06-21T15:20:03.360Z",
-      "expiry": "2026-06-21T16:50:03.360Z",
-      "node": "R-9 Cloud (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "R-9 Cloud (Veil)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -762,7 +792,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "8h 18m 58s",
+    "remaining": "8h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1398,9 +1428,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 19707,
+      "count": 19874,
       "requiredRuns": 33000,
-      "completion": 79.85909090909091,
+      "completion": 80.11212121212121,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1507,9 +1537,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21998,
+      "count": -22131,
       "requiredRuns": 30000,
-      "completion": 26.67333333333334,
+      "completion": 26.229999999999997,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1687,9 +1717,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5582,
+      "count": -5755,
       "requiredRuns": 30000,
-      "completion": 81.39333333333335,
+      "completion": 80.81666666666666,
       "completed": false,
       "rewardTypes": [
         "fieldron"
