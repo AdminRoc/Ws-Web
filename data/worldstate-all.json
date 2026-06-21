@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-21T09:06:14Z",
+  "fetchedAt": "2026-06-21T09:11:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782036840000",
     "activation": "2026-06-21T08:34:00.000Z",
     "expiry": "2026-06-21T10:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 8m 59s",
+    "timeLeft": "1h 3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782031560000",
-    "activation": "2026-06-21T08:46:00.000Z",
-    "expiry": "2026-06-21T09:06:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782032760000",
+    "activation": "2026-06-21T09:06:00.000Z",
+    "expiry": "2026-06-21T09:13:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782036840000",
     "activation": "2026-06-21T08:34:00.000Z",
     "expiry": "2026-06-21T10:14:00.000Z",
-    "timeLeft": "1h 8m 59s",
+    "timeLeft": "1h 3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T11:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 58m 54s"
+    "timeLeft": "1h 52m 54s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782036000000",
@@ -295,17 +295,17 @@
       "isHard": false
     },
     {
-      "id": "6a379553f4c5d2e9ec8ce5b2",
-      "activation": "2026-06-21T08:20:03.351Z",
-      "expiry": "2026-06-21T09:50:03.351Z",
-      "node": "Bendar Cluster (Earth)",
+      "id": "6a379553f4c5d2e9ec8ce5b7",
+      "activation": "2026-06-21T08:20:03.360Z",
+      "expiry": "2026-06-21T09:50:03.360Z",
+      "node": "H-2 Cloud (Veil)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Bendar Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
+      "nodeKey": "H-2 Cloud (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -340,21 +340,6 @@
       "isHard": false
     },
     {
-      "id": "6a379553f4c5d2e9ec8ce5b4",
-      "activation": "2026-06-21T08:20:03.355Z",
-      "expiry": "2026-06-21T09:50:03.355Z",
-      "node": "Mordo Cluster (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Mordo Cluster (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a379553f4c5d2e9ec8ce5b6",
       "activation": "2026-06-21T08:20:03.358Z",
       "expiry": "2026-06-21T09:50:03.358Z",
@@ -370,17 +355,32 @@
       "isHard": false
     },
     {
-      "id": "6a379553f4c5d2e9ec8ce5b7",
-      "activation": "2026-06-21T08:20:03.360Z",
-      "expiry": "2026-06-21T09:50:03.360Z",
-      "node": "H-2 Cloud (Veil)",
+      "id": "6a379553f4c5d2e9ec8ce5b4",
+      "activation": "2026-06-21T08:20:03.355Z",
+      "expiry": "2026-06-21T09:50:03.355Z",
+      "node": "Mordo Cluster (Saturn)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "H-2 Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
+      "nodeKey": "Mordo Cluster (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a379553f4c5d2e9ec8ce5b2",
+      "activation": "2026-06-21T08:20:03.351Z",
+      "expiry": "2026-06-21T09:50:03.351Z",
+      "node": "Bendar Cluster (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Bendar Cluster (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     }
@@ -642,7 +642,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "14h 54m 58s",
+    "remaining": "14h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1178,9 +1178,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -39314,
+      "count": -39517,
       "requiredRuns": 42000,
-      "completion": 3.197619047619049,
+      "completion": 2.9559523809523816,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1278,9 +1278,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 6555,
+      "count": 6844,
       "requiredRuns": 33000,
-      "completion": 59.93181818181819,
+      "completion": 60.369696969696975,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1423,9 +1423,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -11958,
+      "count": -12159,
       "requiredRuns": 30000,
-      "completion": 60.13999999999999,
+      "completion": 59.47,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1459,9 +1459,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4280,
+      "count": -5967,
       "requiredRuns": 40000,
-      "completion": 89.3,
+      "completion": 85.0825,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1495,9 +1495,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -121,
+      "count": -210,
       "requiredRuns": 37000,
-      "completion": 99.67297297297297,
+      "completion": 99.43243243243242,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1531,9 +1531,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -185,
+      "count": -234,
       "requiredRuns": 36000,
-      "completion": 99.48611111111111,
+      "completion": 99.35000000000001,
       "completed": false,
       "rewardTypes": [
         "mutalist"
