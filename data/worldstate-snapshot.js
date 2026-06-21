@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T00:41:14Z",
+  "fetchedAt": "2026-06-21T00:46:15Z",
   "cetusCycle": {
     "id": "cetusCycle1782003840000",
     "activation": "2026-06-21T00:14:00.000Z",
     "expiry": "2026-06-21T01:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "23m 1s",
+    "timeLeft": "18m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782003840000",
     "activation": "2026-06-21T00:14:00.000Z",
     "expiry": "2026-06-21T01:04:00.000Z",
-    "timeLeft": "23m 1s",
+    "timeLeft": "18m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T01:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "22m 55s"
+    "timeLeft": "17m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782007200000",
@@ -129,21 +129,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Umbriel (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a37227aa6a8c084ec8ce5b2",
-      "activation": "2026-06-20T23:30:02.307Z",
-      "expiry": "2026-06-21T00:41:04.592Z",
-      "node": "Tiwaz (Void)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Tiwaz (Void)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -360,17 +345,62 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3716c2263aa44b4b8ce5b1",
-      "activation": "2026-06-20T23:20:03.351Z",
-      "expiry": "2026-06-21T00:50:03.351Z",
-      "node": "Bendar Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
+      "id": "6a37335a1def59d5b88ce5b2",
+      "activation": "2026-06-21T00:42:02.754Z",
+      "expiry": "2026-06-21T02:24:12.750Z",
+      "node": "E Prime (Earth)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Bendar Cluster (Earth)",
+      "nodeKey": "E Prime (Earth)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37335a1def59d5b88ce5b1",
+      "activation": "2026-06-21T00:42:02.754Z",
+      "expiry": "2026-06-21T02:21:55.542Z",
+      "node": "Cytherean (Venus)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cytherean (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37335a1def59d5b88ce5b3",
+      "activation": "2026-06-21T00:42:02.754Z",
+      "expiry": "2026-06-21T02:23:26.901Z",
+      "node": "Arval (Mars)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Arval (Mars)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3716c2263aa44b4b8ce5b5",
+      "activation": "2026-06-20T23:20:03.358Z",
+      "expiry": "2026-06-21T00:50:03.358Z",
+      "node": "Profit Margin (Pluto)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Profit Margin (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -390,36 +420,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3716c2263aa44b4b8ce5b2",
-      "activation": "2026-06-20T23:20:03.353Z",
-      "expiry": "2026-06-21T00:50:03.353Z",
-      "node": "Luckless Expanse (Venus)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Luckless Expanse (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3716c2263aa44b4b8ce5b5",
-      "activation": "2026-06-20T23:20:03.358Z",
-      "expiry": "2026-06-21T00:50:03.358Z",
-      "node": "Profit Margin (Pluto)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Profit Margin (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3716c2263aa44b4b8ce5b4",
       "activation": "2026-06-20T23:20:03.356Z",
       "expiry": "2026-06-21T00:50:03.356Z",
@@ -431,6 +431,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Enkidu Ice Drifts (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3716c2263aa44b4b8ce5b2",
+      "activation": "2026-06-20T23:20:03.353Z",
+      "expiry": "2026-06-21T00:50:03.353Z",
+      "node": "Luckless Expanse (Venus)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Luckless Expanse (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -450,15 +465,15 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3724d3f657af64778ce5b1",
-      "activation": "2026-06-21T00:20:03.351Z",
-      "expiry": "2026-06-21T01:50:03.351Z",
-      "node": "Iota Temple (Earth)",
+      "id": "6a3716c2263aa44b4b8ce5b1",
+      "activation": "2026-06-20T23:20:03.351Z",
+      "expiry": "2026-06-21T00:50:03.351Z",
+      "node": "Bendar Cluster (Earth)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Iota Temple (Earth)",
+      "nodeKey": "Bendar Cluster (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": true,
@@ -480,21 +495,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3724d3f657af64778ce5b3",
-      "activation": "2026-06-21T00:20:03.355Z",
-      "expiry": "2026-06-21T01:50:03.355Z",
-      "node": "Nodo Gap (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nodo Gap (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3724d3f657af64778ce5b6",
       "activation": "2026-06-21T00:20:03.360Z",
       "expiry": "2026-06-21T01:50:03.360Z",
@@ -506,6 +506,36 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Nsu Grid (Veil)",
       "tier": "Axi",
       "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3724d3f657af64778ce5b1",
+      "activation": "2026-06-21T00:20:03.351Z",
+      "expiry": "2026-06-21T01:50:03.351Z",
+      "node": "Iota Temple (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Iota Temple (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3724d3f657af64778ce5b3",
+      "activation": "2026-06-21T00:20:03.355Z",
+      "expiry": "2026-06-21T01:50:03.355Z",
+      "node": "Nodo Gap (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nodo Gap (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": true,
       "isHard": false
     },
@@ -797,7 +827,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "23h 18m 58s",
+    "remaining": "23h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1333,9 +1363,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -30186,
+      "count": -30268,
       "requiredRuns": 42000,
-      "completion": 14.064285714285713,
+      "completion": 13.966666666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1383,9 +1413,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 27062,
+      "count": 27169,
       "requiredRuns": 33000,
-      "completion": 91.0030303030303,
+      "completion": 91.16515151515152,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1528,9 +1558,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -22887,
+      "count": -23004,
       "requiredRuns": 30000,
-      "completion": 23.709999999999997,
+      "completion": 23.319999999999997,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1708,9 +1738,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -591,
+      "count": -635,
       "requiredRuns": 48000,
-      "completion": 98.76875000000001,
+      "completion": 98.67708333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -6339,7 +6369,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 10,
       "salePrice": 9,
       "total": 200,
-      "sold": 125,
+      "sold": 126,
       "discount": 10
     }
   ],
