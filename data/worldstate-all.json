@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-21T12:51:23Z",
+  "fetchedAt": "2026-06-21T12:56:16Z",
   "cetusCycle": {
     "id": "cetusCycle1782048840000",
     "activation": "2026-06-21T12:44:00.000Z",
     "expiry": "2026-06-21T13:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "48m 0s",
+    "timeLeft": "39m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782045600000",
-    "activation": "2026-06-21T12:40:00.000Z",
-    "expiry": "2026-06-21T12:46:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782045960000",
+    "activation": "2026-06-21T12:46:00.000Z",
+    "expiry": "2026-06-21T13:06:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782048840000",
     "activation": "2026-06-21T12:44:00.000Z",
     "expiry": "2026-06-21T13:34:00.000Z",
-    "timeLeft": "48m 0s",
+    "timeLeft": "39m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T13:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "47m 54s"
+    "timeLeft": "38m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782050400000",
@@ -51,21 +51,6 @@
       "nodeKey": "Tuvul Commons (Zariman)",
       "tier": "Omnia",
       "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a37c82ec8622569f88ce5b1",
-      "activation": "2026-06-21T11:17:02.872Z",
-      "expiry": "2026-06-21T12:49:27.856Z",
-      "node": "Mariana (Earth)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Mariana (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
       "isStorm": false,
       "isHard": false
     },
@@ -109,21 +94,6 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Ishtar (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a37ccde21e20605998ce5b2",
-      "activation": "2026-06-21T11:37:02.334Z",
-      "expiry": "2026-06-21T12:50:25.586Z",
-      "node": "Cambria (Earth)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cambria (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -368,6 +338,21 @@
       "tierNum": 3,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a37de36bbcfef04f38ce5b1",
+      "activation": "2026-06-21T12:51:02.546Z",
+      "expiry": "2026-06-21T14:38:38.385Z",
+      "node": "Circulus (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a37bf830c9a9f02258ce5b1",
@@ -807,7 +792,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "11h 13m 58s",
+    "remaining": "11h 4m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1443,9 +1428,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 13552,
+      "count": 13782,
       "requiredRuns": 33000,
-      "completion": 70.53333333333333,
+      "completion": 70.88181818181818,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1552,9 +1537,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17369,
+      "count": -17559,
       "requiredRuns": 30000,
-      "completion": 42.10333333333334,
+      "completion": 41.47,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1624,9 +1609,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -26587,
+      "count": -27426,
       "requiredRuns": 37000,
-      "completion": 28.143243243243244,
+      "completion": 25.87567567567568,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1660,9 +1645,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27868,
+      "count": -28687,
       "requiredRuns": 36000,
-      "completion": 22.588888888888892,
+      "completion": 20.313888888888886,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1696,9 +1681,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -10322,
+      "count": -11238,
       "requiredRuns": 37000,
-      "completion": 72.1027027027027,
+      "completion": 69.62702702702703,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1732,9 +1717,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1256,
+      "count": -1447,
       "requiredRuns": 30000,
-      "completion": 95.81333333333333,
+      "completion": 95.17666666666666,
       "completed": false,
       "rewardTypes": [
         "fieldron"
