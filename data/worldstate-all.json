@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-21T22:31:20Z",
+  "fetchedAt": "2026-06-21T22:41:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782081840000",
     "activation": "2026-06-21T21:04:00.000Z",
     "expiry": "2026-06-21T22:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "13m 0s",
+    "timeLeft": "3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782080760000",
-    "activation": "2026-06-21T22:26:00.000Z",
-    "expiry": "2026-06-21T22:33:28.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782081180000",
+    "activation": "2026-06-21T22:33:00.000Z",
+    "expiry": "2026-06-21T22:53:28.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782081840000",
     "activation": "2026-06-21T21:04:00.000Z",
     "expiry": "2026-06-21T22:44:00.000Z",
-    "timeLeft": "13m 0s",
+    "timeLeft": "3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T23:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 2m 55s"
+    "timeLeft": "52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782086400000",
@@ -60,36 +60,6 @@
     ]
   },
   "fissures": [
-    {
-      "id": "6a384d1245f0b545b98ce5b1",
-      "activation": "2026-06-21T20:44:02.283Z",
-      "expiry": "2026-06-21T22:38:33.830Z",
-      "node": "Thon (Ceres)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Thon (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a384fa781297bde2a8ce5b2",
-      "activation": "2026-06-21T20:55:02.987Z",
-      "expiry": "2026-06-21T22:31:12.658Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a38514a3da3ead9e68ce5b1",
       "activation": "2026-06-21T21:02:02.839Z",
@@ -145,21 +115,6 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Alator (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3853a2d28ac53c338ce5b3",
-      "activation": "2026-06-21T21:12:02.437Z",
-      "expiry": "2026-06-21T22:36:29.799Z",
-      "node": "Kiliken (Venus)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Kiliken (Venus)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -357,6 +312,81 @@
       "nodeKey": "Dakata (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3866da9ae916245d8ce5b1",
+      "activation": "2026-06-21T22:34:02.757Z",
+      "expiry": "2026-06-22T00:31:12.369Z",
+      "node": "Callisto (Jupiter)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Callisto (Jupiter)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38678e82bc63d2bc8ce5b1",
+      "activation": "2026-06-21T22:37:02.832Z",
+      "expiry": "2026-06-22T00:18:54.463Z",
+      "node": "Pago (Kuva Fortress)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Pago (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38678e82bc63d2bc8ce5b2",
+      "activation": "2026-06-21T22:37:02.832Z",
+      "expiry": "2026-06-22T00:17:40.962Z",
+      "node": "Rotuma (Kuva Fortress)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Rotuma (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38678e82bc63d2bc8ce5b3",
+      "activation": "2026-06-21T22:37:02.832Z",
+      "expiry": "2026-06-22T00:08:09.082Z",
+      "node": "Mariana (Earth)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Mariana (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38678e82bc63d2bc8ce5b4",
+      "activation": "2026-06-21T22:37:02.832Z",
+      "expiry": "2026-06-22T00:19:58.675Z",
+      "node": "Ishtar (Venus)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Ishtar (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": false,
       "isHard": true
     },
@@ -798,7 +828,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1h 28m 58s",
+    "remaining": "1h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1434,9 +1464,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 13,
+      "count": -22,
       "requiredRuns": 49000,
-      "completion": 50.01326530612245,
+      "completion": 49.977551020408164,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1651,9 +1681,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15716,
+      "count": -15967,
       "requiredRuns": 30000,
-      "completion": 47.61333333333333,
+      "completion": 46.776666666666664,
       "completed": false,
       "rewardTypes": [
         "fieldron"
