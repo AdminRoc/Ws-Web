@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T02:16:14Z",
+  "fetchedAt": "2026-06-21T02:21:15Z",
   "cetusCycle": {
     "id": "cetusCycle1782009840000",
     "activation": "2026-06-21T01:04:00.000Z",
     "expiry": "2026-06-21T02:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "28m 0s",
+    "timeLeft": "23m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782009840000",
     "activation": "2026-06-21T01:04:00.000Z",
     "expiry": "2026-06-21T02:44:00.000Z",
-    "timeLeft": "28m 0s",
+    "timeLeft": "23m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T03:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 17m 55s"
+    "timeLeft": "1h 12m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782014400000",
@@ -45,21 +45,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a37335a1def59d5b88ce5b1",
-      "activation": "2026-06-21T00:42:02.754Z",
-      "expiry": "2026-06-21T02:21:55.542Z",
-      "node": "Cytherean (Venus)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cytherean (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a37335a1def59d5b88ce5b2",
       "activation": "2026-06-21T00:42:02.754Z",
       "expiry": "2026-06-21T02:24:12.750Z",
@@ -69,6 +54,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "E Prime (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37335a1def59d5b88ce5b1",
+      "activation": "2026-06-21T00:42:02.754Z",
+      "expiry": "2026-06-21T02:21:55.542Z",
+      "node": "Cytherean (Venus)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cytherean (Venus)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -86,36 +86,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Arval (Mars)",
       "tier": "Lith",
       "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3735b340945837f08ce5b1",
-      "activation": "2026-06-21T00:52:02.988Z",
-      "expiry": "2026-06-21T02:20:36.284Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3736deda59f816258ce5b1",
-      "activation": "2026-06-21T00:57:02.413Z",
-      "expiry": "2026-06-21T02:17:03.122Z",
-      "node": "Naeglar (Eris)",
-      "missionType": "Hive",
-      "missionTypeKey": "Hive",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Naeglar (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
       "isStorm": false,
       "isHard": true
     },
@@ -195,21 +165,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a373de67daad54f2b8ce5b2",
-      "activation": "2026-06-21T01:27:02.780Z",
-      "expiry": "2026-06-21T02:56:11.760Z",
-      "node": "Nimus (Eris)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Nimus (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a373de67daad54f2b8ce5b1",
       "activation": "2026-06-21T01:27:02.780Z",
       "expiry": "2026-06-21T02:52:33.206Z",
@@ -219,6 +174,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Kelpie (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a373de67daad54f2b8ce5b2",
+      "activation": "2026-06-21T01:27:02.780Z",
+      "expiry": "2026-06-21T02:56:11.760Z",
+      "node": "Nimus (Eris)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Nimus (Eris)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -270,21 +240,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a37434ab07561566b8ce5b1",
-      "activation": "2026-06-21T01:50:02.722Z",
-      "expiry": "2026-06-21T03:20:32.354Z",
-      "node": "Circulus (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Circulus (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a37434ab07561566b8ce5b2",
       "activation": "2026-06-21T01:50:02.722Z",
       "expiry": "2026-06-21T03:26:19.825Z",
@@ -294,6 +249,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Crossfire",
       "enemyKey": "Crossfire",
       "nodeKey": "Everview Arc (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37434ab07561566b8ce5b1",
+      "activation": "2026-06-21T01:50:02.722Z",
+      "expiry": "2026-06-21T03:20:32.354Z",
+      "node": "Circulus (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Circulus (Lua)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -330,21 +300,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3743c2f97252f1a38ce5b3",
-      "activation": "2026-06-21T01:52:02.423Z",
-      "expiry": "2026-06-21T03:13:16.943Z",
-      "node": "Stephano (Uranus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Stephano (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3743c2f97252f1a38ce5b2",
       "activation": "2026-06-21T01:52:02.423Z",
       "expiry": "2026-06-21T03:04:21.623Z",
@@ -354,6 +309,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Neso (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3743c2f97252f1a38ce5b3",
+      "activation": "2026-06-21T01:52:02.423Z",
+      "expiry": "2026-06-21T03:13:16.943Z",
+      "node": "Stephano (Uranus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Stephano (Uranus)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -371,6 +341,96 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Kala-azar (Eris)",
       "tier": "Axi",
       "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3749630b160185ac8ce5b1",
+      "activation": "2026-06-21T02:16:03.159Z",
+      "expiry": "2026-06-21T03:34:43.800Z",
+      "node": "Yuvarium (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Yuvarium (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a374a16c5191b843b8ce5b1",
+      "activation": "2026-06-21T02:19:02.920Z",
+      "expiry": "2026-06-21T04:05:53.678Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nabuk (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a374a16c5191b843b8ce5b2",
+      "activation": "2026-06-21T02:19:02.920Z",
+      "expiry": "2026-06-21T03:37:17.734Z",
+      "node": "Rotuma (Kuva Fortress)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Rotuma (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a374a16c5191b843b8ce5b3",
+      "activation": "2026-06-21T02:19:02.920Z",
+      "expiry": "2026-06-21T03:58:30.049Z",
+      "node": "Tamu (Kuva Fortress)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Tamu (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a374a52d9a1bba9b78ce5b1",
+      "activation": "2026-06-21T02:20:02.226Z",
+      "expiry": "2026-06-21T04:03:51.948Z",
+      "node": "Pacific (Earth)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Pacific (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a374a52d9a1bba9b78ce5b2",
+      "activation": "2026-06-21T02:20:02.226Z",
+      "expiry": "2026-06-21T03:27:21.836Z",
+      "node": "Kiliken (Venus)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Kiliken (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": false,
       "isHard": true
     },
@@ -812,7 +872,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "21h 43m 58s",
+    "remaining": "21h 38m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1348,9 +1408,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -31813,
+      "count": -31895,
       "requiredRuns": 42000,
-      "completion": 12.12738095238095,
+      "completion": 12.029761904761905,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1398,9 +1458,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 28885,
+      "count": 28998,
       "requiredRuns": 33000,
-      "completion": 93.76515151515152,
+      "completion": 93.93636363636364,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1507,9 +1567,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -25541,
+      "count": -25688,
       "requiredRuns": 30000,
-      "completion": 14.863333333333328,
+      "completion": 14.373333333333338,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1687,9 +1747,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15025,
+      "count": -16029,
       "requiredRuns": 48000,
-      "completion": 68.69791666666667,
+      "completion": 66.60625,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1723,9 +1783,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1744,
+      "count": -1868,
       "requiredRuns": 30000,
-      "completion": 94.18666666666667,
+      "completion": 93.77333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -6354,7 +6414,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 10,
       "salePrice": 9,
       "total": 200,
-      "sold": 157,
+      "sold": 159,
       "discount": 10
     }
   ],
