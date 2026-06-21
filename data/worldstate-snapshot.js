@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T12:46:15Z",
+  "fetchedAt": "2026-06-21T12:51:23Z",
   "cetusCycle": {
     "id": "cetusCycle1782048840000",
     "activation": "2026-06-21T12:44:00.000Z",
     "expiry": "2026-06-21T13:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "49m 0s",
+    "timeLeft": "48m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782048840000",
     "activation": "2026-06-21T12:44:00.000Z",
     "expiry": "2026-06-21T13:34:00.000Z",
-    "timeLeft": "49m 0s",
+    "timeLeft": "48m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T13:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "48m 54s"
+    "timeLeft": "47m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782050400000",
@@ -812,7 +812,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "11h 14m 58s",
+    "remaining": "11h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1448,9 +1448,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 13451,
+      "count": 13552,
       "requiredRuns": 33000,
-      "completion": 70.38030303030303,
+      "completion": 70.53333333333333,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1557,9 +1557,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17311,
+      "count": -17369,
       "requiredRuns": 30000,
-      "completion": 42.296666666666674,
+      "completion": 42.10333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1629,9 +1629,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -25822,
+      "count": -26587,
       "requiredRuns": 37000,
-      "completion": 30.210810810810806,
+      "completion": 28.143243243243244,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1665,9 +1665,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27133,
+      "count": -27868,
       "requiredRuns": 36000,
-      "completion": 24.630555555555556,
+      "completion": 22.588888888888892,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1701,9 +1701,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9579,
+      "count": -10322,
       "requiredRuns": 37000,
-      "completion": 74.11081081081082,
+      "completion": 72.1027027027027,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1737,9 +1737,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1183,
+      "count": -1256,
       "requiredRuns": 30000,
-      "completion": 96.05666666666667,
+      "completion": 95.81333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
