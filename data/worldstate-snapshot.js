@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T23:41:21Z",
+  "fetchedAt": "2026-06-21T23:46:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782090840000",
     "activation": "2026-06-21T23:34:00.000Z",
     "expiry": "2026-06-22T01:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 32m 56s",
+    "timeLeft": "1h 27m 56s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782090840000",
     "activation": "2026-06-21T23:34:00.000Z",
     "expiry": "2026-06-22T01:14:00.000Z",
-    "timeLeft": "1h 32m 56s",
+    "timeLeft": "1h 27m 56s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T02:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 22m 51s"
+    "timeLeft": "2h 17m 50s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782086400000",
@@ -441,15 +441,15 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a385a32d741575e158ce5b6",
-      "activation": "2026-06-21T22:20:03.360Z",
-      "expiry": "2026-06-21T23:50:03.360Z",
-      "node": "H-2 Cloud (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "H-2 Cloud (Veil)",
+      "id": "6a385a32d741575e158ce5b5",
+      "activation": "2026-06-21T22:20:03.358Z",
+      "expiry": "2026-06-21T23:50:03.358Z",
+      "node": "Peregrine Axis (Pluto)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Peregrine Axis (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -467,6 +467,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Beacon Shield Ring (Venus)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a385a32d741575e158ce5b3",
+      "activation": "2026-06-21T22:20:03.355Z",
+      "expiry": "2026-06-21T23:50:03.355Z",
+      "node": "Mordo Cluster (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Mordo Cluster (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": true,
       "isHard": false
     },
@@ -501,30 +516,30 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a385a32d741575e158ce5b3",
-      "activation": "2026-06-21T22:20:03.355Z",
-      "expiry": "2026-06-21T23:50:03.355Z",
-      "node": "Mordo Cluster (Saturn)",
+      "id": "6a385a32d741575e158ce5b6",
+      "activation": "2026-06-21T22:20:03.360Z",
+      "expiry": "2026-06-21T23:50:03.360Z",
+      "node": "H-2 Cloud (Veil)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Mordo Cluster (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
+      "nodeKey": "H-2 Cloud (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
     {
-      "id": "6a385a32d741575e158ce5b5",
-      "activation": "2026-06-21T22:20:03.358Z",
-      "expiry": "2026-06-21T23:50:03.358Z",
-      "node": "Peregrine Axis (Pluto)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
+      "id": "6a386843149206f70a8ce5b5",
+      "activation": "2026-06-21T23:20:03.358Z",
+      "expiry": "2026-06-22T00:50:03.358Z",
+      "node": "Profit Margin (Pluto)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Peregrine Axis (Pluto)",
+      "nodeKey": "Profit Margin (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -542,36 +557,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Bendar Cluster (Earth)",
       "tier": "Lith",
       "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a386843149206f70a8ce5b2",
-      "activation": "2026-06-21T23:20:03.353Z",
-      "expiry": "2026-06-22T00:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a386843149206f70a8ce5b5",
-      "activation": "2026-06-21T23:20:03.358Z",
-      "expiry": "2026-06-22T00:50:03.358Z",
-      "node": "Profit Margin (Pluto)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Profit Margin (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -602,6 +587,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Nu-gua Mines (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a386843149206f70a8ce5b2",
+      "activation": "2026-06-21T23:20:03.353Z",
+      "expiry": "2026-06-22T00:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Orvin-Haarc (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -793,6 +793,17 @@ window.WF_WS_SNAPSHOT = {
         "isPermanent": false
       },
       {
+        "id": "1782345600000seasondailykillenemies",
+        "activation": "2026-06-22T00:00:00.000Z",
+        "expiry": "2026-06-25T00:00:00.000Z",
+        "isDaily": true,
+        "isElite": false,
+        "desc": "Kill 200 Enemies",
+        "title": "Warning Shot",
+        "reputation": 1000,
+        "isPermanent": false
+      },
+      {
         "id": "1782086400000seasonweeklypermanentcompletemissions11",
         "activation": "2026-06-15T00:00:00.000Z",
         "expiry": "2026-06-22T00:00:00.000Z",
@@ -868,6 +879,83 @@ window.WF_WS_SNAPSHOT = {
         "title": "Survival",
         "reputation": 7000,
         "isPermanent": false
+      },
+      {
+        "id": "1782691200000seasonweeklypermanentcompletemissions12",
+        "activation": "2026-06-22T00:00:00.000Z",
+        "expiry": "2026-06-29T00:00:00.000Z",
+        "isDaily": false,
+        "isElite": false,
+        "desc": "Complete any 15 missions",
+        "title": "Mission Complete XII",
+        "reputation": 4500,
+        "isPermanent": false
+      },
+      {
+        "id": "1782691200000seasonweeklypermanentkilleximus12",
+        "activation": "2026-06-22T00:00:00.000Z",
+        "expiry": "2026-06-29T00:00:00.000Z",
+        "isDaily": false,
+        "isElite": false,
+        "desc": "Kill 30 Eximus",
+        "title": "Eximus Eliminator XII",
+        "reputation": 4500,
+        "isPermanent": false
+      },
+      {
+        "id": "1782691200000seasonweeklypermanentkillenemies12",
+        "activation": "2026-06-22T00:00:00.000Z",
+        "expiry": "2026-06-29T00:00:00.000Z",
+        "isDaily": false,
+        "isElite": false,
+        "desc": "Kill 500 Enemies",
+        "title": "Not a Warning Shot XII",
+        "reputation": 4500,
+        "isPermanent": false
+      },
+      {
+        "id": "1782691200000seasonweeklyuseforma",
+        "activation": "2026-06-22T00:00:00.000Z",
+        "expiry": "2026-06-29T00:00:00.000Z",
+        "isDaily": false,
+        "isElite": false,
+        "desc": "Polarize a Weapon, Companion, or Warframe (not in Simulacrum).",
+        "title": "Polarized",
+        "reputation": 4500,
+        "isPermanent": false
+      },
+      {
+        "id": "1782691200000seasonweeklysolveciphers",
+        "activation": "2026-06-22T00:00:00.000Z",
+        "expiry": "2026-06-29T00:00:00.000Z",
+        "isDaily": false,
+        "isElite": false,
+        "desc": "Hack 10 Consoles",
+        "title": "Hacker",
+        "reputation": 4500,
+        "isPermanent": false
+      },
+      {
+        "id": "1782691200000seasonweeklyhardelitebeastslayer",
+        "activation": "2026-06-22T00:00:00.000Z",
+        "expiry": "2026-06-29T00:00:00.000Z",
+        "isDaily": false,
+        "isElite": true,
+        "desc": "Defeat the Orowyrm in Steel Path",
+        "title": "Elite Beast Slayer",
+        "reputation": 7000,
+        "isPermanent": false
+      },
+      {
+        "id": "1782691200000seasonweeklyhardelitesanctuaryonslaught",
+        "activation": "2026-06-22T00:00:00.000Z",
+        "expiry": "2026-06-29T00:00:00.000Z",
+        "isDaily": false,
+        "isElite": true,
+        "desc": "Complete 8 Zones of Elite Sanctuary Onslaught",
+        "title": "Elite Test Subject",
+        "reputation": 7000,
+        "isPermanent": false
       }
     ]
   },
@@ -878,7 +966,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "18m 54s",
+    "remaining": "13m 54s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1464,9 +1552,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -224,
+      "count": -244,
       "requiredRuns": 49000,
-      "completion": 49.77142857142857,
+      "completion": 49.751020408163264,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1681,9 +1769,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17232,
+      "count": -17332,
       "requiredRuns": 30000,
-      "completion": 42.559999999999995,
+      "completion": 42.22666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1717,9 +1805,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -637,
+      "count": -703,
       "requiredRuns": 43000,
-      "completion": 98.51860465116279,
+      "completion": 98.36511627906977,
       "completed": false,
       "rewardTypes": [
         "fieldron"
