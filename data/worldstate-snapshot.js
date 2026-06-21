@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T01:46:14Z",
+  "fetchedAt": "2026-06-21T01:51:16Z",
   "cetusCycle": {
     "id": "cetusCycle1782009840000",
     "activation": "2026-06-21T01:04:00.000Z",
     "expiry": "2026-06-21T02:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "58m 0s",
+    "timeLeft": "53m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782009840000",
     "activation": "2026-06-21T01:04:00.000Z",
     "expiry": "2026-06-21T02:44:00.000Z",
-    "timeLeft": "58m 0s",
+    "timeLeft": "53m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T03:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 47m 55s"
+    "timeLeft": "1h 42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782007200000",
@@ -328,6 +328,51 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 2,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3742d34b529e3b738ce5b1",
+      "activation": "2026-06-21T01:48:03.229Z",
+      "expiry": "2026-06-21T03:19:55.418Z",
+      "node": "Cambria (Earth)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Cambria (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a37434ab07561566b8ce5b1",
+      "activation": "2026-06-21T01:50:02.722Z",
+      "expiry": "2026-06-21T03:20:32.354Z",
+      "node": "Circulus (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37434ab07561566b8ce5b2",
+      "activation": "2026-06-21T01:50:02.722Z",
+      "expiry": "2026-06-21T03:26:19.825Z",
+      "node": "Everview Arc (Zariman)",
+      "missionType": "Void Flood",
+      "missionTypeKey": "Void Flood",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Everview Arc (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a3724d3f657af64778ce5b2",
@@ -767,7 +812,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "22h 13m 58s",
+    "remaining": "22h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1303,9 +1348,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -31262,
+      "count": -31353,
       "requiredRuns": 42000,
-      "completion": 12.783333333333335,
+      "completion": 12.674999999999997,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1353,9 +1398,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 28288,
+      "count": 28387,
       "requiredRuns": 33000,
-      "completion": 92.86060606060606,
+      "completion": 93.01060606060607,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1462,9 +1507,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -24714,
+      "count": -24836,
       "requiredRuns": 30000,
-      "completion": 17.62,
+      "completion": 17.213333333333335,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1642,9 +1687,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9071,
+      "count": -10067,
       "requiredRuns": 48000,
-      "completion": 81.10208333333333,
+      "completion": 79.02708333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1678,9 +1723,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -969,
+      "count": -1121,
       "requiredRuns": 30000,
-      "completion": 96.77,
+      "completion": 96.26333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -6309,7 +6354,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 10,
       "salePrice": 9,
       "total": 200,
-      "sold": 144,
+      "sold": 146,
       "discount": 10
     }
   ],
