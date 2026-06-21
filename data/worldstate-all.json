@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-21T07:26:16Z",
+  "fetchedAt": "2026-06-21T07:31:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782027840000",
     "activation": "2026-06-21T06:04:00.000Z",
     "expiry": "2026-06-21T07:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "19m 0s",
+    "timeLeft": "13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782026400000",
-    "activation": "2026-06-21T07:20:00.000Z",
-    "expiry": "2026-06-21T07:26:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782026760000",
+    "activation": "2026-06-21T07:26:00.000Z",
+    "expiry": "2026-06-21T07:46:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782027840000",
     "activation": "2026-06-21T06:04:00.000Z",
     "expiry": "2026-06-21T07:44:00.000Z",
-    "timeLeft": "19m 0s",
+    "timeLeft": "13m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T08:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 8m 55s"
+    "timeLeft": "1h 2m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782028800000",
@@ -55,21 +55,6 @@
       "isHard": true
     },
     {
-      "id": "6a377a5e652b078c018ce5b1",
-      "activation": "2026-06-21T05:45:02.389Z",
-      "expiry": "2026-06-21T07:27:13.376Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a377c3ed1b52f3dbe8ce5b2",
       "activation": "2026-06-21T05:53:02.677Z",
       "expiry": "2026-06-21T07:36:57.234Z",
@@ -81,21 +66,6 @@
       "nodeKey": "Stephano (Uranus)",
       "tier": "Neo",
       "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a377de2cfc5d874c88ce5b1",
-      "activation": "2026-06-21T06:00:02.953Z",
-      "expiry": "2026-06-21T07:25:18.534Z",
-      "node": "Minthe (Pluto)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Minthe (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
       "isStorm": false,
       "isHard": false
     },
@@ -145,21 +115,6 @@
       "isHard": true
     },
     {
-      "id": "6a378383acbf5c876c8ce5b2",
-      "activation": "2026-06-21T06:24:03.187Z",
-      "expiry": "2026-06-21T07:37:50.706Z",
-      "node": "Tessera (Venus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Tessera (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a378383acbf5c876c8ce5b1",
       "activation": "2026-06-21T06:24:03.187Z",
       "expiry": "2026-06-21T07:33:11.357Z",
@@ -171,6 +126,21 @@
       "nodeKey": "Cypress (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a378383acbf5c876c8ce5b2",
+      "activation": "2026-06-21T06:24:03.187Z",
+      "expiry": "2026-06-21T07:37:50.706Z",
+      "node": "Tessera (Venus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Tessera (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": false,
       "isHard": true
     },
@@ -265,21 +235,6 @@
       "isHard": false
     },
     {
-      "id": "6a3790de2c097fb0ce8ce5b2",
-      "activation": "2026-06-21T07:21:02.253Z",
-      "expiry": "2026-06-21T08:57:18.926Z",
-      "node": "Berehynia (Sedna)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Berehynia (Sedna)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3790de2c097fb0ce8ce5b1",
       "activation": "2026-06-21T07:21:02.253Z",
       "expiry": "2026-06-21T08:31:35.855Z",
@@ -289,6 +244,21 @@
       "enemy": "Orokin",
       "enemyKey": "Orokin",
       "nodeKey": "Hepit (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3790de2c097fb0ce8ce5b2",
+      "activation": "2026-06-21T07:21:02.253Z",
+      "expiry": "2026-06-21T08:57:18.926Z",
+      "node": "Berehynia (Sedna)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Berehynia (Sedna)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -308,6 +278,66 @@
       "tierNum": 6,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a37928231f20c5dc88ce5b1",
+      "activation": "2026-06-21T07:28:02.663Z",
+      "expiry": "2026-06-21T08:59:06.962Z",
+      "node": "Ose (Europa)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Ose (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37928231f20c5dc88ce5b2",
+      "activation": "2026-06-21T07:28:02.663Z",
+      "expiry": "2026-06-21T09:24:15.862Z",
+      "node": "Taranis (Void)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Taranis (Void)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a37928231f20c5dc88ce5b3",
+      "activation": "2026-06-21T07:28:02.663Z",
+      "expiry": "2026-06-21T08:56:16.900Z",
+      "node": "Laomedeia (Neptune)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Laomedeia (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3792be497236c5ac8ce5b1",
+      "activation": "2026-06-21T07:29:02.911Z",
+      "expiry": "2026-06-21T08:51:01.515Z",
+      "node": "Hydron (Sedna)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Hydron (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a3779336fd11891438ce5b3",
@@ -747,7 +777,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "16h 34m 58s",
+    "remaining": "16h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1283,9 +1313,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -37375,
+      "count": -37550,
       "requiredRuns": 42000,
-      "completion": 5.505952380952383,
+      "completion": 5.297619047619046,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1383,9 +1413,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 3277,
+      "count": 3475,
       "requiredRuns": 33000,
-      "completion": 54.96515151515151,
+      "completion": 55.26515151515151,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1600,9 +1630,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9667,
+      "count": -9831,
       "requiredRuns": 30000,
-      "completion": 67.77666666666666,
+      "completion": 67.23,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1636,9 +1666,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -881,
+      "count": -945,
       "requiredRuns": 40000,
-      "completion": 97.7975,
+      "completion": 97.6375,
       "completed": false,
       "rewardTypes": [
         "fieldron"
