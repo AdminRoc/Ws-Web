@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T10:46:14Z",
+  "fetchedAt": "2026-06-21T10:51:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782039840000",
     "activation": "2026-06-21T10:14:00.000Z",
     "expiry": "2026-06-21T11:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "19m 0s",
+    "timeLeft": "13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782039840000",
     "activation": "2026-06-21T10:14:00.000Z",
     "expiry": "2026-06-21T11:04:00.000Z",
-    "timeLeft": "19m 0s",
+    "timeLeft": "13m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T11:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "18m 54s"
+    "timeLeft": "12m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782043200000",
@@ -44,21 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a37a506601d3be3188ce5b1",
-      "activation": "2026-06-21T08:47:02.738Z",
-      "expiry": "2026-06-21T10:46:08.188Z",
-      "node": "Draco (Ceres)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Draco (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a37ac4a1f49d286db8ce5b2",
       "activation": "2026-06-21T09:18:02.390Z",
@@ -129,21 +114,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Rhea (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a37b29ef42a591f528ce5b2",
-      "activation": "2026-06-21T09:45:02.817Z",
-      "expiry": "2026-06-21T10:46:17.990Z",
-      "node": "Sharpless (Phobos)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sharpless (Phobos)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -797,7 +767,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "13h 14m 58s",
+    "remaining": "13h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1333,9 +1303,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -41378,
+      "count": -41568,
       "requiredRuns": 42000,
-      "completion": 0.7404761904761914,
+      "completion": 0.5142857142857116,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1433,9 +1403,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 9467,
+      "count": 9717,
       "requiredRuns": 33000,
-      "completion": 64.3439393939394,
+      "completion": 64.72272727272727,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1542,9 +1512,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -14378,
+      "count": -14570,
       "requiredRuns": 30000,
-      "completion": 52.07333333333332,
+      "completion": 51.43333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1578,9 +1548,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21069,
+      "count": -22741,
       "requiredRuns": 40000,
-      "completion": 47.3275,
+      "completion": 43.14750000000001,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1614,9 +1584,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6571,
+      "count": -8151,
       "requiredRuns": 37000,
-      "completion": 82.24054054054054,
+      "completion": 77.97027027027028,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1650,9 +1620,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8619,
+      "count": -10115,
       "requiredRuns": 36000,
-      "completion": 76.05833333333334,
+      "completion": 71.90277777777779,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1686,9 +1656,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -513,
+      "count": -666,
       "requiredRuns": 37000,
-      "completion": 98.61351351351352,
+      "completion": 98.2,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -5974,6 +5944,4309 @@ window.WF_WS_SNAPSHOT = {
       "id": "1782039879188ZarimanSyndicate",
       "activation": "2026-06-21T08:34:40.314Z",
       "expiry": "2026-06-21T11:04:39.188Z",
+      "syndicate": "The Holdfasts",
+      "syndicateKey": "The Holdfasts",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782048878063CetusSyndicate",
+      "activation": "2026-06-21T11:04:39.189Z",
+      "expiry": "2026-06-21T13:34:38.063Z",
+      "syndicate": "Ostrons",
+      "syndicateKey": "Ostrons",
+      "nodes": [],
+      "jobs": [
+        {
+          "id": "RescueBountyResc1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/TierATableBRewards",
+          "rewardPool": [
+            "Pressure Point",
+            "100X Cryotic",
+            "1,500 Credits Cache",
+            "50 Endo",
+            "15X Grokdrul",
+            "Pressure Point",
+            "100X Cryotic",
+            "1,500 Credits Cache",
+            "50 Endo",
+            "15X Grokdrul",
+            "Gara Chassis Blueprint",
+            "Hornet Strike",
+            "Stretch",
+            "Pressure Point",
+            "100X Cryotic",
+            "1,500 Credits Cache",
+            "50 Endo",
+            "15X Grokdrul",
+            "Gara Chassis Blueprint",
+            "Hornet Strike",
+            "Stretch",
+            "2X Morphics",
+            "Gara Chassis Blueprint",
+            "Hornet Strike",
+            "Stretch",
+            "2X Morphics"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Pressure Point",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 100
+            },
+            {
+              "item": "1,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "50 Endo",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Grokdrul",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 15
+            },
+            {
+              "item": "Pressure Point",
+              "rarity": "Uncommon",
+              "chance": 15.49,
+              "count": 1
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 15.49,
+              "count": 100
+            },
+            {
+              "item": "1,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 15.49,
+              "count": 1
+            },
+            {
+              "item": "50 Endo",
+              "rarity": "Uncommon",
+              "chance": 15.49,
+              "count": 1
+            },
+            {
+              "item": "Grokdrul",
+              "rarity": "Uncommon",
+              "chance": 15.49,
+              "count": 15
+            },
+            {
+              "item": "Gara Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 7.52,
+              "count": 1
+            },
+            {
+              "item": "Hornet Strike",
+              "rarity": "Rare",
+              "chance": 7.52,
+              "count": 1
+            },
+            {
+              "item": "Stretch",
+              "rarity": "Rare",
+              "chance": 7.52,
+              "count": 1
+            },
+            {
+              "item": "Pressure Point",
+              "rarity": "Uncommon",
+              "chance": 15.18,
+              "count": 1
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 15.18,
+              "count": 100
+            },
+            {
+              "item": "1,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 15.18,
+              "count": 1
+            },
+            {
+              "item": "50 Endo",
+              "rarity": "Uncommon",
+              "chance": 15.18,
+              "count": 1
+            },
+            {
+              "item": "Grokdrul",
+              "rarity": "Uncommon",
+              "chance": 15.18,
+              "count": 15
+            },
+            {
+              "item": "Gara Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 7.37,
+              "count": 1
+            },
+            {
+              "item": "Hornet Strike",
+              "rarity": "Rare",
+              "chance": 7.37,
+              "count": 1
+            },
+            {
+              "item": "Stretch",
+              "rarity": "Rare",
+              "chance": 7.37,
+              "count": 1
+            },
+            {
+              "item": "Morphics",
+              "rarity": "Rare",
+              "chance": 2.01,
+              "count": 2
+            },
+            {
+              "item": "Gara Chassis Blueprint",
+              "rarity": "Uncommon",
+              "chance": 30.56,
+              "count": 1
+            },
+            {
+              "item": "Hornet Strike",
+              "rarity": "Uncommon",
+              "chance": 30.56,
+              "count": 1
+            },
+            {
+              "item": "Stretch",
+              "rarity": "Uncommon",
+              "chance": 30.56,
+              "count": 1
+            },
+            {
+              "item": "Morphics",
+              "rarity": "Rare",
+              "chance": 8.33,
+              "count": 2
+            }
+          ],
+          "type": "Search and Rescue",
+          "enemyLevels": [
+            5,
+            15
+          ],
+          "standingStages": [
+            490,
+            490,
+            490
+          ],
+          "minMR": 0
+        },
+        {
+          "id": "AssassinateBountyAss1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/TierBTableBRewards",
+          "rewardPool": [
+            "Energy Inversion",
+            "200X Cryotic",
+            "2,500 Credits Cache",
+            "100 Endo",
+            "Energy Inversion",
+            "200X Cryotic",
+            "2,500 Credits Cache",
+            "100 Endo",
+            "Gara Systems Blueprint",
+            "Speed Trigger",
+            "Reaping Spiral",
+            "Aya",
+            "Energy Inversion",
+            "200X Cryotic",
+            "2,500 Credits Cache",
+            "100 Endo",
+            "Gara Systems Blueprint",
+            "Speed Trigger",
+            "Reaping Spiral",
+            "Aya",
+            "2X Neural Sensors",
+            "Gara Systems Blueprint",
+            "Speed Trigger",
+            "Reaping Spiral",
+            "Aya",
+            "2X Neural Sensors"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Energy Inversion",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 200
+            },
+            {
+              "item": "2,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "100 Endo",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Energy Inversion",
+              "rarity": "Uncommon",
+              "chance": 15.97,
+              "count": 1
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 15.97,
+              "count": 200
+            },
+            {
+              "item": "2,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 15.97,
+              "count": 1
+            },
+            {
+              "item": "100 Endo",
+              "rarity": "Uncommon",
+              "chance": 15.97,
+              "count": 1
+            },
+            {
+              "item": "Gara Systems Blueprint",
+              "rarity": "Uncommon",
+              "chance": 10.08,
+              "count": 1
+            },
+            {
+              "item": "Speed Trigger",
+              "rarity": "Uncommon",
+              "chance": 10.08,
+              "count": 1
+            },
+            {
+              "item": "Reaping Spiral",
+              "rarity": "Uncommon",
+              "chance": 10.08,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 5.88,
+              "count": 1
+            },
+            {
+              "item": "Energy Inversion",
+              "rarity": "Uncommon",
+              "chance": 15.32,
+              "count": 1
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 15.32,
+              "count": 200
+            },
+            {
+              "item": "2,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 15.32,
+              "count": 1
+            },
+            {
+              "item": "100 Endo",
+              "rarity": "Uncommon",
+              "chance": 15.32,
+              "count": 1
+            },
+            {
+              "item": "Gara Systems Blueprint",
+              "rarity": "Rare",
+              "chance": 9.68,
+              "count": 1
+            },
+            {
+              "item": "Speed Trigger",
+              "rarity": "Rare",
+              "chance": 9.68,
+              "count": 1
+            },
+            {
+              "item": "Reaping Spiral",
+              "rarity": "Rare",
+              "chance": 9.68,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 5.65,
+              "count": 1
+            },
+            {
+              "item": "Neural Sensors",
+              "rarity": "Rare",
+              "chance": 4.03,
+              "count": 2
+            },
+            {
+              "item": "Gara Systems Blueprint",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Speed Trigger",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Reaping Spiral",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 14.58,
+              "count": 1
+            },
+            {
+              "item": "Neural Sensors",
+              "rarity": "Uncommon",
+              "chance": 10.42,
+              "count": 2
+            }
+          ],
+          "type": "Assassinate the Commander",
+          "enemyLevels": [
+            10,
+            30
+          ],
+          "standingStages": [
+            600,
+            600,
+            600
+          ],
+          "minMR": 1
+        },
+        {
+          "id": "CaptureBountyCapOne1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/TierCTableBRewards",
+          "rewardPool": [
+            "Vigilante Armaments",
+            "Vazarin Lens",
+            "Unairu Lens",
+            "200 Endo",
+            "Vigilante Armaments",
+            "Vazarin Lens",
+            "Unairu Lens",
+            "200 Endo",
+            "Gara Neuroptics Blueprint",
+            "Gladiator Might",
+            "Revenant Systems Blueprint",
+            "Aya",
+            "Vigilante Armaments",
+            "Vazarin Lens",
+            "Unairu Lens",
+            "200 Endo",
+            "Gara Neuroptics Blueprint",
+            "Gladiator Might",
+            "Revenant Systems Blueprint",
+            "Aya",
+            "Augur Seeker",
+            "Gara Neuroptics Blueprint",
+            "Gladiator Might",
+            "Revenant Systems Blueprint",
+            "Aya",
+            "Augur Seeker"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Vigilante Armaments",
+              "rarity": "Common",
+              "chance": 35.19,
+              "count": 1
+            },
+            {
+              "item": "Vazarin Lens",
+              "rarity": "Uncommon",
+              "chance": 14.81,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Uncommon",
+              "chance": 14.81,
+              "count": 1
+            },
+            {
+              "item": "200 Endo",
+              "rarity": "Common",
+              "chance": 35.19,
+              "count": 1
+            },
+            {
+              "item": "Vigilante Armaments",
+              "rarity": "Uncommon",
+              "chance": 22.09,
+              "count": 1
+            },
+            {
+              "item": "Vazarin Lens",
+              "rarity": "Rare",
+              "chance": 9.3,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Rare",
+              "chance": 9.3,
+              "count": 1
+            },
+            {
+              "item": "200 Endo",
+              "rarity": "Uncommon",
+              "chance": 22.09,
+              "count": 1
+            },
+            {
+              "item": "Gara Neuroptics Blueprint",
+              "rarity": "Rare",
+              "chance": 9.3,
+              "count": 1
+            },
+            {
+              "item": "Gladiator Might",
+              "rarity": "Rare",
+              "chance": 9.3,
+              "count": 1
+            },
+            {
+              "item": "Revenant Systems Blueprint",
+              "rarity": "Uncommon",
+              "chance": 10.47,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 8.14,
+              "count": 1
+            },
+            {
+              "item": "Vigilante Armaments",
+              "rarity": "Uncommon",
+              "chance": 21.59,
+              "count": 1
+            },
+            {
+              "item": "Vazarin Lens",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 1
+            },
+            {
+              "item": "200 Endo",
+              "rarity": "Uncommon",
+              "chance": 21.59,
+              "count": 1
+            },
+            {
+              "item": "Gara Neuroptics Blueprint",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 1
+            },
+            {
+              "item": "Gladiator Might",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 1
+            },
+            {
+              "item": "Revenant Systems Blueprint",
+              "rarity": "Uncommon",
+              "chance": 10.23,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 7.95,
+              "count": 1
+            },
+            {
+              "item": "Augur Seeker",
+              "rarity": "Rare",
+              "chance": 2.27,
+              "count": 1
+            },
+            {
+              "item": "Gara Neuroptics Blueprint",
+              "rarity": "Uncommon",
+              "chance": 23.53,
+              "count": 1
+            },
+            {
+              "item": "Gladiator Might",
+              "rarity": "Uncommon",
+              "chance": 23.53,
+              "count": 1
+            },
+            {
+              "item": "Revenant Systems Blueprint",
+              "rarity": "Uncommon",
+              "chance": 26.47,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 20.59,
+              "count": 1
+            },
+            {
+              "item": "Augur Seeker",
+              "rarity": "Rare",
+              "chance": 5.88,
+              "count": 1
+            }
+          ],
+          "type": "Capture the Grineer Commander",
+          "enemyLevels": [
+            20,
+            40
+          ],
+          "standingStages": [
+            570,
+            570,
+            570,
+            840
+          ],
+          "minMR": 2
+        },
+        {
+          "id": "AssassinateBountyCap1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/TierDTableBRewards",
+          "rewardPool": [
+            "Vigilante Vigor",
+            "Zenurik Lens",
+            "Vazarin Lens",
+            "300 Endo",
+            "Vigilante Vigor",
+            "Zenurik Lens",
+            "Vazarin Lens",
+            "300 Endo",
+            "Cetus Wisp",
+            "Gladiator Resolve",
+            "Revenant Chassis Blueprint",
+            "Aya",
+            "Vigilante Vigor",
+            "Zenurik Lens",
+            "Vazarin Lens",
+            "300 Endo",
+            "Cetus Wisp",
+            "Gladiator Resolve",
+            "Revenant Chassis Blueprint",
+            "Aya",
+            "Augur Secrets",
+            "Cetus Wisp",
+            "Gladiator Resolve",
+            "Revenant Chassis Blueprint",
+            "Aya",
+            "Augur Secrets"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Vigilante Vigor",
+              "rarity": "Common",
+              "chance": 35.19,
+              "count": 1
+            },
+            {
+              "item": "Zenurik Lens",
+              "rarity": "Uncommon",
+              "chance": 14.81,
+              "count": 1
+            },
+            {
+              "item": "Vazarin Lens",
+              "rarity": "Uncommon",
+              "chance": 14.81,
+              "count": 1
+            },
+            {
+              "item": "300 Endo",
+              "rarity": "Common",
+              "chance": 35.19,
+              "count": 1
+            },
+            {
+              "item": "Vigilante Vigor",
+              "rarity": "Uncommon",
+              "chance": 21.35,
+              "count": 1
+            },
+            {
+              "item": "Zenurik Lens",
+              "rarity": "Rare",
+              "chance": 8.99,
+              "count": 1
+            },
+            {
+              "item": "Vazarin Lens",
+              "rarity": "Rare",
+              "chance": 8.99,
+              "count": 1
+            },
+            {
+              "item": "300 Endo",
+              "rarity": "Uncommon",
+              "chance": 21.35,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 10.11,
+              "count": 1
+            },
+            {
+              "item": "Gladiator Resolve",
+              "rarity": "Rare",
+              "chance": 8.99,
+              "count": 1
+            },
+            {
+              "item": "Revenant Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 8.99,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 11.24,
+              "count": 1
+            },
+            {
+              "item": "Vigilante Vigor",
+              "rarity": "Uncommon",
+              "chance": 20.88,
+              "count": 1
+            },
+            {
+              "item": "Zenurik Lens",
+              "rarity": "Rare",
+              "chance": 8.79,
+              "count": 1
+            },
+            {
+              "item": "Vazarin Lens",
+              "rarity": "Rare",
+              "chance": 8.79,
+              "count": 1
+            },
+            {
+              "item": "300 Endo",
+              "rarity": "Uncommon",
+              "chance": 20.88,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Rare",
+              "chance": 9.89,
+              "count": 1
+            },
+            {
+              "item": "Gladiator Resolve",
+              "rarity": "Rare",
+              "chance": 8.79,
+              "count": 1
+            },
+            {
+              "item": "Revenant Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 8.79,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 10.99,
+              "count": 1
+            },
+            {
+              "item": "Augur Secrets",
+              "rarity": "Rare",
+              "chance": 2.2,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 24.32,
+              "count": 1
+            },
+            {
+              "item": "Gladiator Resolve",
+              "rarity": "Uncommon",
+              "chance": 21.62,
+              "count": 1
+            },
+            {
+              "item": "Revenant Chassis Blueprint",
+              "rarity": "Uncommon",
+              "chance": 21.62,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 27.03,
+              "count": 1
+            },
+            {
+              "item": "Augur Secrets",
+              "rarity": "Rare",
+              "chance": 5.41,
+              "count": 1
+            }
+          ],
+          "type": "Capture the New Grineer Commander",
+          "enemyLevels": [
+            30,
+            50
+          ],
+          "standingStages": [
+            570,
+            570,
+            570,
+            570,
+            1110
+          ],
+          "minMR": 3
+        },
+        {
+          "id": "SabotageBountySab1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/TierETableBRewards",
+          "rewardPool": [
+            "5X Breath Of The Eidolon",
+            "400 Endo",
+            "5X Breath Of The Eidolon",
+            "400 Endo",
+            "2X Cetus Wisp",
+            "300X Kuva",
+            "Aya",
+            "5X Breath Of The Eidolon",
+            "400 Endo",
+            "2X Cetus Wisp",
+            "300X Kuva",
+            "Aya",
+            "Furax Wraith Right Gauntlet",
+            "Swooping Falcon",
+            "Eidolon Lens Blueprint",
+            "Revenant Neuroptics Blueprint",
+            "2X Cetus Wisp",
+            "300X Kuva",
+            "Aya",
+            "Furax Wraith Right Gauntlet",
+            "Swooping Falcon",
+            "Eidolon Lens Blueprint",
+            "Revenant Neuroptics Blueprint"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Breath Of The Eidolon",
+              "rarity": "Common",
+              "chance": 50,
+              "count": 5
+            },
+            {
+              "item": "400 Endo",
+              "rarity": "Common",
+              "chance": 50,
+              "count": 1
+            },
+            {
+              "item": "Breath Of The Eidolon",
+              "rarity": "Uncommon",
+              "chance": 21.74,
+              "count": 5
+            },
+            {
+              "item": "400 Endo",
+              "rarity": "Uncommon",
+              "chance": 21.74,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 17.39,
+              "count": 2
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 6.09,
+              "count": 300
+            },
+            {
+              "item": "Aya",
+              "rarity": "Common",
+              "chance": 33.04,
+              "count": 1
+            },
+            {
+              "item": "Breath Of The Eidolon",
+              "rarity": "Uncommon",
+              "chance": 16.89,
+              "count": 5
+            },
+            {
+              "item": "400 Endo",
+              "rarity": "Uncommon",
+              "chance": 16.89,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 13.51,
+              "count": 2
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 4.73,
+              "count": 300
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 25.68,
+              "count": 1
+            },
+            {
+              "item": "Furax Wraith Right Gauntlet",
+              "rarity": "Rare",
+              "chance": 5.41,
+              "count": 1
+            },
+            {
+              "item": "Swooping Falcon",
+              "rarity": "Rare",
+              "chance": 5.41,
+              "count": 1
+            },
+            {
+              "item": "Eidolon Lens Blueprint",
+              "rarity": "Rare",
+              "chance": 4.73,
+              "count": 1
+            },
+            {
+              "item": "Revenant Neuroptics Blueprint",
+              "rarity": "Rare",
+              "chance": 6.76,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 20.41,
+              "count": 2
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 7.14,
+              "count": 300
+            },
+            {
+              "item": "Aya",
+              "rarity": "Common",
+              "chance": 38.78,
+              "count": 1
+            },
+            {
+              "item": "Furax Wraith Right Gauntlet",
+              "rarity": "Rare",
+              "chance": 8.16,
+              "count": 1
+            },
+            {
+              "item": "Swooping Falcon",
+              "rarity": "Rare",
+              "chance": 8.16,
+              "count": 1
+            },
+            {
+              "item": "Eidolon Lens Blueprint",
+              "rarity": "Rare",
+              "chance": 7.14,
+              "count": 1
+            },
+            {
+              "item": "Revenant Neuroptics Blueprint",
+              "rarity": "Uncommon",
+              "chance": 10.2,
+              "count": 1
+            }
+          ],
+          "type": "Sabotage Bounty",
+          "enemyLevels": [
+            40,
+            60
+          ],
+          "standingStages": [
+            750,
+            750,
+            750,
+            750,
+            1470
+          ],
+          "minMR": 5
+        },
+        {
+          "id": "AttritionBountyCap1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/TierETableBRewards",
+          "rewardPool": [
+            "5X Breath Of The Eidolon",
+            "400 Endo",
+            "5X Breath Of The Eidolon",
+            "400 Endo",
+            "2X Cetus Wisp",
+            "300X Kuva",
+            "Aya",
+            "5X Breath Of The Eidolon",
+            "400 Endo",
+            "2X Cetus Wisp",
+            "300X Kuva",
+            "Aya",
+            "Furax Wraith Right Gauntlet",
+            "Swooping Falcon",
+            "Eidolon Lens Blueprint",
+            "Revenant Neuroptics Blueprint",
+            "2X Cetus Wisp",
+            "300X Kuva",
+            "Aya",
+            "Furax Wraith Right Gauntlet",
+            "Swooping Falcon",
+            "Eidolon Lens Blueprint",
+            "Revenant Neuroptics Blueprint"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Breath Of The Eidolon",
+              "rarity": "Common",
+              "chance": 50,
+              "count": 5
+            },
+            {
+              "item": "400 Endo",
+              "rarity": "Common",
+              "chance": 50,
+              "count": 1
+            },
+            {
+              "item": "Breath Of The Eidolon",
+              "rarity": "Uncommon",
+              "chance": 21.74,
+              "count": 5
+            },
+            {
+              "item": "400 Endo",
+              "rarity": "Uncommon",
+              "chance": 21.74,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 17.39,
+              "count": 2
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 6.09,
+              "count": 300
+            },
+            {
+              "item": "Aya",
+              "rarity": "Common",
+              "chance": 33.04,
+              "count": 1
+            },
+            {
+              "item": "Breath Of The Eidolon",
+              "rarity": "Uncommon",
+              "chance": 16.89,
+              "count": 5
+            },
+            {
+              "item": "400 Endo",
+              "rarity": "Uncommon",
+              "chance": 16.89,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 13.51,
+              "count": 2
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 4.73,
+              "count": 300
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 25.68,
+              "count": 1
+            },
+            {
+              "item": "Furax Wraith Right Gauntlet",
+              "rarity": "Rare",
+              "chance": 5.41,
+              "count": 1
+            },
+            {
+              "item": "Swooping Falcon",
+              "rarity": "Rare",
+              "chance": 5.41,
+              "count": 1
+            },
+            {
+              "item": "Eidolon Lens Blueprint",
+              "rarity": "Rare",
+              "chance": 4.73,
+              "count": 1
+            },
+            {
+              "item": "Revenant Neuroptics Blueprint",
+              "rarity": "Rare",
+              "chance": 6.76,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 20.41,
+              "count": 2
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 7.14,
+              "count": 300
+            },
+            {
+              "item": "Aya",
+              "rarity": "Common",
+              "chance": 38.78,
+              "count": 1
+            },
+            {
+              "item": "Furax Wraith Right Gauntlet",
+              "rarity": "Rare",
+              "chance": 8.16,
+              "count": 1
+            },
+            {
+              "item": "Swooping Falcon",
+              "rarity": "Rare",
+              "chance": 8.16,
+              "count": 1
+            },
+            {
+              "item": "Eidolon Lens Blueprint",
+              "rarity": "Rare",
+              "chance": 7.14,
+              "count": 1
+            },
+            {
+              "item": "Revenant Neuroptics Blueprint",
+              "rarity": "Uncommon",
+              "chance": 10.2,
+              "count": 1
+            }
+          ],
+          "type": "Capture Their Leader",
+          "enemyLevels": [
+            100,
+            100
+          ],
+          "standingStages": [
+            840,
+            840,
+            840,
+            840,
+            1660
+          ],
+          "minMR": 10
+        },
+        {
+          "id": "AttritionBountyLib1782048878063",
+          "expiry": "2026-06-21T12:44:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableBRewards",
+          "rewardPool": [
+            "Boreal's Anguish",
+            "Narmer Isoplast",
+            "600 Endo",
+            "Boreal's Anguish",
+            "Narmer Isoplast",
+            "600 Endo",
+            "Caliban Chassis Blueprint",
+            "Nira's Hatred",
+            "2X Narmer Isoplast",
+            "900 Endo",
+            "Boreal's Anguish",
+            "Narmer Isoplast",
+            "600 Endo",
+            "Caliban Chassis Blueprint",
+            "Nira's Hatred",
+            "2X Narmer Isoplast",
+            "900 Endo",
+            "Amar's Contempt",
+            "Nepheri Blueprint",
+            "3X Narmer Isoplast",
+            "1200 Endo",
+            "Caliban Chassis Blueprint",
+            "Nira's Hatred",
+            "2X Narmer Isoplast",
+            "900 Endo",
+            "Amar's Contempt",
+            "Nepheri Blueprint",
+            "3X Narmer Isoplast",
+            "1200 Endo"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Boreal's Anguish",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "600 Endo",
+              "rarity": "Common",
+              "chance": 46.67,
+              "count": 1
+            },
+            {
+              "item": "Boreal's Anguish",
+              "rarity": "Rare",
+              "chance": 8.11,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Uncommon",
+              "chance": 13.51,
+              "count": 1
+            },
+            {
+              "item": "600 Endo",
+              "rarity": "Uncommon",
+              "chance": 18.92,
+              "count": 1
+            },
+            {
+              "item": "Caliban Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 8.11,
+              "count": 1
+            },
+            {
+              "item": "Nira's Hatred",
+              "rarity": "Uncommon",
+              "chance": 13.51,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Uncommon",
+              "chance": 18.92,
+              "count": 2
+            },
+            {
+              "item": "900 Endo",
+              "rarity": "Uncommon",
+              "chance": 18.92,
+              "count": 1
+            },
+            {
+              "item": "Boreal's Anguish",
+              "rarity": "Rare",
+              "chance": 5.45,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 1
+            },
+            {
+              "item": "600 Endo",
+              "rarity": "Uncommon",
+              "chance": 12.73,
+              "count": 1
+            },
+            {
+              "item": "Caliban Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 5.45,
+              "count": 1
+            },
+            {
+              "item": "Nira's Hatred",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Uncommon",
+              "chance": 12.73,
+              "count": 2
+            },
+            {
+              "item": "900 Endo",
+              "rarity": "Uncommon",
+              "chance": 12.73,
+              "count": 1
+            },
+            {
+              "item": "Amar's Contempt",
+              "rarity": "Rare",
+              "chance": 5.45,
+              "count": 1
+            },
+            {
+              "item": "Nepheri Blueprint",
+              "rarity": "Rare",
+              "chance": 5.45,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 3
+            },
+            {
+              "item": "1200 Endo",
+              "rarity": "Uncommon",
+              "chance": 12.73,
+              "count": 1
+            },
+            {
+              "item": "Caliban Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 7.5,
+              "count": 1
+            },
+            {
+              "item": "Nira's Hatred",
+              "rarity": "Uncommon",
+              "chance": 12.5,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Uncommon",
+              "chance": 17.5,
+              "count": 2
+            },
+            {
+              "item": "900 Endo",
+              "rarity": "Uncommon",
+              "chance": 17.5,
+              "count": 1
+            },
+            {
+              "item": "Amar's Contempt",
+              "rarity": "Rare",
+              "chance": 7.5,
+              "count": 1
+            },
+            {
+              "item": "Nepheri Blueprint",
+              "rarity": "Rare",
+              "chance": 7.5,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Uncommon",
+              "chance": 12.5,
+              "count": 3
+            },
+            {
+              "item": "1200 Endo",
+              "rarity": "Uncommon",
+              "chance": 17.5,
+              "count": 1
+            }
+          ],
+          "type": "Bring Them Home (Narmer)",
+          "enemyLevels": [
+            50,
+            70
+          ],
+          "standingStages": [
+            820,
+            820,
+            820,
+            820,
+            1610
+          ],
+          "minMR": 0,
+          "timeBound": "day"
+        }
+      ]
+    },
+    {
+      "id": "1782048878063EntratiLabSyndicate",
+      "activation": "2026-06-21T11:04:39.189Z",
+      "expiry": "2026-06-21T13:34:38.063Z",
+      "syndicate": "Cavia",
+      "syndicateKey": "Cavia",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782048878063EntratiSyndicate",
+      "activation": "2026-06-21T11:04:39.189Z",
+      "expiry": "2026-06-21T13:34:38.063Z",
+      "syndicate": "Entrati",
+      "syndicateKey": "Entrati",
+      "nodes": [],
+      "jobs": [
+        {
+          "id": "DeimosPurifyBounty1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/DeimosMissionRewards/TierATableBRewards",
+          "rewardPool": [
+            "3X 1,500 Credits Cache",
+            "150 Endo",
+            "15X Pustulite",
+            "3X 1,500 Credits Cache",
+            "150 Endo",
+            "15X Pustulite",
+            "2X 3,000 Credits Cache",
+            "2X 3,000 Credits Cache",
+            "250 Endo",
+            "250 Endo",
+            "Aya",
+            "3X 1,500 Credits Cache",
+            "150 Endo",
+            "15X Pustulite",
+            "2X 3,000 Credits Cache",
+            "2X 3,000 Credits Cache",
+            "250 Endo",
+            "250 Endo",
+            "Aya",
+            "Scintillant",
+            "2X 3,000 Credits Cache",
+            "2X 3,000 Credits Cache",
+            "250 Endo",
+            "250 Endo",
+            "Aya",
+            "Scintillant"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "1,500 Credits Cache",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 3
+            },
+            {
+              "item": "150 Endo",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "Pustulite",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 15
+            },
+            {
+              "item": "1,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 25.81,
+              "count": 3
+            },
+            {
+              "item": "150 Endo",
+              "rarity": "Uncommon",
+              "chance": 25.81,
+              "count": 1
+            },
+            {
+              "item": "Pustulite",
+              "rarity": "Uncommon",
+              "chance": 25.81,
+              "count": 15
+            },
+            {
+              "item": "3,000 Credits Cache",
+              "rarity": "Rare",
+              "chance": 4.51,
+              "count": 2
+            },
+            {
+              "item": "3,000 Credits Cache",
+              "rarity": "Rare",
+              "chance": 4.51,
+              "count": 2
+            },
+            {
+              "item": "250 Endo",
+              "rarity": "Rare",
+              "chance": 4.51,
+              "count": 1
+            },
+            {
+              "item": "250 Endo",
+              "rarity": "Rare",
+              "chance": 4.51,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 4.51,
+              "count": 1
+            },
+            {
+              "item": "1,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 25.29,
+              "count": 3
+            },
+            {
+              "item": "150 Endo",
+              "rarity": "Uncommon",
+              "chance": 25.29,
+              "count": 1
+            },
+            {
+              "item": "Pustulite",
+              "rarity": "Uncommon",
+              "chance": 25.29,
+              "count": 15
+            },
+            {
+              "item": "3,000 Credits Cache",
+              "rarity": "Rare",
+              "chance": 4.42,
+              "count": 2
+            },
+            {
+              "item": "3,000 Credits Cache",
+              "rarity": "Rare",
+              "chance": 4.42,
+              "count": 2
+            },
+            {
+              "item": "250 Endo",
+              "rarity": "Rare",
+              "chance": 4.42,
+              "count": 1
+            },
+            {
+              "item": "250 Endo",
+              "rarity": "Rare",
+              "chance": 4.42,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 4.42,
+              "count": 1
+            },
+            {
+              "item": "Scintillant",
+              "rarity": "Rare",
+              "chance": 2.01,
+              "count": 1
+            },
+            {
+              "item": "3,000 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 18.33,
+              "count": 2
+            },
+            {
+              "item": "3,000 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 18.33,
+              "count": 2
+            },
+            {
+              "item": "250 Endo",
+              "rarity": "Uncommon",
+              "chance": 18.33,
+              "count": 1
+            },
+            {
+              "item": "250 Endo",
+              "rarity": "Uncommon",
+              "chance": 18.33,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 18.33,
+              "count": 1
+            },
+            {
+              "item": "Scintillant",
+              "rarity": "Rare",
+              "chance": 8.33,
+              "count": 1
+            }
+          ],
+          "type": "Anomaly Retrieval",
+          "enemyLevels": [
+            5,
+            15
+          ],
+          "standingStages": [
+            6,
+            6,
+            6
+          ],
+          "minMR": 0
+        },
+        {
+          "id": "DeimosAreaDefenseBounty1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/DeimosMissionRewards/TierCTableBRewards",
+          "rewardPool": [
+            "600 Endo",
+            "Vazarin Lens",
+            "Unairu Lens",
+            "Shrapnel Shot",
+            "Scintillant",
+            "600 Endo",
+            "Vazarin Lens",
+            "Unairu Lens",
+            "Shrapnel Shot",
+            "Scintillant",
+            "Aya",
+            "Xaku Neuroptics Blueprint",
+            "Sharpened Bullets",
+            "Bladed Rounds",
+            "600 Endo",
+            "Vazarin Lens",
+            "Unairu Lens",
+            "Shrapnel Shot",
+            "Scintillant",
+            "Aya",
+            "Xaku Neuroptics Blueprint",
+            "Sharpened Bullets",
+            "Bladed Rounds",
+            "Maiming Strike",
+            "Aya",
+            "Xaku Neuroptics Blueprint",
+            "Sharpened Bullets",
+            "Bladed Rounds",
+            "Maiming Strike"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "600 Endo",
+              "rarity": "Uncommon",
+              "chance": 31.58,
+              "count": 1
+            },
+            {
+              "item": "Vazarin Lens",
+              "rarity": "Uncommon",
+              "chance": 18.42,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Uncommon",
+              "chance": 18.42,
+              "count": 1
+            },
+            {
+              "item": "Shrapnel Shot",
+              "rarity": "Uncommon",
+              "chance": 13.16,
+              "count": 1
+            },
+            {
+              "item": "Scintillant",
+              "rarity": "Uncommon",
+              "chance": 18.42,
+              "count": 1
+            },
+            {
+              "item": "600 Endo",
+              "rarity": "Uncommon",
+              "chance": 17.65,
+              "count": 1
+            },
+            {
+              "item": "Vazarin Lens",
+              "rarity": "Uncommon",
+              "chance": 10.29,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Uncommon",
+              "chance": 10.29,
+              "count": 1
+            },
+            {
+              "item": "Shrapnel Shot",
+              "rarity": "Rare",
+              "chance": 7.35,
+              "count": 1
+            },
+            {
+              "item": "Scintillant",
+              "rarity": "Uncommon",
+              "chance": 10.29,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 14.71,
+              "count": 1
+            },
+            {
+              "item": "Xaku Neuroptics Blueprint",
+              "rarity": "Rare",
+              "chance": 8.82,
+              "count": 1
+            },
+            {
+              "item": "Sharpened Bullets",
+              "rarity": "Uncommon",
+              "chance": 10.29,
+              "count": 1
+            },
+            {
+              "item": "Bladed Rounds",
+              "rarity": "Uncommon",
+              "chance": 10.29,
+              "count": 1
+            },
+            {
+              "item": "600 Endo",
+              "rarity": "Uncommon",
+              "chance": 13.64,
+              "count": 1
+            },
+            {
+              "item": "Vazarin Lens",
+              "rarity": "Rare",
+              "chance": 7.95,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Rare",
+              "chance": 7.95,
+              "count": 1
+            },
+            {
+              "item": "Shrapnel Shot",
+              "rarity": "Rare",
+              "chance": 5.68,
+              "count": 1
+            },
+            {
+              "item": "Scintillant",
+              "rarity": "Rare",
+              "chance": 7.95,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 11.36,
+              "count": 1
+            },
+            {
+              "item": "Xaku Neuroptics Blueprint",
+              "rarity": "Rare",
+              "chance": 6.82,
+              "count": 1
+            },
+            {
+              "item": "Sharpened Bullets",
+              "rarity": "Rare",
+              "chance": 7.95,
+              "count": 1
+            },
+            {
+              "item": "Bladed Rounds",
+              "rarity": "Rare",
+              "chance": 7.95,
+              "count": 1
+            },
+            {
+              "item": "Maiming Strike",
+              "rarity": "Uncommon",
+              "chance": 22.73,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Xaku Neuroptics Blueprint",
+              "rarity": "Uncommon",
+              "chance": 12,
+              "count": 1
+            },
+            {
+              "item": "Sharpened Bullets",
+              "rarity": "Uncommon",
+              "chance": 14,
+              "count": 1
+            },
+            {
+              "item": "Bladed Rounds",
+              "rarity": "Uncommon",
+              "chance": 14,
+              "count": 1
+            },
+            {
+              "item": "Maiming Strike",
+              "rarity": "Common",
+              "chance": 40,
+              "count": 1
+            }
+          ],
+          "type": "Reclaim What's Ours",
+          "enemyLevels": [
+            15,
+            25
+          ],
+          "standingStages": [
+            9,
+            9,
+            9
+          ],
+          "minMR": 1
+        },
+        {
+          "id": "DeimosEndlessExcavateBounty1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/DeimosMissionRewards/TierBTableARewards",
+          "rewardPool": [
+            "Ayatan Amber Star",
+            "250 Endo",
+            "Carnis Mandible",
+            "Jugulus Barbs",
+            "Saxum Thorax",
+            "Ayatan Amber Star",
+            "250 Endo",
+            "Carnis Mandible",
+            "Jugulus Barbs",
+            "Saxum Thorax",
+            "Ayatan Amber Star",
+            "500 Endo",
+            "Aya",
+            "Carnis Carapace",
+            "Jugulus Carapace",
+            "Saxum Carapace",
+            "Ayatan Amber Star",
+            "250 Endo",
+            "Carnis Mandible",
+            "Jugulus Barbs",
+            "Saxum Thorax",
+            "Ayatan Amber Star",
+            "500 Endo",
+            "Aya",
+            "Carnis Carapace",
+            "Jugulus Carapace",
+            "Saxum Carapace",
+            "Ayatan Amber Star",
+            "750 Endo",
+            "Aya",
+            "Carnis Stinger",
+            "Jugulus Spines",
+            "Saxum Spittle",
+            "Ayatan Amber Star",
+            "500 Endo",
+            "Aya",
+            "Carnis Carapace",
+            "Jugulus Carapace",
+            "Saxum Carapace",
+            "Ayatan Amber Star",
+            "750 Endo",
+            "Aya",
+            "Carnis Stinger",
+            "Jugulus Spines",
+            "Saxum Spittle"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Common",
+              "chance": 55.56,
+              "count": 1
+            },
+            {
+              "item": "250 Endo",
+              "rarity": "Uncommon",
+              "chance": 27.78,
+              "count": 1
+            },
+            {
+              "item": "Carnis Mandible",
+              "rarity": "Rare",
+              "chance": 5.56,
+              "count": 1
+            },
+            {
+              "item": "Jugulus Barbs",
+              "rarity": "Rare",
+              "chance": 5.56,
+              "count": 1
+            },
+            {
+              "item": "Saxum Thorax",
+              "rarity": "Rare",
+              "chance": 5.56,
+              "count": 1
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 26.67,
+              "count": 1
+            },
+            {
+              "item": "250 Endo",
+              "rarity": "Uncommon",
+              "chance": 13.33,
+              "count": 1
+            },
+            {
+              "item": "Carnis Mandible",
+              "rarity": "Rare",
+              "chance": 2.67,
+              "count": 1
+            },
+            {
+              "item": "Jugulus Barbs",
+              "rarity": "Rare",
+              "chance": 2.67,
+              "count": 1
+            },
+            {
+              "item": "Saxum Thorax",
+              "rarity": "Rare",
+              "chance": 2.67,
+              "count": 1
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 26.67,
+              "count": 1
+            },
+            {
+              "item": "500 Endo",
+              "rarity": "Uncommon",
+              "chance": 13.33,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 4,
+              "count": 1
+            },
+            {
+              "item": "Carnis Carapace",
+              "rarity": "Rare",
+              "chance": 2.67,
+              "count": 1
+            },
+            {
+              "item": "Jugulus Carapace",
+              "rarity": "Rare",
+              "chance": 2.67,
+              "count": 1
+            },
+            {
+              "item": "Saxum Carapace",
+              "rarity": "Rare",
+              "chance": 2.67,
+              "count": 1
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 17.54,
+              "count": 1
+            },
+            {
+              "item": "250 Endo",
+              "rarity": "Rare",
+              "chance": 8.77,
+              "count": 1
+            },
+            {
+              "item": "Carnis Mandible",
+              "rarity": "Rare",
+              "chance": 1.75,
+              "count": 1
+            },
+            {
+              "item": "Jugulus Barbs",
+              "rarity": "Rare",
+              "chance": 1.75,
+              "count": 1
+            },
+            {
+              "item": "Saxum Thorax",
+              "rarity": "Rare",
+              "chance": 1.75,
+              "count": 1
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 17.54,
+              "count": 1
+            },
+            {
+              "item": "500 Endo",
+              "rarity": "Rare",
+              "chance": 8.77,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 2.63,
+              "count": 1
+            },
+            {
+              "item": "Carnis Carapace",
+              "rarity": "Rare",
+              "chance": 1.75,
+              "count": 1
+            },
+            {
+              "item": "Jugulus Carapace",
+              "rarity": "Rare",
+              "chance": 1.75,
+              "count": 1
+            },
+            {
+              "item": "Saxum Carapace",
+              "rarity": "Rare",
+              "chance": 1.75,
+              "count": 1
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 17.54,
+              "count": 1
+            },
+            {
+              "item": "750 Endo",
+              "rarity": "Rare",
+              "chance": 8.77,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 2.63,
+              "count": 1
+            },
+            {
+              "item": "Carnis Stinger",
+              "rarity": "Rare",
+              "chance": 1.75,
+              "count": 1
+            },
+            {
+              "item": "Jugulus Spines",
+              "rarity": "Rare",
+              "chance": 1.75,
+              "count": 1
+            },
+            {
+              "item": "Saxum Spittle",
+              "rarity": "Rare",
+              "chance": 1.75,
+              "count": 1
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 25.64,
+              "count": 1
+            },
+            {
+              "item": "500 Endo",
+              "rarity": "Uncommon",
+              "chance": 12.82,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 3.85,
+              "count": 1
+            },
+            {
+              "item": "Carnis Carapace",
+              "rarity": "Rare",
+              "chance": 2.56,
+              "count": 1
+            },
+            {
+              "item": "Jugulus Carapace",
+              "rarity": "Rare",
+              "chance": 2.56,
+              "count": 1
+            },
+            {
+              "item": "Saxum Carapace",
+              "rarity": "Rare",
+              "chance": 2.56,
+              "count": 1
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 25.64,
+              "count": 1
+            },
+            {
+              "item": "750 Endo",
+              "rarity": "Uncommon",
+              "chance": 12.82,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 3.85,
+              "count": 1
+            },
+            {
+              "item": "Carnis Stinger",
+              "rarity": "Rare",
+              "chance": 2.56,
+              "count": 1
+            },
+            {
+              "item": "Jugulus Spines",
+              "rarity": "Rare",
+              "chance": 2.56,
+              "count": 1
+            },
+            {
+              "item": "Saxum Spittle",
+              "rarity": "Rare",
+              "chance": 2.56,
+              "count": 1
+            }
+          ],
+          "type": "Strip Mining (Endless)",
+          "enemyLevels": [
+            25,
+            30
+          ],
+          "standingStages": [
+            14,
+            14,
+            14
+          ],
+          "minMR": 5
+        },
+        {
+          "id": "DeimosExcavateBounty1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/DeimosMissionRewards/TierDTableBRewards",
+          "rewardPool": [
+            "750 Endo",
+            "Unairu Lens",
+            "Madurai Lens",
+            "Focused Defense",
+            "5X Vome Residue",
+            "750 Endo",
+            "Unairu Lens",
+            "Madurai Lens",
+            "Focused Defense",
+            "5X Vome Residue",
+            "Aya",
+            "Xaku Systems Blueprint",
+            "Targeting Subsystem",
+            "Guided Ordnance",
+            "750 Endo",
+            "Unairu Lens",
+            "Madurai Lens",
+            "Focused Defense",
+            "5X Vome Residue",
+            "Aya",
+            "Xaku Systems Blueprint",
+            "Targeting Subsystem",
+            "Guided Ordnance",
+            "Narrow Barrel",
+            "Aya",
+            "Xaku Systems Blueprint",
+            "Targeting Subsystem",
+            "Guided Ordnance",
+            "Narrow Barrel"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "750 Endo",
+              "rarity": "Common",
+              "chance": 45,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Uncommon",
+              "chance": 17.5,
+              "count": 1
+            },
+            {
+              "item": "Madurai Lens",
+              "rarity": "Uncommon",
+              "chance": 17.5,
+              "count": 1
+            },
+            {
+              "item": "Focused Defense",
+              "rarity": "Uncommon",
+              "chance": 12.5,
+              "count": 1
+            },
+            {
+              "item": "Vome Residue",
+              "rarity": "Rare",
+              "chance": 7.5,
+              "count": 5
+            },
+            {
+              "item": "750 Endo",
+              "rarity": "Uncommon",
+              "chance": 24.66,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Rare",
+              "chance": 9.59,
+              "count": 1
+            },
+            {
+              "item": "Madurai Lens",
+              "rarity": "Rare",
+              "chance": 9.59,
+              "count": 1
+            },
+            {
+              "item": "Focused Defense",
+              "rarity": "Rare",
+              "chance": 6.85,
+              "count": 1
+            },
+            {
+              "item": "Vome Residue",
+              "rarity": "Rare",
+              "chance": 4.11,
+              "count": 5
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 17.81,
+              "count": 1
+            },
+            {
+              "item": "Xaku Systems Blueprint",
+              "rarity": "Rare",
+              "chance": 8.22,
+              "count": 1
+            },
+            {
+              "item": "Targeting Subsystem",
+              "rarity": "Rare",
+              "chance": 9.59,
+              "count": 1
+            },
+            {
+              "item": "Guided Ordnance",
+              "rarity": "Rare",
+              "chance": 9.59,
+              "count": 1
+            },
+            {
+              "item": "750 Endo",
+              "rarity": "Uncommon",
+              "chance": 19.35,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Rare",
+              "chance": 7.53,
+              "count": 1
+            },
+            {
+              "item": "Madurai Lens",
+              "rarity": "Rare",
+              "chance": 7.53,
+              "count": 1
+            },
+            {
+              "item": "Focused Defense",
+              "rarity": "Rare",
+              "chance": 5.38,
+              "count": 1
+            },
+            {
+              "item": "Vome Residue",
+              "rarity": "Rare",
+              "chance": 3.23,
+              "count": 5
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 13.98,
+              "count": 1
+            },
+            {
+              "item": "Xaku Systems Blueprint",
+              "rarity": "Rare",
+              "chance": 6.45,
+              "count": 1
+            },
+            {
+              "item": "Targeting Subsystem",
+              "rarity": "Rare",
+              "chance": 7.53,
+              "count": 1
+            },
+            {
+              "item": "Guided Ordnance",
+              "rarity": "Rare",
+              "chance": 7.53,
+              "count": 1
+            },
+            {
+              "item": "Narrow Barrel",
+              "rarity": "Uncommon",
+              "chance": 21.51,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 24.53,
+              "count": 1
+            },
+            {
+              "item": "Xaku Systems Blueprint",
+              "rarity": "Uncommon",
+              "chance": 11.32,
+              "count": 1
+            },
+            {
+              "item": "Targeting Subsystem",
+              "rarity": "Uncommon",
+              "chance": 13.21,
+              "count": 1
+            },
+            {
+              "item": "Guided Ordnance",
+              "rarity": "Uncommon",
+              "chance": 13.21,
+              "count": 1
+            },
+            {
+              "item": "Narrow Barrel",
+              "rarity": "Common",
+              "chance": 37.74,
+              "count": 1
+            }
+          ],
+          "type": "Core Samples",
+          "enemyLevels": [
+            30,
+            40
+          ],
+          "standingStages": [
+            18,
+            18,
+            18,
+            27
+          ],
+          "minMR": 2
+        },
+        {
+          "id": "DeimosKeyPiecesBounty1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/DeimosMissionRewards/TierETableARewards",
+          "rewardPool": [
+            "Ayatan Amber Star",
+            "1000 Endo",
+            "750X Kuva",
+            "Ayatan Amber Star",
+            "1000 Endo",
+            "750X Kuva",
+            "Aya",
+            "Xaku Chassis Blueprint",
+            "Ayatan Amber Star",
+            "1000 Endo",
+            "750X Kuva",
+            "Aya",
+            "Xaku Chassis Blueprint",
+            "Quassus Blueprint",
+            "Aya",
+            "Xaku Chassis Blueprint",
+            "Quassus Blueprint"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Common",
+              "chance": 45.45,
+              "count": 1
+            },
+            {
+              "item": "1000 Endo",
+              "rarity": "Common",
+              "chance": 45.45,
+              "count": 1
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 750
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 28.57,
+              "count": 1
+            },
+            {
+              "item": "1000 Endo",
+              "rarity": "Uncommon",
+              "chance": 28.57,
+              "count": 1
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 5.71,
+              "count": 750
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 28.57,
+              "count": 1
+            },
+            {
+              "item": "Xaku Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 8.57,
+              "count": 1
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "1000 Endo",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 4.44,
+              "count": 750
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "Xaku Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 6.67,
+              "count": 1
+            },
+            {
+              "item": "Quassus Blueprint",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Common",
+              "chance": 43.48,
+              "count": 1
+            },
+            {
+              "item": "Xaku Chassis Blueprint",
+              "rarity": "Uncommon",
+              "chance": 13.04,
+              "count": 1
+            },
+            {
+              "item": "Quassus Blueprint",
+              "rarity": "Common",
+              "chance": 43.48,
+              "count": 1
+            }
+          ],
+          "type": "Salvage",
+          "enemyLevels": [
+            40,
+            60
+          ],
+          "standingStages": [
+            20,
+            20,
+            20,
+            20,
+            39
+          ],
+          "minMR": 3
+        },
+        {
+          "id": "DeimosCrpSurvivorBounty1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/DeimosMissionRewards/TierETableARewards",
+          "rewardPool": [
+            "Ayatan Amber Star",
+            "1000 Endo",
+            "750X Kuva",
+            "Ayatan Amber Star",
+            "1000 Endo",
+            "750X Kuva",
+            "Aya",
+            "Xaku Chassis Blueprint",
+            "Ayatan Amber Star",
+            "1000 Endo",
+            "750X Kuva",
+            "Aya",
+            "Xaku Chassis Blueprint",
+            "Quassus Blueprint",
+            "Aya",
+            "Xaku Chassis Blueprint",
+            "Quassus Blueprint"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Common",
+              "chance": 45.45,
+              "count": 1
+            },
+            {
+              "item": "1000 Endo",
+              "rarity": "Common",
+              "chance": 45.45,
+              "count": 1
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 750
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 28.57,
+              "count": 1
+            },
+            {
+              "item": "1000 Endo",
+              "rarity": "Uncommon",
+              "chance": 28.57,
+              "count": 1
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 5.71,
+              "count": 750
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 28.57,
+              "count": 1
+            },
+            {
+              "item": "Xaku Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 8.57,
+              "count": 1
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "1000 Endo",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 4.44,
+              "count": 750
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "Xaku Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 6.67,
+              "count": 1
+            },
+            {
+              "item": "Quassus Blueprint",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Common",
+              "chance": 43.48,
+              "count": 1
+            },
+            {
+              "item": "Xaku Chassis Blueprint",
+              "rarity": "Uncommon",
+              "chance": 13.04,
+              "count": 1
+            },
+            {
+              "item": "Quassus Blueprint",
+              "rarity": "Common",
+              "chance": 43.48,
+              "count": 1
+            }
+          ],
+          "type": "For Science!",
+          "enemyLevels": [
+            100,
+            100
+          ],
+          "standingStages": [
+            25,
+            25,
+            25,
+            25,
+            50
+          ],
+          "minMR": 10
+        },
+        {
+          "id": "1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/DeimosMissionRewards/VaultBountyTierATableARewards",
+          "rewardPool": [
+            "Residual Boils",
+            "Necramech Redirection",
+            "2X Orokin Orientation Matrix",
+            "Meso D8 Relic",
+            "Residual Shock",
+            "Necramech Steel Fiber",
+            "2X Orokin Ballistics Matrix",
+            "Neo C7 Relic",
+            "Neo A16 Relic",
+            "Theorem Contagion",
+            "Necramech Thrusters",
+            "Damaged Necramech Weapon Barrel",
+            "3X Scintillant",
+            "2X Orokin Animus Matrix",
+            "Axi S20 Relic"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Residual Boils",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Necramech Redirection",
+              "rarity": "Uncommon",
+              "chance": 12.5,
+              "count": 1
+            },
+            {
+              "item": "Orokin Orientation Matrix",
+              "rarity": "Rare",
+              "chance": 6.25,
+              "count": 2
+            },
+            {
+              "item": "Meso D8 Relic",
+              "rarity": "Rare",
+              "chance": 6.25,
+              "count": 1
+            },
+            {
+              "item": "Residual Shock",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 1
+            },
+            {
+              "item": "Necramech Steel Fiber",
+              "rarity": "Rare",
+              "chance": 7.5,
+              "count": 1
+            },
+            {
+              "item": "Orokin Ballistics Matrix",
+              "rarity": "Rare",
+              "chance": 3.75,
+              "count": 2
+            },
+            {
+              "item": "Neo C7 Relic",
+              "rarity": "Rare",
+              "chance": 1.88,
+              "count": 1
+            },
+            {
+              "item": "Neo A16 Relic",
+              "rarity": "Rare",
+              "chance": 1.88,
+              "count": 1
+            },
+            {
+              "item": "Theorem Contagion",
+              "rarity": "Uncommon",
+              "chance": 10,
+              "count": 1
+            },
+            {
+              "item": "Necramech Thrusters",
+              "rarity": "Rare",
+              "chance": 4,
+              "count": 1
+            },
+            {
+              "item": "Damaged Necramech Weapon Barrel",
+              "rarity": "Rare",
+              "chance": 3,
+              "count": 1
+            },
+            {
+              "item": "Scintillant",
+              "rarity": "Rare",
+              "chance": 2,
+              "count": 3
+            },
+            {
+              "item": "Orokin Animus Matrix",
+              "rarity": "Legendary",
+              "chance": 0.5,
+              "count": 2
+            },
+            {
+              "item": "Axi S20 Relic",
+              "rarity": "Legendary",
+              "chance": 0.5,
+              "count": 1
+            }
+          ],
+          "type": "Isolation Vault Chamber B",
+          "enemyLevels": [
+            30,
+            40
+          ],
+          "standingStages": [
+            2,
+            2,
+            2,
+            4
+          ],
+          "minMR": 5,
+          "isVault": true,
+          "locationTag": "ChamberB"
+        },
+        {
+          "id": "1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/DeimosMissionRewards/VaultBountyTierBTableARewards",
+          "rewardPool": [
+            "Residual Boils",
+            "Necramech Blitz",
+            "Arum Spinosa Blueprint",
+            "3X Orokin Orientation Matrix",
+            "Neo C7 Relic",
+            "Residual Shock",
+            "Necramech Slipstream",
+            "Arum Spinosa Guard",
+            "3X Orokin Ballistics Matrix",
+            "Neo A16 Relic",
+            "Neo T11 Relic",
+            "Theorem Contagion",
+            "Necramech Seismic Wave",
+            "Damaged Necramech Weapon Barrel",
+            "Arum Spinosa Rivet",
+            "3X Orokin Animus Matrix",
+            "Neo V11 Relic"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Residual Boils",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Necramech Blitz",
+              "rarity": "Uncommon",
+              "chance": 12.5,
+              "count": 1
+            },
+            {
+              "item": "Arum Spinosa Blueprint",
+              "rarity": "Rare",
+              "chance": 6.25,
+              "count": 1
+            },
+            {
+              "item": "Orokin Orientation Matrix",
+              "rarity": "Rare",
+              "chance": 3.13,
+              "count": 3
+            },
+            {
+              "item": "Neo C7 Relic",
+              "rarity": "Rare",
+              "chance": 3.13,
+              "count": 1
+            },
+            {
+              "item": "Residual Shock",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 1
+            },
+            {
+              "item": "Necramech Slipstream",
+              "rarity": "Rare",
+              "chance": 7.5,
+              "count": 1
+            },
+            {
+              "item": "Arum Spinosa Guard",
+              "rarity": "Rare",
+              "chance": 3.75,
+              "count": 1
+            },
+            {
+              "item": "Orokin Ballistics Matrix",
+              "rarity": "Rare",
+              "chance": 1.88,
+              "count": 3
+            },
+            {
+              "item": "Neo A16 Relic",
+              "rarity": "Legendary",
+              "chance": 0.94,
+              "count": 1
+            },
+            {
+              "item": "Neo T11 Relic",
+              "rarity": "Legendary",
+              "chance": 0.94,
+              "count": 1
+            },
+            {
+              "item": "Theorem Contagion",
+              "rarity": "Uncommon",
+              "chance": 10,
+              "count": 1
+            },
+            {
+              "item": "Necramech Seismic Wave",
+              "rarity": "Rare",
+              "chance": 4,
+              "count": 1
+            },
+            {
+              "item": "Damaged Necramech Weapon Barrel",
+              "rarity": "Rare",
+              "chance": 3,
+              "count": 1
+            },
+            {
+              "item": "Arum Spinosa Rivet",
+              "rarity": "Rare",
+              "chance": 2,
+              "count": 1
+            },
+            {
+              "item": "Orokin Animus Matrix",
+              "rarity": "Legendary",
+              "chance": 0.5,
+              "count": 3
+            },
+            {
+              "item": "Neo V11 Relic",
+              "rarity": "Legendary",
+              "chance": 0.5,
+              "count": 1
+            }
+          ],
+          "type": "Isolation Vault Chamber A",
+          "enemyLevels": [
+            40,
+            50
+          ],
+          "standingStages": [
+            4,
+            4,
+            4,
+            5
+          ],
+          "minMR": 5,
+          "isVault": true,
+          "locationTag": "ChamberA"
+        },
+        {
+          "id": "1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/DeimosMissionRewards/VaultBountyTierCTableARewards",
+          "rewardPool": [
+            "Residual Boils",
+            "Necramech Fury",
+            "Sporothrix Blueprint",
+            "4X Orokin Orientation Matrix",
+            "Meso K8 Relic",
+            "Residual Shock",
+            "Necramech Stretch",
+            "Sporothrix Barrel",
+            "4X Orokin Ballistics Matrix",
+            "Neo C7 Relic",
+            "Neo A16 Relic",
+            "Theorem Contagion",
+            "Necramech Streamline",
+            "Damaged Necramech Weapon Barrel",
+            "4X Orokin Animus Matrix",
+            "Axi A21 Relic"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Residual Boils",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Necramech Fury",
+              "rarity": "Uncommon",
+              "chance": 12.5,
+              "count": 1
+            },
+            {
+              "item": "Sporothrix Blueprint",
+              "rarity": "Rare",
+              "chance": 6.25,
+              "count": 1
+            },
+            {
+              "item": "Orokin Orientation Matrix",
+              "rarity": "Rare",
+              "chance": 3.13,
+              "count": 4
+            },
+            {
+              "item": "Meso K8 Relic",
+              "rarity": "Rare",
+              "chance": 3.13,
+              "count": 1
+            },
+            {
+              "item": "Residual Shock",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 1
+            },
+            {
+              "item": "Necramech Stretch",
+              "rarity": "Rare",
+              "chance": 7.5,
+              "count": 1
+            },
+            {
+              "item": "Sporothrix Barrel",
+              "rarity": "Rare",
+              "chance": 3.75,
+              "count": 1
+            },
+            {
+              "item": "Orokin Ballistics Matrix",
+              "rarity": "Rare",
+              "chance": 1.88,
+              "count": 4
+            },
+            {
+              "item": "Neo C7 Relic",
+              "rarity": "Legendary",
+              "chance": 0.94,
+              "count": 1
+            },
+            {
+              "item": "Neo A16 Relic",
+              "rarity": "Legendary",
+              "chance": 0.94,
+              "count": 1
+            },
+            {
+              "item": "Theorem Contagion",
+              "rarity": "Uncommon",
+              "chance": 10,
+              "count": 1
+            },
+            {
+              "item": "Necramech Streamline",
+              "rarity": "Rare",
+              "chance": 4,
+              "count": 1
+            },
+            {
+              "item": "Damaged Necramech Weapon Barrel",
+              "rarity": "Rare",
+              "chance": 3,
+              "count": 1
+            },
+            {
+              "item": "Orokin Animus Matrix",
+              "rarity": "Rare",
+              "chance": 1.5,
+              "count": 4
+            },
+            {
+              "item": "Axi A21 Relic",
+              "rarity": "Rare",
+              "chance": 1.5,
+              "count": 1
+            }
+          ],
+          "type": "Isolation Vault Chamber C",
+          "enemyLevels": [
+            50,
+            60
+          ],
+          "standingStages": [
+            5,
+            5,
+            5,
+            7
+          ],
+          "minMR": 5,
+          "isVault": true,
+          "locationTag": "ChamberC"
+        }
+      ]
+    },
+    {
+      "id": "1782048878063HexSyndicate",
+      "activation": "2026-06-21T11:04:39.189Z",
+      "expiry": "2026-06-21T13:34:38.063Z",
+      "syndicate": "The Hex",
+      "syndicateKey": "The Hex",
+      "nodes": [],
+      "jobs": []
+    },
+    {
+      "id": "1782048878063SolarisSyndicate",
+      "activation": "2026-06-21T11:04:39.189Z",
+      "expiry": "2026-06-21T13:34:38.063Z",
+      "syndicate": "Solaris United",
+      "syndicateKey": "Solaris United",
+      "nodes": [],
+      "jobs": [
+        {
+          "id": "VenusIntelJobRecovery1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/VenusJobMissionRewards/VenusTierATableBRewards",
+          "rewardPool": [
+            "100X Cryotic",
+            "1,500 Credits Cache",
+            "50 Endo",
+            "5X Thermal Sludge",
+            "100X Cryotic",
+            "1,500 Credits Cache",
+            "50 Endo",
+            "5X Thermal Sludge",
+            "2X Training Debt-Bond",
+            "Garuda Chassis Blueprint",
+            "5X Tepa Nodule",
+            "100X Cryotic",
+            "1,500 Credits Cache",
+            "50 Endo",
+            "5X Thermal Sludge",
+            "2X Training Debt-Bond",
+            "Garuda Chassis Blueprint",
+            "5X Tepa Nodule",
+            "Aya",
+            "2X Training Debt-Bond",
+            "Garuda Chassis Blueprint",
+            "5X Tepa Nodule",
+            "Aya"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 100
+            },
+            {
+              "item": "1,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "50 Endo",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Thermal Sludge",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 5
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 100
+            },
+            {
+              "item": "1,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 1
+            },
+            {
+              "item": "50 Endo",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 1
+            },
+            {
+              "item": "Thermal Sludge",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 5
+            },
+            {
+              "item": "Training Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 2
+            },
+            {
+              "item": "Garuda Chassis Blueprint",
+              "rarity": "Uncommon",
+              "chance": 12,
+              "count": 1
+            },
+            {
+              "item": "Tepa Nodule",
+              "rarity": "Rare",
+              "chance": 8,
+              "count": 5
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 14.5,
+              "count": 100
+            },
+            {
+              "item": "1,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 14.5,
+              "count": 1
+            },
+            {
+              "item": "50 Endo",
+              "rarity": "Uncommon",
+              "chance": 14.5,
+              "count": 1
+            },
+            {
+              "item": "Thermal Sludge",
+              "rarity": "Uncommon",
+              "chance": 14.5,
+              "count": 5
+            },
+            {
+              "item": "Training Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 19.33,
+              "count": 2
+            },
+            {
+              "item": "Garuda Chassis Blueprint",
+              "rarity": "Uncommon",
+              "chance": 11.6,
+              "count": 1
+            },
+            {
+              "item": "Tepa Nodule",
+              "rarity": "Rare",
+              "chance": 7.73,
+              "count": 5
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 3.36,
+              "count": 1
+            },
+            {
+              "item": "Training Debt-Bond",
+              "rarity": "Common",
+              "chance": 46,
+              "count": 2
+            },
+            {
+              "item": "Garuda Chassis Blueprint",
+              "rarity": "Uncommon",
+              "chance": 27.6,
+              "count": 1
+            },
+            {
+              "item": "Tepa Nodule",
+              "rarity": "Uncommon",
+              "chance": 18.4,
+              "count": 5
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 8,
+              "count": 1
+            }
+          ],
+          "type": "Proof of Life",
+          "enemyLevels": [
+            5,
+            15
+          ],
+          "standingStages": [
+            350,
+            350,
+            350
+          ],
+          "minMR": 0
+        },
+        {
+          "id": "VenusChaosJobAssassinate1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/VenusJobMissionRewards/VenusTierBTableBRewards",
+          "rewardPool": [
+            "15X Thermal Sludge",
+            "200X Cryotic",
+            "2,500 Credits Cache",
+            "100 Endo",
+            "15X Thermal Sludge",
+            "200X Cryotic",
+            "2,500 Credits Cache",
+            "100 Endo",
+            "2X Shelter Debt-Bond",
+            "Garuda Systems Blueprint",
+            "Aya",
+            "15X Thermal Sludge",
+            "200X Cryotic",
+            "2,500 Credits Cache",
+            "100 Endo",
+            "2X Shelter Debt-Bond",
+            "Garuda Systems Blueprint",
+            "Aya",
+            "Mecha Overdrive",
+            "2X Shelter Debt-Bond",
+            "Garuda Systems Blueprint",
+            "Aya",
+            "Mecha Overdrive"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Thermal Sludge",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 15
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 200
+            },
+            {
+              "item": "2,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "100 Endo",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Thermal Sludge",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 15
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 200
+            },
+            {
+              "item": "2,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 1
+            },
+            {
+              "item": "100 Endo",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 1
+            },
+            {
+              "item": "Shelter Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 2
+            },
+            {
+              "item": "Garuda Systems Blueprint",
+              "rarity": "Uncommon",
+              "chance": 12,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 8,
+              "count": 1
+            },
+            {
+              "item": "Thermal Sludge",
+              "rarity": "Uncommon",
+              "chance": 13.24,
+              "count": 15
+            },
+            {
+              "item": "Cryotic",
+              "rarity": "Uncommon",
+              "chance": 13.24,
+              "count": 200
+            },
+            {
+              "item": "2,500 Credits Cache",
+              "rarity": "Uncommon",
+              "chance": 13.24,
+              "count": 1
+            },
+            {
+              "item": "100 Endo",
+              "rarity": "Uncommon",
+              "chance": 13.24,
+              "count": 1
+            },
+            {
+              "item": "Shelter Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 17.65,
+              "count": 2
+            },
+            {
+              "item": "Garuda Systems Blueprint",
+              "rarity": "Uncommon",
+              "chance": 10.59,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 7.06,
+              "count": 1
+            },
+            {
+              "item": "Mecha Overdrive",
+              "rarity": "Uncommon",
+              "chance": 11.76,
+              "count": 1
+            },
+            {
+              "item": "Shelter Debt-Bond",
+              "rarity": "Common",
+              "chance": 37.5,
+              "count": 2
+            },
+            {
+              "item": "Garuda Systems Blueprint",
+              "rarity": "Uncommon",
+              "chance": 22.5,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 1
+            },
+            {
+              "item": "Mecha Overdrive",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            }
+          ],
+          "type": "Scorched Earth",
+          "enemyLevels": [
+            10,
+            30
+          ],
+          "standingStages": [
+            610,
+            610,
+            610
+          ],
+          "minMR": 1
+        },
+        {
+          "id": "VenusPreservationJobResource1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/VenusJobMissionRewards/VenusTierCTableBRewards",
+          "rewardPool": [
+            "200 Endo",
+            "Unairu Lens",
+            "300X Plastids",
+            "200 Endo",
+            "Unairu Lens",
+            "300X Plastids",
+            "2X Medical Debt-Bond",
+            "Garuda Neuroptics Blueprint",
+            "Aya",
+            "200 Endo",
+            "Unairu Lens",
+            "300X Plastids",
+            "2X Medical Debt-Bond",
+            "Garuda Neuroptics Blueprint",
+            "Aya",
+            "Mecha Recharge",
+            "2X Medical Debt-Bond",
+            "Garuda Neuroptics Blueprint",
+            "Aya",
+            "Mecha Recharge"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "200 Endo",
+              "rarity": "Common",
+              "chance": 50,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            },
+            {
+              "item": "Plastids",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 300
+            },
+            {
+              "item": "200 Endo",
+              "rarity": "Uncommon",
+              "chance": 30,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 1
+            },
+            {
+              "item": "Plastids",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 300
+            },
+            {
+              "item": "Medical Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 2
+            },
+            {
+              "item": "Garuda Neuroptics Blueprint",
+              "rarity": "Uncommon",
+              "chance": 12,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 8,
+              "count": 1
+            },
+            {
+              "item": "200 Endo",
+              "rarity": "Uncommon",
+              "chance": 26.47,
+              "count": 1
+            },
+            {
+              "item": "Unairu Lens",
+              "rarity": "Uncommon",
+              "chance": 13.24,
+              "count": 1
+            },
+            {
+              "item": "Plastids",
+              "rarity": "Uncommon",
+              "chance": 13.24,
+              "count": 300
+            },
+            {
+              "item": "Medical Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 17.65,
+              "count": 2
+            },
+            {
+              "item": "Garuda Neuroptics Blueprint",
+              "rarity": "Uncommon",
+              "chance": 10.59,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 7.06,
+              "count": 1
+            },
+            {
+              "item": "Mecha Recharge",
+              "rarity": "Uncommon",
+              "chance": 11.76,
+              "count": 1
+            },
+            {
+              "item": "Medical Debt-Bond",
+              "rarity": "Common",
+              "chance": 37.5,
+              "count": 2
+            },
+            {
+              "item": "Garuda Neuroptics Blueprint",
+              "rarity": "Uncommon",
+              "chance": 22.5,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 15,
+              "count": 1
+            },
+            {
+              "item": "Mecha Recharge",
+              "rarity": "Uncommon",
+              "chance": 25,
+              "count": 1
+            }
+          ],
+          "type": "Trash Their Traps",
+          "enemyLevels": [
+            20,
+            40
+          ],
+          "standingStages": [
+            590,
+            590,
+            590,
+            870
+          ],
+          "minMR": 2
+        },
+        {
+          "id": "VenusHelpingJobCaches1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/VenusJobMissionRewards/VenusTierDTableBRewards",
+          "rewardPool": [
+            "Zenurik Lens",
+            "300 Endo",
+            "2X Detonite Injector",
+            "Zenurik Lens",
+            "300 Endo",
+            "2X Detonite Injector",
+            "2X Advances Debt-Bond",
+            "Aya",
+            "Zenurik Lens",
+            "300 Endo",
+            "2X Detonite Injector",
+            "2X Advances Debt-Bond",
+            "Aya",
+            "Mecha Empowered",
+            "2X Advances Debt-Bond",
+            "Aya",
+            "Mecha Empowered"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Zenurik Lens",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "300 Endo",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "Detonite Injector",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 2
+            },
+            {
+              "item": "Zenurik Lens",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "300 Endo",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Detonite Injector",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 2
+            },
+            {
+              "item": "Advances Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 2
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Zenurik Lens",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "300 Endo",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Detonite Injector",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 2
+            },
+            {
+              "item": "Advances Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 2
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Mecha Empowered",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Advances Debt-Bond",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 2
+            },
+            {
+              "item": "Aya",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "Mecha Empowered",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            }
+          ],
+          "type": "Seems Legit",
+          "enemyLevels": [
+            30,
+            50
+          ],
+          "standingStages": [
+            570,
+            570,
+            570,
+            570,
+            1130
+          ],
+          "minMR": 3
+        },
+        {
+          "id": "VenusIntelJobResource1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/VenusJobMissionRewards/VenusTierETableBRewards",
+          "rewardPool": [
+            "400 Endo",
+            "Neurodes",
+            "Orokin Cell",
+            "400 Endo",
+            "Neurodes",
+            "Orokin Cell",
+            "2X Familial Debt-Bond",
+            "Aya",
+            "400 Endo",
+            "Neurodes",
+            "Orokin Cell",
+            "2X Familial Debt-Bond",
+            "Aya",
+            "Mecha Pulse",
+            "2X Familial Debt-Bond",
+            "Aya",
+            "Mecha Pulse"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "400 Endo",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "Neurodes",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "Orokin Cell",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "400 Endo",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Neurodes",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Orokin Cell",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Familial Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 2
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "400 Endo",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Neurodes",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Orokin Cell",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Familial Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 2
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Mecha Pulse",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Familial Debt-Bond",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 2
+            },
+            {
+              "item": "Aya",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "Mecha Pulse",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            }
+          ],
+          "type": "Operational Intelligence",
+          "enemyLevels": [
+            40,
+            60
+          ],
+          "standingStages": [
+            710,
+            710,
+            710,
+            710,
+            1390
+          ],
+          "minMR": 5
+        },
+        {
+          "id": "VenusCullJobResource1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/VenusJobMissionRewards/VenusTierETableBRewards",
+          "rewardPool": [
+            "400 Endo",
+            "Neurodes",
+            "Orokin Cell",
+            "400 Endo",
+            "Neurodes",
+            "Orokin Cell",
+            "2X Familial Debt-Bond",
+            "Aya",
+            "400 Endo",
+            "Neurodes",
+            "Orokin Cell",
+            "2X Familial Debt-Bond",
+            "Aya",
+            "Mecha Pulse",
+            "2X Familial Debt-Bond",
+            "Aya",
+            "Mecha Pulse"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "400 Endo",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "Neurodes",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "Orokin Cell",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "400 Endo",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Neurodes",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Orokin Cell",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Familial Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 2
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "400 Endo",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Neurodes",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Orokin Cell",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Familial Debt-Bond",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 2
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Mecha Pulse",
+              "rarity": "Uncommon",
+              "chance": 16.67,
+              "count": 1
+            },
+            {
+              "item": "Familial Debt-Bond",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 2
+            },
+            {
+              "item": "Aya",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "Mecha Pulse",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            }
+          ],
+          "type": "Distract and Divert",
+          "enemyLevels": [
+            100,
+            100
+          ],
+          "standingStages": [
+            840,
+            840,
+            840,
+            840,
+            1660
+          ],
+          "minMR": 10
+        },
+        {
+          "id": "NarmerVenusTheftJobExcavation1782048878063",
+          "expiry": "2026-06-21T13:34:38.063Z",
+          "uniqueName": "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/NarmerTableBRewards",
+          "rewardPool": [
+            "Boreal's Anguish",
+            "Narmer Isoplast",
+            "600 Endo",
+            "Boreal's Anguish",
+            "Narmer Isoplast",
+            "600 Endo",
+            "Caliban Chassis Blueprint",
+            "Nira's Hatred",
+            "2X Narmer Isoplast",
+            "900 Endo",
+            "Boreal's Anguish",
+            "Narmer Isoplast",
+            "600 Endo",
+            "Caliban Chassis Blueprint",
+            "Nira's Hatred",
+            "2X Narmer Isoplast",
+            "900 Endo",
+            "Amar's Contempt",
+            "Nepheri Blueprint",
+            "3X Narmer Isoplast",
+            "1200 Endo",
+            "Caliban Chassis Blueprint",
+            "Nira's Hatred",
+            "2X Narmer Isoplast",
+            "900 Endo",
+            "Amar's Contempt",
+            "Nepheri Blueprint",
+            "3X Narmer Isoplast",
+            "1200 Endo"
+          ],
+          "rewardPoolDrops": [
+            {
+              "item": "Boreal's Anguish",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Common",
+              "chance": 33.33,
+              "count": 1
+            },
+            {
+              "item": "600 Endo",
+              "rarity": "Common",
+              "chance": 46.67,
+              "count": 1
+            },
+            {
+              "item": "Boreal's Anguish",
+              "rarity": "Rare",
+              "chance": 8.11,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Uncommon",
+              "chance": 13.51,
+              "count": 1
+            },
+            {
+              "item": "600 Endo",
+              "rarity": "Uncommon",
+              "chance": 18.92,
+              "count": 1
+            },
+            {
+              "item": "Caliban Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 8.11,
+              "count": 1
+            },
+            {
+              "item": "Nira's Hatred",
+              "rarity": "Uncommon",
+              "chance": 13.51,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Uncommon",
+              "chance": 18.92,
+              "count": 2
+            },
+            {
+              "item": "900 Endo",
+              "rarity": "Uncommon",
+              "chance": 18.92,
+              "count": 1
+            },
+            {
+              "item": "Boreal's Anguish",
+              "rarity": "Rare",
+              "chance": 5.45,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 1
+            },
+            {
+              "item": "600 Endo",
+              "rarity": "Uncommon",
+              "chance": 12.73,
+              "count": 1
+            },
+            {
+              "item": "Caliban Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 5.45,
+              "count": 1
+            },
+            {
+              "item": "Nira's Hatred",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Uncommon",
+              "chance": 12.73,
+              "count": 2
+            },
+            {
+              "item": "900 Endo",
+              "rarity": "Uncommon",
+              "chance": 12.73,
+              "count": 1
+            },
+            {
+              "item": "Amar's Contempt",
+              "rarity": "Rare",
+              "chance": 5.45,
+              "count": 1
+            },
+            {
+              "item": "Nepheri Blueprint",
+              "rarity": "Rare",
+              "chance": 5.45,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 3
+            },
+            {
+              "item": "1200 Endo",
+              "rarity": "Uncommon",
+              "chance": 12.73,
+              "count": 1
+            },
+            {
+              "item": "Caliban Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 7.5,
+              "count": 1
+            },
+            {
+              "item": "Nira's Hatred",
+              "rarity": "Uncommon",
+              "chance": 12.5,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Uncommon",
+              "chance": 17.5,
+              "count": 2
+            },
+            {
+              "item": "900 Endo",
+              "rarity": "Uncommon",
+              "chance": 17.5,
+              "count": 1
+            },
+            {
+              "item": "Amar's Contempt",
+              "rarity": "Rare",
+              "chance": 7.5,
+              "count": 1
+            },
+            {
+              "item": "Nepheri Blueprint",
+              "rarity": "Rare",
+              "chance": 7.5,
+              "count": 1
+            },
+            {
+              "item": "Narmer Isoplast",
+              "rarity": "Uncommon",
+              "chance": 12.5,
+              "count": 3
+            },
+            {
+              "item": "1200 Endo",
+              "rarity": "Uncommon",
+              "chance": 17.5,
+              "count": 1
+            }
+          ],
+          "type": "Digging for Narmer (Narmer)",
+          "enemyLevels": [
+            50,
+            70
+          ],
+          "standingStages": [
+            800,
+            800,
+            800,
+            800,
+            1570
+          ],
+          "minMR": 0,
+          "timeBound": "night"
+        }
+      ]
+    },
+    {
+      "id": "1782048878063ZarimanSyndicate",
+      "activation": "2026-06-21T11:04:39.189Z",
+      "expiry": "2026-06-21T13:34:38.063Z",
       "syndicate": "The Holdfasts",
       "syndicateKey": "The Holdfasts",
       "nodes": [],
