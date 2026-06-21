@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T23:06:22Z",
+  "fetchedAt": "2026-06-21T23:11:29Z",
   "cetusCycle": {
     "id": "cetusCycle1782084840000",
     "activation": "2026-06-21T22:44:00.000Z",
     "expiry": "2026-06-21T23:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "27m 56s",
+    "timeLeft": "22m 57s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782084840000",
     "activation": "2026-06-21T22:44:00.000Z",
     "expiry": "2026-06-21T23:34:00.000Z",
-    "timeLeft": "27m 56s",
+    "timeLeft": "22m 57s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T23:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "27m 51s"
+    "timeLeft": "22m 52s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782086400000",
@@ -728,7 +728,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "53m 54s",
+    "remaining": "48m 55s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1364,9 +1364,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -101,
+      "count": -113,
       "requiredRuns": 49000,
-      "completion": 49.8969387755102,
+      "completion": 49.88469387755102,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1581,9 +1581,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -16528,
+      "count": -16646,
       "requiredRuns": 30000,
-      "completion": 44.90666666666666,
+      "completion": 44.513333333333335,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1617,9 +1617,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -192,
+      "count": -298,
       "requiredRuns": 43000,
-      "completion": 99.55348837209303,
+      "completion": 99.30697674418604,
       "completed": false,
       "rewardTypes": [
         "fieldron"
