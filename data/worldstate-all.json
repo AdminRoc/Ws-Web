@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-21T20:26:19Z",
+  "fetchedAt": "2026-06-21T20:31:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782075840000",
     "activation": "2026-06-21T20:14:00.000Z",
     "expiry": "2026-06-21T21:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782075840000",
     "activation": "2026-06-21T20:14:00.000Z",
     "expiry": "2026-06-21T21:04:00.000Z",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T21:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "37m 55s"
+    "timeLeft": "32m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782079200000",
@@ -61,21 +61,6 @@
   },
   "fissures": [
     {
-      "id": "6a38321ee05b6f1a0a8ce5b1",
-      "activation": "2026-06-21T18:49:02.857Z",
-      "expiry": "2026-06-21T20:28:04.323Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a383836234989d1d98ce5b1",
       "activation": "2026-06-21T19:15:02.887Z",
       "expiry": "2026-06-21T20:32:41.588Z",
@@ -87,21 +72,6 @@
       "nodeKey": "Belenus (Void)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a383a52661722125d8ce5b2",
-      "activation": "2026-06-21T19:24:02.305Z",
-      "expiry": "2026-06-21T20:36:10.866Z",
-      "node": "Stickney (Phobos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Stickney (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
       "isStorm": false,
       "isHard": true
     },
@@ -121,19 +91,19 @@
       "isHard": true
     },
     {
-      "id": "6a383b4250dd1acd318ce5b2",
-      "activation": "2026-06-21T19:28:02.796Z",
-      "expiry": "2026-06-21T21:19:00.368Z",
-      "node": "Ani (Void)",
+      "id": "6a383a52661722125d8ce5b2",
+      "activation": "2026-06-21T19:24:02.305Z",
+      "expiry": "2026-06-21T20:36:10.866Z",
+      "node": "Stickney (Phobos)",
       "missionType": "Survival",
       "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Ani (Void)",
-      "tier": "Neo",
-      "tierNum": 3,
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Stickney (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": false,
-      "isHard": false
+      "isHard": true
     },
     {
       "id": "6a383b4250dd1acd318ce5b1",
@@ -145,6 +115,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Umbriel (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a383b4250dd1acd318ce5b2",
+      "activation": "2026-06-21T19:28:02.796Z",
+      "expiry": "2026-06-21T21:19:00.368Z",
+      "node": "Ani (Void)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Ani (Void)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -211,21 +196,6 @@
       "isHard": true
     },
     {
-      "id": "6a383c6e0480dd5c258ce5b2",
-      "activation": "2026-06-21T19:33:02.948Z",
-      "expiry": "2026-06-21T20:46:43.263Z",
-      "node": "Eurasia (Earth)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Eurasia (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a383c6e0480dd5c258ce5b3",
       "activation": "2026-06-21T19:33:02.948Z",
       "expiry": "2026-06-21T21:16:09.356Z",
@@ -235,6 +205,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Ares (Mars)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a383c6e0480dd5c258ce5b2",
+      "activation": "2026-06-21T19:33:02.948Z",
+      "expiry": "2026-06-21T20:46:43.263Z",
+      "node": "Eurasia (Earth)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Eurasia (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -357,6 +342,51 @@
       "nodeKey": "Persto (Deimos)",
       "tier": "Omnia",
       "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a384952c8e0cb1c3a8ce5b1",
+      "activation": "2026-06-21T20:28:02.598Z",
+      "expiry": "2026-06-21T21:37:08.889Z",
+      "node": "Regna (Pluto)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Regna (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a384952c8e0cb1c3a8ce5b2",
+      "activation": "2026-06-21T20:28:02.598Z",
+      "expiry": "2026-06-21T21:34:11.205Z",
+      "node": "Tiwaz (Void)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Tiwaz (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a384952c8e0cb1c3a8ce5b3",
+      "activation": "2026-06-21T20:28:02.598Z",
+      "expiry": "2026-06-21T21:53:35.476Z",
+      "node": "Solium (Eris)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Solium (Eris)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": false,
       "isHard": true
     },
@@ -798,7 +828,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "3h 33m 58s",
+    "remaining": "3h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1384,9 +1414,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 29739,
+      "count": 29926,
       "requiredRuns": 33000,
-      "completion": 95.0590909090909,
+      "completion": 95.34242424242424,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1421,9 +1451,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28886,
+      "count": -28984,
       "requiredRuns": 30000,
-      "completion": 3.713333333333335,
+      "completion": 3.386666666666671,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1601,9 +1631,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -12660,
+      "count": -12773,
       "requiredRuns": 30000,
-      "completion": 57.800000000000004,
+      "completion": 57.42333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
