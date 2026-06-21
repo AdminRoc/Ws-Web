@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T05:06:14Z",
+  "fetchedAt": "2026-06-21T05:11:15Z",
   "cetusCycle": {
     "id": "cetusCycle1782018840000",
     "activation": "2026-06-21T03:34:00.000Z",
     "expiry": "2026-06-21T05:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782017160000",
-    "activation": "2026-06-21T04:46:00.000Z",
-    "expiry": "2026-06-21T05:06:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782018360000",
+    "activation": "2026-06-21T05:06:00.000Z",
+    "expiry": "2026-06-21T05:13:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782018840000",
     "activation": "2026-06-21T03:34:00.000Z",
     "expiry": "2026-06-21T05:14:00.000Z",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T06:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "57m 55s"
+    "timeLeft": "52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782021600000",
@@ -44,21 +44,6 @@ window.WF_WS_SNAPSHOT = {
     "choices": []
   },
   "fissures": [
-    {
-      "id": "6a375737271441b2fe8ce5b2",
-      "activation": "2026-06-21T03:15:02.975Z",
-      "expiry": "2026-06-21T05:08:10.080Z",
-      "node": "Tessera (Venus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Tessera (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a375baaa6b494798d8ce5b1",
       "activation": "2026-06-21T03:34:02.681Z",
@@ -116,36 +101,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Proteus (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a375eb623902a7b588ce5b2",
-      "activation": "2026-06-21T03:47:02.888Z",
-      "expiry": "2026-06-21T05:07:01.318Z",
-      "node": "Umbriel (Uranus)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Umbriel (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a376186ef2f4e17ab8ce5b2",
-      "activation": "2026-06-21T03:59:02.644Z",
-      "expiry": "2026-06-21T05:09:00.136Z",
-      "node": "Ultor (Mars)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Ultor (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
       "isStorm": false,
       "isHard": true
     },
@@ -752,7 +707,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "18h 53m 58s",
+    "remaining": "18h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1288,9 +1243,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -34635,
+      "count": -34723,
       "requiredRuns": 42000,
-      "completion": 8.767857142857144,
+      "completion": 8.663095238095236,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1338,9 +1293,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 32432,
+      "count": 32540,
       "requiredRuns": 33000,
-      "completion": 99.13939393939394,
+      "completion": 99.3030303030303,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1420,42 +1375,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a3695da32944573938ce5b2",
-      "activation": "2026-06-20T13:30:01.882Z",
-      "node": "Titan (Saturn)",
-      "nodeKey": "Titan (Saturn)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -44341,
-      "requiredRuns": 44000,
-      "completion": -0.7749999999999924,
-      "completed": true,
-      "rewardTypes": [
-        "detonite"
-      ]
-    },
-    {
       "id": "6a3695da32944573938ce5b1",
       "activation": "2026-06-20T13:30:01.882Z",
       "node": "Numa (Saturn)",
@@ -1489,6 +1408,42 @@ window.WF_WS_SNAPSHOT = {
       "completed": true,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a3695da32944573938ce5b2",
+      "activation": "2026-06-20T13:30:01.882Z",
+      "node": "Titan (Saturn)",
+      "nodeKey": "Titan (Saturn)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -44341,
+      "requiredRuns": 44000,
+      "completion": -0.7749999999999924,
+      "completed": true,
+      "rewardTypes": [
+        "detonite"
       ]
     },
     {
@@ -1555,10 +1510,10 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -48959,
+      "count": -48988,
       "requiredRuns": 48000,
-      "completion": -1.997916666666666,
-      "completed": false,
+      "completion": -2.05833333333334,
+      "completed": true,
       "rewardTypes": [
         "fieldron"
       ]
@@ -1591,9 +1546,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5575,
+      "count": -5740,
       "requiredRuns": 30000,
-      "completion": 81.41666666666667,
+      "completion": 80.86666666666666,
       "completed": false,
       "rewardTypes": [
         "fieldron"
