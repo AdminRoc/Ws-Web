@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T15:31:15Z",
+  "fetchedAt": "2026-06-21T15:36:17Z",
   "cetusCycle": {
     "id": "cetusCycle1782057840000",
     "activation": "2026-06-21T15:14:00.000Z",
     "expiry": "2026-06-21T16:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "33m 1s",
+    "timeLeft": "28m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782057840000",
     "activation": "2026-06-21T15:14:00.000Z",
     "expiry": "2026-06-21T16:04:00.000Z",
-    "timeLeft": "33m 1s",
+    "timeLeft": "28m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T16:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "32m 55s"
+    "timeLeft": "27m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782057600000",
@@ -88,36 +88,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a37f29a80640917ef8ce5b1",
-      "activation": "2026-06-21T14:18:02.196Z",
-      "expiry": "2026-06-21T15:31:09.543Z",
-      "node": "Augustus (Mars)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Augustus (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a37f29a80640917ef8ce5b2",
-      "activation": "2026-06-21T14:18:02.196Z",
-      "expiry": "2026-06-21T15:31:23.325Z",
-      "node": "E Prime (Earth)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "E Prime (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a37f2d630ba8d3f768ce5b1",
@@ -270,21 +240,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a37fddab37f6415db8ce5b1",
-      "activation": "2026-06-21T15:06:02.610Z",
-      "expiry": "2026-06-21T16:34:22.005Z",
-      "node": "Cinxia (Ceres)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cinxia (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a37fddab37f6415db8ce5b2",
       "activation": "2026-06-21T15:06:02.610Z",
       "expiry": "2026-06-21T16:09:03.568Z",
@@ -294,6 +249,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Gulliver (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a37fddab37f6415db8ce5b1",
+      "activation": "2026-06-21T15:06:02.610Z",
+      "expiry": "2026-06-21T16:34:22.005Z",
+      "node": "Cinxia (Ceres)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Cinxia (Ceres)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -315,21 +285,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38021240cd71c3f28ce5b2",
-      "activation": "2026-06-21T15:24:02.196Z",
-      "expiry": "2026-06-21T16:57:12.755Z",
-      "node": "Cypress (Pluto)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cypress (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38021240cd71c3f28ce5b1",
       "activation": "2026-06-21T15:24:02.196Z",
       "expiry": "2026-06-21T17:14:40.396Z",
@@ -345,19 +300,19 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38028bd0cb0ab8a28ce5b2",
-      "activation": "2026-06-21T15:26:03.050Z",
-      "expiry": "2026-06-21T17:16:29.663Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
+      "id": "6a38021240cd71c3f28ce5b2",
+      "activation": "2026-06-21T15:24:02.196Z",
+      "expiry": "2026-06-21T16:57:12.755Z",
+      "node": "Cypress (Pluto)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cypress (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": false,
-      "isHard": true
+      "isHard": false
     },
     {
       "id": "6a38028bd0cb0ab8a28ce5b1",
@@ -369,6 +324,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Rotuma (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38028bd0cb0ab8a28ce5b2",
+      "activation": "2026-06-21T15:26:03.050Z",
+      "expiry": "2026-06-21T17:16:29.663Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nabuk (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -827,7 +797,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "8h 28m 58s",
+    "remaining": "8h 23m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1463,9 +1433,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 19360,
+      "count": 19540,
       "requiredRuns": 33000,
-      "completion": 79.33333333333333,
+      "completion": 79.60606060606061,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1572,9 +1542,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21731,
+      "count": -21860,
       "requiredRuns": 30000,
-      "completion": 27.56333333333333,
+      "completion": 27.133333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1752,9 +1722,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5312,
+      "count": -5432,
       "requiredRuns": 30000,
-      "completion": 82.29333333333332,
+      "completion": 81.89333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
