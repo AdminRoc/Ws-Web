@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T22:46:19Z",
+  "fetchedAt": "2026-06-21T22:51:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782084840000",
     "activation": "2026-06-21T22:44:00.000Z",
     "expiry": "2026-06-21T23:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782084840000",
     "activation": "2026-06-21T22:44:00.000Z",
     "expiry": "2026-06-21T23:34:00.000Z",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T23:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "47m 55s"
+    "timeLeft": "42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782086400000",
@@ -92,21 +92,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Xini (Eris)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a38550af51827486b8ce5b1",
-      "activation": "2026-06-21T21:18:02.680Z",
-      "expiry": "2026-06-21T22:46:01.251Z",
-      "node": "Rhea (Saturn)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rhea (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
       "isStorm": false,
       "isHard": false
     },
@@ -231,21 +216,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3862defa7d1d34238ce5b1",
-      "activation": "2026-06-21T22:17:02.596Z",
-      "expiry": "2026-06-21T23:27:27.640Z",
-      "node": "Valac (Europa)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Valac (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3862defa7d1d34238ce5b2",
       "activation": "2026-06-21T22:17:02.596Z",
       "expiry": "2026-06-22T00:06:39.081Z",
@@ -255,6 +225,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Orokin",
       "enemyKey": "Orokin",
       "nodeKey": "Ukko (Void)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3862defa7d1d34238ce5b1",
+      "activation": "2026-06-21T22:17:02.596Z",
+      "expiry": "2026-06-21T23:27:27.640Z",
+      "node": "Valac (Europa)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Valac (Europa)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -788,7 +773,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1h 13m 58s",
+    "remaining": "1h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1424,9 +1409,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -58,
+      "count": -83,
       "requiredRuns": 49000,
-      "completion": 49.940816326530616,
+      "completion": 49.915306122448975,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1641,9 +1626,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -16078,
+      "count": -16181,
       "requiredRuns": 30000,
-      "completion": 46.406666666666666,
+      "completion": 46.06333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
