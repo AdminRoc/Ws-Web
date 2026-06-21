@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T16:31:15Z",
+  "fetchedAt": "2026-06-21T16:41:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782063840000",
     "activation": "2026-06-21T16:04:00.000Z",
     "expiry": "2026-06-21T17:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 13m 1s",
+    "timeLeft": "1h 3m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782058800000",
-    "activation": "2026-06-21T16:20:00.000Z",
-    "expiry": "2026-06-21T16:40:08.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782060000000",
+    "activation": "2026-06-21T16:40:00.000Z",
+    "expiry": "2026-06-21T16:46:48.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782063840000",
     "activation": "2026-06-21T16:04:00.000Z",
     "expiry": "2026-06-21T17:44:00.000Z",
-    "timeLeft": "1h 13m 1s",
+    "timeLeft": "1h 3m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T18:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 2m 55s"
+    "timeLeft": "1h 52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782064800000",
@@ -60,21 +60,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a37fddab37f6415db8ce5b1",
-      "activation": "2026-06-21T15:06:02.610Z",
-      "expiry": "2026-06-21T16:34:22.005Z",
-      "node": "Cinxia (Ceres)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cinxia (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38012267953ac5018ce5b1",
       "activation": "2026-06-21T15:20:02.203Z",
       "expiry": "2026-06-21T17:12:43.712Z",
@@ -90,21 +75,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38021240cd71c3f28ce5b2",
-      "activation": "2026-06-21T15:24:02.196Z",
-      "expiry": "2026-06-21T16:57:12.755Z",
-      "node": "Cypress (Pluto)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cypress (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38021240cd71c3f28ce5b1",
       "activation": "2026-06-21T15:24:02.196Z",
       "expiry": "2026-06-21T17:14:40.396Z",
@@ -114,6 +84,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Orokin",
       "enemyKey": "Orokin",
       "nodeKey": "Mithra (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38021240cd71c3f28ce5b2",
+      "activation": "2026-06-21T15:24:02.196Z",
+      "expiry": "2026-06-21T16:57:12.755Z",
+      "node": "Cypress (Pluto)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cypress (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -135,21 +120,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a38028bd0cb0ab8a28ce5b1",
-      "activation": "2026-06-21T15:26:03.050Z",
-      "expiry": "2026-06-21T16:31:26.384Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3802c6175dfc8ab88ce5b1",
       "activation": "2026-06-21T15:27:02.390Z",
       "expiry": "2026-06-21T17:16:41.021Z",
@@ -165,21 +135,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38060eb98565484c8ce5b2",
-      "activation": "2026-06-21T15:41:02.572Z",
-      "expiry": "2026-06-21T17:24:34.963Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a38060eb98565484c8ce5b1",
       "activation": "2026-06-21T15:41:02.572Z",
       "expiry": "2026-06-21T16:49:43.271Z",
@@ -189,6 +144,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Crossfire",
       "enemyKey": "Crossfire",
       "nodeKey": "Tuvul Commons (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38060eb98565484c8ce5b2",
+      "activation": "2026-06-21T15:41:02.572Z",
+      "expiry": "2026-06-21T17:24:34.963Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -210,21 +180,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a380abe0ce67cda0d8ce5b2",
-      "activation": "2026-06-21T16:01:02.507Z",
-      "expiry": "2026-06-21T17:41:35.079Z",
-      "node": "Despina (Neptune)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Despina (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a380abe0ce67cda0d8ce5b1",
       "activation": "2026-06-21T16:01:02.507Z",
       "expiry": "2026-06-21T17:08:42.205Z",
@@ -240,19 +195,19 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a380abe0ce67cda0d8ce5b3",
+      "id": "6a380abe0ce67cda0d8ce5b2",
       "activation": "2026-06-21T16:01:02.507Z",
-      "expiry": "2026-06-21T18:00:50.306Z",
-      "node": "Orias (Europa)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
+      "expiry": "2026-06-21T17:41:35.079Z",
+      "node": "Despina (Neptune)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Orias (Europa)",
+      "nodeKey": "Despina (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
-      "isHard": true
+      "isHard": false
     },
     {
       "id": "6a380abe0ce67cda0d8ce5b4",
@@ -264,6 +219,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Sao (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a380abe0ce67cda0d8ce5b3",
+      "activation": "2026-06-21T16:01:02.507Z",
+      "expiry": "2026-06-21T18:00:50.306Z",
+      "node": "Orias (Europa)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Orias (Europa)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -782,7 +752,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "7h 28m 58s",
+    "remaining": "7h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1418,9 +1388,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 21535,
+      "count": 21947,
       "requiredRuns": 33000,
-      "completion": 82.62878787878788,
+      "completion": 83.2530303030303,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1527,9 +1497,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23355,
+      "count": -23611,
       "requiredRuns": 30000,
-      "completion": 22.150000000000002,
+      "completion": 21.296666666666663,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1707,9 +1677,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -7038,
+      "count": -7302,
       "requiredRuns": 30000,
-      "completion": 76.53999999999999,
+      "completion": 75.66,
       "completed": false,
       "rewardTypes": [
         "fieldron"
