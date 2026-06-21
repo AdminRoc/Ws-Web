@@ -859,6 +859,42 @@ function alignLogoText() {
    从函数源码中提取变量名，再读取 window[vn+'Notice_cn'] 和 Notice_en
    cn 留空则隐藏横幅，非空则显示；鼠标悬停切换为英文。
    ══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════
+   notice 中文字号自适应放大 — autoFitNoticeCn(cnEl, enEl)
+   背景：.lb-tip-cn / .lb-tip-en 在 global.css 里是同一个 grid 单元格堆叠，
+   格高取两者中较高者。英文译文通常比中文换行更多、撑出更高的格子，中文用
+   默认字号显示时格子里会留出一大块没用上的空间。
+   做法：以英文在默认字号下的真实渲染高度为目标，二分搜索中文能放大到的
+   最大字号——每一步都用 scrollHeight 实测（文字换行点是非线性的，字号
+   翻倍不代表高度翻倍，不能按比例瞎算），严格控制在目标高度以内并留
+   MARGIN 像素安全距离，绝不会超出框体边界；同时设 1.6 倍封顶，避免内容
+   本来就很短时被放大到不协调的尺寸。
+   ══════════════════════════════════════════════════════════ */
+function autoFitNoticeCn(cnEl, enEl) {
+  if (!cnEl || !enEl) return;
+  if (!cnEl.textContent || !cnEl.textContent.trim()) return;
+  if (!enEl.textContent || !enEl.textContent.trim()) return;
+
+  cnEl.style.fontSize = '';   /* 先复位，量出的是默认字号下的高度 */
+  var baseSizePx = parseFloat(getComputedStyle(cnEl).fontSize);
+  if (!baseSizePx) return;
+
+  var enHeight     = enEl.scrollHeight;
+  var cnBaseHeight = cnEl.scrollHeight;
+  var MARGIN = 4; /* 安全距离（像素），不贴边 */
+  if (enHeight <= cnBaseHeight + MARGIN) return; /* 中文本来就不比英文矮，无需放大 */
+
+  var targetHeight = enHeight - MARGIN;
+  var lo = baseSizePx, hi = baseSizePx * 1.6, best = baseSizePx;
+  for (var i = 0; i < 12; i++) {   /* 12次二分足够收敛到 <0.05px 精度 */
+    var mid = (lo + hi) / 2;
+    cnEl.style.fontSize = mid + 'px';
+    if (cnEl.scrollHeight <= targetHeight) { best = mid; lo = mid; }
+    else { hi = mid; }
+  }
+  cnEl.style.fontSize = best + 'px';
+}
+
 function _updatePageNotice(dataFn) {
   var el = document.getElementById('page-notice');
   if (!el) return;
@@ -867,11 +903,11 @@ function _updatePageNotice(dataFn) {
     try {
       var src = dataFn.toString();
       /* 支持多种函数格式：
-         1. function(){return xxxRecords;} 
+         1. function(){return xxxRecords;}
          2. function() { return xxxRecords; }
          3. ()=>xxxRecords 或 () => xxxRecords
          4. function name(){return xxxRecords;} */
-      var m = src.match(/return\s+([a-zA-Z_][a-zA-Z0-9_$]*)Records/) || 
+      var m = src.match(/return\s+([a-zA-Z_][a-zA-Z0-9_$]*)Records/) ||
               src.match(/=>\s*([a-zA-Z_][a-zA-Z0-9_$]*)Records/);
       if (m) {
         var vn = m[1];
@@ -888,10 +924,26 @@ function _updatePageNotice(dataFn) {
     var enEl = document.getElementById('notice-en');
     if (cnEl) cnEl.textContent = cn;
     if (enEl) enEl.textContent = en || '';
+    autoFitNoticeCn(cnEl, enEl);
   } else {
     el.style.display = 'none';
   }
 }
+
+/* 视口宽度变化会改变文字换行点，进而改变目标高度，需要重新计算一次，
+   否则缩放/旋转屏幕后中文字号可能不再贴合（虽然不会溢出，但不够贴合）。
+   防抖 200ms，只在当前 notice 处于可见状态时才重算。 */
+(function () {
+  var _noticeResizeTimer = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(_noticeResizeTimer);
+    _noticeResizeTimer = setTimeout(function () {
+      var el = document.getElementById('page-notice');
+      if (!el || el.style.display !== 'grid') return;
+      autoFitNoticeCn(document.getElementById('notice-cn'), document.getElementById('notice-en'));
+    }, 200);
+  });
+})();
 
 function animateTableRows(tbody) {
   if (!tbody) return;
