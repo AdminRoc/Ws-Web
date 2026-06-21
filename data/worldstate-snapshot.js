@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T14:46:16Z",
+  "fetchedAt": "2026-06-21T14:51:15Z",
   "cetusCycle": {
     "id": "cetusCycle1782054840000",
     "activation": "2026-06-21T13:34:00.000Z",
     "expiry": "2026-06-21T15:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "28m 1s",
+    "timeLeft": "23m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782054840000",
     "activation": "2026-06-21T13:34:00.000Z",
     "expiry": "2026-06-21T15:14:00.000Z",
-    "timeLeft": "28m 1s",
+    "timeLeft": "23m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T16:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 17m 55s"
+    "timeLeft": "1h 12m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782057600000",
@@ -90,21 +90,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a37ea2b0e6bb029a88ce5b2",
-      "activation": "2026-06-21T13:42:03.122Z",
-      "expiry": "2026-06-21T15:24:24.158Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a37ea2b0e6bb029a88ce5b1",
       "activation": "2026-06-21T13:42:03.122Z",
       "expiry": "2026-06-21T15:17:09.277Z",
@@ -114,6 +99,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Koro (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a37ea2b0e6bb029a88ce5b2",
+      "activation": "2026-06-21T13:42:03.122Z",
+      "expiry": "2026-06-21T15:24:24.158Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nabuk (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -767,7 +767,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "9h 13m 58s",
+    "remaining": "9h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1403,9 +1403,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 17884,
+      "count": 18054,
       "requiredRuns": 33000,
-      "completion": 77.0969696969697,
+      "completion": 77.35454545454546,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1512,9 +1512,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -20553,
+      "count": -20688,
       "requiredRuns": 30000,
-      "completion": 31.489999999999995,
+      "completion": 31.04,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1656,9 +1656,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -30229,
+      "count": -31095,
       "requiredRuns": 37000,
-      "completion": 18.300000000000004,
+      "completion": 15.959459459459458,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1692,9 +1692,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4289,
+      "count": -4405,
       "requiredRuns": 30000,
-      "completion": 85.70333333333333,
+      "completion": 85.31666666666666,
       "completed": false,
       "rewardTypes": [
         "fieldron"
