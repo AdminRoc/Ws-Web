@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T22:21:22Z",
+  "fetchedAt": "2026-06-21T22:26:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782081840000",
     "activation": "2026-06-21T21:04:00.000Z",
     "expiry": "2026-06-21T22:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "23m 0s",
+    "timeLeft": "18m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782081840000",
     "activation": "2026-06-21T21:04:00.000Z",
     "expiry": "2026-06-21T22:44:00.000Z",
-    "timeLeft": "23m 0s",
+    "timeLeft": "18m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T23:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 12m 55s"
+    "timeLeft": "1h 7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782086400000",
@@ -156,21 +156,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3853a2d28ac53c338ce5b1",
-      "activation": "2026-06-21T21:12:02.437Z",
-      "expiry": "2026-06-21T22:21:34.778Z",
-      "node": "E Prime (Earth)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "E Prime (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3853a2d28ac53c338ce5b2",
       "activation": "2026-06-21T21:12:02.437Z",
       "expiry": "2026-06-21T22:41:32.817Z",
@@ -212,21 +197,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Xini (Eris)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a38541a95e0e875cf8ce5b2",
-      "activation": "2026-06-21T21:14:02.967Z",
-      "expiry": "2026-06-21T22:21:16.294Z",
-      "node": "Valefor (Europa)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Valefor (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
       "isStorm": false,
       "isHard": false
     },
@@ -848,7 +818,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1h 38m 58s",
+    "remaining": "1h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1444,6 +1414,56 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
+      "id": "6a38613bce14f448a48ce5b2",
+      "activation": "2026-06-21T22:26:55.052Z",
+      "node": "Narcissus (Pluto)",
+      "nodeKey": "Narcissus (Pluto)",
+      "desc": "Grineer Offensive",
+      "attacker": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": false,
+      "count": 0,
+      "requiredRuns": 49000,
+      "completion": 50,
+      "completed": false,
+      "rewardTypes": [
+        "detonite",
+        "fieldron"
+      ]
+    },
+    {
       "id": "6a3738beffe92a2e608ce5b1",
       "activation": "2026-06-21T01:05:01.966Z",
       "node": "Themisto (Jupiter)",
@@ -1651,9 +1671,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15408,
+      "count": -15559,
       "requiredRuns": 30000,
-      "completion": 48.64000000000001,
+      "completion": 48.13666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
