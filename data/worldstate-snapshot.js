@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T20:06:20Z",
+  "fetchedAt": "2026-06-21T20:11:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782072840000",
     "activation": "2026-06-21T18:34:00.000Z",
     "expiry": "2026-06-21T20:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "8m 1s",
+    "timeLeft": "3m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782072840000",
     "activation": "2026-06-21T18:34:00.000Z",
     "expiry": "2026-06-21T20:14:00.000Z",
-    "timeLeft": "8m 1s",
+    "timeLeft": "3m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T21:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "57m 55s"
+    "timeLeft": "52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782079200000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a382a26716774d1388ce5b3",
-      "activation": "2026-06-21T18:15:02.415Z",
-      "expiry": "2026-06-21T20:09:04.623Z",
-      "node": "Casta (Ceres)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Casta (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a383002e03bc62e8f8ce5b1",
       "activation": "2026-06-21T18:40:02.468Z",
@@ -141,21 +126,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a383a52661722125d8ce5b2",
-      "activation": "2026-06-21T19:24:02.305Z",
-      "expiry": "2026-06-21T20:36:10.866Z",
-      "node": "Stickney (Phobos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Stickney (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a383a52661722125d8ce5b1",
       "activation": "2026-06-21T19:24:02.305Z",
       "expiry": "2026-06-21T20:48:05.800Z",
@@ -171,19 +141,19 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a383b4250dd1acd318ce5b2",
-      "activation": "2026-06-21T19:28:02.796Z",
-      "expiry": "2026-06-21T21:19:00.368Z",
-      "node": "Ani (Void)",
+      "id": "6a383a52661722125d8ce5b2",
+      "activation": "2026-06-21T19:24:02.305Z",
+      "expiry": "2026-06-21T20:36:10.866Z",
+      "node": "Stickney (Phobos)",
       "missionType": "Survival",
       "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Ani (Void)",
-      "tier": "Neo",
-      "tierNum": 3,
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Stickney (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": false,
-      "isHard": false
+      "isHard": true
     },
     {
       "id": "6a383b4250dd1acd318ce5b1",
@@ -195,6 +165,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Umbriel (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a383b4250dd1acd318ce5b2",
+      "activation": "2026-06-21T19:28:02.796Z",
+      "expiry": "2026-06-21T21:19:00.368Z",
+      "node": "Ani (Void)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Ani (Void)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -261,21 +246,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a383c6e0480dd5c258ce5b2",
-      "activation": "2026-06-21T19:33:02.948Z",
-      "expiry": "2026-06-21T20:46:43.263Z",
-      "node": "Eurasia (Earth)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Eurasia (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a383c6e0480dd5c258ce5b3",
       "activation": "2026-06-21T19:33:02.948Z",
       "expiry": "2026-06-21T21:16:09.356Z",
@@ -285,6 +255,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Ares (Mars)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a383c6e0480dd5c258ce5b2",
+      "activation": "2026-06-21T19:33:02.948Z",
+      "expiry": "2026-06-21T20:46:43.263Z",
+      "node": "Eurasia (Earth)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Eurasia (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -728,7 +713,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "3h 53m 58s",
+    "remaining": "3h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1314,9 +1299,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 29012,
+      "count": 29206,
       "requiredRuns": 33000,
-      "completion": 93.95757575757575,
+      "completion": 94.25151515151515,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1351,9 +1336,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28433,
+      "count": -28544,
       "requiredRuns": 30000,
-      "completion": 5.223333333333335,
+      "completion": 4.853333333333332,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1531,9 +1516,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -12163,
+      "count": -12280,
       "requiredRuns": 30000,
-      "completion": 59.45666666666667,
+      "completion": 59.06666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
