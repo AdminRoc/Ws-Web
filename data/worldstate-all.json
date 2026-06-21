@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-21T07:11:16Z",
+  "fetchedAt": "2026-06-21T07:16:15Z",
   "cetusCycle": {
     "id": "cetusCycle1782027840000",
     "activation": "2026-06-21T06:04:00.000Z",
     "expiry": "2026-06-21T07:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "32m 59s",
+    "timeLeft": "28m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782027840000",
     "activation": "2026-06-21T06:04:00.000Z",
     "expiry": "2026-06-21T07:44:00.000Z",
-    "timeLeft": "32m 59s",
+    "timeLeft": "28m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T08:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 22m 54s"
+    "timeLeft": "1h 17m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782028800000",
@@ -53,21 +53,6 @@
       "tierNum": 5,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a377626b981a29a598ce5b5",
-      "activation": "2026-06-21T05:27:02.872Z",
-      "expiry": "2026-06-21T07:11:43.201Z",
-      "node": "Io (Jupiter)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Io (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a3778baf2dbdf22e28ce5b1",
@@ -325,32 +310,32 @@
       "isHard": true
     },
     {
-      "id": "6a3779336fd11891438ce5b3",
-      "activation": "2026-06-21T06:20:03.351Z",
-      "expiry": "2026-06-21T07:50:03.351Z",
-      "node": "Korm's Belt (Earth)",
+      "id": "6a378ec2dee171c64e8ce5b1",
+      "activation": "2026-06-21T07:12:02.806Z",
+      "expiry": "2026-06-21T08:49:33.788Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nabuk (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3779336fd11891438ce5b5",
+      "activation": "2026-06-21T06:20:03.355Z",
+      "expiry": "2026-06-21T07:50:03.355Z",
+      "node": "Kasio's Rest (Saturn)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Korm's Belt (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3779336fd11891438ce5b4",
-      "activation": "2026-06-21T06:20:03.353Z",
-      "expiry": "2026-06-21T07:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
+      "nodeKey": "Kasio's Rest (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": true,
       "isHard": false
     },
@@ -370,21 +355,6 @@
       "isHard": false
     },
     {
-      "id": "6a3779336fd11891438ce5b6",
-      "activation": "2026-06-21T06:20:03.356Z",
-      "expiry": "2026-06-21T07:50:03.356Z",
-      "node": "Brom Cluster (Neptune)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Brom Cluster (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3779336fd11891438ce5b8",
       "activation": "2026-06-21T06:20:03.360Z",
       "expiry": "2026-06-21T07:50:03.360Z",
@@ -400,17 +370,137 @@
       "isHard": false
     },
     {
-      "id": "6a3779336fd11891438ce5b5",
-      "activation": "2026-06-21T06:20:03.355Z",
-      "expiry": "2026-06-21T07:50:03.355Z",
-      "node": "Kasio's Rest (Saturn)",
+      "id": "6a3779336fd11891438ce5b4",
+      "activation": "2026-06-21T06:20:03.353Z",
+      "expiry": "2026-06-21T07:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Orvin-Haarc (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3779336fd11891438ce5b3",
+      "activation": "2026-06-21T06:20:03.351Z",
+      "expiry": "2026-06-21T07:50:03.351Z",
+      "node": "Korm's Belt (Earth)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Kasio's Rest (Saturn)",
+      "nodeKey": "Korm's Belt (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3779336fd11891438ce5b6",
+      "activation": "2026-06-21T06:20:03.356Z",
+      "expiry": "2026-06-21T07:50:03.356Z",
+      "node": "Brom Cluster (Neptune)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Brom Cluster (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a37874233184e11778ce5b1",
+      "activation": "2026-06-21T07:20:03.351Z",
+      "expiry": "2026-06-21T08:50:03.351Z",
+      "node": "Iota Temple (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Iota Temple (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a37874233184e11778ce5b4",
+      "activation": "2026-06-21T07:20:03.356Z",
+      "expiry": "2026-06-21T08:50:03.356Z",
+      "node": "Sovereign Grasp (Neptune)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sovereign Grasp (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a37874233184e11778ce5b3",
+      "activation": "2026-06-21T07:20:03.355Z",
+      "expiry": "2026-06-21T08:50:03.355Z",
+      "node": "Vand Cluster (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Vand Cluster (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a37874233184e11778ce5b5",
+      "activation": "2026-06-21T07:20:03.358Z",
+      "expiry": "2026-06-21T08:50:03.358Z",
+      "node": "Seven Sirens (Pluto)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Seven Sirens (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a37874233184e11778ce5b2",
+      "activation": "2026-06-21T07:20:03.353Z",
+      "expiry": "2026-06-21T08:50:03.353Z",
+      "node": "Bifrost Echo (Venus)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Bifrost Echo (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a37874233184e11778ce5b6",
+      "activation": "2026-06-21T07:20:03.360Z",
+      "expiry": "2026-06-21T08:50:03.360Z",
+      "node": "Flexa (Veil)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Flexa (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     }
@@ -672,7 +762,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "16h 48m 57s",
+    "remaining": "16h 43m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1208,9 +1298,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -37160,
+      "count": -37278,
       "requiredRuns": 42000,
-      "completion": 5.761904761904763,
+      "completion": 5.621428571428572,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1308,9 +1398,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 2964,
+      "count": 3089,
       "requiredRuns": 33000,
-      "completion": 54.49090909090909,
+      "completion": 54.68030303030304,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1525,9 +1615,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9368,
+      "count": -9494,
       "requiredRuns": 30000,
-      "completion": 68.77333333333333,
+      "completion": 68.35333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1561,9 +1651,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -722,
+      "count": -782,
       "requiredRuns": 40000,
-      "completion": 98.195,
+      "completion": 98.045,
       "completed": false,
       "rewardTypes": [
         "fieldron"
