@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T15:51:15Z",
+  "fetchedAt": "2026-06-21T15:56:46Z",
   "cetusCycle": {
     "id": "cetusCycle1782057840000",
     "activation": "2026-06-21T15:14:00.000Z",
     "expiry": "2026-06-21T16:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "13m 1s",
+    "timeLeft": "10m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782056760000",
-    "activation": "2026-06-21T15:46:00.000Z",
-    "expiry": "2026-06-21T15:53:28.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782057180000",
+    "activation": "2026-06-21T15:53:00.000Z",
+    "expiry": "2026-06-21T16:13:28.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782057840000",
     "activation": "2026-06-21T15:14:00.000Z",
     "expiry": "2026-06-21T16:04:00.000Z",
-    "timeLeft": "13m 1s",
+    "timeLeft": "10m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T16:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "12m 55s"
+    "timeLeft": "9m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782057600000",
@@ -180,21 +180,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a37fddab37f6415db8ce5b2",
-      "activation": "2026-06-21T15:06:02.610Z",
-      "expiry": "2026-06-21T16:09:03.568Z",
-      "node": "Gulliver (Phobos)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Gulliver (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a37fddab37f6415db8ce5b1",
       "activation": "2026-06-21T15:06:02.610Z",
       "expiry": "2026-06-21T16:34:22.005Z",
@@ -204,6 +189,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Cinxia (Ceres)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a37fddab37f6415db8ce5b2",
+      "activation": "2026-06-21T15:06:02.610Z",
+      "expiry": "2026-06-21T16:09:03.568Z",
+      "node": "Gulliver (Phobos)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Gulliver (Phobos)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -225,21 +225,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38021240cd71c3f28ce5b1",
-      "activation": "2026-06-21T15:24:02.196Z",
-      "expiry": "2026-06-21T17:14:40.396Z",
-      "node": "Mithra (Void)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Mithra (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38021240cd71c3f28ce5b2",
       "activation": "2026-06-21T15:24:02.196Z",
       "expiry": "2026-06-21T16:57:12.755Z",
@@ -255,19 +240,19 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38028bd0cb0ab8a28ce5b1",
-      "activation": "2026-06-21T15:26:03.050Z",
-      "expiry": "2026-06-21T16:31:26.384Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
+      "id": "6a38021240cd71c3f28ce5b1",
+      "activation": "2026-06-21T15:24:02.196Z",
+      "expiry": "2026-06-21T17:14:40.396Z",
+      "node": "Mithra (Void)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Mithra (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": false,
-      "isHard": true
+      "isHard": false
     },
     {
       "id": "6a38028bd0cb0ab8a28ce5b2",
@@ -279,6 +264,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Nabuk (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38028bd0cb0ab8a28ce5b1",
+      "activation": "2026-06-21T15:26:03.050Z",
+      "expiry": "2026-06-21T16:31:26.384Z",
+      "node": "Rotuma (Kuva Fortress)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Rotuma (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -300,21 +300,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38060eb98565484c8ce5b1",
-      "activation": "2026-06-21T15:41:02.572Z",
-      "expiry": "2026-06-21T16:49:43.271Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a38060eb98565484c8ce5b2",
       "activation": "2026-06-21T15:41:02.572Z",
       "expiry": "2026-06-21T17:24:34.963Z",
@@ -324,6 +309,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "The Murmur",
       "enemyKey": "The Murmur",
       "nodeKey": "Persto (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38060eb98565484c8ce5b1",
+      "activation": "2026-06-21T15:41:02.572Z",
+      "expiry": "2026-06-21T16:49:43.271Z",
+      "node": "Tuvul Commons (Zariman)",
+      "missionType": "Void Cascade",
+      "missionTypeKey": "Void Cascade",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Tuvul Commons (Zariman)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -782,7 +782,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "8h 8m 58s",
+    "remaining": "8h 5m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1418,9 +1418,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 20053,
+      "count": 20092,
       "requiredRuns": 33000,
-      "completion": 80.38333333333334,
+      "completion": 80.44242424242425,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1527,9 +1527,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -22279,
+      "count": -22329,
       "requiredRuns": 30000,
-      "completion": 25.736666666666665,
+      "completion": 25.570000000000004,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1707,9 +1707,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5920,
+      "count": -5980,
       "requiredRuns": 30000,
-      "completion": 80.26666666666667,
+      "completion": 80.06666666666666,
       "completed": false,
       "rewardTypes": [
         "fieldron"
