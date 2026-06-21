@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-21T12:01:15Z",
+  "fetchedAt": "2026-06-21T12:06:16Z",
   "cetusCycle": {
     "id": "cetusCycle1782045840000",
     "activation": "2026-06-21T11:04:00.000Z",
     "expiry": "2026-06-21T12:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "43m 0s",
+    "timeLeft": "39m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782045840000",
     "activation": "2026-06-21T11:04:00.000Z",
     "expiry": "2026-06-21T12:44:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "39m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T13:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 32m 54s"
+    "timeLeft": "1h 28m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782050400000",
@@ -51,21 +51,6 @@
       "nodeKey": "Adaro (Sedna)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a37ba5a5370a38d898ce5b1",
-      "activation": "2026-06-21T10:18:02.187Z",
-      "expiry": "2026-06-21T12:01:29.084Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
       "isStorm": false,
       "isHard": false
     },
@@ -128,21 +113,6 @@
       "tierNum": 2,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a37c2cad201d87c508ce5b2",
-      "activation": "2026-06-21T10:54:02.850Z",
-      "expiry": "2026-06-21T12:03:41.804Z",
-      "node": "Orias (Europa)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orias (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a37c2cad201d87c508ce5b1",
@@ -355,17 +325,17 @@
       "isHard": false
     },
     {
-      "id": "6a37bf830c9a9f02258ce5b1",
-      "activation": "2026-06-21T11:20:03.351Z",
-      "expiry": "2026-06-21T12:50:03.351Z",
-      "node": "Bendar Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Bendar Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
+      "id": "6a37bf830c9a9f02258ce5b5",
+      "activation": "2026-06-21T11:20:03.358Z",
+      "expiry": "2026-06-21T12:50:03.358Z",
+      "node": "Seven Sirens (Pluto)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Seven Sirens (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -385,17 +355,17 @@
       "isHard": false
     },
     {
-      "id": "6a37bf830c9a9f02258ce5b6",
-      "activation": "2026-06-21T11:20:03.360Z",
-      "expiry": "2026-06-21T12:50:03.360Z",
-      "node": "Numina (Veil)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Numina (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
+      "id": "6a37bf830c9a9f02258ce5b1",
+      "activation": "2026-06-21T11:20:03.351Z",
+      "expiry": "2026-06-21T12:50:03.351Z",
+      "node": "Bendar Cluster (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Bendar Cluster (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -430,15 +400,15 @@
       "isHard": false
     },
     {
-      "id": "6a37bf830c9a9f02258ce5b5",
-      "activation": "2026-06-21T11:20:03.358Z",
-      "expiry": "2026-06-21T12:50:03.358Z",
-      "node": "Seven Sirens (Pluto)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
+      "id": "6a37bf830c9a9f02258ce5b6",
+      "activation": "2026-06-21T11:20:03.360Z",
+      "expiry": "2026-06-21T12:50:03.360Z",
+      "node": "Numina (Veil)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Seven Sirens (Pluto)",
+      "nodeKey": "Numina (Veil)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -702,7 +672,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "11h 58m 58s",
+    "remaining": "11h 54m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1338,9 +1308,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 12041,
+      "count": 12102,
       "requiredRuns": 33000,
-      "completion": 68.24393939393939,
+      "completion": 68.33636363636364,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1447,9 +1417,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -16246,
+      "count": -16313,
       "requiredRuns": 30000,
-      "completion": 45.84666666666667,
+      "completion": 45.623333333333335,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1483,9 +1453,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -34535,
+      "count": -34557,
       "requiredRuns": 40000,
-      "completion": 13.6625,
+      "completion": 13.607499999999995,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1519,9 +1489,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -19418,
+      "count": -19459,
       "requiredRuns": 37000,
-      "completion": 47.51891891891892,
+      "completion": 47.4081081081081,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1555,9 +1525,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -20959,
+      "count": -20988,
       "requiredRuns": 36000,
-      "completion": 41.78055555555555,
+      "completion": 41.7,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1591,9 +1561,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -2916,
+      "count": -2977,
       "requiredRuns": 37000,
-      "completion": 92.11891891891892,
+      "completion": 91.95405405405405,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1627,9 +1597,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -62,
+      "count": -108,
       "requiredRuns": 30000,
-      "completion": 99.79333333333334,
+      "completion": 99.64,
       "completed": false,
       "rewardTypes": [
         "fieldron"
