@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-21T19:16:17Z",
+  "fetchedAt": "2026-06-21T19:21:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782072840000",
     "activation": "2026-06-21T18:34:00.000Z",
     "expiry": "2026-06-21T20:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "58m 1s",
+    "timeLeft": "53m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782068400000",
-    "activation": "2026-06-21T19:00:00.000Z",
-    "expiry": "2026-06-21T19:20:08.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782069600000",
+    "activation": "2026-06-21T19:20:00.000Z",
+    "expiry": "2026-06-21T19:26:48.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782072840000",
     "activation": "2026-06-21T18:34:00.000Z",
     "expiry": "2026-06-21T20:14:00.000Z",
-    "timeLeft": "58m 1s",
+    "timeLeft": "53m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T21:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 47m 55s"
+    "timeLeft": "1h 42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782072000000",
@@ -60,21 +60,6 @@
     ]
   },
   "fissures": [
-    {
-      "id": "6a38201212df564a658ce5b1",
-      "activation": "2026-06-21T17:32:02.435Z",
-      "expiry": "2026-06-21T19:19:30.771Z",
-      "node": "Aten (Void)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Aten (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a38213f159adf3b7b8ce5b1",
       "activation": "2026-06-21T17:37:03.156Z",
@@ -181,6 +166,21 @@
       "isHard": false
     },
     {
+      "id": "6a382a26716774d1388ce5b2",
+      "activation": "2026-06-21T18:15:02.415Z",
+      "expiry": "2026-06-21T19:49:09.496Z",
+      "node": "Cassini (Saturn)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Cassini (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
       "id": "6a382a26716774d1388ce5b1",
       "activation": "2026-06-21T18:15:02.415Z",
       "expiry": "2026-06-21T19:23:33.481Z",
@@ -205,21 +205,6 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Casta (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a382a26716774d1388ce5b2",
-      "activation": "2026-06-21T18:15:02.415Z",
-      "expiry": "2026-06-21T19:49:09.496Z",
-      "node": "Cassini (Saturn)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cassini (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -316,21 +301,6 @@
       "isHard": false
     },
     {
-      "id": "6a382fc735850ea5838ce5b1",
-      "activation": "2026-06-21T18:39:03.201Z",
-      "expiry": "2026-06-21T20:01:07.827Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a382fc735850ea5838ce5b2",
       "activation": "2026-06-21T18:39:03.201Z",
       "expiry": "2026-06-21T19:40:30.208Z",
@@ -340,6 +310,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Dakata (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a382fc735850ea5838ce5b1",
+      "activation": "2026-06-21T18:39:03.201Z",
+      "expiry": "2026-06-21T20:01:07.827Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nabuk (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -843,7 +828,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "4h 43m 58s",
+    "remaining": "4h 38m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1429,9 +1414,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 27322,
+      "count": 27476,
       "requiredRuns": 33000,
-      "completion": 91.3969696969697,
+      "completion": 91.63030303030303,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1466,9 +1451,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27304,
+      "count": -27402,
       "requiredRuns": 30000,
-      "completion": 8.986666666666665,
+      "completion": 8.66,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1646,9 +1631,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -11011,
+      "count": -11138,
       "requiredRuns": 30000,
-      "completion": 63.29666666666667,
+      "completion": 62.873333333333335,
       "completed": false,
       "rewardTypes": [
         "fieldron"
