@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-21T18:51:16Z",
+  "fetchedAt": "2026-06-21T18:56:14Z",
   "cetusCycle": {
     "id": "cetusCycle1782072840000",
     "activation": "2026-06-21T18:34:00.000Z",
     "expiry": "2026-06-21T20:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 23m 1s",
+    "timeLeft": "1h 18m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782066780000",
-    "activation": "2026-06-21T18:33:00.000Z",
-    "expiry": "2026-06-21T18:53:28.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782067980000",
+    "activation": "2026-06-21T18:53:00.000Z",
+    "expiry": "2026-06-21T19:00:08.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782072840000",
     "activation": "2026-06-21T18:34:00.000Z",
     "expiry": "2026-06-21T20:14:00.000Z",
-    "timeLeft": "1h 23m 1s",
+    "timeLeft": "1h 18m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-21T21:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 12m 55s"
+    "timeLeft": "2h 7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782072000000",
@@ -60,21 +60,6 @@
     ]
   },
   "fissures": [
-    {
-      "id": "6a381d7e30e0a412738ce5b2",
-      "activation": "2026-06-21T17:21:02.563Z",
-      "expiry": "2026-06-21T18:53:45.667Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a38201212df564a658ce5b1",
       "activation": "2026-06-21T17:32:02.435Z",
@@ -873,7 +858,7 @@
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "5h 8m 58s",
+    "remaining": "5h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1459,9 +1444,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 26436,
+      "count": 26619,
       "requiredRuns": 33000,
-      "completion": 90.05454545454545,
+      "completion": 90.33181818181818,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1496,9 +1481,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -26750,
+      "count": -26861,
       "requiredRuns": 30000,
-      "completion": 10.833333333333329,
+      "completion": 10.463333333333335,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1676,9 +1661,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -10432,
+      "count": -10543,
       "requiredRuns": 30000,
-      "completion": 65.22666666666666,
+      "completion": 64.85666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
