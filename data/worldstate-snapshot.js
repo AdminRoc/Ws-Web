@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T16:46:15Z",
+  "fetchedAt": "2026-06-21T16:51:16Z",
   "cetusCycle": {
     "id": "cetusCycle1782063840000",
     "activation": "2026-06-21T16:04:00.000Z",
     "expiry": "2026-06-21T17:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "58m 1s",
+    "timeLeft": "53m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782060000000",
-    "activation": "2026-06-21T16:40:00.000Z",
-    "expiry": "2026-06-21T16:46:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782060360000",
+    "activation": "2026-06-21T16:46:00.000Z",
+    "expiry": "2026-06-21T17:06:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782063840000",
     "activation": "2026-06-21T16:04:00.000Z",
     "expiry": "2026-06-21T17:44:00.000Z",
-    "timeLeft": "58m 1s",
+    "timeLeft": "53m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T18:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 47m 55s"
+    "timeLeft": "1h 42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782064800000",
@@ -133,21 +133,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 1,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a38060eb98565484c8ce5b1",
-      "activation": "2026-06-21T15:41:02.572Z",
-      "expiry": "2026-06-21T16:49:43.271Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a38060eb98565484c8ce5b2",
@@ -313,6 +298,21 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 2,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3815fe2af7f46b868ce5b1",
+      "activation": "2026-06-21T16:49:02.734Z",
+      "expiry": "2026-06-21T17:55:02.114Z",
+      "node": "Lith (Earth)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Lith (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a37f7c2e789beec4b8ce5b2",
@@ -752,7 +752,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "7h 13m 58s",
+    "remaining": "7h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1388,9 +1388,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 22142,
+      "count": 22307,
       "requiredRuns": 33000,
-      "completion": 83.54848484848485,
+      "completion": 83.79848484848485,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1497,9 +1497,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23750,
+      "count": -23856,
       "requiredRuns": 30000,
-      "completion": 20.833333333333336,
+      "completion": 20.479999999999997,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1677,9 +1677,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -7410,
+      "count": -7541,
       "requiredRuns": 30000,
-      "completion": 75.3,
+      "completion": 74.86333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
