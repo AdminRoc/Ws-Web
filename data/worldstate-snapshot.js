@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T18:01:16Z",
+  "fetchedAt": "2026-06-21T18:06:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782066840000",
     "activation": "2026-06-21T17:44:00.000Z",
     "expiry": "2026-06-21T18:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "33m 1s",
+    "timeLeft": "28m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782066840000",
     "activation": "2026-06-21T17:44:00.000Z",
     "expiry": "2026-06-21T18:34:00.000Z",
-    "timeLeft": "33m 1s",
+    "timeLeft": "28m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T18:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "32m 55s"
+    "timeLeft": "27m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782072000000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a380abe0ce67cda0d8ce5b3",
-      "activation": "2026-06-21T16:01:02.507Z",
-      "expiry": "2026-06-21T18:00:50.306Z",
-      "node": "Orias (Europa)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orias (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a38118a070b3dc4be8ce5b1",
       "activation": "2026-06-21T16:30:02.890Z",
@@ -381,6 +366,36 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
+      "id": "6a3813e21db44b96c18ce5b3",
+      "activation": "2026-06-21T17:20:03.355Z",
+      "expiry": "2026-06-21T18:50:03.355Z",
+      "node": "Vand Cluster (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Vand Cluster (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3813e21db44b96c18ce5b2",
+      "activation": "2026-06-21T17:20:03.353Z",
+      "expiry": "2026-06-21T18:50:03.353Z",
+      "node": "Bifrost Echo (Venus)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Bifrost Echo (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a3813e21db44b96c18ce5b1",
       "activation": "2026-06-21T17:20:03.351Z",
       "expiry": "2026-06-21T18:50:03.351Z",
@@ -411,51 +426,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3813e21db44b96c18ce5b6",
-      "activation": "2026-06-21T17:20:03.360Z",
-      "expiry": "2026-06-21T18:50:03.360Z",
-      "node": "Flexa (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Flexa (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3813e21db44b96c18ce5b2",
-      "activation": "2026-06-21T17:20:03.353Z",
-      "expiry": "2026-06-21T18:50:03.353Z",
-      "node": "Bifrost Echo (Venus)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Bifrost Echo (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3813e21db44b96c18ce5b3",
-      "activation": "2026-06-21T17:20:03.355Z",
-      "expiry": "2026-06-21T18:50:03.355Z",
-      "node": "Vand Cluster (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Vand Cluster (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3813e21db44b96c18ce5b5",
       "activation": "2026-06-21T17:20:03.358Z",
       "expiry": "2026-06-21T18:50:03.358Z",
@@ -465,6 +435,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Profit Margin (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3813e21db44b96c18ce5b6",
+      "activation": "2026-06-21T17:20:03.360Z",
+      "expiry": "2026-06-21T18:50:03.360Z",
+      "node": "Flexa (Veil)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Flexa (Veil)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -728,7 +713,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "5h 58m 58s",
+    "remaining": "5h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1314,9 +1299,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": 24636,
+      "count": 24824,
       "requiredRuns": 33000,
-      "completion": 87.32727272727271,
+      "completion": 87.61212121212121,
       "completed": false,
       "rewardTypes": [
         "wraith",
@@ -1351,9 +1336,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -25586,
+      "count": -25694,
       "requiredRuns": 30000,
-      "completion": 14.713333333333335,
+      "completion": 14.353333333333328,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1531,9 +1516,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9191,
+      "count": -9327,
       "requiredRuns": 30000,
-      "completion": 69.36333333333333,
+      "completion": 68.91000000000001,
       "completed": false,
       "rewardTypes": [
         "fieldron"
