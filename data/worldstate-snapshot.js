@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T22:51:19Z",
+  "fetchedAt": "2026-06-21T22:56:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782084840000",
     "activation": "2026-06-21T22:44:00.000Z",
     "expiry": "2026-06-21T23:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "43m 0s",
+    "timeLeft": "37m 59s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782081180000",
-    "activation": "2026-06-21T22:33:00.000Z",
-    "expiry": "2026-06-21T22:53:28.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782082380000",
+    "activation": "2026-06-21T22:53:00.000Z",
+    "expiry": "2026-06-21T23:00:08.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782084840000",
     "activation": "2026-06-21T22:44:00.000Z",
     "expiry": "2026-06-21T23:34:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "37m 59s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-21T23:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "42m 55s"
+    "timeLeft": "37m 53s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782086400000",
@@ -150,21 +150,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Spear (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a385bd639106c856d8ce5b2",
-      "activation": "2026-06-21T21:47:02.917Z",
-      "expiry": "2026-06-21T22:54:01.837Z",
-      "node": "Cambria (Earth)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cambria (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -334,6 +319,81 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 1,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a386b8b38a33b3a6b8ce5b1",
+      "activation": "2026-06-21T22:54:02.981Z",
+      "expiry": "2026-06-21T23:59:37.779Z",
+      "node": "Stephano (Uranus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Stephano (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a386b8b38a33b3a6b8ce5b2",
+      "activation": "2026-06-21T22:54:02.981Z",
+      "expiry": "2026-06-22T00:31:18.079Z",
+      "node": "Valefor (Europa)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Valefor (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a386b8b38a33b3a6b8ce5b3",
+      "activation": "2026-06-21T22:54:02.981Z",
+      "expiry": "2026-06-22T00:08:16.253Z",
+      "node": "Sao (Neptune)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sao (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a386bc654b37974338ce5b1",
+      "activation": "2026-06-21T22:55:02.273Z",
+      "expiry": "2026-06-21T23:55:44.649Z",
+      "node": "Titan (Saturn)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Titan (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a386bc654b37974338ce5b2",
+      "activation": "2026-06-21T22:55:02.273Z",
+      "expiry": "2026-06-22T00:29:47.226Z",
+      "node": "Ananke (Jupiter)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Ananke (Jupiter)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a384c22198cc9ac4a8ce5b1",
@@ -773,7 +833,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-15T00:00:00.000Z",
     "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "1h 8m 58s",
+    "remaining": "1h 3m 57s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1409,9 +1469,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -83,
+      "count": -77,
       "requiredRuns": 49000,
-      "completion": 49.915306122448975,
+      "completion": 49.92142857142857,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1626,9 +1686,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -16181,
+      "count": -16295,
       "requiredRuns": 30000,
-      "completion": 46.06333333333333,
+      "completion": 45.68333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1662,9 +1722,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": 0,
+      "count": -30,
       "requiredRuns": 43000,
-      "completion": 100,
+      "completion": 99.93023255813954,
       "completed": false,
       "rewardTypes": [
         "fieldron"
