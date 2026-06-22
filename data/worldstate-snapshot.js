@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-21T23:56:20Z",
+  "fetchedAt": "2026-06-22T00:01:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782090840000",
     "activation": "2026-06-21T23:34:00.000Z",
     "expiry": "2026-06-22T01:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 18m 0s",
+    "timeLeft": "1h 13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782090840000",
     "activation": "2026-06-21T23:34:00.000Z",
     "expiry": "2026-06-22T01:14:00.000Z",
-    "timeLeft": "1h 18m 0s",
+    "timeLeft": "1h 13m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,32 +34,32 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T02:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 7m 55s"
+    "timeLeft": "2h 2m 55s"
   },
   "duviriCycle": {
-    "id": "duviriCyclefear1782086400000",
-    "activation": "2026-06-21T22:00:00.000Z",
-    "expiry": "2026-06-22T00:00:00.000Z",
-    "state": "fear",
+    "id": "duviriCyclejoy1782093600000",
+    "activation": "2026-06-22T00:00:00.000Z",
+    "expiry": "2026-06-22T02:00:00.000Z",
+    "state": "joy",
     "choices": [
       {
         "category": "normal",
         "categoryKey": "EXC_NORMAL",
         "choices": [
-          "Gara",
-          "Khora",
-          "Revenant"
+          "Garuda",
+          "Baruuk",
+          "Hildryn"
         ]
       },
       {
         "category": "hard",
         "categoryKey": "EXC_HARD",
         "choices": [
-          "Dera",
-          "Cestra",
-          "Okina",
-          "Sybaris",
-          "Sicarus"
+          "Vectis",
+          "Stug",
+          "Ballistica",
+          "Destreza",
+          "Obex"
         ]
       }
     ]
@@ -79,21 +79,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a3865374dc8d84b598ce5b1",
-      "activation": "2026-06-21T22:27:03.029Z",
-      "expiry": "2026-06-21T23:58:13.572Z",
-      "node": "Dakata (Kuva Fortress)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Dakata (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a3866da9ae916245d8ce5b1",
@@ -167,21 +152,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Ishtar (Venus)",
       "tier": "Lith",
       "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a386b8b38a33b3a6b8ce5b1",
-      "activation": "2026-06-21T22:54:02.981Z",
-      "expiry": "2026-06-21T23:59:37.779Z",
-      "node": "Stephano (Uranus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Stephano (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
       "isStorm": false,
       "isHard": true
     },
@@ -456,96 +426,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a385a32d741575e158ce5b5",
-      "activation": "2026-06-21T22:20:03.358Z",
-      "expiry": "2026-06-21T23:50:03.358Z",
-      "node": "Peregrine Axis (Pluto)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Peregrine Axis (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a385a32d741575e158ce5b2",
-      "activation": "2026-06-21T22:20:03.353Z",
-      "expiry": "2026-06-21T23:50:03.353Z",
-      "node": "Beacon Shield Ring (Venus)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Beacon Shield Ring (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a385a32d741575e158ce5b3",
-      "activation": "2026-06-21T22:20:03.355Z",
-      "expiry": "2026-06-21T23:50:03.355Z",
-      "node": "Mordo Cluster (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Mordo Cluster (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a385a32d741575e158ce5b1",
-      "activation": "2026-06-21T22:20:03.351Z",
-      "expiry": "2026-06-21T23:50:03.351Z",
-      "node": "Korm's Belt (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Korm's Belt (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a385a32d741575e158ce5b4",
-      "activation": "2026-06-21T22:20:03.356Z",
-      "expiry": "2026-06-21T23:50:03.356Z",
-      "node": "Sovereign Grasp (Neptune)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sovereign Grasp (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a385a32d741575e158ce5b6",
-      "activation": "2026-06-21T22:20:03.360Z",
-      "expiry": "2026-06-21T23:50:03.360Z",
-      "node": "H-2 Cloud (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "H-2 Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a386843149206f70a8ce5b5",
       "activation": "2026-06-21T23:20:03.358Z",
       "expiry": "2026-06-22T00:50:03.358Z",
@@ -717,15 +597,15 @@ window.WF_WS_SNAPSHOT = {
     "factionKey": "Grineer"
   },
   "archonHunt": {
-    "id": "6a2f3cfeb21d7bc4638ce5b1",
-    "activation": "2026-06-15T00:00:00.000Z",
-    "expiry": "2026-06-22T00:00:00.000Z",
+    "id": "6a38777e9b555bf3378ce5b1",
+    "activation": "2026-06-22T00:00:00.000Z",
+    "expiry": "2026-06-29T00:00:00.000Z",
     "rewardPool": "Archon Sortie Rewards",
     "variants": [],
     "missions": [
       {
-        "node": "Augustus (Mars)",
-        "nodeKey": "Augustus (Mars)",
+        "node": "Amalthea (Jupiter)",
+        "nodeKey": "Amalthea (Jupiter)",
         "type": "Spy",
         "typeKey": "Spy",
         "nightmare": false,
@@ -736,10 +616,10 @@ window.WF_WS_SNAPSHOT = {
         "levelAuras": []
       },
       {
-        "node": "Tharsis (Mars)",
-        "nodeKey": "Tharsis (Mars)",
-        "type": "Excavation",
-        "typeKey": "Excavation",
+        "node": "Elara (Jupiter)",
+        "nodeKey": "Elara (Jupiter)",
+        "type": "Defense",
+        "typeKey": "Defense",
         "nightmare": false,
         "archwingRequired": false,
         "isSharkwing": false,
@@ -748,8 +628,8 @@ window.WF_WS_SNAPSHOT = {
         "levelAuras": []
       },
       {
-        "node": "War (Mars)",
-        "nodeKey": "War (Mars)",
+        "node": "Themisto (Jupiter)",
+        "nodeKey": "Themisto (Jupiter)",
         "type": "Assassination",
         "typeKey": "Assassination",
         "nightmare": false,
@@ -760,7 +640,7 @@ window.WF_WS_SNAPSHOT = {
         "levelAuras": []
       }
     ],
-    "boss": "Archon Amar",
+    "boss": "Archon Nira",
     "faction": "Narmer",
     "factionKey": "Narmer"
   },
@@ -774,17 +654,6 @@ window.WF_WS_SNAPSHOT = {
     "params": {},
     "possibleChallenges": [],
     "activeChallenges": [
-      {
-        "id": "1782086400000seasondailykillenemieswithheadshots",
-        "activation": "2026-06-19T00:00:00.000Z",
-        "expiry": "2026-06-22T00:00:00.000Z",
-        "isDaily": true,
-        "isElite": false,
-        "desc": "Kill 40 Enemies with Headshots",
-        "title": "Marksman",
-        "reputation": 1000,
-        "isPermanent": false
-      },
       {
         "id": "1782172800000seasondailybuilderstouch",
         "activation": "2026-06-20T00:00:00.000Z",
@@ -816,83 +685,6 @@ window.WF_WS_SNAPSHOT = {
         "desc": "Kill 200 Enemies",
         "title": "Warning Shot",
         "reputation": 1000,
-        "isPermanent": false
-      },
-      {
-        "id": "1782086400000seasonweeklypermanentcompletemissions11",
-        "activation": "2026-06-15T00:00:00.000Z",
-        "expiry": "2026-06-22T00:00:00.000Z",
-        "isDaily": false,
-        "isElite": false,
-        "desc": "Complete any 15 missions",
-        "title": "Mission Complete XI",
-        "reputation": 4500,
-        "isPermanent": false
-      },
-      {
-        "id": "1782086400000seasonweeklypermanentkilleximus11",
-        "activation": "2026-06-15T00:00:00.000Z",
-        "expiry": "2026-06-22T00:00:00.000Z",
-        "isDaily": false,
-        "isElite": false,
-        "desc": "Kill 30 Eximus",
-        "title": "Eximus Eliminator XI",
-        "reputation": 4500,
-        "isPermanent": false
-      },
-      {
-        "id": "1782086400000seasonweeklypermanentkillenemies11",
-        "activation": "2026-06-15T00:00:00.000Z",
-        "expiry": "2026-06-22T00:00:00.000Z",
-        "isDaily": false,
-        "isElite": false,
-        "desc": "Kill 500 Enemies",
-        "title": "Not a Warning Shot XI",
-        "reputation": 4500,
-        "isPermanent": false
-      },
-      {
-        "id": "1782086400000seasonweeklyunlockdragonvaults",
-        "activation": "2026-06-15T00:00:00.000Z",
-        "expiry": "2026-06-22T00:00:00.000Z",
-        "isDaily": false,
-        "isElite": false,
-        "desc": "Unlock 4 Orokin Vaults",
-        "title": "Vault Looter",
-        "reputation": 4500,
-        "isPermanent": false
-      },
-      {
-        "id": "1782086400000seasonweeklysanctuaryonslaught",
-        "activation": "2026-06-15T00:00:00.000Z",
-        "expiry": "2026-06-22T00:00:00.000Z",
-        "isDaily": false,
-        "isElite": false,
-        "desc": "Complete 8 waves of Sanctuary Onslaught",
-        "title": "Test Subject",
-        "reputation": 4500,
-        "isPermanent": false
-      },
-      {
-        "id": "1782086400000seasonweeklyhardluapuzzles",
-        "activation": "2026-06-15T00:00:00.000Z",
-        "expiry": "2026-06-22T00:00:00.000Z",
-        "isDaily": false,
-        "isElite": true,
-        "desc": "Complete 4 Halls of Ascension on Lua",
-        "title": "Ascendant",
-        "reputation": 7000,
-        "isPermanent": false
-      },
-      {
-        "id": "1782086400000seasonweeklyhardfriendssurvival",
-        "activation": "2026-06-15T00:00:00.000Z",
-        "expiry": "2026-06-22T00:00:00.000Z",
-        "isDaily": false,
-        "isElite": true,
-        "desc": "Complete a Survival mission reaching at least 20 minutes",
-        "title": "Survival",
-        "reputation": 7000,
         "isPermanent": false
       },
       {
@@ -976,12 +768,12 @@ window.WF_WS_SNAPSHOT = {
   },
   "steelPath": {
     "currentReward": {
-      "name": "3x Forma",
+      "name": "Zaw Riven Mod",
       "cost": 75
     },
-    "activation": "2026-06-15T00:00:00.000Z",
-    "expiry": "2026-06-21T23:59:59.000Z",
-    "remaining": "3m 58s",
+    "activation": "2026-06-22T00:00:00.000Z",
+    "expiry": "2026-06-28T23:59:59.000Z",
+    "remaining": "6d 23h 58m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1095,9 +887,9 @@ window.WF_WS_SNAPSHOT = {
       }
     ],
     "incursions": {
-      "id": "spi:1782000000000",
-      "activation": "2026-06-21T00:00:00.000Z",
-      "expiry": "2026-06-21T23:59:59.000Z"
+      "id": "spi:1782086400000",
+      "activation": "2026-06-22T00:00:00.000Z",
+      "expiry": "2026-06-22T23:59:59.000Z"
     }
   },
   "voidTrader": {
@@ -1567,9 +1359,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -281,
+      "count": -298,
       "requiredRuns": 49000,
-      "completion": 49.71326530612245,
+      "completion": 49.695918367346934,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1784,9 +1576,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17554,
+      "count": -17672,
       "requiredRuns": 30000,
-      "completion": 41.48666666666667,
+      "completion": 41.093333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1820,9 +1612,45 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -824,
+      "count": -860,
       "requiredRuns": 43000,
-      "completion": 98.08372093023256,
+      "completion": 98,
+      "completed": false,
+      "rewardTypes": [
+        "fieldron"
+      ]
+    },
+    {
+      "id": "6a387b02a72f8a47be8ce5b1",
+      "activation": "2026-06-22T00:00:01.928Z",
+      "node": "Themisto (Jupiter)",
+      "nodeKey": "Themisto (Jupiter)",
+      "desc": "Phorid Manifestation",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": 0,
+      "requiredRuns": 30000,
+      "completion": 100,
       "completed": false,
       "rewardTypes": [
         "fieldron"
