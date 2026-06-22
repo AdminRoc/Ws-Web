@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-22T23:46:19Z",
+  "fetchedAt": "2026-06-22T23:51:18Z",
   "cetusCycle": {
     "id": "cetusCycle1782174840000",
     "activation": "2026-06-22T23:44:00.000Z",
     "expiry": "2026-06-23T00:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782170760000",
-    "activation": "2026-06-22T23:26:00.000Z",
-    "expiry": "2026-06-22T23:46:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782171960000",
+    "activation": "2026-06-22T23:46:00.000Z",
+    "expiry": "2026-06-22T23:53:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782174840000",
     "activation": "2026-06-22T23:44:00.000Z",
     "expiry": "2026-06-23T00:34:00.000Z",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-23T00:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "47m 55s"
+    "timeLeft": "42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782172800000",
@@ -60,36 +60,6 @@
     ]
   },
   "fissures": [
-    {
-      "id": "6a39b54f2a8cf18c758ce5b1",
-      "activation": "2026-06-22T22:21:03.069Z",
-      "expiry": "2026-06-22T23:47:08.962Z",
-      "node": "Morax (Europa)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Morax (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a39b85a272deec9568ce5b1",
-      "activation": "2026-06-22T22:34:02.510Z",
-      "expiry": "2026-06-22T23:48:59.691Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a39b9867a15d8ecc48ce5b1",
       "activation": "2026-06-22T22:39:02.463Z",
@@ -929,7 +899,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 13m 58s",
+    "remaining": "6d 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1465,9 +1435,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -8608,
+      "count": -8649,
       "requiredRuns": 49000,
-      "completion": 41.21632653061225,
+      "completion": 41.17448979591837,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1515,9 +1485,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -6173,
+      "count": -6216,
       "requiredRuns": 48000,
-      "completion": 43.56979166666667,
+      "completion": 43.525000000000006,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1552,9 +1522,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28725,
+      "count": -28825,
       "requiredRuns": 30000,
-      "completion": 4.249999999999998,
+      "completion": 3.9166666666666683,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1660,9 +1630,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -11533,
+      "count": -11653,
       "requiredRuns": 30000,
-      "completion": 61.55666666666666,
+      "completion": 61.15666666666666,
       "completed": false,
       "rewardTypes": [
         "mutagen"
