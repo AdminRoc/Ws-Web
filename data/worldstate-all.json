@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-22T19:56:21Z",
+  "fetchedAt": "2026-06-22T20:01:28Z",
   "cetusCycle": {
     "id": "cetusCycle1782162840000",
     "activation": "2026-06-22T19:34:00.000Z",
     "expiry": "2026-06-22T21:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 18m 0s",
+    "timeLeft": "1h 13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782162840000",
     "activation": "2026-06-22T19:34:00.000Z",
     "expiry": "2026-06-22T21:14:00.000Z",
-    "timeLeft": "1h 18m 0s",
+    "timeLeft": "1h 13m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,13 +29,13 @@
     "expiry": "2026-06-22T22:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 7m 55s"
+    "timeLeft": "2h 2m 55s"
   },
   "duviriCycle": {
-    "id": "duviriCyclefear1782158400000",
-    "activation": "2026-06-22T18:00:00.000Z",
-    "expiry": "2026-06-22T20:00:00.000Z",
-    "state": "fear",
+    "id": "duviriCyclejoy1782165600000",
+    "activation": "2026-06-22T20:00:00.000Z",
+    "expiry": "2026-06-22T22:00:00.000Z",
+    "state": "joy",
     "choices": [
       {
         "category": "normal",
@@ -76,21 +76,6 @@
       "isHard": false
     },
     {
-      "id": "6a397eb2ebce4746e38ce5b1",
-      "activation": "2026-06-22T18:28:02.335Z",
-      "expiry": "2026-06-22T19:59:52.897Z",
-      "node": "Garus (Kuva Fortress)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Garus (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a397fdff63d2713918ce5b1",
       "activation": "2026-06-22T18:33:03.120Z",
       "expiry": "2026-06-22T20:05:42.715Z",
@@ -121,32 +106,17 @@
       "isHard": true
     },
     {
-      "id": "6a39801aeacd5476d08ce5b1",
-      "activation": "2026-06-22T18:34:02.500Z",
-      "expiry": "2026-06-22T19:59:32.434Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a398092a709729cab8ce5b1",
-      "activation": "2026-06-22T18:36:02.208Z",
-      "expiry": "2026-06-22T19:57:38.206Z",
-      "node": "Mot (Void)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Mot (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
+      "id": "6a3980ceaa995423bf8ce5b1",
+      "activation": "2026-06-22T18:37:02.522Z",
+      "expiry": "2026-06-22T20:06:21.606Z",
+      "node": "Skyresh (Phobos)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Skyresh (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": false,
       "isHard": false
     },
@@ -164,21 +134,6 @@
       "tierNum": 1,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a3980ceaa995423bf8ce5b1",
-      "activation": "2026-06-22T18:37:02.522Z",
-      "expiry": "2026-06-22T20:06:21.606Z",
-      "node": "Skyresh (Phobos)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Skyresh (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a3980ceaa995423bf8ce5b3",
@@ -421,93 +376,33 @@
       "isHard": true
     },
     {
-      "id": "6a397373fbb56e29288ce5b2",
-      "activation": "2026-06-22T18:20:03.353Z",
-      "expiry": "2026-06-22T19:50:03.353Z",
-      "node": "Luckless Expanse (Venus)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Luckless Expanse (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a397373fbb56e29288ce5b1",
-      "activation": "2026-06-22T18:20:03.351Z",
-      "expiry": "2026-06-22T19:50:03.351Z",
-      "node": "Iota Temple (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
+      "id": "6a39938f5e156cad3c8ce5b1",
+      "activation": "2026-06-22T19:57:03.075Z",
+      "expiry": "2026-06-22T21:03:04.053Z",
+      "node": "Dakata (Kuva Fortress)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Iota Temple (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
+      "nodeKey": "Dakata (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
       "isHard": false
     },
     {
-      "id": "6a397373fbb56e29288ce5b4",
-      "activation": "2026-06-22T18:20:03.356Z",
-      "expiry": "2026-06-22T19:50:03.356Z",
-      "node": "Sovereign Grasp (Neptune)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sovereign Grasp (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a397373fbb56e29288ce5b6",
-      "activation": "2026-06-22T18:20:03.360Z",
-      "expiry": "2026-06-22T19:50:03.360Z",
-      "node": "H-2 Cloud (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
+      "id": "6a39938f5e156cad3c8ce5b2",
+      "activation": "2026-06-22T19:57:03.075Z",
+      "expiry": "2026-06-22T21:00:39.226Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "H-2 Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a397373fbb56e29288ce5b5",
-      "activation": "2026-06-22T18:20:03.358Z",
-      "expiry": "2026-06-22T19:50:03.358Z",
-      "node": "Fenton's Field (Pluto)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Fenton's Field (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a397373fbb56e29288ce5b3",
-      "activation": "2026-06-22T18:20:03.355Z",
-      "expiry": "2026-06-22T19:50:03.355Z",
-      "node": "Lupal Pass (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Lupal Pass (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
+      "nodeKey": "Nabuk (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
       "isHard": false
     },
     {
@@ -858,7 +753,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 4h 3m 58s",
+    "remaining": "6d 3h 58m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1394,9 +1289,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -6814,
+      "count": -6852,
       "requiredRuns": 49000,
-      "completion": 43.0469387755102,
+      "completion": 43.00816326530612,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1480,9 +1375,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -4272,
+      "count": -4329,
       "requiredRuns": 48000,
-      "completion": 45.550000000000004,
+      "completion": 45.490625,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1517,9 +1412,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -24175,
+      "count": -24282,
       "requiredRuns": 30000,
-      "completion": 19.41666666666667,
+      "completion": 19.06,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1589,9 +1484,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -31504,
+      "count": -32191,
       "requiredRuns": 33000,
-      "completion": 4.533333333333333,
+      "completion": 2.451515151515149,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1625,9 +1520,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9296,
+      "count": -10223,
       "requiredRuns": 45000,
-      "completion": 79.34222222222222,
+      "completion": 77.28222222222222,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1661,9 +1556,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5725,
+      "count": -5870,
       "requiredRuns": 30000,
-      "completion": 80.91666666666667,
+      "completion": 80.43333333333334,
       "completed": false,
       "rewardTypes": [
         "mutagen"
