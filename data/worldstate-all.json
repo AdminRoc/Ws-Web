@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-22T17:06:26Z",
+  "fetchedAt": "2026-06-22T17:11:43Z",
   "cetusCycle": {
     "id": "cetusCycle1782153840000",
     "activation": "2026-06-22T17:04:00.000Z",
     "expiry": "2026-06-22T18:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782146760000",
-    "activation": "2026-06-22T16:46:00.000Z",
-    "expiry": "2026-06-22T17:06:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782147960000",
+    "activation": "2026-06-22T17:06:00.000Z",
+    "expiry": "2026-06-22T17:13:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782153840000",
     "activation": "2026-06-22T17:04:00.000Z",
     "expiry": "2026-06-22T18:44:00.000Z",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-22T19:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 27m 55s"
+    "timeLeft": "2h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782151200000",
@@ -60,21 +60,6 @@
     ]
   },
   "fissures": [
-    {
-      "id": "6a3953ce61617a9fc08ce5b1",
-      "activation": "2026-06-22T15:25:02.827Z",
-      "expiry": "2026-06-22T17:06:15.383Z",
-      "node": "Minthe (Pluto)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Minthe (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a3954faa38e57a88c8ce5b2",
       "activation": "2026-06-22T15:30:02.475Z",
@@ -421,47 +406,17 @@
       "isHard": true
     },
     {
-      "id": "6a3957527be6f3bc3d8ce5b1",
-      "activation": "2026-06-22T16:20:03.351Z",
-      "expiry": "2026-06-22T17:50:03.351Z",
-      "node": "Korm's Belt (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Korm's Belt (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3957527be6f3bc3d8ce5b2",
-      "activation": "2026-06-22T16:20:03.353Z",
-      "expiry": "2026-06-22T17:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
+      "id": "6a3957527be6f3bc3d8ce5b6",
+      "activation": "2026-06-22T16:20:03.360Z",
+      "expiry": "2026-06-22T17:50:03.360Z",
+      "node": "Lu-yan (Veil)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3957527be6f3bc3d8ce5b3",
-      "activation": "2026-06-22T16:20:03.355Z",
-      "expiry": "2026-06-22T17:50:03.355Z",
-      "node": "Kasio's Rest (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Kasio's Rest (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
+      "nodeKey": "Lu-yan (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -481,17 +436,47 @@
       "isHard": false
     },
     {
-      "id": "6a3957527be6f3bc3d8ce5b6",
-      "activation": "2026-06-22T16:20:03.360Z",
-      "expiry": "2026-06-22T17:50:03.360Z",
-      "node": "Lu-yan (Veil)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
+      "id": "6a3957527be6f3bc3d8ce5b2",
+      "activation": "2026-06-22T16:20:03.353Z",
+      "expiry": "2026-06-22T17:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Lu-yan (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
+      "nodeKey": "Orvin-Haarc (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3957527be6f3bc3d8ce5b1",
+      "activation": "2026-06-22T16:20:03.351Z",
+      "expiry": "2026-06-22T17:50:03.351Z",
+      "node": "Korm's Belt (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Korm's Belt (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3957527be6f3bc3d8ce5b3",
+      "activation": "2026-06-22T16:20:03.355Z",
+      "expiry": "2026-06-22T17:50:03.355Z",
+      "node": "Kasio's Rest (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Kasio's Rest (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": true,
       "isHard": false
     },
@@ -768,7 +753,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 6h 53m 58s",
+    "remaining": "6d 6h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1304,9 +1289,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -5493,
+      "count": -5517,
       "requiredRuns": 49000,
-      "completion": 44.39489795918367,
+      "completion": 44.37040816326531,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1390,9 +1375,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -3011,
+      "count": -3048,
       "requiredRuns": 48000,
-      "completion": 46.86354166666666,
+      "completion": 46.825,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1427,9 +1412,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -20824,
+      "count": -20922,
       "requiredRuns": 30000,
-      "completion": 30.586666666666662,
+      "completion": 30.259999999999998,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1463,9 +1448,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -31870,
+      "count": -32657,
       "requiredRuns": 38000,
-      "completion": 16.131578947368418,
+      "completion": 14.06052631578948,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1499,48 +1484,12 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -7426,
+      "count": -8168,
       "requiredRuns": 33000,
-      "completion": 77.4969696969697,
+      "completion": 75.24848484848485,
       "completed": false,
       "rewardTypes": [
         "mutalist"
-      ]
-    },
-    {
-      "id": "6a39630bc13bb286c58ce5b1",
-      "activation": "2026-06-22T16:30:02.553Z",
-      "node": "Valefor (Europa)",
-      "nodeKey": "Valefor (Europa)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Fieldron",
-              "key": "Fieldron"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -127,
-      "requiredRuns": 45000,
-      "completion": 99.71777777777778,
-      "completed": false,
-      "rewardTypes": [
-        "fieldron"
       ]
     },
     {
@@ -1571,12 +1520,48 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1135,
+      "count": -1284,
       "requiredRuns": 30000,
-      "completion": 96.21666666666667,
+      "completion": 95.72,
       "completed": false,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a39630bc13bb286c58ce5b1",
+      "activation": "2026-06-22T16:30:02.553Z",
+      "node": "Valefor (Europa)",
+      "nodeKey": "Valefor (Europa)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -184,
+      "requiredRuns": 45000,
+      "completion": 99.5911111111111,
+      "completed": false,
+      "rewardTypes": [
+        "fieldron"
       ]
     }
   ],
