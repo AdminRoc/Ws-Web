@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T04:41:22Z",
+  "fetchedAt": "2026-06-22T04:46:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782108840000",
     "activation": "2026-06-22T04:34:00.000Z",
     "expiry": "2026-06-22T06:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 33m 0s",
+    "timeLeft": "1h 28m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782108840000",
     "activation": "2026-06-22T04:34:00.000Z",
     "expiry": "2026-06-22T06:14:00.000Z",
-    "timeLeft": "1h 33m 0s",
+    "timeLeft": "1h 28m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T07:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 22m 54s"
+    "timeLeft": "2h 17m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782108000000",
@@ -216,21 +216,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a38b55ef4f1ecb04e8ce5b3",
-      "activation": "2026-06-22T04:09:02.407Z",
-      "expiry": "2026-06-22T05:23:15.748Z",
-      "node": "Cambria (Earth)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cambria (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a38b55ef4f1ecb04e8ce5b2",
       "activation": "2026-06-22T04:09:02.407Z",
       "expiry": "2026-06-22T05:50:03.597Z",
@@ -246,19 +231,19 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a38b64e8f4a52839a8ce5b1",
-      "activation": "2026-06-22T04:13:02.524Z",
-      "expiry": "2026-06-22T05:31:50.923Z",
-      "node": "Mariana (Earth)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
+      "id": "6a38b55ef4f1ecb04e8ce5b3",
+      "activation": "2026-06-22T04:09:02.407Z",
+      "expiry": "2026-06-22T05:23:15.748Z",
+      "node": "Cambria (Earth)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Mariana (Earth)",
+      "nodeKey": "Cambria (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
-      "isHard": false
+      "isHard": true
     },
     {
       "id": "6a38b64e8f4a52839a8ce5b2",
@@ -270,6 +255,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Cytherean (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38b64e8f4a52839a8ce5b1",
+      "activation": "2026-06-22T04:13:02.524Z",
+      "expiry": "2026-06-22T05:31:50.923Z",
+      "node": "Mariana (Earth)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Mariana (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -381,21 +381,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38ba4abef91833828ce5b2",
-      "activation": "2026-06-22T04:30:02.585Z",
-      "expiry": "2026-06-22T05:48:04.268Z",
-      "node": "Mot (Void)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Mot (Void)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38ba4abef91833828ce5b3",
       "activation": "2026-06-22T04:30:02.585Z",
       "expiry": "2026-06-22T05:59:14.327Z",
@@ -405,6 +390,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Umbriel (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38ba4abef91833828ce5b2",
+      "activation": "2026-06-22T04:30:02.585Z",
+      "expiry": "2026-06-22T05:48:04.268Z",
+      "node": "Mot (Void)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Mot (Void)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -863,7 +863,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 19h 18m 58s",
+    "remaining": "6d 19h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1449,9 +1449,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1087,
+      "count": -1108,
       "requiredRuns": 49000,
-      "completion": 48.89081632653061,
+      "completion": 48.86938775510204,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1522,9 +1522,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23129,
+      "count": -23226,
       "requiredRuns": 30000,
-      "completion": 22.903333333333332,
+      "completion": 22.58,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1594,9 +1594,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5325,
+      "count": -5442,
       "requiredRuns": 30000,
-      "completion": 82.25,
+      "completion": 81.86,
       "completed": false,
       "rewardTypes": [
         "fieldron"
