@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T17:41:20Z",
+  "fetchedAt": "2026-06-22T17:46:26Z",
   "cetusCycle": {
     "id": "cetusCycle1782153840000",
     "activation": "2026-06-22T17:04:00.000Z",
     "expiry": "2026-06-22T18:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 3m 0s",
+    "timeLeft": "58m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782153840000",
     "activation": "2026-06-22T17:04:00.000Z",
     "expiry": "2026-06-22T18:44:00.000Z",
-    "timeLeft": "1h 3m 0s",
+    "timeLeft": "58m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T19:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 52m 55s"
+    "timeLeft": "1h 47m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782151200000",
@@ -182,36 +182,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Taveuni (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3964af617f813a108ce5b3",
-      "activation": "2026-06-22T16:37:03.187Z",
-      "expiry": "2026-06-22T17:42:51.029Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3965da3128ecbfea8ce5b1",
-      "activation": "2026-06-22T16:42:02.634Z",
-      "expiry": "2026-06-22T17:44:25.944Z",
-      "node": "Everview Arc (Zariman)",
-      "missionType": "Void Flood",
-      "missionTypeKey": "Void Flood",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Everview Arc (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
       "isStorm": false,
       "isHard": false
     },
@@ -878,7 +848,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 6h 18m 58s",
+    "remaining": "6d 6h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1414,9 +1384,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -5741,
+      "count": -5778,
       "requiredRuns": 49000,
-      "completion": 44.14183673469388,
+      "completion": 44.104081632653056,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1500,9 +1470,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -3308,
+      "count": -3340,
       "requiredRuns": 48000,
-      "completion": 46.55416666666667,
+      "completion": 46.520833333333336,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1537,9 +1507,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21468,
+      "count": -21573,
       "requiredRuns": 30000,
-      "completion": 28.439999999999998,
+      "completion": 28.090000000000003,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1573,9 +1543,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -37385,
+      "count": -38167,
       "requiredRuns": 38000,
-      "completion": 1.61842105263158,
+      "completion": -0.439473684210534,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1609,9 +1579,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -12472,
+      "count": -13178,
       "requiredRuns": 33000,
-      "completion": 62.206060606060596,
+      "completion": 60.06666666666667,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1645,9 +1615,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -341,
+      "count": -351,
       "requiredRuns": 45000,
-      "completion": 99.24222222222222,
+      "completion": 99.22,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1681,9 +1651,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -2138,
+      "count": -2266,
       "requiredRuns": 30000,
-      "completion": 92.87333333333333,
+      "completion": 92.44666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
