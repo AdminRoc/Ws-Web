@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T01:41:24Z",
+  "fetchedAt": "2026-06-22T01:46:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782093840000",
     "activation": "2026-06-22T01:14:00.000Z",
     "expiry": "2026-06-22T02:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "23m 0s",
+    "timeLeft": "18m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782093840000",
     "activation": "2026-06-22T01:14:00.000Z",
     "expiry": "2026-06-22T02:04:00.000Z",
-    "timeLeft": "23m 0s",
+    "timeLeft": "18m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T02:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "22m 55s"
+    "timeLeft": "17m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782093600000",
@@ -319,6 +319,51 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3892ae1d14d637648ce5b1",
+      "activation": "2026-06-22T01:41:02.331Z",
+      "expiry": "2026-06-22T02:56:57.100Z",
+      "node": "Tamu (Kuva Fortress)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Tamu (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3892ae1d14d637648ce5b2",
+      "activation": "2026-06-22T01:41:02.331Z",
+      "expiry": "2026-06-22T02:58:08.013Z",
+      "node": "Rotuma (Kuva Fortress)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Rotuma (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38936382bab6500d8ce5b1",
+      "activation": "2026-06-22T01:44:03.235Z",
+      "expiry": "2026-06-22T02:49:45.673Z",
+      "node": "Ishtar (Venus)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Ishtar (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a387652bf697db3218ce5b1",
@@ -758,7 +803,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 22h 18m 58s",
+    "remaining": "6d 22h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1344,9 +1389,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -623,
+      "count": -619,
       "requiredRuns": 49000,
-      "completion": 49.364285714285714,
+      "completion": 49.368367346938776,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1426,42 +1471,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a37a48f23ce2149cc8ce5b3",
-      "activation": "2026-06-21T08:45:02.528Z",
-      "node": "Larissa (Neptune)",
-      "nodeKey": "Larissa (Neptune)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutalist Alad V Nav Coordinate",
-              "key": "Mutalist Alad V Nav Coordinate"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutalist-alad-v-nav-coordinate.png",
-          "color": 158519
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -36322,
-      "requiredRuns": 36000,
-      "completion": -0.8944444444444422,
-      "completed": true,
-      "rewardTypes": [
-        "mutalist"
-      ]
-    },
-    {
       "id": "6a37b74f9895ded84b8ce5b1",
       "activation": "2026-06-21T10:05:02.430Z",
       "node": "Despina (Neptune)",
@@ -1525,9 +1534,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -19614,
+      "count": -19713,
       "requiredRuns": 30000,
-      "completion": 34.62,
+      "completion": 34.29,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1561,9 +1570,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -18651,
+      "count": -19541,
       "requiredRuns": 43000,
-      "completion": 56.62558139534883,
+      "completion": 54.555813953488375,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1597,9 +1606,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1884,
+      "count": -1993,
       "requiredRuns": 30000,
-      "completion": 93.72,
+      "completion": 93.35666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
