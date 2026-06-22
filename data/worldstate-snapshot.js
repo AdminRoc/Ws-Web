@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T22:51:20Z",
+  "fetchedAt": "2026-06-22T22:56:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "53m 0s",
+    "timeLeft": "48m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782167580000",
-    "activation": "2026-06-22T22:33:00.000Z",
-    "expiry": "2026-06-22T22:53:28.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782168780000",
+    "activation": "2026-06-22T22:53:00.000Z",
+    "expiry": "2026-06-22T23:00:08.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
-    "timeLeft": "53m 0s",
+    "timeLeft": "48m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T00:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 42m 55s"
+    "timeLeft": "1h 37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782172800000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a39a21611bea263e48ce5b1",
-      "activation": "2026-06-22T20:59:02.533Z",
-      "expiry": "2026-06-22T22:54:58.608Z",
-      "node": "Pago (Kuva Fortress)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pago (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a39a2caa7c0fa99778ce5b2",
       "activation": "2026-06-22T21:02:02.802Z",
@@ -120,21 +105,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "The Murmur",
       "enemyKey": "The Murmur",
       "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a39aa4a1b2100b7d98ce5b1",
-      "activation": "2026-06-22T21:34:02.410Z",
-      "expiry": "2026-06-22T22:53:19.912Z",
-      "node": "Everview Arc (Zariman)",
-      "missionType": "Void Flood",
-      "missionTypeKey": "Void Flood",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Everview Arc (Zariman)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -788,7 +758,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 1h 8m 58s",
+    "remaining": "6d 1h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1324,9 +1294,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -8211,
+      "count": -8245,
       "requiredRuns": 49000,
-      "completion": 41.621428571428574,
+      "completion": 41.58673469387755,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1374,9 +1344,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -5702,
+      "count": -5752,
       "requiredRuns": 48000,
-      "completion": 44.06041666666667,
+      "completion": 44.00833333333333,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1411,9 +1381,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27613,
+      "count": -27702,
       "requiredRuns": 30000,
-      "completion": 7.956666666666667,
+      "completion": 7.66,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1492,42 +1462,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a39630bc13bb286c58ce5b2",
-      "activation": "2026-06-22T16:30:02.553Z",
-      "node": "Naamah (Europa)",
-      "nodeKey": "Naamah (Europa)",
-      "desc": "Phorid Manifestation",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -10159,
-      "requiredRuns": 30000,
-      "completion": 66.13666666666667,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
-      ]
-    },
-    {
       "id": "6a39630bc13bb286c58ce5b1",
       "activation": "2026-06-22T16:30:02.553Z",
       "node": "Valefor (Europa)",
@@ -1555,12 +1489,48 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -41976,
+      "count": -42896,
       "requiredRuns": 45000,
-      "completion": 6.720000000000004,
+      "completion": 4.675555555555555,
       "completed": false,
       "rewardTypes": [
         "fieldron"
+      ]
+    },
+    {
+      "id": "6a39630bc13bb286c58ce5b2",
+      "activation": "2026-06-22T16:30:02.553Z",
+      "node": "Naamah (Europa)",
+      "nodeKey": "Naamah (Europa)",
+      "desc": "Phorid Manifestation",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 2,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -10265,
+      "requiredRuns": 30000,
+      "completion": 65.78333333333333,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
       ]
     }
   ],
@@ -6188,6 +6158,18 @@ window.WF_WS_SNAPSHOT = {
       "total": 80,
       "sold": 39,
       "discount": 50
+    },
+    {
+      "id": "CrpBow1782262800000",
+      "activation": "2026-06-22T23:00:00.000Z",
+      "expiry": "2026-06-24T01:00:00.000Z",
+      "item": "Lenz",
+      "uniqueName": "/Lotus/StoreItems/Weapons/Corpus/Bow/Longbow/CrpBow",
+      "originalPrice": 235,
+      "salePrice": 94,
+      "total": 100,
+      "sold": 0,
+      "discount": 60
     }
   ],
   "tenetWeapons": null,
