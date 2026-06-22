@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T03:56:19Z",
+  "fetchedAt": "2026-06-22T04:01:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782102840000",
     "activation": "2026-06-22T03:44:00.000Z",
     "expiry": "2026-06-22T04:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782102840000",
     "activation": "2026-06-22T03:44:00.000Z",
     "expiry": "2026-06-22T04:34:00.000Z",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,13 +34,13 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T04:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "37m 55s"
+    "timeLeft": "32m 55s"
   },
   "duviriCycle": {
-    "id": "duviriCycleanger1782100800000",
-    "activation": "2026-06-22T02:00:00.000Z",
-    "expiry": "2026-06-22T04:00:00.000Z",
-    "state": "anger",
+    "id": "duviriCycleenvy1782108000000",
+    "activation": "2026-06-22T04:00:00.000Z",
+    "expiry": "2026-06-22T06:00:00.000Z",
+    "state": "envy",
     "choices": [
       {
         "category": "normal",
@@ -351,92 +351,32 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3892738613cd51868ce5b1",
-      "activation": "2026-06-22T02:20:03.351Z",
-      "expiry": "2026-06-22T03:50:03.351Z",
-      "node": "Bendar Cluster (Earth)",
+      "id": "6a38a083d90ce474248ce5b3",
+      "activation": "2026-06-22T03:20:03.355Z",
+      "expiry": "2026-06-22T04:50:03.355Z",
+      "node": "Kasio's Rest (Saturn)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Bendar Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3892738613cd51868ce5b4",
-      "activation": "2026-06-22T02:20:03.356Z",
-      "expiry": "2026-06-22T03:50:03.356Z",
-      "node": "Nu-gua Mines (Neptune)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Nu-gua Mines (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3892738613cd51868ce5b2",
-      "activation": "2026-06-22T02:20:03.353Z",
-      "expiry": "2026-06-22T03:50:03.353Z",
-      "node": "Bifrost Echo (Venus)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Bifrost Echo (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3892738613cd51868ce5b6",
-      "activation": "2026-06-22T02:20:03.360Z",
-      "expiry": "2026-06-22T03:50:03.360Z",
-      "node": "R-9 Cloud (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "R-9 Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3892738613cd51868ce5b3",
-      "activation": "2026-06-22T02:20:03.355Z",
-      "expiry": "2026-06-22T03:50:03.355Z",
-      "node": "Nodo Gap (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nodo Gap (Saturn)",
+      "nodeKey": "Kasio's Rest (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": true,
       "isHard": false
     },
     {
-      "id": "6a3892738613cd51868ce5b5",
-      "activation": "2026-06-22T02:20:03.358Z",
-      "expiry": "2026-06-22T03:50:03.358Z",
-      "node": "Peregrine Axis (Pluto)",
+      "id": "6a38a083d90ce474248ce5b2",
+      "activation": "2026-06-22T03:20:03.353Z",
+      "expiry": "2026-06-22T04:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
       "missionType": "Spy",
       "missionTypeKey": "Spy",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Peregrine Axis (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
+      "nodeKey": "Orvin-Haarc (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -471,21 +411,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38a083d90ce474248ce5b6",
-      "activation": "2026-06-22T03:20:03.360Z",
-      "expiry": "2026-06-22T04:50:03.360Z",
-      "node": "Calabash (Veil)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Calabash (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a38a083d90ce474248ce5b1",
       "activation": "2026-06-22T03:20:03.351Z",
       "expiry": "2026-06-22T04:50:03.351Z",
@@ -501,32 +426,17 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38a083d90ce474248ce5b2",
-      "activation": "2026-06-22T03:20:03.353Z",
-      "expiry": "2026-06-22T04:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
+      "id": "6a38a083d90ce474248ce5b6",
+      "activation": "2026-06-22T03:20:03.360Z",
+      "expiry": "2026-06-22T04:50:03.360Z",
+      "node": "Calabash (Veil)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a38a083d90ce474248ce5b3",
-      "activation": "2026-06-22T03:20:03.355Z",
-      "expiry": "2026-06-22T04:50:03.355Z",
-      "node": "Kasio's Rest (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Kasio's Rest (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
+      "nodeKey": "Calabash (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     }
@@ -788,7 +698,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 20h 3m 58s",
+    "remaining": "6d 19h 58m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1374,9 +1284,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -863,
+      "count": -873,
       "requiredRuns": 49000,
-      "completion": 49.11938775510204,
+      "completion": 49.10918367346939,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1447,9 +1357,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -22259,
+      "count": -22369,
       "requiredRuns": 30000,
-      "completion": 25.803333333333335,
+      "completion": 25.436666666666664,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1483,9 +1393,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -42570,
+      "count": -43454,
       "requiredRuns": 43000,
-      "completion": 1.0000000000000009,
+      "completion": -1.0558139534883715,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1519,9 +1429,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4391,
+      "count": -4479,
       "requiredRuns": 30000,
-      "completion": 85.36333333333333,
+      "completion": 85.07000000000001,
       "completed": false,
       "rewardTypes": [
         "fieldron"
