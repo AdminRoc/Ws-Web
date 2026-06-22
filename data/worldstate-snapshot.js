@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T11:11:21Z",
+  "fetchedAt": "2026-06-22T11:16:21Z",
   "cetusCycle": {
-    "id": "cetusCycle1782126840000",
-    "activation": "2026-06-22T09:34:00.000Z",
-    "expiry": "2026-06-22T11:14:00.000Z",
-    "isDay": true,
-    "state": "day",
-    "timeLeft": "3m 1s",
+    "id": "cetusCycle1782129840000",
+    "activation": "2026-06-22T11:14:00.000Z",
+    "expiry": "2026-06-22T12:04:00.000Z",
+    "isDay": false,
+    "state": "night",
+    "timeLeft": "48m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -22,11 +22,11 @@ window.WF_WS_SNAPSHOT = {
     "state": "cold"
   },
   "cambionCycle": {
-    "id": "cambionCycle1782126840000",
-    "activation": "2026-06-22T09:34:00.000Z",
-    "expiry": "2026-06-22T11:14:00.000Z",
-    "timeLeft": "3m 1s",
-    "state": "fass"
+    "id": "cambionCycle1782129840000",
+    "activation": "2026-06-22T11:14:00.000Z",
+    "expiry": "2026-06-22T12:04:00.000Z",
+    "timeLeft": "48m 1s",
+    "state": "vome"
   },
   "zarimanCycle": {
     "id": "zarimanCycle1782129840000",
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T12:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "52m 55s"
+    "timeLeft": "47m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782129600000",
@@ -514,6 +514,96 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 4,
       "isStorm": true,
       "isHard": false
+    },
+    {
+      "id": "6a391103a3f5c372bf8ce5b6",
+      "activation": "2026-06-22T11:20:03.358Z",
+      "expiry": "2026-06-22T12:50:03.358Z",
+      "node": "Fenton's Field (Pluto)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Fenton's Field (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a391103a3f5c372bf8ce5b5",
+      "activation": "2026-06-22T11:20:03.356Z",
+      "expiry": "2026-06-22T12:50:03.356Z",
+      "node": "Brom Cluster (Neptune)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Brom Cluster (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a391103a3f5c372bf8ce5b2",
+      "activation": "2026-06-22T11:20:03.351Z",
+      "expiry": "2026-06-22T12:50:03.351Z",
+      "node": "Ogal Cluster (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Ogal Cluster (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a391103a3f5c372bf8ce5b7",
+      "activation": "2026-06-22T11:20:03.360Z",
+      "expiry": "2026-06-22T12:50:03.360Z",
+      "node": "Lu-yan (Veil)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Lu-yan (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a391103a3f5c372bf8ce5b3",
+      "activation": "2026-06-22T11:20:03.353Z",
+      "expiry": "2026-06-22T12:50:03.353Z",
+      "node": "Luckless Expanse (Venus)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Luckless Expanse (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a391103a3f5c372bf8ce5b4",
+      "activation": "2026-06-22T11:20:03.355Z",
+      "expiry": "2026-06-22T12:50:03.355Z",
+      "node": "Mordo Cluster (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Mordo Cluster (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": true,
+      "isHard": false
     }
   ],
   "alerts": [
@@ -773,7 +863,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 12h 48m 58s",
+    "remaining": "6d 12h 43m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1309,9 +1399,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -2688,
+      "count": -2697,
       "requiredRuns": 49000,
-      "completion": 47.25714285714286,
+      "completion": 47.24795918367347,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1395,9 +1485,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -527,
+      "count": -544,
       "requiredRuns": 48000,
-      "completion": 49.45104166666667,
+      "completion": 49.43333333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1468,9 +1558,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -13066,
+      "count": -13179,
       "requiredRuns": 30000,
-      "completion": 56.446666666666665,
+      "completion": 56.07,
       "completed": false,
       "rewardTypes": [
         "fieldron"
