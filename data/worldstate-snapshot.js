@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T10:21:24Z",
+  "fetchedAt": "2026-06-22T10:26:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782126840000",
     "activation": "2026-06-22T09:34:00.000Z",
     "expiry": "2026-06-22T11:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "53m 1s",
+    "timeLeft": "48m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782126840000",
     "activation": "2026-06-22T09:34:00.000Z",
     "expiry": "2026-06-22T11:14:00.000Z",
-    "timeLeft": "53m 1s",
+    "timeLeft": "48m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T12:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 42m 55s"
+    "timeLeft": "1h 37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782129600000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a38f46add4ca997f18ce5b1",
-      "activation": "2026-06-22T08:38:02.831Z",
-      "expiry": "2026-06-22T10:25:24.843Z",
-      "node": "Metis (Jupiter)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Metis (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a38f686302d1c577e8ce5b3",
       "activation": "2026-06-22T08:47:02.456Z",
@@ -302,6 +287,36 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Vallis (Mars)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a390c8e99ef7c66248ce5b1",
+      "activation": "2026-06-22T10:21:02.805Z",
+      "expiry": "2026-06-22T12:17:16.968Z",
+      "node": "Enceladus (Saturn)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Enceladus (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a390c8e99ef7c66248ce5b2",
+      "activation": "2026-06-22T10:21:02.805Z",
+      "expiry": "2026-06-22T12:15:07.543Z",
+      "node": "Draco (Ceres)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Draco (Ceres)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": false,
       "isHard": true
     },
@@ -743,7 +758,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 13h 38m 58s",
+    "remaining": "6d 13h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1279,9 +1294,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -2437,
+      "count": -2459,
       "requiredRuns": 49000,
-      "completion": 47.51326530612245,
+      "completion": 47.49081632653061,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1316,9 +1331,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29561,
+      "count": -29654,
       "requiredRuns": 30000,
-      "completion": 1.4633333333333387,
+      "completion": 1.1533333333333284,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1365,9 +1380,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -269,
+      "count": -317,
       "requiredRuns": 48000,
-      "completion": 49.719791666666666,
+      "completion": 49.66979166666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1438,9 +1453,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -12034,
+      "count": -12126,
       "requiredRuns": 30000,
-      "completion": 59.88666666666666,
+      "completion": 59.58,
       "completed": false,
       "rewardTypes": [
         "fieldron"
