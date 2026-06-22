@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T04:01:24Z",
+  "fetchedAt": "2026-06-22T04:06:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782102840000",
     "activation": "2026-06-22T03:44:00.000Z",
     "expiry": "2026-06-22T04:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "33m 0s",
+    "timeLeft": "28m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782102840000",
     "activation": "2026-06-22T03:44:00.000Z",
     "expiry": "2026-06-22T04:34:00.000Z",
-    "timeLeft": "33m 0s",
+    "timeLeft": "28m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T04:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "32m 55s"
+    "timeLeft": "27m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782108000000",
@@ -698,7 +698,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 19h 58m 58s",
+    "remaining": "6d 19h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1284,9 +1284,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -873,
+      "count": -890,
       "requiredRuns": 49000,
-      "completion": 49.10918367346939,
+      "completion": 49.09183673469388,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1357,9 +1357,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -22369,
+      "count": -22408,
       "requiredRuns": 30000,
-      "completion": 25.436666666666664,
+      "completion": 25.306666666666665,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1393,9 +1393,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -43454,
+      "count": -43482,
       "requiredRuns": 43000,
-      "completion": -1.0558139534883715,
+      "completion": -1.1209302325581483,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1429,9 +1429,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4479,
+      "count": -4509,
       "requiredRuns": 30000,
-      "completion": 85.07000000000001,
+      "completion": 84.97,
       "completed": false,
       "rewardTypes": [
         "fieldron"
