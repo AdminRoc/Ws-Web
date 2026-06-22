@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-22T08:31:23Z",
+  "fetchedAt": "2026-06-22T08:36:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782117840000",
     "activation": "2026-06-22T07:04:00.000Z",
     "expiry": "2026-06-22T08:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782117840000",
     "activation": "2026-06-22T07:04:00.000Z",
     "expiry": "2026-06-22T08:44:00.000Z",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-22T09:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 2m 54s"
+    "timeLeft": "57m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782122400000",
@@ -151,21 +151,6 @@
       "isHard": true
     },
     {
-      "id": "6a38e006f4b1c77b008ce5b2",
-      "activation": "2026-06-22T07:11:02.267Z",
-      "expiry": "2026-06-22T08:55:50.192Z",
-      "node": "Thebe (Jupiter)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Thebe (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38e006f4b1c77b008ce5b1",
       "activation": "2026-06-22T07:11:02.267Z",
       "expiry": "2026-06-22T09:06:57.895Z",
@@ -181,15 +166,15 @@
       "isHard": false
     },
     {
-      "id": "6a38e006f4b1c77b008ce5b3",
+      "id": "6a38e006f4b1c77b008ce5b2",
       "activation": "2026-06-22T07:11:02.267Z",
-      "expiry": "2026-06-22T08:32:52.702Z",
-      "node": "Shklovsky (Phobos)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
+      "expiry": "2026-06-22T08:55:50.192Z",
+      "node": "Thebe (Jupiter)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Shklovsky (Phobos)",
+      "nodeKey": "Thebe (Jupiter)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -226,21 +211,6 @@
       "isHard": true
     },
     {
-      "id": "6a38e1aa6ad15ce2198ce5b1",
-      "activation": "2026-06-22T07:18:02.323Z",
-      "expiry": "2026-06-22T08:33:44.766Z",
-      "node": "Triton (Neptune)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Triton (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38e1aa6ad15ce2198ce5b2",
       "activation": "2026-06-22T07:18:02.323Z",
       "expiry": "2026-06-22T08:38:11.234Z",
@@ -271,19 +241,19 @@
       "isHard": true
     },
     {
-      "id": "6a38e29a4fcbd836fe8ce5b2",
-      "activation": "2026-06-22T07:22:02.868Z",
-      "expiry": "2026-06-22T08:34:46.581Z",
-      "node": "Everest (Earth)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Everest (Earth)",
+      "id": "6a38e3c6bd6a195ab38ce5b1",
+      "activation": "2026-06-22T07:27:02.822Z",
+      "expiry": "2026-06-22T09:06:44.847Z",
+      "node": "Tharsis (Mars)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Tharsis (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
-      "isHard": true
+      "isHard": false
     },
     {
       "id": "6a38e3c6bd6a195ab38ce5b2",
@@ -295,21 +265,6 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Eurasia (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a38e3c6bd6a195ab38ce5b1",
-      "activation": "2026-06-22T07:27:02.822Z",
-      "expiry": "2026-06-22T09:06:44.847Z",
-      "node": "Tharsis (Mars)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Tharsis (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -359,6 +314,36 @@
       "tierNum": 6,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a38f37a8f1452dfe08ce5b1",
+      "activation": "2026-06-22T08:34:02.881Z",
+      "expiry": "2026-06-22T09:56:59.901Z",
+      "node": "Sao (Neptune)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sao (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38f3b764a27251a18ce5b1",
+      "activation": "2026-06-22T08:35:03.160Z",
+      "expiry": "2026-06-22T09:37:32.774Z",
+      "node": "Circulus (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a38d8c28d8d02cd698ce5b4",
@@ -798,7 +783,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 15h 28m 58s",
+    "remaining": "6d 15h 23m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1384,9 +1369,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1879,
+      "count": -1889,
       "requiredRuns": 49000,
-      "completion": 48.08265306122449,
+      "completion": 48.07244897959183,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1457,9 +1442,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27472,
+      "count": -27566,
       "requiredRuns": 30000,
-      "completion": 8.426666666666671,
+      "completion": 8.113333333333328,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1529,9 +1514,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9841,
+      "count": -9956,
       "requiredRuns": 30000,
-      "completion": 67.19666666666666,
+      "completion": 66.81333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
