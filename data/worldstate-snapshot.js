@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T03:01:20Z",
+  "fetchedAt": "2026-06-22T03:06:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T04:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 32m 55s"
+    "timeLeft": "1h 27m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782100800000",
@@ -66,36 +66,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a388c972a43e77c698ce5b1",
-      "activation": "2026-06-22T01:15:03.070Z",
-      "expiry": "2026-06-22T03:04:34.301Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a38909261ff8eb17a8ce5b1",
-      "activation": "2026-06-22T01:32:02.941Z",
-      "expiry": "2026-06-22T03:01:51.135Z",
-      "node": "Neso (Neptune)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Neso (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38909261ff8eb17a8ce5b2",
       "activation": "2026-06-22T01:32:02.941Z",
       "expiry": "2026-06-22T03:09:21.659Z",
@@ -120,21 +90,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Infested",
       "enemyKey": "Infested",
       "nodeKey": "Saxis (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a38975e692d14204c8ce5b2",
-      "activation": "2026-06-22T02:01:02.919Z",
-      "expiry": "2026-06-22T03:01:34.592Z",
-      "node": "Mot (Void)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Mot (Void)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -407,6 +362,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Yuvarium (Lua)",
       "tier": "Omnia",
       "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38a65e9e979a3a698ce5b1",
+      "activation": "2026-06-22T03:05:02.241Z",
+      "expiry": "2026-06-22T04:34:17.249Z",
+      "node": "Paimon (Europa)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Paimon (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": false,
       "isHard": false
     },
@@ -758,7 +728,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 20h 58m 58s",
+    "remaining": "6d 20h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1344,9 +1314,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -806,
+      "count": -826,
       "requiredRuns": 49000,
-      "completion": 49.17755102040816,
+      "completion": 49.15714285714286,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1453,9 +1423,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21187,
+      "count": -21292,
       "requiredRuns": 30000,
-      "completion": 29.37666666666666,
+      "completion": 29.026666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1489,9 +1459,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -32831,
+      "count": -33721,
       "requiredRuns": 43000,
-      "completion": 23.64883720930232,
+      "completion": 21.57906976744186,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1525,9 +1495,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -3385,
+      "count": -3469,
       "requiredRuns": 30000,
-      "completion": 88.71666666666667,
+      "completion": 88.43666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
