@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T07:31:21Z",
+  "fetchedAt": "2026-06-22T07:36:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782117840000",
     "activation": "2026-06-22T07:04:00.000Z",
     "expiry": "2026-06-22T08:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 13m 0s",
+    "timeLeft": "1h 8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782117840000",
     "activation": "2026-06-22T07:04:00.000Z",
     "expiry": "2026-06-22T08:44:00.000Z",
-    "timeLeft": "1h 13m 0s",
+    "timeLeft": "1h 8m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T09:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 2m 54s"
+    "timeLeft": "1h 57m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782115200000",
@@ -66,21 +66,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a38c94a47f6a5a1ee8ce5b2",
-      "activation": "2026-06-22T05:34:02.365Z",
-      "expiry": "2026-06-22T07:31:39.477Z",
-      "node": "Martialis (Mars)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Martialis (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38d1ba681a61d6d28ce5b2",
       "activation": "2026-06-22T06:10:02.333Z",
       "expiry": "2026-06-22T07:51:58.507Z",
@@ -92,21 +77,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Yuvarium (Lua)",
       "tier": "Omnia",
       "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a38d1ba681a61d6d28ce5b3",
-      "activation": "2026-06-22T06:10:02.333Z",
-      "expiry": "2026-06-22T07:33:06.993Z",
-      "node": "Koro (Kuva Fortress)",
-      "missionType": "Assault",
-      "missionTypeKey": "Assault",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Koro (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
       "isStorm": false,
       "isHard": false
     },
@@ -452,6 +422,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Tharsis (Mars)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38e56a9d13a3da008ce5b1",
+      "activation": "2026-06-22T07:34:02.813Z",
+      "expiry": "2026-06-22T09:29:06.422Z",
+      "node": "Rotuma (Kuva Fortress)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Rotuma (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
       "isStorm": false,
       "isHard": false
     },
@@ -893,7 +878,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 16h 28m 58s",
+    "remaining": "6d 16h 23m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1479,9 +1464,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1688,
+      "count": -1695,
       "requiredRuns": 49000,
-      "completion": 48.27755102040816,
+      "completion": 48.2704081632653,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1552,9 +1537,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -26391,
+      "count": -26482,
       "requiredRuns": 30000,
-      "completion": 12.029999999999996,
+      "completion": 11.726666666666663,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1624,9 +1609,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8636,
+      "count": -8737,
       "requiredRuns": 30000,
-      "completion": 71.21333333333332,
+      "completion": 70.87666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
