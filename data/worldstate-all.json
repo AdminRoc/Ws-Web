@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-22T15:26:29Z",
+  "fetchedAt": "2026-06-22T15:31:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782144840000",
     "activation": "2026-06-22T14:34:00.000Z",
     "expiry": "2026-06-22T16:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782141600000",
-    "activation": "2026-06-22T15:20:00.000Z",
-    "expiry": "2026-06-22T15:26:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782141960000",
+    "activation": "2026-06-22T15:26:00.000Z",
+    "expiry": "2026-06-22T15:46:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782144840000",
     "activation": "2026-06-22T14:34:00.000Z",
     "expiry": "2026-06-22T16:14:00.000Z",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-22T17:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 37m 55s"
+    "timeLeft": "1h 32m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782144000000",
@@ -102,51 +102,6 @@
       "nodeKey": "Taveuni (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a39410fec229b30978ce5b1",
-      "activation": "2026-06-22T14:05:03.031Z",
-      "expiry": "2026-06-22T15:27:41.748Z",
-      "node": "Stribog (Void)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Stribog (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a39410fec229b30978ce5b2",
-      "activation": "2026-06-22T14:05:03.031Z",
-      "expiry": "2026-06-22T15:29:21.491Z",
-      "node": "Rusalka (Sedna)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rusalka (Sedna)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a39410fec229b30978ce5b3",
-      "activation": "2026-06-22T14:05:03.031Z",
-      "expiry": "2026-06-22T15:28:49.589Z",
-      "node": "Naeglar (Eris)",
-      "missionType": "Hive",
-      "missionTypeKey": "Hive",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Naeglar (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
       "isStorm": false,
       "isHard": true
     },
@@ -342,6 +297,36 @@
       "nodeKey": "Minthe (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3954faa38e57a88c8ce5b1",
+      "activation": "2026-06-22T15:30:02.475Z",
+      "expiry": "2026-06-22T16:51:27.404Z",
+      "node": "Nereid (Neptune)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Nereid (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3954faa38e57a88c8ce5b2",
+      "activation": "2026-06-22T15:30:02.475Z",
+      "expiry": "2026-06-22T17:19:18.627Z",
+      "node": "Ani (Void)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Ani (Void)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": false,
       "isHard": true
     },
@@ -783,7 +768,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 8h 33m 58s",
+    "remaining": "6d 8h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1319,9 +1304,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -4660,
+      "count": -4686,
       "requiredRuns": 49000,
-      "completion": 45.244897959183675,
+      "completion": 45.21836734693878,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1405,9 +1390,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -2222,
+      "count": -2237,
       "requiredRuns": 48000,
-      "completion": 47.68541666666667,
+      "completion": 47.66979166666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1478,9 +1463,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -18658,
+      "count": -18763,
       "requiredRuns": 30000,
-      "completion": 37.806666666666665,
+      "completion": 37.45666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1514,9 +1499,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15966,
+      "count": -16783,
       "requiredRuns": 38000,
-      "completion": 57.98421052631579,
+      "completion": 55.834210526315786,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1550,9 +1535,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1625,
+      "count": -1692,
       "requiredRuns": 33000,
-      "completion": 95.07575757575758,
+      "completion": 94.87272727272727,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -6181,7 +6166,7 @@
       "originalPrice": 175,
       "salePrice": 87,
       "total": 80,
-      "sold": 35,
+      "sold": 36,
       "discount": 50
     }
   ],
