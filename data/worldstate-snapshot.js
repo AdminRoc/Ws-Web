@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T19:21:20Z",
+  "fetchedAt": "2026-06-22T19:26:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782156840000",
     "activation": "2026-06-22T18:44:00.000Z",
     "expiry": "2026-06-22T19:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782156840000",
     "activation": "2026-06-22T18:44:00.000Z",
     "expiry": "2026-06-22T19:34:00.000Z",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T19:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "12m 55s"
+    "timeLeft": "7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782158400000",
@@ -111,6 +111,21 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
+      "id": "6a397eb2ebce4746e38ce5b2",
+      "activation": "2026-06-22T18:28:02.335Z",
+      "expiry": "2026-06-22T20:01:34.160Z",
+      "node": "Rotuma (Kuva Fortress)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Rotuma (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
       "id": "6a397eb2ebce4746e38ce5b1",
       "activation": "2026-06-22T18:28:02.335Z",
       "expiry": "2026-06-22T19:59:52.897Z",
@@ -141,21 +156,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a397eb2ebce4746e38ce5b2",
-      "activation": "2026-06-22T18:28:02.335Z",
-      "expiry": "2026-06-22T20:01:34.160Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a397fdff63d2713918ce5b1",
       "activation": "2026-06-22T18:33:03.120Z",
       "expiry": "2026-06-22T20:05:42.715Z",
@@ -165,21 +165,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Naga (Sedna)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a397fdff63d2713918ce5b3",
-      "activation": "2026-06-22T18:33:03.120Z",
-      "expiry": "2026-06-22T20:31:17.510Z",
-      "node": "Cerberus (Pluto)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cerberus (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -201,17 +186,17 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a39801aeacd5476d08ce5b1",
-      "activation": "2026-06-22T18:34:02.500Z",
-      "expiry": "2026-06-22T19:59:32.434Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
+      "id": "6a397fdff63d2713918ce5b3",
+      "activation": "2026-06-22T18:33:03.120Z",
+      "expiry": "2026-06-22T20:31:17.510Z",
+      "node": "Cerberus (Pluto)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cerberus (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": false,
       "isHard": true
     },
@@ -225,6 +210,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "The Murmur",
       "enemyKey": "The Murmur",
       "nodeKey": "Persto (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a39801aeacd5476d08ce5b1",
+      "activation": "2026-06-22T18:34:02.500Z",
+      "expiry": "2026-06-22T19:59:32.434Z",
+      "node": "Tuvul Commons (Zariman)",
+      "missionType": "Void Cascade",
+      "missionTypeKey": "Void Cascade",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Tuvul Commons (Zariman)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -246,21 +246,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3980ceaa995423bf8ce5b1",
-      "activation": "2026-06-22T18:37:02.522Z",
-      "expiry": "2026-06-22T20:06:21.606Z",
-      "node": "Skyresh (Phobos)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Skyresh (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3980ceaa995423bf8ce5b2",
       "activation": "2026-06-22T18:37:02.522Z",
       "expiry": "2026-06-22T20:19:58.144Z",
@@ -274,6 +259,21 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 1,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a3980ceaa995423bf8ce5b1",
+      "activation": "2026-06-22T18:37:02.522Z",
+      "expiry": "2026-06-22T20:06:21.606Z",
+      "node": "Skyresh (Phobos)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Skyresh (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a3980ceaa995423bf8ce5b3",
@@ -848,7 +848,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 4h 38m 58s",
+    "remaining": "6d 4h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1384,9 +1384,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -6556,
+      "count": -6595,
       "requiredRuns": 49000,
-      "completion": 43.310204081632655,
+      "completion": 43.27040816326531,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1470,9 +1470,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -3945,
+      "count": -4021,
       "requiredRuns": 48000,
-      "completion": 45.890625,
+      "completion": 45.811458333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1507,9 +1507,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23505,
+      "count": -23612,
       "requiredRuns": 30000,
-      "completion": 21.650000000000002,
+      "completion": 21.29333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1579,9 +1579,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -26594,
+      "count": -27293,
       "requiredRuns": 33000,
-      "completion": 19.412121212121214,
+      "completion": 17.293939393939397,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1615,9 +1615,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4824,
+      "count": -4966,
       "requiredRuns": 30000,
-      "completion": 83.91999999999999,
+      "completion": 83.44666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1651,9 +1651,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -2832,
+      "count": -3757,
       "requiredRuns": 45000,
-      "completion": 93.70666666666668,
+      "completion": 91.6511111111111,
       "completed": false,
       "rewardTypes": [
         "fieldron"
