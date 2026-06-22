@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T12:56:22Z",
+  "fetchedAt": "2026-06-22T13:01:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782135840000",
     "activation": "2026-06-22T12:04:00.000Z",
     "expiry": "2026-06-22T13:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "48m 1s",
+    "timeLeft": "43m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782135840000",
     "activation": "2026-06-22T12:04:00.000Z",
     "expiry": "2026-06-22T13:44:00.000Z",
-    "timeLeft": "48m 1s",
+    "timeLeft": "43m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T14:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 37m 55s"
+    "timeLeft": "1h 32m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782136800000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a3914feb195fb64918ce5b1",
-      "activation": "2026-06-22T10:57:02.468Z",
-      "expiry": "2026-06-22T12:56:13.957Z",
-      "node": "Gaia (Earth)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Gaia (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a391b16a55aac0fd58ce5b2",
       "activation": "2026-06-22T11:23:02.870Z",
@@ -423,96 +408,6 @@ window.WF_WS_SNAPSHOT = {
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a391103a3f5c372bf8ce5b6",
-      "activation": "2026-06-22T11:20:03.358Z",
-      "expiry": "2026-06-22T12:50:03.358Z",
-      "node": "Fenton's Field (Pluto)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Fenton's Field (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a391103a3f5c372bf8ce5b5",
-      "activation": "2026-06-22T11:20:03.356Z",
-      "expiry": "2026-06-22T12:50:03.356Z",
-      "node": "Brom Cluster (Neptune)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Brom Cluster (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a391103a3f5c372bf8ce5b2",
-      "activation": "2026-06-22T11:20:03.351Z",
-      "expiry": "2026-06-22T12:50:03.351Z",
-      "node": "Ogal Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Ogal Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a391103a3f5c372bf8ce5b7",
-      "activation": "2026-06-22T11:20:03.360Z",
-      "expiry": "2026-06-22T12:50:03.360Z",
-      "node": "Lu-yan (Veil)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Lu-yan (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a391103a3f5c372bf8ce5b3",
-      "activation": "2026-06-22T11:20:03.353Z",
-      "expiry": "2026-06-22T12:50:03.353Z",
-      "node": "Luckless Expanse (Venus)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Luckless Expanse (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a391103a3f5c372bf8ce5b4",
-      "activation": "2026-06-22T11:20:03.355Z",
-      "expiry": "2026-06-22T12:50:03.355Z",
-      "node": "Mordo Cluster (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Mordo Cluster (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
       "isHard": false
     },
     {
@@ -863,7 +758,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 11h 3m 58s",
+    "remaining": "6d 10h 58m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1399,9 +1294,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -3444,
+      "count": -3496,
       "requiredRuns": 49000,
-      "completion": 46.48571428571429,
+      "completion": 46.432653061224485,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1485,9 +1380,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -926,
+      "count": -901,
       "requiredRuns": 48000,
-      "completion": 49.03541666666666,
+      "completion": 49.061458333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1558,9 +1453,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15336,
+      "count": -15435,
       "requiredRuns": 30000,
-      "completion": 48.88,
+      "completion": 48.550000000000004,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1594,9 +1489,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -458,
+      "count": -505,
       "requiredRuns": 38000,
-      "completion": 98.79473684210527,
+      "completion": 98.67105263157895,
       "completed": false,
       "rewardTypes": [
         "fieldron"
