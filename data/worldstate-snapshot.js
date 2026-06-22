@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T12:21:24Z",
+  "fetchedAt": "2026-06-22T12:26:23Z",
   "cetusCycle": {
     "id": "cetusCycle1782135840000",
     "activation": "2026-06-22T12:04:00.000Z",
     "expiry": "2026-06-22T13:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 23m 1s",
+    "timeLeft": "1h 18m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782135840000",
     "activation": "2026-06-22T12:04:00.000Z",
     "expiry": "2026-06-22T13:44:00.000Z",
-    "timeLeft": "1h 23m 1s",
+    "timeLeft": "1h 18m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T14:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 12m 55s"
+    "timeLeft": "2h 7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782136800000",
@@ -66,21 +66,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a390fd65035e618ef8ce5b1",
-      "activation": "2026-06-22T10:35:02.774Z",
-      "expiry": "2026-06-22T12:20:49.173Z",
-      "node": "Yuvarium (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a39104ec41d89ffa68ce5b1",
       "activation": "2026-06-22T10:37:02.324Z",
       "expiry": "2026-06-22T12:35:10.621Z",
@@ -109,21 +94,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a39122e25ccb835b28ce5b1",
-      "activation": "2026-06-22T10:45:02.349Z",
-      "expiry": "2026-06-22T12:20:52.597Z",
-      "node": "Telesto (Saturn)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Telesto (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a39140ff920bc3e438ce5b3",
@@ -171,21 +141,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3914feb195fb64918ce5b3",
-      "activation": "2026-06-22T10:57:02.468Z",
-      "expiry": "2026-06-22T12:41:24.524Z",
-      "node": "Kiliken (Venus)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Kiliken (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3914feb195fb64918ce5b2",
       "activation": "2026-06-22T10:57:02.468Z",
       "expiry": "2026-06-22T12:44:47.049Z",
@@ -201,17 +156,17 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a391b16a55aac0fd58ce5b1",
-      "activation": "2026-06-22T11:23:02.870Z",
-      "expiry": "2026-06-22T13:01:27.882Z",
-      "node": "Sao (Neptune)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
+      "id": "6a3914feb195fb64918ce5b3",
+      "activation": "2026-06-22T10:57:02.468Z",
+      "expiry": "2026-06-22T12:41:24.524Z",
+      "node": "Kiliken (Venus)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Sao (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
+      "nodeKey": "Kiliken (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": false,
       "isHard": false
     },
@@ -225,6 +180,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Umbriel (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a391b16a55aac0fd58ce5b1",
+      "activation": "2026-06-22T11:23:02.870Z",
+      "expiry": "2026-06-22T13:01:27.882Z",
+      "node": "Sao (Neptune)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sao (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -336,21 +306,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a392782f09249f5138ce5b3",
-      "activation": "2026-06-22T12:16:02.840Z",
-      "expiry": "2026-06-22T13:26:10.992Z",
-      "node": "Amalthea (Jupiter)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Amalthea (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a392782f09249f5138ce5b2",
       "activation": "2026-06-22T12:16:02.840Z",
       "expiry": "2026-06-22T13:57:47.804Z",
@@ -366,15 +321,15 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a392782f09249f5138ce5b5",
+      "id": "6a392782f09249f5138ce5b3",
       "activation": "2026-06-22T12:16:02.840Z",
-      "expiry": "2026-06-22T14:10:32.875Z",
-      "node": "Pallas (Ceres)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pallas (Ceres)",
+      "expiry": "2026-06-22T13:26:10.992Z",
+      "node": "Amalthea (Jupiter)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Amalthea (Jupiter)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -390,6 +345,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Stickney (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a392782f09249f5138ce5b5",
+      "activation": "2026-06-22T12:16:02.840Z",
+      "expiry": "2026-06-22T14:10:32.875Z",
+      "node": "Pallas (Ceres)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Pallas (Ceres)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -833,7 +803,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 11h 38m 58s",
+    "remaining": "6d 11h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1369,9 +1339,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -3217,
+      "count": -3251,
       "requiredRuns": 49000,
-      "completion": 46.71734693877551,
+      "completion": 46.682653061224485,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1455,9 +1425,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -794,
+      "count": -838,
       "requiredRuns": 48000,
-      "completion": 49.172916666666666,
+      "completion": 49.12708333333333,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1528,9 +1498,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -14599,
+      "count": -14696,
       "requiredRuns": 30000,
-      "completion": 51.33666666666667,
+      "completion": 51.013333333333335,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1564,9 +1534,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -19,
+      "count": -38,
       "requiredRuns": 38000,
-      "completion": 99.95,
+      "completion": 99.9,
       "completed": false,
       "rewardTypes": [
         "fieldron"
