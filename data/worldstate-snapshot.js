@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T08:51:21Z",
+  "fetchedAt": "2026-06-22T08:56:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782120840000",
     "activation": "2026-06-22T08:44:00.000Z",
     "expiry": "2026-06-22T09:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782120840000",
     "activation": "2026-06-22T08:44:00.000Z",
     "expiry": "2026-06-22T09:34:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T09:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "42m 54s"
+    "timeLeft": "37m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782122400000",
@@ -65,51 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a38dc4663a6a380628ce5b1",
-      "activation": "2026-06-22T06:55:02.676Z",
-      "expiry": "2026-06-22T08:55:02.406Z",
-      "node": "Dakata (Kuva Fortress)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Dakata (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a38dc4663a6a380628ce5b3",
-      "activation": "2026-06-22T06:55:02.676Z",
-      "expiry": "2026-06-22T08:53:46.265Z",
-      "node": "Umbriel (Uranus)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Umbriel (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a38dcbe11140b18968ce5b1",
-      "activation": "2026-06-22T06:57:02.680Z",
-      "expiry": "2026-06-22T08:51:59.660Z",
-      "node": "Regna (Pluto)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Regna (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a38e006f4b1c77b008ce5b2",
       "activation": "2026-06-22T07:11:02.267Z",
@@ -195,21 +150,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Crossfire",
       "enemyKey": "Crossfire",
       "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a38e877f826f434138ce5b2",
-      "activation": "2026-06-22T07:47:03.148Z",
-      "expiry": "2026-06-22T08:54:22.483Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -379,6 +319,66 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a38f7761ec13a87708ce5b2",
+      "activation": "2026-06-22T08:51:02.794Z",
+      "expiry": "2026-06-22T10:47:38.095Z",
+      "node": "Tamu (Kuva Fortress)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Tamu (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38f7761ec13a87708ce5b1",
+      "activation": "2026-06-22T08:51:02.794Z",
+      "expiry": "2026-06-22T10:04:43.137Z",
+      "node": "Taveuni (Kuva Fortress)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Taveuni (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38f86616a4af9cac8ce5b1",
+      "activation": "2026-06-22T08:55:02.884Z",
+      "expiry": "2026-06-22T10:14:03.878Z",
+      "node": "Yuvarium (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Yuvarium (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38f86616a4af9cac8ce5b2",
+      "activation": "2026-06-22T08:55:02.884Z",
+      "expiry": "2026-06-22T10:40:01.851Z",
+      "node": "Cambire (Deimos)",
+      "missionType": "Alchemy",
+      "missionTypeKey": "Alchemy",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Cambire (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a38d8c28d8d02cd698ce5b2",
@@ -818,7 +818,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 15h 8m 58s",
+    "remaining": "6d 15h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1404,9 +1404,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1926,
+      "count": -1951,
       "requiredRuns": 49000,
-      "completion": 48.03469387755102,
+      "completion": 48.00918367346939,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1477,9 +1477,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27826,
+      "count": -27914,
       "requiredRuns": 30000,
-      "completion": 7.246666666666668,
+      "completion": 6.953333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1549,9 +1549,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -10263,
+      "count": -10352,
       "requiredRuns": 30000,
-      "completion": 65.78999999999999,
+      "completion": 65.49333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -6180,7 +6180,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 175,
       "salePrice": 87,
       "total": 80,
-      "sold": 24,
+      "sold": 25,
       "discount": 50
     }
   ],
