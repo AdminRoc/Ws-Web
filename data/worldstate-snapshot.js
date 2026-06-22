@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T21:21:19Z",
+  "fetchedAt": "2026-06-22T21:26:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782165840000",
     "activation": "2026-06-22T21:14:00.000Z",
     "expiry": "2026-06-22T22:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782165840000",
     "activation": "2026-06-22T21:14:00.000Z",
     "expiry": "2026-06-22T22:04:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T22:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "42m 55s"
+    "timeLeft": "37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782165600000",
@@ -65,36 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a39929ed28c80b6fa8ce5b1",
-      "activation": "2026-06-22T19:53:02.898Z",
-      "expiry": "2026-06-22T21:21:20.528Z",
-      "node": "Minthe (Pluto)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Minthe (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3993167d34871eca8ce5b1",
-      "activation": "2026-06-22T19:55:02.445Z",
-      "expiry": "2026-06-22T21:25:47.265Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a3993167d34871eca8ce5b2",
       "activation": "2026-06-22T19:55:02.445Z",
@@ -878,7 +848,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 2h 38m 58s",
+    "remaining": "6d 2h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1414,9 +1384,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -7496,
+      "count": -7535,
       "requiredRuns": 49000,
-      "completion": 42.351020408163265,
+      "completion": 42.31122448979592,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1500,9 +1470,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -4879,
+      "count": -4934,
       "requiredRuns": 48000,
-      "completion": 44.91770833333334,
+      "completion": 44.860416666666666,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1537,9 +1507,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -25789,
+      "count": -25901,
       "requiredRuns": 30000,
-      "completion": 14.036666666666664,
+      "completion": 13.663333333333338,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1645,9 +1615,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -7984,
+      "count": -8144,
       "requiredRuns": 30000,
-      "completion": 73.38666666666667,
+      "completion": 72.85333333333332,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1681,9 +1651,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -25133,
+      "count": -26057,
       "requiredRuns": 45000,
-      "completion": 44.14888888888889,
+      "completion": 42.09555555555555,
       "completed": false,
       "rewardTypes": [
         "fieldron"
