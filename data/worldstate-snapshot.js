@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T03:46:27Z",
+  "fetchedAt": "2026-06-22T03:51:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782102840000",
     "activation": "2026-06-22T03:44:00.000Z",
     "expiry": "2026-06-22T04:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782098760000",
-    "activation": "2026-06-22T03:26:00.000Z",
-    "expiry": "2026-06-22T03:46:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782099960000",
+    "activation": "2026-06-22T03:46:00.000Z",
+    "expiry": "2026-06-22T03:53:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782102840000",
     "activation": "2026-06-22T03:44:00.000Z",
     "expiry": "2026-06-22T04:34:00.000Z",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T04:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "47m 55s"
+    "timeLeft": "42m 54s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782100800000",
@@ -96,21 +96,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a389a6a02dd93d61f8ce5b3",
-      "activation": "2026-06-22T02:14:02.633Z",
-      "expiry": "2026-06-22T03:50:31.845Z",
-      "node": "Stickney (Phobos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Stickney (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a389d3a066d7b0e8c8ce5b1",
       "activation": "2026-06-22T02:26:02.616Z",
       "expiry": "2026-06-22T04:09:43.145Z",
@@ -124,21 +109,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 5,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a389dee263bc2cc848ce5b2",
-      "activation": "2026-06-22T02:29:02.412Z",
-      "expiry": "2026-06-22T03:49:50.555Z",
-      "node": "Cambria (Earth)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cambria (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a389dee263bc2cc848ce5b1",
@@ -349,6 +319,66 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 4,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a38b0ea960695a7a98ce5b1",
+      "activation": "2026-06-22T03:50:02.747Z",
+      "expiry": "2026-06-22T05:14:33.363Z",
+      "node": "Amalthea (Jupiter)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Amalthea (Jupiter)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38b0ea960695a7a98ce5b2",
+      "activation": "2026-06-22T03:50:02.747Z",
+      "expiry": "2026-06-22T05:32:19.971Z",
+      "node": "Shklovsky (Phobos)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Shklovsky (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38b0ea960695a7a98ce5b3",
+      "activation": "2026-06-22T03:50:02.747Z",
+      "expiry": "2026-06-22T05:05:33.764Z",
+      "node": "Stephano (Uranus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Stephano (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38b0ea960695a7a98ce5b4",
+      "activation": "2026-06-22T03:50:02.747Z",
+      "expiry": "2026-06-22T05:37:50.083Z",
+      "node": "Baal (Europa)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Baal (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a3892738613cd51868ce5b3",
@@ -788,7 +818,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 20h 13m 58s",
+    "remaining": "6d 20h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1374,9 +1404,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -856,
+      "count": -858,
       "requiredRuns": 49000,
-      "completion": 49.1265306122449,
+      "completion": 49.12448979591837,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1447,9 +1477,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -22048,
+      "count": -22157,
       "requiredRuns": 30000,
-      "completion": 26.506666666666668,
+      "completion": 26.14333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1483,9 +1513,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -40814,
+      "count": -41701,
       "requiredRuns": 43000,
-      "completion": 5.083720930232561,
+      "completion": 3.020930232558139,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1519,9 +1549,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4206,
+      "count": -4311,
       "requiredRuns": 30000,
-      "completion": 85.98,
+      "completion": 85.63000000000001,
       "completed": false,
       "rewardTypes": [
         "fieldron"
