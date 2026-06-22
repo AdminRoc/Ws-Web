@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T05:36:28Z",
+  "fetchedAt": "2026-06-22T05:41:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782108840000",
     "activation": "2026-06-22T04:34:00.000Z",
     "expiry": "2026-06-22T06:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "37m 56s",
+    "timeLeft": "32m 57s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782106380000",
-    "activation": "2026-06-22T05:33:00.000Z",
-    "expiry": "2026-06-22T05:40:08.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782106800000",
+    "activation": "2026-06-22T05:40:00.000Z",
+    "expiry": "2026-06-22T06:00:08.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782108840000",
     "activation": "2026-06-22T04:34:00.000Z",
     "expiry": "2026-06-22T06:14:00.000Z",
-    "timeLeft": "37m 56s",
+    "timeLeft": "32m 57s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T07:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 27m 51s"
+    "timeLeft": "1h 22m 51s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782108000000",
@@ -66,21 +66,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a38b0ea960695a7a98ce5b4",
-      "activation": "2026-06-22T03:50:02.747Z",
-      "expiry": "2026-06-22T05:37:50.083Z",
-      "node": "Baal (Europa)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Baal (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a38b55ef4f1ecb04e8ce5b2",
       "activation": "2026-06-22T04:09:02.407Z",
       "expiry": "2026-06-22T05:50:03.597Z",
@@ -92,36 +77,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Arval (Mars)",
       "tier": "Lith",
       "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a38b64e8f4a52839a8ce5b3",
-      "activation": "2026-06-22T04:13:02.524Z",
-      "expiry": "2026-06-22T05:38:39.397Z",
-      "node": "Tharsis (Mars)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Tharsis (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a38b91edf997cbec78ce5b2",
-      "activation": "2026-06-22T04:25:02.746Z",
-      "expiry": "2026-06-22T05:37:43.427Z",
-      "node": "Elara (Jupiter)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Elara (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
       "isStorm": false,
       "isHard": true
     },
@@ -878,7 +833,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 18h 23m 55s",
+    "remaining": "6d 18h 18m 55s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1464,9 +1419,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1281,
+      "count": -1302,
       "requiredRuns": 49000,
-      "completion": 48.69285714285714,
+      "completion": 48.67142857142857,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1537,9 +1492,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -24180,
+      "count": -24278,
       "requiredRuns": 30000,
-      "completion": 19.399999999999995,
+      "completion": 19.07333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1609,9 +1564,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6435,
+      "count": -6531,
       "requiredRuns": 30000,
-      "completion": 78.55,
+      "completion": 78.23,
       "completed": false,
       "rewardTypes": [
         "fieldron"
