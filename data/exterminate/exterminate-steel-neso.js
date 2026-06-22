@@ -24,9 +24,9 @@
 var exterminate_steel_nesoRecords = [
     {
        playerId:   "FrostMainer",
-       clearTime:  "0:33.000",
-       uploadTime: "2026-06-08",
-       videoUrls:  ["https://www.youtube.com/watch?v=CKCC_zWd4nM"],
+       clearTime:  "0:26.000",
+       uploadTime: "2026-06-19",
+       videoUrls:  ["https://www.youtube.com/watch?v=JrAYUQ_kBBQ"],
     },
     {
        playerId:   "NamelessDeity",

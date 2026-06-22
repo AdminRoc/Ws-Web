@@ -36,9 +36,9 @@ var exterminate_steel_puckRecords = [
   },
   {
     playerId:   "FrostMainer",
-    clearTime:  "1:05.000",
-    uploadTime: "2026-06-10",
-    videoUrls:  ["https://www.youtube.com/watch?v=5pHjFD1dBrk"],
+    clearTime:  "0:54.000",
+    uploadTime: "2026-06-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=b_sQ1uSjOJ8"],
   },
 ];
 
