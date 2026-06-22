@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T12:06:22Z",
+  "fetchedAt": "2026-06-22T12:11:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782135840000",
     "activation": "2026-06-22T12:04:00.000Z",
     "expiry": "2026-06-22T13:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 38m 1s",
+    "timeLeft": "1h 33m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782135840000",
     "activation": "2026-06-22T12:04:00.000Z",
     "expiry": "2026-06-22T13:44:00.000Z",
-    "timeLeft": "1h 38m 1s",
+    "timeLeft": "1h 33m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T14:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 27m 55s"
+    "timeLeft": "2h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782136800000",
@@ -96,36 +96,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a390f9a0948eac9658ce5b1",
-      "activation": "2026-06-22T10:34:02.464Z",
-      "expiry": "2026-06-22T12:07:37.153Z",
-      "node": "Hepit (Void)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Hepit (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a390f9a0948eac9658ce5b2",
-      "activation": "2026-06-22T10:34:02.464Z",
-      "expiry": "2026-06-22T12:08:37.512Z",
-      "node": "Kala-azar (Eris)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Kala-azar (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a390fd65035e618ef8ce5b1",
       "activation": "2026-06-22T10:35:02.774Z",
       "expiry": "2026-06-22T12:20:49.173Z",
@@ -165,21 +135,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Garus (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3911b6b1d8ff146a8ce5b1",
-      "activation": "2026-06-22T10:43:02.773Z",
-      "expiry": "2026-06-22T12:07:03.656Z",
-      "node": "Dakata (Kuva Fortress)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Dakata (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -758,7 +713,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 11h 53m 58s",
+    "remaining": "6d 11h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1294,9 +1249,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -3092,
+      "count": -3145,
       "requiredRuns": 49000,
-      "completion": 46.844897959183676,
+      "completion": 46.79081632653061,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1380,9 +1335,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -744,
+      "count": -761,
       "requiredRuns": 48000,
-      "completion": 49.225,
+      "completion": 49.20729166666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1453,9 +1408,45 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -14275,
+      "count": -14385,
       "requiredRuns": 30000,
-      "completion": 52.416666666666664,
+      "completion": 52.05,
+      "completed": false,
+      "rewardTypes": [
+        "fieldron"
+      ]
+    },
+    {
+      "id": "6a3914866943cd44938ce5b1",
+      "activation": "2026-06-22T12:12:20.482Z",
+      "node": "Abaddon (Europa)",
+      "nodeKey": "Abaddon (Europa)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": 0,
+      "requiredRuns": 38000,
+      "completion": 100,
       "completed": false,
       "rewardTypes": [
         "fieldron"
