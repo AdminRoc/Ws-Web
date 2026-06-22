@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T19:26:24Z",
+  "fetchedAt": "2026-06-22T19:31:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782156840000",
     "activation": "2026-06-22T18:44:00.000Z",
     "expiry": "2026-06-22T19:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782156000000",
-    "activation": "2026-06-22T19:20:00.000Z",
-    "expiry": "2026-06-22T19:26:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782156360000",
+    "activation": "2026-06-22T19:26:00.000Z",
+    "expiry": "2026-06-22T19:46:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782156840000",
     "activation": "2026-06-22T18:44:00.000Z",
     "expiry": "2026-06-22T19:34:00.000Z",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T19:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "7m 55s"
+    "timeLeft": "2m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782158400000",
@@ -75,21 +75,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a39755276161b73b08ce5b1",
-      "activation": "2026-06-22T17:48:02.570Z",
-      "expiry": "2026-06-22T19:28:30.823Z",
-      "node": "Dakata (Kuva Fortress)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Dakata (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -848,7 +833,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 4h 33m 58s",
+    "remaining": "6d 4h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1384,9 +1369,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -6595,
+      "count": -6633,
       "requiredRuns": 49000,
-      "completion": 43.27040816326531,
+      "completion": 43.231632653061226,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1470,9 +1455,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -4021,
+      "count": -4064,
       "requiredRuns": 48000,
-      "completion": 45.811458333333334,
+      "completion": 45.766666666666666,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1507,9 +1492,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23612,
+      "count": -23714,
       "requiredRuns": 30000,
-      "completion": 21.29333333333333,
+      "completion": 20.953333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1579,9 +1564,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27293,
+      "count": -27983,
       "requiredRuns": 33000,
-      "completion": 17.293939393939397,
+      "completion": 15.203030303030307,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1615,9 +1600,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4966,
+      "count": -5098,
       "requiredRuns": 30000,
-      "completion": 83.44666666666667,
+      "completion": 83.00666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1651,9 +1636,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -3757,
+      "count": -4675,
       "requiredRuns": 45000,
-      "completion": 91.6511111111111,
+      "completion": 89.61111111111111,
       "completed": false,
       "rewardTypes": [
         "fieldron"
