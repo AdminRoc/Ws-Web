@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-22T00:46:20Z",
+  "fetchedAt": "2026-06-22T00:51:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782090840000",
     "activation": "2026-06-21T23:34:00.000Z",
     "expiry": "2026-06-22T01:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "28m 0s",
+    "timeLeft": "23m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782088800000",
-    "activation": "2026-06-22T00:40:00.000Z",
-    "expiry": "2026-06-22T00:46:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782089160000",
+    "activation": "2026-06-22T00:46:00.000Z",
+    "expiry": "2026-06-22T01:06:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782090840000",
     "activation": "2026-06-21T23:34:00.000Z",
     "expiry": "2026-06-22T01:14:00.000Z",
-    "timeLeft": "28m 0s",
+    "timeLeft": "23m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-22T02:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 17m 55s"
+    "timeLeft": "1h 12m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782093600000",
@@ -74,36 +74,6 @@
       "tierNum": 4,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a38712a43b051f47d8ce5b1",
-      "activation": "2026-06-21T23:18:02.260Z",
-      "expiry": "2026-06-22T00:46:44.618Z",
-      "node": "Adaro (Sedna)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Adaro (Sedna)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a38712a43b051f47d8ce5b2",
-      "activation": "2026-06-21T23:18:02.260Z",
-      "expiry": "2026-06-22T00:49:19.413Z",
-      "node": "Ani (Void)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Ani (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a38712a43b051f47d8ce5b3",
@@ -419,6 +389,36 @@
       "tierNum": 2,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a3885ca03bea1e7428ce5b1",
+      "activation": "2026-06-22T00:46:02.664Z",
+      "expiry": "2026-06-22T02:12:00.807Z",
+      "node": "Solium (Eris)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Solium (Eris)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3885ca03bea1e7428ce5b2",
+      "activation": "2026-06-22T00:46:02.664Z",
+      "expiry": "2026-06-22T02:14:17.518Z",
+      "node": "Cerberus (Pluto)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cerberus (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a386843149206f70a8ce5b5",
@@ -858,7 +858,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 23h 13m 58s",
+    "remaining": "6d 23h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1444,9 +1444,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -446,
+      "count": -459,
       "requiredRuns": 49000,
-      "completion": 49.54489795918368,
+      "completion": 49.53163265306122,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1625,9 +1625,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -18599,
+      "count": -18684,
       "requiredRuns": 30000,
-      "completion": 38.00333333333333,
+      "completion": 37.72,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1661,9 +1661,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8828,
+      "count": -9724,
       "requiredRuns": 43000,
-      "completion": 79.46976744186045,
+      "completion": 77.38604651162791,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1697,9 +1697,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -820,
+      "count": -916,
       "requiredRuns": 30000,
-      "completion": 97.26666666666667,
+      "completion": 96.94666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
