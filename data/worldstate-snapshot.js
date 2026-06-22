@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T19:36:23Z",
+  "fetchedAt": "2026-06-22T19:41:23Z",
   "cetusCycle": {
     "id": "cetusCycle1782162840000",
     "activation": "2026-06-22T19:34:00.000Z",
     "expiry": "2026-06-22T21:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 39m 0s",
+    "timeLeft": "1h 33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782162840000",
     "activation": "2026-06-22T19:34:00.000Z",
     "expiry": "2026-06-22T21:14:00.000Z",
-    "timeLeft": "1h 39m 0s",
+    "timeLeft": "1h 33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T22:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 28m 55s"
+    "timeLeft": "2h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782158400000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a39755276161b73b08ce5b2",
-      "activation": "2026-06-22T17:48:02.570Z",
-      "expiry": "2026-06-22T19:37:58.963Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a39755276161b73b08ce5b4",
       "activation": "2026-06-22T17:48:02.570Z",
@@ -167,21 +152,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Cerberus (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a39801aeacd5476d08ce5b2",
-      "activation": "2026-06-22T18:34:02.500Z",
-      "expiry": "2026-06-22T19:35:26.433Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
       "isStorm": false,
       "isHard": true
     },
@@ -833,7 +803,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 4h 24m 58s",
+    "remaining": "6d 4h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1369,9 +1339,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -6637,
+      "count": -6705,
       "requiredRuns": 49000,
-      "completion": 43.227551020408164,
+      "completion": 43.15816326530612,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1455,9 +1425,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -4083,
+      "count": -4152,
       "requiredRuns": 48000,
-      "completion": 45.746874999999996,
+      "completion": 45.675,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1492,9 +1462,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23752,
+      "count": -23901,
       "requiredRuns": 30000,
-      "completion": 20.82666666666667,
+      "completion": 20.330000000000005,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1564,9 +1534,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28030,
+      "count": -29407,
       "requiredRuns": 33000,
-      "completion": 15.060606060606062,
+      "completion": 10.88787878787879,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1600,9 +1570,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4694,
+      "count": -6512,
       "requiredRuns": 45000,
-      "completion": 89.56888888888889,
+      "completion": 85.52888888888889,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1636,9 +1606,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5166,
+      "count": -5377,
       "requiredRuns": 30000,
-      "completion": 82.78,
+      "completion": 82.07666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -4066,9 +4036,128 @@ window.WF_WS_SNAPSHOT = {
           "expiry": "2026-06-22T22:04:23.435Z",
           "uniqueName": "/Lotus/Types/Game/MissionDecks/DeimosMissionRewards/TierETableARewards",
           "rewardPool": [
-            "Pattern Mismatch. Results inaccurate."
+            "Ayatan Amber Star",
+            "1000 Endo",
+            "750X Kuva",
+            "Ayatan Amber Star",
+            "1000 Endo",
+            "750X Kuva",
+            "Aya",
+            "Xaku Chassis Blueprint",
+            "Ayatan Amber Star",
+            "1000 Endo",
+            "750X Kuva",
+            "Aya",
+            "Xaku Chassis Blueprint",
+            "Quassus Blueprint",
+            "Aya",
+            "Xaku Chassis Blueprint",
+            "Quassus Blueprint"
           ],
-          "rewardPoolDrops": [],
+          "rewardPoolDrops": [
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Common",
+              "chance": 45.45,
+              "count": 1
+            },
+            {
+              "item": "1000 Endo",
+              "rarity": "Common",
+              "chance": 45.45,
+              "count": 1
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 9.09,
+              "count": 750
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 28.57,
+              "count": 1
+            },
+            {
+              "item": "1000 Endo",
+              "rarity": "Uncommon",
+              "chance": 28.57,
+              "count": 1
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 5.71,
+              "count": 750
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 28.57,
+              "count": 1
+            },
+            {
+              "item": "Xaku Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 8.57,
+              "count": 1
+            },
+            {
+              "item": "Ayatan Amber Star",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "1000 Endo",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "Kuva",
+              "rarity": "Rare",
+              "chance": 4.44,
+              "count": 750
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "Xaku Chassis Blueprint",
+              "rarity": "Rare",
+              "chance": 6.67,
+              "count": 1
+            },
+            {
+              "item": "Quassus Blueprint",
+              "rarity": "Uncommon",
+              "chance": 22.22,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Common",
+              "chance": 43.48,
+              "count": 1
+            },
+            {
+              "item": "Xaku Chassis Blueprint",
+              "rarity": "Uncommon",
+              "chance": 13.04,
+              "count": 1
+            },
+            {
+              "item": "Quassus Blueprint",
+              "rarity": "Common",
+              "chance": 43.48,
+              "count": 1
+            }
+          ],
           "type": "Core Samples",
           "enemyLevels": [
             40,
