@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T07:06:21Z",
+  "fetchedAt": "2026-06-22T07:11:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782117840000",
     "activation": "2026-06-22T07:04:00.000Z",
     "expiry": "2026-06-22T08:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782117840000",
     "activation": "2026-06-22T07:04:00.000Z",
     "expiry": "2026-06-22T08:44:00.000Z",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T09:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 27m 54s"
+    "timeLeft": "2h 22m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782115200000",
@@ -334,6 +334,51 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 4,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a38df17260be8f3c48ce5b2",
+      "activation": "2026-06-22T07:07:03.103Z",
+      "expiry": "2026-06-22T08:42:24.791Z",
+      "node": "Gulliver (Phobos)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Gulliver (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38df17260be8f3c48ce5b1",
+      "activation": "2026-06-22T07:07:03.103Z",
+      "expiry": "2026-06-22T08:19:31.890Z",
+      "node": "Casta (Ceres)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Casta (Ceres)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38df17260be8f3c48ce5b3",
+      "activation": "2026-06-22T07:07:03.103Z",
+      "expiry": "2026-06-22T08:15:31.865Z",
+      "node": "Telesto (Saturn)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Telesto (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a38cab2f7b91748418ce5b1",
@@ -683,7 +728,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 16h 53m 58s",
+    "remaining": "6d 16h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1269,9 +1314,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1606,
+      "count": -1631,
       "requiredRuns": 49000,
-      "completion": 48.361224489795916,
+      "completion": 48.33571428571429,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1342,9 +1387,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -25913,
+      "count": -26006,
       "requiredRuns": 30000,
-      "completion": 13.623333333333331,
+      "completion": 13.313333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1414,9 +1459,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8133,
+      "count": -8230,
       "requiredRuns": 30000,
-      "completion": 72.89,
+      "completion": 72.56666666666666,
       "completed": false,
       "rewardTypes": [
         "fieldron"
