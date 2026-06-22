@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T09:01:21Z",
+  "fetchedAt": "2026-06-22T09:06:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782120840000",
     "activation": "2026-06-22T08:44:00.000Z",
     "expiry": "2026-06-22T09:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "33m 0s",
+    "timeLeft": "28m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782120840000",
     "activation": "2026-06-22T08:44:00.000Z",
     "expiry": "2026-06-22T09:34:00.000Z",
-    "timeLeft": "33m 0s",
+    "timeLeft": "28m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T09:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "32m 54s"
+    "timeLeft": "27m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782122400000",
@@ -79,21 +79,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 2,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a38e006f4b1c77b008ce5b6",
-      "activation": "2026-06-22T07:11:02.267Z",
-      "expiry": "2026-06-22T09:05:18.270Z",
-      "node": "Acheron (Pluto)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Acheron (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a38e3c6bd6a195ab38ce5b1",
@@ -351,6 +336,81 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
+      "id": "6a38f9cf10e15580768ce5b2",
+      "activation": "2026-06-22T09:01:03.019Z",
+      "expiry": "2026-06-22T10:44:30.760Z",
+      "node": "Narcissus (Pluto)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Narcissus (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38f9cf10e15580768ce5b1",
+      "activation": "2026-06-22T09:01:03.019Z",
+      "expiry": "2026-06-22T10:57:19.598Z",
+      "node": "Hydron (Sedna)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Hydron (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38f9cf10e15580768ce5b3",
+      "activation": "2026-06-22T09:01:03.019Z",
+      "expiry": "2026-06-22T10:49:10.878Z",
+      "node": "Stribog (Void)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Stribog (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38fa0af0de3d64d28ce5b1",
+      "activation": "2026-06-22T09:02:02.307Z",
+      "expiry": "2026-06-22T10:49:57.948Z",
+      "node": "Kiste (Ceres)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Kiste (Ceres)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38fa0af0de3d64d28ce5b2",
+      "activation": "2026-06-22T09:02:02.307Z",
+      "expiry": "2026-06-22T11:01:48.006Z",
+      "node": "Lith (Earth)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Lith (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
       "id": "6a38e6d265758995608ce5b3",
       "activation": "2026-06-22T08:20:03.355Z",
       "expiry": "2026-06-22T09:50:03.355Z",
@@ -366,21 +426,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38e6d265758995608ce5b2",
-      "activation": "2026-06-22T08:20:03.353Z",
-      "expiry": "2026-06-22T09:50:03.353Z",
-      "node": "Beacon Shield Ring (Venus)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Beacon Shield Ring (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a38e6d265758995608ce5b1",
       "activation": "2026-06-22T08:20:03.351Z",
       "expiry": "2026-06-22T09:50:03.351Z",
@@ -390,6 +435,36 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Ogal Cluster (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a38e6d265758995608ce5b5",
+      "activation": "2026-06-22T08:20:03.358Z",
+      "expiry": "2026-06-22T09:50:03.358Z",
+      "node": "Seven Sirens (Pluto)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Seven Sirens (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a38e6d265758995608ce5b2",
+      "activation": "2026-06-22T08:20:03.353Z",
+      "expiry": "2026-06-22T09:50:03.353Z",
+      "node": "Beacon Shield Ring (Venus)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Beacon Shield Ring (Venus)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": true,
@@ -420,21 +495,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "R-9 Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a38e6d265758995608ce5b5",
-      "activation": "2026-06-22T08:20:03.358Z",
-      "expiry": "2026-06-22T09:50:03.358Z",
-      "node": "Seven Sirens (Pluto)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Seven Sirens (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -698,7 +758,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 14h 58m 58s",
+    "remaining": "6d 14h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1284,9 +1344,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1984,
+      "count": -2012,
       "requiredRuns": 49000,
-      "completion": 47.97551020408164,
+      "completion": 47.946938775510205,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1357,9 +1417,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28001,
+      "count": -28104,
       "requiredRuns": 30000,
-      "completion": 6.663333333333332,
+      "completion": 6.320000000000004,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1429,9 +1489,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -10454,
+      "count": -10569,
       "requiredRuns": 30000,
-      "completion": 65.15333333333334,
+      "completion": 64.77,
       "completed": false,
       "rewardTypes": [
         "fieldron"
