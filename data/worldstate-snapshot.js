@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T12:36:21Z",
+  "fetchedAt": "2026-06-22T12:41:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782135840000",
     "activation": "2026-06-22T12:04:00.000Z",
     "expiry": "2026-06-22T13:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 8m 1s",
+    "timeLeft": "1h 3m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782130800000",
-    "activation": "2026-06-22T12:20:00.000Z",
-    "expiry": "2026-06-22T12:40:08.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782132000000",
+    "activation": "2026-06-22T12:40:00.000Z",
+    "expiry": "2026-06-22T12:46:48.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782135840000",
     "activation": "2026-06-22T12:04:00.000Z",
     "expiry": "2026-06-22T13:44:00.000Z",
-    "timeLeft": "1h 8m 1s",
+    "timeLeft": "1h 3m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T14:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 57m 55s"
+    "timeLeft": "1h 52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782136800000",
@@ -77,21 +77,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Larissa (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a39144a5c95d99b668ce5b2",
-      "activation": "2026-06-22T10:54:02.310Z",
-      "expiry": "2026-06-22T12:39:04.627Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
       "isStorm": false,
       "isHard": true
     },
@@ -426,32 +411,47 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a391103a3f5c372bf8ce5b6",
-      "activation": "2026-06-22T11:20:03.358Z",
-      "expiry": "2026-06-22T12:50:03.358Z",
-      "node": "Fenton's Field (Pluto)",
+      "id": "6a392caa5a35d155a48ce5b1",
+      "activation": "2026-06-22T12:38:02.819Z",
+      "expiry": "2026-06-22T14:11:31.529Z",
+      "node": "Proteus (Neptune)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Proteus (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a392caa5a35d155a48ce5b2",
+      "activation": "2026-06-22T12:38:02.819Z",
+      "expiry": "2026-06-22T14:21:07.038Z",
+      "node": "Stephano (Uranus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Stephano (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a391103a3f5c372bf8ce5b3",
+      "activation": "2026-06-22T11:20:03.353Z",
+      "expiry": "2026-06-22T12:50:03.353Z",
+      "node": "Luckless Expanse (Venus)",
       "missionType": "Survival",
       "missionTypeKey": "Survival",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Fenton's Field (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a391103a3f5c372bf8ce5b5",
-      "activation": "2026-06-22T11:20:03.356Z",
-      "expiry": "2026-06-22T12:50:03.356Z",
-      "node": "Brom Cluster (Neptune)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Brom Cluster (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
+      "nodeKey": "Luckless Expanse (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -486,21 +486,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a391103a3f5c372bf8ce5b3",
-      "activation": "2026-06-22T11:20:03.353Z",
-      "expiry": "2026-06-22T12:50:03.353Z",
-      "node": "Luckless Expanse (Venus)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Luckless Expanse (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a391103a3f5c372bf8ce5b4",
       "activation": "2026-06-22T11:20:03.355Z",
       "expiry": "2026-06-22T12:50:03.355Z",
@@ -512,6 +497,36 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Mordo Cluster (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a391103a3f5c372bf8ce5b5",
+      "activation": "2026-06-22T11:20:03.356Z",
+      "expiry": "2026-06-22T12:50:03.356Z",
+      "node": "Brom Cluster (Neptune)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Brom Cluster (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a391103a3f5c372bf8ce5b6",
+      "activation": "2026-06-22T11:20:03.358Z",
+      "expiry": "2026-06-22T12:50:03.358Z",
+      "node": "Fenton's Field (Pluto)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Fenton's Field (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -561,21 +576,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a391f134d24a725488ce5b6",
-      "activation": "2026-06-22T12:20:03.360Z",
-      "expiry": "2026-06-22T13:50:03.360Z",
-      "node": "Sambir Cloud (Veil)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sambir Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a391f134d24a725488ce5b5",
       "activation": "2026-06-22T12:20:03.358Z",
       "expiry": "2026-06-22T13:50:03.358Z",
@@ -585,6 +585,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Peregrine Axis (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a391f134d24a725488ce5b6",
+      "activation": "2026-06-22T12:20:03.360Z",
+      "expiry": "2026-06-22T13:50:03.360Z",
+      "node": "Sambir Cloud (Veil)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sambir Cloud (Veil)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -863,7 +878,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 11h 23m 58s",
+    "remaining": "6d 11h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1399,9 +1414,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -3318,
+      "count": -3344,
       "requiredRuns": 49000,
-      "completion": 46.614285714285714,
+      "completion": 46.587755102040816,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1485,9 +1500,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -883,
+      "count": -893,
       "requiredRuns": 48000,
-      "completion": 49.08020833333333,
+      "completion": 49.06979166666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1558,9 +1573,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -14918,
+      "count": -15005,
       "requiredRuns": 30000,
-      "completion": 50.273333333333326,
+      "completion": 49.983333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1594,9 +1609,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -110,
+      "count": -206,
       "requiredRuns": 38000,
-      "completion": 99.71052631578947,
+      "completion": 99.4578947368421,
       "completed": false,
       "rewardTypes": [
         "fieldron"
