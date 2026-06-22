@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-22T14:26:58Z",
+  "fetchedAt": "2026-06-22T14:31:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782138840000",
     "activation": "2026-06-22T13:44:00.000Z",
     "expiry": "2026-06-22T14:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782137160000",
-    "activation": "2026-06-22T14:06:00.000Z",
-    "expiry": "2026-06-22T14:26:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782138360000",
+    "activation": "2026-06-22T14:26:00.000Z",
+    "expiry": "2026-06-22T14:33:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782138840000",
     "activation": "2026-06-22T13:44:00.000Z",
     "expiry": "2026-06-22T14:34:00.000Z",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-22T14:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "7m 55s"
+    "timeLeft": "2m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782144000000",
@@ -346,36 +346,6 @@
       "isHard": false
     },
     {
-      "id": "6a392d22257ba767a58ce5b4",
-      "activation": "2026-06-22T13:20:03.356Z",
-      "expiry": "2026-06-22T14:50:03.356Z",
-      "node": "Nu-gua Mines (Neptune)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Nu-gua Mines (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a392d22257ba767a58ce5b5",
-      "activation": "2026-06-22T13:20:03.358Z",
-      "expiry": "2026-06-22T14:50:03.358Z",
-      "node": "Profit Margin (Pluto)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Profit Margin (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a392d22257ba767a58ce5b2",
       "activation": "2026-06-22T13:20:03.353Z",
       "expiry": "2026-06-22T14:50:03.353Z",
@@ -406,6 +376,21 @@
       "isHard": false
     },
     {
+      "id": "6a392d22257ba767a58ce5b5",
+      "activation": "2026-06-22T13:20:03.358Z",
+      "expiry": "2026-06-22T14:50:03.358Z",
+      "node": "Profit Margin (Pluto)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Profit Margin (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a392d22257ba767a58ce5b6",
       "activation": "2026-06-22T13:20:03.360Z",
       "expiry": "2026-06-22T14:50:03.360Z",
@@ -421,6 +406,21 @@
       "isHard": false
     },
     {
+      "id": "6a392d22257ba767a58ce5b4",
+      "activation": "2026-06-22T13:20:03.356Z",
+      "expiry": "2026-06-22T14:50:03.356Z",
+      "node": "Nu-gua Mines (Neptune)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Nu-gua Mines (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a393b33f643df02fb8ce5b3",
       "activation": "2026-06-22T14:20:03.355Z",
       "expiry": "2026-06-22T15:50:03.355Z",
@@ -432,51 +432,6 @@
       "nodeKey": "Mordo Cluster (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a393b33f643df02fb8ce5b4",
-      "activation": "2026-06-22T14:20:03.356Z",
-      "expiry": "2026-06-22T15:50:03.356Z",
-      "node": "Sovereign Grasp (Neptune)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sovereign Grasp (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a393b33f643df02fb8ce5b5",
-      "activation": "2026-06-22T14:20:03.358Z",
-      "expiry": "2026-06-22T15:50:03.358Z",
-      "node": "Fenton's Field (Pluto)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Fenton's Field (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a393b33f643df02fb8ce5b2",
-      "activation": "2026-06-22T14:20:03.353Z",
-      "expiry": "2026-06-22T15:50:03.353Z",
-      "node": "Luckless Expanse (Venus)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Luckless Expanse (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -505,6 +460,51 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Nsu Grid (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a393b33f643df02fb8ce5b2",
+      "activation": "2026-06-22T14:20:03.353Z",
+      "expiry": "2026-06-22T15:50:03.353Z",
+      "node": "Luckless Expanse (Venus)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Luckless Expanse (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a393b33f643df02fb8ce5b4",
+      "activation": "2026-06-22T14:20:03.356Z",
+      "expiry": "2026-06-22T15:50:03.356Z",
+      "node": "Sovereign Grasp (Neptune)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sovereign Grasp (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a393b33f643df02fb8ce5b5",
+      "activation": "2026-06-22T14:20:03.358Z",
+      "expiry": "2026-06-22T15:50:03.358Z",
+      "node": "Fenton's Field (Pluto)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Fenton's Field (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -768,7 +768,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 9h 33m 58s",
+    "remaining": "6d 9h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1304,9 +1304,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -4187,
+      "count": -4217,
       "requiredRuns": 49000,
-      "completion": 45.727551020408164,
+      "completion": 45.696938775510205,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1390,9 +1390,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -1818,
+      "count": -1816,
       "requiredRuns": 48000,
-      "completion": 48.10625,
+      "completion": 48.108333333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1463,9 +1463,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17267,
+      "count": -17370,
       "requiredRuns": 30000,
-      "completion": 42.443333333333335,
+      "completion": 42.1,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1499,9 +1499,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6449,
+      "count": -7240,
       "requiredRuns": 38000,
-      "completion": 83.02894736842106,
+      "completion": 80.94736842105263,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1535,9 +1535,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -766,
+      "count": -837,
       "requiredRuns": 33000,
-      "completion": 97.67878787878787,
+      "completion": 97.46363636363637,
       "completed": false,
       "rewardTypes": [
         "mutalist"
