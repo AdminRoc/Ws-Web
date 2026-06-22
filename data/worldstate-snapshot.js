@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T06:01:21Z",
+  "fetchedAt": "2026-06-22T06:06:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782108840000",
     "activation": "2026-06-22T04:34:00.000Z",
     "expiry": "2026-06-22T06:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782108840000",
     "activation": "2026-06-22T04:34:00.000Z",
     "expiry": "2026-06-22T06:14:00.000Z",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T07:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 2m 55s"
+    "timeLeft": "57m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782115200000",
@@ -351,21 +351,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38bca38f9721b22d8ce5b2",
-      "activation": "2026-06-22T05:20:03.351Z",
-      "expiry": "2026-06-22T06:50:03.351Z",
-      "node": "Ogal Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Ogal Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a38bca38f9721b22d8ce5b3",
       "activation": "2026-06-22T05:20:03.353Z",
       "expiry": "2026-06-22T06:50:03.353Z",
@@ -381,17 +366,17 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38bca38f9721b22d8ce5b4",
-      "activation": "2026-06-22T05:20:03.355Z",
-      "expiry": "2026-06-22T06:50:03.355Z",
-      "node": "Mordo Cluster (Saturn)",
+      "id": "6a38bca38f9721b22d8ce5b7",
+      "activation": "2026-06-22T05:20:03.360Z",
+      "expiry": "2026-06-22T06:50:03.360Z",
+      "node": "Nsu Grid (Veil)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Mordo Cluster (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
+      "nodeKey": "Nsu Grid (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -426,17 +411,32 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38bca38f9721b22d8ce5b7",
-      "activation": "2026-06-22T05:20:03.360Z",
-      "expiry": "2026-06-22T06:50:03.360Z",
-      "node": "Nsu Grid (Veil)",
+      "id": "6a38bca38f9721b22d8ce5b2",
+      "activation": "2026-06-22T05:20:03.351Z",
+      "expiry": "2026-06-22T06:50:03.351Z",
+      "node": "Ogal Cluster (Earth)",
       "missionType": "Skirmish",
       "missionTypeKey": "Skirmish",
       "enemy": "Grineer",
       "enemyKey": "Grineer",
-      "nodeKey": "Nsu Grid (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
+      "nodeKey": "Ogal Cluster (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a38bca38f9721b22d8ce5b4",
+      "activation": "2026-06-22T05:20:03.355Z",
+      "expiry": "2026-06-22T06:50:03.355Z",
+      "node": "Mordo Cluster (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Mordo Cluster (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": true,
       "isHard": false
     }
@@ -698,7 +698,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 17h 58m 58s",
+    "remaining": "6d 17h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1284,9 +1284,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1404,
+      "count": -1414,
       "requiredRuns": 49000,
-      "completion": 48.567346938775515,
+      "completion": 48.55714285714286,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1357,9 +1357,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -24657,
+      "count": -24769,
       "requiredRuns": 30000,
-      "completion": 17.810000000000002,
+      "completion": 17.436666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1429,9 +1429,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6898,
+      "count": -6995,
       "requiredRuns": 30000,
-      "completion": 77.00666666666666,
+      "completion": 76.68333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
