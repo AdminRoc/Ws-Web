@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T06:06:21Z",
+  "fetchedAt": "2026-06-22T06:11:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782108840000",
     "activation": "2026-06-22T04:34:00.000Z",
     "expiry": "2026-06-22T06:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782108000000",
-    "activation": "2026-06-22T06:00:00.000Z",
-    "expiry": "2026-06-22T06:06:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782108360000",
+    "activation": "2026-06-22T06:06:00.000Z",
+    "expiry": "2026-06-22T06:26:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782108840000",
     "activation": "2026-06-22T04:34:00.000Z",
     "expiry": "2026-06-22T06:14:00.000Z",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T07:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "57m 54s"
+    "timeLeft": "52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782115200000",
@@ -92,21 +92,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Taveuni (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a38be82cfc6e34db28ce5b1",
-      "activation": "2026-06-22T04:48:02.862Z",
-      "expiry": "2026-06-22T06:07:08.592Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
       "isStorm": false,
       "isHard": false
     },
@@ -347,6 +332,81 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Tiwaz (Void)",
       "tier": "Neo",
       "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38d1060e389a6a9d8ce5b1",
+      "activation": "2026-06-22T06:07:02.410Z",
+      "expiry": "2026-06-22T07:15:36.046Z",
+      "node": "Aten (Void)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Aten (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38d1ba681a61d6d28ce5b1",
+      "activation": "2026-06-22T06:10:02.333Z",
+      "expiry": "2026-06-22T07:24:12.324Z",
+      "node": "Everview Arc (Zariman)",
+      "missionType": "Void Flood",
+      "missionTypeKey": "Void Flood",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Everview Arc (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38d1ba681a61d6d28ce5b2",
+      "activation": "2026-06-22T06:10:02.333Z",
+      "expiry": "2026-06-22T07:51:58.507Z",
+      "node": "Yuvarium (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Yuvarium (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38d1ba681a61d6d28ce5b4",
+      "activation": "2026-06-22T06:10:02.333Z",
+      "expiry": "2026-06-22T07:38:22.384Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nabuk (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38d1ba681a61d6d28ce5b3",
+      "activation": "2026-06-22T06:10:02.333Z",
+      "expiry": "2026-06-22T07:33:06.993Z",
+      "node": "Koro (Kuva Fortress)",
+      "missionType": "Assault",
+      "missionTypeKey": "Assault",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Koro (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
       "isStorm": false,
       "isHard": false
     },
@@ -698,7 +758,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 17h 53m 58s",
+    "remaining": "6d 17h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1284,9 +1344,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1414,
+      "count": -1427,
       "requiredRuns": 49000,
-      "completion": 48.55714285714286,
+      "completion": 48.54387755102041,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1357,9 +1417,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -24769,
+      "count": -24855,
       "requiredRuns": 30000,
-      "completion": 17.436666666666667,
+      "completion": 17.15,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1429,9 +1489,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6995,
+      "count": -7084,
       "requiredRuns": 30000,
-      "completion": 76.68333333333334,
+      "completion": 76.38666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
