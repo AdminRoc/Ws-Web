@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T23:16:20Z",
+  "fetchedAt": "2026-06-22T23:21:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "28m 0s",
+    "timeLeft": "23m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782169200000",
-    "activation": "2026-06-22T23:00:00.000Z",
-    "expiry": "2026-06-22T23:20:08.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782170400000",
+    "activation": "2026-06-22T23:20:00.000Z",
+    "expiry": "2026-06-22T23:26:48.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
-    "timeLeft": "28m 0s",
+    "timeLeft": "23m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T00:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 17m 55s"
+    "timeLeft": "1h 12m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782172800000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a39aa4a1b2100b7d98ce5b2",
-      "activation": "2026-06-22T21:34:02.410Z",
-      "expiry": "2026-06-22T23:20:34.106Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a39af7294e0fe24fb8ce5b1",
       "activation": "2026-06-22T21:56:02.917Z",
@@ -379,6 +364,51 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 4,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a39c232b6fe0ea0708ce5b1",
+      "activation": "2026-06-22T23:16:02.533Z",
+      "expiry": "2026-06-23T00:59:20.069Z",
+      "node": "Everview Arc (Zariman)",
+      "missionType": "Void Flood",
+      "missionTypeKey": "Void Flood",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Everview Arc (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a39c232b6fe0ea0708ce5b2",
+      "activation": "2026-06-22T23:16:02.533Z",
+      "expiry": "2026-06-23T00:26:16.246Z",
+      "node": "Cambire (Deimos)",
+      "missionType": "Alchemy",
+      "missionTypeKey": "Alchemy",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Cambire (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a39c232b6fe0ea0708ce5b3",
+      "activation": "2026-06-22T23:16:02.533Z",
+      "expiry": "2026-06-23T00:41:29.576Z",
+      "node": "Yuvarium (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Yuvarium (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a39abb32f5603543d8ce5b3",
@@ -818,7 +848,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 43m 58s",
+    "remaining": "6d 38m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1354,9 +1384,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -8379,
+      "count": -8408,
       "requiredRuns": 49000,
-      "completion": 41.449999999999996,
+      "completion": 41.42040816326531,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1404,9 +1434,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -5906,
+      "count": -5952,
       "requiredRuns": 48000,
-      "completion": 43.84791666666666,
+      "completion": 43.8,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1441,9 +1471,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28078,
+      "count": -28188,
       "requiredRuns": 30000,
-      "completion": 6.406666666666672,
+      "completion": 6.040000000000001,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1549,9 +1579,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -10785,
+      "count": -10907,
       "requiredRuns": 30000,
-      "completion": 64.05000000000001,
+      "completion": 63.64333333333334,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -6216,7 +6246,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 235,
       "salePrice": 94,
       "total": 100,
-      "sold": 3,
+      "sold": 4,
       "discount": 60
     }
   ],
