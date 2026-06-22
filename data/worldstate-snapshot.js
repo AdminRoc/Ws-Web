@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T16:51:24Z",
+  "fetchedAt": "2026-06-22T16:56:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782147840000",
     "activation": "2026-06-22T16:14:00.000Z",
     "expiry": "2026-06-22T17:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782147840000",
     "activation": "2026-06-22T16:14:00.000Z",
     "expiry": "2026-06-22T17:04:00.000Z",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T17:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "12m 55s"
+    "timeLeft": "7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782151200000",
@@ -92,21 +92,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Minthe (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3954faa38e57a88c8ce5b1",
-      "activation": "2026-06-22T15:30:02.475Z",
-      "expiry": "2026-06-22T16:51:27.404Z",
-      "node": "Nereid (Neptune)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Nereid (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
       "isStorm": false,
       "isHard": true
     },
@@ -848,7 +833,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 7h 8m 58s",
+    "remaining": "6d 7h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1384,9 +1369,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -5377,
+      "count": -5420,
       "requiredRuns": 49000,
-      "completion": 44.51326530612245,
+      "completion": 44.46938775510204,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1470,9 +1455,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -2840,
+      "count": -2913,
       "requiredRuns": 48000,
-      "completion": 47.041666666666664,
+      "completion": 46.965625,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1507,9 +1492,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -20483,
+      "count": -20597,
       "requiredRuns": 30000,
-      "completion": 31.723333333333336,
+      "completion": 31.343333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1543,9 +1528,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29548,
+      "count": -30322,
       "requiredRuns": 38000,
-      "completion": 22.242105263157896,
+      "completion": 20.205263157894738,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1579,9 +1564,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5326,
+      "count": -6019,
       "requiredRuns": 33000,
-      "completion": 83.86060606060606,
+      "completion": 81.76060606060607,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1615,9 +1600,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -663,
+      "count": -819,
       "requiredRuns": 30000,
-      "completion": 97.78999999999999,
+      "completion": 97.27,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1651,9 +1636,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -33,
+      "count": -63,
       "requiredRuns": 45000,
-      "completion": 99.92666666666666,
+      "completion": 99.86,
       "completed": false,
       "rewardTypes": [
         "fieldron"
