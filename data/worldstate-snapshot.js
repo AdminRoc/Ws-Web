@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T21:41:21Z",
+  "fetchedAt": "2026-06-22T21:46:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782165840000",
     "activation": "2026-06-22T21:14:00.000Z",
     "expiry": "2026-06-22T22:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "23m 0s",
+    "timeLeft": "18m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782165840000",
     "activation": "2026-06-22T21:14:00.000Z",
     "expiry": "2026-06-22T22:04:00.000Z",
-    "timeLeft": "23m 0s",
+    "timeLeft": "18m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T22:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "22m 55s"
+    "timeLeft": "17m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782165600000",
@@ -126,21 +126,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a399b86c8e8a91ac88ce5b1",
-      "activation": "2026-06-22T20:31:02.741Z",
-      "expiry": "2026-06-22T21:42:27.558Z",
-      "node": "Kiliken (Venus)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Kiliken (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a399d66fb6781ff848ce5b1",
       "activation": "2026-06-22T20:39:02.471Z",
       "expiry": "2026-06-22T22:26:02.919Z",
@@ -180,21 +165,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Koro (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a399dde605fd1b8118ce5b2",
-      "activation": "2026-06-22T20:41:02.609Z",
-      "expiry": "2026-06-22T21:42:08.420Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -246,21 +216,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a39a21611bea263e48ce5b2",
-      "activation": "2026-06-22T20:59:02.533Z",
-      "expiry": "2026-06-22T22:44:06.077Z",
-      "node": "Tamu (Kuva Fortress)",
-      "missionType": "Disruption",
-      "missionTypeKey": "Disruption",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Tamu (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a39a21611bea263e48ce5b1",
       "activation": "2026-06-22T20:59:02.533Z",
       "expiry": "2026-06-22T22:54:58.608Z",
@@ -270,6 +225,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Pago (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39a21611bea263e48ce5b2",
+      "activation": "2026-06-22T20:59:02.533Z",
+      "expiry": "2026-06-22T22:44:06.077Z",
+      "node": "Tamu (Kuva Fortress)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Tamu (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -291,21 +261,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a39a2caa7c0fa99778ce5b1",
-      "activation": "2026-06-22T21:02:02.802Z",
-      "expiry": "2026-06-22T22:21:33.728Z",
-      "node": "Unda (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Unda (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a39a2caa7c0fa99778ce5b2",
       "activation": "2026-06-22T21:02:02.802Z",
       "expiry": "2026-06-22T23:00:17.885Z",
@@ -315,6 +270,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Olympus (Mars)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39a2caa7c0fa99778ce5b1",
+      "activation": "2026-06-22T21:02:02.802Z",
+      "expiry": "2026-06-22T22:21:33.728Z",
+      "node": "Unda (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Unda (Venus)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -381,21 +351,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a39aa4a1b2100b7d98ce5b2",
-      "activation": "2026-06-22T21:34:02.410Z",
-      "expiry": "2026-06-22T23:20:34.106Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a39aa4a1b2100b7d98ce5b1",
       "activation": "2026-06-22T21:34:02.410Z",
       "expiry": "2026-06-22T22:53:19.912Z",
@@ -405,6 +360,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Crossfire",
       "enemyKey": "Crossfire",
       "nodeKey": "Everview Arc (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a39aa4a1b2100b7d98ce5b2",
+      "activation": "2026-06-22T21:34:02.410Z",
+      "expiry": "2026-06-22T23:20:34.106Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -893,7 +863,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 2h 18m 58s",
+    "remaining": "6d 2h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1429,9 +1399,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -7664,
+      "count": -7710,
       "requiredRuns": 49000,
-      "completion": 42.179591836734694,
+      "completion": 42.13265306122449,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1515,9 +1485,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -5124,
+      "count": -5191,
       "requiredRuns": 48000,
-      "completion": 44.6625,
+      "completion": 44.592708333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1552,9 +1522,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -26201,
+      "count": -26303,
       "requiredRuns": 30000,
-      "completion": 12.663333333333338,
+      "completion": 12.32333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1660,9 +1630,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28872,
+      "count": -29804,
       "requiredRuns": 45000,
-      "completion": 35.84,
+      "completion": 33.768888888888895,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1696,9 +1666,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8507,
+      "count": -8632,
       "requiredRuns": 30000,
-      "completion": 71.64333333333333,
+      "completion": 71.22666666666666,
       "completed": false,
       "rewardTypes": [
         "mutagen"
