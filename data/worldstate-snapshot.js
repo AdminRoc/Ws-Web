@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T04:36:23Z",
+  "fetchedAt": "2026-06-22T04:41:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782108840000",
     "activation": "2026-06-22T04:34:00.000Z",
     "expiry": "2026-06-22T06:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782102000000",
-    "activation": "2026-06-22T04:20:00.000Z",
-    "expiry": "2026-06-22T04:40:08.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782103200000",
+    "activation": "2026-06-22T04:40:00.000Z",
+    "expiry": "2026-06-22T04:46:48.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782108840000",
     "activation": "2026-06-22T04:34:00.000Z",
     "expiry": "2026-06-22T06:14:00.000Z",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T07:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 27m 55s"
+    "timeLeft": "2h 22m 54s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782108000000",
@@ -66,21 +66,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a38a3ca984bdb886b8ce5b1",
-      "activation": "2026-06-22T02:54:02.451Z",
-      "expiry": "2026-06-22T04:38:03.576Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38a5332e3eeb34278ce5b1",
       "activation": "2026-06-22T03:00:03.089Z",
       "expiry": "2026-06-22T04:52:22.456Z",
@@ -105,21 +90,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "The Murmur",
       "enemyKey": "The Murmur",
       "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a38ab4a348a48fea68ce5b2",
-      "activation": "2026-06-22T03:26:02.444Z",
-      "expiry": "2026-06-22T04:39:34.144Z",
-      "node": "Circulus (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Circulus (Lua)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -893,7 +863,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 19h 23m 58s",
+    "remaining": "6d 19h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1479,9 +1449,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1076,
+      "count": -1087,
       "requiredRuns": 49000,
-      "completion": 48.90204081632653,
+      "completion": 48.89081632653061,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1552,9 +1522,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23048,
+      "count": -23129,
       "requiredRuns": 30000,
-      "completion": 23.173333333333336,
+      "completion": 22.903333333333332,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1624,9 +1594,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -5212,
+      "count": -5325,
       "requiredRuns": 30000,
-      "completion": 82.62666666666667,
+      "completion": 82.25,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -6255,7 +6225,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 175,
       "salePrice": 87,
       "total": 80,
-      "sold": 15,
+      "sold": 16,
       "discount": 50
     }
   ],
