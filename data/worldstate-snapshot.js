@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T14:36:23Z",
+  "fetchedAt": "2026-06-22T14:41:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782144840000",
     "activation": "2026-06-22T14:34:00.000Z",
     "expiry": "2026-06-22T16:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782144840000",
     "activation": "2026-06-22T14:34:00.000Z",
     "expiry": "2026-06-22T16:14:00.000Z",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T17:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 27m 55s"
+    "timeLeft": "2h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782144000000",
@@ -94,21 +94,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a39373666e684c9238ce5b1",
-      "activation": "2026-06-22T13:23:02.290Z",
-      "expiry": "2026-06-22T14:37:25.778Z",
-      "node": "Hellas (Mars)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Hellas (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a393c9a85486864088ce5b1",
@@ -349,6 +334,21 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 1,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a39488ec6d5a5a2f08ce5b1",
+      "activation": "2026-06-22T14:37:02.509Z",
+      "expiry": "2026-06-22T16:08:24.279Z",
+      "node": "Stephano (Uranus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Stephano (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a392d22257ba767a58ce5b1",
@@ -788,7 +788,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 9h 23m 58s",
+    "remaining": "6d 9h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1324,9 +1324,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -4243,
+      "count": -4268,
       "requiredRuns": 49000,
-      "completion": 45.67040816326531,
+      "completion": 45.64489795918367,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1410,9 +1410,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -1859,
+      "count": -1893,
       "requiredRuns": 48000,
-      "completion": 48.063541666666666,
+      "completion": 48.028125,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1483,9 +1483,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -17481,
+      "count": -17586,
       "requiredRuns": 30000,
-      "completion": 41.730000000000004,
+      "completion": 41.379999999999995,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1519,9 +1519,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8036,
+      "count": -8816,
       "requiredRuns": 38000,
-      "completion": 78.85263157894738,
+      "completion": 76.8,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1555,9 +1555,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -881,
+      "count": -925,
       "requiredRuns": 33000,
-      "completion": 97.33030303030303,
+      "completion": 97.19696969696969,
       "completed": false,
       "rewardTypes": [
         "mutalist"
