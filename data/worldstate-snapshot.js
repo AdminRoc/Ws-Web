@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T22:46:19Z",
+  "fetchedAt": "2026-06-22T22:51:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "58m 0s",
+    "timeLeft": "53m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
-    "timeLeft": "58m 0s",
+    "timeLeft": "53m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T00:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 47m 55s"
+    "timeLeft": "1h 42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782172800000",
@@ -332,6 +332,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Tuvul Commons (Zariman)",
       "tier": "Omnia",
       "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39bc1b1022f55ebe8ce5b1",
+      "activation": "2026-06-22T22:50:03.056Z",
+      "expiry": "2026-06-22T23:59:13.425Z",
+      "node": "Koro (Kuva Fortress)",
+      "missionType": "Assault",
+      "missionTypeKey": "Assault",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Koro (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
       "isStorm": false,
       "isHard": false
     },
@@ -773,7 +788,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 1h 13m 58s",
+    "remaining": "6d 1h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1309,48 +1324,12 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -8172,
+      "count": -8211,
       "requiredRuns": 49000,
-      "completion": 41.66122448979592,
+      "completion": 41.621428571428574,
       "completed": false,
       "rewardTypes": [
         "detonite",
-        "fieldron"
-      ]
-    },
-    {
-      "id": "6a37d1179bc337675d8ce5b1",
-      "activation": "2026-06-21T11:55:02.504Z",
-      "node": "Psamathe (Neptune)",
-      "nodeKey": "Psamathe (Neptune)",
-      "desc": "Phorid Manifestation",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Fieldron",
-              "key": "Fieldron"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -30093,
-      "requiredRuns": 30000,
-      "completion": -0.31000000000001027,
-      "completed": true,
-      "rewardTypes": [
         "fieldron"
       ]
     },
@@ -1395,9 +1374,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -5650,
+      "count": -5702,
       "requiredRuns": 48000,
-      "completion": 44.114583333333336,
+      "completion": 44.06041666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1432,9 +1411,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27523,
+      "count": -27613,
       "requiredRuns": 30000,
-      "completion": 8.256666666666668,
+      "completion": 7.956666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1513,42 +1492,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a39630bc13bb286c58ce5b1",
-      "activation": "2026-06-22T16:30:02.553Z",
-      "node": "Valefor (Europa)",
-      "nodeKey": "Valefor (Europa)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Fieldron",
-              "key": "Fieldron"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -41042,
-      "requiredRuns": 45000,
-      "completion": 8.795555555555556,
-      "completed": false,
-      "rewardTypes": [
-        "fieldron"
-      ]
-    },
-    {
       "id": "6a39630bc13bb286c58ce5b2",
       "activation": "2026-06-22T16:30:02.553Z",
       "node": "Naamah (Europa)",
@@ -1576,12 +1519,48 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -10057,
+      "count": -10159,
       "requiredRuns": 30000,
-      "completion": 66.47666666666667,
+      "completion": 66.13666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a39630bc13bb286c58ce5b1",
+      "activation": "2026-06-22T16:30:02.553Z",
+      "node": "Valefor (Europa)",
+      "nodeKey": "Valefor (Europa)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -41976,
+      "requiredRuns": 45000,
+      "completion": 6.720000000000004,
+      "completed": false,
+      "rewardTypes": [
+        "fieldron"
       ]
     }
   ],
