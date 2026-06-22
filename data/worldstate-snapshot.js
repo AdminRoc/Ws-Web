@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T02:36:21Z",
+  "fetchedAt": "2026-06-22T02:41:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 8m 0s",
+    "timeLeft": "1h 3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
-    "timeLeft": "1h 8m 0s",
+    "timeLeft": "1h 3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T04:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 57m 55s"
+    "timeLeft": "1h 52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782100800000",
@@ -81,21 +81,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a388c972a43e77c698ce5b2",
-      "activation": "2026-06-22T01:15:03.070Z",
-      "expiry": "2026-06-22T02:39:06.883Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38909261ff8eb17a8ce5b1",
       "activation": "2026-06-22T01:32:02.941Z",
       "expiry": "2026-06-22T03:01:51.135Z",
@@ -126,21 +111,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3892ae1d14d637648ce5b2",
-      "activation": "2026-06-22T01:41:02.331Z",
-      "expiry": "2026-06-22T02:58:08.013Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3892ae1d14d637648ce5b1",
       "activation": "2026-06-22T01:41:02.331Z",
       "expiry": "2026-06-22T02:56:57.100Z",
@@ -150,6 +120,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Tamu (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3892ae1d14d637648ce5b2",
+      "activation": "2026-06-22T01:41:02.331Z",
+      "expiry": "2026-06-22T02:58:08.013Z",
+      "node": "Rotuma (Kuva Fortress)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Rotuma (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -276,21 +261,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a389a6a02dd93d61f8ce5b1",
-      "activation": "2026-06-22T02:14:02.633Z",
-      "expiry": "2026-06-22T03:25:23.520Z",
-      "node": "Carpo (Jupiter)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Carpo (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a389a6a02dd93d61f8ce5b2",
       "activation": "2026-06-22T02:14:02.633Z",
       "expiry": "2026-06-22T03:54:22.068Z",
@@ -300,6 +270,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Helene (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a389a6a02dd93d61f8ce5b1",
+      "activation": "2026-06-22T02:14:02.633Z",
+      "expiry": "2026-06-22T03:25:23.520Z",
+      "node": "Carpo (Jupiter)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Carpo (Jupiter)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -351,21 +336,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a389dee263bc2cc848ce5b1",
-      "activation": "2026-06-22T02:29:02.412Z",
-      "expiry": "2026-06-22T04:17:03.934Z",
-      "node": "Aphrodite (Venus)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Aphrodite (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a389dee263bc2cc848ce5b2",
       "activation": "2026-06-22T02:29:02.412Z",
       "expiry": "2026-06-22T03:49:50.555Z",
@@ -375,6 +345,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Cambria (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a389dee263bc2cc848ce5b1",
+      "activation": "2026-06-22T02:29:02.412Z",
+      "expiry": "2026-06-22T04:17:03.934Z",
+      "node": "Aphrodite (Venus)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Aphrodite (Venus)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -833,7 +818,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 21h 23m 58s",
+    "remaining": "6d 21h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1419,9 +1404,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -737,
+      "count": -744,
       "requiredRuns": 49000,
-      "completion": 49.247959183673466,
+      "completion": 49.24081632653061,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1528,9 +1513,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -20659,
+      "count": -20760,
       "requiredRuns": 30000,
-      "completion": 31.136666666666667,
+      "completion": 30.800000000000004,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1564,9 +1549,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -28406,
+      "count": -29305,
       "requiredRuns": 43000,
-      "completion": 33.93953488372093,
+      "completion": 31.848837209302328,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1600,9 +1585,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -2931,
+      "count": -3020,
       "requiredRuns": 30000,
-      "completion": 90.23,
+      "completion": 89.93333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
