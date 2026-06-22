@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-22T03:26:22Z",
+  "fetchedAt": "2026-06-22T03:31:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "18m 0s",
+    "timeLeft": "13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782098400000",
-    "activation": "2026-06-22T03:20:00.000Z",
-    "expiry": "2026-06-22T03:26:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782098760000",
+    "activation": "2026-06-22T03:26:00.000Z",
+    "expiry": "2026-06-22T03:46:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
-    "timeLeft": "18m 0s",
+    "timeLeft": "13m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-22T04:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 7m 55s"
+    "timeLeft": "1h 2m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782100800000",
@@ -72,21 +72,6 @@
       "nodeKey": "Umbriel (Uranus)",
       "tier": "Neo",
       "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a389902f25cfc4d258ce5b1",
-      "activation": "2026-06-22T02:08:02.427Z",
-      "expiry": "2026-06-22T03:30:15.590Z",
-      "node": "Everview Arc (Zariman)",
-      "missionType": "Void Flood",
-      "missionTypeKey": "Void Flood",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Everview Arc (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
       "isStorm": false,
       "isHard": true
     },
@@ -181,21 +166,6 @@
       "isHard": true
     },
     {
-      "id": "6a389dee263bc2cc848ce5b1",
-      "activation": "2026-06-22T02:29:02.412Z",
-      "expiry": "2026-06-22T04:17:03.934Z",
-      "node": "Aphrodite (Venus)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Aphrodite (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a389dee263bc2cc848ce5b2",
       "activation": "2026-06-22T02:29:02.412Z",
       "expiry": "2026-06-22T03:49:50.555Z",
@@ -205,6 +175,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Cambria (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a389dee263bc2cc848ce5b1",
+      "activation": "2026-06-22T02:29:02.412Z",
+      "expiry": "2026-06-22T04:17:03.934Z",
+      "node": "Aphrodite (Venus)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Aphrodite (Venus)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -357,6 +342,36 @@
       "nodeKey": "Calypso (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38ab4a348a48fea68ce5b1",
+      "activation": "2026-06-22T03:26:02.444Z",
+      "expiry": "2026-06-22T05:09:43.225Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38ab4a348a48fea68ce5b2",
+      "activation": "2026-06-22T03:26:02.444Z",
+      "expiry": "2026-06-22T04:39:34.144Z",
+      "node": "Circulus (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
       "isStorm": false,
       "isHard": true
     },
@@ -798,7 +813,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 20h 33m 58s",
+    "remaining": "6d 20h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1384,9 +1399,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -835,
+      "count": -831,
       "requiredRuns": 49000,
-      "completion": 49.147959183673464,
+      "completion": 49.15204081632653,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1430,42 +1445,6 @@
       ]
     },
     {
-      "id": "6a37b74f9895ded84b8ce5b1",
-      "activation": "2026-06-21T10:05:02.430Z",
-      "node": "Despina (Neptune)",
-      "nodeKey": "Despina (Neptune)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -37279,
-      "requiredRuns": 37000,
-      "completion": -0.754054054054043,
-      "completed": true,
-      "rewardTypes": [
-        "mutagen"
-      ]
-    },
-    {
       "id": "6a37d1179bc337675d8ce5b1",
       "activation": "2026-06-21T11:55:02.504Z",
       "node": "Psamathe (Neptune)",
@@ -1493,9 +1472,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21702,
+      "count": -21783,
       "requiredRuns": 30000,
-      "completion": 27.659999999999997,
+      "completion": 27.390000000000004,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1529,9 +1508,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -37265,
+      "count": -38143,
       "requiredRuns": 43000,
-      "completion": 13.337209302325581,
+      "completion": 11.295348837209307,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1565,9 +1544,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -3842,
+      "count": -3935,
       "requiredRuns": 30000,
-      "completion": 87.19333333333333,
+      "completion": 86.88333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
