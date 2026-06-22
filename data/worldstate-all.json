@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-22T22:41:21Z",
+  "fetchedAt": "2026-06-22T22:46:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 3m 0s",
+    "timeLeft": "58m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
-    "timeLeft": "1h 3m 0s",
+    "timeLeft": "58m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-23T00:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 52m 55s"
+    "timeLeft": "1h 47m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782172800000",
@@ -61,21 +61,6 @@
   },
   "fissures": [
     {
-      "id": "6a39a19e9af272f5a28ce5b1",
-      "activation": "2026-06-22T20:57:02.889Z",
-      "expiry": "2026-06-22T22:43:29.956Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a39a21611bea263e48ce5b1",
       "activation": "2026-06-22T20:59:02.533Z",
       "expiry": "2026-06-22T22:54:58.608Z",
@@ -85,21 +70,6 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Pago (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a39a21611bea263e48ce5b2",
-      "activation": "2026-06-22T20:59:02.533Z",
-      "expiry": "2026-06-22T22:44:06.077Z",
-      "node": "Tamu (Kuva Fortress)",
-      "missionType": "Disruption",
-      "missionTypeKey": "Disruption",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Tamu (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -121,21 +91,6 @@
       "isHard": false
     },
     {
-      "id": "6a39a64f34e1644f678ce5b1",
-      "activation": "2026-06-22T21:17:03.239Z",
-      "expiry": "2026-06-22T22:41:03.948Z",
-      "node": "Teshub (Void)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Teshub (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a39a64f34e1644f678ce5b2",
       "activation": "2026-06-22T21:17:03.239Z",
       "expiry": "2026-06-22T23:11:01.266Z",
@@ -151,21 +106,6 @@
       "isHard": false
     },
     {
-      "id": "6a39aa4a1b2100b7d98ce5b1",
-      "activation": "2026-06-22T21:34:02.410Z",
-      "expiry": "2026-06-22T22:53:19.912Z",
-      "node": "Everview Arc (Zariman)",
-      "missionType": "Void Flood",
-      "missionTypeKey": "Void Flood",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Everview Arc (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a39aa4a1b2100b7d98ce5b2",
       "activation": "2026-06-22T21:34:02.410Z",
       "expiry": "2026-06-22T23:20:34.106Z",
@@ -175,6 +115,21 @@
       "enemy": "The Murmur",
       "enemyKey": "The Murmur",
       "nodeKey": "Persto (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a39aa4a1b2100b7d98ce5b1",
+      "activation": "2026-06-22T21:34:02.410Z",
+      "expiry": "2026-06-22T22:53:19.912Z",
+      "node": "Everview Arc (Zariman)",
+      "missionType": "Void Flood",
+      "missionTypeKey": "Void Flood",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Everview Arc (Zariman)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -813,7 +768,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 1h 18m 58s",
+    "remaining": "6d 1h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1349,9 +1304,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -8138,
+      "count": -8172,
       "requiredRuns": 49000,
-      "completion": 41.69591836734694,
+      "completion": 41.66122448979592,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1435,9 +1390,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -5598,
+      "count": -5650,
       "requiredRuns": 48000,
-      "completion": 44.16875,
+      "completion": 44.114583333333336,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1472,9 +1427,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27430,
+      "count": -27523,
       "requiredRuns": 30000,
-      "completion": 8.566666666666666,
+      "completion": 8.256666666666668,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1553,42 +1508,6 @@
       ]
     },
     {
-      "id": "6a39630bc13bb286c58ce5b2",
-      "activation": "2026-06-22T16:30:02.553Z",
-      "node": "Naamah (Europa)",
-      "nodeKey": "Naamah (Europa)",
-      "desc": "Phorid Manifestation",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -9958,
-      "requiredRuns": 30000,
-      "completion": 66.80666666666666,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
-      ]
-    },
-    {
       "id": "6a39630bc13bb286c58ce5b1",
       "activation": "2026-06-22T16:30:02.553Z",
       "node": "Valefor (Europa)",
@@ -1616,12 +1535,48 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -40114,
+      "count": -41042,
       "requiredRuns": 45000,
-      "completion": 10.857777777777777,
+      "completion": 8.795555555555556,
       "completed": false,
       "rewardTypes": [
         "fieldron"
+      ]
+    },
+    {
+      "id": "6a39630bc13bb286c58ce5b2",
+      "activation": "2026-06-22T16:30:02.553Z",
+      "node": "Naamah (Europa)",
+      "nodeKey": "Naamah (Europa)",
+      "desc": "Phorid Manifestation",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 2,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -10057,
+      "requiredRuns": 30000,
+      "completion": 66.47666666666667,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
       ]
     }
   ],
