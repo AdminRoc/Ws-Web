@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T20:06:25Z",
+  "fetchedAt": "2026-06-22T20:11:23Z",
   "cetusCycle": {
     "id": "cetusCycle1782162840000",
     "activation": "2026-06-22T19:34:00.000Z",
     "expiry": "2026-06-22T21:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 8m 0s",
+    "timeLeft": "1h 3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782162840000",
     "activation": "2026-06-22T19:34:00.000Z",
     "expiry": "2026-06-22T21:14:00.000Z",
-    "timeLeft": "1h 8m 0s",
+    "timeLeft": "1h 3m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T22:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 57m 55s"
+    "timeLeft": "1h 52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782165600000",
@@ -96,21 +96,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3980ceaa995423bf8ce5b1",
-      "activation": "2026-06-22T18:37:02.522Z",
-      "expiry": "2026-06-22T20:06:21.606Z",
-      "node": "Skyresh (Phobos)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Skyresh (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3980ceaa995423bf8ce5b3",
       "activation": "2026-06-22T18:37:02.522Z",
       "expiry": "2026-06-22T20:35:58.254Z",
@@ -139,21 +124,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a3985ba0dd24a29d38ce5b1",
-      "activation": "2026-06-22T18:58:02.701Z",
-      "expiry": "2026-06-22T20:09:29.751Z",
-      "node": "Neso (Neptune)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Neso (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a3985ba0dd24a29d38ce5b2",
@@ -381,21 +351,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3994ba3c2bb1f4b98ce5b2",
-      "activation": "2026-06-22T20:02:02.875Z",
-      "expiry": "2026-06-22T22:01:29.263Z",
-      "node": "Monolith (Phobos)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Monolith (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3994ba3c2bb1f4b98ce5b1",
       "activation": "2026-06-22T20:02:02.875Z",
       "expiry": "2026-06-22T21:14:58.375Z",
@@ -405,6 +360,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Helene (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3994ba3c2bb1f4b98ce5b2",
+      "activation": "2026-06-22T20:02:02.875Z",
+      "expiry": "2026-06-22T22:01:29.263Z",
+      "node": "Monolith (Phobos)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Monolith (Phobos)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -758,7 +728,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 3h 53m 58s",
+    "remaining": "6d 3h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1294,9 +1264,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -6882,
+      "count": -6903,
       "requiredRuns": 49000,
-      "completion": 42.977551020408164,
+      "completion": 42.95612244897959,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1380,9 +1350,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -4368,
+      "count": -4385,
       "requiredRuns": 48000,
-      "completion": 45.45,
+      "completion": 45.43229166666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1417,9 +1387,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -24362,
+      "count": -24455,
       "requiredRuns": 30000,
-      "completion": 18.79333333333333,
+      "completion": 18.48333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1489,48 +1459,12 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -32884,
+      "count": -33578,
       "requiredRuns": 33000,
-      "completion": 0.3515151515151471,
+      "completion": -1.7515151515151484,
       "completed": false,
       "rewardTypes": [
         "mutalist"
-      ]
-    },
-    {
-      "id": "6a39630bc13bb286c58ce5b1",
-      "activation": "2026-06-22T16:30:02.553Z",
-      "node": "Valefor (Europa)",
-      "nodeKey": "Valefor (Europa)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Fieldron",
-              "key": "Fieldron"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -11147,
-      "requiredRuns": 45000,
-      "completion": 75.22888888888889,
-      "completed": false,
-      "rewardTypes": [
-        "fieldron"
       ]
     },
     {
@@ -1561,12 +1495,48 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -6016,
+      "count": -6130,
       "requiredRuns": 30000,
-      "completion": 79.94666666666667,
+      "completion": 79.56666666666666,
       "completed": false,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a39630bc13bb286c58ce5b1",
+      "activation": "2026-06-22T16:30:02.553Z",
+      "node": "Valefor (Europa)",
+      "nodeKey": "Valefor (Europa)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -12094,
+      "requiredRuns": 45000,
+      "completion": 73.12444444444444,
+      "completed": false,
+      "rewardTypes": [
+        "fieldron"
       ]
     }
   ],
