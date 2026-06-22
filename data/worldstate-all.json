@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-22T10:36:22Z",
+  "fetchedAt": "2026-06-22T10:41:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782126840000",
     "activation": "2026-06-22T09:34:00.000Z",
     "expiry": "2026-06-22T11:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "38m 1s",
+    "timeLeft": "32m 59s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782126840000",
     "activation": "2026-06-22T09:34:00.000Z",
     "expiry": "2026-06-22T11:14:00.000Z",
-    "timeLeft": "38m 1s",
+    "timeLeft": "32m 59s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-22T12:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 27m 55s"
+    "timeLeft": "1h 22m 53s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782129600000",
@@ -61,21 +61,6 @@
   },
   "fissures": [
     {
-      "id": "6a38f686302d1c577e8ce5b3",
-      "activation": "2026-06-22T08:47:02.456Z",
-      "expiry": "2026-06-22T10:38:36.269Z",
-      "node": "Isos (Eris)",
-      "missionType": "Capture",
-      "missionTypeKey": "Capture",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Isos (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a38f6ff4edcbd8a518ce5b1",
       "activation": "2026-06-22T08:49:03.039Z",
       "expiry": "2026-06-22T10:48:52.139Z",
@@ -106,19 +91,19 @@
       "isHard": true
     },
     {
-      "id": "6a38f86616a4af9cac8ce5b2",
-      "activation": "2026-06-22T08:55:02.884Z",
-      "expiry": "2026-06-22T10:40:01.851Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
+      "id": "6a38f9cf10e15580768ce5b1",
+      "activation": "2026-06-22T09:01:03.019Z",
+      "expiry": "2026-06-22T10:57:19.598Z",
+      "node": "Hydron (Sedna)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Hydron (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": false,
-      "isHard": false
+      "isHard": true
     },
     {
       "id": "6a38f9cf10e15580768ce5b2",
@@ -130,21 +115,6 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Narcissus (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a38f9cf10e15580768ce5b1",
-      "activation": "2026-06-22T09:01:03.019Z",
-      "expiry": "2026-06-22T10:57:19.598Z",
-      "node": "Hydron (Sedna)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Hydron (Sedna)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -256,21 +226,6 @@
       "isHard": false
     },
     {
-      "id": "6a3909826befaefa8b8ce5b2",
-      "activation": "2026-06-22T10:08:02.286Z",
-      "expiry": "2026-06-22T12:04:12.071Z",
-      "node": "Vallis (Mars)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Vallis (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3909826befaefa8b8ce5b1",
       "activation": "2026-06-22T10:08:02.286Z",
       "expiry": "2026-06-22T11:27:53.825Z",
@@ -280,6 +235,21 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "E Gate (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3909826befaefa8b8ce5b2",
+      "activation": "2026-06-22T10:08:02.286Z",
+      "expiry": "2026-06-22T12:04:12.071Z",
+      "node": "Vallis (Mars)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Vallis (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -357,6 +327,21 @@
       "nodeKey": "Yuvarium (Lua)",
       "tier": "Omnia",
       "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39104ec41d89ffa68ce5b1",
+      "activation": "2026-06-22T10:37:02.324Z",
+      "expiry": "2026-06-22T12:35:10.621Z",
+      "node": "Pago (Kuva Fortress)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Pago (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
       "isStorm": false,
       "isHard": false
     },
@@ -798,7 +783,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 13h 23m 58s",
+    "remaining": "6d 13h 18m 56s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1334,9 +1319,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -2525,
+      "count": -2568,
       "requiredRuns": 49000,
-      "completion": 47.423469387755105,
+      "completion": 47.37959183673469,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1371,9 +1356,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29865,
+      "count": -29957,
       "requiredRuns": 30000,
-      "completion": 0.44999999999999485,
+      "completion": 0.14333333333332865,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1420,9 +1405,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -400,
+      "count": -419,
       "requiredRuns": 48000,
-      "completion": 49.583333333333336,
+      "completion": 49.563541666666666,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1493,9 +1478,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -12317,
+      "count": -12420,
       "requiredRuns": 30000,
-      "completion": 58.94333333333333,
+      "completion": 58.60000000000001,
       "completed": false,
       "rewardTypes": [
         "fieldron"
