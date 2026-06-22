@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T13:06:23Z",
+  "fetchedAt": "2026-06-22T13:11:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782135840000",
     "activation": "2026-06-22T12:04:00.000Z",
     "expiry": "2026-06-22T13:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "38m 1s",
+    "timeLeft": "33m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782132360000",
-    "activation": "2026-06-22T12:46:00.000Z",
-    "expiry": "2026-06-22T13:06:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782133560000",
+    "activation": "2026-06-22T13:06:00.000Z",
+    "expiry": "2026-06-22T13:13:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782135840000",
     "activation": "2026-06-22T12:04:00.000Z",
     "expiry": "2026-06-22T13:44:00.000Z",
-    "timeLeft": "38m 1s",
+    "timeLeft": "33m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T14:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 27m 55s"
+    "timeLeft": "1h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782136800000",
@@ -396,6 +396,21 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
+      "id": "6a3933eecab49a59638ce5b1",
+      "activation": "2026-06-22T13:09:02.515Z",
+      "expiry": "2026-06-22T14:41:53.590Z",
+      "node": "Despina (Neptune)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Despina (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
       "id": "6a391f134d24a725488ce5b3",
       "activation": "2026-06-22T12:20:03.355Z",
       "expiry": "2026-06-22T13:50:03.355Z",
@@ -441,21 +456,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a391f134d24a725488ce5b6",
-      "activation": "2026-06-22T12:20:03.360Z",
-      "expiry": "2026-06-22T13:50:03.360Z",
-      "node": "Sambir Cloud (Veil)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sambir Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a391f134d24a725488ce5b5",
       "activation": "2026-06-22T12:20:03.358Z",
       "expiry": "2026-06-22T13:50:03.358Z",
@@ -465,6 +465,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Peregrine Axis (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a391f134d24a725488ce5b6",
+      "activation": "2026-06-22T12:20:03.360Z",
+      "expiry": "2026-06-22T13:50:03.360Z",
+      "node": "Sambir Cloud (Veil)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sambir Cloud (Veil)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -743,7 +758,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 10h 53m 58s",
+    "remaining": "6d 10h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1279,9 +1294,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -3556,
+      "count": -3597,
       "requiredRuns": 49000,
-      "completion": 46.371428571428574,
+      "completion": 46.32959183673469,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1365,9 +1380,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -950,
+      "count": -1028,
       "requiredRuns": 48000,
-      "completion": 49.010416666666664,
+      "completion": 48.92916666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1438,9 +1453,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -15552,
+      "count": -15659,
       "requiredRuns": 30000,
-      "completion": 48.160000000000004,
+      "completion": 47.80333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1474,9 +1489,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -561,
+      "count": -614,
       "requiredRuns": 38000,
-      "completion": 98.52368421052631,
+      "completion": 98.38421052631578,
       "completed": false,
       "rewardTypes": [
         "fieldron"
