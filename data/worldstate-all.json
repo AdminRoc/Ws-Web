@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-22T10:06:21Z",
+  "fetchedAt": "2026-06-22T10:11:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782126840000",
     "activation": "2026-06-22T09:34:00.000Z",
     "expiry": "2026-06-22T11:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 8m 1s",
+    "timeLeft": "1h 3m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782122400000",
-    "activation": "2026-06-22T10:00:00.000Z",
-    "expiry": "2026-06-22T10:06:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782122760000",
+    "activation": "2026-06-22T10:06:00.000Z",
+    "expiry": "2026-06-22T10:26:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782126840000",
     "activation": "2026-06-22T09:34:00.000Z",
     "expiry": "2026-06-22T11:14:00.000Z",
-    "timeLeft": "1h 8m 1s",
+    "timeLeft": "1h 3m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-22T12:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 57m 55s"
+    "timeLeft": "1h 52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782129600000",
@@ -331,47 +331,47 @@
       "isHard": false
     },
     {
-      "id": "6a38f4e2d036df4ed48ce5b5",
-      "activation": "2026-06-22T09:20:03.358Z",
-      "expiry": "2026-06-22T10:50:03.358Z",
-      "node": "Peregrine Axis (Pluto)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Peregrine Axis (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a38f4e2d036df4ed48ce5b2",
-      "activation": "2026-06-22T09:20:03.353Z",
-      "expiry": "2026-06-22T10:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
+      "id": "6a3909826befaefa8b8ce5b2",
+      "activation": "2026-06-22T10:08:02.286Z",
+      "expiry": "2026-06-22T12:04:12.071Z",
+      "node": "Vallis (Mars)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Vallis (Mars)",
       "tier": "Lith",
       "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
+      "isStorm": false,
+      "isHard": true
     },
     {
-      "id": "6a38f4e2d036df4ed48ce5b4",
-      "activation": "2026-06-22T09:20:03.356Z",
-      "expiry": "2026-06-22T10:50:03.356Z",
-      "node": "Nu-gua Mines (Neptune)",
+      "id": "6a3909826befaefa8b8ce5b1",
+      "activation": "2026-06-22T10:08:02.286Z",
+      "expiry": "2026-06-22T11:27:53.825Z",
+      "node": "E Gate (Venus)",
       "missionType": "Extermination",
       "missionTypeKey": "Extermination",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Nu-gua Mines (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
+      "nodeKey": "E Gate (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38f4e2d036df4ed48ce5b1",
+      "activation": "2026-06-22T09:20:03.351Z",
+      "expiry": "2026-06-22T10:50:03.351Z",
+      "node": "Korm's Belt (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Korm's Belt (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -391,6 +391,36 @@
       "isHard": false
     },
     {
+      "id": "6a38f4e2d036df4ed48ce5b4",
+      "activation": "2026-06-22T09:20:03.356Z",
+      "expiry": "2026-06-22T10:50:03.356Z",
+      "node": "Nu-gua Mines (Neptune)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Nu-gua Mines (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a38f4e2d036df4ed48ce5b2",
+      "activation": "2026-06-22T09:20:03.353Z",
+      "expiry": "2026-06-22T10:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Orvin-Haarc (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a38f4e2d036df4ed48ce5b6",
       "activation": "2026-06-22T09:20:03.360Z",
       "expiry": "2026-06-22T10:50:03.360Z",
@@ -406,17 +436,17 @@
       "isHard": false
     },
     {
-      "id": "6a38f4e2d036df4ed48ce5b1",
-      "activation": "2026-06-22T09:20:03.351Z",
-      "expiry": "2026-06-22T10:50:03.351Z",
-      "node": "Korm's Belt (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Korm's Belt (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
+      "id": "6a38f4e2d036df4ed48ce5b5",
+      "activation": "2026-06-22T09:20:03.358Z",
+      "expiry": "2026-06-22T10:50:03.358Z",
+      "node": "Peregrine Axis (Pluto)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Peregrine Axis (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     }
@@ -678,7 +708,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 13h 53m 58s",
+    "remaining": "6d 13h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1174,56 +1204,6 @@
   },
   "invasions": [
     {
-      "id": "6a3779336fd11891438ce5b2",
-      "activation": "2026-06-21T05:55:43.384Z",
-      "node": "Cypress (Pluto)",
-      "nodeKey": "Cypress (Pluto)",
-      "desc": "Grineer Offensive",
-      "attacker": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Strun Wraith Blueprint",
-              "key": "Strun Wraith Blueprint"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/furax-wraith.png",
-          "color": 6052435
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Snipetron Vandal Barrel",
-              "key": "Snipetron Vandal Barrel"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/dera-vandal.png",
-          "color": 6052435
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": false,
-      "count": 33053,
-      "requiredRuns": 33000,
-      "completion": 100.08030303030301,
-      "completed": true,
-      "rewardTypes": [
-        "wraith",
-        "vandal"
-      ]
-    },
-    {
       "id": "6a38613bce14f448a48ce5b2",
       "activation": "2026-06-21T22:26:55.052Z",
       "node": "Narcissus (Pluto)",
@@ -1264,9 +1244,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -2360,
+      "count": -2385,
       "requiredRuns": 49000,
-      "completion": 47.59183673469388,
+      "completion": 47.566326530612244,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1301,9 +1281,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29286,
+      "count": -29381,
       "requiredRuns": 30000,
-      "completion": 2.3800000000000043,
+      "completion": 2.063333333333328,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1350,9 +1330,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -248,
+      "count": -231,
       "requiredRuns": 48000,
-      "completion": 49.74166666666667,
+      "completion": 49.759375,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1423,9 +1403,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -11725,
+      "count": -11819,
       "requiredRuns": 30000,
-      "completion": 60.916666666666664,
+      "completion": 60.60333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
