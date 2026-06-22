@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T03:06:22Z",
+  "fetchedAt": "2026-06-22T03:11:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T04:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 27m 55s"
+    "timeLeft": "1h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782100800000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a38909261ff8eb17a8ce5b2",
-      "activation": "2026-06-22T01:32:02.941Z",
-      "expiry": "2026-06-22T03:09:21.659Z",
-      "node": "Stephano (Uranus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Stephano (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a38975e692d14204c8ce5b1",
       "activation": "2026-06-22T02:01:02.919Z",
@@ -171,21 +156,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a389a6a02dd93d61f8ce5b2",
-      "activation": "2026-06-22T02:14:02.633Z",
-      "expiry": "2026-06-22T03:54:22.068Z",
-      "node": "Helene (Saturn)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Helene (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a389a6a02dd93d61f8ce5b1",
       "activation": "2026-06-22T02:14:02.633Z",
       "expiry": "2026-06-22T03:25:23.520Z",
@@ -195,6 +165,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Carpo (Jupiter)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a389a6a02dd93d61f8ce5b2",
+      "activation": "2026-06-22T02:14:02.633Z",
+      "expiry": "2026-06-22T03:54:22.068Z",
+      "node": "Helene (Saturn)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Helene (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -246,21 +231,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a389dee263bc2cc848ce5b2",
-      "activation": "2026-06-22T02:29:02.412Z",
-      "expiry": "2026-06-22T03:49:50.555Z",
-      "node": "Cambria (Earth)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cambria (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a389dee263bc2cc848ce5b1",
       "activation": "2026-06-22T02:29:02.412Z",
       "expiry": "2026-06-22T04:17:03.934Z",
@@ -270,6 +240,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Aphrodite (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a389dee263bc2cc848ce5b2",
+      "activation": "2026-06-22T02:29:02.412Z",
+      "expiry": "2026-06-22T03:49:50.555Z",
+      "node": "Cambria (Earth)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Cambria (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -728,7 +713,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 20h 53m 58s",
+    "remaining": "6d 20h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1314,9 +1299,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -826,
+      "count": -832,
       "requiredRuns": 49000,
-      "completion": 49.15714285714286,
+      "completion": 49.15102040816326,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1423,9 +1408,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21292,
+      "count": -21406,
       "requiredRuns": 30000,
-      "completion": 29.026666666666667,
+      "completion": 28.646666666666665,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1459,9 +1444,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -33721,
+      "count": -34622,
       "requiredRuns": 43000,
-      "completion": 21.57906976744186,
+      "completion": 19.48372093023256,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1495,9 +1480,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -3469,
+      "count": -3570,
       "requiredRuns": 30000,
-      "completion": 88.43666666666667,
+      "completion": 88.1,
       "completed": false,
       "rewardTypes": [
         "fieldron"
