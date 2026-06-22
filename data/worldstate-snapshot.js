@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T03:31:19Z",
+  "fetchedAt": "2026-06-22T03:36:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T04:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 2m 55s"
+    "timeLeft": "57m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782100800000",
@@ -171,21 +171,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a389dee263bc2cc848ce5b2",
-      "activation": "2026-06-22T02:29:02.412Z",
-      "expiry": "2026-06-22T03:49:50.555Z",
-      "node": "Cambria (Earth)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cambria (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a389dee263bc2cc848ce5b1",
       "activation": "2026-06-22T02:29:02.412Z",
       "expiry": "2026-06-22T04:17:03.934Z",
@@ -195,6 +180,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Aphrodite (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a389dee263bc2cc848ce5b2",
+      "activation": "2026-06-22T02:29:02.412Z",
+      "expiry": "2026-06-22T03:49:50.555Z",
+      "node": "Cambria (Earth)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Cambria (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -351,21 +351,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a38ab4a348a48fea68ce5b1",
-      "activation": "2026-06-22T03:26:02.444Z",
-      "expiry": "2026-06-22T05:09:43.225Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a38ab4a348a48fea68ce5b2",
       "activation": "2026-06-22T03:26:02.444Z",
       "expiry": "2026-06-22T04:39:34.144Z",
@@ -375,6 +360,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a38ab4a348a48fea68ce5b1",
+      "activation": "2026-06-22T03:26:02.444Z",
+      "expiry": "2026-06-22T05:09:43.225Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -818,7 +818,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 20h 28m 58s",
+    "remaining": "6d 20h 23m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1404,9 +1404,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -831,
+      "count": -833,
       "requiredRuns": 49000,
-      "completion": 49.15204081632653,
+      "completion": 49.15,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1477,9 +1477,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21783,
+      "count": -21869,
       "requiredRuns": 30000,
-      "completion": 27.390000000000004,
+      "completion": 27.103333333333335,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1513,9 +1513,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -38143,
+      "count": -39031,
       "requiredRuns": 43000,
-      "completion": 11.295348837209307,
+      "completion": 9.230232558139539,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1549,9 +1549,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -3935,
+      "count": -4031,
       "requiredRuns": 30000,
-      "completion": 86.88333333333334,
+      "completion": 86.56333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
