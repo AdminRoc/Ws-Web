@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-22T15:51:21Z",
+  "fetchedAt": "2026-06-22T15:56:29Z",
   "cetusCycle": {
     "id": "cetusCycle1782144840000",
     "activation": "2026-06-22T14:34:00.000Z",
     "expiry": "2026-06-22T16:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "23m 0s",
+    "timeLeft": "18m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782143160000",
-    "activation": "2026-06-22T15:46:00.000Z",
-    "expiry": "2026-06-22T15:53:28.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782143580000",
+    "activation": "2026-06-22T15:53:00.000Z",
+    "expiry": "2026-06-22T16:13:28.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782144840000",
     "activation": "2026-06-22T14:34:00.000Z",
     "expiry": "2026-06-22T16:14:00.000Z",
-    "timeLeft": "23m 0s",
+    "timeLeft": "18m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-22T17:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 12m 55s"
+    "timeLeft": "1h 7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782144000000",
@@ -316,6 +316,81 @@
       "isHard": true
     },
     {
+      "id": "6a395ad72e5baeb16e8ce5b2",
+      "activation": "2026-06-22T15:55:03.047Z",
+      "expiry": "2026-06-22T17:52:25.552Z",
+      "node": "Koro (Kuva Fortress)",
+      "missionType": "Assault",
+      "missionTypeKey": "Assault",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Koro (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a395ad72e5baeb16e8ce5b1",
+      "activation": "2026-06-22T15:55:03.047Z",
+      "expiry": "2026-06-22T17:47:28.978Z",
+      "node": "Dakata (Kuva Fortress)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Dakata (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a395ad72e5baeb16e8ce5b4",
+      "activation": "2026-06-22T15:55:03.047Z",
+      "expiry": "2026-06-22T17:50:27.393Z",
+      "node": "Roche (Phobos)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Roche (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a395ad72e5baeb16e8ce5b3",
+      "activation": "2026-06-22T15:55:03.047Z",
+      "expiry": "2026-06-22T17:11:03.194Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nabuk (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a395ad72e5baeb16e8ce5b5",
+      "activation": "2026-06-22T15:55:03.047Z",
+      "expiry": "2026-06-22T17:52:30.758Z",
+      "node": "Thon (Ceres)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Thon (Ceres)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
       "id": "6a393b33f643df02fb8ce5b3",
       "activation": "2026-06-22T14:20:03.355Z",
       "expiry": "2026-06-22T15:50:03.355Z",
@@ -327,51 +402,6 @@
       "nodeKey": "Mordo Cluster (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a393b33f643df02fb8ce5b4",
-      "activation": "2026-06-22T14:20:03.356Z",
-      "expiry": "2026-06-22T15:50:03.356Z",
-      "node": "Sovereign Grasp (Neptune)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sovereign Grasp (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a393b33f643df02fb8ce5b5",
-      "activation": "2026-06-22T14:20:03.358Z",
-      "expiry": "2026-06-22T15:50:03.358Z",
-      "node": "Fenton's Field (Pluto)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Fenton's Field (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a393b33f643df02fb8ce5b2",
-      "activation": "2026-06-22T14:20:03.353Z",
-      "expiry": "2026-06-22T15:50:03.353Z",
-      "node": "Luckless Expanse (Venus)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Luckless Expanse (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
       "isStorm": true,
       "isHard": false
     },
@@ -406,6 +436,81 @@
       "isHard": false
     },
     {
+      "id": "6a393b33f643df02fb8ce5b2",
+      "activation": "2026-06-22T14:20:03.353Z",
+      "expiry": "2026-06-22T15:50:03.353Z",
+      "node": "Luckless Expanse (Venus)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Luckless Expanse (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a393b33f643df02fb8ce5b4",
+      "activation": "2026-06-22T14:20:03.356Z",
+      "expiry": "2026-06-22T15:50:03.356Z",
+      "node": "Sovereign Grasp (Neptune)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sovereign Grasp (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a393b33f643df02fb8ce5b5",
+      "activation": "2026-06-22T14:20:03.358Z",
+      "expiry": "2026-06-22T15:50:03.358Z",
+      "node": "Fenton's Field (Pluto)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Fenton's Field (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a394942c9f81eb9b08ce5b4",
+      "activation": "2026-06-22T15:20:03.356Z",
+      "expiry": "2026-06-22T16:50:03.356Z",
+      "node": "Enkidu Ice Drifts (Neptune)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Enkidu Ice Drifts (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a394942c9f81eb9b08ce5b2",
+      "activation": "2026-06-22T15:20:03.353Z",
+      "expiry": "2026-06-22T16:50:03.353Z",
+      "node": "Bifrost Echo (Venus)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Bifrost Echo (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a394942c9f81eb9b08ce5b5",
       "activation": "2026-06-22T15:20:03.358Z",
       "expiry": "2026-06-22T16:50:03.358Z",
@@ -415,6 +520,21 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Peregrine Axis (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a394942c9f81eb9b08ce5b6",
+      "activation": "2026-06-22T15:20:03.360Z",
+      "expiry": "2026-06-22T16:50:03.360Z",
+      "node": "Sambir Cloud (Veil)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sambir Cloud (Veil)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -447,51 +567,6 @@
       "nodeKey": "Vand Cluster (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a394942c9f81eb9b08ce5b2",
-      "activation": "2026-06-22T15:20:03.353Z",
-      "expiry": "2026-06-22T16:50:03.353Z",
-      "node": "Bifrost Echo (Venus)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Bifrost Echo (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a394942c9f81eb9b08ce5b4",
-      "activation": "2026-06-22T15:20:03.356Z",
-      "expiry": "2026-06-22T16:50:03.356Z",
-      "node": "Enkidu Ice Drifts (Neptune)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Enkidu Ice Drifts (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a394942c9f81eb9b08ce5b6",
-      "activation": "2026-06-22T15:20:03.360Z",
-      "expiry": "2026-06-22T16:50:03.360Z",
-      "node": "Sambir Cloud (Veil)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sambir Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     }
@@ -753,7 +828,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 8h 8m 58s",
+    "remaining": "6d 8h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1289,9 +1364,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -4825,
+      "count": -4855,
       "requiredRuns": 49000,
-      "completion": 45.076530612244895,
+      "completion": 45.045918367346935,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1375,9 +1450,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -2398,
+      "count": -2470,
       "requiredRuns": 48000,
-      "completion": 47.50208333333333,
+      "completion": 47.42708333333333,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1448,9 +1523,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -19172,
+      "count": -19280,
       "requiredRuns": 30000,
-      "completion": 36.093333333333334,
+      "completion": 35.73333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1484,9 +1559,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -19983,
+      "count": -20757,
       "requiredRuns": 38000,
-      "completion": 47.41315789473685,
+      "completion": 45.376315789473686,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1520,9 +1595,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1845,
+      "count": -1891,
       "requiredRuns": 33000,
-      "completion": 94.4090909090909,
+      "completion": 94.26969696969697,
       "completed": false,
       "rewardTypes": [
         "mutalist"
