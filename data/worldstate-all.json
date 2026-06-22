@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-22T16:01:22Z",
+  "fetchedAt": "2026-06-22T16:06:28Z",
   "cetusCycle": {
     "id": "cetusCycle1782144840000",
     "activation": "2026-06-22T14:34:00.000Z",
     "expiry": "2026-06-22T16:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "13m 1s",
+    "timeLeft": "8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782144840000",
     "activation": "2026-06-22T14:34:00.000Z",
     "expiry": "2026-06-22T16:14:00.000Z",
-    "timeLeft": "13m 1s",
+    "timeLeft": "8m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-22T17:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 2m 55s"
+    "timeLeft": "57m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782151200000",
@@ -256,21 +256,6 @@
       "isHard": true
     },
     {
-      "id": "6a395ad72e5baeb16e8ce5b2",
-      "activation": "2026-06-22T15:55:03.047Z",
-      "expiry": "2026-06-22T17:52:25.552Z",
-      "node": "Koro (Kuva Fortress)",
-      "missionType": "Assault",
-      "missionTypeKey": "Assault",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Koro (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a395ad72e5baeb16e8ce5b1",
       "activation": "2026-06-22T15:55:03.047Z",
       "expiry": "2026-06-22T17:47:28.978Z",
@@ -280,6 +265,36 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Dakata (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a395ad72e5baeb16e8ce5b3",
+      "activation": "2026-06-22T15:55:03.047Z",
+      "expiry": "2026-06-22T17:11:03.194Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nabuk (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a395ad72e5baeb16e8ce5b2",
+      "activation": "2026-06-22T15:55:03.047Z",
+      "expiry": "2026-06-22T17:52:25.552Z",
+      "node": "Koro (Kuva Fortress)",
+      "missionType": "Assault",
+      "missionTypeKey": "Assault",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Koro (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -297,21 +312,6 @@
       "nodeKey": "Roche (Phobos)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a395ad72e5baeb16e8ce5b3",
-      "activation": "2026-06-22T15:55:03.047Z",
-      "expiry": "2026-06-22T17:11:03.194Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
       "isStorm": false,
       "isHard": true
     },
@@ -361,6 +361,96 @@
       "isHard": true
     },
     {
+      "id": "6a395cf22448d82d6b8ce5b2",
+      "activation": "2026-06-22T16:04:02.466Z",
+      "expiry": "2026-06-22T17:25:54.220Z",
+      "node": "Umbriel (Uranus)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Umbriel (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a395cf22448d82d6b8ce5b1",
+      "activation": "2026-06-22T16:04:02.466Z",
+      "expiry": "2026-06-22T17:21:24.540Z",
+      "node": "Abaddon (Europa)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Abaddon (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a395d2effeb3250e48ce5b1",
+      "activation": "2026-06-22T16:05:02.842Z",
+      "expiry": "2026-06-22T17:48:50.590Z",
+      "node": "Kiliken (Venus)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Kiliken (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a395d2effeb3250e48ce5b2",
+      "activation": "2026-06-22T16:05:02.842Z",
+      "expiry": "2026-06-22T17:55:34.262Z",
+      "node": "Vallis (Mars)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Vallis (Mars)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a394942c9f81eb9b08ce5b4",
+      "activation": "2026-06-22T15:20:03.356Z",
+      "expiry": "2026-06-22T16:50:03.356Z",
+      "node": "Enkidu Ice Drifts (Neptune)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Enkidu Ice Drifts (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a394942c9f81eb9b08ce5b2",
+      "activation": "2026-06-22T15:20:03.353Z",
+      "expiry": "2026-06-22T16:50:03.353Z",
+      "node": "Bifrost Echo (Venus)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Bifrost Echo (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a394942c9f81eb9b08ce5b5",
       "activation": "2026-06-22T15:20:03.358Z",
       "expiry": "2026-06-22T16:50:03.358Z",
@@ -370,6 +460,21 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Peregrine Axis (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a394942c9f81eb9b08ce5b6",
+      "activation": "2026-06-22T15:20:03.360Z",
+      "expiry": "2026-06-22T16:50:03.360Z",
+      "node": "Sambir Cloud (Veil)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sambir Cloud (Veil)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -402,51 +507,6 @@
       "nodeKey": "Vand Cluster (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a394942c9f81eb9b08ce5b2",
-      "activation": "2026-06-22T15:20:03.353Z",
-      "expiry": "2026-06-22T16:50:03.353Z",
-      "node": "Bifrost Echo (Venus)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Bifrost Echo (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a394942c9f81eb9b08ce5b4",
-      "activation": "2026-06-22T15:20:03.356Z",
-      "expiry": "2026-06-22T16:50:03.356Z",
-      "node": "Enkidu Ice Drifts (Neptune)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Enkidu Ice Drifts (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a394942c9f81eb9b08ce5b6",
-      "activation": "2026-06-22T15:20:03.360Z",
-      "expiry": "2026-06-22T16:50:03.360Z",
-      "node": "Sambir Cloud (Veil)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sambir Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     }
@@ -708,7 +768,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 7h 58m 58s",
+    "remaining": "6d 7h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1244,9 +1304,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -4894,
+      "count": -4940,
       "requiredRuns": 49000,
-      "completion": 45.00612244897959,
+      "completion": 44.95918367346939,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1330,49 +1390,13 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -2522,
+      "count": -2573,
       "requiredRuns": 48000,
-      "completion": 47.37291666666666,
+      "completion": 47.31979166666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
         "other"
-      ]
-    },
-    {
-      "id": "6a3855828471887fce8ce5b1",
-      "activation": "2026-06-21T22:49:42.313Z",
-      "node": "Io (Jupiter)",
-      "nodeKey": "Io (Jupiter)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Fieldron",
-              "key": "Fieldron"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -43482,
-      "requiredRuns": 43000,
-      "completion": -1.1209302325581483,
-      "completed": true,
-      "rewardTypes": [
-        "fieldron"
       ]
     },
     {
@@ -1403,9 +1427,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -19384,
+      "count": -19498,
       "requiredRuns": 30000,
-      "completion": 35.38666666666666,
+      "completion": 35.00666666666666,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1439,9 +1463,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21537,
+      "count": -22344,
       "requiredRuns": 38000,
-      "completion": 43.32368421052632,
+      "completion": 41.2,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1475,9 +1499,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1927,
+      "count": -2015,
       "requiredRuns": 33000,
-      "completion": 94.16060606060606,
+      "completion": 93.89393939393939,
       "completed": false,
       "rewardTypes": [
         "mutalist"
