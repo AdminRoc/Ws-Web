@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T07:46:20Z",
+  "fetchedAt": "2026-06-22T07:51:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782117840000",
     "activation": "2026-06-22T07:04:00.000Z",
     "expiry": "2026-06-22T08:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "58m 0s",
+    "timeLeft": "52m 58s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782113160000",
-    "activation": "2026-06-22T07:26:00.000Z",
-    "expiry": "2026-06-22T07:46:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782114360000",
+    "activation": "2026-06-22T07:46:00.000Z",
+    "expiry": "2026-06-22T07:53:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782117840000",
     "activation": "2026-06-22T07:04:00.000Z",
     "expiry": "2026-06-22T08:44:00.000Z",
-    "timeLeft": "58m 0s",
+    "timeLeft": "52m 58s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T09:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 47m 54s"
+    "timeLeft": "1h 42m 53s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782115200000",
@@ -422,6 +422,36 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Rotuma (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38e877f826f434138ce5b1",
+      "activation": "2026-06-22T07:47:03.148Z",
+      "expiry": "2026-06-22T08:59:17.801Z",
+      "node": "Tuvul Commons (Zariman)",
+      "missionType": "Void Cascade",
+      "missionTypeKey": "Void Cascade",
+      "enemy": "Crossfire",
+      "enemyKey": "Crossfire",
+      "nodeKey": "Tuvul Commons (Zariman)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a38e877f826f434138ce5b2",
+      "activation": "2026-06-22T07:47:03.148Z",
+      "expiry": "2026-06-22T08:54:22.483Z",
+      "node": "Cambire (Deimos)",
+      "missionType": "Alchemy",
+      "missionTypeKey": "Alchemy",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Cambire (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
       "isStorm": false,
       "isHard": false
     },
@@ -863,7 +893,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 16h 13m 58s",
+    "remaining": "6d 16h 8m 57s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1449,9 +1479,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1725,
+      "count": -1749,
       "requiredRuns": 49000,
-      "completion": 48.23979591836734,
+      "completion": 48.21530612244898,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1522,9 +1552,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -26647,
+      "count": -26725,
       "requiredRuns": 30000,
-      "completion": 11.176666666666668,
+      "completion": 10.916666666666664,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1594,9 +1624,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -8921,
+      "count": -9016,
       "requiredRuns": 30000,
-      "completion": 70.26333333333334,
+      "completion": 69.94666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
