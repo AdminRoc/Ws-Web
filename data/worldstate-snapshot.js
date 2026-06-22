@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T14:06:23Z",
+  "fetchedAt": "2026-06-22T14:11:23Z",
   "cetusCycle": {
     "id": "cetusCycle1782138840000",
     "activation": "2026-06-22T13:44:00.000Z",
     "expiry": "2026-06-22T14:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "28m 1s",
+    "timeLeft": "23m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782136800000",
-    "activation": "2026-06-22T14:00:00.000Z",
-    "expiry": "2026-06-22T14:06:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782137160000",
+    "activation": "2026-06-22T14:06:00.000Z",
+    "expiry": "2026-06-22T14:26:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782138840000",
     "activation": "2026-06-22T13:44:00.000Z",
     "expiry": "2026-06-22T14:34:00.000Z",
-    "timeLeft": "28m 1s",
+    "timeLeft": "23m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T14:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "27m 55s"
+    "timeLeft": "22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782144000000",
@@ -65,66 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a3926ce0dad94bf348ce5b1",
-      "activation": "2026-06-22T12:13:02.742Z",
-      "expiry": "2026-06-22T14:08:39.836Z",
-      "node": "Dakata (Kuva Fortress)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Dakata (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3926ce0dad94bf348ce5b3",
-      "activation": "2026-06-22T12:13:02.742Z",
-      "expiry": "2026-06-22T14:07:12.240Z",
-      "node": "Monolith (Phobos)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Monolith (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a392782f09249f5138ce5b5",
-      "activation": "2026-06-22T12:16:02.840Z",
-      "expiry": "2026-06-22T14:10:32.875Z",
-      "node": "Pallas (Ceres)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pallas (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a392a52d9c952787c8ce5b1",
-      "activation": "2026-06-22T12:28:02.526Z",
-      "expiry": "2026-06-22T14:09:27.747Z",
-      "node": "Regna (Pluto)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Regna (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a392caa5a35d155a48ce5b1",
       "activation": "2026-06-22T12:38:02.819Z",
@@ -411,6 +351,21 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
+      "id": "6a39414b6b8b907dc68ce5b1",
+      "activation": "2026-06-22T14:06:03.130Z",
+      "expiry": "2026-06-22T15:37:51.978Z",
+      "node": "Numa (Saturn)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Numa (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
       "id": "6a392d22257ba767a58ce5b1",
       "activation": "2026-06-22T13:20:03.351Z",
       "expiry": "2026-06-22T14:50:03.351Z",
@@ -422,6 +377,36 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Korm's Belt (Earth)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a392d22257ba767a58ce5b4",
+      "activation": "2026-06-22T13:20:03.356Z",
+      "expiry": "2026-06-22T14:50:03.356Z",
+      "node": "Nu-gua Mines (Neptune)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Nu-gua Mines (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a392d22257ba767a58ce5b5",
+      "activation": "2026-06-22T13:20:03.358Z",
+      "expiry": "2026-06-22T14:50:03.358Z",
+      "node": "Profit Margin (Pluto)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Profit Margin (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -456,21 +441,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a392d22257ba767a58ce5b5",
-      "activation": "2026-06-22T13:20:03.358Z",
-      "expiry": "2026-06-22T14:50:03.358Z",
-      "node": "Profit Margin (Pluto)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Profit Margin (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a392d22257ba767a58ce5b6",
       "activation": "2026-06-22T13:20:03.360Z",
       "expiry": "2026-06-22T14:50:03.360Z",
@@ -482,21 +452,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Flexa (Veil)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a392d22257ba767a58ce5b4",
-      "activation": "2026-06-22T13:20:03.356Z",
-      "expiry": "2026-06-22T14:50:03.356Z",
-      "node": "Nu-gua Mines (Neptune)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Nu-gua Mines (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
       "isStorm": true,
       "isHard": false
     }
@@ -758,7 +713,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 9h 53m 58s",
+    "remaining": "6d 9h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1294,9 +1249,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -4047,
+      "count": -4084,
       "requiredRuns": 49000,
-      "completion": 45.87040816326531,
+      "completion": 45.83265306122449,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1380,9 +1335,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -1596,
+      "count": -1671,
       "requiredRuns": 48000,
-      "completion": 48.3375,
+      "completion": 48.259375,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1453,9 +1408,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -16853,
+      "count": -16964,
       "requiredRuns": 30000,
-      "completion": 43.82333333333334,
+      "completion": 43.45333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1489,9 +1444,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -3264,
+      "count": -4059,
       "requiredRuns": 38000,
-      "completion": 91.41052631578947,
+      "completion": 89.31842105263158,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1525,9 +1480,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -317,
+      "count": -447,
       "requiredRuns": 33000,
-      "completion": 99.03939393939393,
+      "completion": 98.64545454545454,
       "completed": false,
       "rewardTypes": [
         "mutalist"
