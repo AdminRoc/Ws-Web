@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T03:21:23Z",
+  "fetchedAt": "2026-06-22T03:26:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "23m 0s",
+    "timeLeft": "18m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782099840000",
     "activation": "2026-06-22T02:04:00.000Z",
     "expiry": "2026-06-22T03:44:00.000Z",
-    "timeLeft": "23m 0s",
+    "timeLeft": "18m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T04:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 12m 55s"
+    "timeLeft": "1h 7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782100800000",
@@ -66,21 +66,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a38975e692d14204c8ce5b1",
-      "activation": "2026-06-22T02:01:02.919Z",
-      "expiry": "2026-06-22T03:22:03.802Z",
-      "node": "Saxis (Eris)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Saxis (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3898c7d260f81e398ce5b1",
       "activation": "2026-06-22T02:07:03.210Z",
       "expiry": "2026-06-22T03:54:56.979Z",
@@ -111,21 +96,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a389902f25cfc4d258ce5b2",
-      "activation": "2026-06-22T02:08:02.427Z",
-      "expiry": "2026-06-22T03:24:24.249Z",
-      "node": "Io (Jupiter)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Io (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a38997bdeb3f2566a8ce5b1",
       "activation": "2026-06-22T02:10:03.112Z",
       "expiry": "2026-06-22T03:39:28.301Z",
@@ -152,21 +122,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Belenus (Void)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a389a6a02dd93d61f8ce5b1",
-      "activation": "2026-06-22T02:14:02.633Z",
-      "expiry": "2026-06-22T03:25:23.520Z",
-      "node": "Carpo (Jupiter)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Carpo (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
       "isStorm": false,
       "isHard": false
     },
@@ -848,7 +803,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 20h 38m 58s",
+    "remaining": "6d 20h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1543,9 +1498,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -21614,
+      "count": -21702,
       "requiredRuns": 30000,
-      "completion": 27.95333333333333,
+      "completion": 27.659999999999997,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1579,9 +1534,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -36386,
+      "count": -37265,
       "requiredRuns": 43000,
-      "completion": 15.381395348837213,
+      "completion": 13.337209302325581,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1615,9 +1570,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -3748,
+      "count": -3842,
       "requiredRuns": 30000,
-      "completion": 87.50666666666666,
+      "completion": 87.19333333333333,
       "completed": false,
       "rewardTypes": [
         "fieldron"
