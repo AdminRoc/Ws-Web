@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T22:21:19Z",
+  "fetchedAt": "2026-06-22T22:26:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 23m 0s",
+    "timeLeft": "1h 18m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
-    "timeLeft": "1h 23m 0s",
+    "timeLeft": "1h 18m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T00:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 12m 55s"
+    "timeLeft": "2h 7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782172800000",
@@ -156,36 +156,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a39a21611bea263e48ce5b3",
-      "activation": "2026-06-22T20:59:02.533Z",
-      "expiry": "2026-06-22T22:23:51.320Z",
-      "node": "Taveuni (Kuva Fortress)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Taveuni (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a39a2caa7c0fa99778ce5b1",
-      "activation": "2026-06-22T21:02:02.802Z",
-      "expiry": "2026-06-22T22:21:33.728Z",
-      "node": "Unda (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Unda (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a39a2caa7c0fa99778ce5b2",
       "activation": "2026-06-22T21:02:02.802Z",
       "expiry": "2026-06-22T23:00:17.885Z",
@@ -214,21 +184,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 1,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a39a522bbad0f00b38ce5b1",
-      "activation": "2026-06-22T21:12:02.595Z",
-      "expiry": "2026-06-22T22:24:10.274Z",
-      "node": "Sharpless (Phobos)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sharpless (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a39a64f34e1644f678ce5b1",
@@ -424,6 +379,36 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 2,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a39b54f2a8cf18c758ce5b1",
+      "activation": "2026-06-22T22:21:03.069Z",
+      "expiry": "2026-06-22T23:47:08.962Z",
+      "node": "Morax (Europa)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Morax (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39b54f2a8cf18c758ce5b2",
+      "activation": "2026-06-22T22:21:03.069Z",
+      "expiry": "2026-06-22T23:32:34.747Z",
+      "node": "Laomedeia (Neptune)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Laomedeia (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a399da3f2ff6034db8ce5b5",
@@ -863,7 +848,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 1h 38m 58s",
+    "remaining": "6d 1h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1399,9 +1384,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -8003,
+      "count": -8027,
       "requiredRuns": 49000,
-      "completion": 41.833673469387755,
+      "completion": 41.809183673469384,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1485,9 +1470,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -5468,
+      "count": -5503,
       "requiredRuns": 48000,
-      "completion": 44.30416666666667,
+      "completion": 44.26770833333333,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1522,9 +1507,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27033,
+      "count": -27139,
       "requiredRuns": 30000,
-      "completion": 9.889999999999999,
+      "completion": 9.53666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1630,9 +1615,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9515,
+      "count": -9623,
       "requiredRuns": 30000,
-      "completion": 68.28333333333335,
+      "completion": 67.92333333333333,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1666,9 +1651,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -36355,
+      "count": -37293,
       "requiredRuns": 45000,
-      "completion": 19.211111111111112,
+      "completion": 17.12666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
