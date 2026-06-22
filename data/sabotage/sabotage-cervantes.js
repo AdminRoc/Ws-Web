@@ -24,9 +24,21 @@
 var sabotage_cervantesRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "1:31.433",
-    uploadTime: "2025-10-30",
-    videoUrls:  ["https://www.youtube.com/watch?v=MWdMEwD918g"],
+    clearTime:  "1:30.667",
+    uploadTime: "2026-06-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=u6l1wBAb9O8"],
+  },
+  {
+    playerId:   "Endryx_Ow",
+    clearTime:  "1:32.417",
+    uploadTime: "2024-11-17",
+    videoUrls:  ["https://www.youtube.com/watch?v=d1udXSzmMOk"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "1:34.100",
+    uploadTime: "2021-04-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=dVye1XEkt-U"],
   },
 ];
 

@@ -25,9 +25,9 @@ var exterminate_steel_e_primeRecords = [
 
   {
     playerId:   "FrostMainer",
-    clearTime:  "0:23.000",
-    uploadTime: "2026-05-24",
-    videoUrls:  ["https://www.youtube.com/watch?v=pcm1OH4gEEw"],
+    clearTime:  "0:22.000",
+    uploadTime: "2026-06-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=NOkiDQ-CIOY"],
   },
   {
     playerId:   "NamelessDeity",

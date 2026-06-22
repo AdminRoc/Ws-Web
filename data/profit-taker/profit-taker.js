@@ -265,13 +265,12 @@ var profitTakerRecords = [
     uploadTime: "2026-06-03",
     videoUrls:     ["https://www.youtube.com/watch?v=clTmtE3HKpk"]
   },
-  // ─── 在此处继续添加新条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "01:20.400",
+    playerId:   "psAGATHOS",
+    uploadTime: "2026-06-14",
+    videoUrls:     ["https://www.youtube.com/watch?v=q0OezvFJSac"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

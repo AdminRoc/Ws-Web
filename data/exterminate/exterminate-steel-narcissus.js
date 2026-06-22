@@ -24,9 +24,9 @@
 var exterminate_steel_narcissusRecords = [
   {
     playerId:   "FrostMainer",
-    clearTime:  "0:32.000",
-    uploadTime: "2026-05-20",
-    videoUrls:  ["https://www.youtube.com/watch?v=xe-1uAyS3bk"],
+    clearTime:  "0:28.000",
+    uploadTime: "2026-06-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=BePwkbOkTBo"],
   },
   {
     playerId:   "NamelessDeity",
