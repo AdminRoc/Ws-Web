@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T22:11:19Z",
+  "fetchedAt": "2026-06-22T22:16:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 33m 50s",
+    "timeLeft": "1h 28m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
-    "timeLeft": "1h 33m 50s",
+    "timeLeft": "1h 28m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T00:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 23m 45s"
+    "timeLeft": "2h 17m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782172800000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a3998028c2afb121d8ce5b1",
-      "activation": "2026-06-22T20:16:02.958Z",
-      "expiry": "2026-06-22T22:09:27.976Z",
-      "node": "Larissa (Neptune)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Larissa (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a399d66fb6781ff848ce5b1",
       "activation": "2026-06-22T20:39:02.471Z",
@@ -499,6 +484,96 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": true,
       "isHard": false
+    },
+    {
+      "id": "6a39abb32f5603543d8ce5b3",
+      "activation": "2026-06-22T22:20:03.355Z",
+      "expiry": "2026-06-22T23:50:03.355Z",
+      "node": "Lupal Pass (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Lupal Pass (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a39abb32f5603543d8ce5b1",
+      "activation": "2026-06-22T22:20:03.351Z",
+      "expiry": "2026-06-22T23:50:03.351Z",
+      "node": "Ogal Cluster (Earth)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Ogal Cluster (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a39abb32f5603543d8ce5b5",
+      "activation": "2026-06-22T22:20:03.358Z",
+      "expiry": "2026-06-22T23:50:03.358Z",
+      "node": "Fenton's Field (Pluto)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Fenton's Field (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a39abb32f5603543d8ce5b2",
+      "activation": "2026-06-22T22:20:03.353Z",
+      "expiry": "2026-06-22T23:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Orvin-Haarc (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a39abb32f5603543d8ce5b6",
+      "activation": "2026-06-22T22:20:03.360Z",
+      "expiry": "2026-06-22T23:50:03.360Z",
+      "node": "Numina (Veil)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Numina (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a39abb32f5603543d8ce5b4",
+      "activation": "2026-06-22T22:20:03.356Z",
+      "expiry": "2026-06-22T23:50:03.356Z",
+      "node": "Sovereign Grasp (Neptune)",
+      "missionType": "Volatile",
+      "missionTypeKey": "Volatile",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Sovereign Grasp (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
     }
   ],
   "alerts": [
@@ -758,7 +833,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 1h 49m 48s",
+    "remaining": "6d 1h 43m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1294,9 +1369,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -7886,
+      "count": -7970,
       "requiredRuns": 49000,
-      "completion": 41.953061224489794,
+      "completion": 41.867346938775505,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1380,9 +1455,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -5361,
+      "count": -5440,
       "requiredRuns": 48000,
-      "completion": 44.415625000000006,
+      "completion": 44.333333333333336,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1417,9 +1492,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -26770,
+      "count": -26924,
       "requiredRuns": 30000,
-      "completion": 10.76666666666667,
+      "completion": 10.253333333333337,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1525,9 +1600,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -9192,
+      "count": -9400,
       "requiredRuns": 30000,
-      "completion": 69.36,
+      "completion": 68.66666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1561,9 +1636,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -33591,
+      "count": -35435,
       "requiredRuns": 45000,
-      "completion": 25.35333333333334,
+      "completion": 21.25555555555556,
       "completed": false,
       "rewardTypes": [
         "fieldron"
