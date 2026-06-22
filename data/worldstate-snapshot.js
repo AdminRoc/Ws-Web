@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T23:06:21Z",
+  "fetchedAt": "2026-06-22T23:11:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782171840000",
     "activation": "2026-06-22T22:04:00.000Z",
     "expiry": "2026-06-22T23:44:00.000Z",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T00:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 27m 55s"
+    "timeLeft": "1h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782172800000",
@@ -349,6 +349,51 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 1,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a39bfda0154d862778ce5b1",
+      "activation": "2026-06-22T23:06:02.753Z",
+      "expiry": "2026-06-23T00:20:54.674Z",
+      "node": "Selkie (Sedna)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Selkie (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39bfda0154d862778ce5b2",
+      "activation": "2026-06-22T23:06:02.753Z",
+      "expiry": "2026-06-23T00:55:11.101Z",
+      "node": "Cerberus (Pluto)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cerberus (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39bfda0154d862778ce5b3",
+      "activation": "2026-06-22T23:06:02.753Z",
+      "expiry": "2026-06-23T00:43:30.950Z",
+      "node": "Hepit (Void)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Hepit (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a39abb32f5603543d8ce5b3",
@@ -698,7 +743,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 53m 58s",
+    "remaining": "6d 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1234,9 +1279,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -8310,
+      "count": -8340,
       "requiredRuns": 49000,
-      "completion": 41.5204081632653,
+      "completion": 41.48979591836734,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1284,9 +1329,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -5843,
+      "count": -5871,
       "requiredRuns": 48000,
-      "completion": 43.91354166666667,
+      "completion": 43.884375,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1321,9 +1366,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27894,
+      "count": -27990,
       "requiredRuns": 30000,
-      "completion": 7.020000000000004,
+      "completion": 6.699999999999995,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1429,9 +1474,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -10538,
+      "count": -10668,
       "requiredRuns": 30000,
-      "completion": 64.87333333333333,
+      "completion": 64.44,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1465,9 +1510,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -44789,
+      "count": -45716,
       "requiredRuns": 45000,
-      "completion": 0.46888888888888536,
+      "completion": -1.591111111111121,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -6096,7 +6141,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 235,
       "salePrice": 94,
       "total": 100,
-      "sold": 2,
+      "sold": 3,
       "discount": 60
     }
   ],
