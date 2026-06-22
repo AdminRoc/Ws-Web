@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T19:01:21Z",
+  "fetchedAt": "2026-06-22T19:06:25Z",
   "cetusCycle": {
     "id": "cetusCycle1782156840000",
     "activation": "2026-06-22T18:44:00.000Z",
     "expiry": "2026-06-22T19:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "33m 0s",
+    "timeLeft": "28m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782156840000",
     "activation": "2026-06-22T18:44:00.000Z",
     "expiry": "2026-06-22T19:34:00.000Z",
-    "timeLeft": "33m 0s",
+    "timeLeft": "28m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T19:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "32m 55s"
+    "timeLeft": "27m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782158400000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a396d96e3255775a08ce5b1",
-      "activation": "2026-06-22T17:15:02.817Z",
-      "expiry": "2026-06-22T19:02:27.214Z",
-      "node": "Orias (Europa)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orias (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a39755276161b73b08ce5b2",
       "activation": "2026-06-22T17:48:02.570Z",
@@ -728,7 +713,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 4h 58m 58s",
+    "remaining": "6d 4h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1264,9 +1249,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -6395,
+      "count": -6443,
       "requiredRuns": 49000,
-      "completion": 43.47448979591837,
+      "completion": 43.42551020408163,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1350,9 +1335,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -3762,
+      "count": -3806,
       "requiredRuns": 48000,
-      "completion": 46.081250000000004,
+      "completion": 46.03541666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1387,9 +1372,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23104,
+      "count": -23203,
       "requiredRuns": 30000,
-      "completion": 22.986666666666665,
+      "completion": 22.65666666666667,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1459,48 +1444,12 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -23863,
+      "count": -24543,
       "requiredRuns": 33000,
-      "completion": 27.687878787878784,
+      "completion": 25.627272727272732,
       "completed": false,
       "rewardTypes": [
         "mutalist"
-      ]
-    },
-    {
-      "id": "6a39630bc13bb286c58ce5b1",
-      "activation": "2026-06-22T16:30:02.553Z",
-      "node": "Valefor (Europa)",
-      "nodeKey": "Valefor (Europa)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Fieldron",
-              "key": "Fieldron"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -943,
-      "requiredRuns": 45000,
-      "completion": 97.90444444444445,
-      "completed": false,
-      "rewardTypes": [
-        "fieldron"
       ]
     },
     {
@@ -1531,12 +1480,48 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -4333,
+      "count": -4453,
       "requiredRuns": 30000,
-      "completion": 85.55666666666667,
+      "completion": 85.15666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a39630bc13bb286c58ce5b1",
+      "activation": "2026-06-22T16:30:02.553Z",
+      "node": "Valefor (Europa)",
+      "nodeKey": "Valefor (Europa)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Fieldron",
+              "key": "Fieldron"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/fieldron.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -964,
+      "requiredRuns": 45000,
+      "completion": 97.85777777777778,
+      "completed": false,
+      "rewardTypes": [
+        "fieldron"
       ]
     }
   ],
