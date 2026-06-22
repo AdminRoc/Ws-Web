@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-22T08:41:20Z",
+  "fetchedAt": "2026-06-22T08:46:20Z",
   "cetusCycle": {
-    "id": "cetusCycle1782117840000",
-    "activation": "2026-06-22T07:04:00.000Z",
-    "expiry": "2026-06-22T08:44:00.000Z",
-    "isDay": true,
-    "state": "day",
-    "timeLeft": "3m 0s",
+    "id": "cetusCycle1782120840000",
+    "activation": "2026-06-22T08:44:00.000Z",
+    "expiry": "2026-06-22T09:34:00.000Z",
+    "isDay": false,
+    "state": "night",
+    "timeLeft": "48m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -22,11 +22,11 @@ window.WF_WS_SNAPSHOT = {
     "state": "warm"
   },
   "cambionCycle": {
-    "id": "cambionCycle1782117840000",
-    "activation": "2026-06-22T07:04:00.000Z",
-    "expiry": "2026-06-22T08:44:00.000Z",
-    "timeLeft": "3m 0s",
-    "state": "fass"
+    "id": "cambionCycle1782120840000",
+    "activation": "2026-06-22T08:44:00.000Z",
+    "expiry": "2026-06-22T09:34:00.000Z",
+    "timeLeft": "48m 0s",
+    "state": "vome"
   },
   "zarimanCycle": {
     "id": "zarimanCycle1782120840000",
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-22T09:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "52m 54s"
+    "timeLeft": "47m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782122400000",
@@ -81,21 +81,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a38dc4663a6a380628ce5b2",
-      "activation": "2026-06-22T06:55:02.676Z",
-      "expiry": "2026-06-22T08:43:37.180Z",
-      "node": "Garus (Kuva Fortress)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Garus (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a38dc4663a6a380628ce5b3",
       "activation": "2026-06-22T06:55:02.676Z",
       "expiry": "2026-06-22T08:53:46.265Z",
@@ -124,21 +109,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 4,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a38df17260be8f3c48ce5b2",
-      "activation": "2026-06-22T07:07:03.103Z",
-      "expiry": "2026-06-22T08:42:24.791Z",
-      "node": "Gulliver (Phobos)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Gulliver (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a38e006f4b1c77b008ce5b2",
@@ -171,21 +141,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a38e006f4b1c77b008ce5b4",
-      "activation": "2026-06-22T07:11:02.267Z",
-      "expiry": "2026-06-22T08:45:19.023Z",
-      "node": "Taranis (Void)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Taranis (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a38e006f4b1c77b008ce5b6",
       "activation": "2026-06-22T07:11:02.267Z",
       "expiry": "2026-06-22T09:05:18.270Z",
@@ -199,36 +154,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 4,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a38e29a4fcbd836fe8ce5b1",
-      "activation": "2026-06-22T07:22:02.868Z",
-      "expiry": "2026-06-22T08:43:25.381Z",
-      "node": "Aphrodite (Venus)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Aphrodite (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a38e3c6bd6a195ab38ce5b2",
-      "activation": "2026-06-22T07:27:02.822Z",
-      "expiry": "2026-06-22T08:43:06.221Z",
-      "node": "Eurasia (Earth)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Eurasia (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a38e3c6bd6a195ab38ce5b1",
@@ -833,7 +758,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "6d 15h 18m 58s",
+    "remaining": "6d 15h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1419,9 +1344,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -1901,
+      "count": -1912,
       "requiredRuns": 49000,
-      "completion": 48.06020408163265,
+      "completion": 48.04897959183673,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1492,9 +1417,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27659,
+      "count": -27746,
       "requiredRuns": 30000,
-      "completion": 7.803333333333329,
+      "completion": 7.513333333333339,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1564,9 +1489,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -10059,
+      "count": -10169,
       "requiredRuns": 30000,
-      "completion": 66.47000000000001,
+      "completion": 66.10333333333334,
       "completed": false,
       "rewardTypes": [
         "fieldron"
