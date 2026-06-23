@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T12:26:24Z",
+  "fetchedAt": "2026-06-23T12:31:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782219840000",
     "activation": "2026-06-23T12:14:00.000Z",
     "expiry": "2026-06-23T13:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "38m 1s",
+    "timeLeft": "33m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782219840000",
     "activation": "2026-06-23T12:14:00.000Z",
     "expiry": "2026-06-23T13:04:00.000Z",
-    "timeLeft": "38m 1s",
+    "timeLeft": "33m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T13:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "37m 55s"
+    "timeLeft": "32m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782223200000",
@@ -332,6 +332,66 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Eurasia (Earth)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3a7bd36c3b2dc6318ce5b1",
+      "activation": "2026-06-23T12:28:03.177Z",
+      "expiry": "2026-06-23T14:17:31.208Z",
+      "node": "Nereid (Neptune)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Nereid (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3a7bd36c3b2dc6318ce5b3",
+      "activation": "2026-06-23T12:28:03.177Z",
+      "expiry": "2026-06-23T14:15:38.566Z",
+      "node": "Stephano (Uranus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Stephano (Uranus)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3a7bd36c3b2dc6318ce5b2",
+      "activation": "2026-06-23T12:28:03.177Z",
+      "expiry": "2026-06-23T13:28:46.242Z",
+      "node": "Tiwaz (Void)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Tiwaz (Void)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3a7c4aef634ec0bb8ce5b1",
+      "activation": "2026-06-23T12:30:02.735Z",
+      "expiry": "2026-06-23T13:45:59.831Z",
+      "node": "Koro (Kuva Fortress)",
+      "missionType": "Assault",
+      "missionTypeKey": "Assault",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Koro (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
       "isStorm": false,
       "isHard": true
     },
@@ -773,7 +833,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 11h 33m 58s",
+    "remaining": "5d 11h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1309,9 +1369,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -16990,
+      "count": -17070,
       "requiredRuns": 49000,
-      "completion": 32.66326530612245,
+      "completion": 32.58163265306122,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1359,9 +1419,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -15315,
+      "count": -15404,
       "requiredRuns": 48000,
-      "completion": 34.046875,
+      "completion": 33.954166666666666,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1504,9 +1564,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1269,
+      "count": -1307,
       "requiredRuns": 40000,
-      "completion": 96.8275,
+      "completion": 96.7325,
       "completed": false,
       "rewardTypes": [
         "detonite"
