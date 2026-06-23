@@ -1,0 +1,37 @@
+name: 打包榜单数据文件
+
+# 触发时机：当 data/ 目录下的数据源文件被 push 时自动重建 bundle。
+# 你照旧逐个编辑 data/<分类>/ 下的单个成绩文件并 push，本工作流会自动把它们
+# 重新拼接成各分类的 _bundle.js（榜单页面和全站搜索实际加载的就是这些 bundle）。
+on:
+  push:
+    paths:
+      - 'data/**'
+  workflow_dispatch:   # 也支持手动触发（Actions 页面点 Run workflow）
+
+# 排队执行，避免连续 push 时多个运行同时 commit 冲突
+concurrency:
+  group: bundle-data
+  cancel-in-progress: false
+
+jobs:
+  rebuild-bundles:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: 重建所有分类的 _bundle.js
+        run: python3 .github/scripts/bundle_data.py
+
+      - name: 提交并推送（无变化时跳过）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/*/_bundle.js
+          # commit 信息带 [skip ci]，防止本次 commit（也落在 data/**）再次触发本工作流形成死循环
+          git diff --staged --quiet || \
+            git commit -m "build: rebuild data bundles [skip ci]"
+          git push
