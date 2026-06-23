@@ -1,82 +1,70 @@
 # WFS 竞速排行榜
 
-这是一个专门记录 Warframe 竞速成绩的排行榜网站（静态）。
+这是一个专门记录 Warframe 竞速成绩的排行榜网站（纯静态）。
 
-站内所有成绩榜单一目了然。成绩由玩家自主提交并经过公平审核、所有人都可以自由查询已提交的纪录内容。玩家可以自由举报有作弊嫌疑的成绩，被确认为作弊的成绩，也会公开展示。
+**本站与其他审核不严密的站点不同，每一条新成绩都需要经过人工复核；仅凭 EE.log 等可被随意篡改的信息，是不能直接上榜的。**
+
+站内所有成绩榜单一目了然，所有人都可以自由查询已提交的纪录内容。
 
 ---
 
 ## 网站结构
 
-**首页（index.html）**  
-从这里进入三个最热门项目：中断、夜灵、蜘蛛。
+**首页（index.html）** — 入口，直达中断、夜灵、蜘蛛三个最热门项目；进入榜单后，可从顶部导航前往其他项目页面。
 
-进入榜单后，可以从顶部导航进入其他项目页面。
+榜单页面（按地图/任务类型分组排名，多数区分普通与钢铁之路或"有无限制"）：
 
-**中断竞速（disruption.html）**  
-按游戏内中断任务地图分组，支持单人、双人、多人三个模式分别排名。
+| 页面 | 内容 |
+|---|---|
+| `disruption.html` / `-duo` / `-multi` | 中断竞速，单人 / 双人 / 多人 |
+| `eidolon.html` / `eidolon-macro.html` | 夜灵竞速，有限制 / 无限制 |
+| `profit-taker.html` / `profit-taker-macro.html` | 大蜘蛛竞速，有限制 / 无限制 |
+| `arbitration.html` | 仲裁任务，12 张地图 × 千生息精华 / 指定轮次耗时 |
+| `assassination.html` | 刺杀竞速 |
+| `capture.html` | 捕获竞速 |
+| `cambire.html` | 元素转换竞速 |
+| `defection.html` | 叛逃任务竞速 |
+| `defense-relic.html` | 防御裂缝 60 轮竞速 |
+| `exterminate.html` | 歼灭竞速 |
+| `rescue.html` | 救援竞速 |
+| `sabotage.html` | 破坏竞速 |
+| `ropalolyst.html` | 蝠力使竞速 |
+| `skirmish.html` | 面纱前哨战竞速 |
+| `spy.html` | 间谍竞速（区分允许 / 禁止破解器） |
+| `hollvania.html` | 1999 任务竞速（歼灭、传承种收割、舞台防御、坦克等） |
+| `special_challenge.html` | 特殊挑战（执刑官猎杀、阿耶檀识、二蜘蛛、衰退室等） |
+| `special-events.html` | 站内临时竞速活动，仅活动期间生效 |
 
-**夜灵竞速（eidolon.html / eidolon-macro.html）**  
-夜灵竞速，区分有无"限制"。两类单独排名。
+工具与信息页面：
 
-**蜘蛛竞速（profit-taker.html / profit-taker-macro.html）**  
-大蜘蛛竞速，同样区分有无"限制"。两类单独排名。
+| 页面 | 内容 |
+|---|---|
+| `search.html` | 全站搜索，跨所有榜单按玩家/地图/分类检索 |
+| `worldstate.html` | 实时世界状态：周期、裂缝、仲裁、夜波、特卖、武器轮换等 |
+| `eelog.html`（及 `log/analyzer.html`） | EE.log 战斗日志分析器（独立设计风格） |
+| `player.html` | 玩家主页，汇总该玩家在各榜单的提交记录 |
+| `viewer.html` | 站内规则文档查看器 |
+| `about.html` | 站点说明、各项目规则汇总、成绩提交入口 |
 
-**仲裁任务（arbitration.html）**  
-按任务类型（防御、生存、中断、拦截、挖掘等）分类，共 12 张地图 × 两种竞速赛道（获得1000个生息精华、以及到达指定轮次的时间）。
-
-**刺杀（assassination.html）**  
-刺杀竞速，按普通难度和钢铁之路分别排名。
-
-**捕获（capture.html）**  
-所有捕获任务竞速，按地图逐一排名。
-
-**叛逃（defection.html）**  
-叛逃任务竞速，按地图分组排名。
-
-**裂隙防御60轮（defense-relic.html）**  
-裂隙防御60轮的竞速，按普通难度和钢铁之路分别排名。
-
-**歼灭（exterminate.html）**  
-全地图歼灭任务竞速，按普通难度和钢铁之路分别排名。
-
-**救援（rescue.html）**  
-全地图救援任务竞速，按地图逐一排名。
-
-**破坏（sabotage.html）**  
-全地图破坏任务竞速，按地图逐一排名。
-
-**面纱前哨战（skirmish.html）**  
-面纱前哨战任务竞速，按普通难度和钢铁之路分别排名。
-
-**间谍（spy.html）**  
-间谍任务竞速，同时列出"允许使用破解器"和"不允许使用破解器"两种情况。按地图分组排名。
-
-**1999 任务（hollvania.html）**  
-霍瓦尼亚任务竞速，包含 1999 歼灭、传承种收割、舞台防御、王者坦克、普通坦克五个分类。
-
-**特殊挑战（special_challenge.html）**  
-包含执刑官猎杀、获取阿耶檀识塑像、二蜘蛛、衰退室、氏族跑酷、有罪之人六个挑战项目。
-
-**站内活动（special-events.html）**  
-作为本站预留的临时竞速活动成绩，仅供活动期间采用。
-
-**关于（about.html）**  
-站点说明、规则汇总、各项目详细规则链接、成绩提交入口。
-
-（规则链接、举报按钮、成绩提交入口等按钮，在其他页面也都存在。）
+（规则链接、举报按钮、成绩提交入口在其他页面同样可用。）
 
 ---
 
 ## 提交成绩
 
-进入「提交成绩」按钮，填写表单即可。成绩提交后由管理员详细审核，审核通过后，通过自动化工作流，将自动出现在对应榜单。
+进入「提交成绩」按钮，填写表单即可。成绩提交后由管理员人工复核，审核通过后，通过自动化工作流自动出现在对应榜单。
+
+---
+
+## 举报与违规公示
+
+本站支持对任何已上榜成绩进行举报。一经查实违规/作弊，该成绩将被单独公开展示，其在提交成绩时所同意公布的表单内容，也会一并完全公开展示。
 
 ---
 
 ## 数据格式说明
 
-成绩数据统一存储在 `data/` 目录下，按项目分文件夹存放，后缀为 `.js` 的文件即为数据文件。每个文件包含三条信息：
+成绩数据统一存储在 `data/` 目录下，按项目分文件夹存放，后缀为 `.js` 的文件即为数据文件。每条记录包含四个字段：
 
 | 字段 | 说明 |
 |------|------|
@@ -91,9 +79,7 @@
 
 ## 如何更新数据
 
-只需修改 `data/` 目录下对应的 `.js` 文件即可，无需触碰页面代码。
-
-修改后刷新页面，数据自动加载，无需任何额外操作。
+只需修改 `data/` 目录下对应的 `.js` 文件即可，无需触碰页面代码。修改后刷新页面，数据自动加载。
 
 ---
 
@@ -123,81 +109,63 @@
 
 A pure static leaderboard website for Warframe speedrun records.
 
-All records are clearly listed and easily searchable. Players submit their own times, which go through a fair review process before going live — everyone can freely browse submitted records. Any suspicious submissions can be reported, and confirmed cheating records are publicly displayed.
+**Unlike some loosely-moderated sites, every new record here goes through manual human review — information that can be freely edited, such as an EE.log file, is never enough on its own to get a submission listed.**
+
+All records are clearly listed and easily searchable by everyone.
 
 ---
 
 ## Pages
 
-**Home（index.html）**  
-Quick access to the three most popular categories: Disruption, Eidolon, and Profit Taker.
+**Home (index.html)** — Entry point, quick access to the three most popular categories (Disruption, Eidolon, Profit Taker). From any leaderboard page, the top navigation leads to all other pages.
 
-From any leaderboard page, the top navigation leads to all other project pages.
+Leaderboard pages (grouped by map/mission type, most split into Normal vs. Steel Path, or "with/without restrictions"):
 
-**Disruption（disruption.html）**  
-Disruption speedruns grouped by mission map, with separate leaderboards for Solo, Duo, and Multiplayer.
+| Page | Content |
+|---|---|
+| `disruption.html` / `-duo` / `-multi` | Disruption, Solo / Duo / Multiplayer |
+| `eidolon.html` / `eidolon-macro.html` | Eidolon hunts, with / without restrictions |
+| `profit-taker.html` / `profit-taker-macro.html` | Profit Taker kills, with / without restrictions |
+| `arbitration.html` | Arbitration, 12 maps × (1000 Vitus Essence / time to a set round) |
+| `assassination.html` | Boss assassinations |
+| `capture.html` | Capture missions |
+| `cambire.html` | Cambire (element conversion) missions |
+| `defection.html` | Defection missions |
+| `defense-relic.html` | Relic Defense, 60 rounds |
+| `exterminate.html` | Exterminate missions |
+| `rescue.html` | Rescue missions |
+| `sabotage.html` | Sabotage missions |
+| `ropalolyst.html` | Ropalolyst fight |
+| `skirmish.html` | Veil Proxima Skirmish |
+| `spy.html` | Spy missions (vault hack allowed / banned) |
+| `hollvania.html` | 1999-themed missions (Exterminate, Legacyte Harvest, Stage Defense, Tanks, etc.) |
+| `special_challenge.html` | Special challenges (Archon Hunt, Ayatan Capture, Exploiter Orb, Netracell, etc.) |
+| `special-events.html` | Temporary community events; active only during event periods |
 
-**Eidolon（eidolon.html / eidolon-macro.html）**  
-Eidolon hunt speedruns. With and without "restrictions" are listed on separate pages.
+Tools and info pages:
 
-**Profit Taker（profit-taker.html / profit-taker-macro.html）**  
-Profit Taker kill speedruns. With and without "restrictions" are listed on separate pages.
+| Page | Content |
+|---|---|
+| `search.html` | Site-wide search across every leaderboard by player / map / category |
+| `worldstate.html` | Live world state: cycles, fissures, arbitration, Nightwave, sales, weapon rotations, etc. |
+| `eelog.html` (and `log/analyzer.html`) | EE.log combat-log analyzer (intentionally distinct visual style) |
+| `player.html` | Player profile aggregating one player's submissions across all leaderboards |
+| `viewer.html` | In-site viewer for rules documents |
+| `about.html` | Site overview, rules for each category, and the record submission form |
 
-**Arbitration（arbitration.html）**  
-Arbitration speedruns categorized by mission type (Defense, Survival, Disruption, Interception, Excavation, etc.), across 12 maps × two race formats (reaching 1000 Vitus Essence, or reaching a specified round count).
-
-**Assassination（assassination.html）**  
-Boss assassination speedruns, listed separately for Normal and Steel Path.
-
-**Capture（capture.html）**  
-All capture mission speedruns, by individual map.
-
-**Cambire（cambire.html）**  
-Cambire mission speedruns, Normal and Steel Path.
-
-**Defection（defection.html）**  
-Defection speedruns, grouped by map.
-
-**Defense · Relic 60 rounds（defense-relic.html）**  
-Relic Defense 60-round speedruns, Normal and Steel Path.
-
-**Exterminate（exterminate.html）**  
-All Exterminate mission speedruns, Normal and Steel Path.
-
-**Rescue（rescue.html）**  
-All Rescue mission speedruns, by individual map.
-
-**Sabotage（sabotage.html）**  
-All Sabotage mission speedruns, by individual map.
-
-**Ropalolyst（ropalolyst.html）**  
-Ropalolyst fight speedruns, Normal and Steel Path.
-
-**Skirmish（skirmish.html）**  
-Veil Proxima Skirmish speedruns, Normal and Steel Path.
-
-**Spy（spy.html）**  
-Spy mission speedruns, listing both "vault hack allowed" and "vault hack banned" results, grouped by map.
-
-**Hollvania（hollvania.html）**  
-1999-themed speedruns: 1999 Exterminate, Legacyte Harvest, Stage Defense, Apex Tanks, Normal Tanks.
-
-**Special Challenge（special_challenge.html）**  
-Includes Archon Hunt, Ayatan Capture, Exploiter Orb, Netracell, Obstacle Course, and The Guilty.
-
-**Special Events（special-events.html）**  
-Reserved for temporary community speedrun events; active only during event periods.
-
-**About（about.html）**  
-Site overview, rules for each category, links to detailed rules, and the record submission form.
-
-(Rules links, report buttons, and submission form buttons are also available on all other pages.)
+(Rules links, report buttons, and the submission form are also available on other pages.)
 
 ---
 
 ## Submitting Records
 
-Click "Submit Record" on any page, fill out the form, and submit. The record goes through a detailed admin review, and once approved, an automated workflow publishes it to the correct leaderboard.
+Click "Submit Record" on any page and fill out the form. Submissions go through manual admin review, and once approved, an automated workflow publishes them to the correct leaderboard.
+
+---
+
+## Reporting & Disclosure of Violations
+
+Any listed record can be reported. If a report is confirmed as a violation/cheating, that record is publicly flagged and displayed separately — and the form details the submitter agreed to disclose at submission time are also published in full.
 
 ---
 
