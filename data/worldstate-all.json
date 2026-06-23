@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-23T10:06:20Z",
+  "fetchedAt": "2026-06-23T10:11:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782210840000",
     "activation": "2026-06-23T09:44:00.000Z",
     "expiry": "2026-06-23T10:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "28m 1s",
+    "timeLeft": "23m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782208800000",
-    "activation": "2026-06-23T10:00:00.000Z",
-    "expiry": "2026-06-23T10:06:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782209160000",
+    "activation": "2026-06-23T10:06:00.000Z",
+    "expiry": "2026-06-23T10:26:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782210840000",
     "activation": "2026-06-23T09:44:00.000Z",
     "expiry": "2026-06-23T10:34:00.000Z",
-    "timeLeft": "28m 1s",
+    "timeLeft": "23m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-23T10:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "27m 55s"
+    "timeLeft": "22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782216000000",
@@ -60,21 +60,6 @@
     ]
   },
   "fissures": [
-    {
-      "id": "6a3a3fd207fdfb4e178ce5b1",
-      "activation": "2026-06-23T08:12:02.213Z",
-      "expiry": "2026-06-23T10:07:18.254Z",
-      "node": "Teshub (Void)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Teshub (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3a43566dbdd01b028ce5b2",
       "activation": "2026-06-23T08:27:02.423Z",
@@ -211,21 +196,6 @@
       "isHard": false
     },
     {
-      "id": "6a3a4da730580e4a7b8ce5b3",
-      "activation": "2026-06-23T09:11:03.064Z",
-      "expiry": "2026-06-23T11:03:53.518Z",
-      "node": "Stephano (Uranus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Stephano (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3a4da730580e4a7b8ce5b4",
       "activation": "2026-06-23T09:11:03.064Z",
       "expiry": "2026-06-23T10:34:42.669Z",
@@ -235,6 +205,21 @@
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Laomedeia (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3a4da730580e4a7b8ce5b3",
+      "activation": "2026-06-23T09:11:03.064Z",
+      "expiry": "2026-06-23T11:03:53.518Z",
+      "node": "Stephano (Uranus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Stephano (Uranus)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -361,21 +346,6 @@
       "isHard": true
     },
     {
-      "id": "6a3a586e21c01c3c578ce5b2",
-      "activation": "2026-06-23T09:57:02.717Z",
-      "expiry": "2026-06-23T11:02:32.101Z",
-      "node": "Persto (Deimos)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Persto (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3a586e21c01c3c578ce5b1",
       "activation": "2026-06-23T09:57:02.717Z",
       "expiry": "2026-06-23T11:32:01.439Z",
@@ -385,6 +355,21 @@
       "enemy": "Orokin",
       "enemyKey": "Orokin",
       "nodeKey": "Yuvarium (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3a586e21c01c3c578ce5b2",
+      "activation": "2026-06-23T09:57:02.717Z",
+      "expiry": "2026-06-23T11:02:32.101Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -753,7 +738,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 13h 53m 58s",
+    "remaining": "5d 13h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1289,9 +1274,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -15095,
+      "count": -15156,
       "requiredRuns": 49000,
-      "completion": 34.5969387755102,
+      "completion": 34.53469387755102,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1339,9 +1324,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -13542,
+      "count": -13603,
       "requiredRuns": 48000,
-      "completion": 35.893750000000004,
+      "completion": 35.83020833333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1448,9 +1433,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -27504,
+      "count": -27637,
       "requiredRuns": 30000,
-      "completion": 8.320000000000006,
+      "completion": 7.876666666666665,
       "completed": false,
       "rewardTypes": [
         "mutagen"
