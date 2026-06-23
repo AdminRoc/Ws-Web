@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T00:51:19Z",
+  "fetchedAt": "2026-06-23T00:56:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782180840000",
     "activation": "2026-06-23T00:34:00.000Z",
     "expiry": "2026-06-23T02:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 23m 0s",
+    "timeLeft": "1h 18m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782180840000",
     "activation": "2026-06-23T00:34:00.000Z",
     "expiry": "2026-06-23T02:14:00.000Z",
-    "timeLeft": "1h 23m 0s",
+    "timeLeft": "1h 18m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T03:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 12m 55s"
+    "timeLeft": "2h 7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782180000000",
@@ -81,21 +81,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a39bfda0154d862778ce5b2",
-      "activation": "2026-06-22T23:06:02.753Z",
-      "expiry": "2026-06-23T00:55:11.101Z",
-      "node": "Cerberus (Pluto)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cerberus (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a39c232b6fe0ea0708ce5b1",
       "activation": "2026-06-22T23:16:02.533Z",
       "expiry": "2026-06-23T00:59:20.069Z",
@@ -126,21 +111,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a39c5b68d0c2fbad48ce5b1",
-      "activation": "2026-06-22T23:31:02.485Z",
-      "expiry": "2026-06-23T01:18:21.795Z",
-      "node": "Ani (Void)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Ani (Void)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a39c5b68d0c2fbad48ce5b2",
       "activation": "2026-06-22T23:31:02.485Z",
       "expiry": "2026-06-23T01:23:30.077Z",
@@ -150,6 +120,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Cypress (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a39c5b68d0c2fbad48ce5b1",
+      "activation": "2026-06-22T23:31:02.485Z",
+      "expiry": "2026-06-23T01:18:21.795Z",
+      "node": "Ani (Void)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Ani (Void)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -216,21 +201,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a39cb56c5ab83fe608ce5b1",
-      "activation": "2026-06-22T23:55:02.334Z",
-      "expiry": "2026-06-23T01:19:22.838Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a39cb56c5ab83fe608ce5b2",
       "activation": "2026-06-22T23:55:02.334Z",
       "expiry": "2026-06-23T01:29:27.481Z",
@@ -240,6 +210,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Nabuk (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39cb56c5ab83fe608ce5b1",
+      "activation": "2026-06-22T23:55:02.334Z",
+      "expiry": "2026-06-23T01:19:22.838Z",
+      "node": "Rotuma (Kuva Fortress)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Rotuma (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -261,21 +246,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a39d3c6c1af2f64bd8ce5b1",
-      "activation": "2026-06-23T00:31:02.252Z",
-      "expiry": "2026-06-23T01:33:48.901Z",
-      "node": "Everest (Earth)",
-      "missionType": "Excavation",
-      "missionTypeKey": "Excavation",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Everest (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a39d3c6c1af2f64bd8ce5b2",
       "activation": "2026-06-23T00:31:02.252Z",
       "expiry": "2026-06-23T01:52:27.002Z",
@@ -285,6 +255,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Hellas (Mars)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a39d3c6c1af2f64bd8ce5b1",
+      "activation": "2026-06-23T00:31:02.252Z",
+      "expiry": "2026-06-23T01:33:48.901Z",
+      "node": "Everest (Earth)",
+      "missionType": "Excavation",
+      "missionTypeKey": "Excavation",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Everest (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -319,6 +304,81 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 2,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a39d876933210093d8ce5b1",
+      "activation": "2026-06-23T00:51:02.440Z",
+      "expiry": "2026-06-23T02:38:43.962Z",
+      "node": "Saxis (Eris)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Saxis (Eris)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39d876933210093d8ce5b2",
+      "activation": "2026-06-23T00:51:02.440Z",
+      "expiry": "2026-06-23T02:23:39.556Z",
+      "node": "Mantle (Earth)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Mantle (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39d876933210093d8ce5b3",
+      "activation": "2026-06-23T00:51:02.440Z",
+      "expiry": "2026-06-23T02:18:15.794Z",
+      "node": "Aphrodite (Venus)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Aphrodite (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39d966e9acf4b2c38ce5b2",
+      "activation": "2026-06-23T00:55:02.600Z",
+      "expiry": "2026-06-23T02:39:09.419Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a39d966e9acf4b2c38ce5b1",
+      "activation": "2026-06-23T00:55:02.600Z",
+      "expiry": "2026-06-23T02:08:45.508Z",
+      "node": "Yuvarium (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Yuvarium (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a39b9c25b0c8e6bbe8ce5b2",
@@ -758,7 +818,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 23h 8m 58s",
+    "remaining": "5d 23h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1294,9 +1354,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -9150,
+      "count": -9188,
       "requiredRuns": 49000,
-      "completion": 40.66326530612245,
+      "completion": 40.624489795918365,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1344,9 +1404,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -6738,
+      "count": -6773,
       "requiredRuns": 48000,
-      "completion": 42.981249999999996,
+      "completion": 42.94479166666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1525,9 +1585,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -13217,
+      "count": -13348,
       "requiredRuns": 30000,
-      "completion": 55.943333333333335,
+      "completion": 55.50666666666666,
       "completed": false,
       "rewardTypes": [
         "mutagen"
