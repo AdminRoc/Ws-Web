@@ -1,2 +1,6 @@
 # 备份文件
 *.bak
+
+# Python 缓存（本地跑 .github/scripts/*.py 时产生）
+__pycache__/
+*.pyc
