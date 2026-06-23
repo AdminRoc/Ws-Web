@@ -2627,12 +2627,23 @@
     return d !== type ? d : type;
   }
 
+  /* 合并而非整体替换 _dict：dictP（远程 dict.zh.json）与 itemZhP（本地
+     item-names-zh.json）是并行请求，谁先谁后不确定，之前用 _dict = data
+     整体覆盖，曾导致后完成的一方把先完成的一方刚合并进去的译名全部冲掉
+     （表现为：入侵奖励等本来在 item-names-zh.json 里有翻译的物品名，
+     在线上时常又变回英文——取决于两个请求谁跑得快，并非每次都复现）。 */
+  function mergeDict(data) {
+    if (!data) return;
+    if (!_dict) _dict = {};
+    Object.keys(data).forEach(function (k) { _dict[k] = data[k]; });
+  }
+
   function loadDict() {
     try {
       var raw = localStorage.getItem(DICT_LS_KEY);
       if (raw) {
         var obj = JSON.parse(raw);
-        if (obj && Date.now() - obj.ts < DICT_TTL) { _dict = obj.data; return Promise.resolve(); }
+        if (obj && Date.now() - obj.ts < DICT_TTL) { mergeDict(obj.data); return Promise.resolve(); }
       }
     } catch (e) {}
     return fetchFirstOk(DICT_URLS).then(function (data) {
@@ -2640,11 +2651,11 @@
         /* 全部 URL 失败：尝试使用过期缓存（离线兜底） */
         try {
           var stale = localStorage.getItem(DICT_LS_KEY);
-          if (stale) { var so = JSON.parse(stale); if (so && so.data) _dict = so.data; }
+          if (stale) { var so = JSON.parse(stale); if (so && so.data) mergeDict(so.data); }
         } catch (e) {}
         return;
       }
-      _dict = data;
+      mergeDict(data);
       try { localStorage.setItem(DICT_LS_KEY, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
     });
   }
@@ -4058,7 +4069,7 @@
       var dictRaw = localStorage.getItem(DICT_LS_KEY);
       if (dictRaw) {
         var dictObj = JSON.parse(dictRaw);
-        if (dictObj && Date.now() - dictObj.ts < DICT_TTL) _dict = dictObj.data;
+        if (dictObj && Date.now() - dictObj.ts < DICT_TTL) mergeDict(dictObj.data);
       }
     } catch (e) {}
     /* 赏金轮次从缓存恢复（检查是否已过期） */
