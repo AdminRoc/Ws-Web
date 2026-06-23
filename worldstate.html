@@ -2719,7 +2719,9 @@
   var RAW_WS_TTL = 60000; /* 1 分钟，与主轮询同步 */
   var RAW_WS_URLS = [
     'https://oracle.browse.wf/worldState.json',
-    'https://api.warframe.com/cdn/worldState.php'
+    'https://api.warframe.com/cdn/worldState.php',
+    'https://api.wfhub.top/china/worldState.json',
+    'https://ws.wfhub.top/ws.json'
   ];
 
   /* GitHub Actions 每 5 分钟预拉取的世界周期快照（专供大陆用户兜底）
@@ -2736,6 +2738,14 @@
      而 Pages 发布出来的页面本身不受仓库可见性影响，相对路径永远有效。 */
   var WS_FALLBACK_URLS = [
     'data/worldstate-all.json'
+  ];
+  /* 信条/终幕武器轮换：元素+加成% 是游戏内随机生成的，没有任何官方/社区API能查，
+     只能靠社区实测记录在 Google Sheets 里。GitHub Actions 每小时在服务器侧（不受
+     大陆网络限制）抓取一次写进这个同源文件，比让浏览器直连 Google 表格稳得多。
+     见 .github/scripts/fetch_tenet_coda.py 与 .github/workflows/tenet-coda-rotation.yml */
+  var _tenetCodaRotation = null;
+  var WS_TENET_CODA_URLS = [
+    'data/tenet-coda-rotation.json'
   ];
   var WS_ITEM_ZH_URLS = [
     'data/item-names-zh.json'
@@ -3044,7 +3054,13 @@
       });
     });
 
-    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, bountyP, regP]).then(function () {
+    /* 信条/终幕武器轮换：本地静态表(TENET_GROUPS/CODA_BATCHES)只是没有这份同源
+       文件时的最后兜底，这里才是真正可信的来源 */
+    var tenetCodaP = fetchFirstOk(WS_TENET_CODA_URLS).then(function (data) {
+      if (data) _tenetCodaRotation = data;
+    });
+
+    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, tenetCodaP, bountyP, regP]).then(function () {
       /* 赏金任务板最终兜底：rawP（oracle.browse.wf / api.warframe.com）在大陆网络下
          可能也连不上，此时若 D.bounties 仍为空，用 GitHub 快照里的
          syndicateMissions（来自 apiP 或 fallbackP）重建同样结构的数据，
@@ -3884,24 +3900,26 @@
     var el = document.getElementById('ws-tenet');
     if (!el) return;
 
-    /* API 数据优先（端点可用时自动启用）*/
-    var apiData = D.tenetWeapons;
-    if (Array.isArray(apiData) && apiData.length) {
-      var apiExpiry = apiData[0] && apiData[0].expiry ? new Date(apiData[0].expiry).getTime() : null;
+    /* 同源校准文件优先（每小时从社区实测表格抓取，见 fetch_tenet_coda.py）。
+       4 天周期的轮换时刻本身是固定可推算的，只有元素/加成%是随机的、靠这份
+       文件提供真实值；本地静态表 TENET_GROUPS 只在这份文件也拿不到时兜底。 */
+    var rotData = _tenetCodaRotation && _tenetCodaRotation.tenet && _tenetCodaRotation.tenet.weapons;
+    if (Array.isArray(rotData) && rotData.length) {
+      var rNow    = Date.now();
+      var rIdx    = Math.floor((rNow - TENET_EPOCH) / FOUR_DAYS_MS);
+      var rNextMs = TENET_EPOCH + (rIdx + 1) * FOUR_DAYS_MS;
       el.innerHTML =
         '<div class="ws-weap-hd">' +
           '<span class="ws-weap-batch">Ergo Glast 当前轮换</span>' +
-          '<span class="ws-weap-cycle">每 4 天轮换</span>' +
-          (apiExpiry ? '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-tenet"></span></div>' : '') +
+          '<span class="ws-weap-cycle">每 4 天 00:00 UTC 轮换一次祖灵伤害加成</span>' +
+          '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-tenet"></span></div>' +
         '</div>' +
         '<div class="ws-weap-grid">' +
-          apiData.map(function (w) {
-            var e = w.element || w.damage || '';
-            var pct = w.elementalDamage != null ? (+w.elementalDamage).toFixed(1) + '%' : '';
-            return weapItemHtml(w.name || '--', e, pct);
+          rotData.map(function (w) {
+            return weapItemHtml(w.name || '--', w.element || '', w.bonusPct != null ? (+w.bonusPct).toFixed(1) + '%' : '');
           }).join('') +
         '</div>';
-      if (apiExpiry) countdown(document.getElementById('wt-tenet'), apiExpiry, true);
+      countdown(document.getElementById('wt-tenet'), rNextMs, true);
       return;
     }
 
@@ -3933,30 +3951,26 @@
     var el = document.getElementById('ws-coda');
     if (!el) return;
 
-    /* API 数据优先（端点可用时自动启用）*/
-    var apiData    = D.codaWeapons;
-    var apiWeapons = Array.isArray(apiData) ? apiData : (apiData && apiData.weapons ? apiData.weapons : null);
-    if (apiWeapons && apiWeapons.length) {
-      var apiBatch  = apiData && !Array.isArray(apiData) && apiData.batch ? apiData.batch : null;
-      var apiExpiry = apiData && !Array.isArray(apiData) && apiData.expiry
-                      ? new Date(apiData.expiry).getTime()
-                      : (Array.isArray(apiData) && apiData[0] && apiData[0].expiry
-                          ? new Date(apiData[0].expiry).getTime() : null);
-      var apiNext   = apiBatch ? String.fromCharCode(apiBatch.charCodeAt(0) + 1) : null;
+    /* 同源校准文件优先，理由同 renderTenetWeapons() 顶部注释 */
+    var rotCoda = _tenetCodaRotation && _tenetCodaRotation.coda;
+    if (rotCoda && Array.isArray(rotCoda.weapons) && rotCoda.weapons.length) {
+      var rBatch  = rotCoda.batch || null;
+      var rNext2  = rBatch ? String.fromCharCode(rBatch.charCodeAt(0) + 1) : null;
+      var rNow2   = Date.now();
+      var rIdx2   = Math.floor((rNow2 - CODA_EPOCH) / FOUR_DAYS_MS);
+      var rNextMs2 = CODA_EPOCH + (rIdx2 + 1) * FOUR_DAYS_MS;
       el.innerHTML =
         '<div class="ws-weap-hd">' +
-          '<span class="ws-weap-batch">' + (apiBatch ? '当前批次 ' + apiBatch : '当前批次') + '</span>' +
-          '<span class="ws-weap-cycle">每 4 天轮换' + (apiNext ? '，下次为批次 ' + apiNext : '') + '</span>' +
-          (apiExpiry ? '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-coda"></span></div>' : '') +
+          '<span class="ws-weap-batch">' + (rBatch ? '当前批次 ' + rBatch : '当前批次') + '</span>' +
+          '<span class="ws-weap-cycle">每 4 天轮换' + (rNext2 ? '，下次为批次 ' + rNext2 : '') + '</span>' +
+          '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-coda"></span></div>' +
         '</div>' +
         '<div class="ws-weap-grid">' +
-          apiWeapons.map(function (w) {
-            var e = w.element || w.damage || '';
-            var pct = w.elementalDamage != null ? (+w.elementalDamage).toFixed(1) + '%' : '';
-            return weapItemHtml(w.name || '--', e, pct);
+          rotCoda.weapons.map(function (w) {
+            return weapItemHtml(w.name || '--', w.element || '', w.bonusPct != null ? (+w.bonusPct).toFixed(1) + '%' : '');
           }).join('') +
         '</div>';
-      if (apiExpiry) countdown(document.getElementById('wt-coda'), apiExpiry, true);
+      countdown(document.getElementById('wt-coda'), rNextMs2, true);
       return;
     }
 

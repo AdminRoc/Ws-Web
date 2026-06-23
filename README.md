@@ -230,4 +230,17 @@ Each leaderboard can display its own top-of-page notice banner. Edit the `Notice
 
 ---
 
+## 特别鸣谢
+
+本站世界状态（worldstate.html）模块的部分数据，依赖以下第三方公开数据源与社区项目，特此致谢：
+
+- [warframestat.us](https://warframestat.us) —— WFCD 维护的 Warframe 世界状态 API
+- [browse.wf](https://browse.wf) —— calamity-inc 维护的世界状态镜像与中文字典（dict.zh.json）
+- [wfhub.top](https://wfhub.top) —— 信条 / 终幕武器轮换（元素与加成百分比）数据参考来源
+- Digital Extremes 官方 API（api.warframe.com）
+
+以上数据源均为公开接口，本站仅做读取与展示，不修改、不转售其内容。如数据源维护者认为引用方式有不妥之处，欢迎联系我们调整或移除。
+
+---
+
 *© 2026 CSC Alliance · All rights reserved. Code originally created by Roc on May 21, 2026.*
