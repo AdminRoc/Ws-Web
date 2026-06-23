@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T19:51:21Z",
+  "fetchedAt": "2026-06-23T19:56:23Z",
   "cetusCycle": {
     "id": "cetusCycle1782246840000",
     "activation": "2026-06-23T19:44:00.000Z",
     "expiry": "2026-06-23T20:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782243960000",
-    "activation": "2026-06-23T19:46:00.000Z",
-    "expiry": "2026-06-23T19:53:28.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782244380000",
+    "activation": "2026-06-23T19:53:00.000Z",
+    "expiry": "2026-06-23T20:13:28.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782246840000",
     "activation": "2026-06-23T19:44:00.000Z",
     "expiry": "2026-06-23T20:34:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T20:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "42m 55s"
+    "timeLeft": "37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782244800000",
@@ -186,21 +186,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3ad7b3936978b7608ce5b2",
-      "activation": "2026-06-23T19:00:03.071Z",
-      "expiry": "2026-06-23T20:51:09.726Z",
-      "node": "Neso (Neptune)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Neso (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3ad7b3936978b7608ce5b1",
       "activation": "2026-06-23T19:00:03.071Z",
       "expiry": "2026-06-23T20:58:07.182Z",
@@ -210,6 +195,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Orokin",
       "enemyKey": "Orokin",
       "nodeKey": "Taranis (Void)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3ad7b3936978b7608ce5b2",
+      "activation": "2026-06-23T19:00:03.071Z",
+      "expiry": "2026-06-23T20:51:09.726Z",
+      "node": "Neso (Neptune)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Neso (Neptune)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -334,6 +334,36 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 2,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3ae41e9b2e9e4e598ce5b2",
+      "activation": "2026-06-23T19:53:02.496Z",
+      "expiry": "2026-06-23T21:19:23.558Z",
+      "node": "Naeglar (Eris)",
+      "missionType": "Hive",
+      "missionTypeKey": "Hive",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Naeglar (Eris)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3ae41e9b2e9e4e598ce5b1",
+      "activation": "2026-06-23T19:53:02.496Z",
+      "expiry": "2026-06-23T21:24:13.253Z",
+      "node": "Selkie (Sedna)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Selkie (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a3ac4f3db946d7fec8ce5b2",
@@ -773,7 +803,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 4h 8m 58s",
+    "remaining": "5d 4h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1309,9 +1339,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -24001,
+      "count": -24083,
       "requiredRuns": 49000,
-      "completion": 25.509183673469387,
+      "completion": 25.425510204081636,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1359,9 +1389,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -21879,
+      "count": -21964,
       "requiredRuns": 48000,
-      "completion": 27.209375,
+      "completion": 27.120833333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1576,9 +1606,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -27174,
+      "count": -28039,
       "requiredRuns": 41000,
-      "completion": 33.72195121951219,
+      "completion": 31.612195121951213,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1612,9 +1642,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -26613,
+      "count": -27391,
       "requiredRuns": 37000,
-      "completion": 28.072972972972977,
+      "completion": 25.97027027027027,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1648,9 +1678,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -7334,
+      "count": -8199,
       "requiredRuns": 43000,
-      "completion": 82.94418604651163,
+      "completion": 80.93255813953488,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1684,9 +1714,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -8953,
+      "count": -9675,
       "requiredRuns": 35000,
-      "completion": 74.42,
+      "completion": 72.35714285714285,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1720,9 +1750,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -104,
+      "count": -114,
       "requiredRuns": 37000,
-      "completion": 99.71891891891892,
+      "completion": 99.6918918918919,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1756,9 +1786,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -40,
+      "count": -166,
       "requiredRuns": 40000,
-      "completion": 99.9,
+      "completion": 99.58500000000001,
       "completed": false,
       "rewardTypes": [
         "mutagen"
