@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T03:06:19Z",
+  "fetchedAt": "2026-06-23T03:11:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782189840000",
     "activation": "2026-06-23T03:04:00.000Z",
     "expiry": "2026-06-23T04:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782189840000",
     "activation": "2026-06-23T03:04:00.000Z",
     "expiry": "2026-06-23T04:44:00.000Z",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T05:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 27m 54s"
+    "timeLeft": "2h 22m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782187200000",
@@ -698,7 +698,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 20h 53m 58s",
+    "remaining": "5d 20h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1234,9 +1234,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -10477,
+      "count": -10541,
       "requiredRuns": 49000,
-      "completion": 39.30918367346939,
+      "completion": 39.243877551020404,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1284,9 +1284,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -8190,
+      "count": -8259,
       "requiredRuns": 48000,
-      "completion": 41.46875,
+      "completion": 41.396875,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1429,9 +1429,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -16835,
+      "count": -16964,
       "requiredRuns": 30000,
-      "completion": 43.88333333333333,
+      "completion": 43.45333333333333,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1501,9 +1501,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -500,
+      "count": -523,
       "requiredRuns": 43000,
-      "completion": 98.83720930232558,
+      "completion": 98.78372093023256,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -6132,7 +6132,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 235,
       "salePrice": 94,
       "total": 100,
-      "sold": 45,
+      "sold": 47,
       "discount": 60
     }
   ],
