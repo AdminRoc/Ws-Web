@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T23:46:20Z",
+  "fetchedAt": "2026-06-23T23:51:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "58m 0s",
+    "timeLeft": "53m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782257160000",
-    "activation": "2026-06-23T23:26:00.000Z",
-    "expiry": "2026-06-23T23:46:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782258360000",
+    "activation": "2026-06-23T23:46:00.000Z",
+    "expiry": "2026-06-23T23:53:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
-    "timeLeft": "58m 0s",
+    "timeLeft": "53m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T01:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 47m 54s"
+    "timeLeft": "1h 42m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782259200000",
@@ -437,6 +437,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Olympus (Mars)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b1b6fe9bca197dd8ce5b1",
+      "activation": "2026-06-23T23:49:03.089Z",
+      "expiry": "2026-06-24T01:01:28.115Z",
+      "node": "Taranis (Void)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Taranis (Void)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": false,
       "isHard": false
     },
@@ -889,7 +904,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 13m 58s",
+    "remaining": "5d 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1425,9 +1440,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -27787,
+      "count": -27868,
       "requiredRuns": 49000,
-      "completion": 21.64591836734694,
+      "completion": 21.563265306122446,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1475,9 +1490,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -25552,
+      "count": -25638,
       "requiredRuns": 48000,
-      "completion": 23.383333333333333,
+      "completion": 23.293750000000003,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1764,9 +1779,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -22244,
+      "count": -22998,
       "requiredRuns": 37000,
-      "completion": 39.881081081081085,
+      "completion": 37.84324324324324,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1800,9 +1815,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -12742,
+      "count": -13569,
       "requiredRuns": 40000,
-      "completion": 68.145,
+      "completion": 66.0775,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1836,9 +1851,45 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -430,
+      "count": -485,
       "requiredRuns": 39000,
-      "completion": 98.8974358974359,
+      "completion": 98.75641025641025,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
+      "id": "6a3b1baa5025afb0cd8ce5b1",
+      "activation": "2026-06-23T23:50:01.822Z",
+      "node": "Ker (Ceres)",
+      "nodeKey": "Ker (Ceres)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 1,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": 0,
+      "requiredRuns": 32000,
+      "completion": 100,
       "completed": false,
       "rewardTypes": [
         "mutagen"
