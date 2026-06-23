@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T11:21:23Z",
+  "fetchedAt": "2026-06-23T11:26:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782216840000",
     "activation": "2026-06-23T10:34:00.000Z",
     "expiry": "2026-06-23T12:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "53m 1s",
+    "timeLeft": "48m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782216840000",
     "activation": "2026-06-23T10:34:00.000Z",
     "expiry": "2026-06-23T12:14:00.000Z",
-    "timeLeft": "53m 1s",
+    "timeLeft": "48m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T13:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 42m 55s"
+    "timeLeft": "1h 37m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782216000000",
@@ -81,21 +81,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3a559f15aee556f38ce5b2",
-      "activation": "2026-06-23T09:45:03.049Z",
-      "expiry": "2026-06-23T11:23:34.922Z",
-      "node": "Nuovo (Ceres)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nuovo (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3a586e21c01c3c578ce5b1",
       "activation": "2026-06-23T09:57:02.717Z",
       "expiry": "2026-06-23T11:32:01.439Z",
@@ -126,21 +111,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3a5d1e7a43ed169d8ce5b2",
-      "activation": "2026-06-23T10:17:02.268Z",
-      "expiry": "2026-06-23T11:22:00.962Z",
-      "node": "Monolith (Phobos)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Monolith (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3a5d1e7a43ed169d8ce5b1",
       "activation": "2026-06-23T10:17:02.268Z",
       "expiry": "2026-06-23T11:44:41.086Z",
@@ -150,21 +120,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Metis (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3a5d1e7a43ed169d8ce5b3",
-      "activation": "2026-06-23T10:17:02.268Z",
-      "expiry": "2026-06-23T11:23:05.955Z",
-      "node": "Anthe (Saturn)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Anthe (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -833,7 +788,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 12h 38m 58s",
+    "remaining": "5d 12h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1369,9 +1324,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -15998,
+      "count": -16062,
       "requiredRuns": 49000,
-      "completion": 33.67551020408163,
+      "completion": 33.61020408163265,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1419,9 +1374,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -14446,
+      "count": -14504,
       "requiredRuns": 48000,
-      "completion": 34.952083333333334,
+      "completion": 34.891666666666666,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1492,9 +1447,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29663,
+      "count": -29836,
       "requiredRuns": 30000,
-      "completion": 1.1233333333333317,
+      "completion": 0.546666666666662,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1564,9 +1519,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -394,
+      "count": -466,
       "requiredRuns": 40000,
-      "completion": 99.015,
+      "completion": 98.835,
       "completed": false,
       "rewardTypes": [
         "detonite"
