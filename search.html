@@ -6,7 +6,7 @@
 <title>全站搜索 — WFSpeed.run</title>
 <link rel="icon" type="image/png" href="picture/websitelogo.png">
 <style>
-@font-face{font-family:'Xszt';src:url('fonts/xszt.ttf') format('truetype');font-display:swap;}
+@font-face{font-family:'Xszt';src:url('fonts/xszt.woff2') format('woff2'),url('fonts/xszt.ttf') format('truetype');font-display:swap;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;font-family:'Xszt','Orbitron',sans-serif;}
 @keyframes pgIn{from{opacity:0}to{opacity:1}}
 html{font-size:16px;animation:pgIn .75s ease .05s both;}
@@ -318,28 +318,19 @@ var _loaded=false,_loading=false,_cbs=[];
 function loadData(cb){
   if(_loaded){cb();return;}
   _cbs.push(cb);if(_loading)return;_loading=true;
-  var f=[];
-  (function(){
-    var aM=['alchemy','defection','defense','disruption','excavation','salvage','interception','mirror-defense','survival','void-cascade','void-flood','void-armageddon'];
-    aM.forEach(function(m){f.push('data/arbitration/arbitration-hourly-vitus-'+m+'.js','data/arbitration/arbitration-rounds-'+m+'.js');});
-    ['effervo','exequias','exta','fossa','hades','iliad','jordas-golem','magnacidium','merrow','mutalist-alad-v','naamah','oro','psamathe','tethys','themisto','titania','tolstoj','war'].forEach(function(m){f.push('data/assassination/assassination-normal-'+m+'.js','data/assassination/assassination-steel-'+m+'.js');});
-    f.push('data/assassination/assassination-steel-the-fragmented-one.js','data/cambire/cambire-normal.js','data/cambire/cambire-steel.js');
-    ['abaddon','ananke','ara','ariel','cassini','copernicus','elion','galatea','hepit','horend','hydra','isos','kobinn-west','lex','mantle','skyresh','ukko','venera'].forEach(function(m){f.push('data/capture/capture-'+m+'.js');});
-    ['caracol','memphis','yursa'].forEach(function(m){f.push('data/defection/defection-'+m+'.js');});
-    ['akkad','belenus','casta','coba','gulliver','helene','hydron','hyf','io','kadesh','kala-azar','lares','larzac','lith','nabuk','outer','paimon','proteus','romula','sangeru','sechura','seimeni','sinai','spear','stephano','stofler','taranis','tessera'].forEach(function(m){f.push('data/defense-relic/defense-relic-normal-'+m+'.js','data/defense-relic/defense-relic-steel-'+m+'.js');});
-    ['apollo','armatus','kappa','tamu','ur'].forEach(function(m){['solo','duo','multi'].forEach(function(md){f.push('data/disruption/disruption-'+m+'-'+md+'.js');});});
-    ['solo','duo','trio','quad'].forEach(function(m){f.push('data/eidolon/eidolon-'+m+'.js','data/eidolon-macro/eidolon-macro-'+m+'.js');});
-    ['acheron','adaro','armaros','baal','carpo','dakata','e-gate','e-prime','halako-perimeter','hellas','m-prime','mariana','mausoleum-east','montes','narcissus','neso','nex','oxomoco','pallas','pantheon','phlegyas','plato','puck','rhu-manor','roche','saxis','sycorax','syrtis','telesto','teshub','ultor'].forEach(function(m){f.push('data/exterminate/exterminate-normal-'+m+'.js','data/exterminate/exterminate-steel-'+m+'.js');});
-    ['1999-exterminate','legacyte-harvest','stage-defense','victory-plaza-apex','victory-plaza-normal'].forEach(function(m){f.push('data/hollvania/hollvania-'+m+'.js');});
-    f.push('data/profit-taker/profit-taker.js','data/profit-taker-macro/profit-taker-macro.js');
-    ['anthe','brugia','caliban','caloris','garus','linea','martialis','metis','monolith','naga','numa','nuovo','orias','pacific','regna','triton','zeipel'].forEach(function(m){f.push('data/rescue/rescue-'+m+'.js');});
-    f.push('data/ropalolyst/ropalolyst-normal.js','data/ropalolyst/ropalolyst-steel.js');
-    ['adrastea','ares','calypso','cervantes','cypress','desdemona','enceladus','formido','galilea','gradivus','ishtar','ker','kokabiel','koro','marduk','naeglar','rusalka','sao','stribog','terminus','thebe','thon'].forEach(function(m){f.push('data/sabotage/sabotage-'+m+'.js');});
-    ['flexa','h2-cloud','nsu-grid','r9-cloud'].forEach(function(m){f.push('data/skirmish/skirmish-normal-'+m+'.js','data/skirmish/skirmish-steel-'+m+'.js');});
-    f.push('data/special-events/special-events.js');
-    ['archon-hunt','ayatan-capture','exploiter','netracell','obstacle-course','ollies-crash-course','the-guilty'].forEach(function(m){f.push('data/special_challenge/special-challenge-'+m+'.js');});
-    ['amalthea','arval','bode','cambria','dione','kelpie','nereid','oceanum','pago','rosalind','shklovsky','suisei','unda','valac'].forEach(function(m){f.push('data/spy/spy-allow-'+m+'.js','data/spy/spy-ban-'+m+'.js');});
-  })();
+  /* 性能优化：原本逐个加载 317 个数据文件（317 次 HTTP 请求，大陆访问 GitHub Pages
+     极慢甚至超时），现改为加载 20 个按分类目录预拼接好的 _bundle.js（由
+     .github/scripts/bundle_data.py 在每次 data/ 改动 push 后自动重建）。
+     每个 bundle 内含该分类所有节点的全局变量，IDX 按变量名查表逻辑完全不变。 */
+  var f=[
+    'data/arbitration/_bundle.js','data/assassination/_bundle.js','data/cambire/_bundle.js',
+    'data/capture/_bundle.js','data/defection/_bundle.js','data/defense-relic/_bundle.js',
+    'data/disruption/_bundle.js','data/eidolon/_bundle.js','data/eidolon-macro/_bundle.js',
+    'data/exterminate/_bundle.js','data/hollvania/_bundle.js','data/profit-taker/_bundle.js',
+    'data/profit-taker-macro/_bundle.js','data/rescue/_bundle.js','data/ropalolyst/_bundle.js',
+    'data/sabotage/_bundle.js','data/skirmish/_bundle.js','data/special-events/_bundle.js',
+    'data/special_challenge/_bundle.js','data/spy/_bundle.js'
+  ];
   var bi=0,BATCH=40;
   function nb(){
     if(bi*BATCH>=f.length){_loaded=true;_loading=false;_cbs.forEach(function(c){c();});_cbs=[];return;}
