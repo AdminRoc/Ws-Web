@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T00:36:20Z",
+  "fetchedAt": "2026-06-23T00:41:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782180840000",
     "activation": "2026-06-23T00:34:00.000Z",
     "expiry": "2026-06-23T02:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782174000000",
-    "activation": "2026-06-23T00:20:00.000Z",
-    "expiry": "2026-06-23T00:40:08.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782175200000",
+    "activation": "2026-06-23T00:40:00.000Z",
+    "expiry": "2026-06-23T00:46:48.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782180840000",
     "activation": "2026-06-23T00:34:00.000Z",
     "expiry": "2026-06-23T02:14:00.000Z",
-    "timeLeft": "1h 38m 0s",
+    "timeLeft": "1h 33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T03:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 27m 54s"
+    "timeLeft": "2h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782180000000",
@@ -92,21 +92,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "V Prime (Venus)",
       "tier": "Lith",
       "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a39bdfaf199fde5918ce5b1",
-      "activation": "2026-06-22T22:58:02.387Z",
-      "expiry": "2026-06-23T00:37:01.573Z",
-      "node": "Carpo (Jupiter)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Carpo (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
       "isStorm": false,
       "isHard": false
     },
@@ -201,21 +186,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a39c5b68d0c2fbad48ce5b2",
-      "activation": "2026-06-22T23:31:02.485Z",
-      "expiry": "2026-06-23T01:23:30.077Z",
-      "node": "Cypress (Pluto)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cypress (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a39c5b68d0c2fbad48ce5b1",
       "activation": "2026-06-22T23:31:02.485Z",
       "expiry": "2026-06-23T01:18:21.795Z",
@@ -231,6 +201,21 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
+      "id": "6a39c5b68d0c2fbad48ce5b2",
+      "activation": "2026-06-22T23:31:02.485Z",
+      "expiry": "2026-06-23T01:23:30.077Z",
+      "node": "Cypress (Pluto)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cypress (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
       "id": "6a39c62f24fdd565d68ce5b1",
       "activation": "2026-06-22T23:33:02.994Z",
       "expiry": "2026-06-23T01:24:18.093Z",
@@ -240,21 +225,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Io (Jupiter)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a39c62f24fdd565d68ce5b2",
-      "activation": "2026-06-22T23:33:02.994Z",
-      "expiry": "2026-06-23T00:38:49.203Z",
-      "node": "Titan (Saturn)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Titan (Saturn)",
       "tier": "Meso",
       "tierNum": 2,
       "isStorm": false,
@@ -336,21 +306,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a39cb56c5ab83fe608ce5b2",
-      "activation": "2026-06-22T23:55:02.334Z",
-      "expiry": "2026-06-23T01:29:27.481Z",
-      "node": "Nabuk (Kuva Fortress)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nabuk (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a39cb56c5ab83fe608ce5b1",
       "activation": "2026-06-22T23:55:02.334Z",
       "expiry": "2026-06-23T01:19:22.838Z",
@@ -360,6 +315,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Rotuma (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a39cb56c5ab83fe608ce5b2",
+      "activation": "2026-06-22T23:55:02.334Z",
+      "expiry": "2026-06-23T01:29:27.481Z",
+      "node": "Nabuk (Kuva Fortress)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nabuk (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -381,21 +351,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a39d3c6c1af2f64bd8ce5b2",
-      "activation": "2026-06-23T00:31:02.252Z",
-      "expiry": "2026-06-23T01:52:27.002Z",
-      "node": "Hellas (Mars)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Hellas (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a39d3c6c1af2f64bd8ce5b1",
       "activation": "2026-06-23T00:31:02.252Z",
       "expiry": "2026-06-23T01:33:48.901Z",
@@ -405,6 +360,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Everest (Earth)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a39d3c6c1af2f64bd8ce5b2",
+      "activation": "2026-06-23T00:31:02.252Z",
+      "expiry": "2026-06-23T01:52:27.002Z",
+      "node": "Hellas (Mars)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Hellas (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -848,7 +818,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 23h 23m 58s",
+    "remaining": "5d 23h 18m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1384,9 +1354,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -9008,
+      "count": -9055,
       "requiredRuns": 49000,
-      "completion": 40.80816326530613,
+      "completion": 40.76020408163266,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1434,9 +1404,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -6642,
+      "count": -6658,
       "requiredRuns": 48000,
-      "completion": 43.08125,
+      "completion": 43.06458333333333,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1471,9 +1441,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29763,
+      "count": -29863,
       "requiredRuns": 30000,
-      "completion": 0.7900000000000018,
+      "completion": 0.4566666666666719,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1552,6 +1522,42 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
+      "id": "6a39630bc13bb286c58ce5b2",
+      "activation": "2026-06-22T16:30:02.553Z",
+      "node": "Naamah (Europa)",
+      "nodeKey": "Naamah (Europa)",
+      "desc": "Phorid Manifestation",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 2,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -12939,
+      "requiredRuns": 30000,
+      "completion": 56.87,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
       "id": "6a39630bc13bb286c58ce5b1",
       "activation": "2026-06-22T16:30:02.553Z",
       "node": "Valefor (Europa)",
@@ -1585,42 +1591,6 @@ window.WF_WS_SNAPSHOT = {
       "completed": true,
       "rewardTypes": [
         "fieldron"
-      ]
-    },
-    {
-      "id": "6a39630bc13bb286c58ce5b2",
-      "activation": "2026-06-22T16:30:02.553Z",
-      "node": "Naamah (Europa)",
-      "nodeKey": "Naamah (Europa)",
-      "desc": "Phorid Manifestation",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -12808,
-      "requiredRuns": 30000,
-      "completion": 57.30666666666666,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
       ]
     }
   ],
@@ -6267,7 +6237,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 235,
       "salePrice": 94,
       "total": 100,
-      "sold": 20,
+      "sold": 21,
       "discount": 60
     }
   ],
