@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T08:06:23Z",
+  "fetchedAt": "2026-06-23T08:11:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782207840000",
     "activation": "2026-06-23T08:04:00.000Z",
     "expiry": "2026-06-23T09:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 38m 1s",
+    "timeLeft": "1h 33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782207840000",
     "activation": "2026-06-23T08:04:00.000Z",
     "expiry": "2026-06-23T09:44:00.000Z",
-    "timeLeft": "1h 38m 1s",
+    "timeLeft": "1h 33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T10:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 27m 55s"
+    "timeLeft": "2h 22m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782208800000",
@@ -92,21 +92,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Skyresh (Phobos)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3a2b33174e3ca75c8ce5b1",
-      "activation": "2026-06-23T06:44:03.144Z",
-      "expiry": "2026-06-23T08:06:12.830Z",
-      "node": "Sao (Neptune)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Sao (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
       "isStorm": false,
       "isHard": false
     },
@@ -379,6 +364,36 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3a3f5b05baef3b128ce5b1",
+      "activation": "2026-06-23T08:10:03.512Z",
+      "expiry": "2026-06-23T09:49:38.305Z",
+      "node": "Anthe (Saturn)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Anthe (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3a3f5b05baef3b128ce5b2",
+      "activation": "2026-06-23T08:10:03.512Z",
+      "expiry": "2026-06-23T09:36:35.938Z",
+      "node": "Roche (Phobos)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Roche (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a3a2a420a58a7d4da8ce5b5",
@@ -728,7 +743,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 15h 53m 58s",
+    "remaining": "5d 15h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1264,9 +1279,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -13779,
+      "count": -13824,
       "requiredRuns": 49000,
-      "completion": 35.939795918367345,
+      "completion": 35.89387755102041,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1314,9 +1329,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -11974,
+      "count": -12049,
       "requiredRuns": 48000,
-      "completion": 37.52708333333333,
+      "completion": 37.44895833333333,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1459,9 +1474,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -24593,
+      "count": -24715,
       "requiredRuns": 30000,
-      "completion": 18.023333333333337,
+      "completion": 17.61666666666667,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1495,9 +1510,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -34250,
+      "count": -35154,
       "requiredRuns": 43000,
-      "completion": 20.348837209302328,
+      "completion": 18.24651162790698,
       "completed": false,
       "rewardTypes": [
         "detonite"
