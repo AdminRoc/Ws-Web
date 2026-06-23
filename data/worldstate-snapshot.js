@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T19:31:22Z",
+  "fetchedAt": "2026-06-23T19:36:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782243840000",
     "activation": "2026-06-23T18:04:00.000Z",
     "expiry": "2026-06-23T19:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782243840000",
     "activation": "2026-06-23T18:04:00.000Z",
     "expiry": "2026-06-23T19:44:00.000Z",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T20:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 2m 55s"
+    "timeLeft": "57m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782244800000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a3ac47a3d368b507e8ce5b1",
-      "activation": "2026-06-23T17:38:02.351Z",
-      "expiry": "2026-06-23T19:32:00.763Z",
-      "node": "Cinxia (Ceres)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cinxia (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3ac966a81edcc0618ce5b1",
       "activation": "2026-06-23T17:59:02.597Z",
@@ -863,7 +848,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 4h 28m 58s",
+    "remaining": "5d 4h 23m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1399,9 +1384,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -23646,
+      "count": -23724,
       "requiredRuns": 49000,
-      "completion": 25.871428571428567,
+      "completion": 25.791836734693874,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1449,9 +1434,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -21572,
+      "count": -21650,
       "requiredRuns": 48000,
-      "completion": 27.529166666666665,
+      "completion": 27.447916666666668,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1666,9 +1651,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -23775,
+      "count": -24614,
       "requiredRuns": 41000,
-      "completion": 42.01219512195122,
+      "completion": 39.96585365853659,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1702,9 +1687,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -23451,
+      "count": -24235,
       "requiredRuns": 37000,
-      "completion": 36.61891891891892,
+      "completion": 34.5,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1738,9 +1723,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -3823,
+      "count": -4711,
       "requiredRuns": 43000,
-      "completion": 91.1093023255814,
+      "completion": 89.04418604651163,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1774,9 +1759,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -6118,
+      "count": -6827,
       "requiredRuns": 35000,
-      "completion": 82.52,
+      "completion": 80.49428571428572,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1810,9 +1795,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -42,
+      "count": -55,
       "requiredRuns": 37000,
-      "completion": 99.88648648648648,
+      "completion": 99.85135135135135,
       "completed": false,
       "rewardTypes": [
         "detonite"
