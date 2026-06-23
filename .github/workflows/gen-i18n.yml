@@ -1,0 +1,42 @@
+name: 生成统一翻译库
+
+# 统一中英映射库 data/i18n/wf-i18n.json 是派生产物，由本工作流从下列"源文件"自动组装：
+#   log/js/wf-i18n-zh.js（byPath 人工核校译名）
+#   data/item-names-zh.json（byName 英文名译名）
+#   data/wf-translations.json（override/planet/mission/misc）
+#   远程 dict.zh.json + ExportRegions（byLang 节点名子集，在 GitHub 服务器侧拉取）
+# 改了任一源文件 push 后，本工作流自动重建并提交 wf-i18n.json —— 维护者只改源，不手改派生文件。
+on:
+  push:
+    paths:
+      - 'log/js/wf-i18n-zh.js'
+      - 'data/item-names-zh.json'
+      - 'data/wf-translations.json'
+      - '.github/scripts/gen_i18n.py'
+  workflow_dispatch:
+
+concurrency:
+  group: gen-i18n
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: 重建 data/i18n/wf-i18n.json
+        run: python3 .github/scripts/gen_i18n.py
+
+      - name: 提交并推送（无变化时跳过）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/i18n/wf-i18n.json
+          # 带 [skip ci]，避免本次提交（落在 data/**）再触发其它 data 相关工作流
+          git diff --staged --quiet || \
+            git commit -m "build: regenerate unified i18n [skip ci]"
+          git push

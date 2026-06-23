@@ -1040,32 +1040,12 @@ WF.profileView = (function () {
     return Math.min(40,Math.floor((-1+Math.sqrt(1+8*total/750))/2));
   }
 
-  function _itemName(path){
-    if(!path)return'';
-    /* 共享手动校正表（与世界状态模块共用，见 js/wf-translations.js）优先，
-       兼容完整路径或末段短名两种形式 */
-    var ov = window.WF_TR && window.WF_TR.ITEM_OVERRIDE;
-    if(ov && ov[path]) return ov[path];
-    var zh = WF.I18N_ZH && WF.I18N_ZH[path];
-    if(zh)return zh;
-    var parts=path.split('/');
-    var raw=parts[parts.length-1]||parts[parts.length-2]||'';
-    if(ov && ov[raw]) return ov[raw];
-    return raw.replace(/([a-z])([A-Z])/g,'$1 $2').replace(/([A-Z]+)([A-Z][a-z])/g,'$1 $2');
-  }
+  /* 物品名翻译统一走共享运行时 WF.i18n（见 js/wf-i18n.js）。
+     itemNameByPath 内部已复刻原"override[路径]→字典[路径]→override[末段]→驼峰拆词"链，行为不变。 */
+  function _itemName(path){ return WF.i18n.itemNameByPath(path); }
 
-  /* 短名反查索引（从 WF.I18N_ZH 完整路径提取末段） */
-  var _i18nShort = null;
-  function _i18nShortMap() {
-    if (_i18nShort) return _i18nShort;
-    _i18nShort = {};
-    var zh = WF.I18N_ZH || {};
-    Object.keys(zh).forEach(function(k) {
-      var last = k.split('/').pop();
-      if (last && !_i18nShort[last]) _i18nShort[last] = zh[k];
-    });
-    return _i18nShort;
-  }
+  /* 短名反查表同样取自 WF.i18n（byPath 末段→中文，首个出现优先），与原逻辑一致 */
+  function _i18nShortMap() { return WF.i18n.shortMap(); }
 
   /* 挑战/成就名称翻译 */
   function _challengeNameZh(raw) {

@@ -2226,6 +2226,11 @@
 
 <script src="js/main.js"></script>
 <script src="js/wf-translations.js"></script>
+<!-- 统一翻译运行时 WF.i18n：作为现有远程字典(dict.zh.json)之外的"同源兜底"。
+     远程被墙/未命中时，仍能本地翻译节点名(byLang 426)/物品名(byName)/override —— 只增不减，
+     绝不覆盖远程已成功的翻译，故在线广度不缩水、离线可译性反而增强。 -->
+<script src="js/wf-i18n.js"></script>
+<script>WF.i18n.load('data/i18n/wf-i18n.json');</script>
 <script src="data/worldstate-snapshot.js"></script>
 <script>
 (function () {
@@ -2569,8 +2574,13 @@
   function resolveNode(nodeId) {
     if (_exportRegions && _exportRegions[nodeId]) {
       var n = _exportRegions[nodeId];
-      var name    = (_dict && _dict[n.name])        ? _dict[n.name]        : (n.name.split('/').pop());
-      var mission = (_dict && _dict[n.missionName]) ? _dict[n.missionName] : (MZ[n.missionName] || '');
+      /* _dict（远程广字典）优先；未命中时用 WF.i18n.byLang 同源兜底（426 条正覆盖全部节点引用键），
+         再不行才退回英文末段 / MZ —— 只增不减。 */
+      var i18 = (window.WF && WF.i18n) ? WF.i18n : null;
+      var name    = (_dict && _dict[n.name])        ? _dict[n.name]
+                  : (i18 && i18.byLang(n.name))        || n.name.split('/').pop();
+      var mission = (_dict && _dict[n.missionName]) ? _dict[n.missionName]
+                  : (i18 && i18.byLang(n.missionName)) || (MZ[n.missionName] || '');
       return mission ? (name + ' · ' + mission) : name;
     }
     if (ARB_NODES[nodeId]) {
@@ -2616,7 +2626,11 @@
   function tr(key) {
     if (!key) return '';
     if (ITEM_ZH_OVERRIDE[key]) return ITEM_ZH_OVERRIDE[key];
-    return (_dict && _dict[key]) ? _dict[key] : key;
+    if (_dict && _dict[key]) return _dict[key];
+    /* 同源兜底：远程广字典 _dict 未命中（含被墙）时再查 WF.i18n，命中即返回；
+       绝不覆盖 _dict 已成功的翻译，故只增不减、在线广度不缩水。 */
+    var alt = (window.WF && WF.i18n) ? WF.i18n.find(key) : null;
+    return (alt != null) ? alt : key;
   }
 
   /* 任务类型翻译：MZ 手动表优先于远程字典，防止字典更新覆盖校正后的译名 */
@@ -3060,7 +3074,10 @@
       if (data) _tenetCodaRotation = data;
     });
 
-    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, tenetCodaP, bountyP, regP]).then(function () {
+    /* 等同源统一字典就绪，保证渲染时 tr/resolveNode 的同源兜底可用（尤其远程被墙时） */
+    var i18nP = (window.WF && WF.i18n) ? WF.i18n.ready : Promise.resolve();
+
+    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, tenetCodaP, i18nP, bountyP, regP]).then(function () {
       /* 赏金任务板最终兜底：rawP（oracle.browse.wf / api.warframe.com）在大陆网络下
          可能也连不上，此时若 D.bounties 仍为空，用 GitHub 快照里的
          syndicateMissions（来自 apiP 或 fallbackP）重建同样结构的数据，
