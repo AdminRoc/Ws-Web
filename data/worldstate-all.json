@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-23T04:26:20Z",
+  "fetchedAt": "2026-06-23T04:31:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782189840000",
     "activation": "2026-06-23T03:04:00.000Z",
     "expiry": "2026-06-23T04:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "18m 0s",
+    "timeLeft": "13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782189840000",
     "activation": "2026-06-23T03:04:00.000Z",
     "expiry": "2026-06-23T04:44:00.000Z",
-    "timeLeft": "18m 0s",
+    "timeLeft": "13m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-23T05:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 7m 54s"
+    "timeLeft": "1h 2m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782194400000",
@@ -60,21 +60,6 @@
     ]
   },
   "fissures": [
-    {
-      "id": "6a39f0d62da79f9a428ce5b1",
-      "activation": "2026-06-23T02:35:02.906Z",
-      "expiry": "2026-06-23T04:27:39.125Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a39f4d3f2d0f464838ce5b2",
       "activation": "2026-06-23T02:52:03.138Z",
@@ -389,6 +374,36 @@
       "tierNum": 6,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a3a0ada950b2c7b7d8ce5b2",
+      "activation": "2026-06-23T04:26:02.914Z",
+      "expiry": "2026-06-23T05:51:42.471Z",
+      "node": "Rotuma (Kuva Fortress)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Rotuma (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3a0ada950b2c7b7d8ce5b1",
+      "activation": "2026-06-23T04:26:02.914Z",
+      "expiry": "2026-06-23T06:04:52.930Z",
+      "node": "Taveuni (Kuva Fortress)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Taveuni (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a39f20251610619ec8ce5b2",
@@ -828,7 +843,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 19h 33m 58s",
+    "remaining": "5d 19h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1364,9 +1379,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -11354,
+      "count": -11412,
       "requiredRuns": 49000,
-      "completion": 38.41428571428571,
+      "completion": 38.35510204081633,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1414,9 +1429,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -9254,
+      "count": -9332,
       "requiredRuns": 48000,
-      "completion": 40.360416666666666,
+      "completion": 40.27916666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1532,42 +1547,6 @@
       ]
     },
     {
-      "id": "6a39630bc13bb286c58ce5b2",
-      "activation": "2026-06-22T16:30:02.553Z",
-      "node": "Naamah (Europa)",
-      "nodeKey": "Naamah (Europa)",
-      "desc": "Phorid Manifestation",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -18953,
-      "requiredRuns": 30000,
-      "completion": 36.82333333333333,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
-      ]
-    },
-    {
       "id": "6a39630bc13bb286c58ce5b1",
       "activation": "2026-06-22T16:30:02.553Z",
       "node": "Valefor (Europa)",
@@ -1604,6 +1583,42 @@
       ]
     },
     {
+      "id": "6a39630bc13bb286c58ce5b2",
+      "activation": "2026-06-22T16:30:02.553Z",
+      "node": "Naamah (Europa)",
+      "nodeKey": "Naamah (Europa)",
+      "desc": "Phorid Manifestation",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 2,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -19089,
+      "requiredRuns": 30000,
+      "completion": 36.370000000000005,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
       "id": "6a39d966e9acf4b2c38ce5b3",
       "activation": "2026-06-23T01:57:34.016Z",
       "node": "Vallis (Mars)",
@@ -1631,9 +1646,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1056,
+      "count": -1079,
       "requiredRuns": 43000,
-      "completion": 97.54418604651163,
+      "completion": 97.4906976744186,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -6262,7 +6277,7 @@
       "originalPrice": 235,
       "salePrice": 94,
       "total": 100,
-      "sold": 62,
+      "sold": 63,
       "discount": 60
     }
   ],
