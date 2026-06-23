@@ -178,8 +178,14 @@
   /* 个人资料获取：通过剪贴板引导用户自行复制 Warframe API JSON
    * （Warframe API 直接禁止跨域访问，代理方案均已失效） */
   function _showProfileGuide() {
-    /* 不做任何网络请求，直接显示剪贴板引导面板 */
-    if (state.activeTab === 'profile') WF.profileView.render($('detail'), state.profileState);
+    /* 个人信息页要翻译大量物品名，依赖完整字典：等 WF.i18n.ready 后再渲染，
+       保证字典已就位、绝不出现未翻译英文（遵守"优化不削弱汉化"原则）。
+       其它 tab（中断/夜灵等）不依赖大字典，不经过这里、无需等待。
+       仍不做任何网络请求之外的事，只显示剪贴板引导面板。 */
+    if (state.activeTab !== 'profile') return;
+    WF.i18n.ready.then(function () {
+      if (state.activeTab === 'profile') WF.profileView.render($('detail'), state.profileState);
+    });
   }
 
   function switchTab(tabId) {

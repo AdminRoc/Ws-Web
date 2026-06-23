@@ -94,7 +94,11 @@
   <script src="js/logReader.js"></script>
   <script src="../js/wf-translations.js"></script>
   <script src="js/solNodes.js"></script>
-  <script src="js/wf-i18n-zh.js"></script>
+  <!-- 物品名中文字典改由共享运行时 WF.i18n 异步加载同源 data/i18n/wf-i18n.json，
+       不再用 523KB 的同步 <script> 阻塞 DOMContentLoaded（上传按钮因此可立即就绪）。
+       “个人信息”页渲染前会 await WF.i18n.ready，保证字典就位、绝不回退英文（见 main.js）。 -->
+  <script src="../js/wf-i18n.js"></script>
+  <script>WF.i18n.load('../data/i18n/wf-i18n.json');</script>
   <script src="js/squadMixin.js"></script>
   <script src="js/parsers/eidolon.js"></script>
   <script src="js/parsers/disruption.js"></script>
