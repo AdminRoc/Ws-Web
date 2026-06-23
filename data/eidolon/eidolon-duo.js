@@ -62,6 +62,13 @@ var eidolonDuoRecords = [
     uploadTime:    "2025-05-21",
     videoUrls:     ["https://youtu.be/0PxKjTw6bvY"]
   },
+  {
+    avgRealTime:   "07:47.191",
+    captureStatus: "6×3",
+    playerId:      "-T14Nt / Loongx.",
+    uploadTime:    "2026-06-10",
+    videoUrls:     ["https://youtu.be/B4yb-fZ17Yw"]
+  },
   // ─── 在此处继续添加新条目 ───
   // {
   //   avgRealTime:   "MM:SS.mmm",
