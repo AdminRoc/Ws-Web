@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-23T20:56:19Z",
+  "fetchedAt": "2026-06-23T21:01:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782252840000",
     "activation": "2026-06-23T20:34:00.000Z",
     "expiry": "2026-06-23T22:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 18m 0s",
+    "timeLeft": "1h 13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782252840000",
     "activation": "2026-06-23T20:34:00.000Z",
     "expiry": "2026-06-23T22:14:00.000Z",
-    "timeLeft": "1h 18m 0s",
+    "timeLeft": "1h 13m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-23T23:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 7m 54s"
+    "timeLeft": "2h 2m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782252000000",
@@ -61,21 +61,6 @@
   },
   "fissures": [
     {
-      "id": "6a3ad7b3936978b7608ce5b1",
-      "activation": "2026-06-23T19:00:03.071Z",
-      "expiry": "2026-06-23T20:58:07.182Z",
-      "node": "Taranis (Void)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Taranis (Void)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3adc626a3ac103f68ce5b1",
       "activation": "2026-06-23T19:20:02.311Z",
       "expiry": "2026-06-23T21:16:22.652Z",
@@ -106,21 +91,6 @@
       "isHard": false
     },
     {
-      "id": "6a3ae41e9b2e9e4e598ce5b2",
-      "activation": "2026-06-23T19:53:02.496Z",
-      "expiry": "2026-06-23T21:19:23.558Z",
-      "node": "Naeglar (Eris)",
-      "missionType": "Hive",
-      "missionTypeKey": "Hive",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Naeglar (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3ae41e9b2e9e4e598ce5b1",
       "activation": "2026-06-23T19:53:02.496Z",
       "expiry": "2026-06-23T21:24:13.253Z",
@@ -130,6 +100,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Selkie (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3ae41e9b2e9e4e598ce5b2",
+      "activation": "2026-06-23T19:53:02.496Z",
+      "expiry": "2026-06-23T21:19:23.558Z",
+      "node": "Naeglar (Eris)",
+      "missionType": "Hive",
+      "missionTypeKey": "Hive",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Naeglar (Eris)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -181,21 +166,6 @@
       "isHard": false
     },
     {
-      "id": "6a3ae94639fdf6b9198ce5b2",
-      "activation": "2026-06-23T20:15:02.603Z",
-      "expiry": "2026-06-23T21:33:42.701Z",
-      "node": "Circulus (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Circulus (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3ae94639fdf6b9198ce5b1",
       "activation": "2026-06-23T20:15:02.603Z",
       "expiry": "2026-06-23T21:52:55.166Z",
@@ -205,6 +175,21 @@
       "enemy": "The Murmur",
       "enemyKey": "The Murmur",
       "nodeKey": "Cambire (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3ae94639fdf6b9198ce5b2",
+      "activation": "2026-06-23T20:15:02.603Z",
+      "expiry": "2026-06-23T21:33:42.701Z",
+      "node": "Circulus (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Circulus (Lua)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -391,93 +376,18 @@
       "isHard": true
     },
     {
-      "id": "6a3ad3027a51fad9538ce5b4",
-      "activation": "2026-06-23T19:20:03.356Z",
-      "expiry": "2026-06-23T20:50:03.356Z",
-      "node": "Nu-gua Mines (Neptune)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
+      "id": "6a3af31e53607318838ce5b1",
+      "activation": "2026-06-23T20:57:02.437Z",
+      "expiry": "2026-06-23T21:58:39.128Z",
+      "node": "Monolith (Phobos)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Nu-gua Mines (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3ad3027a51fad9538ce5b3",
-      "activation": "2026-06-23T19:20:03.355Z",
-      "expiry": "2026-06-23T20:50:03.355Z",
-      "node": "Lupal Pass (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Lupal Pass (Saturn)",
+      "nodeKey": "Monolith (Phobos)",
       "tier": "Meso",
       "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3ad3027a51fad9538ce5b2",
-      "activation": "2026-06-23T19:20:03.353Z",
-      "expiry": "2026-06-23T20:50:03.353Z",
-      "node": "Beacon Shield Ring (Venus)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Beacon Shield Ring (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3ad3027a51fad9538ce5b1",
-      "activation": "2026-06-23T19:20:03.351Z",
-      "expiry": "2026-06-23T20:50:03.351Z",
-      "node": "Iota Temple (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Iota Temple (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3ad3027a51fad9538ce5b5",
-      "activation": "2026-06-23T19:20:03.358Z",
-      "expiry": "2026-06-23T20:50:03.358Z",
-      "node": "Peregrine Axis (Pluto)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Peregrine Axis (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3ad3027a51fad9538ce5b6",
-      "activation": "2026-06-23T19:20:03.360Z",
-      "expiry": "2026-06-23T20:50:03.360Z",
-      "node": "R-9 Cloud (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "R-9 Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
+      "isStorm": false,
       "isHard": false
     },
     {
@@ -828,7 +738,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 3h 3m 58s",
+    "remaining": "5d 2h 58m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1364,9 +1274,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -25015,
+      "count": -25092,
       "requiredRuns": 49000,
-      "completion": 24.47448979591837,
+      "completion": 24.39591836734694,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1414,9 +1324,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -22956,
+      "count": -23026,
       "requiredRuns": 48000,
-      "completion": 26.0875,
+      "completion": 26.01458333333333,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1457,42 +1367,6 @@
       "completed": true,
       "rewardTypes": [
         "mutagen"
-      ]
-    },
-    {
-      "id": "6a39d966e9acf4b2c38ce5b3",
-      "activation": "2026-06-23T01:57:34.016Z",
-      "node": "Vallis (Mars)",
-      "nodeKey": "Vallis (Mars)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -43248,
-      "requiredRuns": 43000,
-      "completion": -0.5767441860465183,
-      "completed": true,
-      "rewardTypes": [
-        "detonite"
       ]
     },
     {
@@ -1631,9 +1505,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -38328,
+      "count": -39165,
       "requiredRuns": 41000,
-      "completion": 6.5170731707317024,
+      "completion": 4.475609756097565,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1667,9 +1541,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -36727,
+      "count": -37496,
       "requiredRuns": 37000,
-      "completion": 0.7378378378378403,
+      "completion": -1.3405405405405357,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1703,9 +1577,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -18757,
+      "count": -19635,
       "requiredRuns": 43000,
-      "completion": 56.379069767441855,
+      "completion": 54.337209302325576,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1739,9 +1613,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -18258,
+      "count": -18965,
       "requiredRuns": 35000,
-      "completion": 47.83428571428572,
+      "completion": 45.81428571428572,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1775,9 +1649,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -251,
+      "count": -257,
       "requiredRuns": 37000,
-      "completion": 99.32162162162163,
+      "completion": 99.3054054054054,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1811,9 +1685,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -843,
+      "count": -901,
       "requiredRuns": 40000,
-      "completion": 97.8925,
+      "completion": 97.7475,
       "completed": false,
       "rewardTypes": [
         "mutagen"
