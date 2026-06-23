@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T13:16:20Z",
+  "fetchedAt": "2026-06-23T13:21:24Z",
   "cetusCycle": {
     "id": "cetusCycle1782225840000",
     "activation": "2026-06-23T13:04:00.000Z",
     "expiry": "2026-06-23T14:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 28m 0s",
+    "timeLeft": "1h 23m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782225840000",
     "activation": "2026-06-23T13:04:00.000Z",
     "expiry": "2026-06-23T14:44:00.000Z",
-    "timeLeft": "1h 28m 0s",
+    "timeLeft": "1h 23m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T15:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 17m 55s"
+    "timeLeft": "2h 12m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782223200000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a3a6ba69e6ec284a68ce5b2",
-      "activation": "2026-06-23T11:19:02.514Z",
-      "expiry": "2026-06-23T13:17:22.514Z",
-      "node": "Shklovsky (Phobos)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Shklovsky (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a3a709228df6e87038ce5b1",
       "activation": "2026-06-23T11:40:02.805Z",
@@ -152,21 +137,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Brugia (Eris)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3a766eae5f738f608ce5b1",
-      "activation": "2026-06-23T12:05:02.390Z",
-      "expiry": "2026-06-23T13:18:31.805Z",
-      "node": "Everview Arc (Zariman)",
-      "missionType": "Void Flood",
-      "missionTypeKey": "Void Flood",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Everview Arc (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
       "isStorm": false,
       "isHard": false
     },
@@ -422,6 +392,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Circulus (Lua)",
       "tier": "Omnia",
       "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3a87c70c66bdadd08ce5b1",
+      "activation": "2026-06-23T13:19:03.025Z",
+      "expiry": "2026-06-23T15:01:30.016Z",
+      "node": "Ishtar (Venus)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Ishtar (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
       "isStorm": false,
       "isHard": false
     },
@@ -863,7 +848,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 10h 43m 58s",
+    "remaining": "5d 10h 38m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1399,9 +1384,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -17738,
+      "count": -17811,
       "requiredRuns": 49000,
-      "completion": 31.900000000000002,
+      "completion": 31.82551020408163,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1449,9 +1434,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -16049,
+      "count": -16156,
       "requiredRuns": 48000,
-      "completion": 33.282291666666666,
+      "completion": 33.170833333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1558,9 +1543,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -4908,
+      "count": -5751,
       "requiredRuns": 40000,
-      "completion": 87.72999999999999,
+      "completion": 85.6225,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1594,12 +1579,48 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -268,
+      "count": -354,
       "requiredRuns": 31000,
-      "completion": 99.13548387096775,
+      "completion": 98.85806451612903,
       "completed": false,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a3a709228df6e87038ce5b4",
+      "activation": "2026-06-23T13:22:11.817Z",
+      "node": "Hydron (Sedna)",
+      "nodeKey": "Hydron (Sedna)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": 0,
+      "requiredRuns": 41000,
+      "completion": 100,
+      "completed": false,
+      "rewardTypes": [
+        "detonite"
       ]
     }
   ],
