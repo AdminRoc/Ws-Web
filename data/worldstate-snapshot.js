@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T07:26:21Z",
+  "fetchedAt": "2026-06-23T07:31:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782201840000",
     "activation": "2026-06-23T07:14:00.000Z",
     "expiry": "2026-06-23T08:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "38m 1s",
+    "timeLeft": "33m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782199200000",
-    "activation": "2026-06-23T07:20:00.000Z",
-    "expiry": "2026-06-23T07:26:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782199560000",
+    "activation": "2026-06-23T07:26:00.000Z",
+    "expiry": "2026-06-23T07:46:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782201840000",
     "activation": "2026-06-23T07:14:00.000Z",
     "expiry": "2026-06-23T08:04:00.000Z",
-    "timeLeft": "38m 1s",
+    "timeLeft": "33m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T08:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "37m 55s"
+    "timeLeft": "32m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782201600000",
@@ -139,21 +139,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 5,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a3a26be1bb817d04a8ce5b1",
-      "activation": "2026-06-23T06:25:02.694Z",
-      "expiry": "2026-06-23T07:27:38.114Z",
-      "node": "Yuvarium (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a3a298e9887a6783f8ce5b1",
@@ -833,7 +818,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 16h 33m 58s",
+    "remaining": "5d 16h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1369,9 +1354,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -13290,
+      "count": -13342,
       "requiredRuns": 49000,
-      "completion": 36.43877551020408,
+      "completion": 36.385714285714286,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1419,9 +1404,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -11398,
+      "count": -11492,
       "requiredRuns": 48000,
-      "completion": 38.12708333333333,
+      "completion": 38.02916666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1501,6 +1486,42 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
+      "id": "6a39630bc13bb286c58ce5b2",
+      "activation": "2026-06-22T16:30:02.553Z",
+      "node": "Naamah (Europa)",
+      "nodeKey": "Naamah (Europa)",
+      "desc": "Phorid Manifestation",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 2,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -23762,
+      "requiredRuns": 30000,
+      "completion": 20.79333333333333,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
       "id": "6a39630bc13bb286c58ce5b1",
       "activation": "2026-06-22T16:30:02.553Z",
       "node": "Valefor (Europa)",
@@ -1537,42 +1558,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a39630bc13bb286c58ce5b2",
-      "activation": "2026-06-22T16:30:02.553Z",
-      "node": "Naamah (Europa)",
-      "nodeKey": "Naamah (Europa)",
-      "desc": "Phorid Manifestation",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -23640,
-      "requiredRuns": 30000,
-      "completion": 21.199999999999996,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
-      ]
-    },
-    {
       "id": "6a39d966e9acf4b2c38ce5b3",
       "activation": "2026-06-23T01:57:34.016Z",
       "node": "Vallis (Mars)",
@@ -1600,9 +1585,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -27150,
+      "count": -28026,
       "requiredRuns": 43000,
-      "completion": 36.86046511627907,
+      "completion": 34.823255813953494,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -6231,7 +6216,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 235,
       "salePrice": 94,
       "total": 100,
-      "sold": 76,
+      "sold": 78,
       "discount": 60
     }
   ],
