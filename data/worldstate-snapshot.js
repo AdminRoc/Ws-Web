@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T05:26:19Z",
+  "fetchedAt": "2026-06-23T05:31:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782192840000",
     "activation": "2026-06-23T04:44:00.000Z",
     "expiry": "2026-06-23T05:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782192840000",
     "activation": "2026-06-23T04:44:00.000Z",
     "expiry": "2026-06-23T05:34:00.000Z",
-    "timeLeft": "8m 0s",
+    "timeLeft": "3m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T05:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "7m 54s"
+    "timeLeft": "2m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782194400000",
@@ -65,36 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a39fdf653057019f78ce5b3",
-      "activation": "2026-06-23T03:31:02.587Z",
-      "expiry": "2026-06-23T05:25:56.017Z",
-      "node": "E Prime (Earth)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "E Prime (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3a040e2c3d9c74d98ce5b2",
-      "activation": "2026-06-23T03:57:02.921Z",
-      "expiry": "2026-06-23T05:29:54.427Z",
-      "node": "Monolith (Phobos)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Monolith (Phobos)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3a066783332db4d08ce5b2",
       "activation": "2026-06-23T04:07:03.030Z",
@@ -216,21 +186,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3a0ed78c706d2fd48ce5b2",
-      "activation": "2026-06-23T04:43:03.019Z",
-      "expiry": "2026-06-23T06:41:52.029Z",
-      "node": "Narcissus (Pluto)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Narcissus (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3a0ed78c706d2fd48ce5b3",
       "activation": "2026-06-23T04:43:03.019Z",
       "expiry": "2026-06-23T05:46:49.066Z",
@@ -240,6 +195,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Infested",
       "enemyKey": "Infested",
       "nodeKey": "Saxis (Eris)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3a0ed78c706d2fd48ce5b2",
+      "activation": "2026-06-23T04:43:03.019Z",
+      "expiry": "2026-06-23T06:41:52.029Z",
+      "node": "Narcissus (Pluto)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Narcissus (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -863,7 +833,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 18h 33m 58s",
+    "remaining": "5d 18h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1399,9 +1369,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -12040,
+      "count": -12102,
       "requiredRuns": 49000,
-      "completion": 37.71428571428571,
+      "completion": 37.65102040816327,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1449,9 +1419,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -9950,
+      "count": -10001,
       "requiredRuns": 48000,
-      "completion": 39.635416666666664,
+      "completion": 39.58229166666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1630,9 +1600,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -20625,
+      "count": -20758,
       "requiredRuns": 30000,
-      "completion": 31.25,
+      "completion": 30.806666666666672,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1666,9 +1636,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -5836,
+      "count": -6710,
       "requiredRuns": 43000,
-      "completion": 86.42790697674418,
+      "completion": 84.39534883720931,
       "completed": false,
       "rewardTypes": [
         "detonite"
