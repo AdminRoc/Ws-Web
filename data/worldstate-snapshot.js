@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T21:01:20Z",
+  "fetchedAt": "2026-06-23T21:06:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782252840000",
     "activation": "2026-06-23T20:34:00.000Z",
     "expiry": "2026-06-23T22:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 13m 0s",
+    "timeLeft": "1h 8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782252840000",
     "activation": "2026-06-23T20:34:00.000Z",
     "expiry": "2026-06-23T22:14:00.000Z",
-    "timeLeft": "1h 13m 0s",
+    "timeLeft": "1h 8m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T23:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "2h 2m 55s"
+    "timeLeft": "1h 57m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782252000000",
@@ -81,19 +81,19 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3ade066f01a29a148ce5b1",
-      "activation": "2026-06-23T19:27:02.348Z",
-      "expiry": "2026-06-23T21:01:20.216Z",
-      "node": "Rhea (Saturn)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rhea (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
+      "id": "6a3ae41e9b2e9e4e598ce5b2",
+      "activation": "2026-06-23T19:53:02.496Z",
+      "expiry": "2026-06-23T21:19:23.558Z",
+      "node": "Naeglar (Eris)",
+      "missionType": "Hive",
+      "missionTypeKey": "Hive",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Naeglar (Eris)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": false,
-      "isHard": false
+      "isHard": true
     },
     {
       "id": "6a3ae41e9b2e9e4e598ce5b1",
@@ -105,21 +105,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Selkie (Sedna)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3ae41e9b2e9e4e598ce5b2",
-      "activation": "2026-06-23T19:53:02.496Z",
-      "expiry": "2026-06-23T21:19:23.558Z",
-      "node": "Naeglar (Eris)",
-      "missionType": "Hive",
-      "missionTypeKey": "Hive",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Naeglar (Eris)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": false,
@@ -141,21 +126,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3ae6762d02ab97128ce5b2",
-      "activation": "2026-06-23T20:03:02.403Z",
-      "expiry": "2026-06-23T21:05:20.868Z",
-      "node": "Cinxia (Ceres)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Cinxia (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3ae72afdbea476fa8ce5b1",
       "activation": "2026-06-23T20:06:02.401Z",
       "expiry": "2026-06-23T21:37:36.735Z",
@@ -171,21 +141,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3ae94639fdf6b9198ce5b1",
-      "activation": "2026-06-23T20:15:02.603Z",
-      "expiry": "2026-06-23T21:52:55.166Z",
-      "node": "Cambire (Deimos)",
-      "missionType": "Alchemy",
-      "missionTypeKey": "Alchemy",
-      "enemy": "The Murmur",
-      "enemyKey": "The Murmur",
-      "nodeKey": "Cambire (Deimos)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3ae94639fdf6b9198ce5b2",
       "activation": "2026-06-23T20:15:02.603Z",
       "expiry": "2026-06-23T21:33:42.701Z",
@@ -195,6 +150,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3ae94639fdf6b9198ce5b1",
+      "activation": "2026-06-23T20:15:02.603Z",
+      "expiry": "2026-06-23T21:52:55.166Z",
+      "node": "Cambire (Deimos)",
+      "missionType": "Alchemy",
+      "missionTypeKey": "Alchemy",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Cambire (Deimos)",
       "tier": "Omnia",
       "tierNum": 6,
       "isStorm": false,
@@ -396,30 +366,15 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3ae112681fce54708ce5b3",
-      "activation": "2026-06-23T20:20:03.355Z",
-      "expiry": "2026-06-23T21:50:03.355Z",
-      "node": "Nodo Gap (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nodo Gap (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3ae112681fce54708ce5b6",
-      "activation": "2026-06-23T20:20:03.360Z",
-      "expiry": "2026-06-23T21:50:03.360Z",
-      "node": "Calabash (Veil)",
+      "id": "6a3ae112681fce54708ce5b5",
+      "activation": "2026-06-23T20:20:03.358Z",
+      "expiry": "2026-06-23T21:50:03.358Z",
+      "node": "Seven Sirens (Pluto)",
       "missionType": "Extermination",
       "missionTypeKey": "Extermination",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Calabash (Veil)",
+      "nodeKey": "Seven Sirens (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -441,15 +396,30 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3ae112681fce54708ce5b5",
-      "activation": "2026-06-23T20:20:03.358Z",
-      "expiry": "2026-06-23T21:50:03.358Z",
-      "node": "Seven Sirens (Pluto)",
+      "id": "6a3ae112681fce54708ce5b4",
+      "activation": "2026-06-23T20:20:03.356Z",
+      "expiry": "2026-06-23T21:50:03.356Z",
+      "node": "Enkidu Ice Drifts (Neptune)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Enkidu Ice Drifts (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3ae112681fce54708ce5b6",
+      "activation": "2026-06-23T20:20:03.360Z",
+      "expiry": "2026-06-23T21:50:03.360Z",
+      "node": "Calabash (Veil)",
       "missionType": "Extermination",
       "missionTypeKey": "Extermination",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Seven Sirens (Pluto)",
+      "nodeKey": "Calabash (Veil)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -471,17 +441,17 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3ae112681fce54708ce5b4",
-      "activation": "2026-06-23T20:20:03.356Z",
-      "expiry": "2026-06-23T21:50:03.356Z",
-      "node": "Enkidu Ice Drifts (Neptune)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Enkidu Ice Drifts (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
+      "id": "6a3ae112681fce54708ce5b3",
+      "activation": "2026-06-23T20:20:03.355Z",
+      "expiry": "2026-06-23T21:50:03.355Z",
+      "node": "Nodo Gap (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Nodo Gap (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": true,
       "isHard": false
     }
@@ -743,7 +713,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 2h 58m 58s",
+    "remaining": "5d 2h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1279,9 +1249,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -25092,
+      "count": -25156,
       "requiredRuns": 49000,
-      "completion": 24.39591836734694,
+      "completion": 24.33061224489796,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1329,9 +1299,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -23026,
+      "count": -23097,
       "requiredRuns": 48000,
-      "completion": 26.01458333333333,
+      "completion": 25.940625,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1510,9 +1480,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -39165,
+      "count": -40007,
       "requiredRuns": 41000,
-      "completion": 4.475609756097565,
+      "completion": 2.4219512195121973,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1546,10 +1516,10 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -37496,
+      "count": -37542,
       "requiredRuns": 37000,
-      "completion": -1.3405405405405357,
-      "completed": false,
+      "completion": -1.4648648648648566,
+      "completed": true,
       "rewardTypes": [
         "mutalist"
       ]
@@ -1582,9 +1552,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -19635,
+      "count": -20511,
       "requiredRuns": 43000,
-      "completion": 54.337209302325576,
+      "completion": 52.300000000000004,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1618,9 +1588,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -18965,
+      "count": -19678,
       "requiredRuns": 35000,
-      "completion": 45.81428571428572,
+      "completion": 43.777142857142856,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1654,9 +1624,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -257,
+      "count": -269,
       "requiredRuns": 37000,
-      "completion": 99.3054054054054,
+      "completion": 99.27297297297298,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1690,9 +1660,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -901,
+      "count": -988,
       "requiredRuns": 40000,
-      "completion": 97.7475,
+      "completion": 97.53,
       "completed": false,
       "rewardTypes": [
         "mutagen"
