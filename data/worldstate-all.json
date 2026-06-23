@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-23T13:41:24Z",
+  "fetchedAt": "2026-06-23T13:46:22Z",
   "cetusCycle": {
     "id": "cetusCycle1782225840000",
     "activation": "2026-06-23T13:04:00.000Z",
     "expiry": "2026-06-23T14:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 4m 0s",
+    "timeLeft": "58m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782221580000",
-    "activation": "2026-06-23T13:33:00.000Z",
-    "expiry": "2026-06-23T13:40:08.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782222000000",
+    "activation": "2026-06-23T13:40:00.000Z",
+    "expiry": "2026-06-23T14:00:08.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782225840000",
     "activation": "2026-06-23T13:04:00.000Z",
     "expiry": "2026-06-23T14:44:00.000Z",
-    "timeLeft": "1h 4m 0s",
+    "timeLeft": "58m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-23T15:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 53m 55s"
+    "timeLeft": "1h 47m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782223200000",
@@ -60,21 +60,6 @@
     ]
   },
   "fissures": [
-    {
-      "id": "6a3a73db9be9b4358d8ce5b2",
-      "activation": "2026-06-23T11:54:02.994Z",
-      "expiry": "2026-06-23T13:40:40.622Z",
-      "node": "Brugia (Eris)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Brugia (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3a79f25ed60502958ce5b1",
       "activation": "2026-06-23T12:20:02.944Z",
@@ -181,21 +166,6 @@
       "isHard": true
     },
     {
-      "id": "6a3a8172e186d1dbde8ce5b1",
-      "activation": "2026-06-23T12:52:02.475Z",
-      "expiry": "2026-06-23T13:59:54.059Z",
-      "node": "Pago (Kuva Fortress)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pago (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3a8172e186d1dbde8ce5b2",
       "activation": "2026-06-23T12:52:02.475Z",
       "expiry": "2026-06-23T13:55:21.594Z",
@@ -205,6 +175,21 @@
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Dakata (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3a8172e186d1dbde8ce5b1",
+      "activation": "2026-06-23T12:52:02.475Z",
+      "expiry": "2026-06-23T13:59:54.059Z",
+      "node": "Pago (Kuva Fortress)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Pago (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -389,6 +374,21 @@
       "tierNum": 4,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3a8cef496136cc068ce5b1",
+      "activation": "2026-06-23T13:41:02.993Z",
+      "expiry": "2026-06-23T14:49:06.107Z",
+      "node": "Tamu (Kuva Fortress)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Tamu (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a3a709328df6e87038ce5b9",
@@ -828,7 +828,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 10h 19m 58s",
+    "remaining": "5d 10h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1364,9 +1364,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -18034,
+      "count": -18177,
       "requiredRuns": 49000,
-      "completion": 31.597959183673467,
+      "completion": 31.45204081632653,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1414,9 +1414,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -16397,
+      "count": -16506,
       "requiredRuns": 48000,
-      "completion": 32.91979166666666,
+      "completion": 32.806250000000006,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1523,9 +1523,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -8300,
+      "count": -9922,
       "requiredRuns": 40000,
-      "completion": 79.25,
+      "completion": 75.19500000000001,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1559,9 +1559,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -562,
+      "count": -640,
       "requiredRuns": 31000,
-      "completion": 98.18709677419355,
+      "completion": 97.93548387096774,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1595,9 +1595,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -83,
+      "count": -193,
       "requiredRuns": 41000,
-      "completion": 99.79756097560976,
+      "completion": 99.52926829268293,
       "completed": false,
       "rewardTypes": [
         "detonite"
