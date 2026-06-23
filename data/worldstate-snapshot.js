@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T23:21:19Z",
+  "fetchedAt": "2026-06-23T23:26:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 23m 0s",
+    "timeLeft": "1h 18m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
-    "timeLeft": "1h 23m 0s",
+    "timeLeft": "1h 18m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T01:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 12m 54s"
+    "timeLeft": "2h 7m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782259200000",
@@ -94,36 +94,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 4,
       "isStorm": false,
       "isHard": false
-    },
-    {
-      "id": "6a3b030fa4cc0ffde78ce5b3",
-      "activation": "2026-06-23T22:05:03.028Z",
-      "expiry": "2026-06-23T23:22:59.343Z",
-      "node": "Saxis (Eris)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Saxis (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3b04b22f12f96c6d8ce5b1",
-      "activation": "2026-06-23T22:12:02.530Z",
-      "expiry": "2026-06-23T23:22:38.962Z",
-      "node": "Koro (Kuva Fortress)",
-      "missionType": "Assault",
-      "missionTypeKey": "Assault",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Koro (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
     },
     {
       "id": "6a3b04b22f12f96c6d8ce5b2",
@@ -923,7 +893,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 38m 58s",
+    "remaining": "5d 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1459,9 +1429,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -27384,
+      "count": -27461,
       "requiredRuns": 49000,
-      "completion": 22.057142857142857,
+      "completion": 21.97857142857143,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1509,9 +1479,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -25208,
+      "count": -25269,
       "requiredRuns": 48000,
-      "completion": 23.741666666666667,
+      "completion": 23.678125,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1834,9 +1804,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -18426,
+      "count": -19181,
       "requiredRuns": 37000,
-      "completion": 50.2,
+      "completion": 48.15945945945946,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1870,9 +1840,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -8644,
+      "count": -9463,
       "requiredRuns": 40000,
-      "completion": 78.39,
+      "completion": 76.3425,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1906,9 +1876,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -243,
+      "count": -281,
       "requiredRuns": 39000,
-      "completion": 99.37692307692308,
+      "completion": 99.27948717948718,
       "completed": false,
       "rewardTypes": [
         "mutagen"
