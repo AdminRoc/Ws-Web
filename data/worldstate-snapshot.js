@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T22:16:20Z",
+  "fetchedAt": "2026-06-23T22:21:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782255840000",
     "activation": "2026-06-23T22:14:00.000Z",
     "expiry": "2026-06-23T23:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782255840000",
     "activation": "2026-06-23T22:14:00.000Z",
     "expiry": "2026-06-23T23:04:00.000Z",
-    "timeLeft": "48m 0s",
+    "timeLeft": "43m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T23:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "47m 54s"
+    "timeLeft": "42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782259200000",
@@ -65,36 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a3aec8f3f80398baf8ce5b1",
-      "activation": "2026-06-23T20:29:03.102Z",
-      "expiry": "2026-06-23T22:19:30.567Z",
-      "node": "Tiwaz (Void)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Tiwaz (Void)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3af0c755255c8be28ce5b1",
-      "activation": "2026-06-23T20:47:02.984Z",
-      "expiry": "2026-06-23T22:16:08.118Z",
-      "node": "Rotuma (Kuva Fortress)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rotuma (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a3af26afb0abcaed58ce5b1",
       "activation": "2026-06-23T20:54:02.529Z",
@@ -186,21 +156,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3af8830b3cabaf608ce5b1",
-      "activation": "2026-06-23T21:20:03.112Z",
-      "expiry": "2026-06-23T22:20:34.811Z",
-      "node": "Solium (Eris)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Solium (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3af8830b3cabaf608ce5b2",
       "activation": "2026-06-23T21:20:03.112Z",
       "expiry": "2026-06-23T23:00:55.980Z",
@@ -261,21 +216,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3afb8e90c6bb2c778ce5b1",
-      "activation": "2026-06-23T21:33:02.277Z",
-      "expiry": "2026-06-23T22:41:17.113Z",
-      "node": "Tamu (Kuva Fortress)",
-      "missionType": "Disruption",
-      "missionTypeKey": "Disruption",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Tamu (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3afb8e90c6bb2c778ce5b2",
       "activation": "2026-06-23T21:33:02.277Z",
       "expiry": "2026-06-23T22:43:58.046Z",
@@ -285,6 +225,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Garus (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3afb8e90c6bb2c778ce5b1",
+      "activation": "2026-06-23T21:33:02.277Z",
+      "expiry": "2026-06-23T22:41:17.113Z",
+      "node": "Tamu (Kuva Fortress)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Tamu (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -893,7 +848,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 1h 43m 58s",
+    "remaining": "5d 1h 38m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1429,9 +1384,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -26326,
+      "count": -26406,
       "requiredRuns": 49000,
-      "completion": 23.136734693877553,
+      "completion": 23.055102040816326,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1479,9 +1434,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -24279,
+      "count": -24335,
       "requiredRuns": 48000,
-      "completion": 24.709375,
+      "completion": 24.651041666666668,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1732,9 +1687,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -32730,
+      "count": -33599,
       "requiredRuns": 43000,
-      "completion": 23.883720930232556,
+      "completion": 21.862790697674416,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1768,9 +1723,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -29662,
+      "count": -30374,
       "requiredRuns": 35000,
-      "completion": 15.251428571428571,
+      "completion": 13.21714285714286,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1804,9 +1759,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -8629,
+      "count": -9383,
       "requiredRuns": 37000,
-      "completion": 76.67837837837837,
+      "completion": 74.64054054054054,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1840,9 +1795,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1814,
+      "count": -1865,
       "requiredRuns": 40000,
-      "completion": 95.465,
+      "completion": 95.33749999999999,
       "completed": false,
       "rewardTypes": [
         "mutagen"
