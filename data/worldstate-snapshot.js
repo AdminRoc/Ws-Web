@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T23:41:21Z",
+  "fetchedAt": "2026-06-23T23:46:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 3m 0s",
+    "timeLeft": "58m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
-    "timeLeft": "1h 3m 0s",
+    "timeLeft": "58m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T01:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 52m 54s"
+    "timeLeft": "1h 47m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782259200000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a3b030fa4cc0ffde78ce5b1",
-      "activation": "2026-06-23T22:05:03.028Z",
-      "expiry": "2026-06-23T23:43:22.762Z",
-      "node": "Rusalka (Sedna)",
-      "missionType": "Sabotage",
-      "missionTypeKey": "Sabotage",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Rusalka (Sedna)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3b030fa4cc0ffde78ce5b2",
       "activation": "2026-06-23T22:05:03.028Z",
@@ -137,21 +122,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Ani (Void)",
       "tier": "Neo",
       "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3b0b06b0e8904b9e8ce5b1",
-      "activation": "2026-06-23T22:39:02.918Z",
-      "expiry": "2026-06-23T23:45:17.161Z",
-      "node": "Pago (Kuva Fortress)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pago (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
       "isStorm": false,
       "isHard": false
     },
@@ -823,6 +793,17 @@ window.WF_WS_SNAPSHOT = {
         "isPermanent": false
       },
       {
+        "id": "1782518400000seasondailykillenemieswhileonkdrive",
+        "activation": "2026-06-24T00:00:00.000Z",
+        "expiry": "2026-06-27T00:00:00.000Z",
+        "isDaily": true,
+        "isElite": false,
+        "desc": "Kill 20 enemies while riding a K-Drive, Kaithe, Velocipod or Merulina.",
+        "title": "Thrill Rider",
+        "reputation": 1000,
+        "isPermanent": false
+      },
+      {
         "id": "1782691200000seasonweeklypermanentcompletemissions12",
         "activation": "2026-06-22T00:00:00.000Z",
         "expiry": "2026-06-29T00:00:00.000Z",
@@ -908,7 +889,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 18m 58s",
+    "remaining": "5d 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1444,9 +1425,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -27704,
+      "count": -27787,
       "requiredRuns": 49000,
-      "completion": 21.730612244897955,
+      "completion": 21.64591836734694,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1494,9 +1475,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -25474,
+      "count": -25552,
       "requiredRuns": 48000,
-      "completion": 23.464583333333334,
+      "completion": 23.383333333333333,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1783,9 +1764,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -21474,
+      "count": -22244,
       "requiredRuns": 37000,
-      "completion": 41.962162162162166,
+      "completion": 39.881081081081085,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1819,9 +1800,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -11927,
+      "count": -12742,
       "requiredRuns": 40000,
-      "completion": 70.18249999999999,
+      "completion": 68.145,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1855,9 +1836,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -391,
+      "count": -430,
       "requiredRuns": 39000,
-      "completion": 98.99743589743589,
+      "completion": 98.8974358974359,
       "completed": false,
       "rewardTypes": [
         "mutagen"
