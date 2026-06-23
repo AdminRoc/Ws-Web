@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T04:16:20Z",
+  "fetchedAt": "2026-06-23T04:21:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782189840000",
     "activation": "2026-06-23T03:04:00.000Z",
     "expiry": "2026-06-23T04:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "28m 0s",
+    "timeLeft": "23m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782187980000",
-    "activation": "2026-06-23T04:13:00.000Z",
-    "expiry": "2026-06-23T04:20:08.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782188400000",
+    "activation": "2026-06-23T04:20:00.000Z",
+    "expiry": "2026-06-23T04:40:08.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782189840000",
     "activation": "2026-06-23T03:04:00.000Z",
     "expiry": "2026-06-23T04:44:00.000Z",
-    "timeLeft": "28m 0s",
+    "timeLeft": "23m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T05:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 17m 54s"
+    "timeLeft": "1h 12m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782194400000",
@@ -66,21 +66,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a39ed16734fca784b8ce5b1",
-      "activation": "2026-06-23T02:19:02.375Z",
-      "expiry": "2026-06-23T04:18:08.833Z",
-      "node": "V Prime (Venus)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "V Prime (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a39ee42c5fe2cb11e8ce5b1",
       "activation": "2026-06-23T02:24:02.737Z",
       "expiry": "2026-06-23T04:22:55.771Z",
@@ -94,21 +79,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a39f09a2d3aaae3fb8ce5b1",
-      "activation": "2026-06-23T02:34:02.576Z",
-      "expiry": "2026-06-23T04:19:39.500Z",
-      "node": "Xini (Eris)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Infested",
-      "enemyKey": "Infested",
-      "nodeKey": "Xini (Eris)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a39f09a2d3aaae3fb8ce5b2",
@@ -394,6 +364,66 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 1,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3a08fbf818264e5a8ce5b1",
+      "activation": "2026-06-23T04:18:03.117Z",
+      "expiry": "2026-06-23T05:53:42.079Z",
+      "node": "Solium (Eris)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Solium (Eris)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3a08fbf818264e5a8ce5b2",
+      "activation": "2026-06-23T04:18:03.117Z",
+      "expiry": "2026-06-23T05:39:20.419Z",
+      "node": "Mot (Void)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Mot (Void)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3a08fbf818264e5a8ce5b3",
+      "activation": "2026-06-23T04:18:03.117Z",
+      "expiry": "2026-06-23T05:18:39.782Z",
+      "node": "Armaros (Europa)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Armaros (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3a08fbf818264e5a8ce5b4",
+      "activation": "2026-06-23T04:18:03.117Z",
+      "expiry": "2026-06-23T06:16:14.747Z",
+      "node": "Mithra (Void)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Mithra (Void)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a39f20251610619ec8ce5b1",
@@ -833,7 +863,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 19h 43m 58s",
+    "remaining": "5d 19h 38m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1369,9 +1399,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -11197,
+      "count": -11285,
       "requiredRuns": 49000,
-      "completion": 38.57448979591837,
+      "completion": 38.48469387755102,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1419,9 +1449,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -9116,
+      "count": -9198,
       "requiredRuns": 48000,
-      "completion": 40.50416666666666,
+      "completion": 40.41875,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1600,9 +1630,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -18679,
+      "count": -18821,
       "requiredRuns": 30000,
-      "completion": 37.736666666666665,
+      "completion": 37.263333333333335,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1636,9 +1666,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -984,
+      "count": -1028,
       "requiredRuns": 43000,
-      "completion": 97.71162790697674,
+      "completion": 97.6093023255814,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -6267,7 +6297,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 235,
       "salePrice": 94,
       "total": 100,
-      "sold": 61,
+      "sold": 62,
       "discount": 60
     }
   ],
