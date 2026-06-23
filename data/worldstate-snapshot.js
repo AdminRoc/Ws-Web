@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T09:31:22Z",
+  "fetchedAt": "2026-06-23T09:36:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782207840000",
     "activation": "2026-06-23T08:04:00.000Z",
     "expiry": "2026-06-23T09:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "13m 1s",
+    "timeLeft": "8m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782205980000",
-    "activation": "2026-06-23T09:13:00.000Z",
-    "expiry": "2026-06-23T09:33:28.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782207180000",
+    "activation": "2026-06-23T09:33:00.000Z",
+    "expiry": "2026-06-23T09:40:08.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782207840000",
     "activation": "2026-06-23T08:04:00.000Z",
     "expiry": "2026-06-23T09:44:00.000Z",
-    "timeLeft": "13m 1s",
+    "timeLeft": "8m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T10:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 2m 55s"
+    "timeLeft": "57m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782208800000",
@@ -92,21 +92,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Oceanum (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3a3c12eeb3daf09b8ce5b1",
-      "activation": "2026-06-23T07:56:02.378Z",
-      "expiry": "2026-06-23T09:32:39.842Z",
-      "node": "Taveuni (Kuva Fortress)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Taveuni (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
       "isStorm": false,
       "isHard": true
     },
@@ -366,21 +351,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3a4da730580e4a7b8ce5b3",
-      "activation": "2026-06-23T09:11:03.064Z",
-      "expiry": "2026-06-23T11:03:53.518Z",
-      "node": "Stephano (Uranus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Stephano (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3a4da730580e4a7b8ce5b4",
       "activation": "2026-06-23T09:11:03.064Z",
       "expiry": "2026-06-23T10:34:42.669Z",
@@ -390,6 +360,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Laomedeia (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3a4da730580e4a7b8ce5b3",
+      "activation": "2026-06-23T09:11:03.064Z",
+      "expiry": "2026-06-23T11:03:53.518Z",
+      "node": "Stephano (Uranus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Stephano (Uranus)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -878,7 +863,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 14h 28m 58s",
+    "remaining": "5d 14h 23m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1414,9 +1399,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -14709,
+      "count": -14760,
       "requiredRuns": 49000,
-      "completion": 34.99081632653061,
+      "completion": 34.93877551020408,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1464,9 +1449,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -13051,
+      "count": -13118,
       "requiredRuns": 48000,
-      "completion": 36.405208333333334,
+      "completion": 36.33541666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1573,9 +1558,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -26617,
+      "count": -26755,
       "requiredRuns": 30000,
-      "completion": 11.276666666666667,
+      "completion": 10.816666666666663,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -6261,7 +6246,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 235,
       "salePrice": 94,
       "total": 100,
-      "sold": 93,
+      "sold": 94,
       "discount": 60
     }
   ],
