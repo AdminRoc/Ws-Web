@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T23:51:20Z",
+  "fetchedAt": "2026-06-23T23:56:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "53m 0s",
+    "timeLeft": "48m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782258360000",
-    "activation": "2026-06-23T23:46:00.000Z",
-    "expiry": "2026-06-23T23:53:28.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782258780000",
+    "activation": "2026-06-23T23:53:00.000Z",
+    "expiry": "2026-06-24T00:13:28.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
-    "timeLeft": "53m 0s",
+    "timeLeft": "48m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T01:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 42m 54s"
+    "timeLeft": "1h 37m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclesorrow1782259200000",
@@ -94,36 +94,6 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 5,
       "isStorm": false,
       "isHard": true
-    },
-    {
-      "id": "6a3b05664a35db1c438ce5b1",
-      "activation": "2026-06-23T22:15:02.280Z",
-      "expiry": "2026-06-23T23:53:43.851Z",
-      "node": "Stephano (Uranus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Stephano (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3b05664a35db1c438ce5b2",
-      "activation": "2026-06-23T22:15:02.280Z",
-      "expiry": "2026-06-23T23:51:17.165Z",
-      "node": "Ani (Void)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Ani (Void)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
     },
     {
       "id": "6a3b0b06b0e8904b9e8ce5b2",
@@ -454,6 +424,51 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 3,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3b1c223a39b690bf8ce5b1",
+      "activation": "2026-06-23T23:52:02.745Z",
+      "expiry": "2026-06-24T01:25:40.184Z",
+      "node": "Saxis (Eris)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Saxis (Eris)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b1c223a39b690bf8ce5b2",
+      "activation": "2026-06-23T23:52:02.745Z",
+      "expiry": "2026-06-24T01:23:20.817Z",
+      "node": "Cypress (Pluto)",
+      "missionType": "Sabotage",
+      "missionTypeKey": "Sabotage",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Cypress (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b1cd61531574a908ce5b1",
+      "activation": "2026-06-23T23:55:02.553Z",
+      "expiry": "2026-06-24T01:12:59.233Z",
+      "node": "Persto (Deimos)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Persto (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a3afd329be553a1b58ce5b4",
@@ -904,7 +919,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 8m 58s",
+    "remaining": "5d 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1440,9 +1455,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -27868,
+      "count": -27963,
       "requiredRuns": 49000,
-      "completion": 21.563265306122446,
+      "completion": 21.466326530612246,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1490,9 +1505,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -25638,
+      "count": -25718,
       "requiredRuns": 48000,
-      "completion": 23.293750000000003,
+      "completion": 23.210416666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1779,9 +1794,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -22998,
+      "count": -23765,
       "requiredRuns": 37000,
-      "completion": 37.84324324324324,
+      "completion": 35.77027027027027,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1815,9 +1830,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -13569,
+      "count": -14413,
       "requiredRuns": 40000,
-      "completion": 66.0775,
+      "completion": 63.9675,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1851,9 +1866,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -485,
+      "count": -1348,
       "requiredRuns": 39000,
-      "completion": 98.75641025641025,
+      "completion": 96.54358974358973,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1887,9 +1902,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": 0,
+      "count": -7,
       "requiredRuns": 32000,
-      "completion": 100,
+      "completion": 99.97812499999999,
       "completed": false,
       "rewardTypes": [
         "mutagen"
