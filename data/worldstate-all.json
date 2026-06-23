@@ -1,26 +1,26 @@
 {
-  "fetchedAt": "2026-06-23T17:06:25Z",
+  "fetchedAt": "2026-06-23T17:16:40Z",
   "cetusCycle": {
     "id": "cetusCycle1782234840000",
     "activation": "2026-06-23T15:34:00.000Z",
     "expiry": "2026-06-23T17:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "8m 0s",
+    "timeLeft": "6m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782233160000",
-    "activation": "2026-06-23T16:46:00.000Z",
-    "expiry": "2026-06-23T17:06:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782234360000",
+    "activation": "2026-06-23T17:06:00.000Z",
+    "expiry": "2026-06-23T17:13:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782234840000",
     "activation": "2026-06-23T15:34:00.000Z",
     "expiry": "2026-06-23T17:14:00.000Z",
-    "timeLeft": "8m 0s",
+    "timeLeft": "6m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-23T18:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "57m 55s"
+    "timeLeft": "55m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782237600000",
@@ -678,7 +678,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 6h 53m 58s",
+    "remaining": "5d 6h 51m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1214,9 +1214,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -21166,
+      "count": -21234,
       "requiredRuns": 49000,
-      "completion": 28.402040816326533,
+      "completion": 28.332653061224487,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1264,9 +1264,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -19270,
+      "count": -19343,
       "requiredRuns": 48000,
-      "completion": 29.927083333333336,
+      "completion": 29.851041666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1409,9 +1409,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -25153,
+      "count": -25790,
       "requiredRuns": 31000,
-      "completion": 18.861290322580647,
+      "completion": 16.806451612903228,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1445,9 +1445,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -21682,
+      "count": -22530,
       "requiredRuns": 41000,
-      "completion": 47.11707317073171,
+      "completion": 45.048780487804876,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1481,9 +1481,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1351,
+      "count": -1371,
       "requiredRuns": 41000,
-      "completion": 96.70487804878049,
+      "completion": 96.65609756097561,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1517,9 +1517,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1526,
+      "count": -1556,
       "requiredRuns": 37000,
-      "completion": 95.87567567567568,
+      "completion": 95.7945945945946,
       "completed": false,
       "rewardTypes": [
         "mutalist"
