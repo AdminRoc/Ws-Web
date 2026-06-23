@@ -338,7 +338,7 @@
   var langTimer = null;
 
   /* ══ 面板内背景粒子 canvas ══ */
-  var bgCanvas = null, bgCtx = null, bgAnim = null, bgParticles = [];
+  var bgCanvas = null, bgCtx = null, bgAnim = null, bgParticles = [], bgSpriteNear = null, bgSpriteFar = null;
 
   function initPanelCanvas() {
     if (bgCanvas) return;
@@ -358,45 +358,9 @@
     bgCanvas.height = panel.offsetHeight || 200;
   }
 
-  function spawnPanelParticles() {
-    bgParticles = [];
-    var W = bgCanvas.width, H = bgCanvas.height;
-    var PAL = ['#00d4ff','#8b5cf6','#00ffcc','#60a5fa','#f0abfc'];
-    for (var i = 0; i < 55; i++) {
-      bgParticles.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: .5 + Math.random() * 1.8,
-        vx: (Math.random() - .5) * .35,
-        vy: (Math.random() - .5) * .25,
-        col: PAL[Math.floor(Math.random() * PAL.length)],
-        a: Math.random(),
-        da: .004 + Math.random() * .008
-      });
-    }
-  }
+  function spawnPanelParticles(){bgParticles=[];var W=bgCanvas.width,H=bgCanvas.height;for(var i=0;i<90;i++){var depth=Math.random();bgParticles.push({x:Math.random()*W,y:Math.random()*H,r:.6+depth*2.2,vx:(Math.random()-.5)*(.18+depth*.3),vy:(Math.random()-.5)*(.12+depth*.22),depth:depth,a:Math.random(),da:.004+Math.random()*.008});}}
 
-  function animatePanelCanvas() {
-    if (!bgCtx) return;
-    bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-    var W = bgCanvas.width, H = bgCanvas.height;
-    bgParticles.forEach(function(p) {
-      p.x += p.vx; p.y += p.vy; p.a += p.da;
-      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-      var alpha = .15 + .55 * Math.abs(Math.sin(p.a));
-      bgCtx.save();
-      bgCtx.globalAlpha = alpha;
-      bgCtx.fillStyle = p.col;
-      bgCtx.shadowColor = p.col;
-      bgCtx.shadowBlur = p.r * 5;
-      bgCtx.beginPath();
-      bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      bgCtx.fill();
-      bgCtx.restore();
-    });
-    bgAnim = requestAnimationFrame(animatePanelCanvas);
-  }
+  function animatePanelCanvas(){if(!bgCtx)return;if(!bgSpriteNear){function mkBgSpr(core,mid,big){var SPR=big?40:22,s=document.createElement('canvas');s.width=s.height=SPR;var sc=s.getContext('2d');var g=sc.createRadialGradient(SPR/2,SPR/2,0,SPR/2,SPR/2,SPR/2);g.addColorStop(0,core);g.addColorStop(.4,mid);g.addColorStop(1,'rgba(255,200,60,0)');sc.fillStyle=g;sc.fillRect(0,0,SPR,SPR);return s;}bgSpriteNear=mkBgSpr('rgba(255,250,225,1)','rgba(255,210,80,.9)',false);bgSpriteFar=mkBgSpr('rgba(255,225,150,.85)','rgba(255,180,50,.55)',true);}bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);var W=bgCanvas.width,H=bgCanvas.height;bgParticles.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.a+=p.da;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;var alpha=(.15+.55*Math.abs(Math.sin(p.a)))*(.5+p.depth*.6);var spr=p.depth>.45?bgSpriteNear:bgSpriteFar;var s=p.r*(p.depth>.45?7:11);bgCtx.globalAlpha=alpha;bgCtx.drawImage(spr,p.x-s/2,p.y-s/2,s,s);});bgAnim=requestAnimationFrame(animatePanelCanvas);}
 
   function destroyPanelCanvas() {
     if (bgAnim) { cancelAnimationFrame(bgAnim); bgAnim = null; }
