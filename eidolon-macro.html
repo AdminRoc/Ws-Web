@@ -466,21 +466,36 @@
     document.body.appendChild(c);
     var ctx = c.getContext('2d');
 
-    var PAL = ['#00d4ff','#8b5cf6','#00ffcc','#ffffff','#60a5fa','#f0abfc','#a78bfa','#00ff88','#ff6b9d'];
+    /* 预渲染发光金粒子贴图（只算一次渐变），逐帧用 drawImage 代替 arc+shadowBlur，
+       shadowBlur 是逐图形软件光栅化、按帧重算，粒子一多就是掉帧元凶 */
+    var SPR = 28;
+    function makeSprite(core, mid) {
+      var s = document.createElement('canvas');
+      s.width = s.height = SPR;
+      var sc = s.getContext('2d');
+      var g = sc.createRadialGradient(SPR/2, SPR/2, 0, SPR/2, SPR/2, SPR/2);
+      g.addColorStop(0, core); g.addColorStop(.4, mid); g.addColorStop(1, 'rgba(255,180,0,0)');
+      sc.fillStyle = g; sc.fillRect(0, 0, SPR, SPR);
+      return s;
+    }
+    var sprites = [
+      makeSprite('rgba(255,252,235,1)', 'rgba(255,214,90,.95)'),
+      makeSprite('rgba(255,225,140,1)', 'rgba(255,180,40,.9)')
+    ];
+
     var pts = [];
-    for (var i = 0; i < 60; i++) {
-      var a = (i / 60) * Math.PI * 2 + (Math.random() - .5) * .5;
-      var spd = 70 + Math.random() * 180;
+    for (var i = 0; i < 56; i++) {
+      var a = (i / 56) * Math.PI * 2 + (Math.random() - .5) * .5;
+      var spd = 80 + Math.random() * 200;
       pts.push({
         x: cx, y: cy,
         vx: Math.cos(a) * spd,
-        vy: Math.sin(a) * spd - 55,
-        r: 1.2 + Math.random() * 4.0,
-        col: PAL[i % PAL.length],
+        vy: Math.sin(a) * spd - 60,
+        r: 1.6 + Math.random() * 3.2,
+        spr: sprites[i % 2],
         life: 1,
-        decay: .013 + Math.random() * .016,
-        trail: [],
-        spark: Math.random() < .3   // 30% 为星形
+        decay: .012 + Math.random() * .015,
+        trail: []
       });
     }
 
@@ -492,37 +507,32 @@
       var alive = false;
       pts.forEach(function(p) {
         if (p.life <= 0) return;
-        p.trail.push({x:p.x, y:p.y, a:p.life});
-        if (p.trail.length > 8) p.trail.shift();
+        p.trail.push({x:p.x, y:p.y});
+        if (p.trail.length > 5) p.trail.shift();
 
-        p.vx *= .96; p.vy += 240 * dt;
+        p.vx *= .96; p.vy += 220 * dt;
         p.x += p.vx * dt; p.y += p.vy * dt;
         p.life -= p.decay;
         alive = true;
 
-        /* 拖尾 */
-        for (var t = 1; t < p.trail.length; t++) {
+        /* 拖尾：单条 stroke，不叠 shadowBlur，便宜 */
+        if (p.trail.length > 1) {
           ctx.save();
-          ctx.globalAlpha = p.trail[t].a * .4 * (t / p.trail.length);
-          ctx.strokeStyle = p.col;
-          ctx.lineWidth = p.r * .55;
+          ctx.globalAlpha = Math.max(0, p.life) * .3;
+          ctx.strokeStyle = '#ffd76a';
+          ctx.lineWidth = p.r * .5;
           ctx.lineCap = 'round';
-          ctx.shadowColor = p.col; ctx.shadowBlur = p.r * 3;
           ctx.beginPath();
-          ctx.moveTo(p.trail[t-1].x, p.trail[t-1].y);
-          ctx.lineTo(p.trail[t].x, p.trail[t].y);
+          ctx.moveTo(p.trail[0].x, p.trail[0].y);
+          for (var t = 1; t < p.trail.length; t++) ctx.lineTo(p.trail[t].x, p.trail[t].y);
           ctx.stroke();
           ctx.restore();
         }
-        /* 粒子本体 */
-        ctx.save();
+
+        /* 粒子本体：贴图 drawImage（GPU 位图拷贝）代替逐帧重算的阴影发光 */
+        var s = p.r * 6;
         ctx.globalAlpha = Math.max(0, p.life);
-        ctx.shadowColor = p.col; ctx.shadowBlur = p.r * 7;
-        ctx.fillStyle = p.col;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
+        ctx.drawImage(p.spr, p.x - s / 2, p.y - s / 2, s, s);
       });
 
       if (alive) requestAnimationFrame(frame); else c.remove();
@@ -535,7 +545,7 @@
     var r = document.createElement('span');
     r.style.cssText = [
       'position:absolute','inset:0','border-radius:inherit','pointer-events:none',
-      'background:conic-gradient(from 0deg,#00d4ff,#8b5cf6,#00ffcc,#f0abfc,#00d4ff)',
+      'background:conic-gradient(from 0deg,#ffd700,#ffb347,#fff4cc,#ffaa00,#ffd700)',
       'opacity:.6','transform:scale(0)',
       'transition:transform .6s ease,opacity .6s ease'
     ].join(';');
