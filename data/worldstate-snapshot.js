@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T16:31:26Z",
+  "fetchedAt": "2026-06-23T16:36:26Z",
   "cetusCycle": {
     "id": "cetusCycle1782234840000",
     "activation": "2026-06-23T15:34:00.000Z",
     "expiry": "2026-06-23T17:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782234840000",
     "activation": "2026-06-23T15:34:00.000Z",
     "expiry": "2026-06-23T17:14:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T18:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 32m 55s"
+    "timeLeft": "1h 27m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782237600000",
@@ -66,21 +66,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a3a9a4a20ff3347d18ce5b2",
-      "activation": "2026-06-23T14:38:02.789Z",
-      "expiry": "2026-06-23T16:34:09.928Z",
-      "node": "Adaro (Sedna)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Adaro (Sedna)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3a9a4a20ff3347d18ce5b3",
       "activation": "2026-06-23T14:38:02.789Z",
       "expiry": "2026-06-23T16:36:06.604Z",
@@ -107,21 +92,6 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Kelpie (Sedna)",
       "tier": "Axi",
       "tierNum": 4,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3a9ebe57cde35ffd8ce5b3",
-      "activation": "2026-06-23T14:57:02.390Z",
-      "expiry": "2026-06-23T16:34:03.200Z",
-      "node": "Tuvul Commons (Zariman)",
-      "missionType": "Void Cascade",
-      "missionTypeKey": "Void Cascade",
-      "enemy": "Crossfire",
-      "enemyKey": "Crossfire",
-      "nodeKey": "Tuvul Commons (Zariman)",
-      "tier": "Omnia",
-      "tierNum": 6,
       "isStorm": false,
       "isHard": false
     },
@@ -246,21 +216,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3aadbe5e3acaadec8ce5b1",
-      "activation": "2026-06-23T16:01:02.417Z",
-      "expiry": "2026-06-23T17:19:58.323Z",
-      "node": "Pago (Kuva Fortress)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pago (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3aadbe5e3acaadec8ce5b2",
       "activation": "2026-06-23T16:01:02.417Z",
       "expiry": "2026-06-23T17:25:04.542Z",
@@ -270,6 +225,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Garus (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3aadbe5e3acaadec8ce5b1",
+      "activation": "2026-06-23T16:01:02.417Z",
+      "expiry": "2026-06-23T17:19:58.323Z",
+      "node": "Pago (Kuva Fortress)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Pago (Kuva Fortress)",
       "tier": "Requiem",
       "tierNum": 5,
       "isStorm": false,
@@ -334,6 +304,66 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 6,
       "isStorm": false,
       "isHard": false
+    },
+    {
+      "id": "6a3ab50284d877911f8ce5b1",
+      "activation": "2026-06-23T16:32:02.505Z",
+      "expiry": "2026-06-23T17:50:13.305Z",
+      "node": "Acheron (Pluto)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Acheron (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3ab50284d877911f8ce5b2",
+      "activation": "2026-06-23T16:32:02.505Z",
+      "expiry": "2026-06-23T18:03:45.215Z",
+      "node": "Outer Terminus (Pluto)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Outer Terminus (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3ab53e819dc60db18ce5b1",
+      "activation": "2026-06-23T16:33:02.794Z",
+      "expiry": "2026-06-23T18:22:48.294Z",
+      "node": "Rhea (Saturn)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Rhea (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3ab53e819dc60db18ce5b2",
+      "activation": "2026-06-23T16:33:02.794Z",
+      "expiry": "2026-06-23T18:28:43.092Z",
+      "node": "Gulliver (Phobos)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Gulliver (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
     },
     {
       "id": "6a3a9ac244cd81cc3a8ce5b1",
@@ -773,7 +803,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 7h 28m 58s",
+    "remaining": "5d 7h 23m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1309,9 +1339,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -20664,
+      "count": -20740,
       "requiredRuns": 49000,
-      "completion": 28.914285714285715,
+      "completion": 28.836734693877553,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1359,9 +1389,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -18818,
+      "count": -18880,
       "requiredRuns": 48000,
-      "completion": 30.397916666666667,
+      "completion": 30.333333333333336,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1468,9 +1498,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -37554,
+      "count": -38377,
       "requiredRuns": 40000,
-      "completion": 6.115000000000004,
+      "completion": 4.057500000000003,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1504,9 +1534,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -20981,
+      "count": -21668,
       "requiredRuns": 31000,
-      "completion": 32.31935483870968,
+      "completion": 30.10322580645162,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1540,9 +1570,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -16522,
+      "count": -17363,
       "requiredRuns": 41000,
-      "completion": 59.702439024390245,
+      "completion": 57.65121951219512,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1576,9 +1606,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1038,
+      "count": -1086,
       "requiredRuns": 41000,
-      "completion": 97.46829268292683,
+      "completion": 97.35121951219512,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1612,9 +1642,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1285,
+      "count": -1307,
       "requiredRuns": 37000,
-      "completion": 96.52702702702702,
+      "completion": 96.46756756756757,
       "completed": false,
       "rewardTypes": [
         "mutalist"
