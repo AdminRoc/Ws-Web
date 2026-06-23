@@ -5,8 +5,9 @@ name: 信条/终幕武器轮换校准
 # 大陆不稳定，不能让用户浏览器直连，所以改为本工作流每小时在 GitHub 服务器上抓取一次，
 # 写入 data/tenet-coda-rotation.json，worldstate.html 读取这份同源文件。
 on:
-  schedule:
-    - cron: '7 * * * *'   # 每小时第7分钟跑一次，错开整点避免和其他定时任务挤在一起
+  # 定时触发已迁移至 Cloudflare Workers Cron Triggers（见 cloudflare-worker/），
+  # 跟 worldstate-cycles.yml 同一套理由：比 GitHub 自带的 schedule 更可靠，
+  # 不会因为仓库不活跃被 GitHub 自动跳过/延迟。
   workflow_dispatch:
 
 concurrency:

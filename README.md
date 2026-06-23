@@ -109,6 +109,10 @@
 
 ---
 
+**特别提醒**：为了防范有些照抄之后说"原创"的提示词"开发者"，本站刻意删除了部分与榜单内容无关的内容，包含中英文映射表中的大量条目（仅保留了当前翻译所需的）、榜单数据的自动化更新逻辑、物品掉落信息查询页面、以及需要路由我方境外服务器的世界状态 API（当前改为纯静态站点 + 借用其他 API）。
+
+---
+
 *© 2026 CSC Alliance · All rights reserved. 由 Roc 于 2026 年 5 月 21 日开始创建代码。*
 
 ---
@@ -227,6 +231,10 @@ All global colors are in `css/global.css` under `:root`. Change a color code the
 ## Notice Banners
 
 Each leaderboard can display its own top-of-page notice banner. Edit the `Notice_cn` (Chinese) and `Notice_en` (English) fields at the bottom of the corresponding data file — no HTML changes needed.
+
+---
+
+**Special Note**: To guard against "prompt engineers" who copy this project and then claim it as their own "original" work, this repository intentionally omits certain content that is unrelated to the leaderboards themselves — including the bulk of entries in the Chinese/English mapping tables (only the entries actually needed for current translations are kept), the automated leaderboard data-update pipeline, the item drop-lookup page, and the worldstate API logic that required routing through our overseas server (this public version has been changed to a pure static site that borrows other public APIs instead).
 
 ---
 
