@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T14:26:25Z",
+  "fetchedAt": "2026-06-23T14:31:27Z",
   "cetusCycle": {
     "id": "cetusCycle1782225840000",
     "activation": "2026-06-23T13:04:00.000Z",
     "expiry": "2026-06-23T14:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "18m 0s",
+    "timeLeft": "13m 0s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782223560000",
-    "activation": "2026-06-23T14:06:00.000Z",
-    "expiry": "2026-06-23T14:26:48.000Z",
-    "isWarm": false,
-    "state": "cold"
+    "id": "vallisCycle1782224760000",
+    "activation": "2026-06-23T14:26:00.000Z",
+    "expiry": "2026-06-23T14:33:28.000Z",
+    "isWarm": true,
+    "state": "warm"
   },
   "cambionCycle": {
     "id": "cambionCycle1782225840000",
     "activation": "2026-06-23T13:04:00.000Z",
     "expiry": "2026-06-23T14:44:00.000Z",
-    "timeLeft": "18m 0s",
+    "timeLeft": "13m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T15:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 7m 55s"
+    "timeLeft": "1h 2m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782230400000",
@@ -407,6 +407,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Everview Arc (Zariman)",
       "tier": "Omnia",
       "tierNum": 6,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3a982ffae8b7536b8ce5b1",
+      "activation": "2026-06-23T14:29:02.999Z",
+      "expiry": "2026-06-23T15:30:54.950Z",
+      "node": "Roche (Phobos)",
+      "missionType": "Extermination",
+      "missionTypeKey": "Extermination",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Roche (Phobos)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": false,
       "isHard": true
     },
@@ -848,7 +863,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 9h 33m 58s",
+    "remaining": "5d 9h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1384,9 +1399,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -18774,
+      "count": -18860,
       "requiredRuns": 49000,
-      "completion": 30.842857142857145,
+      "completion": 30.75510204081633,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1434,9 +1449,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -17103,
+      "count": -17157,
       "requiredRuns": 48000,
-      "completion": 32.184374999999996,
+      "completion": 32.128125,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1543,9 +1558,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -16635,
+      "count": -17496,
       "requiredRuns": 40000,
-      "completion": 58.4125,
+      "completion": 56.26,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1579,9 +1594,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -3775,
+      "count": -4475,
       "requiredRuns": 31000,
-      "completion": 87.82258064516128,
+      "completion": 85.56451612903227,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1615,9 +1630,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -637,
+      "count": -714,
       "requiredRuns": 41000,
-      "completion": 98.44634146341463,
+      "completion": 98.25853658536585,
       "completed": false,
       "rewardTypes": [
         "detonite"
