@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-23T00:21:20Z",
+  "fetchedAt": "2026-06-23T00:26:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782174840000",
     "activation": "2026-06-22T23:44:00.000Z",
     "expiry": "2026-06-23T00:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782174840000",
     "activation": "2026-06-22T23:44:00.000Z",
     "expiry": "2026-06-23T00:34:00.000Z",
-    "timeLeft": "13m 0s",
+    "timeLeft": "8m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-23T00:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "12m 55s"
+    "timeLeft": "7m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleenvy1782180000000",
@@ -878,7 +878,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "5d 23h 38m 58s",
+    "remaining": "5d 23h 33m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1414,9 +1414,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -8896,
+      "count": -8926,
       "requiredRuns": 49000,
-      "completion": 40.922448979591834,
+      "completion": 40.891836734693875,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1464,9 +1464,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -6494,
+      "count": -6544,
       "requiredRuns": 48000,
-      "completion": 43.235416666666666,
+      "completion": 43.18333333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1501,9 +1501,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -29470,
+      "count": -29565,
       "requiredRuns": 30000,
-      "completion": 1.766666666666672,
+      "completion": 1.4499999999999957,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1582,6 +1582,42 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
+      "id": "6a39630bc13bb286c58ce5b2",
+      "activation": "2026-06-22T16:30:02.553Z",
+      "node": "Naamah (Europa)",
+      "nodeKey": "Naamah (Europa)",
+      "desc": "Phorid Manifestation",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 2,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Corpus",
+        "factionKey": "Corpus"
+      },
+      "vsInfestation": true,
+      "count": -12569,
+      "requiredRuns": 30000,
+      "completion": 58.10333333333333,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
       "id": "6a39630bc13bb286c58ce5b1",
       "activation": "2026-06-22T16:30:02.553Z",
       "node": "Valefor (Europa)",
@@ -1615,42 +1651,6 @@ window.WF_WS_SNAPSHOT = {
       "completed": true,
       "rewardTypes": [
         "fieldron"
-      ]
-    },
-    {
-      "id": "6a39630bc13bb286c58ce5b2",
-      "activation": "2026-06-22T16:30:02.553Z",
-      "node": "Naamah (Europa)",
-      "nodeKey": "Naamah (Europa)",
-      "desc": "Phorid Manifestation",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 2,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Corpus",
-        "factionKey": "Corpus"
-      },
-      "vsInfestation": true,
-      "count": -12455,
-      "requiredRuns": 30000,
-      "completion": 58.483333333333334,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
       ]
     }
   ],
@@ -10579,7 +10579,7 @@ window.WF_WS_SNAPSHOT = {
       "originalPrice": 235,
       "salePrice": 94,
       "total": 100,
-      "sold": 16,
+      "sold": 17,
       "discount": 60
     }
   ],
