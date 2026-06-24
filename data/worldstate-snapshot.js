@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T00:06:19Z",
+  "fetchedAt": "2026-06-24T00:11:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T01:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 27m 54s"
+    "timeLeft": "1h 22m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782266400000",
@@ -743,7 +743,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 23h 53m 58s",
+    "remaining": "4d 23h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1279,9 +1279,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -28134,
+      "count": -28219,
       "requiredRuns": 49000,
-      "completion": 21.291836734693874,
+      "completion": 21.205102040816325,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1329,9 +1329,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -25893,
+      "count": -25969,
       "requiredRuns": 48000,
-      "completion": 23.028125,
+      "completion": 22.948958333333337,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1618,9 +1618,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -25283,
+      "count": -26046,
       "requiredRuns": 37000,
-      "completion": 31.667567567567566,
+      "completion": 29.605405405405406,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1654,9 +1654,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -16084,
+      "count": -16924,
       "requiredRuns": 40000,
-      "completion": 59.79,
+      "completion": 57.69,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1690,9 +1690,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -2983,
+      "count": -3792,
       "requiredRuns": 39000,
-      "completion": 92.35128205128204,
+      "completion": 90.27692307692308,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1726,9 +1726,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -114,
+      "count": -188,
       "requiredRuns": 32000,
-      "completion": 99.64375,
+      "completion": 99.41250000000001,
       "completed": false,
       "rewardTypes": [
         "mutagen"
