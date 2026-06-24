@@ -4,3 +4,13 @@
 # Python 缓存（本地跑 .github/scripts/*.py 时产生）
 __pycache__/
 *.pyc
+
+# ── 已迁入私库 AdminRoc/Ws-Web-core 的后端文件 ──
+# Action 运行时会临时 checkout 私库并把这些覆盖进工作树以生成产物，
+# 但它们绝不能被提交回公库（否则核心脚本/源又公开了）。这里 ignore 作双保险，
+# 即使误用 git add -A 也不会把它们重新加进公库。改这些请去私库改。
+/.github/scripts/*.py
+/log/js/wf-i18n-zh.js
+/data/wf-translations.json
+/log/tools/
+/cloudflare-worker/
