@@ -1,7 +1,7 @@
 name: 更新世界状态全量数据
 
 on:
-  # 定时触发已迁移至 Cloudflare Workers Cron Triggers（见 cloudflare-worker/），
+  # 定时触发已迁移至 Cloudflare Workers Cron Triggers（见私库 cloudflare-worker/），
   # 每5分钟调用一次本工作流的 workflow_dispatch，比 GitHub 自带的 schedule 更可靠。
   workflow_dispatch:          # 支持手动 / 外部触发
 
@@ -18,8 +18,22 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout
+      - name: Checkout 公库
         uses: actions/checkout@v5
+
+      # lookup_names.py 已迁私库 AdminRoc/Ws-Web-core，运行前覆盖进工作树（不提交回公库）
+      - name: 拉取私库（后端脚本）
+        uses: actions/checkout@v5
+        with:
+          repository: AdminRoc/Ws-Web-core
+          token: ${{ secrets.PRIVATE_REPO_PAT }}
+          path: _private
+
+      - name: 覆盖私库脚本进工作树（不会被提交回公库）
+        run: |
+          mkdir -p .github/scripts
+          cp -a _private/.github/scripts/. .github/scripts/
+          rm -rf _private
 
       - name: 拉取完整世界状态数据并生成 JSON
         run: |
@@ -35,7 +49,7 @@ jobs:
             exit 0
           fi
 
-          # 提取所有 16 个键，fetchedAt 记录本次拉取时刻（UTC）
+          # 提取所有键，fetchedAt 记录本次拉取时刻（UTC）
           # 各时间戳均为 DE 服务器下发的绝对 UTC 值，与拉取时刻无关，不会引起误差
           echo "$response" | jq \
             --arg fetchedAt "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
@@ -78,10 +92,11 @@ jobs:
             printf ';\n'
           } > data/worldstate-snapshot.js
 
-      - name: 提交并推送（无变化时跳过）
+      - name: 提交并推送（只提交产物，无变化时跳过）
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # 只 add 产物：私库脚本不会被提交回公库
           git add data/worldstate-all.json data/worldstate-snapshot.js data/item-names-zh.json
           git diff --staged --quiet || \
             git commit -m "data: update worldstate-all [skip ci]"
