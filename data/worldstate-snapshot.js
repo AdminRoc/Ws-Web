@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T04:26:23Z",
+  "fetchedAt": "2026-06-24T04:31:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782279840000",
     "activation": "2026-06-24T04:04:00.000Z",
     "expiry": "2026-06-24T05:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 18m 1s",
+    "timeLeft": "1h 13m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782279840000",
     "activation": "2026-06-24T04:04:00.000Z",
     "expiry": "2026-06-24T05:44:00.000Z",
-    "timeLeft": "1h 18m 1s",
+    "timeLeft": "1h 13m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T06:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 7m 55s"
+    "timeLeft": "2h 2m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782280800000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a3b43fac67a3f06cd8ce5b1",
-      "activation": "2026-06-24T02:42:02.660Z",
-      "expiry": "2026-06-24T04:30:40.477Z",
-      "node": "Minthe (Pluto)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Minthe (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": false,
-      "isHard": true
-    },
     {
       "id": "6a3b45278685a247c18ce5b1",
       "activation": "2026-06-24T02:47:03.008Z",
@@ -150,21 +135,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "V Prime (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
-      "id": "6a3b4dd2709989b5f68ce5b1",
-      "activation": "2026-06-24T03:24:02.266Z",
-      "expiry": "2026-06-24T04:30:30.469Z",
-      "node": "Eurasia (Earth)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Eurasia (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -362,6 +332,51 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Hellas (Mars)",
       "tier": "Lith",
       "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b5c5a299276d34d8ce5b1",
+      "activation": "2026-06-24T04:26:02.780Z",
+      "expiry": "2026-06-24T05:35:33.389Z",
+      "node": "Kelpie (Sedna)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Kelpie (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3b5d0e6d1daee9248ce5b1",
+      "activation": "2026-06-24T04:29:02.576Z",
+      "expiry": "2026-06-24T05:44:35.552Z",
+      "node": "Belenus (Void)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Orokin",
+      "enemyKey": "Orokin",
+      "nodeKey": "Belenus (Void)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b5d0e6d1daee9248ce5b2",
+      "activation": "2026-06-24T04:29:02.576Z",
+      "expiry": "2026-06-24T06:14:43.608Z",
+      "node": "Morax (Europa)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Morax (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": false,
       "isHard": false
     },
@@ -803,7 +818,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 19h 33m 58s",
+    "remaining": "4d 19h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1339,9 +1354,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -32428,
+      "count": -32507,
       "requiredRuns": 49000,
-      "completion": 16.910204081632653,
+      "completion": 16.829591836734693,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1389,9 +1404,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -30205,
+      "count": -30289,
       "requiredRuns": 48000,
-      "completion": 18.536458333333332,
+      "completion": 18.44895833333333,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1786,9 +1801,45 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -23943,
+      "count": -24605,
       "requiredRuns": 32000,
-      "completion": 25.178124999999994,
+      "completion": 23.109375,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
+      "id": "6a3b34471db6a4de368ce5b2",
+      "activation": "2026-06-24T01:35:02.675Z",
+      "node": "Ludi (Ceres)",
+      "nodeKey": "Ludi (Ceres)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 1,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -13376,
+      "requiredRuns": 38000,
+      "completion": 64.8,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1822,48 +1873,12 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -15825,
+      "count": -16599,
       "requiredRuns": 38000,
-      "completion": 58.35526315789474,
+      "completion": 56.318421052631585,
       "completed": false,
       "rewardTypes": [
         "detonite"
-      ]
-    },
-    {
-      "id": "6a3b34471db6a4de368ce5b2",
-      "activation": "2026-06-24T01:35:02.675Z",
-      "node": "Ludi (Ceres)",
-      "nodeKey": "Ludi (Ceres)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -12589,
-      "requiredRuns": 38000,
-      "completion": 66.87105263157895,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
       ]
     },
     {
@@ -1894,9 +1909,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1323,
+      "count": -1406,
       "requiredRuns": 30000,
-      "completion": 95.59,
+      "completion": 95.31333333333333,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1930,9 +1945,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -220,
+      "count": -243,
       "requiredRuns": 44000,
-      "completion": 99.5,
+      "completion": 99.44772727272728,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1966,9 +1981,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -445,
+      "count": -462,
       "requiredRuns": 47000,
-      "completion": 99.05319148936171,
+      "completion": 99.01702127659574,
       "completed": false,
       "rewardTypes": [
         "fieldron"
