@@ -2,12 +2,13 @@ name: 信条/终幕武器轮换校准
 
 # 信条(Tenet)/终幕(Coda)武器每次轮换的元素+加成百分比是游戏内随机生成的，没有任何
 # 官方/社区API能查询，只能靠社区在 Google Sheets 上记录实测结果。Google 服务在中国
-# 大陆不稳定，不能让用户浏览器直连，所以改为本工作流每小时在 GitHub 服务器上抓取一次，
+# 大陆不稳定，不能让用户浏览器直连，所以改为本工作流定时在 GitHub 服务器上抓取一次，
 # 写入 data/tenet-coda-rotation.json，worldstate.html 读取这份同源文件。
+#
+# 抓取脚本 fetch_tenet_coda.py 已迁私库 AdminRoc/Ws-Web-core：运行前 checkout 私库覆盖
+# 进工作树；产物 json 提交回公库，私库脚本绝不提交回公库。
 on:
-  # 定时触发已迁移至 Cloudflare Workers Cron Triggers（见 cloudflare-worker/），
-  # 跟 worldstate-cycles.yml 同一套理由：比 GitHub 自带的 schedule 更可靠，
-  # 不会因为仓库不活跃被 GitHub 自动跳过/延迟。
+  # 定时触发已迁移至 Cloudflare Workers Cron Triggers（见私库 cloudflare-worker/）。
   workflow_dispatch:
 
 concurrency:
@@ -20,13 +21,26 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout
+      - name: Checkout 公库
         uses: actions/checkout@v5
+
+      - name: 拉取私库（后端脚本）
+        uses: actions/checkout@v5
+        with:
+          repository: AdminRoc/Ws-Web-core
+          token: ${{ secrets.PRIVATE_REPO_PAT }}
+          path: _private
+
+      - name: 覆盖私库脚本进工作树（不会被提交回公库）
+        run: |
+          mkdir -p .github/scripts
+          cp -a _private/.github/scripts/. .github/scripts/
+          rm -rf _private
 
       - name: 抓取信条/终幕轮换数据
         run: python3 .github/scripts/fetch_tenet_coda.py
 
-      - name: 提交并推送（无变化时跳过）
+      - name: 提交并推送（只提交产物，无变化时跳过）
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
