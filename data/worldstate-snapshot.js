@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T02:31:19Z",
+  "fetchedAt": "2026-06-24T02:36:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782270840000",
     "activation": "2026-06-24T01:34:00.000Z",
     "expiry": "2026-06-24T03:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "43m 1s",
+    "timeLeft": "38m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782267960000",
-    "activation": "2026-06-24T02:26:00.000Z",
-    "expiry": "2026-06-24T02:33:28.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782268380000",
+    "activation": "2026-06-24T02:33:00.000Z",
+    "expiry": "2026-06-24T02:53:28.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782270840000",
     "activation": "2026-06-24T01:34:00.000Z",
     "expiry": "2026-06-24T03:14:00.000Z",
-    "timeLeft": "43m 1s",
+    "timeLeft": "38m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T04:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "1h 32m 55s"
+    "timeLeft": "1h 27m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782273600000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a3b2672939301726d8ce5b1",
-      "activation": "2026-06-24T00:36:02.444Z",
-      "expiry": "2026-06-24T02:34:26.963Z",
-      "node": "Pallas (Ceres)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Pallas (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3b2ae69cf3f00b6c8ce5b2",
       "activation": "2026-06-24T00:55:02.589Z",
@@ -833,7 +818,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 21h 28m 58s",
+    "remaining": "4d 21h 23m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1369,9 +1354,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -30500,
+      "count": -30576,
       "requiredRuns": 49000,
-      "completion": 18.877551020408163,
+      "completion": 18.8,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1419,9 +1404,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -28088,
+      "count": -28174,
       "requiredRuns": 48000,
-      "completion": 20.74166666666667,
+      "completion": 20.652083333333334,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1744,10 +1729,10 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -40299,
+      "count": -40317,
       "requiredRuns": 40000,
-      "completion": -0.7474999999999898,
-      "completed": false,
+      "completion": -0.792499999999996,
+      "completed": true,
       "rewardTypes": [
         "mutagen"
       ]
@@ -1780,9 +1765,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -26733,
+      "count": -27526,
       "requiredRuns": 39000,
-      "completion": 31.453846153846154,
+      "completion": 29.420512820512823,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1816,9 +1801,45 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -8317,
+      "count": -8976,
       "requiredRuns": 32000,
-      "completion": 74.009375,
+      "completion": 71.95,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
+      "id": "6a3b34471db6a4de368ce5b2",
+      "activation": "2026-06-24T01:35:02.675Z",
+      "node": "Ludi (Ceres)",
+      "nodeKey": "Ludi (Ceres)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 1,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -420,
+      "requiredRuns": 38000,
+      "completion": 98.89473684210527,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1852,48 +1873,12 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -230,
+      "count": -250,
       "requiredRuns": 38000,
-      "completion": 99.39473684210526,
+      "completion": 99.3421052631579,
       "completed": false,
       "rewardTypes": [
         "detonite"
-      ]
-    },
-    {
-      "id": "6a3b34471db6a4de368ce5b2",
-      "activation": "2026-06-24T01:35:02.675Z",
-      "node": "Ludi (Ceres)",
-      "nodeKey": "Ludi (Ceres)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -373,
-      "requiredRuns": 38000,
-      "completion": 99.01842105263158,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
       ]
     }
   ],
