@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T03:06:19Z",
+  "fetchedAt": "2026-06-24T03:11:20Z",
   "cetusCycle": {
     "id": "cetusCycle1782270840000",
     "activation": "2026-06-24T01:34:00.000Z",
     "expiry": "2026-06-24T03:14:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "8m 1s",
+    "timeLeft": "3m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782270840000",
     "activation": "2026-06-24T01:34:00.000Z",
     "expiry": "2026-06-24T03:14:00.000Z",
-    "timeLeft": "8m 1s",
+    "timeLeft": "3m 1s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T04:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "57m 55s"
+    "timeLeft": "52m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782273600000",
@@ -411,6 +411,21 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
+      "id": "6a3b3573296480f3f88ce5b2",
+      "activation": "2026-06-24T02:20:03.353Z",
+      "expiry": "2026-06-24T03:50:03.353Z",
+      "node": "Orvin-Haarc (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Orvin-Haarc (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
       "id": "6a3b3573296480f3f88ce5b1",
       "activation": "2026-06-24T02:20:03.351Z",
       "expiry": "2026-06-24T03:50:03.351Z",
@@ -426,47 +441,17 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3b3573296480f3f88ce5b4",
-      "activation": "2026-06-24T02:20:03.356Z",
-      "expiry": "2026-06-24T03:50:03.356Z",
-      "node": "Enkidu Ice Drifts (Neptune)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Enkidu Ice Drifts (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3b3573296480f3f88ce5b5",
-      "activation": "2026-06-24T02:20:03.358Z",
-      "expiry": "2026-06-24T03:50:03.358Z",
-      "node": "Fenton's Field (Pluto)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Fenton's Field (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3b3573296480f3f88ce5b2",
-      "activation": "2026-06-24T02:20:03.353Z",
-      "expiry": "2026-06-24T03:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
+      "id": "6a3b3573296480f3f88ce5b3",
+      "activation": "2026-06-24T02:20:03.355Z",
+      "expiry": "2026-06-24T03:50:03.355Z",
+      "node": "Kasio's Rest (Saturn)",
+      "missionType": "Skirmish",
+      "missionTypeKey": "Skirmish",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Kasio's Rest (Saturn)",
+      "tier": "Meso",
+      "tierNum": 2,
       "isStorm": true,
       "isHard": false
     },
@@ -486,17 +471,32 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3b3573296480f3f88ce5b3",
-      "activation": "2026-06-24T02:20:03.355Z",
-      "expiry": "2026-06-24T03:50:03.355Z",
-      "node": "Kasio's Rest (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Kasio's Rest (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
+      "id": "6a3b3573296480f3f88ce5b5",
+      "activation": "2026-06-24T02:20:03.358Z",
+      "expiry": "2026-06-24T03:50:03.358Z",
+      "node": "Fenton's Field (Pluto)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Fenton's Field (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3b3573296480f3f88ce5b4",
+      "activation": "2026-06-24T02:20:03.356Z",
+      "expiry": "2026-06-24T03:50:03.356Z",
+      "node": "Enkidu Ice Drifts (Neptune)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Enkidu Ice Drifts (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": true,
       "isHard": false
     }
@@ -758,7 +758,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 20h 53m 58s",
+    "remaining": "4d 20h 48m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1294,9 +1294,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -31079,
+      "count": -31168,
       "requiredRuns": 49000,
-      "completion": 18.28673469387755,
+      "completion": 18.195918367346938,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1344,9 +1344,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -28765,
+      "count": -28838,
       "requiredRuns": 48000,
-      "completion": 20.036458333333336,
+      "completion": 19.96041666666667,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1426,150 +1426,6 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
-      "id": "6a3a709228df6e87038ce5b4",
-      "activation": "2026-06-23T13:22:11.817Z",
-      "node": "Hydron (Sedna)",
-      "nodeKey": "Hydron (Sedna)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -41210,
-      "requiredRuns": 41000,
-      "completion": -0.51219512195122,
-      "completed": true,
-      "rewardTypes": [
-        "detonite"
-      ]
-    },
-    {
-      "id": "6a3a9f72fbef0af36f8ce5b1",
-      "activation": "2026-06-23T15:00:01.779Z",
-      "node": "Rusalka (Sedna)",
-      "nodeKey": "Rusalka (Sedna)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutalist Alad V Nav Coordinate",
-              "key": "Mutalist Alad V Nav Coordinate"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutalist-alad-v-nav-coordinate.png",
-          "color": 158519
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -41836,
-      "requiredRuns": 41000,
-      "completion": -2.0390243902439043,
-      "completed": true,
-      "rewardTypes": [
-        "mutalist"
-      ]
-    },
-    {
-      "id": "6a3a9f72fbef0af36f8ce5b2",
-      "activation": "2026-06-23T15:00:01.779Z",
-      "node": "Kappa (Sedna)",
-      "nodeKey": "Kappa (Sedna)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutalist Alad V Nav Coordinate",
-              "key": "Mutalist Alad V Nav Coordinate"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutalist-alad-v-nav-coordinate.png",
-          "color": 158519
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -37542,
-      "requiredRuns": 37000,
-      "completion": -1.4648648648648566,
-      "completed": true,
-      "rewardTypes": [
-        "mutalist"
-      ]
-    },
-    {
-      "id": "6a3ac042b3df3340728ce5b1",
-      "activation": "2026-06-23T17:20:02.141Z",
-      "node": "Naga (Sedna)",
-      "nodeKey": "Naga (Sedna)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -43234,
-      "requiredRuns": 43000,
-      "completion": -0.5441860465116299,
-      "completed": true,
-      "rewardTypes": [
-        "detonite"
-      ]
-    },
-    {
       "id": "6a3ac042b3df3340728ce5b2",
       "activation": "2026-06-23T17:20:02.141Z",
       "node": "Berehynia (Sedna)",
@@ -1642,6 +1498,150 @@ window.WF_WS_SNAPSHOT = {
       ]
     },
     {
+      "id": "6a3ac042b3df3340728ce5b1",
+      "activation": "2026-06-23T17:20:02.141Z",
+      "node": "Naga (Sedna)",
+      "nodeKey": "Naga (Sedna)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -43234,
+      "requiredRuns": 43000,
+      "completion": -0.5441860465116299,
+      "completed": true,
+      "rewardTypes": [
+        "detonite"
+      ]
+    },
+    {
+      "id": "6a3a9f72fbef0af36f8ce5b2",
+      "activation": "2026-06-23T15:00:01.779Z",
+      "node": "Kappa (Sedna)",
+      "nodeKey": "Kappa (Sedna)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 1,
+              "type": "Mutalist Alad V Nav Coordinate",
+              "key": "Mutalist Alad V Nav Coordinate"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutalist-alad-v-nav-coordinate.png",
+          "color": 158519
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -37542,
+      "requiredRuns": 37000,
+      "completion": -1.4648648648648566,
+      "completed": true,
+      "rewardTypes": [
+        "mutalist"
+      ]
+    },
+    {
+      "id": "6a3a9f72fbef0af36f8ce5b1",
+      "activation": "2026-06-23T15:00:01.779Z",
+      "node": "Rusalka (Sedna)",
+      "nodeKey": "Rusalka (Sedna)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 1,
+              "type": "Mutalist Alad V Nav Coordinate",
+              "key": "Mutalist Alad V Nav Coordinate"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutalist-alad-v-nav-coordinate.png",
+          "color": 158519
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -41836,
+      "requiredRuns": 41000,
+      "completion": -2.0390243902439043,
+      "completed": true,
+      "rewardTypes": [
+        "mutalist"
+      ]
+    },
+    {
+      "id": "6a3a709228df6e87038ce5b4",
+      "activation": "2026-06-23T13:22:11.817Z",
+      "node": "Hydron (Sedna)",
+      "nodeKey": "Hydron (Sedna)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -41210,
+      "requiredRuns": 41000,
+      "completion": -0.51219512195122,
+      "completed": true,
+      "rewardTypes": [
+        "detonite"
+      ]
+    },
+    {
       "id": "6a3ac8777473294c8e8ce5b1",
       "activation": "2026-06-23T19:40:52.726Z",
       "node": "Thon (Ceres)",
@@ -1705,9 +1705,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -32551,
+      "count": -33372,
       "requiredRuns": 39000,
-      "completion": 16.53589743589744,
+      "completion": 14.430769230769236,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1741,9 +1741,45 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -13078,
+      "count": -13750,
       "requiredRuns": 32000,
-      "completion": 59.13125,
+      "completion": 57.03125,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
+      "id": "6a3b34471db6a4de368ce5b2",
+      "activation": "2026-06-24T01:35:02.675Z",
+      "node": "Ludi (Ceres)",
+      "nodeKey": "Ludi (Ceres)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 1,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -687,
+      "requiredRuns": 38000,
+      "completion": 98.19210526315788,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1777,19 +1813,55 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -3386,
+      "count": -4174,
       "requiredRuns": 38000,
-      "completion": 91.08947368421052,
+      "completion": 89.01578947368421,
       "completed": false,
       "rewardTypes": [
         "detonite"
       ]
     },
     {
-      "id": "6a3b34471db6a4de368ce5b2",
-      "activation": "2026-06-24T01:35:02.675Z",
-      "node": "Ludi (Ceres)",
-      "nodeKey": "Ludi (Ceres)",
+      "id": "6a3b4a8a355c63fe748ce5b1",
+      "activation": "2026-06-24T03:10:01.961Z",
+      "node": "Exta (Ceres)",
+      "nodeKey": "Exta (Ceres)",
+      "desc": "Phorid Manifestation",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": 0,
+      "requiredRuns": 30000,
+      "completion": 100,
+      "completed": false,
+      "rewardTypes": [
+        "detonite"
+      ]
+    },
+    {
+      "id": "6a3b4a8a355c63fe748ce5b2",
+      "activation": "2026-06-24T03:10:01.961Z",
+      "node": "Lex (Ceres)",
+      "nodeKey": "Lex (Ceres)",
       "desc": "Infested Outbreak",
       "attacker": {
         "faction": "Infested",
@@ -1800,25 +1872,25 @@ window.WF_WS_SNAPSHOT = {
           "items": [],
           "countedItems": [
             {
-              "count": 1,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
             }
           ],
           "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
           "color": 5068118
         },
         "faction": "Grineer",
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -632,
-      "requiredRuns": 38000,
-      "completion": 98.33684210526316,
+      "count": 0,
+      "requiredRuns": 44000,
+      "completion": 100,
       "completed": false,
       "rewardTypes": [
-        "mutagen"
+        "detonite"
       ]
     }
   ],
