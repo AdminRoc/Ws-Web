@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T00:56:19Z",
+  "fetchedAt": "2026-06-24T01:01:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782264840000",
     "activation": "2026-06-24T00:44:00.000Z",
     "expiry": "2026-06-24T01:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782264840000",
     "activation": "2026-06-24T00:44:00.000Z",
     "expiry": "2026-06-24T01:34:00.000Z",
-    "timeLeft": "38m 0s",
+    "timeLeft": "33m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T01:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "37m 54s"
+    "timeLeft": "32m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782266400000",
@@ -65,21 +65,6 @@ window.WF_WS_SNAPSHOT = {
     ]
   },
   "fissures": [
-    {
-      "id": "6a3b115a6c7713658a8ce5b1",
-      "activation": "2026-06-23T23:06:02.215Z",
-      "expiry": "2026-06-24T00:59:54.911Z",
-      "node": "Yuvarium (Lua)",
-      "missionType": "Survival",
-      "missionTypeKey": "Survival",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Yuvarium (Lua)",
-      "tier": "Omnia",
-      "tierNum": 6,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3b17aef06d1cd69a8ce5b1",
       "activation": "2026-06-23T23:33:02.354Z",
@@ -351,92 +336,32 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3b0b42923a8ee76b8ce5b5",
-      "activation": "2026-06-23T23:20:03.356Z",
-      "expiry": "2026-06-24T00:50:03.356Z",
-      "node": "Sovereign Grasp (Neptune)",
-      "missionType": "Volatile",
-      "missionTypeKey": "Volatile",
+      "id": "6a3b2b5eea449bcfae8ce5b1",
+      "activation": "2026-06-24T00:57:02.158Z",
+      "expiry": "2026-06-24T02:51:57.640Z",
+      "node": "Abaddon (Europa)",
+      "missionType": "Capture",
+      "missionTypeKey": "Capture",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Sovereign Grasp (Neptune)",
+      "nodeKey": "Abaddon (Europa)",
       "tier": "Neo",
       "tierNum": 3,
-      "isStorm": true,
+      "isStorm": false,
       "isHard": false
     },
     {
-      "id": "6a3b0b42923a8ee76b8ce5b4",
-      "activation": "2026-06-23T23:20:03.355Z",
-      "expiry": "2026-06-24T00:50:03.355Z",
-      "node": "Mordo Cluster (Saturn)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Mordo Cluster (Saturn)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3b0b42923a8ee76b8ce5b6",
-      "activation": "2026-06-23T23:20:03.358Z",
-      "expiry": "2026-06-24T00:50:03.358Z",
-      "node": "Seven Sirens (Pluto)",
+      "id": "6a3b1952dba95a33f48ce5b2",
+      "activation": "2026-06-24T00:20:03.353Z",
+      "expiry": "2026-06-24T01:50:03.353Z",
+      "node": "Bifrost Echo (Venus)",
       "missionType": "Extermination",
       "missionTypeKey": "Extermination",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Seven Sirens (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3b0b42923a8ee76b8ce5b3",
-      "activation": "2026-06-23T23:20:03.353Z",
-      "expiry": "2026-06-24T00:50:03.353Z",
-      "node": "Orvin-Haarc (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Orvin-Haarc (Venus)",
+      "nodeKey": "Bifrost Echo (Venus)",
       "tier": "Lith",
       "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3b0b42923a8ee76b8ce5b2",
-      "activation": "2026-06-23T23:20:03.351Z",
-      "expiry": "2026-06-24T00:50:03.351Z",
-      "node": "Ogal Cluster (Earth)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Ogal Cluster (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3b0b42923a8ee76b8ce5b7",
-      "activation": "2026-06-23T23:20:03.360Z",
-      "expiry": "2026-06-24T00:50:03.360Z",
-      "node": "H-2 Cloud (Veil)",
-      "missionType": "Skirmish",
-      "missionTypeKey": "Skirmish",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "H-2 Cloud (Veil)",
-      "tier": "Axi",
-      "tierNum": 4,
       "isStorm": true,
       "isHard": false
     },
@@ -456,17 +381,17 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3b1952dba95a33f48ce5b2",
-      "activation": "2026-06-24T00:20:03.353Z",
-      "expiry": "2026-06-24T01:50:03.353Z",
-      "node": "Bifrost Echo (Venus)",
-      "missionType": "Extermination",
-      "missionTypeKey": "Extermination",
+      "id": "6a3b1952dba95a33f48ce5b4",
+      "activation": "2026-06-24T00:20:03.356Z",
+      "expiry": "2026-06-24T01:50:03.356Z",
+      "node": "Brom Cluster (Neptune)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Bifrost Echo (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
+      "nodeKey": "Brom Cluster (Neptune)",
+      "tier": "Neo",
+      "tierNum": 3,
       "isStorm": true,
       "isHard": false
     },
@@ -486,36 +411,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3b1952dba95a33f48ce5b5",
-      "activation": "2026-06-24T00:20:03.358Z",
-      "expiry": "2026-06-24T01:50:03.358Z",
-      "node": "Peregrine Axis (Pluto)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Peregrine Axis (Pluto)",
-      "tier": "Axi",
-      "tierNum": 4,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
-      "id": "6a3b1952dba95a33f48ce5b4",
-      "activation": "2026-06-24T00:20:03.356Z",
-      "expiry": "2026-06-24T01:50:03.356Z",
-      "node": "Brom Cluster (Neptune)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Brom Cluster (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": true,
-      "isHard": false
-    },
-    {
       "id": "6a3b1952dba95a33f48ce5b6",
       "activation": "2026-06-24T00:20:03.360Z",
       "expiry": "2026-06-24T01:50:03.360Z",
@@ -525,6 +420,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Flexa (Veil)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": true,
+      "isHard": false
+    },
+    {
+      "id": "6a3b1952dba95a33f48ce5b5",
+      "activation": "2026-06-24T00:20:03.358Z",
+      "expiry": "2026-06-24T01:50:03.358Z",
+      "node": "Peregrine Axis (Pluto)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Peregrine Axis (Pluto)",
       "tier": "Axi",
       "tierNum": 4,
       "isStorm": true,
@@ -788,7 +698,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 23h 3m 58s",
+    "remaining": "4d 22h 58m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1324,9 +1234,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -28933,
+      "count": -29013,
       "requiredRuns": 49000,
-      "completion": 20.476530612244897,
+      "completion": 20.394897959183673,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1374,9 +1284,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -26669,
+      "count": -26742,
       "requiredRuns": 48000,
-      "completion": 22.219791666666666,
+      "completion": 22.14375,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1663,9 +1573,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -32827,
+      "count": -33578,
       "requiredRuns": 37000,
-      "completion": 11.278378378378374,
+      "completion": 9.24864864864865,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1699,9 +1609,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -24417,
+      "count": -25235,
       "requiredRuns": 40000,
-      "completion": 38.9575,
+      "completion": 36.9125,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1735,9 +1645,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -11133,
+      "count": -11957,
       "requiredRuns": 39000,
-      "completion": 71.45384615384616,
+      "completion": 69.34102564102564,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1771,9 +1681,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -579,
+      "count": -619,
       "requiredRuns": 32000,
-      "completion": 98.190625,
+      "completion": 98.065625,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -6414,18 +6324,6 @@ window.WF_WS_SNAPSHOT = {
     }
   ],
   "dailyDeals": [
-    {
-      "id": "CrpBow1782262800000",
-      "activation": "2026-06-22T23:00:00.000Z",
-      "expiry": "2026-06-24T01:00:00.000Z",
-      "item": "Lenz",
-      "uniqueName": "/Lotus/StoreItems/Weapons/Corpus/Bow/Longbow/CrpBow",
-      "originalPrice": 235,
-      "salePrice": 94,
-      "total": 100,
-      "sold": 100,
-      "discount": 60
-    },
     {
       "id": "TennoSniperRifle1782356400000",
       "activation": "2026-06-24T01:00:00.000Z",
