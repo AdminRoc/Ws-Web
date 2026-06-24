@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T00:41:19Z",
+  "fetchedAt": "2026-06-24T00:46:22Z",
   "cetusCycle": {
-    "id": "cetusCycle1782261840000",
-    "activation": "2026-06-23T23:04:00.000Z",
-    "expiry": "2026-06-24T00:44:00.000Z",
-    "isDay": true,
-    "state": "day",
-    "timeLeft": "3m 0s",
+    "id": "cetusCycle1782264840000",
+    "activation": "2026-06-24T00:44:00.000Z",
+    "expiry": "2026-06-24T01:34:00.000Z",
+    "isDay": false,
+    "state": "night",
+    "timeLeft": "48m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -22,11 +22,11 @@ window.WF_WS_SNAPSHOT = {
     "state": "warm"
   },
   "cambionCycle": {
-    "id": "cambionCycle1782261840000",
-    "activation": "2026-06-23T23:04:00.000Z",
-    "expiry": "2026-06-24T00:44:00.000Z",
-    "timeLeft": "3m 0s",
-    "state": "fass"
+    "id": "cambionCycle1782264840000",
+    "activation": "2026-06-24T00:44:00.000Z",
+    "expiry": "2026-06-24T01:34:00.000Z",
+    "timeLeft": "48m 0s",
+    "state": "vome"
   },
   "zarimanCycle": {
     "id": "zarimanCycle1782264840000",
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T01:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "52m 54s"
+    "timeLeft": "47m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782266400000",
@@ -66,36 +66,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a3b0f7a0fe90103a28ce5b1",
-      "activation": "2026-06-23T22:58:02.368Z",
-      "expiry": "2026-06-24T00:40:56.993Z",
-      "node": "Nuovo (Ceres)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Nuovo (Ceres)",
-      "tier": "Meso",
-      "tierNum": 2,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3b111ef851dbb05b8ce5b1",
-      "activation": "2026-06-23T23:05:02.900Z",
-      "expiry": "2026-06-24T00:41:18.070Z",
-      "node": "Arval (Mars)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Arval (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3b115a6c7713658a8ce5b1",
       "activation": "2026-06-23T23:06:02.215Z",
       "expiry": "2026-06-24T00:59:54.911Z",
@@ -111,21 +81,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3b17aef06d1cd69a8ce5b2",
-      "activation": "2026-06-23T23:33:02.354Z",
-      "expiry": "2026-06-24T01:06:17.652Z",
-      "node": "Olympus (Mars)",
-      "missionType": "Disruption",
-      "missionTypeKey": "Disruption",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Olympus (Mars)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3b17aef06d1cd69a8ce5b1",
       "activation": "2026-06-23T23:33:02.354Z",
       "expiry": "2026-06-24T01:06:09.667Z",
@@ -135,6 +90,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Unda (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b17aef06d1cd69a8ce5b2",
+      "activation": "2026-06-23T23:33:02.354Z",
+      "expiry": "2026-06-24T01:06:17.652Z",
+      "node": "Olympus (Mars)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Olympus (Mars)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -788,7 +758,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 23h 18m 58s",
+    "remaining": "4d 23h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1324,9 +1294,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -28697,
+      "count": -28774,
       "requiredRuns": 49000,
-      "completion": 20.71734693877551,
+      "completion": 20.638775510204084,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1374,9 +1344,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -26457,
+      "count": -26512,
       "requiredRuns": 48000,
-      "completion": 22.440624999999997,
+      "completion": 22.383333333333333,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1663,9 +1633,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -30565,
+      "count": -31320,
       "requiredRuns": 37000,
-      "completion": 17.3918918918919,
+      "completion": 15.35135135135135,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1699,9 +1669,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -21902,
+      "count": -22745,
       "requiredRuns": 40000,
-      "completion": 45.245000000000005,
+      "completion": 43.137499999999996,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1735,9 +1705,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -8657,
+      "count": -9486,
       "requiredRuns": 39000,
-      "completion": 77.8025641025641,
+      "completion": 75.67692307692307,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1771,9 +1741,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -493,
+      "count": -527,
       "requiredRuns": 32000,
-      "completion": 98.45937500000001,
+      "completion": 98.35312499999999,
       "completed": false,
       "rewardTypes": [
         "mutagen"
