@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T05:46:22Z",
+  "fetchedAt": "2026-06-24T05:51:23Z",
   "cetusCycle": {
     "id": "cetusCycle1782282840000",
     "activation": "2026-06-24T05:44:00.000Z",
     "expiry": "2026-06-24T06:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "48m 1s",
+    "timeLeft": "43m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782282840000",
     "activation": "2026-06-24T05:44:00.000Z",
     "expiry": "2026-06-24T06:34:00.000Z",
-    "timeLeft": "48m 1s",
+    "timeLeft": "43m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T06:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "47m 55s"
+    "timeLeft": "42m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782280800000",
@@ -347,6 +347,21 @@ window.WF_WS_SNAPSHOT = {
       "nodeKey": "Casta (Ceres)",
       "tier": "Meso",
       "tierNum": 2,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3b6f92d30e0591708ce5b1",
+      "activation": "2026-06-24T05:48:02.498Z",
+      "expiry": "2026-06-24T07:38:12.814Z",
+      "node": "Cambire (Deimos)",
+      "missionType": "Alchemy",
+      "missionTypeKey": "Alchemy",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Cambire (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
       "isStorm": false,
       "isHard": true
     },
@@ -788,7 +803,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 18h 13m 58s",
+    "remaining": "4d 18h 8m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1324,9 +1339,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -33778,
+      "count": -33876,
       "requiredRuns": 49000,
-      "completion": 15.532653061224488,
+      "completion": 15.432653061224489,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1374,49 +1389,13 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -31440,
+      "count": -31523,
       "requiredRuns": 48000,
-      "completion": 17.25,
+      "completion": 17.163541666666664,
       "completed": false,
       "rewardTypes": [
         "vandal",
         "other"
-      ]
-    },
-    {
-      "id": "6a3a8226ac0c2dd7b38ce5b1",
-      "activation": "2026-06-23T12:55:01.771Z",
-      "node": "Ara (Mars)",
-      "nodeKey": "Ara (Mars)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -31463,
-      "requiredRuns": 31000,
-      "completion": -1.4935483870967659,
-      "completed": true,
-      "rewardTypes": [
-        "mutagen"
       ]
     },
     {
@@ -1699,9 +1678,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -9246,
+      "count": -10133,
       "requiredRuns": 44000,
-      "completion": 78.98636363636363,
+      "completion": 76.97045454545454,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1735,9 +1714,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -2802,
+      "count": -2887,
       "requiredRuns": 30000,
-      "completion": 90.66,
+      "completion": 90.37666666666667,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1771,9 +1750,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -25423,
+      "count": -26213,
       "requiredRuns": 38000,
-      "completion": 33.09736842105263,
+      "completion": 31.018421052631584,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1807,9 +1786,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -28293,
+      "count": -29069,
       "requiredRuns": 38000,
-      "completion": 25.544736842105266,
+      "completion": 23.502631578947366,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1915,9 +1894,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1998,
+      "count": -2971,
       "requiredRuns": 47000,
-      "completion": 95.74893617021276,
+      "completion": 93.67872340425532,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1951,9 +1930,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -81,
+      "count": -208,
       "requiredRuns": 30000,
-      "completion": 99.72999999999999,
+      "completion": 99.30666666666667,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -1987,9 +1966,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -11,
+      "count": -42,
       "requiredRuns": 35000,
-      "completion": 99.96857142857142,
+      "completion": 99.88,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -2023,9 +2002,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": 0,
+      "count": -26,
       "requiredRuns": 37000,
-      "completion": 100,
+      "completion": 99.92972972972973,
       "completed": false,
       "rewardTypes": [
         "mutalist"
