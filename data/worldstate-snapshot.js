@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T00:01:20Z",
+  "fetchedAt": "2026-06-24T00:06:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782261840000",
     "activation": "2026-06-23T23:04:00.000Z",
     "expiry": "2026-06-24T00:44:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T01:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "1h 32m 54s"
+    "timeLeft": "1h 27m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782266400000",
@@ -291,21 +291,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3b17aef06d1cd69a8ce5b1",
-      "activation": "2026-06-23T23:33:02.354Z",
-      "expiry": "2026-06-24T01:06:09.667Z",
-      "node": "Unda (Venus)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Unda (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3b17aef06d1cd69a8ce5b2",
       "activation": "2026-06-23T23:33:02.354Z",
       "expiry": "2026-06-24T01:06:17.652Z",
@@ -315,6 +300,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Grineer",
       "enemyKey": "Grineer",
       "nodeKey": "Olympus (Mars)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b17aef06d1cd69a8ce5b1",
+      "activation": "2026-06-23T23:33:02.354Z",
+      "expiry": "2026-06-24T01:06:09.667Z",
+      "node": "Unda (Venus)",
+      "missionType": "Spy",
+      "missionTypeKey": "Spy",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Unda (Venus)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -743,7 +743,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 23h 58m 58s",
+    "remaining": "4d 23h 53m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1279,9 +1279,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -28042,
+      "count": -28134,
       "requiredRuns": 49000,
-      "completion": 21.385714285714286,
+      "completion": 21.291836734693874,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1329,9 +1329,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -25812,
+      "count": -25893,
       "requiredRuns": 48000,
-      "completion": 23.112500000000004,
+      "completion": 23.028125,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1618,9 +1618,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -24522,
+      "count": -25283,
       "requiredRuns": 37000,
-      "completion": 33.72432432432433,
+      "completion": 31.667567567567566,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1654,9 +1654,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -15249,
+      "count": -16084,
       "requiredRuns": 40000,
-      "completion": 61.877500000000005,
+      "completion": 59.79,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1690,9 +1690,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -2181,
+      "count": -2983,
       "requiredRuns": 39000,
-      "completion": 94.4076923076923,
+      "completion": 92.35128205128204,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1726,9 +1726,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -56,
+      "count": -114,
       "requiredRuns": 32000,
-      "completion": 99.825,
+      "completion": 99.64375,
       "completed": false,
       "rewardTypes": [
         "mutagen"
