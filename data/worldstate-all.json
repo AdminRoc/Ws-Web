@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-06-24T04:31:20Z",
+  "fetchedAt": "2026-06-24T04:36:25Z",
   "cetusCycle": {
     "id": "cetusCycle1782279840000",
     "activation": "2026-06-24T04:04:00.000Z",
     "expiry": "2026-06-24T05:44:00.000Z",
     "isDay": true,
     "state": "day",
-    "timeLeft": "1h 13m 1s",
+    "timeLeft": "1h 7m 59s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -20,7 +20,7 @@
     "id": "cambionCycle1782279840000",
     "activation": "2026-06-24T04:04:00.000Z",
     "expiry": "2026-06-24T05:44:00.000Z",
-    "timeLeft": "1h 13m 1s",
+    "timeLeft": "1h 7m 59s",
     "state": "fass"
   },
   "zarimanCycle": {
@@ -29,7 +29,7 @@
     "expiry": "2026-06-24T06:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "2h 2m 55s"
+    "timeLeft": "1h 57m 54s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782280800000",
@@ -60,21 +60,6 @@
     ]
   },
   "fissures": [
-    {
-      "id": "6a3b45278685a247c18ce5b1",
-      "activation": "2026-06-24T02:47:03.008Z",
-      "expiry": "2026-06-24T04:33:55.971Z",
-      "node": "Nereid (Neptune)",
-      "missionType": "Spy",
-      "missionTypeKey": "Spy",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Nereid (Neptune)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
     {
       "id": "6a3b4707337c3a60088ce5b1",
       "activation": "2026-06-24T02:55:03.012Z",
@@ -346,6 +331,21 @@
       "isHard": true
     },
     {
+      "id": "6a3b5d0e6d1daee9248ce5b2",
+      "activation": "2026-06-24T04:29:02.576Z",
+      "expiry": "2026-06-24T06:14:43.608Z",
+      "node": "Morax (Europa)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Corpus",
+      "enemyKey": "Corpus",
+      "nodeKey": "Morax (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
       "id": "6a3b5d0e6d1daee9248ce5b1",
       "activation": "2026-06-24T04:29:02.576Z",
       "expiry": "2026-06-24T05:44:35.552Z",
@@ -361,17 +361,47 @@
       "isHard": false
     },
     {
-      "id": "6a3b5d0e6d1daee9248ce5b2",
-      "activation": "2026-06-24T04:29:02.576Z",
-      "expiry": "2026-06-24T06:14:43.608Z",
-      "node": "Morax (Europa)",
+      "id": "6a3b5dfef95bd0fd1b8ce5b2",
+      "activation": "2026-06-24T04:33:02.816Z",
+      "expiry": "2026-06-24T06:22:24.426Z",
+      "node": "Solium (Eris)",
       "missionType": "Mobile Defense",
       "missionTypeKey": "Mobile Defense",
+      "enemy": "Infested",
+      "enemyKey": "Infested",
+      "nodeKey": "Solium (Eris)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b5dfef95bd0fd1b8ce5b1",
+      "activation": "2026-06-24T04:33:02.816Z",
+      "expiry": "2026-06-24T05:35:13.929Z",
+      "node": "Cerberus (Pluto)",
+      "missionType": "Interception",
+      "missionTypeKey": "Interception",
       "enemy": "Corpus",
       "enemyKey": "Corpus",
-      "nodeKey": "Morax (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
+      "nodeKey": "Cerberus (Pluto)",
+      "tier": "Axi",
+      "tierNum": 4,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b5dfef95bd0fd1b8ce5b3",
+      "activation": "2026-06-24T04:33:02.816Z",
+      "expiry": "2026-06-24T06:11:40.270Z",
+      "node": "Kappa (Sedna)",
+      "missionType": "Disruption",
+      "missionTypeKey": "Disruption",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Kappa (Sedna)",
+      "tier": "Axi",
+      "tierNum": 4,
       "isStorm": false,
       "isHard": false
     },
@@ -813,7 +843,7 @@
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 19h 28m 58s",
+    "remaining": "4d 19h 23m 57s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1349,9 +1379,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -32507,
+      "count": -32596,
       "requiredRuns": 49000,
-      "completion": 16.829591836734693,
+      "completion": 16.73877551020408,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1399,9 +1429,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -30289,
+      "count": -30387,
       "requiredRuns": 48000,
-      "completion": 18.44895833333333,
+      "completion": 18.346875,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1796,45 +1826,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -24605,
+      "count": -25259,
       "requiredRuns": 32000,
-      "completion": 23.109375,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
-      ]
-    },
-    {
-      "id": "6a3b34471db6a4de368ce5b2",
-      "activation": "2026-06-24T01:35:02.675Z",
-      "node": "Ludi (Ceres)",
-      "nodeKey": "Ludi (Ceres)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -13376,
-      "requiredRuns": 38000,
-      "completion": 64.8,
+      "completion": 21.065624999999997,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1868,12 +1862,48 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -16599,
+      "count": -17373,
       "requiredRuns": 38000,
-      "completion": 56.318421052631585,
+      "completion": 54.28157894736842,
       "completed": false,
       "rewardTypes": [
         "detonite"
+      ]
+    },
+    {
+      "id": "6a3b34471db6a4de368ce5b2",
+      "activation": "2026-06-24T01:35:02.675Z",
+      "node": "Ludi (Ceres)",
+      "nodeKey": "Ludi (Ceres)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 1,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -14156,
+      "requiredRuns": 38000,
+      "completion": 62.74736842105263,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
       ]
     },
     {
@@ -1904,9 +1934,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -1406,
+      "count": -1505,
       "requiredRuns": 30000,
-      "completion": 95.31333333333333,
+      "completion": 94.98333333333333,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1940,9 +1970,9 @@
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -243,
+      "count": -259,
       "requiredRuns": 44000,
-      "completion": 99.44772727272728,
+      "completion": 99.41136363636363,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1976,9 +2006,9 @@
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -462,
+      "count": -495,
       "requiredRuns": 47000,
-      "completion": 99.01702127659574,
+      "completion": 98.94680851063829,
       "completed": false,
       "rewardTypes": [
         "fieldron"
