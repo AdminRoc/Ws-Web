@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T05:41:23Z",
+  "fetchedAt": "2026-06-24T05:46:22Z",
   "cetusCycle": {
-    "id": "cetusCycle1782279840000",
-    "activation": "2026-06-24T04:04:00.000Z",
-    "expiry": "2026-06-24T05:44:00.000Z",
-    "isDay": true,
-    "state": "day",
-    "timeLeft": "3m 1s",
+    "id": "cetusCycle1782282840000",
+    "activation": "2026-06-24T05:44:00.000Z",
+    "expiry": "2026-06-24T06:34:00.000Z",
+    "isDay": false,
+    "state": "night",
+    "timeLeft": "48m 1s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -22,11 +22,11 @@ window.WF_WS_SNAPSHOT = {
     "state": "cold"
   },
   "cambionCycle": {
-    "id": "cambionCycle1782279840000",
-    "activation": "2026-06-24T04:04:00.000Z",
-    "expiry": "2026-06-24T05:44:00.000Z",
-    "timeLeft": "3m 1s",
-    "state": "fass"
+    "id": "cambionCycle1782282840000",
+    "activation": "2026-06-24T05:44:00.000Z",
+    "expiry": "2026-06-24T06:34:00.000Z",
+    "timeLeft": "48m 1s",
+    "state": "vome"
   },
   "zarimanCycle": {
     "id": "zarimanCycle1782282840000",
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T06:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "52m 55s"
+    "timeLeft": "47m 55s"
   },
   "duviriCycle": {
     "id": "duviriCycleanger1782280800000",
@@ -90,21 +90,6 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Morax (Europa)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
-      "id": "6a3b5d0e6d1daee9248ce5b1",
-      "activation": "2026-06-24T04:29:02.576Z",
-      "expiry": "2026-06-24T05:44:35.552Z",
-      "node": "Belenus (Void)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Orokin",
-      "enemyKey": "Orokin",
-      "nodeKey": "Belenus (Void)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -803,7 +788,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 18h 18m 58s",
+    "remaining": "4d 18h 13m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1339,9 +1324,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -33675,
+      "count": -33778,
       "requiredRuns": 49000,
-      "completion": 15.637755102040817,
+      "completion": 15.532653061224488,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1389,9 +1374,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -31360,
+      "count": -31440,
       "requiredRuns": 48000,
-      "completion": 17.333333333333336,
+      "completion": 17.25,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1714,9 +1699,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -8355,
+      "count": -9246,
       "requiredRuns": 44000,
-      "completion": 81.01136363636363,
+      "completion": 78.98636363636363,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1750,45 +1735,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -2714,
+      "count": -2802,
       "requiredRuns": 30000,
-      "completion": 90.95333333333333,
-      "completed": false,
-      "rewardTypes": [
-        "detonite"
-      ]
-    },
-    {
-      "id": "6a3b34471db6a4de368ce5b1",
-      "activation": "2026-06-24T01:35:02.675Z",
-      "node": "Draco (Ceres)",
-      "nodeKey": "Draco (Ceres)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 3,
-              "type": "Detonite Injector",
-              "key": "Detonite Injector"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -27512,
-      "requiredRuns": 38000,
-      "completion": 27.6,
+      "completion": 90.66,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1822,12 +1771,48 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -24594,
+      "count": -25423,
       "requiredRuns": 38000,
-      "completion": 35.27894736842106,
+      "completion": 33.09736842105263,
       "completed": false,
       "rewardTypes": [
         "mutagen"
+      ]
+    },
+    {
+      "id": "6a3b34471db6a4de368ce5b1",
+      "activation": "2026-06-24T01:35:02.675Z",
+      "node": "Draco (Ceres)",
+      "nodeKey": "Draco (Ceres)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 3,
+              "type": "Detonite Injector",
+              "key": "Detonite Injector"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/detonite-injector.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -28293,
+      "requiredRuns": 38000,
+      "completion": 25.544736842105266,
+      "completed": false,
+      "rewardTypes": [
+        "detonite"
       ]
     },
     {
@@ -1930,9 +1915,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -1013,
+      "count": -1998,
       "requiredRuns": 47000,
-      "completion": 97.84468085106383,
+      "completion": 95.74893617021276,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -1966,9 +1951,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": 0,
+      "count": -81,
       "requiredRuns": 30000,
-      "completion": 100,
+      "completion": 99.72999999999999,
       "completed": false,
       "rewardTypes": [
         "mutalist"
@@ -2002,9 +1987,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": 0,
+      "count": -11,
       "requiredRuns": 35000,
-      "completion": 100,
+      "completion": 99.96857142857142,
       "completed": false,
       "rewardTypes": [
         "mutalist"
