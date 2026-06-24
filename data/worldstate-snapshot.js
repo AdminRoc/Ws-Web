@@ -4,28 +4,28 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T03:26:20Z",
+  "fetchedAt": "2026-06-24T03:31:21Z",
   "cetusCycle": {
     "id": "cetusCycle1782273840000",
     "activation": "2026-06-24T03:14:00.000Z",
     "expiry": "2026-06-24T04:04:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "38m 1s",
+    "timeLeft": "33m 1s",
     "isCetus": true
   },
   "vallisCycle": {
-    "id": "vallisCycle1782271200000",
-    "activation": "2026-06-24T03:20:00.000Z",
-    "expiry": "2026-06-24T03:26:48.000Z",
-    "isWarm": true,
-    "state": "warm"
+    "id": "vallisCycle1782271560000",
+    "activation": "2026-06-24T03:26:00.000Z",
+    "expiry": "2026-06-24T03:46:48.000Z",
+    "isWarm": false,
+    "state": "cold"
   },
   "cambionCycle": {
     "id": "cambionCycle1782273840000",
     "activation": "2026-06-24T03:14:00.000Z",
     "expiry": "2026-06-24T04:04:00.000Z",
-    "timeLeft": "38m 1s",
+    "timeLeft": "33m 1s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T04:04:00.000Z",
     "isCorpus": false,
     "state": "grineer",
-    "timeLeft": "37m 55s"
+    "timeLeft": "32m 55s"
   },
   "duviriCycle": {
     "id": "duviriCyclejoy1782273600000",
@@ -66,21 +66,6 @@ window.WF_WS_SNAPSHOT = {
   },
   "fissures": [
     {
-      "id": "6a3b39322d0f0a11a28ce5b2",
-      "activation": "2026-06-24T01:56:02.432Z",
-      "expiry": "2026-06-24T03:47:59.272Z",
-      "node": "Garus (Kuva Fortress)",
-      "missionType": "Rescue",
-      "missionTypeKey": "Rescue",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Garus (Kuva Fortress)",
-      "tier": "Requiem",
-      "tierNum": 5,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3b39322d0f0a11a28ce5b1",
       "activation": "2026-06-24T01:56:02.432Z",
       "expiry": "2026-06-24T03:52:29.120Z",
@@ -96,19 +81,19 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3b39322d0f0a11a28ce5b5",
+      "id": "6a3b39322d0f0a11a28ce5b2",
       "activation": "2026-06-24T01:56:02.432Z",
-      "expiry": "2026-06-24T03:28:18.335Z",
-      "node": "Cytherean (Venus)",
-      "missionType": "Interception",
-      "missionTypeKey": "Interception",
-      "enemy": "Corpus",
-      "enemyKey": "Corpus",
-      "nodeKey": "Cytherean (Venus)",
-      "tier": "Lith",
-      "tierNum": 1,
+      "expiry": "2026-06-24T03:47:59.272Z",
+      "node": "Garus (Kuva Fortress)",
+      "missionType": "Rescue",
+      "missionTypeKey": "Rescue",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Garus (Kuva Fortress)",
+      "tier": "Requiem",
+      "tierNum": 5,
       "isStorm": false,
-      "isHard": true
+      "isHard": false
     },
     {
       "id": "6a3b3c3f4a0801c37c8ce5b1",
@@ -276,21 +261,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": false
     },
     {
-      "id": "6a3b45278685a247c18ce5b2",
-      "activation": "2026-06-24T02:47:03.008Z",
-      "expiry": "2026-06-24T04:16:20.237Z",
-      "node": "Stephano (Uranus)",
-      "missionType": "Defense",
-      "missionTypeKey": "Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Stephano (Uranus)",
-      "tier": "Neo",
-      "tierNum": 3,
-      "isStorm": false,
-      "isHard": false
-    },
-    {
       "id": "6a3b45278685a247c18ce5b3",
       "activation": "2026-06-24T02:47:03.008Z",
       "expiry": "2026-06-24T04:20:52.261Z",
@@ -300,6 +270,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "Armaros (Europa)",
+      "tier": "Neo",
+      "tierNum": 3,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b45278685a247c18ce5b2",
+      "activation": "2026-06-24T02:47:03.008Z",
+      "expiry": "2026-06-24T04:16:20.237Z",
+      "node": "Stephano (Uranus)",
+      "missionType": "Defense",
+      "missionTypeKey": "Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Stephano (Uranus)",
       "tier": "Neo",
       "tierNum": 3,
       "isStorm": false,
@@ -381,21 +366,6 @@ window.WF_WS_SNAPSHOT = {
       "isHard": true
     },
     {
-      "id": "6a3b4dd2709989b5f68ce5b1",
-      "activation": "2026-06-24T03:24:02.266Z",
-      "expiry": "2026-06-24T04:30:30.469Z",
-      "node": "Eurasia (Earth)",
-      "missionType": "Mobile Defense",
-      "missionTypeKey": "Mobile Defense",
-      "enemy": "Grineer",
-      "enemyKey": "Grineer",
-      "nodeKey": "Eurasia (Earth)",
-      "tier": "Lith",
-      "tierNum": 1,
-      "isStorm": false,
-      "isHard": true
-    },
-    {
       "id": "6a3b4dd2709989b5f68ce5b2",
       "activation": "2026-06-24T03:24:02.266Z",
       "expiry": "2026-06-24T04:35:31.725Z",
@@ -405,6 +375,21 @@ window.WF_WS_SNAPSHOT = {
       "enemy": "Corpus",
       "enemyKey": "Corpus",
       "nodeKey": "V Prime (Venus)",
+      "tier": "Lith",
+      "tierNum": 1,
+      "isStorm": false,
+      "isHard": true
+    },
+    {
+      "id": "6a3b4dd2709989b5f68ce5b1",
+      "activation": "2026-06-24T03:24:02.266Z",
+      "expiry": "2026-06-24T04:30:30.469Z",
+      "node": "Eurasia (Earth)",
+      "missionType": "Mobile Defense",
+      "missionTypeKey": "Mobile Defense",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Eurasia (Earth)",
       "tier": "Lith",
       "tierNum": 1,
       "isStorm": false,
@@ -863,7 +848,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 20h 33m 58s",
+    "remaining": "4d 20h 28m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1399,9 +1384,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -31420,
+      "count": -31499,
       "requiredRuns": 49000,
-      "completion": 17.93877551020408,
+      "completion": 17.85816326530612,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1449,9 +1434,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -29094,
+      "count": -29193,
       "requiredRuns": 48000,
-      "completion": 19.693749999999998,
+      "completion": 19.590625,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1810,9 +1795,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -35818,
+      "count": -36615,
       "requiredRuns": 39000,
-      "completion": 8.158974358974358,
+      "completion": 6.115384615384611,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1846,9 +1831,45 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -15793,
+      "count": -16496,
       "requiredRuns": 32000,
-      "completion": 50.646875,
+      "completion": 48.45,
+      "completed": false,
+      "rewardTypes": [
+        "mutagen"
+      ]
+    },
+    {
+      "id": "6a3b34471db6a4de368ce5b2",
+      "activation": "2026-06-24T01:35:02.675Z",
+      "node": "Ludi (Ceres)",
+      "nodeKey": "Ludi (Ceres)",
+      "desc": "Infested Outbreak",
+      "attacker": {
+        "faction": "Infested",
+        "factionKey": "Infested"
+      },
+      "defender": {
+        "reward": {
+          "items": [],
+          "countedItems": [
+            {
+              "count": 1,
+              "type": "Mutagen Mass",
+              "key": "Mutagen Mass"
+            }
+          ],
+          "credits": 0,
+          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
+          "color": 5068118
+        },
+        "faction": "Grineer",
+        "factionKey": "Grineer"
+      },
+      "vsInfestation": true,
+      "count": -3923,
+      "requiredRuns": 38000,
+      "completion": 89.67631578947368,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1882,48 +1903,12 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -6518,
+      "count": -7300,
       "requiredRuns": 38000,
-      "completion": 82.84736842105262,
+      "completion": 80.78947368421052,
       "completed": false,
       "rewardTypes": [
         "detonite"
-      ]
-    },
-    {
-      "id": "6a3b34471db6a4de368ce5b2",
-      "activation": "2026-06-24T01:35:02.675Z",
-      "node": "Ludi (Ceres)",
-      "nodeKey": "Ludi (Ceres)",
-      "desc": "Infested Outbreak",
-      "attacker": {
-        "faction": "Infested",
-        "factionKey": "Infested"
-      },
-      "defender": {
-        "reward": {
-          "items": [],
-          "countedItems": [
-            {
-              "count": 1,
-              "type": "Mutagen Mass",
-              "key": "Mutagen Mass"
-            }
-          ],
-          "credits": 0,
-          "thumbnail": "https://cdn.warframestat.us/img/mutagen-mass.png",
-          "color": 5068118
-        },
-        "faction": "Grineer",
-        "factionKey": "Grineer"
-      },
-      "vsInfestation": true,
-      "count": -3142,
-      "requiredRuns": 38000,
-      "completion": 91.73157894736842,
-      "completed": false,
-      "rewardTypes": [
-        "mutagen"
       ]
     },
     {
@@ -1954,9 +1939,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -226,
+      "count": -327,
       "requiredRuns": 30000,
-      "completion": 99.24666666666667,
+      "completion": 98.91,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1990,9 +1975,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -24,
+      "count": -42,
       "requiredRuns": 44000,
-      "completion": 99.94545454545455,
+      "completion": 99.90454545454546,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -2026,9 +2011,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": true,
-      "count": -62,
+      "count": -118,
       "requiredRuns": 47000,
-      "completion": 99.86808510638298,
+      "completion": 99.74893617021277,
       "completed": false,
       "rewardTypes": [
         "fieldron"
@@ -2454,9 +2439,191 @@ window.WF_WS_SNAPSHOT = {
           "expiry": "2026-06-24T04:04:09.933Z",
           "uniqueName": "/Lotus/Types/Game/MissionDecks/EidolonJobMissionRewards/TierCTableARewards",
           "rewardPool": [
-            "Pattern Mismatch. Results inaccurate."
+            "Gladiator Aegis",
+            "Madurai Lens",
+            "Cetus Wisp",
+            "200 Endo",
+            "Gladiator Aegis",
+            "Madurai Lens",
+            "Cetus Wisp",
+            "200 Endo",
+            "Gara Neuroptics Blueprint",
+            "Augur Accord",
+            "Revenant Systems Blueprint",
+            "Aya",
+            "Gladiator Aegis",
+            "Madurai Lens",
+            "Cetus Wisp",
+            "200 Endo",
+            "Gara Neuroptics Blueprint",
+            "Augur Accord",
+            "Revenant Systems Blueprint",
+            "Aya",
+            "Vigilante Supplies",
+            "Gara Neuroptics Blueprint",
+            "Augur Accord",
+            "Revenant Systems Blueprint",
+            "Aya",
+            "Vigilante Supplies"
           ],
-          "rewardPoolDrops": [],
+          "rewardPoolDrops": [
+            {
+              "item": "Gladiator Aegis",
+              "rarity": "Uncommon",
+              "chance": 27.59,
+              "count": 1
+            },
+            {
+              "item": "Madurai Lens",
+              "rarity": "Uncommon",
+              "chance": 13.79,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 29.31,
+              "count": 1
+            },
+            {
+              "item": "200 Endo",
+              "rarity": "Uncommon",
+              "chance": 29.31,
+              "count": 1
+            },
+            {
+              "item": "Gladiator Aegis",
+              "rarity": "Uncommon",
+              "chance": 18.08,
+              "count": 1
+            },
+            {
+              "item": "Madurai Lens",
+              "rarity": "Rare",
+              "chance": 9.04,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 19.21,
+              "count": 1
+            },
+            {
+              "item": "200 Endo",
+              "rarity": "Uncommon",
+              "chance": 19.21,
+              "count": 1
+            },
+            {
+              "item": "Gara Neuroptics Blueprint",
+              "rarity": "Rare",
+              "chance": 9.04,
+              "count": 1
+            },
+            {
+              "item": "Augur Accord",
+              "rarity": "Rare",
+              "chance": 9.04,
+              "count": 1
+            },
+            {
+              "item": "Revenant Systems Blueprint",
+              "rarity": "Rare",
+              "chance": 9.04,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 7.34,
+              "count": 1
+            },
+            {
+              "item": "Gladiator Aegis",
+              "rarity": "Uncommon",
+              "chance": 17.68,
+              "count": 1
+            },
+            {
+              "item": "Madurai Lens",
+              "rarity": "Rare",
+              "chance": 8.84,
+              "count": 1
+            },
+            {
+              "item": "Cetus Wisp",
+              "rarity": "Uncommon",
+              "chance": 18.78,
+              "count": 1
+            },
+            {
+              "item": "200 Endo",
+              "rarity": "Uncommon",
+              "chance": 18.78,
+              "count": 1
+            },
+            {
+              "item": "Gara Neuroptics Blueprint",
+              "rarity": "Rare",
+              "chance": 8.84,
+              "count": 1
+            },
+            {
+              "item": "Augur Accord",
+              "rarity": "Rare",
+              "chance": 8.84,
+              "count": 1
+            },
+            {
+              "item": "Revenant Systems Blueprint",
+              "rarity": "Rare",
+              "chance": 8.84,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Rare",
+              "chance": 7.18,
+              "count": 1
+            },
+            {
+              "item": "Vigilante Supplies",
+              "rarity": "Rare",
+              "chance": 2.21,
+              "count": 1
+            },
+            {
+              "item": "Gara Neuroptics Blueprint",
+              "rarity": "Uncommon",
+              "chance": 24.62,
+              "count": 1
+            },
+            {
+              "item": "Augur Accord",
+              "rarity": "Uncommon",
+              "chance": 24.62,
+              "count": 1
+            },
+            {
+              "item": "Revenant Systems Blueprint",
+              "rarity": "Uncommon",
+              "chance": 24.62,
+              "count": 1
+            },
+            {
+              "item": "Aya",
+              "rarity": "Uncommon",
+              "chance": 20,
+              "count": 1
+            },
+            {
+              "item": "Vigilante Supplies",
+              "rarity": "Rare",
+              "chance": 6.15,
+              "count": 1
+            }
+          ],
           "type": "Capture the New Grineer Commander",
           "enemyLevels": [
             20,
