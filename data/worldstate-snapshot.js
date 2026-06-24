@@ -4,14 +4,14 @@
    就能拿到数据——哪怕 api.warframestat.us 和所有镜像都连不上，
    甚至哪怕是用 file:// 协议本地打开页面，这份数据依然可用。 */
 window.WF_WS_SNAPSHOT = {
-  "fetchedAt": "2026-06-24T00:51:20Z",
+  "fetchedAt": "2026-06-24T00:56:19Z",
   "cetusCycle": {
     "id": "cetusCycle1782264840000",
     "activation": "2026-06-24T00:44:00.000Z",
     "expiry": "2026-06-24T01:34:00.000Z",
     "isDay": false,
     "state": "night",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "isCetus": true
   },
   "vallisCycle": {
@@ -25,7 +25,7 @@ window.WF_WS_SNAPSHOT = {
     "id": "cambionCycle1782264840000",
     "activation": "2026-06-24T00:44:00.000Z",
     "expiry": "2026-06-24T01:34:00.000Z",
-    "timeLeft": "43m 0s",
+    "timeLeft": "38m 0s",
     "state": "vome"
   },
   "zarimanCycle": {
@@ -34,7 +34,7 @@ window.WF_WS_SNAPSHOT = {
     "expiry": "2026-06-24T01:34:00.000Z",
     "isCorpus": true,
     "state": "corpus",
-    "timeLeft": "42m 54s"
+    "timeLeft": "37m 54s"
   },
   "duviriCycle": {
     "id": "duviriCyclefear1782266400000",
@@ -319,6 +319,36 @@ window.WF_WS_SNAPSHOT = {
       "tierNum": 1,
       "isStorm": false,
       "isHard": true
+    },
+    {
+      "id": "6a3b2ae69cf3f00b6c8ce5b1",
+      "activation": "2026-06-24T00:55:02.589Z",
+      "expiry": "2026-06-24T02:17:56.729Z",
+      "node": "Circulus (Lua)",
+      "missionType": "Survival",
+      "missionTypeKey": "Survival",
+      "enemy": "Grineer",
+      "enemyKey": "Grineer",
+      "nodeKey": "Circulus (Lua)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
+    },
+    {
+      "id": "6a3b2ae69cf3f00b6c8ce5b2",
+      "activation": "2026-06-24T00:55:02.589Z",
+      "expiry": "2026-06-24T02:43:02.193Z",
+      "node": "Cambire (Deimos)",
+      "missionType": "Alchemy",
+      "missionTypeKey": "Alchemy",
+      "enemy": "The Murmur",
+      "enemyKey": "The Murmur",
+      "nodeKey": "Cambire (Deimos)",
+      "tier": "Omnia",
+      "tierNum": 6,
+      "isStorm": false,
+      "isHard": false
     },
     {
       "id": "6a3b0b42923a8ee76b8ce5b5",
@@ -758,7 +788,7 @@ window.WF_WS_SNAPSHOT = {
     },
     "activation": "2026-06-22T00:00:00.000Z",
     "expiry": "2026-06-28T23:59:59.000Z",
-    "remaining": "4d 23h 8m 58s",
+    "remaining": "4d 23h 3m 58s",
     "rotation": [
       {
         "name": "Umbra Forma Blueprint",
@@ -1294,9 +1324,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Corpus"
       },
       "vsInfestation": false,
-      "count": -28853,
+      "count": -28933,
       "requiredRuns": 49000,
-      "completion": 20.558163265306124,
+      "completion": 20.476530612244897,
       "completed": false,
       "rewardTypes": [
         "detonite",
@@ -1344,9 +1374,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": false,
-      "count": -26586,
+      "count": -26669,
       "requiredRuns": 48000,
-      "completion": 22.30625,
+      "completion": 22.219791666666666,
       "completed": false,
       "rewardTypes": [
         "vandal",
@@ -1633,9 +1663,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -32071,
+      "count": -32827,
       "requiredRuns": 37000,
-      "completion": 13.321621621621627,
+      "completion": 11.278378378378374,
       "completed": false,
       "rewardTypes": [
         "detonite"
@@ -1669,9 +1699,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -23587,
+      "count": -24417,
       "requiredRuns": 40000,
-      "completion": 41.032500000000006,
+      "completion": 38.9575,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1705,9 +1735,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -10314,
+      "count": -11133,
       "requiredRuns": 39000,
-      "completion": 73.55384615384615,
+      "completion": 71.45384615384616,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -1741,9 +1771,9 @@ window.WF_WS_SNAPSHOT = {
         "factionKey": "Grineer"
       },
       "vsInfestation": true,
-      "count": -550,
+      "count": -579,
       "requiredRuns": 32000,
-      "completion": 98.28125,
+      "completion": 98.190625,
       "completed": false,
       "rewardTypes": [
         "mutagen"
@@ -6395,6 +6425,18 @@ window.WF_WS_SNAPSHOT = {
       "total": 100,
       "sold": 100,
       "discount": 60
+    },
+    {
+      "id": "TennoSniperRifle1782356400000",
+      "activation": "2026-06-24T01:00:00.000Z",
+      "expiry": "2026-06-25T03:00:00.000Z",
+      "item": "Vectis",
+      "uniqueName": "/Lotus/StoreItems/Weapons/Tenno/Rifle/TennoSniperRifle",
+      "originalPrice": 250,
+      "salePrice": 75,
+      "total": 100,
+      "sold": 0,
+      "discount": 70
     }
   ],
   "tenetWeapons": null,
