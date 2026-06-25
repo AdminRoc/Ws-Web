@@ -1188,21 +1188,23 @@
       user-select: none;
       /* 整体边框 — logo + 文字在同一个 pill 里 */
       background: rgba(14,10,5,.96);
-      border: 1.5px solid rgba(201,164,50,.52);
-      border-radius: 28px;
-      padding: 4px 14px 4px 4px;
+      /* 尺寸直接写进真实 CSS(在原基础上整体放大约 45%)，不用 transform 缩放，
+         字与 logo 才能按目标大小原生渲染、清晰锐利不被拉糊 */
+      border: 2.3px solid rgba(201,164,50,.52);
+      border-radius: 40px;
+      padding: 6px 21px 6px 6px;
       box-shadow: 0 0 18px rgba(201,164,50,.28), 0 4px 18px rgba(0,0,0,.55);
-      transition: background .2s, border-color .2s, box-shadow .2s, transform .25s cubic-bezier(.34,1.56,.64,1);
-      /* 在原 10% 基础上再放大 15%：1.1 × 1.15 ≈ 1.265 */
-      transform: scale(1.265);
+      transition: background .2s, border-color .2s, box-shadow .2s, transform .2s cubic-bezier(.34,1.56,.64,1);
+      /* --qn-z：JS 写入的"抵消浏览器缩放"系数(100% 缩放时为 1)；--qn-h：hover 放大系数。
+         100% 缩放且未 hover 时 = scale(1)，等同无变换 → 不产生模糊 */
+      transform: scale(calc(var(--qn-z, 1) * var(--qn-h, 1)));
       transform-origin: bottom right;
-      will-change: transform;
     }
     .ws-quicknav:hover {
       background: rgba(25,18,6,.97);
       border-color: rgba(201,164,50,.82);
       box-shadow: 0 0 24px rgba(201,164,50,.48), 0 4px 22px rgba(0,0,0,.6);
-      transform: scale(1.33);
+      --qn-h: 1.06;
     }
     /* 透明桥接层：防止鼠标从控件移向菜单时因 gap 导致 hover 丢失 */
     .ws-quicknav::before {
@@ -1218,8 +1220,8 @@
     .ws-quicknav::after {
       content: '';
       position: absolute;
-      inset: -4px;
-      border-radius: 32px;
+      inset: -5px;
+      border-radius: 45px;
       pointer-events: none;
       z-index: -1;
       box-shadow: 0 0 22px 3px rgba(201,164,50,.5);
@@ -1236,7 +1238,7 @@
     .ws-qn-fx {
       position: absolute;
       inset: 0;
-      border-radius: 28px;
+      border-radius: 40px;
       overflow: hidden;
       pointer-events: none;
       z-index: 0;
@@ -1265,8 +1267,8 @@
     /* logo 旋转光环：conic 渐变弧光持续旋转，营造"扫描中"科技感 */
     .ws-qn-logo-wrap {
       position: relative;
-      width: 40px;
-      height: 40px;
+      width: 59px;
+      height: 59px;
       flex-shrink: 0;
       z-index: 1;
     }
@@ -1292,8 +1294,8 @@
       .ws-qn-logo-wrap::before { animation: none; }
     }
     .ws-qn-logo {
-      width: 40px;
-      height: 40px;
+      width: 59px;
+      height: 59px;
       border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
@@ -1301,9 +1303,9 @@
       z-index: 1;
     }
     .ws-qn-label {
-      padding-left: .7rem;
+      padding-left: 1.04rem;
       font-family: 'Orbitron', sans-serif;
-      font-size: .7rem;
+      font-size: 1.02rem;
       font-weight: 700;
       letter-spacing: .12em;
       color: var(--ws-gold-bright);
@@ -1311,47 +1313,115 @@
     }
     .ws-qn-menu {
       position: absolute;
-      bottom: calc(100% + .5rem);
+      bottom: calc(100% + .6rem);
       right: 0;
-      min-width: 158px;
-      background: rgba(14,10,5,.97);
+      min-width: 182px;
+      background: linear-gradient(158deg, rgba(20,14,6,.98), rgba(9,6,3,.985));
       border: 1px solid var(--ws-gold-line);
-      border-radius: 4px;
-      padding: .3rem 0;
-      box-shadow: 0 -8px 32px rgba(0,0,0,.55), 0 0 0 1px rgba(201,164,50,.06);
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(8px);
-      transition: opacity .18s ease, transform .18s ease;
+      border-radius: 6px;
+      padding: .4rem 0;
+      box-shadow: 0 -10px 38px rgba(0,0,0,.6), 0 0 0 1px rgba(201,164,50,.08), 0 0 22px rgba(201,164,50,.06);
       display: flex;
       flex-direction: column;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+      /* 横向必须 hidden：逐条入场的 translateX 会临时右移产生横向溢出，
+         若不锁横向，overflow-y:auto 会令 overflow-x 计算为 auto → 闪现横向滚动条。
+         锁掉后条目从右边缘干净裁入。 */
+      overflow-x: hidden;
+      /* 收起态：从按钮侧(底缘)向上"擦除式"裁开 + 轻微上移淡出，锚点钉在按钮角 */
+      opacity: 0;
+      pointer-events: none;
+      transform-origin: bottom right;
+      transform: translateY(12px);
+      clip-path: inset(100% 0 0 0 round 6px);
+      transition:
+        opacity .26s ease,
+        transform .42s cubic-bezier(.16,1,.3,1),
+        clip-path .46s cubic-bezier(.16,1,.3,1);
+    }
+    /* 顶缘扫描高光：展开时一道金光沿顶部亮起 */
+    .ws-qn-menu::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 12%; right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,226,134,.9), transparent);
+      opacity: 0;
+      transition: opacity .3s ease .14s;
     }
     .ws-quicknav:hover .ws-qn-menu,
     .ws-quicknav.ws-qn-open .ws-qn-menu {
       opacity: 1;
       pointer-events: auto;
       transform: translateY(0);
+      clip-path: inset(0 0 0 0 round 6px);
     }
+    .ws-quicknav:hover .ws-qn-menu::before,
+    .ws-quicknav.ws-qn-open .ws-qn-menu::before { opacity: 1; }
+
     .ws-qn-menu a {
+      position: relative;
       display: block;
-      padding: .46rem 1.05rem;
+      padding: .5rem 1.15rem;
       font-family: var(--f-sci);
-      font-size: .85rem;
+      font-size: .92rem;
       color: var(--ws-text);
       text-decoration: none;
       letter-spacing: .04em;
       white-space: nowrap;
-      transition: background .12s, color .12s;
+      /* 逐条层叠入场：按 --i 递增延迟从右滑入淡现(延迟只加在 opacity/transform，hover 反馈即时) */
+      opacity: 0;
+      transform: translateX(15px);
+      transition:
+        opacity .34s ease calc(var(--i, 0) * 26ms),
+        transform .44s cubic-bezier(.16,1,.3,1) calc(var(--i, 0) * 26ms),
+        background .14s ease,
+        color .14s ease,
+        padding-left .2s cubic-bezier(.16,1,.3,1);
     }
-    .ws-qn-menu a:hover { background: rgba(201,164,50,.1); color: var(--ws-gold-bright); }
-    .ws-qn-sep { height: 1px; background: var(--ws-sep); margin: .22rem .55rem; }
+    /* hover 左侧金色指示条纵向展开 */
+    .ws-qn-menu a::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      width: 2.5px; height: 0;
+      background: linear-gradient(var(--ws-gold-bright), var(--ws-gold));
+      box-shadow: 0 0 6px rgba(201,164,50,.6);
+      transform: translateY(-50%);
+      transition: height .22s cubic-bezier(.16,1,.3,1);
+    }
+    .ws-qn-menu a:hover {
+      background: linear-gradient(90deg, rgba(201,164,50,.16), rgba(201,164,50,.02));
+      color: var(--ws-gold-bright);
+      padding-left: 1.45rem;
+    }
+    .ws-qn-menu a:hover::before { height: 60%; }
+    .ws-qn-sep {
+      height: 1px;
+      margin: .3rem .6rem;
+      background: var(--ws-sep);
+      opacity: 0;
+      transform: scaleX(.3);
+      transform-origin: right;
+      transition:
+        opacity .34s ease calc(var(--i, 0) * 26ms),
+        transform .44s cubic-bezier(.16,1,.3,1) calc(var(--i, 0) * 26ms);
+    }
+    .ws-quicknav:hover .ws-qn-menu a,
+    .ws-quicknav.ws-qn-open .ws-qn-menu a,
+    .ws-quicknav:hover .ws-qn-menu .ws-qn-sep,
+    .ws-quicknav.ws-qn-open .ws-qn-menu .ws-qn-sep {
+      opacity: 1;
+      transform: none;
+    }
     /* 快速导航锚点偏移：补偿顶部固定导航栏 70px + 余量 */
     [id^="ws-sec-"] { scroll-margin-top: 84px; }
     @media (max-width: 560px) {
       .ws-quicknav { bottom: 1.2rem; right: .8rem; }
-      .ws-qn-label { font-size: .64rem; }
-      .ws-qn-logo-wrap { width: 34px; height: 34px; }
-      .ws-qn-logo { width: 34px; height: 34px; }
+      .ws-qn-label { font-size: .93rem; }
+      .ws-qn-logo-wrap { width: 49px; height: 49px; }
+      .ws-qn-logo { width: 49px; height: 49px; }
     }
 
     /* ══════════════════════════════════════════════
@@ -4227,6 +4297,23 @@
     /* 快速导航浮窗：点击切换展开，点击外部收起 */
     var qn = document.getElementById('ws-quicknav');
     if (qn) {
+      /* 抵消浏览器缩放(Ctrl+滚轮)：锁定按钮视觉大小，避免放大后下拉菜单冲出屏幕。
+         浏览器缩放会改变 devicePixelRatio；以页面加载时的 DPR 为基准，
+         实时反向缩放(scale=基准/当前)，使按钮视觉尺寸恒定。100% 时系数=1(不模糊)。 */
+      var _qnBaseDPR = window.devicePixelRatio || 1;
+      function _qnLockZoom() {
+        var comp = _qnBaseDPR / (window.devicePixelRatio || 1);
+        qn.style.setProperty('--qn-z', comp.toFixed(4));
+      }
+      window.addEventListener('resize', _qnLockZoom);
+      _qnLockZoom();
+      /* 给下拉菜单每个子项设置递增序号 --i，驱动逐条层叠入场的延迟 */
+      var _qnMenu = qn.querySelector('.ws-qn-menu');
+      if (_qnMenu) {
+        Array.prototype.forEach.call(_qnMenu.children, function (el, i) {
+          el.style.setProperty('--i', i);
+        });
+      }
       var _qnTimer = null;
       qn.addEventListener('mouseenter', function () {
         clearTimeout(_qnTimer);
