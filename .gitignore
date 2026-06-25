@@ -1,6 +1,10 @@
 # 备份文件
 *.bak
 
+# Claude Code 本地配置：launch.json(预览服务器配置)纳入仓库以便换机继续开发；
+# settings.local.json 是本机权限设置，不应同步，忽略掉。
+/.claude/settings.local.json
+
 # Python 缓存（本地跑 .github/scripts/*.py 时产生）
 __pycache__/
 *.pyc
