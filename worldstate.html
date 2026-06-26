@@ -1466,7 +1466,11 @@
     .ws-dna-node {
       fill: #ffe486;
       filter: drop-shadow(0 0 4px rgba(255,220,120,.9));
+      /* 节点圆点不能"瞬间出现"——跟连线一起淡入，只有分叉真正展开完才可见 */
+      opacity: 0;
+      transition: opacity .3s ease;
     }
+    .ws-dna-branch.show .ws-dna-node { opacity: 1; }
     .ws-dna-jump {
       position: absolute;
       display: inline-flex;
@@ -4980,10 +4984,17 @@
     function expandBranch(key) {
       var items = WS_DNA_NAV[key] || []; var n = items.length; if (!n) return;
       var d = dialGeom(), a0 = CAT_ANG[key];
-      var node0 = catPoint(key);
+      /* 连线的根点不能落在分类按钮中心——量出按钮真实宽高，用"射线与矩形边界求交"
+         把根点挪到按钮朝外(沿 a0 方向)的边缘上，让线条/节点天生就长在卡片外面，
+         不靠 z-index 盖压来"隐藏"，从几何上就不会出现在文字中间。 */
+      var center = catPoint(key);
+      var ux0 = Math.cos(a0), uy0 = Math.sin(a0);
+      var cr = activeBtn.getBoundingClientRect();
+      var t = Math.min((cr.width / 2) / Math.max(Math.abs(ux0), 1e-6), (cr.height / 2) / Math.max(Math.abs(uy0), 1e-6));
+      var node0 = { x: center.x + ux0 * t, y: center.y + uy0 * t };
       var spread = Math.min(2.0, 0.15 * n + 0.45);
       var fromA = a0 - spread / 2, stepA = n > 1 ? spread / (n - 1) : 0;
-      var RING_GAP = 50, BUMP = 16, MARGIN = 10, EDGE_PAD = 18;
+      var MARGIN = 10, EDGE_PAD = 18;
 
       branch.style.left = '0'; branch.style.top = '0';
       branch.style.width = W + 'px'; branch.style.height = H + 'px';
@@ -5007,10 +5018,9 @@
         branch.appendChild(a);
         els.push(a);
       }
-      // 第二步：按预设角度起步，径向逐步外推直到与已放置的按钮不再重叠——
-      // 但绝不能推出屏幕：每个角度先算出"沿这个方向走到视口边缘(留 EDGE_PAD 安全边)最多能走多远"，
-      // 外推过程中把半径夹在这个上限内；若到达上限仍有重叠，宁可接受轻微重叠也不让按钮越界裁切。
-      var placed = [], finalPos = [];
+      // 第二步：初始落点——按预设角度起步，半径先夹到"沿这个方向走到屏幕边缘
+      // (留 EDGE_PAD 安全边)最多能走多远"以内，保证起点本身就不越界。
+      var boxes = [];
       for (var i = 0; i < n; i++) {
         var ang = fromA + stepA * i;
         var bw = els[i].offsetWidth, bh = els[i].offsetHeight;
@@ -5019,26 +5029,53 @@
         var roomX = Math.abs(ux) > 1e-6 ? (d.cx - EDGE_PAD) / Math.abs(ux) : Infinity;
         var roomY = Math.abs(uy) > 1e-6 ? (d.cy - EDGE_PAD) / Math.abs(uy) : Infinity;
         var maxR = Math.max(d.RR + 24, Math.min(roomX, roomY) - diag);
-        var R = Math.min(d.MR + (i % 2) * RING_GAP, maxR), bx, by, guard = 0;
-        while (guard++ < 80) {
-          bx = d.cx + ux * R; by = d.cy + uy * R;
-          var box = { l: bx - bw / 2 - MARGIN, r: bx + bw / 2 + MARGIN, t: by - bh / 2 - MARGIN, b: by + bh / 2 + MARGIN };
-          var hit = false;
-          for (var k = 0; k < placed.length; k++) {
-            var p = placed[k];
-            if (!(box.r < p.l || box.l > p.r || box.b < p.t || box.t > p.b)) { hit = true; break; }
+        var R = Math.min(d.MR, maxR);
+        boxes.push({ cx: d.cx + ux * R, cy: d.cy + uy * R, hw: bw / 2, hh: bh / 2 });
+      }
+      // 第三步：力导向式两两分离——哪个轴重叠量更小就沿哪个轴把两个按钮推开(经典
+      // AABB 最小平移分离)，每推一次立刻把按钮夹回安全可视区域内；反复多轮直到
+      // 彼此不再重叠或迭代上限。同一套迭代天然同时满足"不重叠"与"不越界"两个约束，
+      // 不管屏幕比例、按钮数量、文字长度怎么变，都会自适应找到能放下的位置。
+      function clampBox(b) {
+        var minCx = EDGE_PAD + b.hw, maxCx = W - EDGE_PAD - b.hw;
+        var minCy = EDGE_PAD + b.hh, maxCy = H - EDGE_PAD - b.hh;
+        if (minCx <= maxCx) b.cx = Math.max(minCx, Math.min(maxCx, b.cx));
+        if (minCy <= maxCy) b.cy = Math.max(minCy, Math.min(maxCy, b.cy));
+      }
+      for (var iter = 0; iter < 60; iter++) {
+        var any = false;
+        for (var i = 0; i < n; i++) {
+          for (var j = i + 1; j < n; j++) {
+            var A = boxes[i], B = boxes[j];
+            var ox = (A.hw + B.hw + MARGIN) - Math.abs(A.cx - B.cx);
+            var oy = (A.hh + B.hh + MARGIN) - Math.abs(A.cy - B.cy);
+            if (ox > 0 && oy > 0) {
+              any = true;
+              if (ox < oy) {
+                var px = ox / 2 + 0.5;
+                if (A.cx < B.cx) { A.cx -= px; B.cx += px; } else { A.cx += px; B.cx -= px; }
+              } else {
+                var py = oy / 2 + 0.5;
+                if (A.cy < B.cy) { A.cy -= py; B.cy += py; } else { A.cy += py; B.cy -= py; }
+              }
+              clampBox(A); clampBox(B);
+            }
           }
-          if (!hit || R >= maxR) break;     // 不重叠，或已到边界——后者宁可轻微重叠也不越界
-          R = Math.min(R + BUMP, maxR);
         }
-        placed.push({ l: bx - bw / 2, r: bx + bw / 2, t: by - bh / 2, b: by + bh / 2 });
-        finalPos.push({ x: bx, y: by, ang: ang });
-        els[i].style.left = (bx - bw / 2) + 'px';
-        els[i].style.top  = (by - bh / 2) + 'px';
+        if (!any) break;
+      }
+      // 第四步：落地——用最终位置摆放按钮，连线角度也按最终落点重算(而非初始预设角度)，
+      // 即使分离迭代把按钮挪动过，连线依然自然指向它真正的落点。
+      var finalPos = [];
+      for (var i = 0; i < n; i++) {
+        var b = boxes[i];
+        els[i].style.left = (b.cx - b.hw) + 'px';
+        els[i].style.top  = (b.cy - b.hh) + 'px';
         els[i].style.visibility = 'visible';
+        finalPos.push({ x: b.cx, y: b.cy, ang: Math.atan2(b.cy - d.cy, b.cx - d.cx) });
       }
 
-      // 第三步：依最终落点画金色连接线(根点在分类按钮中心，靠其 z-index 更高的
+      // 第五步：依最终落点画金色连接线(根点在分类按钮中心，靠其 z-index 更高的
       // 不透明背景盖住按钮范围内的线段，线只在按钮外缘才可见，不会糊住文字)
       var paths = [];
       for (var i = 0; i < n; i++) {
@@ -5053,6 +5090,7 @@
         svg.appendChild(path); paths.push(path);
         var node = document.createElementNS(NSVG, 'circle');
         node.setAttribute('class', 'ws-dna-node'); node.setAttribute('cx', fp.x); node.setAttribute('cy', fp.y); node.setAttribute('r', '3');
+        node.style.transitionDelay = (i * 42 + 200) + 'ms';   // 跟自己那条线画完的节奏对齐，不抢先出现
         svg.appendChild(node);
       }
       var root0 = document.createElementNS(NSVG, 'circle');
