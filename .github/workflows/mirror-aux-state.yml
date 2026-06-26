@@ -1,8 +1,8 @@
-name: 镜像世界状态(wf.wiki)
+name: 镜像世界状态(辅助源)
 
-# 把 worldstate.wf.wiki 的聚合接口(server=intl/cn × lang=zh/en)镜像成同源静态 JSON,
+# 把一个辅助世界状态接口(server=intl/cn × lang=zh/en)镜像成同源静态 JSON,
 # 交给腾讯云 CDN 分发,供前端按"国服/国际服 + 中/英"切换读取。
-# 抓取脚本 build_wfwiki_state.py 在私库 AdminRoc/Ws-Web-core;运行前 checkout 私库覆盖进
+# 抓取脚本 build_aux_state.py 在私库 AdminRoc/Ws-Web-core;运行前 checkout 私库覆盖进
 # 工作树,产物(4 个 ws-*.json)提交回公库,私库脚本绝不提交回公库。
 #
 # 定时触发由 Cloudflare Workers Cron Triggers 负责(每 2 分钟;见私库 cloudflare-worker/),
@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: wfwiki-state
+  group: mirror-aux-state
   cancel-in-progress: false
 
 jobs:
@@ -37,8 +37,8 @@ jobs:
           cp -a _private/.github/scripts/. .github/scripts/
           rm -rf _private
 
-      - name: 镜像 wf.wiki 世界状态(4 组合)
-        run: python3 .github/scripts/build_wfwiki_state.py
+      - name: 镜像世界状态(4 组合)
+        run: python3 .github/scripts/build_aux_state.py
 
       - name: 提交并推送(只提交产物,无变化时跳过)
         run: |
@@ -46,5 +46,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ws-intl-zh.json data/ws-intl-en.json data/ws-cn-zh.json data/ws-cn-en.json
           git diff --staged --quiet || \
-            git commit -m "data: update wfwiki-state [skip ci]"
+            git commit -m "data: update aux-state [skip ci]"
           git push
