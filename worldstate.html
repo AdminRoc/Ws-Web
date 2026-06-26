@@ -4822,7 +4822,6 @@
     var phase = 'idle';            // idle | opening | open | closing
     var activeKey = null, activeBtn = null;
     var catBtns = [];
-    var mouse = { x: -9999, y: -9999 };      // 光标位置(电路背景在其周围留圆形空洞)
 
     // —— 画布尺寸（每次重算 DPR，缩放时不糊不错位）——
     function sizeCanvas() {
@@ -4902,7 +4901,7 @@
       drawDust(fade);
     }
 
-    // —— 主循环(单 rAF：背景指挥环 + 光标空洞) ——
+    // —— 主循环(单 rAF：背景指挥环) ——
     var raf = null, last = 0;
     function loop(now) {
       if (!last) last = now;
@@ -4914,15 +4913,6 @@
       var fade = closing ? Math.max(0, 1 - (now - closeT0) / CLOSE_DUR) : 1;
       var grow = Math.min(1, (now - openT0) / 540);
       drawDial(now, fade, grow);
-      // 光标圆形空洞(只削弱背景，不影响枢纽/分类/模块 DOM)
-      if (mouse.x > -9000 && !closing) {
-        var R = 120;
-        var hole = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, R);
-        hole.addColorStop(0, 'rgba(0,0,0,1)'); hole.addColorStop(.6, 'rgba(0,0,0,.85)'); hole.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.fillStyle = hole; ctx.beginPath(); ctx.arc(mouse.x, mouse.y, R, 0, Math.PI * 2); ctx.fill();
-        ctx.globalCompositeOperation = 'source-over';
-      }
       raf = requestAnimationFrame(loop);
     }
     function startLoop() { if (!raf) { last = 0; raf = requestAnimationFrame(loop); } }
@@ -4993,7 +4983,7 @@
       var node0 = catPoint(key);
       var spread = Math.min(2.0, 0.15 * n + 0.45);
       var fromA = a0 - spread / 2, stepA = n > 1 ? spread / (n - 1) : 0;
-      var RING_GAP = 50, BUMP = 16, MARGIN = 10;
+      var RING_GAP = 50, BUMP = 16, MARGIN = 10, EDGE_PAD = 18;
 
       branch.style.left = '0'; branch.style.top = '0';
       branch.style.width = W + 'px'; branch.style.height = H + 'px';
@@ -5017,22 +5007,29 @@
         branch.appendChild(a);
         els.push(a);
       }
-      // 第二步：按预设角度起步，径向逐步外推直到与已放置的按钮不再重叠
+      // 第二步：按预设角度起步，径向逐步外推直到与已放置的按钮不再重叠——
+      // 但绝不能推出屏幕：每个角度先算出"沿这个方向走到视口边缘(留 EDGE_PAD 安全边)最多能走多远"，
+      // 外推过程中把半径夹在这个上限内；若到达上限仍有重叠，宁可接受轻微重叠也不让按钮越界裁切。
       var placed = [], finalPos = [];
       for (var i = 0; i < n; i++) {
         var ang = fromA + stepA * i;
         var bw = els[i].offsetWidth, bh = els[i].offsetHeight;
-        var R = d.MR + (i % 2) * RING_GAP, bx, by, guard = 0;
+        var ux = Math.cos(ang), uy = Math.sin(ang);
+        var diag = Math.hypot(bw / 2, bh / 2);
+        var roomX = Math.abs(ux) > 1e-6 ? (d.cx - EDGE_PAD) / Math.abs(ux) : Infinity;
+        var roomY = Math.abs(uy) > 1e-6 ? (d.cy - EDGE_PAD) / Math.abs(uy) : Infinity;
+        var maxR = Math.max(d.RR + 24, Math.min(roomX, roomY) - diag);
+        var R = Math.min(d.MR + (i % 2) * RING_GAP, maxR), bx, by, guard = 0;
         while (guard++ < 80) {
-          bx = d.cx + Math.cos(ang) * R; by = d.cy + Math.sin(ang) * R;
+          bx = d.cx + ux * R; by = d.cy + uy * R;
           var box = { l: bx - bw / 2 - MARGIN, r: bx + bw / 2 + MARGIN, t: by - bh / 2 - MARGIN, b: by + bh / 2 + MARGIN };
           var hit = false;
           for (var k = 0; k < placed.length; k++) {
             var p = placed[k];
             if (!(box.r < p.l || box.l > p.r || box.b < p.t || box.t > p.b)) { hit = true; break; }
           }
-          if (!hit) break;
-          R += BUMP;
+          if (!hit || R >= maxR) break;     // 不重叠，或已到边界——后者宁可轻微重叠也不越界
+          R = Math.min(R + BUMP, maxR);
         }
         placed.push({ l: bx - bw / 2, r: bx + bw / 2, t: by - bh / 2, b: by + bh / 2 });
         finalPos.push({ x: bx, y: by, ang: ang });
@@ -5152,7 +5149,6 @@
       if (e.target === stage) closeNav();                 // 点击空白处 → 收束消失
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeNav(); });
-    window.addEventListener('mousemove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
     window.addEventListener('resize', function () {
       if (phase === 'idle' || phase === 'closing') return;
       sizeCanvas();
