@@ -1,0 +1,50 @@
+name: 镜像世界状态(wf.wiki)
+
+# 把 worldstate.wf.wiki 的聚合接口(server=intl/cn × lang=zh/en)镜像成同源静态 JSON,
+# 交给腾讯云 CDN 分发,供前端按"国服/国际服 + 中/英"切换读取。
+# 抓取脚本 build_wfwiki_state.py 在私库 AdminRoc/Ws-Web-core;运行前 checkout 私库覆盖进
+# 工作树,产物(4 个 ws-*.json)提交回公库,私库脚本绝不提交回公库。
+#
+# 定时触发由 Cloudflare Workers Cron Triggers 负责(每 2 分钟;见私库 cloudflare-worker/),
+# 弥补 GitHub 自带 schedule 对不活跃仓库的延迟/跳过。
+# 脚本内做"忽略时间戳噪声"的变化检测,世界状态无实质变动时不产生提交,避免历史膨胀。
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: wfwiki-state
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout 公库
+        uses: actions/checkout@v5
+
+      - name: 拉取私库(抓取脚本)
+        uses: actions/checkout@v5
+        with:
+          repository: AdminRoc/Ws-Web-core
+          token: ${{ secrets.PRIVATE_REPO_PAT }}
+          path: _private
+
+      - name: 覆盖私库脚本进工作树(不会被提交回公库)
+        run: |
+          mkdir -p .github/scripts
+          cp -a _private/.github/scripts/. .github/scripts/
+          rm -rf _private
+
+      - name: 镜像 wf.wiki 世界状态(4 组合)
+        run: python3 .github/scripts/build_wfwiki_state.py
+
+      - name: 提交并推送(只提交产物,无变化时跳过)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ws-intl-zh.json data/ws-intl-en.json data/ws-cn-zh.json data/ws-cn-en.json
+          git diff --staged --quiet || \
+            git commit -m "data: update wfwiki-state [skip ci]"
+          git push
