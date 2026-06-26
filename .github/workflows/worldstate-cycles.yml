@@ -48,6 +48,15 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # 只 add 产物：私库脚本不会被提交回公库
           git add data/worldstate-all.json data/worldstate-snapshot.js data/item-names-zh.json
-          git diff --staged --quiet || \
-            git commit -m "data: update worldstate-all [skip ci]"
-          git push
+          git diff --staged --quiet && { echo "无实质变动,跳过提交"; exit 0; }
+          git commit -m "data: update worldstate-all [skip ci]"
+          # 多个定时工作流(本工作流 + 镜像世界状态(辅助源) 等)各自按 cron 推送同一 main 分支,
+          # concurrency 只能串行"同名"工作流,跨工作流仍会撞车导致 push 被拒(non-fast-forward)。
+          # 这里 fetch + rebase + 重试自愈,避免偶发推送失败。产物提交带 [skip ci] 不会触发额外构建。
+          for i in 1 2 3 4 5; do
+            if git push; then echo "推送成功(第 $i 次)"; exit 0; fi
+            echo "推送被拒(第 $i 次),拉取远端后 rebase 重试..."
+            git pull --rebase --autostash origin main || true
+          done
+          echo "重试多次仍推送失败" >&2
+          exit 1

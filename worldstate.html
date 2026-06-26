@@ -456,6 +456,112 @@
       padding: .2rem .65rem;
     }
 
+    /* ══ 突击(Incursions) ══ */
+    .ws-incur-list { display: flex; flex-direction: column; gap: .6rem; }
+    .ws-incur-row {
+      background: var(--ws-card-bg);
+      border: 1px solid var(--ws-gold-line);
+      border-left: 3px solid var(--ws-gold-bright);
+      border-radius: 2px;
+      padding: .8rem 1.1rem;
+    }
+    .ws-incur-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .6rem;
+    }
+    .ws-incur-node {
+      font-family: var(--f-sci);
+      font-size: .94rem;
+      font-weight: 700;
+      color: var(--ws-text);
+    }
+    .ws-incur-timer {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .78rem;
+      color: var(--ws-gold-bright);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .ws-incur-meta {
+      font-family: var(--f-sci);
+      font-size: .82rem;
+      color: var(--ws-text-dim);
+      margin-top: .3rem;
+    }
+
+    /* ══ 通用辅助数据源模块卡片(深层科研/地心攀升/日历/战团金库/泰辛/杜维利回环) ══ */
+    .ws-aux-group { margin-bottom: 1rem; }
+    .ws-aux-group-title {
+      font-family: var(--f-sci);
+      font-size: .92rem;
+      font-weight: 700;
+      color: var(--ws-gold-bright);
+      margin-bottom: .5rem;
+    }
+    .ws-aux-row {
+      background: var(--ws-card-bg);
+      border: 1px solid var(--ws-gold-line);
+      border-radius: 2px;
+      padding: .7rem 1rem;
+      margin-bottom: .5rem;
+    }
+    .ws-aux-hd { display: flex; align-items: center; justify-content: space-between; }
+    .ws-aux-title {
+      font-family: var(--f-sci);
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--ws-text);
+    }
+    .ws-aux-sub {
+      font-family: var(--f-sci);
+      font-size: .8rem;
+      color: var(--ws-text-dim);
+      margin-top: .3rem;
+      line-height: 1.5;
+    }
+    .ws-bar {
+      margin-top: .5rem;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(201,164,50,.12);
+      overflow: hidden;
+    }
+    .ws-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--ws-gold-line), var(--ws-gold-bright));
+    }
+    .ws-desc-cur {
+      display: inline-block;
+      font-family: var(--f-sci);
+      font-size: .7rem;
+      font-weight: 700;
+      color: #1a1000;
+      background: linear-gradient(120deg, rgba(255,222,130,.96), rgba(210,165,58,.95));
+      border-radius: 999px;
+      padding: .04rem .5rem;
+      vertical-align: middle;
+      margin-left: .2rem;
+    }
+    .ws-desc-next {
+      margin-top: .6rem;
+      color: var(--ws-text-dim);
+      opacity: .85;
+    }
+    .ws-desc-active { border-left: 2px solid var(--ws-gold-bright); padding-left: .7rem; }
+    .ws-aux-chiprow { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
+    .ws-aux-chip {
+      font-family: var(--f-sci);
+      font-size: .8rem;
+      color: var(--ws-gold-bright);
+      background: rgba(201,164,50,.1);
+      border: 1px solid var(--ws-gold-line);
+      border-radius: 999px;
+      padding: .2rem .65rem;
+    }
+
     /* ══ 突击 / 执刑官猎杀 ══ */
     .ws-mission-card {
       background: var(--ws-card-bg);
@@ -1176,48 +1282,41 @@
     .ws-el-def   { color:var(--ws-gold); background:rgba(201,164,50,.12); border:1px solid rgba(201,164,50,.3); }
     .ws-weap-pct { color:var(--ws-gold); font-size:.8rem; white-space:nowrap; }
 
-    /* ══ 快速导航浮窗 ══ */
-    .ws-quicknav {
+    /* ══ DNA 快速导航 ══ */
+    .ws-dna {
       position: fixed;
       bottom: 2rem;
       right: 2rem;
       z-index: 9000;
       display: flex;
-      align-items: center;
-      cursor: pointer;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: .7rem;
       user-select: none;
-      /* 整体边框 — logo + 文字在同一个 pill 里 */
+    }
+    /* ── 主按钮（暗金 pill：呼吸光晕 + 流光扫掠 + 旋转光环）── */
+    .ws-dna-main {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
       background: rgba(14,10,5,.96);
-      /* 尺寸直接写进真实 CSS(在原基础上整体放大约 45%)，不用 transform 缩放，
-         字与 logo 才能按目标大小原生渲染、清晰锐利不被拉糊 */
       border: 2.3px solid rgba(201,164,50,.52);
       border-radius: 40px;
       padding: 6px 21px 6px 6px;
       box-shadow: 0 0 18px rgba(201,164,50,.28), 0 4px 18px rgba(0,0,0,.55);
-      transition: background .2s, border-color .2s, box-shadow .2s, transform .2s cubic-bezier(.34,1.56,.64,1);
-      /* --qn-z：JS 写入的"抵消浏览器缩放"系数(100% 缩放时为 1)；--qn-h：hover 放大系数。
-         100% 缩放且未 hover 时 = scale(1)，等同无变换 → 不产生模糊 */
-      transform: scale(calc(var(--qn-z, 1) * var(--qn-h, 1)));
+      cursor: pointer;
+      transition: background .2s, border-color .2s, box-shadow .2s, transform .25s cubic-bezier(.34,1.56,.64,1);
       transform-origin: bottom right;
     }
-    .ws-quicknav:hover {
+    .ws-dna-main:hover,
+    .ws-dna.cats-open .ws-dna-main {
       background: rgba(25,18,6,.97);
       border-color: rgba(201,164,50,.82);
       box-shadow: 0 0 24px rgba(201,164,50,.48), 0 4px 22px rgba(0,0,0,.6);
-      --qn-h: 1.06;
+      transform: translateY(-1px) scale(1.04);
     }
-    /* 透明桥接层：防止鼠标从控件移向菜单时因 gap 导致 hover 丢失 */
-    .ws-quicknav::before {
-      content: '';
-      position: absolute;
-      bottom: 100%;
-      left: 0;
-      right: 0;
-      height: .7rem;
-    }
-    /* ── 悬浮导航 · 高帧率动态特效（全部用 transform/opacity 合成层，避免重排重绘掉帧）── */
-    /* 呼吸光晕：环绕 pill 的金色光圈，缓慢明暗+缩放呼吸 */
-    .ws-quicknav::after {
+    /* 呼吸光晕 */
+    .ws-dna-main::after {
       content: '';
       position: absolute;
       inset: -5px;
@@ -1226,16 +1325,16 @@
       z-index: -1;
       box-shadow: 0 0 22px 3px rgba(201,164,50,.5);
       opacity: .4;
-      animation: wsQnBreath 2.8s ease-in-out infinite;
+      animation: wsDnaBreath 2.8s ease-in-out infinite;
       will-change: opacity, transform;
     }
-    @keyframes wsQnBreath {
+    @keyframes wsDnaBreath {
       0%, 100% { opacity: .28; transform: scale(.985); }
       50%      { opacity: .72; transform: scale(1.025); }
     }
-    .ws-quicknav:hover::after { animation-duration: 1.5s; }
-    /* 流光扫掠：周期性掠过 pill 的高光带；裁剪在 pill 内，不影响菜单弹出 */
-    .ws-qn-fx {
+    .ws-dna-main:hover::after { animation-duration: 1.5s; }
+    /* 流光扫掠 */
+    .ws-dna-fx {
       position: absolute;
       inset: 0;
       border-radius: 40px;
@@ -1243,7 +1342,7 @@
       pointer-events: none;
       z-index: 0;
     }
-    .ws-qn-fx::before {
+    .ws-dna-fx::before {
       content: '';
       position: absolute;
       top: -20%;
@@ -1256,23 +1355,23 @@
         rgba(255,232,150,0) 70%,
         transparent 100%);
       transform: translateX(-260%) skewX(-18deg);
-      animation: wsQnSheen 4.8s cubic-bezier(.5,0,.25,1) infinite;
+      animation: wsDnaSheen 4.8s cubic-bezier(.5,0,.25,1) infinite;
       will-change: transform;
     }
-    @keyframes wsQnSheen {
+    @keyframes wsDnaSheen {
       0%   { transform: translateX(-260%) skewX(-18deg); }
       22%  { transform: translateX(360%)  skewX(-18deg); }
       100% { transform: translateX(360%)  skewX(-18deg); }
     }
-    /* logo 旋转光环：conic 渐变弧光持续旋转，营造"扫描中"科技感 */
-    .ws-qn-logo-wrap {
+    /* logo 旋转光环 */
+    .ws-dna-logo-wrap {
       position: relative;
-      width: 59px;
-      height: 59px;
+      width: 52px;
+      height: 52px;
       flex-shrink: 0;
       z-index: 1;
     }
-    .ws-qn-logo-wrap::before {
+    .ws-dna-logo-wrap::before {
       content: '';
       position: absolute;
       inset: -3px;
@@ -1282,146 +1381,264 @@
         rgba(201,164,50,0) 210deg,
         rgba(255,226,134,.95) 312deg,
         rgba(201,164,50,0) 360deg);
-      animation: wsQnSpin 3.2s linear infinite;
+      animation: wsDnaSpin 3.2s linear infinite;
       will-change: transform;
     }
-    @keyframes wsQnSpin { to { transform: rotate(360deg); } }
-    .ws-qn-label { position: relative; z-index: 1; }
-    /* 尊重系统"减少动态效果"偏好：关掉持续动画，保留 hover 反馈 */
-    @media (prefers-reduced-motion: reduce) {
-      .ws-quicknav::after,
-      .ws-qn-fx::before,
-      .ws-qn-logo-wrap::before { animation: none; }
-    }
-    .ws-qn-logo {
-      width: 59px;
-      height: 59px;
+    @keyframes wsDnaSpin { to { transform: rotate(360deg); } }
+    .ws-dna-logo {
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       object-fit: cover;
-      flex-shrink: 0;
       position: relative;
       z-index: 1;
     }
-    .ws-qn-label {
-      padding-left: 1.04rem;
+    .ws-dna-label {
+      position: relative;
+      z-index: 1;
+      padding-left: 1rem;
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.02rem;
+      font-size: 1rem;
       font-weight: 700;
-      letter-spacing: .12em;
+      letter-spacing: .14em;
       color: var(--ws-gold-bright);
       white-space: nowrap;
     }
-    .ws-qn-menu {
+
+    /* ── 分类按钮基础样式(实际挂载位置/入场动画由 JS 按指挥环几何动态计算 + .ws-dna-stage .ws-dna-cat 控制) ── */
+    .ws-dna-cat {
+      position: fixed;
+      /* 必须高于 .ws-dna-branch(9001)：分叉线的几何根点就在按钮中心，靠分类按钮
+         的不透明背景把按钮范围内的线段"盖住"，线只在按钮外缘才可见——
+         自然呈现"从边缘引出"的效果，不会糊在文字中间。 */
+      z-index: 9002;
+      pointer-events: auto;
+      font-family: 'Orbitron', sans-serif;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: var(--ws-gold-bright);
+      background: linear-gradient(150deg, rgba(22,15,6,.97), rgba(10,7,3,.98));
+      border: 1.5px solid var(--ws-gold-line);
+      border-radius: 30px;
+      padding: .5rem 1.2rem;
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(0,0,0,.5);
+      transition:
+        opacity .34s ease,
+        transform .5s cubic-bezier(.16,1,.3,1),
+        color .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .ws-dna-cat:hover {
+      border-color: var(--ws-gold-bright);
+      box-shadow: 0 0 14px rgba(201,164,50,.42);
+    }
+    .ws-dna-cat.active {
+      color: #100800;
+      background: linear-gradient(150deg, rgba(255,222,130,.96), rgba(210,165,58,.92));
+      border-color: var(--ws-gold-bright);
+      box-shadow: 0 0 18px rgba(201,164,50,.62);
+    }
+    .ws-dna-cat.closing-out { opacity: 0 !important; transform: scale(.7) !important; transition: opacity .5s ease, transform .5s cubic-bezier(.4,0,1,1) !important; }
+
+    /* ── 分叉面板（DNA 连接线 + 模块跳转按钮，位置/尺寸由 JS 计算）── */
+    .ws-dna-branch {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9001;
+    }
+    .ws-dna-branch svg {
       position: absolute;
-      bottom: calc(100% + .6rem);
-      right: 0;
-      min-width: 182px;
-      background: linear-gradient(158deg, rgba(20,14,6,.98), rgba(9,6,3,.985));
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .ws-dna-link {
+      fill: none;
+      stroke: url(#wsDnaGrad);
+      stroke-width: 2;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 3px rgba(201,164,50,.7));
+    }
+    .ws-dna-node {
+      fill: #ffe486;
+      filter: drop-shadow(0 0 4px rgba(255,220,120,.9));
+    }
+    .ws-dna-jump {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 34px;
+      padding: 0 .95rem;          /* 仅留左右内边距，框体紧贴文字、无空白区域 */
+      font-family: var(--f-sci);
+      font-size: .88rem;
+      letter-spacing: .04em;
+      color: var(--ws-gold-bright);
+      text-decoration: none;
+      white-space: nowrap;
+      background: linear-gradient(120deg, rgba(24,17,6,.97), rgba(38,27,10,.97));
       border: 1px solid var(--ws-gold-line);
-      border-radius: 6px;
-      padding: .4rem 0;
-      box-shadow: 0 -10px 38px rgba(0,0,0,.6), 0 0 0 1px rgba(201,164,50,.08), 0 0 22px rgba(201,164,50,.06);
-      display: flex;
-      flex-direction: column;
-      max-height: calc(100vh - 6rem);
-      overflow-y: auto;
-      /* 横向必须 hidden：逐条入场的 translateX 会临时右移产生横向溢出，
-         若不锁横向，overflow-y:auto 会令 overflow-x 计算为 auto → 闪现横向滚动条。
-         锁掉后条目从右边缘干净裁入。 */
-      overflow-x: hidden;
-      /* 收起态：从按钮侧(底缘)向上"擦除式"裁开 + 轻微上移淡出，锚点钉在按钮角 */
+      border-radius: 5px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,226,134,.06);
+      pointer-events: auto;
+      opacity: 0;
+      transform: translateX(-14px) scale(.82);
+      transform-origin: left center;
+      transition:
+        opacity .32s ease,
+        transform .46s cubic-bezier(.16,1,.3,1),
+        background .15s ease, color .15s ease, box-shadow .15s ease;
+    }
+    .ws-dna-branch.show .ws-dna-jump { opacity: 1; transform: none; }
+    .ws-dna-jump:hover {
+      background: linear-gradient(120deg, rgba(201,164,50,.26), rgba(201,164,50,.06));
+      color: #fff4cc;
+      border-color: var(--ws-gold-bright);
+      box-shadow: 0 0 16px rgba(201,164,50,.5);
+    }
+    /* 尊重系统"减少动态效果"偏好：关掉持续动画，保留 hover 反馈 */
+    @media (prefers-reduced-motion: reduce) {
+      .ws-dna-main::after,
+      .ws-dna-fx::before,
+      .ws-dna-logo-wrap::before { animation: none; }
+    }
+
+    /* ── 大型呈现层：背景虚化遮罩 / 全屏 FX 画布 / 升起核心 / 舞台 ── */
+    .ws-dna-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 8997;
+      background: radial-gradient(ellipse at 50% 55%, rgba(10,7,2,.40), rgba(2,1,0,.82));
+      -webkit-backdrop-filter: blur(7px) saturate(.82);
+      backdrop-filter: blur(7px) saturate(.82);
       opacity: 0;
       pointer-events: none;
-      transform-origin: bottom right;
-      transform: translateY(12px);
-      clip-path: inset(100% 0 0 0 round 6px);
-      transition:
-        opacity .26s ease,
-        transform .42s cubic-bezier(.16,1,.3,1),
-        clip-path .46s cubic-bezier(.16,1,.3,1);
+      transition: opacity .5s ease;
     }
-    /* 顶缘扫描高光：展开时一道金光沿顶部亮起 */
-    .ws-qn-menu::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 12%; right: 12%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,226,134,.9), transparent);
-      opacity: 0;
-      transition: opacity .3s ease .14s;
-    }
-    .ws-quicknav:hover .ws-qn-menu,
-    .ws-quicknav.ws-qn-open .ws-qn-menu {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-      clip-path: inset(0 0 0 0 round 6px);
-    }
-    .ws-quicknav:hover .ws-qn-menu::before,
-    .ws-quicknav.ws-qn-open .ws-qn-menu::before { opacity: 1; }
+    .ws-dna.launched .ws-dna-backdrop { opacity: 1; pointer-events: auto; }
+    .ws-dna.closing  .ws-dna-backdrop { opacity: 0; }
 
-    .ws-qn-menu a {
-      position: relative;
-      display: block;
-      padding: .5rem 1.15rem;
-      font-family: var(--f-sci);
-      font-size: .92rem;
-      color: var(--ws-text);
-      text-decoration: none;
-      letter-spacing: .04em;
-      white-space: nowrap;
-      /* 逐条层叠入场：按 --i 递增延迟从右滑入淡现(延迟只加在 opacity/transform，hover 反馈即时) */
+    #ws-nav-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 8998;
+      pointer-events: none;
       opacity: 0;
-      transform: translateX(15px);
-      transition:
-        opacity .34s ease calc(var(--i, 0) * 26ms),
-        transform .44s cubic-bezier(.16,1,.3,1) calc(var(--i, 0) * 26ms),
-        background .14s ease,
-        color .14s ease,
-        padding-left .2s cubic-bezier(.16,1,.3,1);
+      transition: opacity .45s ease;
     }
-    /* hover 左侧金色指示条纵向展开 */
-    .ws-qn-menu a::before {
+    .ws-dna.launched #ws-nav-canvas { opacity: 1; }
+    /* 关闭时把画布抬到导航元素之上，金沙波从上方扫过卷走导航 */
+    .ws-dna.closing #ws-nav-canvas { z-index: 9006; }
+
+    .ws-dna-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 9002;
+      pointer-events: none;
+    }
+    .ws-dna.launched .ws-dna-stage { pointer-events: auto; }
+    /* 大型模式下隐藏角落启动按钮(核心接管) */
+    .ws-dna.launched .ws-dna-main { opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+
+    /* 升起核心：主按钮升到屏幕中部成形的发光六边体 */
+    /* 核心 = 螺旋顶端的暗金玻璃徽标(内嵌 WS logo + 旋转细金环)，非纯色块 */
+    .ws-dna-core {
+      position: fixed;
+      z-index: 9003;
+      width: 74px;
+      height: 74px;
+      margin: -37px 0 0 -37px;        /* 以 left/top 作为几何中心 */
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 36%, rgba(42,31,12,.86), rgba(10,7,3,.93));
+      border: 1.5px solid rgba(201,164,50,.55);
+      box-shadow: 0 0 24px rgba(201,164,50,.42), inset 0 0 18px rgba(201,164,50,.16);
+      opacity: 0;
+      transform: scale(.3);
+      pointer-events: auto;
+      cursor: pointer;
+      transition: left .62s cubic-bezier(.22,.61,.36,1), top .62s cubic-bezier(.22,.61,.36,1);
+    }
+    .ws-dna-core img {
+      width: 58%;
+      height: 58%;
+      object-fit: contain;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 6px rgba(255,226,134,.45));
+    }
+    .ws-dna-core::before {           /* 旋转细金环(用 mask 抠成环) */
       content: '';
       position: absolute;
-      left: 0; top: 50%;
-      width: 2.5px; height: 0;
-      background: linear-gradient(var(--ws-gold-bright), var(--ws-gold));
-      box-shadow: 0 0 6px rgba(201,164,50,.6);
-      transform: translateY(-50%);
-      transition: height .22s cubic-bezier(.16,1,.3,1);
+      inset: -5px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg,
+        rgba(255,226,134,0) 0deg, rgba(255,226,134,.95) 70deg,
+        rgba(255,226,134,0) 150deg, rgba(255,226,134,.85) 280deg,
+        rgba(255,226,134,0) 360deg);
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+      animation: wsDnaSpin 3.6s linear infinite;
+      opacity: .75;
     }
-    .ws-qn-menu a:hover {
-      background: linear-gradient(90deg, rgba(201,164,50,.16), rgba(201,164,50,.02));
-      color: var(--ws-gold-bright);
-      padding-left: 1.45rem;
-    }
-    .ws-qn-menu a:hover::before { height: 60%; }
-    .ws-qn-sep {
-      height: 1px;
-      margin: .3rem .6rem;
-      background: var(--ws-sep);
-      opacity: 0;
-      transform: scaleX(.3);
-      transform-origin: right;
-      transition:
-        opacity .34s ease calc(var(--i, 0) * 26ms),
-        transform .44s cubic-bezier(.16,1,.3,1) calc(var(--i, 0) * 26ms);
-    }
-    .ws-quicknav:hover .ws-qn-menu a,
-    .ws-quicknav.ws-qn-open .ws-qn-menu a,
-    .ws-quicknav:hover .ws-qn-menu .ws-qn-sep,
-    .ws-quicknav.ws-qn-open .ws-qn-menu .ws-qn-sep {
+    .ws-dna-core.in {
       opacity: 1;
-      transform: none;
+      transform: scale(1);
+      transition: opacity .45s ease, transform .6s cubic-bezier(.34,1.56,.64,1);
+    }
+    .ws-dna-core.pulse { animation: wsCorePulse 2.6s ease-in-out infinite; }
+    .ws-dna-core.closing-out {
+      opacity: 0 !important;
+      transform: scale(.5) !important;
+      transition: opacity .55s ease, transform .55s cubic-bezier(.4,0,1,1) !important;
+      animation: none !important;
+    }
+    @keyframes wsCorePulse {
+      0%,100% { box-shadow: 0 0 24px rgba(201,164,50,.4), inset 0 0 18px rgba(201,164,50,.16); }
+      50%     { box-shadow: 0 0 38px rgba(255,226,134,.62), inset 0 0 22px rgba(201,164,50,.3); }
+    }
+
+    /* 舞台内的分类按钮(由 JS 绝对定位在核心一侧) */
+    .ws-dna-stage .ws-dna-cat {
+      position: fixed;
+      opacity: 0;
+      transform: translateX(22px) scale(.84);
+      transition:
+        opacity .35s ease,
+        transform .52s cubic-bezier(.16,1,.3,1),
+        color .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .ws-dna-stage.show-cats .ws-dna-cat { opacity: 1; transform: none; }
+    /* 大型模式下分类节点更大更醒目，挂在螺旋中轴 */
+    .ws-dna-cat-grand {
+      font-size: 1.02rem;
+      padding: .7rem 1.6rem;
+      border-width: 2px;
+      box-shadow: 0 0 18px rgba(201,164,50,.35), 0 4px 16px rgba(0,0,0,.5);
+      backdrop-filter: blur(2px);
+    }
+    .ws-dna-cat-grand.active {
+      box-shadow: 0 0 26px rgba(255,226,134,.7), 0 0 54px rgba(201,164,50,.4);
+    }
+    .ws-dna-jump {
+      font-size: .92rem;
+      height: 36px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ws-dna-core::before { animation: none; }
+      .ws-dna-core.pulse { animation: none; }
     }
     /* 快速导航锚点偏移：补偿顶部固定导航栏 70px + 余量 */
     [id^="ws-sec-"] { scroll-margin-top: 84px; }
     @media (max-width: 560px) {
-      .ws-quicknav { bottom: 1.2rem; right: .8rem; }
-      .ws-qn-label { font-size: .93rem; }
-      .ws-qn-logo-wrap { width: 49px; height: 49px; }
-      .ws-qn-logo { width: 49px; height: 49px; }
+      .ws-dna { bottom: 1.2rem; right: .8rem; }
+      .ws-dna-label { font-size: .9rem; padding-left: .8rem; }
+      .ws-dna-logo-wrap, .ws-dna-logo { width: 46px; height: 46px; }
+      .ws-dna-cat { font-size: .78rem; padding: .45rem 1rem; }
     }
 
     /* ══════════════════════════════════════════════
@@ -1780,90 +1997,9 @@
       .ws-spl-corner--tr, .ws-spl-corner--br { right: 1.2rem; }
     }
 
-    /* ══ 网络提示横幅 ══ */
-    #ws-notice {
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 8888;
-      width: min(580px, 90vw);
-      padding: 1.1rem 1.6rem;
-      background: rgba(8, 5, 1, 0.97);
-      border: 1px solid rgba(185,142,52,.52);
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow:
-        0 0 0 1px rgba(185,142,52,.07),
-        0 16px 60px rgba(0,0,0,.92),
-        0 0 44px rgba(185,142,52,.14),
-        inset 0 1px 0 rgba(185,142,52,.22);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .75s ease;
-    }
-    #ws-notice.ws-nb-show { opacity: 1; pointer-events: auto; }
-    /* 流光扫描 */
-    #ws-notice::before {
-      content: '';
-      position: absolute;
-      top: -30%; left: -65%;
-      width: 42%; height: 160%;
-      background: linear-gradient(108deg,
-        transparent 18%,
-        rgba(212,168,74,.2) 50%,
-        rgba(255,220,100,.07) 57%,
-        transparent 76%);
-      transform: skewX(-12deg);
-      animation: wsNbShimmer 3.2s ease-in-out infinite;
-      pointer-events: none;
-    }
-    @keyframes wsNbShimmer { 0%{left:-65%;} 100%{left:120%;} }
-    /* 顶部金线呼吸 */
-    #ws-notice::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg,
-        transparent,
-        rgba(212,168,74,.7) 30%,
-        rgba(255,225,100,.5) 50%,
-        rgba(212,168,74,.4) 70%,
-        transparent);
-      animation: wsNbTopline 2.2s ease-in-out infinite alternate;
-    }
-    @keyframes wsNbTopline { from{opacity:.35;} to{opacity:1;} }
-    .ws-nb-body {
-      position: relative;
-      display: flex;
-      align-items: flex-start;
-      gap: .75rem;
-    }
-    .ws-nb-icon {
-      flex-shrink: 0;
-      margin-top: .08em;
-      font-size: 1.05rem;
-      color: rgba(212,168,74,.75);
-    }
-    .ws-nb-text {
-      margin: 0;
-      font-size: .9rem;
-      line-height: 1.72;
-      color: rgba(212,168,74,.8);
-      letter-spacing: .03em;
-    }
   </style>
 </head>
 <body>
-
-<!-- ══ 网络提示横幅（进入10s后渐显，停留6s后渐隐） ══ -->
-<div id="ws-notice" role="alert" aria-live="polite">
-  <div class="ws-nb-body">
-    <span class="ws-nb-icon">⚠</span>
-    <p class="ws-nb-text">由于本站当前静态部署于 GitHub，当您处于中国大陆网络环境时，本页面的数据更新周期将长达十分钟，对此带来的不便请您见谅。</p>
-  </div>
-</div>
 
 <!-- ══ 世界状态 · 战术接入界面 ══ -->
 <div id="ws-splash" aria-hidden="true" role="status" aria-label="正在加载世界状态数据">
@@ -2342,32 +2478,116 @@
       <div id="ws-invasions"><div class="ws-empty">加载中…</div></div>
     </section>
 
+    <!-- ══ 13. 突击 ══ -->
+    <section id="ws-sec-incursions" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">侵袭</span>
+        <span class="ws-section-en">Incursions</span>
+      </div>
+      <div id="ws-incursions"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 14. 深层科研 ══ -->
+    <section id="ws-sec-archimedea" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">科研</span>
+        <span class="ws-section-en">Archimedea</span>
+      </div>
+      <div id="ws-archimedea"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 15. 地心攀升 ══ -->
+    <section id="ws-sec-descents" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">沉沦之地</span>
+        <span class="ws-section-en">Descents</span>
+      </div>
+      <div id="ws-descents"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 16. 日历 ══ -->
+    <section id="ws-sec-calendar" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">日历</span>
+        <span class="ws-section-en">Calendar</span>
+      </div>
+      <div id="ws-calendar"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 17. 战团金库 ══ -->
+    <section id="ws-sec-clanvault" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">氏族金库奖励</span>
+        <span class="ws-section-en">Clan Vault</span>
+      </div>
+      <div id="ws-clanvault"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 18. 泰辛军械库 ══ -->
+    <section id="ws-sec-teshin" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">泰辛军械库</span>
+        <span class="ws-section-en">Teshin</span>
+      </div>
+      <div id="ws-teshin"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 19. 杜维利回环 ══ -->
+    <section id="ws-sec-duviri" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">无尽回廊</span>
+        <span class="ws-section-en">Duviri Circuit</span>
+      </div>
+      <div id="ws-duviri"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 20. 集团任务 ══ -->
+    <section id="ws-sec-syndicates" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">集团任务</span>
+        <span class="ws-section-en">Syndicates</span>
+      </div>
+      <div id="ws-syndicates"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 21. 限时活动 ══ -->
+    <section id="ws-sec-events" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">限时活动</span>
+        <span class="ws-section-en">Events</span>
+      </div>
+      <div id="ws-events"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 22. 建造进度 ══ -->
+    <section id="ws-sec-construction" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">建造进度</span>
+        <span class="ws-section-en">Construction</span>
+      </div>
+      <div id="ws-construction"><div class="ws-empty">加载中…</div></div>
+    </section>
+
   </main>
 
-  <!-- ══ 快速导航浮窗 ══ -->
-  <div class="ws-quicknav" id="ws-quicknav">
-    <span class="ws-qn-fx" aria-hidden="true"></span>
-    <span class="ws-qn-logo-wrap"><img class="ws-qn-logo" src="picture/WS-logo-2.png" alt="WS"></span>
-    <span class="ws-qn-label">快速导航</span>
-    <div class="ws-qn-menu">
-      <a href="#ws-sec-cycles">世界周期</a>
-      <a href="#ws-sec-sortie">突击 · 执刑官猎杀</a>
-      <a href="#ws-sec-baro">奸商</a>
-      <a href="#ws-sec-alerts">警报</a>
-      <div class="ws-qn-sep"></div>
-      <a href="#ws-sec-fissures">虚空裂缝</a>
-      <a href="#ws-sec-bounties">重要赏金任务</a>
-      <a href="#ws-sec-arb">仲裁</a>
-      <a href="#ws-sec-sp">钢铁之路</a>
-      <div class="ws-qn-sep"></div>
-      <a href="#ws-sec-darvo">Darvo 特惠</a>
-      <a href="#ws-sec-tenet">信条武器轮换</a>
-      <a href="#ws-sec-coda">终幕武器轮换</a>
-      <div class="ws-qn-sep"></div>
-      <a href="#ws-sec-nw">午夜电波</a>
-      <a href="#ws-sec-varzia">瓦奇娅</a>
-      <a href="#ws-sec-inv">入侵</a>
+  <!-- ══ DNA 快速导航：主按钮→四分类(短期/每日/每周/其他)→DNA 分叉出各模块跳转 ══
+       分类与模块清单在脚本里的 WS_DNA_NAV 维护，按刷新周期分桶、桶内按刷新由快到慢排序 -->
+  <div class="ws-dna" id="ws-dna">
+    <!-- 背景虚化暗化遮罩 -->
+    <div class="ws-dna-backdrop" id="ws-dna-backdrop"></div>
+    <!-- 全屏 FX 画布：电路板生长 + 升起金色轨迹 + 关闭金沙消散 -->
+    <canvas id="ws-nav-canvas"></canvas>
+    <!-- 舞台：核心 + (JS 注入)四分类按钮 + DNA 分叉面板 -->
+    <div class="ws-dna-stage" id="ws-dna-stage" aria-hidden="true">
+      <div class="ws-dna-branch" id="ws-dna-branch"></div>
+      <div class="ws-dna-core" id="ws-dna-core" aria-hidden="true"><img src="picture/WS-logo-2.png" alt=""></div>
     </div>
+    <!-- 角落启动按钮：点击后升起成核心 -->
+    <button type="button" class="ws-dna-main" id="ws-dna-main" aria-label="快速导航">
+      <span class="ws-dna-fx" aria-hidden="true"></span>
+      <span class="ws-dna-logo-wrap"><img class="ws-dna-logo" src="picture/WS-logo-2.png" alt="WS"></span>
+      <span class="ws-dna-label">导航</span>
+    </button>
   </div>
 
   <footer class="site-footer">
@@ -2795,6 +3015,18 @@
     return d !== type ? d : type;
   }
 
+  /* 同源辅助数据源(见 _auxState)的字段已经是目标语言的现成译名；只有当对方
+     没翻译、留的还是英文原文时，才尝试用我方 trLocation/tr 兜底补译，
+     体现"对方没译的我们补上"。纯中文/空值原样返回，避免误把中文当 key 去查表。 */
+  function zhOrTr(s) {
+    if (!s) return '--';
+    if (/[^\x00-\x7f]/.test(s)) return s;
+    var t = trLocation(s);
+    if (t && t !== s) return t;
+    var t2 = tr(s);
+    return t2 !== s ? t2 : s;
+  }
+
   /* 合并而非整体替换 _dict：dictP（远程 dict.zh.json）与 itemZhP（本地
      item-names-zh.json）是并行请求，谁先谁后不确定，之前用 _dict = data
      整体覆盖，曾导致后完成的一方把先完成的一方刚合并进去的译名全部冲掉
@@ -3132,6 +3364,16 @@
      'none'：连内嵌快照都没有（理论上不会发生，除非这个 js 文件本身丢失） */
   var _wsDataSource = null;
 
+  /* 一份从公共网络抓取的公开数据源的同源镜像快照(国际服·中文)，补充本站原本
+     没有的模块(如下方"突击"/incursions)。独立于上面的主数据流，只增不替换，
+     失败时静默忽略，不影响既有任何模块的显示。 */
+  var _auxState = null;
+
+  /* 辅助数据源倒计时安全提前量(毫秒)：静态页+镜像延迟下"宁可早不可晚"，
+     显示剩余时间统一减去此值，确保永远不晚于真实时间。15s 与本站既有
+     "快十几秒~30秒"的观感一致，不会错过日夜交替等关键节点。 */
+  var AUX_COUNTDOWN_LEAD_MS = 15000;
+
   function fetchOne(ep) {
     return fetchT(API + ep + '?' + LANG, 5000)
       .then(function (r) { return r.ok ? r.json() : null; })
@@ -3228,10 +3470,31 @@
       if (data) _tenetCodaRotation = data;
     });
 
+    /* 辅助数据源镜像快照：补充本站此前没有的全部模块(侵袭/科研/沉沦之地/集团任务/
+       建造进度/限时活动/泰辛/无尽回廊/日历/氏族金库 等，未来新增模块同样只是这份
+       同源 JSON 里多一个键，自动纳入)。同源相对路径请求 data/ws-intl-zh.json——
+       该文件由镜像工作流每 2 分钟周期性写入仓库，本身即"周期性落盘缓存"。
+       这里再叠一层 localStorage：先用上次成功的缓存兜底，文件/网络临时取不到时
+       模块仍显示上一次的数据而不是空白；取到新数据后回写缓存。 */
+    var AUX_LS = 'wf_ep_auxstate';
+    try {
+      var _auxCached = JSON.parse(localStorage.getItem(AUX_LS) || 'null');
+      if (_auxCached && _auxCached.data) _auxState = _auxCached.data;
+    } catch (e) {}
+    var auxP = fetchT('data/ws-intl-zh.json', 8000)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data) {
+          _auxState = data;
+          try { localStorage.setItem(AUX_LS, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
+        }
+      })
+      .catch(function () {});
+
     /* 等同源统一字典就绪，保证渲染时 tr/resolveNode 的同源兜底可用（尤其远程被墙时） */
     var i18nP = (window.WF && WF.i18n) ? WF.i18n.ready : Promise.resolve();
 
-    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, tenetCodaP, i18nP, bountyP, regP]).then(function () {
+    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, tenetCodaP, auxP, i18nP, bountyP, regP]).then(function () {
       /* 赏金任务板最终兜底：rawP（oracle.browse.wf / api.warframe.com）在大陆网络下
          可能也连不上，此时若 D.bounties 仍为空，用 GitHub 快照里的
          syndicateMissions（来自 apiP 或 fallbackP）重建同样结构的数据，
@@ -3866,6 +4129,196 @@
     }).join('') + '</div>';
   }
 
+  /* ══ 渲染：突击(Incursions，来自辅助数据源 _auxState) ══ */
+  function renderIncursions() {
+    var el = document.getElementById('ws-incursions');
+    if (!el) return;
+    var data = _auxState && _auxState.incursions;
+    var nodes = data && Array.isArray(data.nodes) ? data.nodes : null;
+    if (!nodes) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    if (!nodes.length) { el.innerHTML = '<div class="ws-empty">当前无活跃突击</div>'; return; }
+
+    el.innerHTML = '<div class="ws-incur-list">' + nodes.map(function (n, i) {
+      var lvl = (n.minLevel != null && n.maxLevel != null) ? ('Lv. ' + n.minLevel + '-' + n.maxLevel) : '';
+      return '<div class="ws-incur-row">' +
+        '<div class="ws-incur-hd">' +
+          '<span class="ws-incur-node">' + zhOrTr(n.node) + '</span>' +
+          '<span class="ws-incur-timer" id="wt-incur-' + i + '"></span>' +
+        '</div>' +
+        '<div class="ws-incur-meta">' + zhOrTr(n.system) + ' · ' + zhOrTr(n.mission) +
+          ' · ' + zhOrTr(n.faction) + (lvl ? ' · ' + lvl : '') + '</div>' +
+        '</div>';
+    }).join('') + '</div>';
+
+    if (data.expiry) {
+      /* 静态页+2分钟镜像必有滞后，宁可早不可晚：倒计时目标减去安全提前量，
+         保证显示的剩余时间永远 ≤ 真实剩余时间，到点稍微提前归零等刷新。 */
+      var t = new Date(data.expiry).getTime() - AUX_COUNTDOWN_LEAD_MS;
+      nodes.forEach(function (n, i) { countdown(document.getElementById('wt-incur-' + i), t, true); });
+    }
+  }
+
+  /* ══ 渲染：深层科研(Archimedea，来自辅助数据源) ══ */
+  function renderArchimedea() {
+    var el = document.getElementById('ws-archimedea');
+    if (!el) return;
+    var list = _auxState && Array.isArray(_auxState.archimedea) ? _auxState.archimedea : null;
+    if (!list) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    if (!list.length) { el.innerHTML = '<div class="ws-empty">当前无深层科研轮换</div>'; return; }
+    el.innerHTML = list.map(function (round) {
+      var missions = (round.missions || []).map(function (m) {
+        var dev = (m.deviations || []).map(function (d) {
+          return '<div class="ws-aux-sub"><b>' + (d.name || '') + '</b>' + (d.desc ? '：' + d.desc : '') + '</div>';
+        }).join('');
+        var risk = (m.risks || []).map(function (r) {
+          return '<div class="ws-aux-sub"><b>' + (r.name || '') + '</b>' + (r.desc ? '：' + r.desc : '') + '</div>';
+        }).join('');
+        return '<div class="ws-aux-row">' +
+          '<div class="ws-aux-hd"><span class="ws-aux-title">' + zhOrTr(m.faction) + ' · ' + (m.mission || '') + '</span></div>' +
+          dev + risk + '</div>';
+      }).join('');
+      return '<div class="ws-aux-group"><div class="ws-aux-group-title">' + (round.type || '') + '</div>' + missions + '</div>';
+    }).join('');
+  }
+
+  /* ══ 渲染：沉沦之地(Descents，来自辅助数据源) ══
+     数据是 6 个"炼狱 N"，各带独立 expiry、相隔 7 天——即每周轮换的当前周+后续 5 周。
+     只把"未过期且 expiry 最早"的那组当作【本周】完整展示(含倒计时)，
+     其余作为后续周以日期紧凑列出，避免把 6 周内容堆在一起。 */
+  function renderDescents() {
+    var el = document.getElementById('ws-descents');
+    if (!el) return;
+    var list = _auxState && Array.isArray(_auxState.descents) ? _auxState.descents : null;
+    if (!list) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    var now = Date.now();
+    var future = list.filter(function (f) { return !f.expiry || f.expiry > now; })
+                     .sort(function (a, b) { return (a.expiry || 0) - (b.expiry || 0); });
+    if (!future.length) { el.innerHTML = '<div class="ws-empty">当前无沉沦之地轮换</div>'; return; }
+    function md(ts) { var d = new Date(ts); return (d.getMonth() + 1) + '月' + d.getDate() + '日'; }
+    var cur = future[0];
+    var ch = (cur.challenges || []).map(function (c) {
+      var parts = [c.mode, c.challenge, c.npc].filter(Boolean);
+      return '<div class="ws-aux-sub">' + c.index + '. ' + parts.join(' · ') + '</div>';
+    }).join('');
+    var next = future.slice(1).map(function (f) {
+      return (f.name || ('炼狱 ' + f.floor)) + '（' + md(f.expiry) + '）';
+    }).join(' · ');
+    el.innerHTML =
+      '<div class="ws-aux-group ws-desc-active">' +
+        '<div class="ws-aux-group-title">' + (cur.name || ('炼狱 ' + cur.floor)) +
+        ' <span class="ws-desc-cur">本周</span>' +
+        ' <span class="ws-incur-timer" id="wt-desc-cur"></span></div>' + ch +
+      '</div>' +
+      (next ? '<div class="ws-aux-sub ws-desc-next">后续轮换：' + next + '</div>' : '');
+    if (cur.expiry) countdown(document.getElementById('wt-desc-cur'), cur.expiry - AUX_COUNTDOWN_LEAD_MS, true);
+  }
+
+  /* ══ 渲染：日历(Calendar，来自辅助数据源) ══ */
+  function renderCalendar() {
+    var el = document.getElementById('ws-calendar');
+    if (!el) return;
+    var data = _auxState && _auxState.calendar;
+    if (!data) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    var days = Array.isArray(data.days) ? data.days : [];
+    if (!days.length) { el.innerHTML = '<div class="ws-empty">当前无日历事件</div>'; return; }
+    el.innerHTML = '<div class="ws-aux-group-title">' + (data.season || '') + '</div>' + days.map(function (d) {
+      var ev = (d.events || []).map(function (e) {
+        return '<div class="ws-aux-sub"><b>' + (e.name || '') + '</b>' + (e.desc ? '：' + e.desc : '') + '</div>';
+      }).join('');
+      return '<div class="ws-aux-row"><div class="ws-aux-hd"><span class="ws-aux-title">第 ' + d.day + ' 天</span></div>' + ev + '</div>';
+    }).join('');
+  }
+
+  /* ══ 渲染：战团金库(ClanVault，来自辅助数据源) ══ */
+  function renderClanVault() {
+    var el = document.getElementById('ws-clanvault');
+    if (!el) return;
+    var data = _auxState && _auxState.clanVault;
+    if (!data) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    var rewards = (data.rewards || []).map(function (r) {
+      return '<div class="ws-aux-sub">达到 ' + r.threshold + '：' + r.count + ' × ' + (r.item || '') + '</div>';
+    }).join('');
+    el.innerHTML = '<div class="ws-aux-row"><div class="ws-aux-hd"><span class="ws-aux-title">' +
+      (data.region || '--') + (data.nextRegion ? (' → ' + data.nextRegion) : '') + '</span></div>' + rewards + '</div>';
+  }
+
+  /* ══ 渲染：泰辛(Teshin，来自辅助数据源) ══ */
+  function renderTeshin() {
+    var el = document.getElementById('ws-teshin');
+    if (!el) return;
+    var data = _auxState && _auxState.teshin;
+    if (!data) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    var weeks = (data.weeks || []).map(function (w) {
+      return '<div class="ws-aux-chip">' + (w.offer || '') + '</div>';
+    }).join('');
+    el.innerHTML = '<div class="ws-aux-row"><div class="ws-aux-hd"><span class="ws-aux-title">本周：' +
+      (data.offer || '--') + '</span></div><div class="ws-aux-chiprow">' + weeks + '</div></div>';
+  }
+
+  /* ══ 渲染：杜维利回环(DuviriCircuit，来自辅助数据源) ══ */
+  function renderDuviriCircuit() {
+    var el = document.getElementById('ws-duviri');
+    if (!el) return;
+    var data = _auxState && _auxState.duviriCircuit;
+    if (!data) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    function row(label, items) {
+      var chips = (items || []).map(function (f) { return '<div class="ws-aux-chip">' + (f.name || '') + '</div>'; }).join('');
+      return '<div class="ws-aux-row"><div class="ws-aux-hd"><span class="ws-aux-title">' + label + '</span></div><div class="ws-aux-chiprow">' + chips + '</div></div>';
+    }
+    el.innerHTML = row('普通', data.normal) + row('钢铁之路', data.hard);
+  }
+
+  /* ══ 渲染：建造进度(Construction，来自辅助数据源) ══ */
+  function renderConstruction() {
+    var el = document.getElementById('ws-construction');
+    if (!el) return;
+    var data = _auxState && _auxState.construction;
+    if (!data) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    function bar(label, pct) {
+      var p = Math.max(0, Math.min(100, Number(pct) || 0));
+      return '<div class="ws-aux-row"><div class="ws-aux-hd">' +
+        '<span class="ws-aux-title">' + label + '</span>' +
+        '<span class="ws-incur-timer">' + p.toFixed(1) + '%</span></div>' +
+        '<div class="ws-bar"><div class="ws-bar-fill" style="width:' + p + '%"></div></div></div>';
+    }
+    el.innerHTML = bar('Grineer 巨人战舰', data.fomorian) + bar('Corpus 利刃豺狼舰队', data.razorback);
+  }
+
+  /* ══ 渲染：限时活动(Events，来自辅助数据源) ══ */
+  function renderEvents() {
+    var el = document.getElementById('ws-events');
+    if (!el) return;
+    var list = _auxState && Array.isArray(_auxState.events) ? _auxState.events : null;
+    if (!list) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    if (!list.length) { el.innerHTML = '<div class="ws-empty">当前无限时活动</div>'; return; }
+    el.innerHTML = list.map(function (e, i) {
+      var hp = (e.healthPct != null) ? Math.max(0, Math.min(100, e.healthPct * 100)) : null;
+      var bar = (hp != null) ? '<div class="ws-bar"><div class="ws-bar-fill" style="width:' + hp + '%"></div></div>' : '';
+      return '<div class="ws-aux-row"><div class="ws-aux-hd">' +
+        '<span class="ws-aux-title">' + zhOrTr(e.name) + '</span>' +
+        '<span class="ws-incur-timer" id="wt-event-' + i + '"></span></div>' + bar + '</div>';
+    }).join('');
+    list.forEach(function (e, i) {
+      if (e.expiry) countdown(document.getElementById('wt-event-' + i), new Date(e.expiry).getTime() - AUX_COUNTDOWN_LEAD_MS, true);
+    });
+  }
+
+  /* ══ 渲染：集团任务轮换(Syndicates，来自辅助数据源) ══ */
+  function renderSyndicates() {
+    var el = document.getElementById('ws-syndicates');
+    if (!el) return;
+    var list = _auxState && Array.isArray(_auxState.syndicates) ? _auxState.syndicates : null;
+    if (!list) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    if (!list.length) { el.innerHTML = '<div class="ws-empty">当前无集团任务</div>'; return; }
+    el.innerHTML = list.map(function (s) {
+      var nodes = (s.nodes || []).map(function (n) {
+        return '<div class="ws-aux-sub">' + zhOrTr(n.node) + ' · ' + zhOrTr(n.system) +
+          ' · ' + zhOrTr(n.faction) + ' · ' + (n.mission || '') + '</div>';
+      }).join('');
+      return '<div class="ws-aux-group"><div class="ws-aux-group-title">' + zhOrTr(s.name) + '</div>' + nodes + '</div>';
+    }).join('');
+  }
+
   /* ══ 渲染：重要赏金任务（守望者 / 科维兽 / 六人组）
      数据来自 oracle.browse.wf/bounty-cycle（服务器侧解算 Seed） ══ */
   function renderBounties() {
@@ -4187,6 +4640,16 @@
     renderCodaWeapons();
     renderNightwave();
     renderInvasions();
+    renderIncursions();
+    renderArchimedea();
+    renderDescents();
+    renderCalendar();
+    renderClanVault();
+    renderTeshin();
+    renderDuviriCircuit();
+    renderConstruction();
+    renderEvents();
+    renderSyndicates();
     renderBounties();
     var main = document.querySelector('.ws-main');
     if (main) fixBrackets(main);
@@ -4294,47 +4757,411 @@
       fetchAll().then(function () { setLoading(false); renderAll(); });
     });
 
-    /* 快速导航浮窗：点击切换展开，点击外部收起 */
-    var qn = document.getElementById('ws-quicknav');
-    if (qn) {
-      /* 抵消浏览器缩放(Ctrl+滚轮)：锁定按钮视觉大小，避免放大后下拉菜单冲出屏幕。
-         浏览器缩放会改变 devicePixelRatio；以页面加载时的 DPR 为基准，
-         实时反向缩放(scale=基准/当前)，使按钮视觉尺寸恒定。100% 时系数=1(不模糊)。 */
-      var _qnBaseDPR = window.devicePixelRatio || 1;
-      function _qnLockZoom() {
-        var comp = _qnBaseDPR / (window.devicePixelRatio || 1);
-        qn.style.setProperty('--qn-z', comp.toFixed(4));
-      }
-      window.addEventListener('resize', _qnLockZoom);
-      _qnLockZoom();
-      /* 给下拉菜单每个子项设置递增序号 --i，驱动逐条层叠入场的延迟 */
-      var _qnMenu = qn.querySelector('.ws-qn-menu');
-      if (_qnMenu) {
-        Array.prototype.forEach.call(_qnMenu.children, function (el, i) {
-          el.style.setProperty('--i', i);
-        });
-      }
-      var _qnTimer = null;
-      qn.addEventListener('mouseenter', function () {
-        clearTimeout(_qnTimer);
-        qn.classList.add('ws-qn-open');
-      });
-      qn.addEventListener('mouseleave', function () {
-        _qnTimer = setTimeout(function () { qn.classList.remove('ws-qn-open'); }, 150);
-      });
-      qn.addEventListener('click', function (e) {
-        if (e.target.tagName === 'A') {
-          setTimeout(function () { qn.classList.remove('ws-qn-open'); }, 120);
-          return;
-        }
-        e.stopPropagation();
-        qn.classList.toggle('ws-qn-open');
-      });
-      document.addEventListener('click', function (e) {
-        if (!qn.contains(e.target)) qn.classList.remove('ws-qn-open');
-      });
-    }
+    initDnaNav();
   });
+
+  /* ══ DNA 快速导航控制器 ══
+     主按钮 → 悬停/点击展开四个分类子按钮(短期/每日/每周/其他) → 点击某分类，
+     从该子按钮按 DNA 样式分叉出金色连接线，线末端是各模块跳转按钮。
+     切换分类时旧分叉动态收回；点击空白处逐级收回(先跳转按钮、再子按钮、最后整体)。
+     模块按"刷新周期"分桶，桶内按刷新由快到慢排序(满足"按刷新时间排序")。 */
+  var WS_DNA_NAV = {
+    short: [
+      { t: '世界周期',     href: '#ws-sec-cycles' },
+      { t: '虚空裂缝',     href: '#ws-sec-fissures' },
+      { t: '警报',         href: '#ws-sec-alerts' },
+      { t: '仲裁',         href: '#ws-sec-arb' },
+      { t: '入侵',         href: '#ws-sec-inv' },
+      { t: '重要赏金任务', href: '#ws-sec-bounties' }
+    ],
+    daily: [
+      { t: '突击',       href: '#ws-sec-sortie' },
+      { t: '侵袭',       href: '#ws-sec-incursions' },
+      { t: '集团任务',   href: '#ws-sec-syndicates' },
+      { t: 'Darvo 特惠', href: '#ws-sec-darvo' }
+    ],
+    weekly: [
+      { t: '执刑官猎杀',   href: '#ws-sec-sortie' },
+      { t: '钢铁之路',     href: '#ws-sec-sp' },
+      { t: '午夜电波',     href: '#ws-sec-nw' },
+      { t: '科研',         href: '#ws-sec-archimedea' },
+      { t: '无尽回廊',     href: '#ws-sec-duviri' },
+      { t: '沉沦之地',     href: '#ws-sec-descents' },
+      { t: '信条武器轮换', href: '#ws-sec-tenet' },
+      { t: '终幕武器轮换', href: '#ws-sec-coda' },
+      { t: '泰辛军械库',   href: '#ws-sec-teshin' }
+    ],
+    other: [
+      { t: '奸商',         href: '#ws-sec-baro' },
+      { t: '瓦奇娅',       href: '#ws-sec-varzia' },
+      { t: '日历',         href: '#ws-sec-calendar' },
+      { t: '氏族金库奖励', href: '#ws-sec-clanvault' },
+      { t: '限时活动',     href: '#ws-sec-events' },
+      { t: '建造进度',     href: '#ws-sec-construction' }
+    ]
+  };
+
+  /* ── 大型 DNA 导航：点击启动 → 沿金色轨迹升至屏幕中部成形发光核心 →
+        电路板纹路自底铺开 → 核心一侧逐级 DNA 分叉出分类与模块按钮；
+        关闭时整体自上而下化作"金沙"随风飘散。全部走单一 rAF + 离屏精灵，高帧率。 ── */
+  var NSVG = 'http://www.w3.org/2000/svg';
+  function initDnaNav() {
+    var root    = document.getElementById('ws-dna');
+    var main    = document.getElementById('ws-dna-main');
+    var stage   = document.getElementById('ws-dna-stage');
+    var core    = document.getElementById('ws-dna-core');
+    var branch  = document.getElementById('ws-dna-branch');
+    var canvas  = document.getElementById('ws-nav-canvas');
+    if (!root || !main || !stage || !core || !branch || !canvas) return;
+
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    var W = 0, H = 0;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var phase = 'idle';            // idle | opening | open | closing
+    var activeKey = null, activeBtn = null;
+    var catBtns = [];
+    var mouse = { x: -9999, y: -9999 };      // 光标位置(电路背景在其周围留圆形空洞)
+
+    // —— 画布尺寸（每次重算 DPR，缩放时不糊不错位）——
+    function sizeCanvas() {
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    // —— 金色径向精灵（粒子/光点共用，避免每帧画渐变）——
+    var spr = (function () {
+      var S = 26, c = document.createElement('canvas'); c.width = c.height = S;
+      var g = c.getContext('2d'), rg = g.createRadialGradient(S/2, S/2, 0, S/2, S/2, S/2);
+      rg.addColorStop(0, 'rgba(255,244,206,1)');
+      rg.addColorStop(.45, 'rgba(232,190,90,.85)');
+      rg.addColorStop(1, 'rgba(201,164,50,0)');
+      g.fillStyle = rg; g.fillRect(0, 0, S, S); return c;
+    })();
+
+    // —— 几何：屏幕中央「指挥环」枢纽；四向(上/右/下/左)挂分类；hover 后模块沿该方向放射 ——
+    var openT0 = 0, closeT0 = 0, dust = [];
+    function dialGeom() {
+      var cx = Math.round(W / 2), cy = Math.round(H / 2), base = Math.min(W, H);
+      /* 纯按视口短边的比例算，不设绝对像素上限——浏览器缩放(Ctrl+/-)时 W/H 等比变化，
+         RR/MR 跟着等比缩放，导航占屏幕的比例因此保持不变(用户明确要求"缩放不影响占屏比例")。
+         只给一个很低的绝对楼层(应对极小窗口/手机宽度这种边界情况，不影响正常缩放场景)。 */
+      var RR = Math.max(96, base * 0.205);      // 分类内环半径：短边 20.5%
+      var MR = Math.max(RR + 90, base * 0.46);  // 模块放射外环半径：短边 46%，整体占满约 92% 短边
+      return { cx: cx, cy: cy, RR: RR, MR: MR };
+    }
+    var CAT_ANG = { short: -Math.PI / 2, daily: 0, weekly: Math.PI / 2, other: Math.PI };
+    function catPoint(key) { var d = dialGeom(), a = CAT_ANG[key]; return { x: d.cx + Math.cos(a) * d.RR, y: d.cy + Math.sin(a) * d.RR, a: a }; }
+
+    // —— 金色尘埃(全屏缓慢漂浮 + 闪烁，低亮度) ——
+    function buildDust() {
+      dust = []; var n = Math.min(120, Math.floor(W * H / 13000));
+      for (var i = 0; i < n; i++) dust.push({ x: Math.random() * W, y: Math.random() * H, r: .5 + Math.random() * 1.9, vx: (Math.random() - .5) * .12, vy: (Math.random() - .5) * .1, ph: Math.random() * 6.28, sp: .004 + Math.random() * .01 });
+    }
+    function drawDust(fade) {
+      for (var i = 0; i < dust.length; i++) {
+        var p = dust[i];
+        p.x += p.vx; p.y += p.vy; p.ph += p.sp;
+        if (p.x < 0) p.x = W; else if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; else if (p.y > H) p.y = 0;
+        var a = (.1 + .5 * Math.abs(Math.sin(p.ph))) * fade, s = p.r * 5;
+        ctx.globalAlpha = a; ctx.drawImage(spr, p.x - s / 2, p.y - s / 2, s, s);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    // —— 指挥环背景：中心辉光 + 双同心金环 + 内外双向旋转刻度 ——
+    function drawDial(now, fade, grow) {
+      var d = dialGeom(), cx = d.cx, cy = d.cy, TAU = Math.PI * 2;
+      var gl = ctx.createRadialGradient(cx, cy, 0, cx, cy, d.RR * 1.6);
+      gl.addColorStop(0, 'rgba(201,164,50,' + (0.20 * fade) + ')');
+      gl.addColorStop(1, 'rgba(201,164,50,0)');
+      ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(cx, cy, d.RR * 1.6, 0, TAU); ctx.fill();
+      ctx.strokeStyle = 'rgba(201,164,50,' + (0.24 * fade) + ')'; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.arc(cx, cy, d.RR * grow, 0, TAU); ctx.stroke();
+      ctx.strokeStyle = 'rgba(201,164,50,' + (0.10 * fade) + ')'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(cx, cy, d.MR * grow, 0, TAU); ctx.stroke();
+      var ph = now * 0.00009 * TAU, ticks = 84;
+      for (var i = 0; i < ticks; i++) {
+        var ang = ph + i / ticks * TAU, maj = (i % 7 === 0);
+        var r0 = (d.RR - 5) * grow, r1 = (d.RR + (maj ? 13 : 5)) * grow;
+        ctx.strokeStyle = 'rgba(201,164,50,' + ((maj ? 0.44 : 0.16) * fade) + ')';
+        ctx.lineWidth = maj ? 1.4 : 0.8;
+        ctx.beginPath(); ctx.moveTo(cx + Math.cos(ang) * r0, cy + Math.sin(ang) * r0); ctx.lineTo(cx + Math.cos(ang) * r1, cy + Math.sin(ang) * r1); ctx.stroke();
+      }
+      var ph2 = -now * 0.00006 * TAU, t2 = 54;
+      for (var j = 0; j < t2; j++) {
+        var b = ph2 + j / t2 * TAU, r0b = (d.MR - 4) * grow, r1b = (d.MR + 9) * grow;
+        ctx.strokeStyle = 'rgba(201,164,50,' + (0.13 * fade) + ')'; ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.moveTo(cx + Math.cos(b) * r0b, cy + Math.sin(b) * r0b); ctx.lineTo(cx + Math.cos(b) * r1b, cy + Math.sin(b) * r1b); ctx.stroke();
+      }
+      drawDust(fade);
+    }
+
+    // —— 主循环(单 rAF：背景指挥环 + 光标空洞) ——
+    var raf = null, last = 0;
+    function loop(now) {
+      if (!last) last = now;
+      last = now;
+      ctx.clearRect(0, 0, W, H);
+      var closing = (phase === 'closing');
+      /* 关闭是分阶段的(先收次级按钮,再收四个分类,最后核心内爆)，背景指挥环跟着
+         整段时长同步渐隐(CLOSE_DUR，与 closeNav() 里的分阶段总时长一致)，不要太快收掉。 */
+      var fade = closing ? Math.max(0, 1 - (now - closeT0) / CLOSE_DUR) : 1;
+      var grow = Math.min(1, (now - openT0) / 540);
+      drawDial(now, fade, grow);
+      // 光标圆形空洞(只削弱背景，不影响枢纽/分类/模块 DOM)
+      if (mouse.x > -9000 && !closing) {
+        var R = 120;
+        var hole = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, R);
+        hole.addColorStop(0, 'rgba(0,0,0,1)'); hole.addColorStop(.6, 'rgba(0,0,0,.85)'); hole.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = hole; ctx.beginPath(); ctx.arc(mouse.x, mouse.y, R, 0, Math.PI * 2); ctx.fill();
+        ctx.globalCompositeOperation = 'source-over';
+      }
+      raf = requestAnimationFrame(loop);
+    }
+    function startLoop() { if (!raf) { last = 0; raf = requestAnimationFrame(loop); } }
+    function stopLoop() { if (raf) { cancelAnimationFrame(raf); raf = null; } ctx.clearRect(0, 0, W, H); }
+
+    function launch() {
+      if (phase !== 'idle') return;
+      phase = 'opening';
+      sizeCanvas();
+      if (!dust.length) buildDust();
+      root.classList.add('launched');
+      stage.setAttribute('aria-hidden', 'false');
+      openT0 = performance.now();
+      var mr = main.getBoundingClientRect();
+      var c = dialGeom();
+      core.style.left = (mr.left + mr.width / 2) + 'px';
+      core.style.top  = (mr.top + mr.height / 2) + 'px';
+      core.style.visibility = 'visible';
+      core.style.transform = '';               // 清掉可能残留的内联 transform，交回 CSS 类控制(.in 切换缩放)
+      core.classList.remove('in', 'pulse', 'closing-out');
+      // 下一帧把核心挪到指挥环中心并放大成形——left/top 走内联 transition，transform/opacity 走 .in 类
+      requestAnimationFrame(function () {
+        core.style.left = c.cx + 'px';
+        core.style.top  = c.cy + 'px';
+        core.classList.add('in');
+      });
+      startLoop();
+      var doneAfter = reduce ? 0 : 620;
+      setTimeout(function () { if (phase === 'opening') onAscendDone(); }, doneAfter);
+    }
+
+    function onAscendDone() {
+      if (phase !== 'opening') return;
+      phase = 'open';
+      core.classList.add('pulse');
+      buildCats();
+    }
+
+    function buildCats() {
+      catBtns = [];
+      stage.querySelectorAll('.ws-dna-cat').forEach(function (b) { b.remove(); });
+      var keys = [['short', '短期轮换'], ['daily', '每日轮换'], ['weekly', '每周轮换'], ['other', '其他轮换']];
+      keys.forEach(function (kv, i) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'ws-dna-cat ws-dna-cat-grand'; b.setAttribute('data-cat', kv[0]); b.textContent = kv[1];
+        b.style.visibility = 'hidden';
+        (function (cat, btn) {
+          btn.addEventListener('mouseenter', function () { if (phase === 'open') activateCat(cat, btn); });
+        })(kv[0], b);
+        stage.appendChild(b); catBtns.push(b);
+        var p = catPoint(kv[0]);
+        var bw = b.offsetWidth, bh = b.offsetHeight;
+        b.style.left = (p.x - bw / 2) + 'px';
+        b.style.top  = (p.y - bh / 2) + 'px';
+        b.style.transitionDelay = (i * 70) + 'ms';
+        b.style.visibility = 'visible';
+      });
+      setTimeout(function () { stage.classList.add('show-cats'); }, 20);
+    }
+
+    /* 放射分叉：从选中的分类节点沿其所在方向，向指挥环外圈扇形展开该分类的模块按钮，
+       金色弧线连接(径向渐变)。先量出每个按钮的真实宽高，再做"径向避让"——
+       某个槎位若和已放置的按钮重叠，就沿自己的方向继续往外推，直至不再重叠，
+       从根本上消除"次级框体互相折叠"。 */
+    function expandBranch(key) {
+      var items = WS_DNA_NAV[key] || []; var n = items.length; if (!n) return;
+      var d = dialGeom(), a0 = CAT_ANG[key];
+      var node0 = catPoint(key);
+      var spread = Math.min(2.0, 0.15 * n + 0.45);
+      var fromA = a0 - spread / 2, stepA = n > 1 ? spread / (n - 1) : 0;
+      var RING_GAP = 50, BUMP = 16, MARGIN = 10;
+
+      branch.style.left = '0'; branch.style.top = '0';
+      branch.style.width = W + 'px'; branch.style.height = H + 'px';
+
+      var svg = document.createElementNS(NSVG, 'svg');
+      svg.setAttribute('width', W); svg.setAttribute('height', H);
+      var defs = document.createElementNS(NSVG, 'defs');
+      defs.innerHTML = '<radialGradient id="wsDnaGrad" gradientUnits="userSpaceOnUse" cx="' + node0.x + '" cy="' + node0.y + '" r="' + d.MR + '">' +
+        '<stop offset="0%" stop-color="#ffe486"/><stop offset="50%" stop-color="#c9a432"/>' +
+        '<stop offset="100%" stop-color="rgba(201,164,50,.45)"/></radialGradient>';
+      svg.appendChild(defs);
+      branch.innerHTML = ''; branch.appendChild(svg);
+
+      // 第一步：先隐藏插入全部跳转按钮，量出真实宽高(文字撑开，不设宽度)
+      var els = [];
+      for (var i = 0; i < n; i++) {
+        var a = document.createElement('a');
+        a.className = 'ws-dna-jump'; a.href = items[i].href; a.textContent = items[i].t;
+        a.style.visibility = 'hidden';
+        a.style.transitionDelay = (i * 42) + 'ms';
+        branch.appendChild(a);
+        els.push(a);
+      }
+      // 第二步：按预设角度起步，径向逐步外推直到与已放置的按钮不再重叠
+      var placed = [], finalPos = [];
+      for (var i = 0; i < n; i++) {
+        var ang = fromA + stepA * i;
+        var bw = els[i].offsetWidth, bh = els[i].offsetHeight;
+        var R = d.MR + (i % 2) * RING_GAP, bx, by, guard = 0;
+        while (guard++ < 80) {
+          bx = d.cx + Math.cos(ang) * R; by = d.cy + Math.sin(ang) * R;
+          var box = { l: bx - bw / 2 - MARGIN, r: bx + bw / 2 + MARGIN, t: by - bh / 2 - MARGIN, b: by + bh / 2 + MARGIN };
+          var hit = false;
+          for (var k = 0; k < placed.length; k++) {
+            var p = placed[k];
+            if (!(box.r < p.l || box.l > p.r || box.b < p.t || box.t > p.b)) { hit = true; break; }
+          }
+          if (!hit) break;
+          R += BUMP;
+        }
+        placed.push({ l: bx - bw / 2, r: bx + bw / 2, t: by - bh / 2, b: by + bh / 2 });
+        finalPos.push({ x: bx, y: by, ang: ang });
+        els[i].style.left = (bx - bw / 2) + 'px';
+        els[i].style.top  = (by - bh / 2) + 'px';
+        els[i].style.visibility = 'visible';
+      }
+
+      // 第三步：依最终落点画金色连接线(根点在分类按钮中心，靠其 z-index 更高的
+      // 不透明背景盖住按钮范围内的线段，线只在按钮外缘才可见，不会糊住文字)
+      var paths = [];
+      for (var i = 0; i < n; i++) {
+        var fp = finalPos[i];
+        var rr = Math.hypot(fp.x - d.cx, fp.y - d.cy);
+        var r1 = d.RR + (d.MR - d.RR) * 0.4, r2 = d.RR + (rr - d.RR) * 0.78;
+        var c1x = d.cx + Math.cos(a0) * r1, c1y = d.cy + Math.sin(a0) * r1;
+        var c2x = d.cx + Math.cos(fp.ang) * r2, c2y = d.cy + Math.sin(fp.ang) * r2;
+        var dPath = 'M ' + node0.x + ' ' + node0.y + ' C ' + c1x + ' ' + c1y + ', ' + c2x + ' ' + c2y + ', ' + fp.x + ' ' + fp.y;
+        var path = document.createElementNS(NSVG, 'path');
+        path.setAttribute('class', 'ws-dna-link'); path.setAttribute('d', dPath);
+        svg.appendChild(path); paths.push(path);
+        var node = document.createElementNS(NSVG, 'circle');
+        node.setAttribute('class', 'ws-dna-node'); node.setAttribute('cx', fp.x); node.setAttribute('cy', fp.y); node.setAttribute('r', '3');
+        svg.appendChild(node);
+      }
+      var root0 = document.createElementNS(NSVG, 'circle');
+      root0.setAttribute('class', 'ws-dna-node'); root0.setAttribute('cx', node0.x); root0.setAttribute('cy', node0.y); root0.setAttribute('r', '4');
+      svg.appendChild(root0);
+
+      paths.forEach(function (p, i) {
+        var len = p.getTotalLength(); p.setAttribute('data-len', len);
+        p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
+        p.style.transition = 'stroke-dashoffset .5s cubic-bezier(.16,1,.3,1) ' + (i * 42) + 'ms';
+      });
+      setTimeout(function () {
+        if (activeKey !== key || phase !== 'open') return;
+        branch.classList.add('show');
+        paths.forEach(function (p) { p.style.strokeDashoffset = 0; });
+      }, 30);
+    }
+
+    function retractBranch(cb) {
+      if (!branch.classList.contains('show') && !branch.innerHTML) { cb && cb(); return; }
+      branch.classList.remove('show');
+      Array.prototype.forEach.call(branch.querySelectorAll('.ws-dna-link'), function (p) {
+        p.style.strokeDashoffset = p.getAttribute('data-len') || 0;
+      });
+      // 等线缩回+跳转按钮淡出滑回的过渡都跑完(最长约 .5s + 末位 stagger)才清空，
+      // 否则会在动画播完前被打断、看起来像"跳变"而不是收回。
+      setTimeout(function () { if (!branch.classList.contains('show')) branch.innerHTML = ''; cb && cb(); }, 560);
+    }
+
+    /* hover 用：只展开/切换，从不收回(避免鼠标移动造成意外收起) */
+    function activateCat(key, btn) {
+      if (phase !== 'open' || activeKey === key) return;
+      var had = !!activeKey;
+      if (activeBtn) activeBtn.classList.remove('active');
+      activeKey = key; activeBtn = btn; btn.classList.add('active');
+      if (had) retractBranch(function () { if (activeKey === key) expandBranch(key); });
+      else expandBranch(key);
+    }
+    /* 点击用：点同一个已展开的分类 → 收回其次级按钮(不影响整体导航)；点其它分类 → 切换 */
+    function toggleCat(key, btn) {
+      if (phase !== 'open') return;
+      if (activeKey === key) {
+        btn.classList.remove('active');
+        activeKey = null; activeBtn = null;
+        retractBranch();
+        return;
+      }
+      activateCat(key, btn);
+    }
+
+    /* —— 关闭：放弃流沙，改成有层次的"分级收回"，让用户看清楚每一步——
+       第1步：先收次级跳转按钮(若有展开)；第2步：稍候，四个分类按钮依次错开淡出内收；
+       第3步：分类收完后核心最后内爆收束；全程配合背景指挥环同步渐隐。不再是一下子全消失。 ── */
+    var CLOSE_DUR = 1520;   // 须与 closeNav() 实际分阶段总时长(catStart+4*catGap+200+620)一致，背景渐隐才同步
+    function closeNav() {
+      if (phase !== 'open') return;          // 仅完全展开后才允许关闭(避免开场途中误关)
+      phase = 'closing';
+      closeT0 = performance.now();
+      root.classList.add('closing');
+      retractBranch();                                   // 第1步：次级按钮先收
+      var catStart = 380, catGap = 80;
+      setTimeout(function () {                            // 第2步：四个分类依次错开收回
+        stage.classList.remove('show-cats');
+        catBtns.forEach(function (b, i) {
+          b.style.transitionDelay = (i * catGap) + 'ms';
+          b.classList.add('closing-out');
+        });
+      }, catStart);
+      var coreStart = catStart + catBtns.length * catGap + 200;
+      setTimeout(function () { core.classList.add('closing-out'); }, coreStart);  // 第3步：核心最后收
+      startLoop();                                        // 背景指挥环跟着 closeT0 同步渐隐
+      setTimeout(finishClose, coreStart + 620);
+    }
+    function finishClose() {
+      stopLoop();
+      root.classList.remove('launched', 'closing');
+      stage.setAttribute('aria-hidden', 'true');
+      branch.classList.remove('show'); branch.innerHTML = '';
+      catBtns.forEach(function (b) { b.remove(); }); catBtns = [];
+      core.classList.remove('in', 'pulse', 'closing-out');
+      core.style.cssText = '';                 // 清掉关闭时叠加的 opacity/transform/transition
+      activeKey = null; activeBtn = null;
+      phase = 'idle';
+    }
+
+    // —— 事件 ——
+    main.addEventListener('click', function (e) { e.stopPropagation(); launch(); });
+    core.addEventListener('click', function (e) { e.stopPropagation(); closeNav(); });
+    stage.addEventListener('click', function (e) {
+      var jump = e.target.closest('.ws-dna-jump');
+      if (jump) { setTimeout(closeNav, 90); return; }     // 跳转后淡出收束
+      var cat = e.target.closest('.ws-dna-cat');
+      if (cat) { e.stopPropagation(); toggleCat(cat.getAttribute('data-cat'), cat); return; }
+      if (e.target === stage) closeNav();                 // 点击空白处 → 收束消失
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeNav(); });
+    window.addEventListener('mousemove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
+    window.addEventListener('resize', function () {
+      if (phase === 'idle' || phase === 'closing') return;
+      sizeCanvas();
+      if (!dust.length) buildDust();
+      var c = dialGeom();
+      core.style.left = c.cx + 'px'; core.style.top = c.cy + 'px';
+      if (phase === 'open') { buildCats(); if (activeKey) setTimeout(function () { if (activeKey) expandBranch(activeKey); }, 30); }
+    });
+  }
 
 })();
 </script>
@@ -4407,23 +5234,6 @@
   });
   document.addEventListener('keydown', function(e) { if (e.key==='Escape') closePanel(); });
   window.addEventListener('resize', function() { if (isOpen) resizePanelCanvas(); });
-})();
-</script>
-
-<script>
-/* ── 网络提示横幅：10s 后渐显，停留 6s 后渐隐 ── */
-(function () {
-  setTimeout(function () {
-    var nb = document.getElementById('ws-notice');
-    if (!nb) return;
-    nb.classList.add('ws-nb-show');
-    setTimeout(function () {
-      nb.classList.remove('ws-nb-show');
-      setTimeout(function () {
-        if (nb.parentNode) nb.parentNode.removeChild(nb);
-      }, 800);
-    }, 6000);
-  }, 10000);
 })();
 </script>
 

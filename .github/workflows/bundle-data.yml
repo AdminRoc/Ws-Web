@@ -47,6 +47,12 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # 只 add 产物，绝不用 git add -A：防止把覆盖进来的私库脚本提交回公库
           git add data/*/_bundle.js
-          git diff --staged --quiet || \
-            git commit -m "build: rebuild data bundles [skip ci]"
-          git push
+          git diff --staged --quiet && { echo "无实质变动,跳过提交"; exit 0; }
+          git commit -m "build: rebuild data bundles [skip ci]"
+          # 跨工作流并发推送同一 main 会撞车(non-fast-forward),fetch+rebase+重试自愈
+          for i in 1 2 3 4 5; do
+            if git push; then echo "推送成功(第 $i 次)"; exit 0; fi
+            echo "推送被拒(第 $i 次),拉取远端后 rebase 重试..."
+            git pull --rebase --autostash origin main || true
+          done
+          echo "重试多次仍推送失败" >&2; exit 1

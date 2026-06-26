@@ -413,7 +413,8 @@ img { display: block; max-width: 100%; }
   font-size: .82rem;
   font-weight: 400;
   letter-spacing: .09em;
-  color: var(--c-gold-mid);
+  /* 默认亮度对齐"提交成绩"按钮(var(--c-gold-bright))，原为 --c-gold-mid 偏暗 */
+  color: var(--c-gold-bright);
   border: 1px solid var(--c-gold-dim);
   border-radius: 1px;
   background: rgba(162,118,42,.07);
