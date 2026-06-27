@@ -431,6 +431,7 @@
 "byName":{
 "10k Kuva":"10k 赤毒",
 "3x Forma":"3x Forma",
+"Ankyros":"甲龙双拳",
 "Augmented Enemy Armor":"增强敌方护甲",
 "Bishamo Cuirass Blueprint":"Bishamo 胸甲蓝图",
 "Bishamo Greaves Blueprint":"Bishamo 护腿蓝图",
@@ -6874,7 +6875,19 @@
 "/Lotus/Weapons/VoidTrader/VTDetron":"苦痛·德特昂"
 },
 "misc":{
+"Archimedea":"科研",
+"Clan Vault":"氏族金库奖励",
+"Deep Archimedea":"深层科研",
+"Descent":"沉沦之地",
+"Descents":"沉沦之地",
+"Duviri Circuit":"无尽回廊",
+"Fomorian":"巨人战舰",
+"Incursions":"侵袭",
 "Prime Resurgence":"Prime重生",
+"Razorback":"利刃豺狼舰队",
+"Temporal Archimedea":"时光科研",
+"The Circuit":"无尽回廊",
+"The Descendia":"沉沦之地",
 "Varzia":"瓦奇娅"
 },
 "mission":{
