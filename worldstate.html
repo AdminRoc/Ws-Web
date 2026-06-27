@@ -521,6 +521,48 @@
       margin-top: .3rem;
       line-height: 1.5;
     }
+
+    /* ══ 集团任务卡片(每个集团一张卡，替代裸列表) ══ */
+    .ws-syn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: .9rem;
+    }
+    .ws-syn-card {
+      background: var(--ws-card-bg);
+      border: 1px solid var(--ws-gold-line);
+      border-left: 3px solid var(--ws-gold-bright);
+      border-radius: 2px;
+      padding: .9rem 1.1rem;
+    }
+    .ws-syn-title {
+      font-family: var(--f-sci);
+      font-size: .96rem;
+      font-weight: 700;
+      color: var(--ws-gold-bright);
+      margin-bottom: .6rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid var(--ws-sep);
+    }
+    .ws-syn-node {
+      display: flex;
+      flex-direction: column;
+      padding: .35rem 0;
+      border-bottom: 1px dashed rgba(201,164,50,.14);
+    }
+    .ws-syn-node:last-child { border-bottom: none; }
+    .ws-syn-node-name {
+      font-family: var(--f-sci);
+      font-size: .86rem;
+      font-weight: 600;
+      color: var(--ws-text);
+    }
+    .ws-syn-node-meta {
+      font-family: var(--f-sci);
+      font-size: .76rem;
+      color: var(--ws-text-dim);
+      margin-top: .15rem;
+    }
     .ws-bar {
       margin-top: .5rem;
       height: 6px;
@@ -2512,7 +2554,7 @@
     <!-- ══ 16. 日历 ══ -->
     <section id="ws-sec-calendar" class="ws-section">
       <div class="ws-section-hd">
-        <span class="ws-section-title">日历</span>
+        <span class="ws-section-title">霍瓦尼亚·日历</span>
         <span class="ws-section-en">Calendar</span>
       </div>
       <div id="ws-calendar"><div class="ws-empty">加载中…</div></div>
@@ -2525,15 +2567,6 @@
         <span class="ws-section-en">Clan Vault</span>
       </div>
       <div id="ws-clanvault"><div class="ws-empty">加载中…</div></div>
-    </section>
-
-    <!-- ══ 18. 泰辛军械库 ══ -->
-    <section id="ws-sec-teshin" class="ws-section">
-      <div class="ws-section-hd">
-        <span class="ws-section-title">泰辛军械库</span>
-        <span class="ws-section-en">Teshin</span>
-      </div>
-      <div id="ws-teshin"><div class="ws-empty">加载中…</div></div>
     </section>
 
     <!-- ══ 19. 杜维利回环 ══ -->
@@ -4246,19 +4279,6 @@
       (data.region || '--') + (data.nextRegion ? (' → ' + data.nextRegion) : '') + '</span></div>' + rewards + '</div>';
   }
 
-  /* ══ 渲染：泰辛(Teshin，来自辅助数据源) ══ */
-  function renderTeshin() {
-    var el = document.getElementById('ws-teshin');
-    if (!el) return;
-    var data = _auxState && _auxState.teshin;
-    if (!data) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
-    var weeks = (data.weeks || []).map(function (w) {
-      return '<div class="ws-aux-chip">' + (w.offer || '') + '</div>';
-    }).join('');
-    el.innerHTML = '<div class="ws-aux-row"><div class="ws-aux-hd"><span class="ws-aux-title">本周：' +
-      (data.offer || '--') + '</span></div><div class="ws-aux-chiprow">' + weeks + '</div></div>';
-  }
-
   /* ══ 渲染：杜维利回环(DuviriCircuit，来自辅助数据源) ══ */
   function renderDuviriCircuit() {
     var el = document.getElementById('ws-duviri');
@@ -4308,19 +4328,24 @@
   }
 
   /* ══ 渲染：集团任务轮换(Syndicates，来自辅助数据源) ══ */
+  /* 开放世界三大据点(Ostron/索拉里斯联合/英择谛)的集团其实就是平原赏金任务的"集团身份"，
+     不是真正的"任务节点轮换"集团——和本站"重要赏金任务"模块内容重复，故按 tag 过滤掉，
+     只保留剩下 6 个有真实任务节点轮换的集团(均衡仲裁者/中枢苏达/新世间/佩兰数列/血色面纱/钢铁防线)。*/
+  var SYNDICATE_EXCLUDE_TAGS = { CetusSyndicate: 1, SolarisSyndicate: 1, EntratiSyndicate: 1 };
   function renderSyndicates() {
     var el = document.getElementById('ws-syndicates');
     if (!el) return;
     var list = _auxState && Array.isArray(_auxState.syndicates) ? _auxState.syndicates : null;
     if (!list) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+    list = list.filter(function (s) { return !SYNDICATE_EXCLUDE_TAGS[s.tag]; });
     if (!list.length) { el.innerHTML = '<div class="ws-empty">当前无集团任务</div>'; return; }
-    el.innerHTML = list.map(function (s) {
+    el.innerHTML = '<div class="ws-syn-grid">' + list.map(function (s) {
       var nodes = (s.nodes || []).map(function (n) {
-        return '<div class="ws-aux-sub">' + zhOrTr(n.node) + ' · ' + zhOrTr(n.system) +
-          ' · ' + zhOrTr(n.faction) + ' · ' + (n.mission || '') + '</div>';
+        return '<div class="ws-syn-node"><span class="ws-syn-node-name">' + zhOrTr(n.node) + '</span>' +
+          '<span class="ws-syn-node-meta">' + zhOrTr(n.system) + ' · ' + zhOrTr(n.faction) + ' · ' + (n.mission || '') + '</span></div>';
       }).join('');
-      return '<div class="ws-aux-group"><div class="ws-aux-group-title">' + zhOrTr(s.name) + '</div>' + nodes + '</div>';
-    }).join('');
+      return '<div class="ws-syn-card"><div class="ws-syn-title">' + zhOrTr(s.name) + '</div>' + nodes + '</div>';
+    }).join('') + '</div>';
   }
 
   /* ══ 渲染：重要赏金任务（守望者 / 科维兽 / 六人组）
@@ -4649,7 +4674,6 @@
     renderDescents();
     renderCalendar();
     renderClanVault();
-    renderTeshin();
     renderDuviriCircuit();
     renderConstruction();
     renderEvents();
@@ -4792,13 +4816,12 @@
       { t: '无尽回廊',     href: '#ws-sec-duviri' },
       { t: '沉沦之地',     href: '#ws-sec-descents' },
       { t: '信条武器轮换', href: '#ws-sec-tenet' },
-      { t: '终幕武器轮换', href: '#ws-sec-coda' },
-      { t: '泰辛军械库',   href: '#ws-sec-teshin' }
+      { t: '终幕武器轮换', href: '#ws-sec-coda' }
     ],
     other: [
       { t: '奸商',         href: '#ws-sec-baro' },
       { t: '瓦奇娅',       href: '#ws-sec-varzia' },
-      { t: '日历',         href: '#ws-sec-calendar' },
+      { t: '霍瓦尼亚·日历', href: '#ws-sec-calendar' },
       { t: '氏族金库奖励', href: '#ws-sec-clanvault' },
       { t: '限时活动',     href: '#ws-sec-events' },
       { t: '建造进度',     href: '#ws-sec-construction' }
