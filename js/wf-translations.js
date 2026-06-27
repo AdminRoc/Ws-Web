@@ -84,7 +84,19 @@ window.WF_TR = {
   },
   "MISC": {
     "Varzia": "瓦奇娅",
-    "Prime Resurgence": "Prime重生"
+    "Prime Resurgence": "Prime重生",
+    "Incursions": "侵袭",
+    "Archimedea": "科研",
+    "Deep Archimedea": "深层科研",
+    "Temporal Archimedea": "时光科研",
+    "The Descendia": "沉沦之地",
+    "Descents": "沉沦之地",
+    "Descent": "沉沦之地",
+    "Clan Vault": "氏族金库奖励",
+    "Duviri Circuit": "无尽回廊",
+    "The Circuit": "无尽回廊",
+    "Fomorian": "巨人战舰",
+    "Razorback": "利刃豺狼舰队"
   }
 };
 
