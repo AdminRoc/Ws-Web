@@ -522,11 +522,19 @@
       line-height: 1.5;
     }
 
-    /* ══ 集团任务卡片(每个集团一张卡，替代裸列表) ══ */
+    /* ══ 集团任务卡片(每个集团一张卡，替代裸列表) ══
+       固定 3 列(用户要求的"上三下三"排版)，避免 auto-fit 在不同宽度下变成 2/4 列错位；
+       屏幕太窄(放不下3张卡)时才退化为更少列，保证不挤压裁切。 */
     .ws-syn-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: .9rem;
+    }
+    @media (max-width: 820px) {
+      .ws-syn-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .ws-syn-grid { grid-template-columns: 1fr; }
     }
     .ws-syn-card {
       background: var(--ws-card-bg);
@@ -4332,6 +4340,11 @@
      不是真正的"任务节点轮换"集团——和本站"重要赏金任务"模块内容重复，故按 tag 过滤掉，
      只保留剩下 6 个有真实任务节点轮换的集团(均衡仲裁者/中枢苏达/新世间/佩兰数列/血色面纱/钢铁防线)。*/
   var SYNDICATE_EXCLUDE_TAGS = { CetusSyndicate: 1, SolarisSyndicate: 1, EntratiSyndicate: 1 };
+  /* 用户指定的固定排版顺序：上排 钢铁防线/均衡仲裁者/中枢苏达，下排 佩兰数列/血色面纱/新世间 */
+  var SYNDICATE_ORDER = [
+    'SteelMeridianSyndicate', 'ArbitersSyndicate', 'CephalonSudaSyndicate',
+    'PerrinSyndicate', 'RedVeilSyndicate', 'NewLokaSyndicate'
+  ];
   function renderSyndicates() {
     var el = document.getElementById('ws-syndicates');
     if (!el) return;
@@ -4339,6 +4352,11 @@
     if (!list) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
     list = list.filter(function (s) { return !SYNDICATE_EXCLUDE_TAGS[s.tag]; });
     if (!list.length) { el.innerHTML = '<div class="ws-empty">当前无集团任务</div>'; return; }
+    // 按固定顺序排版成 3+3；未在清单里的(若数据源未来新增集团)按原顺序追加在后面，不丢内容
+    var byTag = {}; list.forEach(function (s) { byTag[s.tag] = s; });
+    var ordered = SYNDICATE_ORDER.map(function (tag) { return byTag[tag]; }).filter(Boolean);
+    list.forEach(function (s) { if (SYNDICATE_ORDER.indexOf(s.tag) === -1) ordered.push(s); });
+    list = ordered;
     el.innerHTML = '<div class="ws-syn-grid">' + list.map(function (s) {
       var nodes = (s.nodes || []).map(function (n) {
         return '<div class="ws-syn-node"><span class="ws-syn-node-name">' + zhOrTr(n.node) + '</span>' +
