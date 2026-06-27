@@ -571,6 +571,18 @@
       color: var(--ws-text-dim);
       margin-top: .15rem;
     }
+    /* 声望等级分组(同一卡片内，按 1→2→3→4→5 级用细分割线分段) */
+    .ws-syn-tier { margin-top: .6rem; padding-top: .55rem; border-top: 1px dashed rgba(201,164,50,.18); }
+    .ws-syn-tier:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .ws-syn-tier-label {
+      font-family: var(--f-sci);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: var(--ws-gold-bright);
+      opacity: .85;
+      margin-bottom: .3rem;
+    }
     .ws-bar {
       margin-top: .5rem;
       height: 6px;
@@ -4357,12 +4369,25 @@
     var ordered = SYNDICATE_ORDER.map(function (tag) { return byTag[tag]; }).filter(Boolean);
     list.forEach(function (s) { if (SYNDICATE_ORDER.indexOf(s.tag) === -1) ordered.push(s); });
     list = ordered;
+    /* 集团任务节点数组本身就是按声望等级顺序排列的：前 3 个是 1 级时同时开放的任务，
+       从第 4 个起每升一级解锁 1 个新任务，一直到满级(通常 5 级)——按这个结构分组展示，
+       不再是一坨 7 条裸列表，一眼就能看出"哪几个是同时开放的、哪个是哪一级解锁的"。
+       (注：任务模式 mission 字段偶尔与游戏内实际显示不一致——疑似上游数据源把节点的
+       "常驻任务类型"当成了"集团任务专属覆写类型"，二者在 Warframe 里可以不同；
+       目前我方主/兜底数据源都没有能区分两者的字段，已记入后续深度调研待办。) */
     el.innerHTML = '<div class="ws-syn-grid">' + list.map(function (s) {
-      var nodes = (s.nodes || []).map(function (n) {
-        return '<div class="ws-syn-node"><span class="ws-syn-node-name">' + zhOrTr(n.node) + '</span>' +
-          '<span class="ws-syn-node-meta">' + zhOrTr(n.system) + ' · ' + zhOrTr(n.faction) + ' · ' + (n.mission || '') + '</span></div>';
+      var nodes = s.nodes || [];
+      var groups = [];
+      if (nodes.length) groups.push({ label: '声望 1 级 · 同时开放', items: nodes.slice(0, 3) });
+      for (var i = 3; i < nodes.length; i++) groups.push({ label: '声望 ' + (i - 1) + ' 级解锁', items: [nodes[i]] });
+      var html = groups.map(function (g) {
+        var rows = g.items.map(function (n) {
+          return '<div class="ws-syn-node"><span class="ws-syn-node-name">' + zhOrTr(n.node) + '</span>' +
+            '<span class="ws-syn-node-meta">' + zhOrTr(n.system) + ' · ' + zhOrTr(n.faction) + ' · ' + (n.mission || '') + '</span></div>';
+        }).join('');
+        return '<div class="ws-syn-tier"><div class="ws-syn-tier-label">' + g.label + '</div>' + rows + '</div>';
       }).join('');
-      return '<div class="ws-syn-card"><div class="ws-syn-title">' + zhOrTr(s.name) + '</div>' + nodes + '</div>';
+      return '<div class="ws-syn-card"><div class="ws-syn-title">' + zhOrTr(s.name) + '</div>' + html + '</div>';
     }).join('') + '</div>';
   }
 
