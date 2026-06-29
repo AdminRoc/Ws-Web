@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="Warframe 物品检索 — 融合官方掉落来源、Warframe.market 实时买卖、中英维基查询 · WFSpeed.run">
+  <meta name="description" content="Warframe 物品检索 — 融合官方掉落来源、Warframe.market 实时交易信息、中英维基查询 · WFSpeed.run">
   <title>物品检索 Super Search — Warframe Speed</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -166,6 +166,8 @@
     }
     .it-drop-row:last-child { border-bottom: none; }
     .it-drop-src { color: var(--ws-text); }
+    .it-drop-wiki { color: var(--ws-text); text-decoration: none; border-bottom: 1px dashed var(--ws-gold-line); }
+    .it-drop-wiki:hover { color: var(--ws-gold-bright); border-bottom-color: var(--ws-gold); }
     .it-drop-src .it-drop-sec { color: var(--ws-text-dim); font-size: .78rem; display: block; }
     .it-drop-rot { color: var(--ws-gold); font-size: .78rem; }
     .it-drop-chance { color: var(--ws-gold-bright); font-family: 'Orbitron', sans-serif; font-size: .85rem; white-space: nowrap; }
@@ -178,9 +180,12 @@
     .it-ord-col-title { font-size: .82rem; color: var(--ws-text-dim); margin-bottom: .5rem; letter-spacing: .08em; }
     .it-ord-row {
       display: grid; grid-template-columns: auto 1fr auto; gap: .5rem; align-items: center;
-      padding: .42rem 0; border-bottom: 1px solid var(--ws-sep); font-size: .86rem;
+      padding: .42rem .3rem; border-bottom: 1px solid var(--ws-sep); font-size: .86rem;
+      cursor: pointer; border-radius: 4px; transition: background .15s;
     }
     .it-ord-row:last-child { border-bottom: none; }
+    .it-ord-row:hover { background: rgba(201,164,50,.1); }
+    .it-ord-row:active { background: rgba(201,164,50,.2); }
     .it-ord-plat { font-family: 'Orbitron', sans-serif; color: var(--ws-gold-bright); font-weight: 600; }
     .it-ord-user { color: var(--ws-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .it-ord-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
@@ -207,6 +212,16 @@
 
     .it-empty { color: var(--ws-text-dim); text-align: center; padding: 1.5rem 0; font-size: .9rem; }
     .it-loading { color: var(--ws-gold); text-align: center; padding: 1rem 0; font-size: .85rem; }
+
+    /* 复制成功提示 */
+    .it-copy-toast {
+      position: fixed; left: 50%; bottom: 2.4rem; transform: translate(-50%, 12px);
+      background: var(--ws-panel-bg); border: 1px solid var(--ws-gold-line); color: var(--ws-gold-bright);
+      font-size: .86rem; padding: .55rem 1.2rem; border-radius: 8px; z-index: 9995;
+      opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s;
+      box-shadow: 0 8px 24px rgba(0,0,0,.5);
+    }
+    .it-copy-toast.show { opacity: 1; transform: translate(-50%, 0); }
 
     @media (max-width: 720px) {
       .it-cards { grid-template-columns: 1fr; }
@@ -343,7 +358,7 @@
   <main class="it-main">
     <div class="it-header">
       <h1 class="it-title">物品检索<span class="it-en">SUPER SEARCH</span></h1>
-      <p class="it-sub">输入物品中文名或英文名 — 融合游戏掉落来源、Warframe.market 实时买卖、中英维基查询</p>
+      <p class="it-sub">输入物品中文名或英文名 — 融合游戏掉落来源、Warframe.market 实时交易信息、中英维基查询</p>
     </div>
 
     <div class="it-search-wrap">
@@ -368,6 +383,7 @@
 </div>
 
 <script src="js/main.js"></script>
+<script src="js/wf-translations.js"></script>
 <script>
 /* ── 移动端有下拉框的链接点两次再跳转 ── */
 (function() {
@@ -580,16 +596,16 @@
 
 <script>
 /* ══════════════════════════════════════════════
-   物品检索：融合 ①游戏掉落来源(官方掉落表反查) ②Warframe.market 实时买卖
+   物品检索：融合 ①游戏掉落来源(官方掉落表反查) ②Warframe.market 实时交易信息
    ③中文维基搜索链接 ④英文维基搜索链接。
    数据：data/wm-items.json(物品库) + data/drops-index.json(掉落反查)，
-   实时买卖经本站自有域的 WM 代理(WM_PROXY_BASE)读取(WM API 无 CORS，必须代理)。
+   实时交易信息经本站自有域的 WM 代理(WM_PROXY_BASE)读取(WM API 无 CORS，必须代理)。
    ══════════════════════════════════════════════ */
 (function () {
   'use strict';
 
   /* 部署 WM 代理 Worker 后，把它的公开地址填到这里(形如 https://wmproxy.<本站域>)。
-     留空时仍可用掉落来源 + 维基链接，只是实时买卖一栏会提示"未配置代理"。 */
+     留空时仍可用掉落来源 + 维基链接，只是实时交易信息一栏会提示"未配置代理"。 */
   var WM_PROXY_BASE = 'https://wfspeed-wm-proxy.xiang-kun.workers.dev';
 
   var WIKI_ZH = 'https://warframe.huijiwiki.com/index.php?search=';
@@ -743,10 +759,62 @@
 
     resultsEl.innerHTML = head + cards;
     resultsEl.classList.add('show');
-    if (rec.slug) loadOrders(rec.slug);
+    if (rec.slug) loadOrders(rec);
   }
 
   var RARITY_ZH = { 'Very Common': '极常见', 'Common': '常见', 'Uncommon': '不常见', 'Rare': '稀有', 'Ultra Rare': '超稀有', 'Legendary': '传奇' };
+
+  /* 掉落来源汉化：官方掉落表(droptables.html)是纯英文的页面/任务/赏金标签，不是API key，
+     不在 WF.i18n 现有的 byPath/byName/byLang 体系里。全部取自 js/wf-translations.js 的
+     WF_TR（即 data/wf-translations.json，已逐条经用户确认）——
+     PLANET/MISSION_TYPE：行星名、任务类型（节点专名本身沿用 solNodes.js 的既有约定，不翻译）；
+     DROP_LOCATION：掉落表赏金小节用到的开放世界/特殊地点专名(希图斯/奥布山谷/魔胎之境/
+       阿尔布雷希特的实验室/六人组)；
+     DROP_SECTION：掉落表小节标题(任务/钥匙/遗物/突击/各"按来源划分的XX掉落"等)；
+     DROP_MISC：反复出现的通用词(赏金奖励/事件触发/最终轮次/阶段)。
+     查不到的(主要是 Boss/敌人/任务关名等长尾)一律保留英文原文，不做猜测式翻译。 */
+  function trPlanet(p) { return (window.WF_TR && WF_TR.PLANET && WF_TR.PLANET[p]) || p; }
+  function trMission(m) { return (window.WF_TR && ((WF_TR.MISSION_TYPE && WF_TR.MISSION_TYPE[m]) || (WF_TR.MISC && WF_TR.MISC[m]))) || m; }
+  function trDropLoc(l) { return (window.WF_TR && WF_TR.DROP_LOCATION && WF_TR.DROP_LOCATION[l]) || l; }
+  function trDropMisc(k) { return (window.WF_TR && WF_TR.DROP_MISC && WF_TR.DROP_MISC[k]) || null; }
+  /* 节点专名、以及完全没查到对应翻译的专有名词(Boss/敌人/任务关名等)，不编翻译，
+     改成可点击的中文维基搜索链接，方便用户自己点进去确认具体是什么——
+     比硬塞一个英文裸词、或更糟地编一个没验证过的中文词都更负责任。 */
+  function wikiLink(text) {
+    if (!text) return '';
+    return '<a class="it-drop-wiki" href="' + WIKI_ZH + encodeURIComponent(text) + '" target="_blank" rel="noopener" title="在中文维基搜索此名称">' + esc(text) + '</a>';
+  }
+  function translateSource(s) {
+    if (!s) return '';
+    var m = s.match(/^(Event:\s*)?([^/]+)\/(.+?)\s*\(([^)]+)\)\s*$/);
+    if (m) {
+      var node = m[3].trim();
+      var evtZh = trDropMisc('Event');
+      var prefix = m[1] ? (evtZh ? '[' + esc(evtZh) + '] ' : esc(m[1])) : '';
+      return prefix + wikiLink(node) + esc('，' + trPlanet(m[2].trim()) + '（' + trMission(m[4].trim()) + '）');
+    }
+    var b = s.match(/^Level (\d+)\s*-\s*(\d+)\s+(.+?)\s+Bounty$/);
+    if (b) {
+      var locRaw = b[3], locZh = trDropLoc(locRaw);
+      var locOut = (locZh !== locRaw) ? esc(locZh) : wikiLink(locRaw);
+      return esc(b[1] + '-' + b[2] + '级 ') + locOut + esc('赏金任务');
+    }
+    if (s === 'Final Stage') { var fz = trDropMisc('Final Stage'); return fz ? esc(fz) : wikiLink(s); }
+    var st = s.match(/^Stage\s*(\d+)/);
+    if (st) { var stZh = trDropMisc('Stage'); return stZh ? esc(stZh + ' ' + st[1]) : wikiLink(s); }
+    return wikiLink(s);
+  }
+  function translateSection(sec) {
+    if (!sec) return sec;
+    if (window.WF_TR && WF_TR.DROP_SECTION && WF_TR.DROP_SECTION[sec]) return WF_TR.DROP_SECTION[sec];
+    var m = sec.match(/^(.+) Bounty Rewards$/);
+    if (m) {
+      var loc = trDropLoc(m[1]), suffix = trDropMisc('Bounty Rewards');
+      if (loc !== m[1] && suffix) return loc + suffix;
+    }
+    return sec;
+  }
+
   function dropCard(rec) {
     var di = (DROPS && DROPS.items && DROPS.items[rec.en]) || null;
     var inner;
@@ -758,8 +826,8 @@
         var chance = (s.chance != null ? s.chance + '%' : '');
         var rar = s.rarity ? (RARITY_ZH[s.rarity] || s.rarity) : '';
         return '<div class="it-drop-row">' +
-            '<div class="it-drop-src">' + esc(s.source) + rot +
-              '<span class="it-drop-sec">' + esc(s.section) + '</span></div>' +
+            '<div class="it-drop-src">' + translateSource(s.source) + rot +
+              '<span class="it-drop-sec">' + esc(translateSection(s.section)) + '</span></div>' +
             '<div class="it-drop-chance">' + esc(rar) + ' ' + esc(chance) + '</div>' +
           '</div>';
       }).join('');
@@ -774,38 +842,47 @@
     if (!rec.slug) {
       body = '<div class="it-empty">该物品在 Warframe.market 上不可交易。</div>';
     } else if (!WM_PROXY_BASE) {
-      body = '<div class="it-empty">实时买卖需要配置 WM 代理（WM_PROXY_BASE）。</div>' +
+      body = '<div class="it-empty">实时交易信息需要配置 WM 代理（WM_PROXY_BASE）。</div>' +
         '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(rec.slug) + '" target="_blank" rel="noopener">前往 Warframe.market 查看 ↗</a>';
     } else {
-      body = '<div class="it-loading" id="it-ord-loading">正在获取实时买卖单…</div><div id="it-ord-body"></div>' +
+      body = '<div class="it-loading" id="it-ord-loading">正在获取实时交易信息…</div><div id="it-ord-body"></div>' +
         '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(rec.slug) + '" target="_blank" rel="noopener">在 Warframe.market 打开 ↗</a>';
     }
-    return '<div class="it-card it-card-wide"><div class="it-card-hd">Warframe.market 实时买卖 <span class="it-card-en">LIVE ORDERS</span></div>' + body + '</div>';
+    return '<div class="it-card it-card-wide"><div class="it-card-hd">Warframe.market 实时交易信息 <span class="it-card-en">LIVE ORDERS</span></div>' + body + '</div>';
   }
 
-  function loadOrders(slug) {
+  /* 点击某条出售/求购单，按 Warframe.market 站内喊话的标准格式自动复制交易消息：
+     点出售单 = 向卖家表达"我要买"；点求购单 = 向买家表达"我要卖"。物品名沿用 WM 自身的
+     英文显示名(与该站点单内一致)，moddable 物品带 mod_rank 时附注 "(rank N)"，
+     非mod但有subtype(如遗物精炼度)时附注 "(Subtype)"。 */
+  var _curRec = null, _curSell = [], _curBuy = [];
+
+  function loadOrders(rec) {
     if (!WM_PROXY_BASE) return;
-    var url = WM_PROXY_BASE.replace(/\/$/, '') + '/v2/orders/item/' + encodeURIComponent(slug) + '/top?lang=zh-hans&platform=pc';
+    _curRec = rec;
+    var url = WM_PROXY_BASE.replace(/\/$/, '') + '/v2/orders/item/' + encodeURIComponent(rec.slug) + '/top?lang=zh-hans&platform=pc';
     fetch(url).then(function (r) { return r.json(); }).then(function (d) {
       var data = d && d.data ? d.data : {};
-      var sell = data.sell || [], buy = data.buy || [];
+      _curSell = data.sell || []; _curBuy = data.buy || [];
       var loading = document.getElementById('it-ord-loading');
       var body = document.getElementById('it-ord-body');
       if (loading) loading.style.display = 'none';
       if (!body) return;
-      if (!sell.length && !buy.length) { body.innerHTML = '<div class="it-empty">当前无在线买卖单。</div>'; return; }
+      if (!_curSell.length && !_curBuy.length) { body.innerHTML = '<div class="it-empty">当前无在线买卖单。</div>'; return; }
       body.innerHTML = '<div class="it-ord-cols">' +
-        ordCol('卖单（向他买）', sell) + ordCol('买单（卖给他）', buy) + '</div>';
+        ordCol('出售（点击复制求购消息）', _curSell, 'sell') +
+        ordCol('求购（点击复制出售消息）', _curBuy, 'buy') +
+        '</div>';
     }).catch(function () {
       var loading = document.getElementById('it-ord-loading');
-      if (loading) loading.textContent = '实时买卖单获取失败，请稍后重试或前往 Warframe.market。';
+      if (loading) loading.textContent = '实时交易信息获取失败，请稍后重试或前往 Warframe.market。';
     });
   }
-  function ordCol(title, orders) {
-    var rows = orders.slice(0, 5).map(function (o) {
+  function ordCol(title, orders, side) {
+    var rows = orders.slice(0, 10).map(function (o, i) {
       var u = o.user || {};
       var st = (u.status === 'ingame') ? 'ingame' : (u.status === 'online' ? 'online' : 'offline');
-      return '<div class="it-ord-row">' +
+      return '<div class="it-ord-row" data-side="' + side + '" data-i="' + i + '">' +
           '<span class="it-ord-dot ' + st + '"></span>' +
           '<span class="it-ord-user">' + esc(u.ingameName || '—') + '</span>' +
           '<span class="it-ord-plat">' + esc(o.platinum) + ' P</span>' +
@@ -814,6 +891,43 @@
     }).join('');
     return '<div><div class="it-ord-col-title">' + title + '</div>' + (rows || '<div class="it-empty">无</div>') + '</div>';
   }
+  function orderVariant(o) {
+    if (!o) return '';
+    if (o.mod_rank != null) return ' (rank ' + o.mod_rank + ')';
+    if (o.subtype && o.subtype !== 'item') return ' (' + o.subtype.charAt(0).toUpperCase() + o.subtype.slice(1) + ')';
+    return '';
+  }
+  function showCopyToast(text) {
+    var t = document.getElementById('it-copy-toast');
+    if (!t) { t = document.createElement('div'); t.id = 'it-copy-toast'; t.className = 'it-copy-toast'; document.body.appendChild(t); }
+    t.textContent = text;
+    t.classList.remove('show'); void t.offsetWidth; t.classList.add('show');
+    clearTimeout(t._tm); t._tm = setTimeout(function () { t.classList.remove('show'); }, 1600);
+  }
+  function copyText(text) {
+    function ok() { showCopyToast('已复制交易消息'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok).catch(function () { fallbackCopy(text); ok(); });
+    } else { fallbackCopy(text); ok(); }
+  }
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    ta.remove();
+  }
+  resultsEl.addEventListener('click', function (e) {
+    var row = e.target.closest('.it-ord-row');
+    if (!row || !_curRec) return;
+    var side = row.getAttribute('data-side');
+    var o = (side === 'sell' ? _curSell : _curBuy)[parseInt(row.getAttribute('data-i'), 10)];
+    if (!o) return;
+    var ign = (o.user && o.user.ingameName) || '';
+    var itemName = (_curRec.en || _curRec.zh) + orderVariant(o);
+    var verb = side === 'sell' ? 'buy' : 'sell';
+    copyText('/w ' + ign + ' Hi! I want to ' + verb + ': "' + itemName + '" for ' + o.platinum + ' platinum. (warframe.market)');
+  });
 
   function wikiCard(rec) {
     var q = encodeURIComponent(rec.zh || rec.en);
