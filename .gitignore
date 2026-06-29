@@ -18,3 +18,12 @@ __pycache__/
 /data/wf-translations.json
 /log/tools/
 /cloudflare-worker/
+
+# Python 字节码编译文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 可选：忽略其他潜在编译产物
+*.pyo
+*.pyd

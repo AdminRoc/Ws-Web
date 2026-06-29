@@ -77,7 +77,8 @@ window.WF_TR = {
     "The Perita Rebellion": "佩里塔叛乱",
     "Free Roam": "自由漫游",
     "Relay": "中继站",
-    "Conclave": "武形秘仪"
+    "Conclave": "武形秘仪",
+    "Sortie": "突击"
   },
   "ITEM_OVERRIDE": {
     "Guardian Title": "魔丸称号"
@@ -97,6 +98,32 @@ window.WF_TR = {
     "The Circuit": "无尽回廊",
     "Fomorian": "巨人战舰",
     "Razorback": "利刃豺狼舰队"
+  },
+  "DROP_LOCATION": {
+    "Cetus": "希图斯",
+    "Orb Vallis": "奥布山谷",
+    "Cambion Drift": "魔胎之境",
+    "Albrecht's Laboratories": "阿尔布雷希特的实验室",
+    "Hex": "六人组"
+  },
+  "DROP_SECTION": {
+    "Missions": "任务",
+    "Keys": "钥匙",
+    "Relics": "遗物",
+    "Sorties": "突击",
+    "Dynamic Location Rewards": "地区特产",
+    "Mod Drops by Source": "按来源划分的[MOD]掉落",
+    "Resource Drops by Source": "按来源划分的[资源]掉落",
+    "Blueprint/Item Drops by Source": "按来源划分的[蓝图/物品]掉落",
+    "Sigil Drops by Source": "按来源划分的[纹章]掉落",
+    "Relic Drops by Source": "按来源划分的[遗物]掉落",
+    "Additional Item Drops by Source": "按来源划分的[额外物品掉落]掉落"
+  },
+  "DROP_MISC": {
+    "Bounty Rewards": "赏金奖励",
+    "Event": "事件触发",
+    "Final Stage": "最终轮次",
+    "Stage": "阶段"
   }
 };
 
