@@ -176,7 +176,7 @@
       100% { opacity: 0; transform: scale(1.35); }
     }
 
-    /* ══ 国服/国际服切换水墨过渡 ══ */
+    /* ══ 国服/国际服切换水墨过渡：canvas 版，几十个独立墨点逐帧画出毛边再合并填色 ══ */
     .ws-ink-overlay {
       position: fixed;
       inset: 0;
@@ -186,42 +186,12 @@
       visibility: hidden;
     }
     .ws-ink-overlay.ws-ink-on { opacity: 1; visibility: visible; }
-    .ws-ink-blobs {
+    #ws-ink-canvas {
       position: absolute;
       inset: 0;
-      filter: url(#wsInkGoo);
-      will-change: filter;
-    }
-    .ws-ink-blob {
-      position: absolute;
-      width: 62vmax;
-      height: 62vmax;
-      border-radius: 46% 54% 52% 48% / 50% 45% 55% 50%;
-      background: radial-gradient(circle at 42% 38%, #100c06 0%, #0a0704 58%, rgba(10,7,4,0) 100%);
-      transform: scale(0);
-      will-change: transform;
-    }
-    .ws-ink-blob-tl { top: -22vmax; left: -22vmax; transform-origin: 68% 68%; }
-    .ws-ink-blob-tr { top: -22vmax; right: -22vmax; transform-origin: 32% 68%; }
-    .ws-ink-blob-bl { bottom: -22vmax; left: -22vmax; transform-origin: 68% 32%; }
-    .ws-ink-blob-br { bottom: -22vmax; right: -22vmax; transform-origin: 32% 32%; }
-    .ws-ink-blob-tm { top: -34vmax; left: 50%; margin-left: -31vmax; transform-origin: 50% 82%; }
-    .ws-ink-blob-bm { bottom: -34vmax; left: 50%; margin-left: -31vmax; transform-origin: 50% 18%; }
-    /* 墨边缘的暗金辉光：固定在视口中心，随墨团收拢/撤离同步缩放，
-       象征"最后一点画面被墨吞没/最先露出的一点光"，呼应本站暗金基调。 */
-    .ws-ink-rim {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 70vmax; height: 70vmax;
-      margin: -35vmax 0 0 -35vmax;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,226,134,0) 55%, rgba(201,164,50,.5) 64%, rgba(255,226,134,.18) 70%, rgba(201,164,50,0) 78%);
-      transform: scale(0);
-      will-change: transform, opacity;
-      opacity: 0;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .ws-ink-blob, .ws-ink-rim { transition: none !important; }
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
     /* ── 章节容器 ── */
@@ -2804,28 +2774,13 @@
 
   </main>
 
-  <!-- ══ 国服/国际服切换的水墨过渡：四角+上下共6个有机墨团，靠 SVG 滤镜融合成一整片
-       墨色，从四周收拢盖满全屏(此时切换内容)，再反向从中心撤回四周直至消散。 ══ -->
-  <svg width="0" height="0" style="position:absolute">
-    <defs>
-      <filter id="wsInkGoo">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="22" result="wsInkBlur" />
-        <feColorMatrix in="wsInkBlur" type="matrix"
-          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="wsInkGooed" />
-        <feComposite in="SourceGraphic" in2="wsInkGooed" operator="atop" />
-      </filter>
-    </defs>
-  </svg>
+  <!-- ══ 国服/国际服切换的水墨过渡：canvas 逐帧绘制几十个独立墨点，每个墨点自己的
+       轮廓都是用噪声扰动半径画出的不规则毛边(不是 CSS 圆形)，所有墨点合并进同一条
+       path 一次性填色，重叠处天然融成一整片连续墨色；撤离时几十个点各自独立收缩/
+       消散，不会看出"只有几个明显的收缩中心点"。实际页面内容在墨点铺满前就已经
+       透明度归零，画面上看不到任何被遮挡的痕迹。 ══ -->
   <div class="ws-ink-overlay" id="ws-ink-overlay" aria-hidden="true">
-    <div class="ws-ink-rim"></div>
-    <div class="ws-ink-blobs">
-      <div class="ws-ink-blob ws-ink-blob-tl"></div>
-      <div class="ws-ink-blob ws-ink-blob-tr"></div>
-      <div class="ws-ink-blob ws-ink-blob-bl"></div>
-      <div class="ws-ink-blob ws-ink-blob-br"></div>
-      <div class="ws-ink-blob ws-ink-blob-tm"></div>
-      <div class="ws-ink-blob ws-ink-blob-bm"></div>
-    </div>
+    <canvas id="ws-ink-canvas"></canvas>
   </div>
 
   <!-- ══ DNA 快速导航：主按钮→四分类(短期/每日/每周/其他)→DNA 分叉出各模块跳转 ══
@@ -2909,6 +2864,14 @@
     day: '#f6c264', night: '#4a9eff', warm: '#ff8f6b', cold: '#6bc5ff',
     fass: '#ff6b3d', vome: '#8b5cf6', grineer: '#e87038', corpus: '#3b82f6',
     joy: '#f6c264', anger: '#ff4a4a', envy: '#a855f7', sorrow: '#4a9eff', fear: '#6b7280'
+  };
+  /* 同源数据源对 cambion/zariman 这两个周期的 state 文本字段经常直出英文原文不翻译
+     (Fass/Grineer)，但 stateKey 这个稳定枚举值始终可靠——不依赖对方翻没翻译，
+     用我方自己这张表按 stateKey 查，保证显示永远是中文且比对方准。 */
+  var CN_STATE_LABEL = {
+    day: '白天', night: '夜晚', warm: '温暖', cold: '寒冷',
+    fass: '混乱', vome: '平静', grineer: '克隆尼', corpus: '科普斯',
+    joy: '喜悦', anger: '愤怒', envy: '嫉妒', sorrow: '悲伤', fear: '恐惧'
   };
 
   /* ── 仲裁任务类型/阵营 中文对照 ──
@@ -3304,6 +3267,21 @@
     if (t && t !== s) return t;
     var t2 = tr(s);
     return t2 !== s ? t2 : s;
+  }
+
+  /* 阵营简称：同源数据源对 faction 字段给的是"克隆尼阵营/科普斯商会/异变感染体"这种
+     正式全称，但游戏内常用的是更短的"克隆尼/科普斯/疫变体"——两服都受影响(数据管线
+     共用)，统一在这里收短，比常见的"国服干脆留着不翻译(Fass/Grineer 原文直出)"
+     的做法要更准更好。覆盖不到的全称(奥罗金/低语者等已经够短)原样返回。 */
+  var FACTION_SHORT_ZH = {
+    '克隆尼阵营': '克隆尼',
+    '科普斯商会': '科普斯',
+    '异变感染体': '疫变体'
+  };
+  function factionZh(s) {
+    if (!s) return '--';
+    if (FACTION_SHORT_ZH[s]) return FACTION_SHORT_ZH[s];
+    return zhOrTr(s);
   }
 
   /* 合并而非整体替换 _dict：dictP（远程 dict.zh.json）与 itemZhP（本地
@@ -3891,7 +3869,7 @@
         var tid = 'wct-cn' + idx;
         card.innerHTML =
           '<div class="ws-cycle-name">' + def.name + ' <span class="ws-cycle-en">' + def.en + '</span></div>' +
-          '<div class="ws-cycle-state" style="color:' + (CN_STATE_COLOR[d.stateKey] || '#b0b8c4') + '">' + (d.state || '--') + '</div>' +
+          '<div class="ws-cycle-state" style="color:' + (CN_STATE_COLOR[d.stateKey] || '#b0b8c4') + '">' + (CN_STATE_LABEL[d.stateKey] || d.state || '--') + '</div>' +
           '<div class="ws-cycle-timer" id="' + tid + '"></div>';
         wrap.appendChild(card);
         if (d.expiry) countdown(document.getElementById(tid), d.expiry);
@@ -3982,7 +3960,7 @@
         '<span class="ws-ftier" style="color:' + c + ';border-color:' + c + '">' + (f.tier || '--') + '</span>' +
         '<span class="ws-fnode">'    + (f.node || '--') + ' (' + (f.system || '--') + ')' + '</span>' +
         '<span class="ws-fmission">' + (f.mission || '--') + '</span>' +
-        '<span class="ws-fenemy">'   + (f.faction || '--') + '</span>' +
+        '<span class="ws-fenemy">'   + factionZh(f.faction) + '</span>' +
         '<span class="ws-ftimer" id="' + tid + '"></span>' +
         '</div>';
     }).join('');
@@ -4541,7 +4519,7 @@
             '<span class="ws-alert-node">' + (a.node || '--') + ' (' + (a.system || '--') + ')' + '</span>' +
             '<span class="ws-alert-timer" id="wt-alert-' + i + '"></span>' +
           '</div>' +
-          '<div class="ws-alert-meta">' + (a.mission || '--') + ' · ' + (a.faction || '--') + '</div>' +
+          '<div class="ws-alert-meta">' + (a.mission || '--') + ' · ' + factionZh(a.faction) + '</div>' +
           (chipsCnAl.length ? '<div class="ws-alert-rewards">' + chipsCnAl.join('') + '</div>' : '') +
           '</div>';
       }).join('') + '</div>';
@@ -4603,12 +4581,12 @@
           '<div class="ws-inv-node">' + (iv.node || '--') + ' (' + (iv.system || '--') + ')' + '</div>' +
           '<div class="ws-inv-vs">' +
             '<span class="ws-inv-side">' +
-              '<span class="ws-inv-faction">' + (iv.attackerFaction || '--') + '</span>' +
+              '<span class="ws-inv-faction">' + factionZh(iv.attackerFaction) + '</span>' +
               '<span class="ws-inv-reward">' + rewardCnI(iv.attackerReward) + '</span>' +
             '</span>' +
             '<span class="ws-inv-divider">vs</span>' +
             '<span class="ws-inv-side">' +
-              '<span class="ws-inv-faction">' + (iv.defenderFaction || '--') + '</span>' +
+              '<span class="ws-inv-faction">' + factionZh(iv.defenderFaction) + '</span>' +
               '<span class="ws-inv-reward">' + rewardCnI(iv.defenderReward) + '</span>' +
             '</span>' +
           '</div>' +
@@ -4674,7 +4652,7 @@
           '<span class="ws-incur-timer" id="wt-incur-' + i + '"></span>' +
         '</div>' +
         '<div class="ws-incur-meta">' + zhOrTr(n.system) + ' · ' + zhOrTr(n.mission) +
-          ' · ' + zhOrTr(n.faction) + (lvl ? ' · ' + lvl : '') + '</div>' +
+          ' · ' + factionZh(n.faction) + (lvl ? ' · ' + lvl : '') + '</div>' +
         '</div>';
     }).join('') + '</div>';
 
@@ -4922,7 +4900,7 @@
       var html = groups.map(function (g) {
         var rows = g.items.map(function (n) {
           return '<div class="ws-syn-node"><span class="ws-syn-node-name">' + zhOrTr(n.node) + '</span>' +
-            '<span class="ws-syn-node-meta">' + zhOrTr(n.system) + ' · ' + zhOrTr(n.faction) + ' · ' + (n.mission || '') + '</span></div>';
+            '<span class="ws-syn-node-meta">' + zhOrTr(n.system) + ' · ' + factionZh(n.faction) + ' · ' + (n.mission || '') + '</span></div>';
         }).join('');
         return '<div class="ws-syn-tier"><div class="ws-syn-tier-label">' + g.label + '</div>' + rows + '</div>';
       }).join('');
@@ -5445,62 +5423,259 @@
      目前还只读 api.warframestat.us 等国际服专属数据源(D对象)，切到国服时这些暂时
      仍显示国际服内容——这是下一步要继续补的工作，不是这次的疏漏遗漏，先如实标注。
      按钮视觉目前仍是简单壳，留待国服内容补完后再回头精修。 */
-  /* 国服/国际服切换的水墨过渡：四角+上下共6个有机墨团靠 SVG 滤镜融合收拢盖满全屏，
-     盖满的瞬间(动画 finished 之后)才真正切换 _currentServer+重渲染，让用户看不到
-     内容跳变的瞬间；随后墨团反向从中心撤回四周直至消散，露出已经切好的新内容。
-     用 Web Animations API 而非 CSS transition/keyframes，时序由 JS 精确掌控、
-     compositor 加速(只动 transform/opacity)，高帧率不掉帧。 */
+  /* 国服/国际服切换的水墨过渡(第3版，canvas 粒子版，按用户反馈重做)：
+     ① 不再用 CSS/SVG 画"几个会被看出来的大圆形"。改成 canvas 逐帧绘制 N 个(默认
+        约30个)独立墨点，每个墨点的轮廓不是圆形，而是沿 24 个采样角度、用多层正弦
+        噪声扰动半径画出来的不规则毛边(`_inkBlotPath`)，模拟墨水在纸/水里洇开时
+        凹凸不平的边界；所有墨点的轮廓一次性 add 进同一条 Path2D 再整体 fill 一次，
+        重叠处是同一次填色、不会有"双重叠色的接缝感"，看起来就是一整片连续墨色。
+     ② 墨点散布用"抖动网格"(jittered grid)取点，保证铺满整屏不留空当，每个点
+        起始延迟、最终半径、毛边噪声相位都各自随机，收拢时此起彼伏地"依次晕染开"；
+        撤离时这 30 个点各自独立收缩/消散(收缩到自己的随机子中心而非屏幕几个固定
+        点)，不会出现"看得出只有 3 个收缩目标点"的问题。
+     ③ 真实页面内容(导航/正文/DNA按钮/页脚)在墨点铺满前就先把透明度动画到 0——
+        即便某些缩放比例下墨点边缘有缝隙，缝隙后面也是真的不可见，不是单纯被盖住。
+     ④ 节奏：收拢 1050ms → 全黑停留 500ms(此时切换内容) → 撤离 1300ms 期间新内容
+        跟着墨迹消散逐步淡入。总时长 ≈2.85s，满足"至少2.5秒"。
+     ⑤ 边缘叠一层暗金辉光，呼应站点暗金基调；canvas 整体加一点 CSS blur 让毛边
+        再"洇"开一点，更像吸墨纸而不是矢量图形。
+     用 rAF 驱动单一绘制循环 + canvas 2D 填色(GPU 合成层 + blur 滤镜走 compositor)，
+     不依赖 SVG 滤镜的 displacement/turbulence(那个开销更大也更难控制細节)。 */
   var _inkPlaying = false;
+  function _wsContentEls() {
+    return [
+      document.querySelector('nav.site-nav'),
+      document.querySelector('main.ws-main'),
+      document.getElementById('ws-dna'),
+      document.querySelector('footer.site-footer')
+    ].filter(Boolean);
+  }
+
+  /* 单个墨点的不规则轮廓：以 (cx,cy) 为中心，沿 segs 个角度采样，每个采样角的
+     半径 = baseR * progress * (1 + 多层正弦噪声*wobble) ，noise 用该墨点自带的
+     随机相位偏移(phaseA/phaseB/phaseC)，让每个点的毛边形状都不重复。 */
+  function _inkBlotPoints(seed, progress, segs) {
+    var pts = [];
+    var r = seed.maxR * progress;
+    if (r <= 0.5) return pts;
+    for (var i = 0; i < segs; i++) {
+      var ang = (i / segs) * Math.PI * 2;
+      var n = Math.sin(ang * 3 + seed.phaseA) * 0.16 +
+              Math.sin(ang * 5 - seed.phaseB) * 0.10 +
+              Math.sin(ang * 9 + seed.phaseC) * 0.06;
+      var rr = r * (1 + n * seed.wobble);
+      pts.push([seed.cx + Math.cos(ang) * rr, seed.cy + Math.sin(ang) * rr]);
+    }
+    return pts;
+  }
+  function _inkAddBlotToPath(path, pts) {
+    if (pts.length < 3) return;
+    path.moveTo(pts[0][0], pts[0][1]);
+    for (var i = 1; i <= pts.length; i++) {
+      var p0 = pts[(i - 1) % pts.length];
+      var p1 = pts[i % pts.length];
+      var mx = (p0[0] + p1[0]) / 2, my = (p0[1] + p1[1]) / 2;
+      path.quadraticCurveTo(p0[0], p0[1], mx, my);
+    }
+    path.closePath();
+  }
+
+  function _inkMakeSeeds(w, h) {
+    var diag = Math.sqrt(w * w + h * h);
+    var cols = 7, rows = 5;
+    var cellW = w / cols, cellH = h / rows;
+    var seeds = [];
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var jitterX = (Math.random() - 0.5) * cellW * 0.7;
+        var jitterY = (Math.random() - 0.5) * cellH * 0.7;
+        seeds.push({
+          cx: (c + 0.5) * cellW + jitterX,
+          cy: (r + 0.5) * cellH + jitterY,
+          maxR: diag * (0.115 + Math.random() * 0.075),
+          delay: Math.random(),                 /* 0~1，乘以 stagger 窗口 */
+          wobble: 0.55 + Math.random() * 0.45,
+          phaseA: Math.random() * Math.PI * 2,
+          phaseB: Math.random() * Math.PI * 2,
+          phaseC: Math.random() * Math.PI * 2,
+          shrinkBiasX: (Math.random() - 0.5) * 0.5,  /* 撤离时各自收缩去往的小偏心点 */
+          shrinkBiasY: (Math.random() - 0.5) * 0.5
+        });
+      }
+    }
+    /* 额外撒一把小墨点填补网格缝隙、增加层次感 */
+    for (var i = 0; i < 14; i++) {
+      seeds.push({
+        cx: Math.random() * w,
+        cy: Math.random() * h,
+        maxR: diag * (0.05 + Math.random() * 0.045),
+        delay: Math.random(),
+        wobble: 0.6 + Math.random() * 0.4,
+        phaseA: Math.random() * Math.PI * 2,
+        phaseB: Math.random() * Math.PI * 2,
+        phaseC: Math.random() * Math.PI * 2,
+        shrinkBiasX: (Math.random() - 0.5) * 0.5,
+        shrinkBiasY: (Math.random() - 0.5) * 0.5
+      });
+    }
+    return seeds;
+  }
+
+  function easeOutQuint(t) { return 1 - Math.pow(1 - t, 5); }
+  function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
   function playInkTransition(onCovered) {
     var overlay = document.getElementById('ws-ink-overlay');
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var canvas  = document.getElementById('ws-ink-canvas');
+    var reduce  = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ctxOk   = canvas && typeof canvas.getContext === 'function';
+    if (!overlay || !canvas || !ctxOk || reduce) { onCovered(); return; }
+    var ctx = canvas.getContext('2d');
+    if (!ctx) { onCovered(); return; }
+    var content = _wsContentEls();
     var waapiOk = typeof Element !== 'undefined' && typeof Element.prototype.animate === 'function';
-    if (!overlay || reduce || !waapiOk) { onCovered(); return; }
-    var blobs = Array.prototype.slice.call(overlay.querySelectorAll('.ws-ink-blob'));
-    var rim   = overlay.querySelector('.ws-ink-rim');
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = window.innerWidth, h = window.innerHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvas.style.filter = 'blur(2.5px)';
+
+    var seeds = _inkMakeSeeds(w, h);
+    var STAGGER_IN = 380, STAGGER_OUT = 420;
+    var IN_MS = 1050, HOLD_MS = 500, OUT_MS = 1300;
+    var SEGS = 22;
+
     overlay.classList.add('ws-ink-on');
 
-    var IN_MS = 620, HOLD_MS = 150, OUT_MS = 700;
-    var coverEase  = 'cubic-bezier(.6,0,.2,1)';
-    var revealEase = 'cubic-bezier(.16,1,.3,1)';
+    /* 真实页面内容先于墨点铺满完成隐身，比墨迹本身更早归零 */
+    if (waapiOk) {
+      content.forEach(function (el) {
+        el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 360, easing: 'ease-in', fill: 'forwards' });
+      });
+    } else {
+      content.forEach(function (el) { el.style.opacity = '0'; });
+    }
 
-    var inAnims = blobs.map(function (b, i) {
-      return b.animate(
-        [{ transform: 'scale(0)' }, { transform: 'scale(1.18)' }],
-        { duration: IN_MS, delay: i * 35, easing: coverEase, fill: 'forwards' }
-      );
-    });
-    rim.style.opacity = '1';
-    rim.animate(
-      [{ transform: 'scale(0)', opacity: 0 },
-       { transform: 'scale(.55)', opacity: .9, offset: .72 },
-       { transform: 'scale(.05)', opacity: 0 }],
-      { duration: IN_MS + 80, easing: coverEase, fill: 'forwards' }
-    );
+    var phase = 'in';            /* 'in' | 'hold' | 'out' | 'done' */
+    var phaseStart = performance.now();
+    var holdTimer = null;
+    var coveredFired = false;
+    var fadeInFired = false;
+    var rafId = null;
 
-    Promise.all(inAnims.map(function (a) { return a.finished; })).then(function () {
-      onCovered();                       /* 全黑覆盖的瞬间才换内容，用户完全看不到跳变 */
-      setTimeout(function () {
-        var outAnims = blobs.map(function (b, i) {
-          return b.animate(
-            [{ transform: 'scale(1.18)' }, { transform: 'scale(0)' }],
-            { duration: OUT_MS, delay: i * 30, easing: revealEase, fill: 'forwards' }
-          );
+    function drawFrame(now) {
+      var t = now - phaseStart;
+      ctx.clearRect(0, 0, w, h);
+
+      var avgProgress;
+      if (phase === 'in') {
+        var done = true;
+        var sum = 0;
+        var path = new Path2D();
+        seeds.forEach(function (s) {
+          var local = (t - s.delay * STAGGER_IN) / (IN_MS - STAGGER_IN);
+          local = Math.max(0, Math.min(1, local));
+          if (local < 1) done = false;
+          var p = easeOutQuint(local);
+          sum += p;
+          var pts = _inkBlotPoints(s, p, SEGS);
+          _inkAddBlotToPath(path, pts);
         });
-        rim.style.opacity = '1';
-        rim.animate(
-          [{ transform: 'scale(.05)', opacity: 0 },
-           { transform: 'scale(.6)', opacity: .85, offset: .32 },
-           { transform: 'scale(1.05)', opacity: 0 }],
-          { duration: OUT_MS, easing: revealEase, fill: 'forwards' }
-        );
-        Promise.all(outAnims.map(function (a) { return a.finished; })).then(function () {
-          overlay.classList.remove('ws-ink-on');
-          blobs.forEach(function (b) { b.style.transform = ''; });
-          rim.style.opacity = '';
+        avgProgress = sum / seeds.length;
+        ctx.fillStyle = '#0a0704';
+        ctx.fill(path);
+        _inkDrawRim(ctx, w, h, avgProgress, true);
+
+        if (avgProgress > 0.985 && !coveredFired) {
+          coveredFired = true;
+          onCovered();             /* 几乎全黑覆盖、真实内容也已透明的瞬间才换内容 */
+        }
+        if (done) {
+          phase = 'hold';
+          phaseStart = now;
+        }
+      } else if (phase === 'hold') {
+        var path2 = new Path2D();
+        seeds.forEach(function (s) {
+          var pts = _inkBlotPoints(s, 1, SEGS);
+          _inkAddBlotToPath(path2, pts);
         });
-      }, HOLD_MS);
-    });
+        ctx.fillStyle = '#0a0704';
+        ctx.fill(path2);
+        if (t >= HOLD_MS) {
+          phase = 'out';
+          phaseStart = now;
+          if (waapiOk) {
+            setTimeout(function () {
+              if (fadeInFired) return;
+              fadeInFired = true;
+              content.forEach(function (el) {
+                el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 950, easing: 'ease-out', fill: 'forwards' });
+              });
+            }, 140);
+          } else {
+            setTimeout(function () { content.forEach(function (el) { el.style.opacity = '1'; }); }, 140);
+          }
+        }
+      } else if (phase === 'out') {
+        var done2 = true;
+        var sum2 = 0;
+        var path3 = new Path2D();
+        seeds.forEach(function (s) {
+          var local = (t - s.delay * STAGGER_OUT) / (OUT_MS - STAGGER_OUT);
+          local = Math.max(0, Math.min(1, local));
+          if (local < 1) done2 = false;
+          var p = 1 - easeInOutCubic(local);
+          sum2 += p;
+          var shrunk = {
+            cx: s.cx + s.maxR * s.shrinkBiasX * (1 - p),
+            cy: s.cy + s.maxR * s.shrinkBiasY * (1 - p),
+            maxR: s.maxR, wobble: s.wobble,
+            phaseA: s.phaseA, phaseB: s.phaseB, phaseC: s.phaseC
+          };
+          var pts = _inkBlotPoints(shrunk, p, SEGS);
+          _inkAddBlotToPath(path3, pts);
+        });
+        avgProgress = sum2 / seeds.length;
+        ctx.fillStyle = '#0a0704';
+        ctx.fill(path3);
+        _inkDrawRim(ctx, w, h, avgProgress, false);
+        if (done2) {
+          phase = 'done';
+        }
+      }
+
+      if (phase !== 'done') {
+        rafId = requestAnimationFrame(drawFrame);
+      } else {
+        ctx.clearRect(0, 0, w, h);
+        overlay.classList.remove('ws-ink-on');
+      }
+    }
+    rafId = requestAnimationFrame(drawFrame);
+  }
+
+  /* 墨迹前沿的暗金辉光：半径跟随平均覆盖进度，象征"最后一点画面被墨吞没/
+     最先露出的一点光"，呼应本站暗金基调。 */
+  function _inkDrawRim(ctx, w, h, progress, growing) {
+    var cx = w / 2, cy = h / 2;
+    var diag = Math.sqrt(w * w + h * h);
+    var p = growing ? progress : (1 - progress);
+    var rimR = diag * 0.5 * (1 - p) * 0.9 + diag * 0.06;
+    var alpha = Math.sin(Math.min(p, 1) * Math.PI) * 0.55;
+    if (alpha <= 0.01) return;
+    var grad = ctx.createRadialGradient(cx, cy, Math.max(0, rimR * 0.78), cx, cy, rimR * 1.18);
+    grad.addColorStop(0, 'rgba(255,226,134,0)');
+    grad.addColorStop(0.62, 'rgba(201,164,50,' + (alpha * 0.85).toFixed(3) + ')');
+    grad.addColorStop(0.78, 'rgba(255,226,134,' + (alpha * 0.32).toFixed(3) + ')');
+    grad.addColorStop(1, 'rgba(201,164,50,0)');
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
   }
 
   function initServerSwitch() {
@@ -5517,7 +5692,7 @@
         _auxState = _auxByServer[_currentServer];   /* 立即重新指向，不等下一轮 30 秒轮询 */
         renderAll();
       });
-      setTimeout(function () { _inkPlaying = false; }, 1700);
+      setTimeout(function () { _inkPlaying = false; }, 3100);   /* 略长于 IN+HOLD+OUT 总时长(2850ms) */
       btn.classList.remove('ws-ssw-pulse');
       void btn.offsetWidth;             // 强制重排，保证连续快速点击时脉冲能重新播放
       btn.classList.add('ws-ssw-pulse');
