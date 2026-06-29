@@ -2819,6 +2819,24 @@
     Axi: '#e8d5a3', Requiem: '#9b59b6', Omnia: '#e879f9'
   };
   var TIER_ORD = { Lith: 1, Meso: 2, Neo: 3, Axi: 4, Requiem: 5, Omnia: 6 };
+  /* 国服辅助数据源的裂缝 tier 字段已经是现成中文(古纪/前纪/...)，不是 Lith/Meso 这种
+     英文枚举——按位置对应同一套颜色/排序，保证国服裂缝视觉跟国际服统一。 */
+  var CN_TIER_COLOR = { 古纪: '#cd7f32', 前纪: '#b0b8c4', 中纪: '#ffd700', 后纪: '#e8d5a3', 安魂: '#9b59b6', 全能: '#e879f9' };
+  var CN_TIER_ORD   = { 古纪: 1, 前纪: 2, 中纪: 3, 后纪: 4, 安魂: 5, 全能: 6 };
+  /* 世界周期(cycles)国服字段是 {id,label,state,stateKey,expiry}——state 已是中文，
+     按 id 对应到我方现有 5 张卡片(国服多一条 "earth" 我方未展示，直接忽略)。 */
+  var CN_CYCLE_DEFS = {
+    cetus:   { name: '希图斯',   en: 'Cetus' },
+    vallis:  { name: '奥布山谷', en: 'Orb Vallis' },
+    cambion: { name: '魔胎之境', en: 'Cambion Drift' },
+    zariman: { name: '扎里曼',   en: 'Zariman' },
+    duviri:  { name: '双衍王境', en: 'Duviri' }
+  };
+  var CN_STATE_COLOR = {
+    day: '#f6c264', night: '#4a9eff', warm: '#ff8f6b', cold: '#6bc5ff',
+    fass: '#ff6b3d', vome: '#8b5cf6', grineer: '#e87038', corpus: '#3b82f6',
+    joy: '#f6c264', anger: '#ff4a4a', envy: '#a855f7', sorrow: '#4a9eff', fear: '#6b7280'
+  };
 
   /* ── 仲裁任务类型/阵营 中文对照 ──
      数据来自共享文件 js/wf-translations.js（window.WF_TR.MISSION_TYPE），
@@ -3788,6 +3806,26 @@
     var wrap = document.getElementById('ws-cycles');
     if (!wrap) return;
 
+    if (_currentServer === 'cn') {
+      var auxCycles = _auxState && Array.isArray(_auxState.cycles) ? _auxState.cycles : null;
+      if (!auxCycles) { wrap.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+      wrap.innerHTML = '';
+      auxCycles.forEach(function (d, idx) {
+        var def = CN_CYCLE_DEFS[d.id];
+        if (!def) return;    /* 国服多出的"earth"等我方暂无对应卡片的条目直接跳过 */
+        var card = document.createElement('div');
+        card.className = 'ws-cycle-card';
+        var tid = 'wct-cn' + idx;
+        card.innerHTML =
+          '<div class="ws-cycle-name">' + def.name + ' <span class="ws-cycle-en">' + def.en + '</span></div>' +
+          '<div class="ws-cycle-state" style="color:' + (CN_STATE_COLOR[d.stateKey] || '#b0b8c4') + '">' + (d.state || '--') + '</div>' +
+          '<div class="ws-cycle-timer" id="' + tid + '"></div>';
+        wrap.appendChild(card);
+        if (d.expiry) countdown(document.getElementById(tid), d.expiry);
+      });
+      return;
+    }
+
     var defs = [
       {
         key: 'cetusCycle', name: '希图斯', en: 'Cetus',
@@ -3856,7 +3894,54 @@
   }
 
   /* ══ 渲染：虚空裂缝 ══ */
+  /* 国服裂缝列表：字段已是现成中文(mission/faction)，跟国际服 renderFissureList()
+     用的 missionType/enemy(需查表翻译)形状不同，单独写一版渲染，节点/星球/任务/
+     阵营都直接显示，不用 trLocation/FZ。 */
+  function renderFissureListCn(id, arr) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (!arr.length) { el.innerHTML = '<div class="ws-empty">当前无此类裂缝</div>'; return; }
+    var pfx = id.replace('ws-fissures-', '').charAt(0) + 'cn';
+    el.innerHTML = arr.map(function (f, i) {
+      var c   = CN_TIER_COLOR[f.tier] || '#b0cae8';
+      var tid = 'wf-' + pfx + '-' + i;
+      return '<div class="ws-fissure-row">' +
+        '<span class="ws-ftier" style="color:' + c + ';border-color:' + c + '">' + (f.tier || '--') + '</span>' +
+        '<span class="ws-fnode">'    + (f.node || '--') + ' (' + (f.system || '--') + ')' + '</span>' +
+        '<span class="ws-fmission">' + (f.mission || '--') + '</span>' +
+        '<span class="ws-fenemy">'   + (f.faction || '--') + '</span>' +
+        '<span class="ws-ftimer" id="' + tid + '"></span>' +
+        '</div>';
+    }).join('');
+    arr.forEach(function (f, i) {
+      var tid = 'wf-' + pfx + '-' + i;
+      if (f.expiry) countdown(document.getElementById(tid), f.expiry, false, '正在消失');
+    });
+  }
+
   function renderFissures() {
+    if (_currentServer === 'cn') {
+      var auxFs = _auxState && Array.isArray(_auxState.fissures) ? _auxState.fissures : null;
+      if (!auxFs) { ['ws-fissures-normal', 'ws-fissures-hard', 'ws-fissures-storm'].forEach(function (id) {
+        var el = document.getElementById(id); if (el) el.innerHTML = '<div class="ws-empty">加载中…</div>';
+      }); return; }
+      var now2 = Date.now();
+      var cnNormal = [], cnHard = [], cnStorm = [];
+      auxFs.forEach(function (f) {
+        if (f.expiry && f.expiry <= now2) return;
+        if (f.railjack) cnStorm.push(f); else if (f.steelPath) cnHard.push(f); else cnNormal.push(f);
+      });
+      function byTierCn(a, b) { return (CN_TIER_ORD[a.tier] || 9) - (CN_TIER_ORD[b.tier] || 9); }
+      cnNormal.sort(byTierCn); cnHard.sort(byTierCn); cnStorm.sort(byTierCn);
+      ['normal', 'hard', 'storm'].forEach(function (k) {
+        var el = document.getElementById('fc-' + k);
+        if (el) el.textContent = { normal: cnNormal.length, hard: cnHard.length, storm: cnStorm.length }[k];
+      });
+      renderFissureListCn('ws-fissures-normal', cnNormal);
+      renderFissureListCn('ws-fissures-hard',   cnHard);
+      renderFissureListCn('ws-fissures-storm',  cnStorm);
+      return;
+    }
     var all = D.fissures;
     var normal = [], hard = [], storm = [];
     if (Array.isArray(all)) {
@@ -4043,9 +4128,31 @@
   }
 
   /* ══ 渲染：突击 ══ */
+  /* 国服突击/执刑官猎杀的任务行：字段已是现成中文(mission/system/faction)，
+     不需要 trLocation/tr 查表，两个模块共用同一个行渲染。 */
+  function cnMissionRowHtml(m, i) {
+    return '<div class="ws-mission-row">' +
+      '<span class="ws-mr-num">' + (i + 1) + '</span>' +
+      '<span class="ws-mr-node">' + (m.node || '--') + ' (' + (m.system || '--') + ')' + '</span>' +
+      '<span class="ws-mr-type">' + (m.mission || '--') + '</span>' +
+      (m.modifier ? '<span class="ws-mr-modifier">' + m.modifier + '</span>' : '') +
+      '</div>';
+  }
   function renderSortie() {
     var el = document.getElementById('ws-sortie');
     if (!el) return;
+    if (_currentServer === 'cn') {
+      var dCn = _auxState && _auxState.sortie;
+      if (!dCn) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+      el.innerHTML =
+        '<div class="ws-mission-card">' +
+          '<div class="ws-mission-hd">' +
+            '<span class="ws-mission-boss">' + (dCn.boss || '--') + '</span>' +
+            '<span class="ws-mission-timer" id="wt-sortie"></span>' +
+          '</div>' + (dCn.missions || []).map(cnMissionRowHtml).join('') + '</div>';
+      if (dCn.expiry) countdown(document.getElementById('wt-sortie'), dCn.expiry);
+      return;
+    }
     var d = D.sortie;
     if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
     var rows = (d.variants || []).map(function (v, i) {
