@@ -3809,7 +3809,7 @@
 
     var cur = getCurrentArbSlot();
 
-    /* 节点名带 SolNode ID（不像 arbi.wf.wiki 那样隐藏掉，方便核对/排查） */
+    /* 节点名带 SolNode ID（同类参照站点通常会隐藏掉，我方保留，方便核对/排查） */
     function nodeLine(nodeId, info) {
       var name = info ? tr(info[0]) + ' (' + (PLANET_ZH[info[1]] || tr(info[1])) + ')' : nodeId;
       return name + '<div class="ws-arb-solnode">' + nodeId + '</div>';
