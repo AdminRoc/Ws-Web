@@ -672,11 +672,6 @@
       color: #1a1000; background: linear-gradient(120deg, rgba(255,222,130,.96), rgba(210,165,58,.92));
       border-color: var(--ws-gold-bright); font-weight: 700;
     }
-    .ws-news-count {
-      margin-left: auto; font-family: 'Orbitron', sans-serif; font-size: .76rem;
-      color: var(--ws-gold); background: rgba(201,164,50,.1); border: 1px solid var(--ws-gold-line);
-      border-radius: 999px; padding: .1rem .55rem;
-    }
     .ws-news-pinned { display: flex; gap: .6rem; margin-bottom: .9rem; flex-wrap: wrap; }
     .ws-news-pin-btn {
       font-family: var(--f-sci); font-size: .8rem; font-weight: 700; letter-spacing: .04em;
@@ -1274,6 +1269,8 @@
       white-space: nowrap;
     }
     .ws-bj-type { color: var(--ws-text); min-width: 0; overflow-wrap: break-word; }
+    .ws-bj-title { color: var(--ws-gold); font-weight: 600; margin-bottom: .15rem; }
+    .ws-bj-desc  { color: var(--ws-text); font-size: .92em; line-height: 1.5; }
     .ws-bj-rep  { color: var(--ws-text-dim); font-size: .78rem; text-align: right; white-space: nowrap; }
     .ws-bounty-rot {
       font-size: .7rem; font-family: 'Orbitron', sans-serif;
@@ -4706,16 +4703,14 @@
       var parts = [c.mode, c.challenge, c.npc].filter(Boolean);
       return '<div class="ws-aux-line">' + c.index + '. ' + parts.join(' · ') + '</div>';
     }).join('');
-    var next = future.slice(1).map(function (f) {
-      return (f.name || ('炼狱 ' + f.floor)) + '（' + md(f.expiry) + '）';
-    }).join(' · ');
+    var nextOne = future[1];
     el.innerHTML =
       '<div class="ws-aux-group ws-desc-active">' +
         '<div class="ws-aux-group-title">' + (cur.name || ('炼狱 ' + cur.floor)) +
         ' <span class="ws-desc-cur">本周</span>' +
         ' <span class="ws-incur-timer" id="wt-desc-cur"></span></div>' + ch +
       '</div>' +
-      (next ? '<div class="ws-aux-sub ws-desc-next">后续轮换：' + next + '</div>' : '');
+      (nextOne ? '<div class="ws-aux-sub ws-desc-next">下次轮换时间：' + md(nextOne.expiry) + '</div>' : '');
     if (cur.expiry) countdown(document.getElementById('wt-desc-cur'), cur.expiry - AUX_COUNTDOWN_LEAD_MS, true);
   }
 
@@ -4809,7 +4804,7 @@
   ];
   var _newsLang = 'zh';   /* 'zh' | 'en'，仅国际服用得到("全部"选项没有实际意义，已去掉) */
   function newsItemHtml(n) {
-    var text = (n.messages && (n.messages.zh || n.messages.en)) || n.message || '--';
+    var text = (n.messages && (n.messages[_newsLang] || n.messages.zh || n.messages.en)) || n.message || '--';
     /* 内部消息 key 形如 /Lotus/Language/CommunityMessages/JoinDiscord 这种没翻译到的
        原始路径，但只要看得出是 Discord 邀请类公告，就统一显示成一句正常的话，
        不要把内部路径原样露出来。 */
@@ -4850,7 +4845,7 @@
     }).sort(function (a, b) { return (b.date || 0) - (a.date || 0); });
 
     el.innerHTML =
-      '<div class="ws-news-hd">' + tabsHtml + '<span class="ws-news-count">' + filtered.length + '</span></div>' +
+      '<div class="ws-news-hd">' + tabsHtml + '</div>' +
       pinnedHtml +
       (filtered.length ? '<div class="ws-news-list">' + filtered.map(newsItemHtml).join('') + '</div>' : '<div class="ws-empty">暂无资讯</div>');
 
@@ -4961,6 +4956,15 @@
     try { localStorage.setItem(BOUNTY_ICON_HARVEST_LS, JSON.stringify(map)); } catch (e) {}
   }
 
+  /* 赏金任务行文案统一两行排版："任务名称" 与 "任务描述" 以全角冒号为界分两行显示，
+     找不到冒号(没有具体目标描述)时原样单行显示，不强行拆分。 */
+  function bountyJobTypeHtml(text) {
+    var idx = text.indexOf('：');
+    if (idx === -1) return text;
+    return '<div class="ws-bj-title">' + text.slice(0, idx) + '</div>' +
+           '<div class="ws-bj-desc">' + text.slice(idx + 1) + '</div>';
+  }
+
   function renderBounties() {
     var el = document.getElementById('ws-bounties');
     if (!el) return;
@@ -4987,7 +4991,7 @@
             var typeTxt = (j.node || '--') + ' · ' + (j.mission || '--') + (j.challenge ? '：' + j.challenge : '');
             return '<div class="ws-bounty-job">' +
                 '<span class="ws-bj-lvl">Lv ' + range + '</span>' +
-                '<span class="ws-bj-type">' + typeTxt + '</span>' +
+                '<div class="ws-bj-type">' + bountyJobTypeHtml(typeTxt) + '</div>' +
                 (ally ? '<span class="ws-bj-ally">' + ally + '</span>' : '') +
               '</div>';
           }).join('');
@@ -5016,7 +5020,7 @@
           var ally    = allyRaw ? (HEX_ALLIES[allyRaw] || allyRaw) : null;
           return '<div class="ws-bounty-job">' +
               '<span class="ws-bj-lvl">Lv ' + range + '</span>' +
-              '<span class="ws-bj-type">' + name + '</span>' +
+              '<div class="ws-bj-type">' + bountyJobTypeHtml(name) + '</div>' +
               (ally ? '<span class="ws-bj-ally">' + ally + '</span>' : '') +
             '</div>';
         }).join('');
