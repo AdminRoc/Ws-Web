@@ -559,10 +559,24 @@
     .ws-aux-sub {
       font-family: var(--f-sci);
       font-size: .8rem;
-      color: var(--ws-text-dim);
+      color: var(--ws-text);    /* 这是正文主要内容，不是次要说明，原来用 text-dim 太暗几乎看不清 */
       margin-top: .3rem;
       line-height: 1.5;
     }
+    /* 通用"加个壳"行卡片：沉沦之地的挑战行/氏族金库的奖励行等裸文本行，
+       都改用这个带描边的小卡片，不再是没有任何容器的纯文字。 */
+    .ws-aux-line {
+      background: rgba(20,14,6,.55);
+      border: 1px solid var(--ws-gold-line);
+      border-radius: 2px;
+      padding: .5rem .75rem;
+      margin-top: .4rem;
+      font-family: var(--f-sci);
+      font-size: .8rem;
+      color: var(--ws-text);    /* 同上，原来太暗 */
+      line-height: 1.5;
+    }
+    .ws-aux-line:first-of-type { margin-top: .6rem; }
 
     /* ══ 集团任务卡片(每个集团一张卡，替代裸列表) ══
        固定 3 列(用户要求的"上三下三"排版)，避免 auto-fit 在不同宽度下变成 2/4 列错位；
@@ -625,6 +639,50 @@
       opacity: .85;
       margin-bottom: .3rem;
     }
+    /* ══ 最新资讯 ══ */
+    .ws-news-hd { display: flex; align-items: center; gap: .5rem; margin-bottom: .8rem; }
+    .ws-news-tabs { display: flex; gap: .4rem; }
+    .ws-news-tab {
+      font-family: var(--f-sci); font-size: .78rem; letter-spacing: .04em;
+      color: var(--ws-text-dim); background: rgba(201,164,50,.06);
+      border: 1px solid var(--ws-gold-line); border-radius: 999px;
+      padding: .28rem .85rem; cursor: pointer; transition: all .2s ease;
+    }
+    .ws-news-tab:hover:not(.active) { border-color: var(--ws-gold); color: var(--ws-text); }
+    .ws-news-tab.active {
+      color: #1a1000; background: linear-gradient(120deg, rgba(255,222,130,.96), rgba(210,165,58,.92));
+      border-color: var(--ws-gold-bright); font-weight: 700;
+    }
+    .ws-news-count {
+      margin-left: auto; font-family: 'Orbitron', sans-serif; font-size: .76rem;
+      color: var(--ws-gold); background: rgba(201,164,50,.1); border: 1px solid var(--ws-gold-line);
+      border-radius: 999px; padding: .1rem .55rem;
+    }
+    .ws-news-pinned { display: flex; gap: .6rem; margin-bottom: .9rem; flex-wrap: wrap; }
+    .ws-news-pin-btn {
+      font-family: var(--f-sci); font-size: .8rem; font-weight: 700; letter-spacing: .04em;
+      color: var(--ws-gold-bright); text-decoration: none; white-space: nowrap;
+      background: linear-gradient(150deg, rgba(201,164,50,.16), rgba(201,164,50,.04));
+      border: 1px solid var(--ws-gold-bright); border-radius: 3px;
+      padding: .5rem 1rem; transition: all .2s ease;
+    }
+    .ws-news-pin-btn:hover { background: rgba(201,164,50,.3); box-shadow: 0 0 12px rgba(201,164,50,.4); }
+    .ws-news-list { display: flex; flex-direction: column; gap: .1rem; }
+    .ws-news-item {
+      display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
+      padding: .5rem .2rem; border-bottom: 1px dashed rgba(201,164,50,.14);
+      font-family: var(--f-sci); font-size: .85rem;
+    }
+    .ws-news-item:last-child { border-bottom: none; }
+    .ws-news-link { color: var(--ws-text); text-decoration: none; flex: 1; min-width: 0; }
+    .ws-news-link:hover { color: var(--ws-gold-bright); text-decoration: underline; }
+    .ws-news-tag {
+      font-size: .68rem; color: var(--ws-gold); white-space: nowrap;
+      background: rgba(201,164,50,.1); border: 1px solid rgba(201,164,50,.3);
+      border-radius: 3px; padding: 0 .35em; letter-spacing: .08em;
+    }
+    .ws-news-date { font-size: .72rem; color: var(--ws-text-dim); white-space: nowrap; font-family: 'Orbitron', sans-serif; }
+
     .ws-bar {
       margin-top: .5rem;
       height: 6px;
@@ -1208,6 +1266,27 @@
       border-radius: 3px; padding: 0 .35em;
       letter-spacing: .12em;
     }
+    /* ══ 赏金任务上3格(开放世界平原)：任务目标+等级区间+阶段数+奖励图标横排 ══ */
+    .ws-bb-jobs { padding: .4rem 0; max-height: 360px; overflow-y: auto; }
+    .ws-bb-job { padding: .5rem 1rem; border-bottom: 1px solid var(--ws-sep); }
+    .ws-bb-job:last-child { border-bottom: none; }
+    .ws-bb-job-hd {
+      display: flex; align-items: baseline; flex-wrap: wrap; gap: .45rem;
+      font-family: var(--f-sci); font-size: .84rem;
+    }
+    .ws-bb-job-obj { color: var(--ws-text); font-weight: 700; }
+    .ws-bb-job-lvl { color: var(--ws-gold); font-family: 'Orbitron', sans-serif; font-size: .74rem; white-space: nowrap; }
+    .ws-bb-job-stages { color: var(--ws-text-dim); font-size: .72rem; margin-left: auto; white-space: nowrap; }
+    .ws-bb-rewards { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .4rem; }
+    .ws-bb-reward {
+      display: inline-flex; align-items: center; gap: .3rem;
+      background: rgba(201,164,50,.07); border: 1px solid var(--ws-gold-line);
+      border-radius: 3px; padding: .12rem .4rem .12rem .12rem;
+      font-family: var(--f-sci); font-size: .7rem; color: var(--ws-text-dim);
+      max-width: 11rem;
+    }
+    .ws-bb-reward img { width: 16px; height: 16px; object-fit: contain; border-radius: 2px; flex-shrink: 0; }
+    .ws-bb-reward span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
     /* ══ 响应式 ══ */
     @media (max-width: 1200px) {
@@ -2502,11 +2581,11 @@
       </div>
     </section>
 
-    <!-- ══ 5. 重要赏金任务 ══ -->
+    <!-- ══ 5. 赏金任务(原"重要赏金任务"，扩充为开放世界三平原+赏金轮换三集团共6格) ══ -->
     <section id="ws-sec-bounties" class="ws-section">
       <div class="ws-section-hd">
-        <span class="ws-section-title">重要赏金任务</span>
-        <span class="ws-section-en">Bounties</span>
+        <span class="ws-section-title">赏金任务</span>
+        <span class="ws-section-en">Bounty Tasks</span>
       </div>
       <div id="ws-bounties"><div class="ws-empty">加载中…</div></div>
     </section>
@@ -2602,23 +2681,23 @@
       <div id="ws-archimedea"><div class="ws-empty">加载中…</div></div>
     </section>
 
-    <!-- ══ 15. 地心攀升 ══ -->
-    <section id="ws-sec-descents" class="ws-section">
-      <div class="ws-section-hd">
-        <span class="ws-section-title">沉沦之地</span>
-        <span class="ws-section-en">Descents</span>
-      </div>
-      <div id="ws-descents"><div class="ws-empty">加载中…</div></div>
-    </section>
-
-    <!-- ══ 16. 日历 ══ -->
-    <section id="ws-sec-calendar" class="ws-section">
-      <div class="ws-section-hd">
-        <span class="ws-section-title">霍瓦尼亚·日历</span>
-        <span class="ws-section-en">Calendar</span>
-      </div>
-      <div id="ws-calendar"><div class="ws-empty">加载中…</div></div>
-    </section>
+    <!-- ══ 15&16. 沉沦之地 & 霍瓦尼亚·日历(两者都是窄长内容，左右各占半屏不浪费空间) ══ -->
+    <div id="ws-sec-descents-calendar" class="ws-dual" style="margin-bottom: 2.8rem;">
+      <section id="ws-sec-descents" class="ws-section" style="margin-bottom:0">
+        <div class="ws-section-hd">
+          <span class="ws-section-title">沉沦之地</span>
+          <span class="ws-section-en">Descents</span>
+        </div>
+        <div id="ws-descents"><div class="ws-empty">加载中…</div></div>
+      </section>
+      <section id="ws-sec-calendar" class="ws-section" style="margin-bottom:0">
+        <div class="ws-section-hd">
+          <span class="ws-section-title">霍瓦尼亚·日历</span>
+          <span class="ws-section-en">Calendar</span>
+        </div>
+        <div id="ws-calendar"><div class="ws-empty">加载中…</div></div>
+      </section>
+    </div>
 
     <!-- ══ 17. 战团金库 ══ -->
     <section id="ws-sec-clanvault" class="ws-section">
@@ -2647,7 +2726,16 @@
       <div id="ws-syndicates"><div class="ws-empty">加载中…</div></div>
     </section>
 
-    <!-- ══ 21. 限时活动 ══ -->
+    <!-- ══ 21. 建造进度 ══ -->
+    <section id="ws-sec-construction" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">建造进度</span>
+        <span class="ws-section-en">Construction</span>
+      </div>
+      <div id="ws-construction"><div class="ws-empty">加载中…</div></div>
+    </section>
+
+    <!-- ══ 22. 限时活动(挪到最下方——经常没有内容，放前面容易显得空) ══ -->
     <section id="ws-sec-events" class="ws-section">
       <div class="ws-section-hd">
         <span class="ws-section-title">限时活动</span>
@@ -2656,13 +2744,13 @@
       <div id="ws-events"><div class="ws-empty">加载中…</div></div>
     </section>
 
-    <!-- ══ 22. 建造进度 ══ -->
-    <section id="ws-sec-construction" class="ws-section">
+    <!-- ══ 23. 最新资讯(原"新闻/公告"，最末位，参照站同样把这个放最下面) ══ -->
+    <section id="ws-sec-news" class="ws-section">
       <div class="ws-section-hd">
-        <span class="ws-section-title">建造进度</span>
-        <span class="ws-section-en">Construction</span>
+        <span class="ws-section-title">最新资讯</span>
+        <span class="ws-section-en">News</span>
       </div>
-      <div id="ws-construction"><div class="ws-empty">加载中…</div></div>
+      <div id="ws-news"><div class="ws-empty">加载中…</div></div>
     </section>
 
   </main>
@@ -2715,9 +2803,12 @@
      导致多数据源兜底链迟迟轮不到能用的源，只能用过期缓存 + 周期数学推算补，
      推算次数一多就会偏离真实状态。这里给每次请求设置较短超时，挂起立即判定失败，
      尽快切换到下一个候选源（如 jsdelivr）。 */
-  function fetchT(url, ms) {
+  function fetchT(url, ms, noStore) {
     var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
     var opts = ctrl ? { signal: ctrl.signal } : {};
+    if (noStore) opts.cache = 'no-store';   /* 同源数据文件每2分钟会变，浏览器自身的磁盘缓存
+      不一定遵守这个节奏(尤其本地起服务器测试时极容易长期沿用第一次的缓存响应)——
+      调这类"会被后端周期性更新"的同源文件时强制不缓存，保证每轮 fetchAll 真的拿到最新内容。 */
     var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, ms || 5000) : null;
     return fetch(url, opts).finally(function () { if (timer) clearTimeout(timer); });
   }
@@ -3461,9 +3552,16 @@
      'none'：连内嵌快照都没有（理论上不会发生，除非这个 js 文件本身丢失） */
   var _wsDataSource = null;
 
-  /* 一份从公共网络抓取的公开数据源的同源镜像快照(国际服·中文)，补充本站原本
-     没有的模块(如下方"突击"/incursions)。独立于上面的主数据流，只增不替换，
-     失败时静默忽略，不影响既有任何模块的显示。 */
+  /* 一份从公共网络抓取的公开数据源的同源镜像快照，补充本站原本没有的模块
+     (如"突击"/incursions、本节点的"最新资讯"等)。独立于上面的主数据流，只增
+     不替换，失败时静默忽略，不影响既有任何模块的显示。
+     国服/国际服完全独立存两份快照(`_auxByServer.intl`/`.cn`)+各自独立的
+     localStorage 缓存；`_auxState` 永远是"当前选中服务器"那一份的指针，
+     切换服务器时只需重新指向、不用改任何读 `_auxState.xxx` 的渲染函数。 */
+  var _auxByServer = { intl: null, cn: null };
+  var WS_SERVER_LS  = 'wf_ep_server';
+  var _currentServer = 'intl';
+  try { _currentServer = (localStorage.getItem(WS_SERVER_LS) === 'cn') ? 'cn' : 'intl'; } catch (e) {}
   var _auxState = null;
 
   /* 辅助数据源倒计时安全提前量(毫秒)：静态页+镜像延迟下"宁可早不可晚"，
@@ -3568,25 +3666,33 @@
     });
 
     /* 辅助数据源镜像快照：补充本站此前没有的全部模块(侵袭/科研/沉沦之地/集团任务/
-       建造进度/限时活动/泰辛/无尽回廊/日历/氏族金库 等，未来新增模块同样只是这份
-       同源 JSON 里多一个键，自动纳入)。同源相对路径请求 data/ws-intl-zh.json——
-       该文件由镜像工作流每 2 分钟周期性写入仓库，本身即"周期性落盘缓存"。
-       这里再叠一层 localStorage：先用上次成功的缓存兜底，文件/网络临时取不到时
-       模块仍显示上一次的数据而不是空白；取到新数据后回写缓存。 */
-    var AUX_LS = 'wf_ep_auxstate';
-    try {
-      var _auxCached = JSON.parse(localStorage.getItem(AUX_LS) || 'null');
-      if (_auxCached && _auxCached.data) _auxState = _auxCached.data;
-    } catch (e) {}
-    var auxP = fetchT('data/ws-intl-zh.json', 8000)
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (data) {
-        if (data) {
-          _auxState = data;
-          try { localStorage.setItem(AUX_LS, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
-        }
-      })
-      .catch(function () {});
+       建造进度/限时活动/泰辛/无尽回廊/日历/氏族金库/最新资讯 等，未来新增模块同样
+       只是这份同源 JSON 里多一个键，自动纳入)。国服/国际服两份快照完全独立拉取、
+       独立存 localStorage 缓存，互不覆盖——同源相对路径请求 data/ws-{intl,cn}-zh.json，
+       由镜像工作流每 2 分钟周期性写入仓库，本身即"周期性落盘缓存"；这里再叠一层
+       localStorage 兜底：先用上次成功的缓存渲染，文件/网络临时取不到时模块仍显示
+       上一次的数据而不是空白，取到新数据后回写缓存。
+       `_auxState` 始终指向"当前选中服务器"那一份，渲染函数完全不用关心服务器切换。 */
+    function auxLsKey(server) { return 'wf_ep_auxstate_' + server; }
+    ['intl', 'cn'].forEach(function (server) {
+      try {
+        var cached = JSON.parse(localStorage.getItem(auxLsKey(server)) || 'null');
+        if (cached && cached.data) _auxByServer[server] = cached.data;
+      } catch (e) {}
+    });
+    _auxState = _auxByServer[_currentServer];
+    var auxP = Promise.all(['intl', 'cn'].map(function (server) {
+      return fetchT('data/ws-' + server + '-zh.json', 8000, true)
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+          if (data) {
+            _auxByServer[server] = data;
+            try { localStorage.setItem(auxLsKey(server), JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
+            if (server === _currentServer) _auxState = data;
+          }
+        })
+        .catch(function () {});
+    }));
 
     /* 等同源统一字典就绪，保证渲染时 tr/resolveNode 的同源兜底可用（尤其远程被墙时） */
     var i18nP = (window.WF && WF.i18n) ? WF.i18n.ready : Promise.resolve();
@@ -4295,7 +4401,7 @@
     var cur = future[0];
     var ch = (cur.challenges || []).map(function (c) {
       var parts = [c.mode, c.challenge, c.npc].filter(Boolean);
-      return '<div class="ws-aux-sub">' + c.index + '. ' + parts.join(' · ') + '</div>';
+      return '<div class="ws-aux-line">' + c.index + '. ' + parts.join(' · ') + '</div>';
     }).join('');
     var next = future.slice(1).map(function (f) {
       return (f.name || ('炼狱 ' + f.floor)) + '（' + md(f.expiry) + '）';
@@ -4333,7 +4439,7 @@
     var data = _auxState && _auxState.clanVault;
     if (!data) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
     var rewards = (data.rewards || []).map(function (r) {
-      return '<div class="ws-aux-sub">达到 ' + r.threshold + '：' + r.count + ' × ' + (r.item || '') + '</div>';
+      return '<div class="ws-aux-line">达到 ' + r.threshold + '：' + r.count + ' × ' + (r.item || '') + '</div>';
     }).join('');
     el.innerHTML = '<div class="ws-aux-row"><div class="ws-aux-hd"><span class="ws-aux-title">' +
       (data.region || '--') + (data.nextRegion ? (' → ' + data.nextRegion) : '') + '</span></div>' + rewards + '</div>';
@@ -4387,6 +4493,70 @@
     });
   }
 
+  /* ══ 渲染：最新资讯(原"新闻/公告"，来自辅助数据源 news 字段) ══
+     每条 {id,message,messages:{语言代码:文本},link,date,community}——messages 是这条
+     公告在 Warframe 官方论坛各语言版本下的镜像，存在哪个语言 key 就代表该公告有
+     哪个语言版本。国际服按 messages.zh / messages.en 是否存在筛选"中文/英文/全部"，
+     中文分页下额外置顶 3 个我方自建的资讯站外链接(B站UP主)；国服内容本就是国服
+     自己发布的中文公告(wf.qq.com / wegame.com.cn)，不设语言分页。 */
+  var NEWS_PINNED_LINKS = [
+    { t: 'ZJM最新发布', href: 'https://space.bilibili.com/16730771/dynamic' },
+    { t: '012最新发布', href: 'https://space.bilibili.com/53737/dynamic' },
+    { t: '官号资讯',     href: 'https://space.bilibili.com/3546721195919964/dynamic' }
+  ];
+  var _newsLang = 'zh';   /* 'zh' | 'en' | 'all'，仅国际服用得到 */
+  function newsItemHtml(n) {
+    var text = (n.messages && (n.messages.zh || n.messages.en)) || n.message || '--';
+    var d = n.date ? new Date(n.date).toLocaleDateString('zh-CN') : '';
+    var inner = n.link
+      ? '<a class="ws-news-link" href="' + n.link + '" target="_blank" rel="noopener">' + text + '</a>'
+      : '<span class="ws-news-link">' + text + '</span>';
+    return '<div class="ws-news-item">' + inner +
+      (n.community ? '<span class="ws-news-tag">社区</span>' : '') +
+      (d ? '<span class="ws-news-date">' + d + '</span>' : '') +
+    '</div>';
+  }
+  function renderNews() {
+    var el = document.getElementById('ws-news');
+    if (!el) return;
+    var list = _auxState && Array.isArray(_auxState.news) ? _auxState.news : null;
+    if (!list) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+
+    var isCn = (_currentServer === 'cn');
+    var pinnedHtml = (!isCn && _newsLang === 'zh')
+      ? '<div class="ws-news-pinned">' + NEWS_PINNED_LINKS.map(function (p) {
+          return '<a class="ws-news-pin-btn" href="' + p.href + '" target="_blank" rel="noopener">' + p.t + '</a>';
+        }).join('') + '</div>'
+      : '';
+
+    var tabsHtml = isCn ? '' :
+      '<div class="ws-news-tabs">' +
+        ['zh', 'en', 'all'].map(function (key) {
+          var label = key === 'zh' ? '中文' : key === 'en' ? '英文' : '全部';
+          return '<button type="button" class="ws-news-tab' + (_newsLang === key ? ' active' : '') + '" data-lang="' + key + '">' + label + '</button>';
+        }).join('') +
+      '</div>';
+
+    var filtered = list.filter(function (n) {
+      if (isCn || _newsLang === 'all') return true;
+      return n.messages && n.messages[_newsLang];
+    }).sort(function (a, b) { return (b.date || 0) - (a.date || 0); });
+
+    el.innerHTML =
+      '<div class="ws-news-hd">' + tabsHtml + '<span class="ws-news-count">' + filtered.length + '</span></div>' +
+      pinnedHtml +
+      (filtered.length ? '<div class="ws-news-list">' + filtered.map(newsItemHtml).join('') + '</div>' : '<div class="ws-empty">暂无资讯</div>');
+
+    if (!isCn) {
+      Array.prototype.forEach.call(el.querySelectorAll('.ws-news-tab'), function (btn) {
+        btn.addEventListener('click', function () {
+          _newsLang = btn.getAttribute('data-lang');
+          renderNews();
+        });
+      });
+    }
+  }
+
   /* ══ 渲染：集团任务轮换(Syndicates，来自辅助数据源) ══ */
   /* 开放世界三大据点(Ostron/索拉里斯联合/英择谛)的集团其实就是平原赏金任务的"集团身份"，
      不是真正的"任务节点轮换"集团——和本站"重要赏金任务"模块内容重复，故按 tag 过滤掉，
@@ -4431,57 +4601,113 @@
     }).join('') + '</div>';
   }
 
-  /* ══ 渲染：重要赏金任务（守望者 / 科维兽 / 六人组）
-     数据来自 oracle.browse.wf/bounty-cycle（服务器侧解算 Seed） ══ */
+  /* ══ 渲染：赏金任务（原"重要赏金任务"，现扩充为 6 格：
+     上 3 格=开放世界三平原(Ostron/索拉里斯/英择谛，来自同源镜像 _auxState.bountyBoard，
+     即对方站点的"开放世界赏金"模块对应内容)；
+     下 3 格=守望者/科维兽/六人组(来自 oracle.browse.wf/bounty-cycle，对应对方的"赏金轮换"模块)。
+     两段拼进同一个 .ws-bounty-list 三列网格，6 张卡自然换行成 2 行 3 列。
+     奖励图标 icon 字段是 content.warframe.com 官方游戏 CDN 的公开资源地址，
+     任何站点都能直接引用，不存在"借鉴需隐藏"的问题；先在这里展示+用 harvestRewardIcons()
+     顺手攒一份去重快照供以后做"物品检索"模块时直接复用，现在还不建那个模块。 ══ */
+  var BOUNTY_BOARD_ORDER = ['CetusSyndicate', 'SolarisSyndicate', 'EntratiSyndicate'];
+  var BOUNTY_BOARD_ZH    = { CetusSyndicate: 'Ostron', SolarisSyndicate: '索拉里斯', EntratiSyndicate: '英择谛' };
+
+  function bbRewardHtml(r) {
+    var icon = r.icon ? '<img src="' + r.icon + '" alt="" loading="lazy">' : '';
+    var cnt  = r.count ? ('×' + r.count) : '';
+    return '<span class="ws-bb-reward">' + icon + '<span>' + (r.name || '--') + (cnt ? ' ' + cnt : '') + '</span></span>';
+  }
+  function bbCardHtml(tag, entry) {
+    var tid = 'wt-bb-' + tag;
+    var jobs = ((entry && entry.jobs) || []).map(function (j) {
+      return '<div class="ws-bb-job">' +
+        '<div class="ws-bb-job-hd">' +
+          '<span class="ws-bb-job-obj">' + (j.objective || '--') + '</span>' +
+          '<span class="ws-bb-job-lvl">Lv ' + j.minLevel + '-' + j.maxLevel + '</span>' +
+          '<span class="ws-bb-job-stages">' + (j.stages || 0) + ' 阶段</span>' +
+        '</div>' +
+        '<div class="ws-bb-rewards">' + (j.rewards || []).map(bbRewardHtml).join('') + '</div>' +
+      '</div>';
+    }).join('');
+    return '<div class="ws-bounty-syndicate">' +
+      '<div class="ws-bounty-syn-hd">' +
+        '<span class="ws-bounty-syn-name">' + (BOUNTY_BOARD_ZH[tag] || (entry && entry.name) || '--') + '</span>' +
+        '<span class="ws-bounty-timer" id="' + tid + '"></span>' +
+      '</div>' +
+      '<div class="ws-bounty-jobs ws-bb-jobs">' + (jobs || '<div class="ws-empty">加载中…</div>') + '</div>' +
+    '</div>';
+  }
+  /* 把本次拿到的所有奖励 {name,icon} 去重累积进 localStorage，留给以后的"物品检索"模块直接用；
+     只攒数据，不在这里建检索 UI。 */
+  var BOUNTY_ICON_HARVEST_LS = 'wf_ep_item_icon_harvest';
+  function harvestRewardIcons(bbList) {
+    if (!Array.isArray(bbList)) return;
+    var map = {};
+    try { map = JSON.parse(localStorage.getItem(BOUNTY_ICON_HARVEST_LS) || '{}'); } catch (e) { map = {}; }
+    bbList.forEach(function (s) {
+      (s.jobs || []).forEach(function (j) {
+        (j.rewards || []).forEach(function (r) {
+          if (r.name && r.icon && !map[r.name]) map[r.name] = r.icon;
+        });
+      });
+    });
+    try { localStorage.setItem(BOUNTY_ICON_HARVEST_LS, JSON.stringify(map)); } catch (e) {}
+  }
+
   function renderBounties() {
     var el = document.getElementById('ws-bounties');
     if (!el) return;
-    if (!_bountyCycle || !_bountyCycle.bounties) {
-      el.innerHTML = '<div class="ws-empty">赏金数据加载中…</div>';
-      return;
+
+    var bbList = _auxState && Array.isArray(_auxState.bountyBoard) ? _auxState.bountyBoard : null;
+    var byTag = {};
+    if (bbList) { bbList.forEach(function (s) { byTag[s.tag] = s; }); harvestRewardIcons(bbList); }
+    var topHtml = BOUNTY_BOARD_ORDER.map(function (tag) { return bbCardHtml(tag, byTag[tag]); }).join('');
+
+    var tags = ['ZarimanSyndicate', 'EntratiLabSyndicate', 'HexSyndicate'];
+    var bottomHtml;
+    if (_bountyCycle && _bountyCycle.bounties) {
+      bottomHtml = tags.map(function (tag) {
+        var meta = BOUNTY_META[tag];
+        var jobs = (_bountyCycle.bounties[tag] || []);
+        var lvls = BOUNTY_LVLS[tag] || [];
+        var tid  = 'wt-bounty-' + tag;
+        var jobsHtml = jobs.map(function (j, idx) {
+          var range   = lvls[idx] ? lvls[idx][0] + '–' + lvls[idx][1] : '--';
+          var name    = resolveNode(j.node);
+          var allyRaw = j.ally ? j.ally.split('/').pop() : null;
+          var ally    = allyRaw ? (HEX_ALLIES[allyRaw] || allyRaw) : null;
+          return '<div class="ws-bounty-job">' +
+              '<span class="ws-bj-lvl">Lv ' + range + '</span>' +
+              '<span class="ws-bj-type">' + name + '</span>' +
+              (ally ? '<span class="ws-bj-ally">' + ally + '</span>' : '') +
+            '</div>';
+        }).join('');
+        return '<div class="ws-bounty-syndicate">' +
+            '<div class="ws-bounty-syn-hd">' +
+              '<span class="ws-bounty-syn-name">' + meta.zh + '</span>' +
+              '<span class="ws-bounty-syn-en">'   + meta.en + '</span>' +
+              '<span class="ws-bounty-timer" id="' + tid + '"></span>' +
+            '</div>' +
+            '<div class="ws-bounty-jobs">' + jobsHtml + '</div>' +
+          '</div>';
+      }).join('');
+    } else {
+      bottomHtml = tags.map(function () { return '<div class="ws-bounty-syndicate"><div class="ws-empty">赏金数据加载中…</div></div>'; }).join('');
     }
 
-    var rot    = _bountyCycle.rot || '';
-    var expiry = _bountyCycle.expiry; /* ms */
-    var tags   = ['ZarimanSyndicate', 'EntratiLabSyndicate', 'HexSyndicate'];
+    el.innerHTML = '<div class="ws-bounty-list">' + topHtml + bottomHtml + '</div>';
 
-    var html = '<div class="ws-bounty-list">';
-    tags.forEach(function (tag) {
-      var meta = BOUNTY_META[tag];
-      var jobs = (_bountyCycle.bounties[tag] || []);
-      var lvls = BOUNTY_LVLS[tag] || [];
-      var tid  = 'wt-bounty-' + tag;
-
-      html +=
-        '<div class="ws-bounty-syndicate">' +
-          '<div class="ws-bounty-syn-hd">' +
-            '<span class="ws-bounty-syn-name">' + meta.zh + '</span>' +
-            '<span class="ws-bounty-syn-en">'   + meta.en + '</span>' +
-            '<span class="ws-bounty-timer" id="' + tid + '"></span>' +
-          '</div>' +
-          '<div class="ws-bounty-jobs">';
-
-      jobs.forEach(function (j, idx) {
-        var range   = lvls[idx] ? lvls[idx][0] + '–' + lvls[idx][1] : '--';
-        var name    = resolveNode(j.node);
-        var allyRaw = j.ally ? j.ally.split('/').pop() : null;
-        var ally    = allyRaw ? (HEX_ALLIES[allyRaw] || allyRaw) : null;
-        html +=
-          '<div class="ws-bounty-job">' +
-            '<span class="ws-bj-lvl">Lv ' + range + '</span>' +
-            '<span class="ws-bj-type">' + name + '</span>' +
-            (ally ? '<span class="ws-bj-ally">' + ally + '</span>' : '') +
-          '</div>';
+    if (bbList) {
+      BOUNTY_BOARD_ORDER.forEach(function (tag) {
+        var entry = byTag[tag];
+        if (entry && entry.expiry) countdown(document.getElementById('wt-bb-' + tag), entry.expiry - AUX_COUNTDOWN_LEAD_MS, true);
       });
-
-      html += '</div></div>';
-    });
-
-    html += '</div>';
-    el.innerHTML = html;
-    tags.forEach(function (tag) {
-      countdown(document.getElementById('wt-bounty-' + tag), expiry);
-    });
+    }
+    if (_bountyCycle && _bountyCycle.expiry) {
+      tags.forEach(function (tag) {
+        countdown(document.getElementById('wt-bounty-' + tag), _bountyCycle.expiry);
+      });
+    }
   }
 
   /* 将页面内所有纯文本中的 ( ) 括号包裹在 .ws-br 中，令其使用微软雅黑字体 */
@@ -4803,6 +5029,7 @@
     renderEvents();
     renderSyndicates();
     renderBounties();
+    renderNews();
     var main = document.querySelector('.ws-main');
     if (main) fixBrackets(main);
   }
@@ -4819,20 +5046,24 @@
     });
   }
 
-  /* 国服/国际服切换按钮：当前只是交互壳(状态切换+localStorage持久化+脉冲反馈)，
-     真正按服务器切换页面内容是 Phase D 的主线任务，国服数据管线/汉化没做完前
-     先不接，避免给用户"已经能切换国服"的错误印象。 */
-  var WS_SERVER_LS = 'wf_ep_server';
+  /* 国服/国际服切换按钮：点击真正切换 `_currentServer` + 重新指向 `_auxState`(已在
+     fetchAll 里独立拉取两份)立即重渲染——目前覆盖的是所有"辅助数据源"模块(突击/
+     科研/沉沦之地/集团任务/赏金任务上3格/最新资讯/信条终幕 等)，这些模块切换后
+     会显示真正独立的国服内容。**已知尚未覆盖**：世界周期/虚空裂缝/突击(Sortie)/
+     执刑官猎杀/警报/午夜电波/瓦奇娅/入侵/Darvo特惠/奸商/赏金任务下3格 这些"老"模块
+     目前还只读 api.warframestat.us 等国际服专属数据源(D对象)，切到国服时这些暂时
+     仍显示国际服内容——这是下一步要继续补的工作，不是这次的疏漏遗漏，先如实标注。
+     按钮视觉目前仍是简单壳，留待国服内容补完后再回头精修。 */
   function initServerSwitch() {
     var btn = document.getElementById('ws-server-switch');
     if (!btn) return;
-    var isCn = false;
-    try { isCn = localStorage.getItem(WS_SERVER_LS) === 'cn'; } catch (e) {}
-    btn.setAttribute('aria-pressed', isCn ? 'true' : 'false');
+    btn.setAttribute('aria-pressed', _currentServer === 'cn' ? 'true' : 'false');
     btn.addEventListener('click', function () {
-      isCn = !isCn;
-      btn.setAttribute('aria-pressed', isCn ? 'true' : 'false');
-      try { localStorage.setItem(WS_SERVER_LS, isCn ? 'cn' : 'intl'); } catch (e) {}
+      _currentServer = (_currentServer === 'cn') ? 'intl' : 'cn';
+      btn.setAttribute('aria-pressed', _currentServer === 'cn' ? 'true' : 'false');
+      try { localStorage.setItem(WS_SERVER_LS, _currentServer); } catch (e) {}
+      _auxState = _auxByServer[_currentServer];   /* 立即重新指向，不等下一轮 30 秒轮询 */
+      renderAll();
       btn.classList.remove('ws-ssw-pulse');
       void btn.offsetWidth;             // 强制重排，保证连续快速点击时脉冲能重新播放
       btn.classList.add('ws-ssw-pulse');
@@ -4918,7 +5149,7 @@
       { t: '警报',         href: '#ws-sec-alerts' },
       { t: '仲裁',         href: '#ws-sec-arb' },
       { t: '入侵',         href: '#ws-sec-inv' },
-      { t: '重要赏金任务', href: '#ws-sec-bounties' }
+      { t: '赏金任务',     href: '#ws-sec-bounties' }
     ],
     daily: [
       { t: '突击',       href: '#ws-sec-sortie' },
@@ -4941,8 +5172,9 @@
       { t: '瓦奇娅',       href: '#ws-sec-varzia' },
       { t: '霍瓦尼亚·日历', href: '#ws-sec-calendar' },
       { t: '氏族金库奖励', href: '#ws-sec-clanvault' },
+      { t: '建造进度',     href: '#ws-sec-construction' },
       { t: '限时活动',     href: '#ws-sec-events' },
-      { t: '建造进度',     href: '#ws-sec-construction' }
+      { t: '最新资讯',     href: '#ws-sec-news' }
     ]
   };
 
