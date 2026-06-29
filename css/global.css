@@ -322,7 +322,9 @@ img { display: block; max-width: 100%; }
   visibility: visible;
   transform: translateY(0) scaleY(1);
 }
-/* 逐项入场动画 */
+/* 逐项入场动画：用 nth-child(n) 按顺序错开延迟，不再硬编码只覆盖到 3 个 ——
+   下拉菜单项数变化(比如功能扩展从3项变4项)时，新增项也能正常入场，不会停在
+   opacity:0 变成视觉上"消失的按钮"。这里预留到第 8 项，足够覆盖站内所有下拉菜单。 */
 .nav-item.has-dropdown:hover .nav-dropdown-menu a:nth-child(1) {
   animation: navItemIn .28s cubic-bezier(.22,.68,0,1.2) .04s forwards;
 }
@@ -331,6 +333,21 @@ img { display: block; max-width: 100%; }
 }
 .nav-item.has-dropdown:hover .nav-dropdown-menu a:nth-child(3) {
   animation: navItemIn .28s cubic-bezier(.22,.68,0,1.2) .16s forwards;
+}
+.nav-item.has-dropdown:hover .nav-dropdown-menu a:nth-child(4) {
+  animation: navItemIn .28s cubic-bezier(.22,.68,0,1.2) .22s forwards;
+}
+.nav-item.has-dropdown:hover .nav-dropdown-menu a:nth-child(5) {
+  animation: navItemIn .28s cubic-bezier(.22,.68,0,1.2) .28s forwards;
+}
+.nav-item.has-dropdown:hover .nav-dropdown-menu a:nth-child(6) {
+  animation: navItemIn .28s cubic-bezier(.22,.68,0,1.2) .34s forwards;
+}
+.nav-item.has-dropdown:hover .nav-dropdown-menu a:nth-child(7) {
+  animation: navItemIn .28s cubic-bezier(.22,.68,0,1.2) .40s forwards;
+}
+.nav-item.has-dropdown:hover .nav-dropdown-menu a:nth-child(8) {
+  animation: navItemIn .28s cubic-bezier(.22,.68,0,1.2) .46s forwards;
 }
 @keyframes navItemIn {
   from { opacity: 0; transform: translateY(-5px) translateX(-3px); }
