@@ -94,45 +94,87 @@
       letter-spacing: .14em;
       font-weight: 600;
     }
-    .ws-page-meta { display: flex; align-items: center; gap: .9rem; }
-    .ws-last-update {
-      font-family: var(--f-sci);
-      font-size: .88rem;
-      color: var(--ws-gold);
-      letter-spacing: .05em;
-    }
-    .ws-refresh-btn {
+    /* ══ 国服/国际服切换按钮(简单壳，内容联动留待国服数据完善后回头精修视觉) ══
+       五态：idle(常态描边) / hover(描边+辉光转亮) / 按下(整体微缩+滑块微缩，按压感)
+       / 已切换(滑块滑到右侧+标签淡入淡出+轨道整体染色) / 切换瞬间(短促脉冲扩散一次)。 */
+    .ws-server-switch {
       display: inline-flex;
       align-items: center;
-      gap: .4rem;
-      padding: .45rem 1.1rem;
-      font-family: var(--f-sci);
-      font-size: .85rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      color: var(--ws-gold);
-      border: 1px solid var(--ws-gold-dim);
-      border-radius: 2px;
-      background: rgba(201,164,50,.06);
+      gap: .6rem;
+      padding: .42rem .9rem .42rem .55rem;
+      background: rgba(14,10,5,.92);
+      border: 1px solid var(--ws-gold-line);
+      border-radius: 999px;
       cursor: pointer;
-      transition: all .3s ease;
+      user-select: none;
+      position: relative;
+      flex-shrink: 0;
+      transition: border-color .25s ease, box-shadow .25s ease, transform .18s ease;
     }
-    .ws-refresh-btn:hover:not(:disabled) {
+    .ws-server-switch:hover {
+      border-color: var(--ws-gold-bright);
+      box-shadow: 0 0 14px rgba(201,164,50,.32);
+    }
+    .ws-server-switch:active { transform: scale(.96); }
+    .ws-ssw-track {
+      position: relative;
+      width: 38px;
+      height: 21px;
+      border-radius: 999px;
       background: rgba(201,164,50,.14);
-      border-color: var(--ws-gold);
-      color: var(--ws-gold-bright);
-      box-shadow: 0 0 12px rgba(201,164,50,.35);
+      border: 1px solid var(--ws-gold-line);
+      flex-shrink: 0;
+      transition: background .32s ease, border-color .32s ease;
     }
-    .ws-refresh-btn:disabled { opacity: .4; cursor: not-allowed; }
-    .ws-loading-dot {
-      display: none;
-      width: 7px; height: 7px;
+    .ws-ssw-knob {
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 15px; height: 15px;
       border-radius: 50%;
-      background: var(--ws-gold);
-      animation: wsDotPulse .8s ease-in-out infinite alternate;
+      background: radial-gradient(circle at 35% 30%, #ffe9ad, var(--ws-gold-bright) 70%);
+      box-shadow: 0 0 6px rgba(201,164,50,.65);
+      transition: transform .36s cubic-bezier(.34,1.56,.64,1);
     }
-    @keyframes wsDotPulse { from { opacity: .3; } to { opacity: 1; } }
-
+    .ws-server-switch:active .ws-ssw-knob { transform: scale(.86); }
+    .ws-server-switch[aria-pressed="true"] .ws-ssw-knob { transform: translateX(17px); }
+    .ws-server-switch[aria-pressed="true"]:active .ws-ssw-knob { transform: translateX(17px) scale(.86); }
+    .ws-server-switch[aria-pressed="true"] .ws-ssw-track {
+      background: rgba(201,164,50,.34);
+      border-color: var(--ws-gold-bright);
+    }
+    .ws-ssw-label-wrap {
+      position: relative;
+      display: grid;
+      min-width: 2.8em;
+    }
+    .ws-ssw-label {
+      grid-area: 1 / 1;
+      font-family: var(--f-sci);
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--ws-gold-bright);
+      white-space: nowrap;
+      transition: opacity .26s ease, transform .26s ease;
+    }
+    .ws-ssw-label-intl { opacity: 1; transform: translateY(0); }
+    .ws-ssw-label-cn { opacity: 0; transform: translateY(5px); }
+    .ws-server-switch[aria-pressed="true"] .ws-ssw-label-intl { opacity: 0; transform: translateY(-5px); }
+    .ws-server-switch[aria-pressed="true"] .ws-ssw-label-cn { opacity: 1; transform: translateY(0); }
+    /* 切换瞬间的一次性脈冲(JS 加 .ws-ssw-pulse 后自动播完移除) */
+    .ws-server-switch.ws-ssw-pulse::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 999px;
+      border: 1px solid var(--ws-gold-bright);
+      animation: wsSswPulse .55s ease-out;
+      pointer-events: none;
+    }
+    @keyframes wsSswPulse {
+      0%   { opacity: .9; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.35); }
+    }
     /* ── 章节容器 ── */
     .ws-section { margin-bottom: 3rem; }
     .ws-section-hd {
@@ -2380,17 +2422,15 @@
         世界状态
         <span>WORLD STATE</span>
       </div>
-      <div class="ws-page-meta">
-        <span class="ws-last-update" id="ws-last-update">--</span>
-        <span class="ws-loading-dot" id="ws-loading"></span>
-        <button class="ws-refresh-btn" id="ws-refresh">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M10.5 6A4.5 4.5 0 1 1 6 1.5c1.2 0 2.3.47 3.12 1.24L10.5 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-            <path d="M10.5 1.5V4H8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          立即刷新数据
-        </button>
-      </div>
+      <!-- 国服/国际服切换：先做简单版交互壳(idle/hover/按下/已切换/再切换 五态过渡)，
+           内容联动等国服数据/汉化都做完后再回头精修视觉。 -->
+      <button class="ws-server-switch" id="ws-server-switch" type="button" aria-pressed="false">
+        <span class="ws-ssw-track"><span class="ws-ssw-knob"></span></span>
+        <span class="ws-ssw-label-wrap">
+          <span class="ws-ssw-label ws-ssw-label-intl">国际服</span>
+          <span class="ws-ssw-label ws-ssw-label-cn">国服</span>
+        </span>
+      </button>
     </div>
 
     <!-- ══ 1. 世界周期 ══ -->
@@ -4596,7 +4636,29 @@
     var el = document.getElementById('ws-tenet');
     if (!el) return;
 
-    /* 同源校准文件优先（每小时从社区实测表格抓取，见 fetch_tenet_coda.py）。
+    /* 同源镜像 _auxState.tenetCoda 优先——这是当前已验证最准确的来源(2分钟刷新一次,
+       走私库+Action的镜像管线,不是浏览器直连,符合"借鉴内容需隐藏处理"的要求)。
+       实测发现旧的 Google Sheets 社区实测表(fetch_tenet_coda.py)的信条数值已经
+       过时/错误，元素+加成完全对不上游戏内实际显示，故把它降级为更靠后的兜底。 */
+    var auxTC = _auxState && _auxState.tenetCoda;
+    var auxTenet = auxTC && auxTC.tenet;
+    if (Array.isArray(auxTenet) && auxTenet.length) {
+      el.innerHTML =
+        '<div class="ws-weap-hd">' +
+          '<span class="ws-weap-batch">Ergo Glast 当前轮换</span>' +
+          '<span class="ws-weap-cycle">每 4 天 00:00 UTC 轮换一次祖灵伤害加成</span>' +
+          '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-tenet"></span></div>' +
+        '</div>' +
+        '<div class="ws-weap-grid">' +
+          auxTenet.map(function (w) {
+            return weapItemHtml(w.name || '--', w.elementKey || '', w.bonus != null ? (+w.bonus).toFixed(1) + '%' : '');
+          }).join('') +
+        '</div>';
+      if (auxTC.expiry) countdown(document.getElementById('wt-tenet'), auxTC.expiry - AUX_COUNTDOWN_LEAD_MS, true);
+      return;
+    }
+
+    /* 同源校准文件兜底（每小时从社区实测表格抓取，见 fetch_tenet_coda.py）。
        4 天周期的轮换时刻本身是固定可推算的，只有元素/加成%是随机的、靠这份
        文件提供真实值；本地静态表 TENET_GROUPS 只在这份文件也拿不到时兜底。 */
     var rotData = _tenetCodaRotation && _tenetCodaRotation.tenet && _tenetCodaRotation.tenet.weapons;
@@ -4647,7 +4709,26 @@
     var el = document.getElementById('ws-coda');
     if (!el) return;
 
-    /* 同源校准文件优先，理由同 renderTenetWeapons() 顶部注释 */
+    /* 同源镜像 _auxState.tenetCoda 优先，理由同 renderTenetWeapons() 顶部注释 */
+    var auxTC2 = _auxState && _auxState.tenetCoda;
+    var auxCoda = auxTC2 && auxTC2.coda;
+    if (Array.isArray(auxCoda) && auxCoda.length) {
+      el.innerHTML =
+        '<div class="ws-weap-hd">' +
+          '<span class="ws-weap-batch">' + (auxTC2.codaBatch ? '当前批次 ' + auxTC2.codaBatch : '当前批次') + '</span>' +
+          '<span class="ws-weap-cycle">每 4 天轮换</span>' +
+          '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-coda"></span></div>' +
+        '</div>' +
+        '<div class="ws-weap-grid">' +
+          auxCoda.map(function (w) {
+            return weapItemHtml(w.name || '--', w.elementKey || '', w.bonus != null ? (+w.bonus).toFixed(1) + '%' : '');
+          }).join('') +
+        '</div>';
+      if (auxTC2.expiry) countdown(document.getElementById('wt-coda'), auxTC2.expiry - AUX_COUNTDOWN_LEAD_MS, true);
+      return;
+    }
+
+    /* 同源校准文件兜底，理由同 renderTenetWeapons() 顶部注释 */
     var rotCoda = _tenetCodaRotation && _tenetCodaRotation.coda;
     if (rotCoda && Array.isArray(rotCoda.weapons) && rotCoda.weapons.length) {
       var rBatch  = rotCoda.batch || null;
@@ -4724,28 +4805,6 @@
     renderBounties();
     var main = document.querySelector('.ws-main');
     if (main) fixBrackets(main);
-    var upd = document.getElementById('ws-last-update');
-    if (upd) {
-      if (_wsDataSource === 'snapshot' && _snapshotFetchedAt) {
-        var snapTime = new Date(_snapshotFetchedAt).toLocaleTimeString('zh-CN');
-        upd.textContent = '⚠ 网络不可用，显示的是本地校准快照（' + snapTime + '）';
-        upd.title = '当前未能连接到任何实时数据源（warframestat.us / oracle.browse.wf / 同源镜像），' +
-          '以下内容来自项目每 5 分钟自动校准并内嵌进页面的快照，可能与真实状态有最多几分钟的偏差。';
-      } else if (_wsDataSource === 'none') {
-        upd.textContent = '⚠ 暂无可用数据';
-        upd.title = '内嵌快照缺失且所有网络请求均失败，请检查网络或稍后刷新。';
-      } else {
-        upd.textContent = '更新: ' + new Date().toLocaleTimeString('zh-CN');
-        upd.title = '';
-      }
-    }
-  }
-
-  function setLoading(v) {
-    var btn = document.getElementById('ws-refresh');
-    var dot = document.getElementById('ws-loading');
-    if (btn) btn.disabled = v;
-    if (dot) dot.style.display = v ? 'inline-block' : 'none';
   }
 
   function initTabs() {
@@ -4760,8 +4819,30 @@
     });
   }
 
+  /* 国服/国际服切换按钮：当前只是交互壳(状态切换+localStorage持久化+脉冲反馈)，
+     真正按服务器切换页面内容是 Phase D 的主线任务，国服数据管线/汉化没做完前
+     先不接，避免给用户"已经能切换国服"的错误印象。 */
+  var WS_SERVER_LS = 'wf_ep_server';
+  function initServerSwitch() {
+    var btn = document.getElementById('ws-server-switch');
+    if (!btn) return;
+    var isCn = false;
+    try { isCn = localStorage.getItem(WS_SERVER_LS) === 'cn'; } catch (e) {}
+    btn.setAttribute('aria-pressed', isCn ? 'true' : 'false');
+    btn.addEventListener('click', function () {
+      isCn = !isCn;
+      btn.setAttribute('aria-pressed', isCn ? 'true' : 'false');
+      try { localStorage.setItem(WS_SERVER_LS, isCn ? 'cn' : 'intl'); } catch (e) {}
+      btn.classList.remove('ws-ssw-pulse');
+      void btn.offsetWidth;             // 强制重排，保证连续快速点击时脉冲能重新播放
+      btn.classList.add('ws-ssw-pulse');
+      setTimeout(function () { btn.classList.remove('ws-ssw-pulse'); }, 600);
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initTabs();
+    initServerSwitch();
 
     /* 先用 localStorage 缓存立即渲染，消除首屏"加载中"闪烁 */
     var eps = [
@@ -4810,23 +4891,17 @@
     /* 有缓存时先用缓存渲染，但载入界面仍等 fetchAll 完成后才消失 */
     if (hasCached || _arbV2) renderAll();
 
-    setLoading(true);
     fetchAll().then(function () {
-      setLoading(false);
       renderAll();
       window._wsSplashHide && window._wsSplashHide();
     });
 
-    /* 每 90 秒刷新 API 数据（避免频繁触发 429）；v2 时刻表 7 天缓存自动维护 */
+    /* 用户侧静默每 30 秒自动刷新一次（无可见按钮/时间戳，纯后台行为；
+       不是缓存也不是 Action，是网页自己在浏览器里定时重新拉取）。
+       v2 时刻表 7 天缓存自动维护，不受此影响。 */
     setInterval(function () {
       fetchAll().then(renderAll);
-    }, 90000);
-
-    var btn = document.getElementById('ws-refresh');
-    if (btn) btn.addEventListener('click', function () {
-      setLoading(true);
-      fetchAll().then(function () { setLoading(false); renderAll(); });
-    });
+    }, 30000);
 
     initDnaNav();
   });
