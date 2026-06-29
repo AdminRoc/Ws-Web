@@ -5451,6 +5451,39 @@
     ].filter(Boolean);
   }
 
+  /* 水墨完全合拢时浮在中央的 Warframe 官方 logo(本地托管，固定宽高比 489.7:181.1)，
+     脚本解析时就预加载，等真正触发过渡时图已经在内存里，不会等待网络。 */
+  var _wfLogoImg = new Image();
+  var _wfLogoReady = false;
+  var _wfLogoRatio = 489.7 / 181.1;
+  _wfLogoImg.onload = function () { _wfLogoReady = true; };
+  _wfLogoImg.src = 'picture/warframe-logo.svg';
+
+  /* logo 的渐显/渐隐时间表：在 IN 阶段后半段(墨迹快合拢时)淡入，HOLD 阶段满血停留，
+     OUT 阶段刚开始撤离的前 40% 内淡出——比内容淡入更早消失，不会和露出的新内容叠在一起。 */
+  function _inkLogoAlpha(elapsed, IN_MS, HOLD_MS, OUT_MS) {
+    var fadeInStart = IN_MS * 0.55;
+    if (elapsed < fadeInStart) return 0;
+    if (elapsed < IN_MS) return (elapsed - fadeInStart) / (IN_MS - fadeInStart);
+    if (elapsed < IN_MS + HOLD_MS) return 1;
+    var outFadeMs = OUT_MS * 0.4;
+    var intoOut = elapsed - IN_MS - HOLD_MS;
+    if (intoOut < outFadeMs) return 1 - intoOut / outFadeMs;
+    return 0;
+  }
+  function _inkDrawLogo(ctx, w, h, alpha) {
+    if (!_wfLogoReady || alpha <= 0.01) return;
+    var logoW = Math.min(w, h) * 0.96;
+    var logoH = logoW / _wfLogoRatio;
+    var a = Math.min(1, alpha);
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.shadowColor = 'rgba(255,226,134,' + (0.75 * a).toFixed(3) + ')';
+    ctx.shadowBlur = 30;
+    ctx.drawImage(_wfLogoImg, w / 2 - logoW / 2, h / 2 - logoH / 2, logoW, logoH);
+    ctx.restore();
+  }
+
   /* 单个墨点的不规则轮廓：以 (cx,cy) 为中心，沿 segs 个角度采样，每个采样角的
      半径 = baseR * progress * (1 + 多层正弦噪声*wobble) ，noise 用该墨点自带的
      随机相位偏移(phaseA/phaseB/phaseC)，让每个点的毛边形状都不重复。 */
@@ -5543,8 +5576,8 @@
     canvas.style.filter = 'blur(2.5px)';
 
     var seeds = _inkMakeSeeds(w, h);
-    var STAGGER_IN = 380, STAGGER_OUT = 420;
-    var IN_MS = 1050, HOLD_MS = 500, OUT_MS = 1300;
+    var STAGGER_IN = 460, STAGGER_OUT = 520;
+    var IN_MS = 1300, HOLD_MS = 600, OUT_MS = 1600;     /* 总计 3500ms */
     var SEGS = 22;
 
     overlay.classList.add('ws-ink-on');
@@ -5552,21 +5585,22 @@
     /* 真实页面内容先于墨点铺满完成隐身，比墨迹本身更早归零 */
     if (waapiOk) {
       content.forEach(function (el) {
-        el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 360, easing: 'ease-in', fill: 'forwards' });
+        el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 420, easing: 'ease-in', fill: 'forwards' });
       });
     } else {
       content.forEach(function (el) { el.style.opacity = '0'; });
     }
 
     var phase = 'in';            /* 'in' | 'hold' | 'out' | 'done' */
-    var phaseStart = performance.now();
-    var holdTimer = null;
+    var globalStart = performance.now();
+    var phaseStart = globalStart;
     var coveredFired = false;
     var fadeInFired = false;
     var rafId = null;
 
     function drawFrame(now) {
       var t = now - phaseStart;
+      var elapsed = now - globalStart;
       ctx.clearRect(0, 0, w, h);
 
       var avgProgress;
@@ -5587,6 +5621,7 @@
         ctx.fillStyle = '#0a0704';
         ctx.fill(path);
         _inkDrawRim(ctx, w, h, avgProgress, true);
+        _inkDrawLogo(ctx, w, h, _inkLogoAlpha(elapsed, IN_MS, HOLD_MS, OUT_MS));
 
         if (avgProgress > 0.985 && !coveredFired) {
           coveredFired = true;
@@ -5604,6 +5639,7 @@
         });
         ctx.fillStyle = '#0a0704';
         ctx.fill(path2);
+        _inkDrawLogo(ctx, w, h, _inkLogoAlpha(elapsed, IN_MS, HOLD_MS, OUT_MS));
         if (t >= HOLD_MS) {
           phase = 'out';
           phaseStart = now;
@@ -5612,11 +5648,11 @@
               if (fadeInFired) return;
               fadeInFired = true;
               content.forEach(function (el) {
-                el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 950, easing: 'ease-out', fill: 'forwards' });
+                el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1150, easing: 'ease-out', fill: 'forwards' });
               });
-            }, 140);
+            }, 220);
           } else {
-            setTimeout(function () { content.forEach(function (el) { el.style.opacity = '1'; }); }, 140);
+            setTimeout(function () { content.forEach(function (el) { el.style.opacity = '1'; }); }, 220);
           }
         }
       } else if (phase === 'out') {
@@ -5642,6 +5678,7 @@
         ctx.fillStyle = '#0a0704';
         ctx.fill(path3);
         _inkDrawRim(ctx, w, h, avgProgress, false);
+        _inkDrawLogo(ctx, w, h, _inkLogoAlpha(elapsed, IN_MS, HOLD_MS, OUT_MS));
         if (done2) {
           phase = 'done';
         }
@@ -5692,7 +5729,7 @@
         _auxState = _auxByServer[_currentServer];   /* 立即重新指向，不等下一轮 30 秒轮询 */
         renderAll();
       });
-      setTimeout(function () { _inkPlaying = false; }, 3100);   /* 略长于 IN+HOLD+OUT 总时长(2850ms) */
+      setTimeout(function () { _inkPlaying = false; }, 3750);   /* 略长于 IN+HOLD+OUT 总时长(3500ms) */
       btn.classList.remove('ws-ssw-pulse');
       void btn.offsetWidth;             // 强制重排，保证连续快速点击时脉冲能重新播放
       btn.classList.add('ws-ssw-pulse');
