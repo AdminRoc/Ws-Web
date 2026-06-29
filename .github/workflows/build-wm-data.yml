@@ -57,16 +57,32 @@ jobs:
         run: rm -f droptables.html
 
       - name: 提交并推送(只提交产物,无变化时跳过)
+        id: commit
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/wm-items.json data/drops-index.json
-          git diff --staged --quiet && { echo "无实质变动,跳过提交"; exit 0; }
+          git diff --staged --quiet && { echo "无实质变动,跳过提交"; echo "pushed=false" >> "$GITHUB_OUTPUT"; exit 0; }
           git commit -m "data: update item-search data [skip ci]"
           for i in 1 2 3 4 5; do
-            if git push; then echo "推送成功(第 $i 次)"; exit 0; fi
+            if git push; then
+              echo "推送成功(第 $i 次)"
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
             echo "推送被拒(第 $i 次),拉取远端后 rebase 重试..."
             git pull --rebase --autostash origin main || true
           done
           echo "重试多次仍推送失败" >&2
           exit 1
+
+      - name: 刷新腾讯云 CDN 缓存(让刚更新的数据立刻生效,不等缓存自然过期)
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+          TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+        run: |
+          pip install --quiet tencentcloud-sdk-python
+          python3 .github/scripts/purge_tencent_cdn.py \
+            "https://wfspeed.run/data/wm-items.json" \
+            "https://wfspeed.run/data/drops-index.json"
