@@ -175,6 +175,55 @@
       0%   { opacity: .9; transform: scale(1); }
       100% { opacity: 0; transform: scale(1.35); }
     }
+
+    /* ══ 国服/国际服切换水墨过渡 ══ */
+    .ws-ink-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9990;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .ws-ink-overlay.ws-ink-on { opacity: 1; visibility: visible; }
+    .ws-ink-blobs {
+      position: absolute;
+      inset: 0;
+      filter: url(#wsInkGoo);
+      will-change: filter;
+    }
+    .ws-ink-blob {
+      position: absolute;
+      width: 62vmax;
+      height: 62vmax;
+      border-radius: 46% 54% 52% 48% / 50% 45% 55% 50%;
+      background: radial-gradient(circle at 42% 38%, #100c06 0%, #0a0704 58%, rgba(10,7,4,0) 100%);
+      transform: scale(0);
+      will-change: transform;
+    }
+    .ws-ink-blob-tl { top: -22vmax; left: -22vmax; transform-origin: 68% 68%; }
+    .ws-ink-blob-tr { top: -22vmax; right: -22vmax; transform-origin: 32% 68%; }
+    .ws-ink-blob-bl { bottom: -22vmax; left: -22vmax; transform-origin: 68% 32%; }
+    .ws-ink-blob-br { bottom: -22vmax; right: -22vmax; transform-origin: 32% 32%; }
+    .ws-ink-blob-tm { top: -34vmax; left: 50%; margin-left: -31vmax; transform-origin: 50% 82%; }
+    .ws-ink-blob-bm { bottom: -34vmax; left: 50%; margin-left: -31vmax; transform-origin: 50% 18%; }
+    /* 墨边缘的暗金辉光：固定在视口中心，随墨团收拢/撤离同步缩放，
+       象征"最后一点画面被墨吞没/最先露出的一点光"，呼应本站暗金基调。 */
+    .ws-ink-rim {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 70vmax; height: 70vmax;
+      margin: -35vmax 0 0 -35vmax;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,226,134,0) 55%, rgba(201,164,50,.5) 64%, rgba(255,226,134,.18) 70%, rgba(201,164,50,0) 78%);
+      transform: scale(0);
+      will-change: transform, opacity;
+      opacity: 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ws-ink-blob, .ws-ink-rim { transition: none !important; }
+    }
+
     /* ── 章节容器 ── */
     .ws-section { margin-bottom: 3rem; }
     .ws-section-hd {
@@ -1267,7 +1316,7 @@
       letter-spacing: .12em;
     }
     /* ══ 赏金任务上3格(开放世界平原)：任务目标+等级区间+阶段数+奖励图标横排 ══ */
-    .ws-bb-jobs { padding: .4rem 0; max-height: 360px; overflow-y: auto; }
+    .ws-bb-jobs { padding: .4rem 0; }   /* 全量展示，不设内部滚动条，不需要用户翻页才能看全 */
     .ws-bb-job { padding: .5rem 1rem; border-bottom: 1px solid var(--ws-sep); }
     .ws-bb-job:last-child { border-bottom: none; }
     .ws-bb-job-hd {
@@ -2554,15 +2603,6 @@
       <div id="ws-baro"><div class="ws-empty">加载中…</div></div>
     </section>
 
-    <!-- ══ 警报 ══ -->
-    <section id="ws-sec-alerts" class="ws-section">
-      <div class="ws-section-hd">
-        <span class="ws-section-title">警报</span>
-        <span class="ws-section-en">Alerts</span>
-      </div>
-      <div id="ws-alerts"><div class="ws-empty">加载中…</div></div>
-    </section>
-
     <!-- ══ 4. 虚空裂缝 ══ -->
     <section id="ws-sec-fissures" class="ws-section">
       <div class="ws-section-hd">
@@ -2735,6 +2775,15 @@
       <div id="ws-construction"><div class="ws-empty">加载中…</div></div>
     </section>
 
+    <!-- ══ 警报 ══ -->
+    <section id="ws-sec-alerts" class="ws-section">
+      <div class="ws-section-hd">
+        <span class="ws-section-title">警报</span>
+        <span class="ws-section-en">Alerts</span>
+      </div>
+      <div id="ws-alerts"><div class="ws-empty">加载中…</div></div>
+    </section>
+
     <!-- ══ 22. 限时活动(挪到最下方——经常没有内容，放前面容易显得空) ══ -->
     <section id="ws-sec-events" class="ws-section">
       <div class="ws-section-hd">
@@ -2754,6 +2803,30 @@
     </section>
 
   </main>
+
+  <!-- ══ 国服/国际服切换的水墨过渡：四角+上下共6个有机墨团，靠 SVG 滤镜融合成一整片
+       墨色，从四周收拢盖满全屏(此时切换内容)，再反向从中心撤回四周直至消散。 ══ -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="wsInkGoo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="22" result="wsInkBlur" />
+        <feColorMatrix in="wsInkBlur" type="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="wsInkGooed" />
+        <feComposite in="SourceGraphic" in2="wsInkGooed" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+  <div class="ws-ink-overlay" id="ws-ink-overlay" aria-hidden="true">
+    <div class="ws-ink-rim"></div>
+    <div class="ws-ink-blobs">
+      <div class="ws-ink-blob ws-ink-blob-tl"></div>
+      <div class="ws-ink-blob ws-ink-blob-tr"></div>
+      <div class="ws-ink-blob ws-ink-blob-bl"></div>
+      <div class="ws-ink-blob ws-ink-blob-br"></div>
+      <div class="ws-ink-blob ws-ink-blob-tm"></div>
+      <div class="ws-ink-blob ws-ink-blob-bm"></div>
+    </div>
+  </div>
 
   <!-- ══ DNA 快速导航：主按钮→四分类(短期/每日/每周/其他)→DNA 分叉出各模块跳转 ══
        分类与模块清单在脚本里的 WS_DNA_NAV 维护，按刷新周期分桶、桶内按刷新由快到慢排序 -->
@@ -4176,6 +4249,18 @@
   function renderArchon() {
     var el = document.getElementById('ws-archon');
     if (!el) return;
+    if (_currentServer === 'cn') {
+      var dCnA = _auxState && _auxState.archonHunt;
+      if (!dCnA) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+      el.innerHTML =
+        '<div class="ws-mission-card">' +
+          '<div class="ws-mission-hd">' +
+            '<span class="ws-mission-boss">' + (dCnA.boss || '--') + '</span>' +
+            '<span class="ws-mission-timer" id="wt-archon"></span>' +
+          '</div>' + (dCnA.missions || []).map(cnMissionRowHtml).join('') + '</div>';
+      if (dCnA.expiry) countdown(document.getElementById('wt-archon'), dCnA.expiry);
+      return;
+    }
     var d = D.archonHunt;
     if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
     var rows = (d.missions || []).map(function (m, i) {
@@ -4198,6 +4283,35 @@
   function renderBaro() {
     var el = document.getElementById('ws-baro');
     if (!el) return;
+    if (_currentServer === 'cn') {
+      var dCnB = _auxState && _auxState.voidTrader;
+      if (!dCnB) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+      var activeCnB = dCnB.active;
+      var invCnB    = dCnB.inventory || [];
+      var hdClsCnB  = activeCnB ? 'ws-baro-active' : 'ws-baro-away';
+      var invHtmlCnB = (activeCnB && invCnB.length) ?
+        '<div class="ws-baro-inv-grid">' +
+          invCnB.slice(0, 30).map(function (item) {
+            return '<div class="ws-baro-item">' +
+              '<span class="ws-bi-name">' + (item.item || item.name || '--') + '</span>' +
+              '<span class="ws-bi-cost">' + (item.ducats || 0) + ' 金质 + ' +
+                (item.credits || 0).toLocaleString() + ' 点数</span>' +
+              '</div>';
+          }).join('') +
+        '</div>' : (activeCnB ? '<div class="ws-empty">商人背包暂无物品数据</div>' : '');
+      el.innerHTML =
+        '<div class="ws-baro-hd ' + hdClsCnB + '">' +
+          '<div class="ws-baro-status">' + (activeCnB ? '✦ 已抵达' : '⏳ 前往中') + '</div>' +
+          '<div class="ws-baro-loc">地点：' + (dCnB.node || '--') + '</div>' +
+          '<div class="ws-baro-tw">' +
+            '<span>' + (activeCnB ? '离开倒计时：' : '到达倒计时：') + '</span>' +
+            '<span class="ws-baro-t" id="wt-baro"></span>' +
+          '</div>' +
+        '</div>' + invHtmlCnB;
+      var ttCnB = activeCnB ? dCnB.expiry : dCnB.activation;
+      if (ttCnB) countdown(document.getElementById('wt-baro'), ttCnB, true);
+      return;
+    }
     var d = D.voidTrader;
     if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
     var active      = d.active;
@@ -4270,6 +4384,31 @@
   function renderVarzia() {
     var el = document.getElementById('ws-varzia');
     if (!el) return;
+    if (_currentServer === 'cn') {
+      var dCnV = _auxState && _auxState.varzia;
+      if (!dCnV) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+      var nowCnV    = Date.now();
+      var activeCnV = !!(dCnV.activation && dCnV.expiry && dCnV.activation <= nowCnV && nowCnV < dCnV.expiry);
+      var invCnV    = dCnV.inventory || [];
+      var invHtmlCnV = (activeCnV && invCnV.length) ?
+        '<div class="ws-baro-inv-grid">' +
+          invCnV.slice(0, 60).map(function (item) {
+            return '<div class="ws-baro-item"><span class="ws-bi-name">' + (item.name || '--') + '</span></div>';
+          }).join('') +
+        '</div>' : (activeCnV ? '<div class="ws-empty">商人背包暂无物品数据</div>' : '');
+      el.innerHTML =
+        '<div class="ws-baro-hd ' + (activeCnV ? 'ws-baro-active' : 'ws-baro-away') + '">' +
+          '<div class="ws-baro-status">' + (activeCnV ? '✦ 已抵达' : '⏳ 前往中') + '</div>' +
+          (dCnV.node ? '<div class="ws-baro-loc">地点：' + dCnV.node + '</div>' : '') +
+          '<div class="ws-baro-tw">' +
+            '<span>' + (activeCnV ? '离开倒计时：' : '到达倒计时：') + '</span>' +
+            '<span class="ws-baro-t" id="wt-varzia"></span>' +
+          '</div>' +
+        '</div>' + invHtmlCnV;
+      var ttCnV = activeCnV ? dCnV.expiry : dCnV.activation;
+      if (ttCnV) countdown(document.getElementById('wt-varzia'), ttCnV, true);
+      return;
+    }
     var d = D.vaultTrader;
     if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
     var now         = Date.now();
@@ -4332,6 +4471,26 @@
   function renderNightwave() {
     var el = document.getElementById('ws-nightwave');
     if (!el) return;
+    if (_currentServer === 'cn') {
+      /* 国服字段只给 {daily布尔,name,desc}，没有 isElite/isPermanent/reputation 这些细分，
+         只能按"每日/每周及赛季"两档分组，没有声望值徽章可显示。 */
+      var dCnN = _auxState && _auxState.nightwave;
+      if (!dCnN) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+      var allCnN   = dCnN.challenges || [];
+      var dailyCnN = allCnN.filter(function (c) { return c.daily; });
+      var restCnN  = allCnN.filter(function (c) { return !c.daily; });
+      function cnRow(c) {
+        return '<div class="ws-nw-challenge"><span class="ws-nw-title">' + (c.name || '--') +
+          (c.desc ? '：' + c.desc : '') + '</span></div>';
+      }
+      function cnGroup(title, arr) {
+        if (!arr.length) return '';
+        return '<div class="ws-nw-group"><div class="ws-nw-group-title">' + title + '</div>' + arr.map(cnRow).join('') + '</div>';
+      }
+      var htmlCnN = cnGroup('每日挑战', dailyCnN) + cnGroup('每周及赛季挑战', restCnN);
+      el.innerHTML = htmlCnN ? '<div class="ws-nw-groups">' + htmlCnN + '</div>' : '<div class="ws-empty">当前无午夜电波活动</div>';
+      return;
+    }
     var d = D.nightwave;
     if (!d) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
     var all    = d.activeChallenges || [];
@@ -4364,6 +4523,33 @@
   function renderAlerts() {
     var el = document.getElementById('ws-alerts');
     if (!el) return;
+    if (_currentServer === 'cn') {
+      var listCnAl = _auxState && Array.isArray(_auxState.alerts) ? _auxState.alerts : null;
+      if (!listCnAl) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+      var nowCnAl = Date.now();
+      var activeCnAl = listCnAl.filter(function (a) { return !a.expiry || a.expiry > nowCnAl; });
+      if (!activeCnAl.length) { el.innerHTML = '<div class="ws-empty">当前无活跃警报</div>'; return; }
+      el.innerHTML = '<div class="ws-alert-list">' + activeCnAl.map(function (a, i) {
+        var rw = a.reward || {};
+        var chipsCnAl = [];
+        if (rw.credits) chipsCnAl.push('<span class="ws-alert-chip">' + rw.credits.toLocaleString() + ' 现金</span>');
+        (rw.entries || []).forEach(function (e) {
+          chipsCnAl.push('<span class="ws-alert-chip">' + (e.count > 1 ? e.count + '× ' : '') + (e.name || '--') + '</span>');
+        });
+        return '<div class="ws-alert-row">' +
+          '<div class="ws-alert-hd">' +
+            '<span class="ws-alert-node">' + (a.node || '--') + ' (' + (a.system || '--') + ')' + '</span>' +
+            '<span class="ws-alert-timer" id="wt-alert-' + i + '"></span>' +
+          '</div>' +
+          '<div class="ws-alert-meta">' + (a.mission || '--') + ' · ' + (a.faction || '--') + '</div>' +
+          (chipsCnAl.length ? '<div class="ws-alert-rewards">' + chipsCnAl.join('') + '</div>' : '') +
+          '</div>';
+      }).join('') + '</div>';
+      activeCnAl.forEach(function (a, i) {
+        if (a.expiry) countdown(document.getElementById('wt-alert-' + i), a.expiry, true);
+      });
+      return;
+    }
     var list = D.alerts;
     if (!Array.isArray(list)) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
     var active = list.filter(function (a) { return a.active !== false; });
@@ -4402,6 +4588,38 @@
   function renderInvasions() {
     var el = document.getElementById('ws-invasions');
     if (!el) return;
+    if (_currentServer === 'cn') {
+      var invCnI = _auxState && Array.isArray(_auxState.invasions) ? _auxState.invasions : null;
+      if (!invCnI) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+      var activeCnI = invCnI.filter(function (i) { return !i.completed; });
+      if (!activeCnI.length) { el.innerHTML = '<div class="ws-empty">当前无活跃入侵</div>'; return; }
+      function rewardCnI(side) {
+        if (!side || !side.entries) return '';
+        return side.entries.map(function (e) { return (e.count > 1 ? e.count + '× ' : '') + (e.name || '--'); }).join(', ');
+      }
+      el.innerHTML = '<div class="ws-inv-list">' + activeCnI.map(function (iv) {
+        var comp = Math.max(0, Math.min(100, Math.round(iv.completion || 0)));
+        return '<div class="ws-inv-row">' +
+          '<div class="ws-inv-node">' + (iv.node || '--') + ' (' + (iv.system || '--') + ')' + '</div>' +
+          '<div class="ws-inv-vs">' +
+            '<span class="ws-inv-side">' +
+              '<span class="ws-inv-faction">' + (iv.attackerFaction || '--') + '</span>' +
+              '<span class="ws-inv-reward">' + rewardCnI(iv.attackerReward) + '</span>' +
+            '</span>' +
+            '<span class="ws-inv-divider">vs</span>' +
+            '<span class="ws-inv-side">' +
+              '<span class="ws-inv-faction">' + (iv.defenderFaction || '--') + '</span>' +
+              '<span class="ws-inv-reward">' + rewardCnI(iv.defenderReward) + '</span>' +
+            '</span>' +
+          '</div>' +
+          '<div class="ws-inv-progress">' +
+            '<div class="ws-inv-bar"><div class="ws-inv-fill" style="width:' + (50 + comp / 2) + '%"></div></div>' +
+            '<span class="ws-inv-pct">' + comp + '%</span>' +
+          '</div>' +
+          '</div>';
+      }).join('') + '</div>';
+      return;
+    }
     var inv = D.invasions;
     if (!Array.isArray(inv)) { el.innerHTML = '<div class="ws-empty">获取失败</div>'; return; }
     var active = inv.filter(function (i) { return !i.completed; });
@@ -4607,13 +4825,17 @@
      中文分页下额外置顶 3 个我方自建的资讯站外链接(B站UP主)；国服内容本就是国服
      自己发布的中文公告(wf.qq.com / wegame.com.cn)，不设语言分页。 */
   var NEWS_PINNED_LINKS = [
-    { t: 'ZJM最新发布', href: 'https://space.bilibili.com/16730771/dynamic' },
-    { t: '012最新发布', href: 'https://space.bilibili.com/53737/dynamic' },
-    { t: '官号资讯',     href: 'https://space.bilibili.com/3546721195919964/dynamic' }
+    { t: 'jxtichi012 · 最新发布', href: 'https://space.bilibili.com/53737/dynamic' },
+    { t: 'ZJM · 最新发布',        href: 'https://space.bilibili.com/16730771/dynamic' },
+    { t: 'PlayWarframe · 官号资讯', href: 'https://space.bilibili.com/3546721195919964/dynamic' }
   ];
-  var _newsLang = 'zh';   /* 'zh' | 'en' | 'all'，仅国际服用得到 */
+  var _newsLang = 'zh';   /* 'zh' | 'en'，仅国际服用得到("全部"选项没有实际意义，已去掉) */
   function newsItemHtml(n) {
     var text = (n.messages && (n.messages.zh || n.messages.en)) || n.message || '--';
+    /* 内部消息 key 形如 /Lotus/Language/CommunityMessages/JoinDiscord 这种没翻译到的
+       原始路径，但只要看得出是 Discord 邀请类公告，就统一显示成一句正常的话，
+       不要把内部路径原样露出来。 */
+    if (/discord/i.test(text)) text = '现在加入 Warframe 的 Discord 服务器！';
     var d = n.date ? new Date(n.date).toLocaleDateString('zh-CN') : '';
     var inner = n.link
       ? '<a class="ws-news-link" href="' + n.link + '" target="_blank" rel="noopener">' + text + '</a>'
@@ -4638,14 +4860,14 @@
 
     var tabsHtml = isCn ? '' :
       '<div class="ws-news-tabs">' +
-        ['zh', 'en', 'all'].map(function (key) {
-          var label = key === 'zh' ? '中文' : key === 'en' ? '英文' : '全部';
+        ['zh', 'en'].map(function (key) {
+          var label = key === 'zh' ? '中文' : '英文';
           return '<button type="button" class="ws-news-tab' + (_newsLang === key ? ' active' : '') + '" data-lang="' + key + '">' + label + '</button>';
         }).join('') +
       '</div>';
 
     var filtered = list.filter(function (n) {
-      if (isCn || _newsLang === 'all') return true;
+      if (isCn) return true;
       return n.messages && n.messages[_newsLang];
     }).sort(function (a, b) { return (b.date || 0) - (a.date || 0); });
 
@@ -4709,14 +4931,14 @@
   }
 
   /* ══ 渲染：赏金任务（原"重要赏金任务"，现扩充为 6 格：
-     上 3 格=开放世界三平原(Ostron/索拉里斯/英择谛，来自同源镜像 _auxState.bountyBoard，
-     即对方站点的"开放世界赏金"模块对应内容)；
-     下 3 格=守望者/科维兽/六人组(来自 oracle.browse.wf/bounty-cycle，对应对方的"赏金轮换"模块)。
+     上 3 格=守望者/科维兽/六人组(国际服来自 oracle.browse.wf/bounty-cycle，国服来自同源镜像
+     _auxState.bounties.groups)；
+     下 3 格=开放世界三平原(英择谛/索拉里斯/Ostron，来自同源镜像 _auxState.bountyBoard)。
      两段拼进同一个 .ws-bounty-list 三列网格，6 张卡自然换行成 2 行 3 列。
      奖励图标 icon 字段是 content.warframe.com 官方游戏 CDN 的公开资源地址，
      任何站点都能直接引用，不存在"借鉴需隐藏"的问题；先在这里展示+用 harvestRewardIcons()
      顺手攒一份去重快照供以后做"物品检索"模块时直接复用，现在还不建那个模块。 ══ */
-  var BOUNTY_BOARD_ORDER = ['CetusSyndicate', 'SolarisSyndicate', 'EntratiSyndicate'];
+  var BOUNTY_BOARD_ORDER = ['EntratiSyndicate', 'SolarisSyndicate', 'CetusSyndicate'];
   var BOUNTY_BOARD_ZH    = { CetusSyndicate: 'Ostron', SolarisSyndicate: '索拉里斯', EntratiSyndicate: '英择谛' };
 
   function bbRewardHtml(r) {
@@ -4729,7 +4951,7 @@
     var jobs = ((entry && entry.jobs) || []).map(function (j) {
       return '<div class="ws-bb-job">' +
         '<div class="ws-bb-job-hd">' +
-          '<span class="ws-bb-job-obj">' + (j.objective || '--') + '</span>' +
+          '<span class="ws-bb-job-obj">' + (j.objective || '委托任务') + '</span>' +
           '<span class="ws-bb-job-lvl">Lv ' + j.minLevel + '-' + j.maxLevel + '</span>' +
           '<span class="ws-bb-job-stages">' + (j.stages || 0) + ' 阶段</span>' +
         '</div>' +
@@ -4765,15 +4987,46 @@
     var el = document.getElementById('ws-bounties');
     if (!el) return;
 
-    var bbList = _auxState && Array.isArray(_auxState.bountyBoard) ? _auxState.bountyBoard : null;
-    var byTag = {};
-    if (bbList) { bbList.forEach(function (s) { byTag[s.tag] = s; }); harvestRewardIcons(bbList); }
-    var topHtml = BOUNTY_BOARD_ORDER.map(function (tag) { return bbCardHtml(tag, byTag[tag]); }).join('');
-
     var tags = ['ZarimanSyndicate', 'EntratiLabSyndicate', 'HexSyndicate'];
-    var bottomHtml;
-    if (_bountyCycle && _bountyCycle.bounties) {
-      bottomHtml = tags.map(function (tag) {
+
+    /* ── 上 3 格：守望者/科维兽/六人组 ── */
+    var groupHtml;
+    if (_currentServer === 'cn') {
+      var groupsCn = _auxState && _auxState.bounties && Array.isArray(_auxState.bounties.groups) ? _auxState.bounties.groups : null;
+      if (groupsCn) {
+        var byTagCn = {};
+        groupsCn.forEach(function (g) { byTagCn[g.tag] = g; });
+        groupHtml = tags.map(function (tag) {
+          var meta = BOUNTY_META[tag];
+          var g    = byTagCn[tag];
+          var jobs = (g && g.jobs) || [];
+          var lvls = BOUNTY_LVLS[tag] || [];
+          var tid  = 'wt-bounty-' + tag;
+          var jobsHtml = jobs.map(function (j, idx) {
+            var range   = lvls[idx] ? lvls[idx][0] + '–' + lvls[idx][1] : '--';
+            var allyRaw = j.ally ? j.ally.split('/').pop() : j.ally;
+            var ally    = allyRaw ? (HEX_ALLIES[allyRaw] || allyRaw) : null;
+            var typeTxt = (j.node || '--') + ' · ' + (j.mission || '--') + (j.challenge ? '：' + j.challenge : '');
+            return '<div class="ws-bounty-job">' +
+                '<span class="ws-bj-lvl">Lv ' + range + '</span>' +
+                '<span class="ws-bj-type">' + typeTxt + '</span>' +
+                (ally ? '<span class="ws-bj-ally">' + ally + '</span>' : '') +
+              '</div>';
+          }).join('');
+          return '<div class="ws-bounty-syndicate">' +
+              '<div class="ws-bounty-syn-hd">' +
+                '<span class="ws-bounty-syn-name">' + meta.zh + '</span>' +
+                '<span class="ws-bounty-syn-en">'   + meta.en + '</span>' +
+                '<span class="ws-bounty-timer" id="' + tid + '"></span>' +
+              '</div>' +
+              '<div class="ws-bounty-jobs">' + (jobsHtml || '<div class="ws-empty">加载中…</div>') + '</div>' +
+            '</div>';
+        }).join('');
+      } else {
+        groupHtml = tags.map(function () { return '<div class="ws-bounty-syndicate"><div class="ws-empty">加载中…</div></div>'; }).join('');
+      }
+    } else if (_bountyCycle && _bountyCycle.bounties) {
+      groupHtml = tags.map(function (tag) {
         var meta = BOUNTY_META[tag];
         var jobs = (_bountyCycle.bounties[tag] || []);
         var lvls = BOUNTY_LVLS[tag] || [];
@@ -4799,10 +5052,16 @@
           '</div>';
       }).join('');
     } else {
-      bottomHtml = tags.map(function () { return '<div class="ws-bounty-syndicate"><div class="ws-empty">赏金数据加载中…</div></div>'; }).join('');
+      groupHtml = tags.map(function () { return '<div class="ws-bounty-syndicate"><div class="ws-empty">赏金数据加载中…</div></div>'; }).join('');
     }
 
-    el.innerHTML = '<div class="ws-bounty-list">' + topHtml + bottomHtml + '</div>';
+    /* ── 下 3 格：英择谛/索拉里斯/Ostron ── */
+    var bbList = _auxState && Array.isArray(_auxState.bountyBoard) ? _auxState.bountyBoard : null;
+    var byTag = {};
+    if (bbList) { bbList.forEach(function (s) { byTag[s.tag] = s; }); harvestRewardIcons(bbList); }
+    var boardHtml = BOUNTY_BOARD_ORDER.map(function (tag) { return bbCardHtml(tag, byTag[tag]); }).join('');
+
+    el.innerHTML = '<div class="ws-bounty-list">' + groupHtml + boardHtml + '</div>';
 
     if (bbList) {
       BOUNTY_BOARD_ORDER.forEach(function (tag) {
@@ -4810,7 +5069,10 @@
         if (entry && entry.expiry) countdown(document.getElementById('wt-bb-' + tag), entry.expiry - AUX_COUNTDOWN_LEAD_MS, true);
       });
     }
-    if (_bountyCycle && _bountyCycle.expiry) {
+    if (_currentServer === 'cn') {
+      var expCn = _auxState && _auxState.bounties && _auxState.bounties.expiry;
+      if (expCn) tags.forEach(function (tag) { countdown(document.getElementById('wt-bounty-' + tag), expCn - AUX_COUNTDOWN_LEAD_MS); });
+    } else if (_bountyCycle && _bountyCycle.expiry) {
       tags.forEach(function (tag) {
         countdown(document.getElementById('wt-bounty-' + tag), _bountyCycle.expiry);
       });
@@ -4941,6 +5203,28 @@
   function renderDarvo() {
     var el = document.getElementById('ws-darvo');
     if (!el) return;
+    if (_currentServer === 'cn') {
+      var dealsCnD = _auxState && Array.isArray(_auxState.dailyDeals) ? _auxState.dailyDeals : null;
+      if (!dealsCnD) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+      if (!dealsCnD.length) { el.innerHTML = '<div class="ws-empty">今日暂无特惠</div>'; return; }
+      el.innerHTML = '<div class="ws-darvo-grid">' +
+        dealsCnD.map(function (deal, i) {
+          return '<div class="ws-darvo-item">' +
+            '<div class="ws-darvo-name">' + (deal.name || '--') + '</div>' +
+            '<div class="ws-darvo-meta">' +
+              '<span class="ws-darvo-sale">' + (deal.sale || 0).toLocaleString() + ' ₱</span>' +
+              (deal.original ? '<span class="ws-darvo-orig">' + deal.original.toLocaleString() + ' ₱</span>' : '') +
+              (deal.discount ? '<span class="ws-darvo-disc">-' + deal.discount + '%</span>' : '') +
+            '</div>' +
+            (deal.expiry ? '<div class="ws-darvo-timer" id="wt-dv-' + i + '"></div>' : '') +
+          '</div>';
+        }).join('') +
+      '</div>';
+      dealsCnD.forEach(function (deal, i) {
+        if (deal.expiry) countdown(document.getElementById('wt-dv-' + i), deal.expiry);
+      });
+      return;
+    }
     var deals = D.dailyDeals;
     if (!Array.isArray(deals) || !deals.length) {
       el.innerHTML = '<div class="ws-empty">今日暂无特惠</div>';
@@ -5161,16 +5445,79 @@
      目前还只读 api.warframestat.us 等国际服专属数据源(D对象)，切到国服时这些暂时
      仍显示国际服内容——这是下一步要继续补的工作，不是这次的疏漏遗漏，先如实标注。
      按钮视觉目前仍是简单壳，留待国服内容补完后再回头精修。 */
+  /* 国服/国际服切换的水墨过渡：四角+上下共6个有机墨团靠 SVG 滤镜融合收拢盖满全屏，
+     盖满的瞬间(动画 finished 之后)才真正切换 _currentServer+重渲染，让用户看不到
+     内容跳变的瞬间；随后墨团反向从中心撤回四周直至消散，露出已经切好的新内容。
+     用 Web Animations API 而非 CSS transition/keyframes，时序由 JS 精确掌控、
+     compositor 加速(只动 transform/opacity)，高帧率不掉帧。 */
+  var _inkPlaying = false;
+  function playInkTransition(onCovered) {
+    var overlay = document.getElementById('ws-ink-overlay');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var waapiOk = typeof Element !== 'undefined' && typeof Element.prototype.animate === 'function';
+    if (!overlay || reduce || !waapiOk) { onCovered(); return; }
+    var blobs = Array.prototype.slice.call(overlay.querySelectorAll('.ws-ink-blob'));
+    var rim   = overlay.querySelector('.ws-ink-rim');
+    overlay.classList.add('ws-ink-on');
+
+    var IN_MS = 620, HOLD_MS = 150, OUT_MS = 700;
+    var coverEase  = 'cubic-bezier(.6,0,.2,1)';
+    var revealEase = 'cubic-bezier(.16,1,.3,1)';
+
+    var inAnims = blobs.map(function (b, i) {
+      return b.animate(
+        [{ transform: 'scale(0)' }, { transform: 'scale(1.18)' }],
+        { duration: IN_MS, delay: i * 35, easing: coverEase, fill: 'forwards' }
+      );
+    });
+    rim.style.opacity = '1';
+    rim.animate(
+      [{ transform: 'scale(0)', opacity: 0 },
+       { transform: 'scale(.55)', opacity: .9, offset: .72 },
+       { transform: 'scale(.05)', opacity: 0 }],
+      { duration: IN_MS + 80, easing: coverEase, fill: 'forwards' }
+    );
+
+    Promise.all(inAnims.map(function (a) { return a.finished; })).then(function () {
+      onCovered();                       /* 全黑覆盖的瞬间才换内容，用户完全看不到跳变 */
+      setTimeout(function () {
+        var outAnims = blobs.map(function (b, i) {
+          return b.animate(
+            [{ transform: 'scale(1.18)' }, { transform: 'scale(0)' }],
+            { duration: OUT_MS, delay: i * 30, easing: revealEase, fill: 'forwards' }
+          );
+        });
+        rim.style.opacity = '1';
+        rim.animate(
+          [{ transform: 'scale(.05)', opacity: 0 },
+           { transform: 'scale(.6)', opacity: .85, offset: .32 },
+           { transform: 'scale(1.05)', opacity: 0 }],
+          { duration: OUT_MS, easing: revealEase, fill: 'forwards' }
+        );
+        Promise.all(outAnims.map(function (a) { return a.finished; })).then(function () {
+          overlay.classList.remove('ws-ink-on');
+          blobs.forEach(function (b) { b.style.transform = ''; });
+          rim.style.opacity = '';
+        });
+      }, HOLD_MS);
+    });
+  }
+
   function initServerSwitch() {
     var btn = document.getElementById('ws-server-switch');
     if (!btn) return;
     btn.setAttribute('aria-pressed', _currentServer === 'cn' ? 'true' : 'false');
     btn.addEventListener('click', function () {
-      _currentServer = (_currentServer === 'cn') ? 'intl' : 'cn';
-      btn.setAttribute('aria-pressed', _currentServer === 'cn' ? 'true' : 'false');
-      try { localStorage.setItem(WS_SERVER_LS, _currentServer); } catch (e) {}
-      _auxState = _auxByServer[_currentServer];   /* 立即重新指向，不等下一轮 30 秒轮询 */
-      renderAll();
+      if (_inkPlaying) return;           /* 动画播放中不响应连点，避免状态错乱 */
+      _inkPlaying = true;
+      playInkTransition(function () {
+        _currentServer = (_currentServer === 'cn') ? 'intl' : 'cn';
+        btn.setAttribute('aria-pressed', _currentServer === 'cn' ? 'true' : 'false');
+        try { localStorage.setItem(WS_SERVER_LS, _currentServer); } catch (e) {}
+        _auxState = _auxByServer[_currentServer];   /* 立即重新指向，不等下一轮 30 秒轮询 */
+        renderAll();
+      });
+      setTimeout(function () { _inkPlaying = false; }, 1700);
       btn.classList.remove('ws-ssw-pulse');
       void btn.offsetWidth;             // 强制重排，保证连续快速点击时脉冲能重新播放
       btn.classList.add('ws-ssw-pulse');
@@ -5272,13 +5619,13 @@
       { t: '无尽回廊',     href: '#ws-sec-duviri' },
       { t: '沉沦之地',     href: '#ws-sec-descents' },
       { t: '信条武器轮换', href: '#ws-sec-tenet' },
-      { t: '终幕武器轮换', href: '#ws-sec-coda' }
+      { t: '终幕武器轮换', href: '#ws-sec-coda' },
+      { t: '氏族金库奖励', href: '#ws-sec-clanvault' }
     ],
     other: [
       { t: '奸商',         href: '#ws-sec-baro' },
       { t: '瓦奇娅',       href: '#ws-sec-varzia' },
       { t: '霍瓦尼亚·日历', href: '#ws-sec-calendar' },
-      { t: '氏族金库奖励', href: '#ws-sec-clanvault' },
       { t: '建造进度',     href: '#ws-sec-construction' },
       { t: '限时活动',     href: '#ws-sec-events' },
       { t: '最新资讯',     href: '#ws-sec-news' }
