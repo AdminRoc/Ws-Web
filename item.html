@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Warframe 物品检索 — 融合官方掉落来源、Warframe.market 实时买卖、中英维基查询 · WFSpeed.run">
+  <title>物品检索 Super Search — Warframe Speed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="picture/websitelogo.png">
+  <link rel="stylesheet" href="css/global.css">
+  <style>
+    .hover-text-swap { position: relative; display: inline-block; }
+    .hover-text-swap .text-cn { display: inline; transition: opacity 0.3s ease; }
+    .hover-text-swap .text-en {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap; opacity: 0;
+      transition: opacity 0.3s ease;
+      font-size: clamp(0.5rem, 1.2vw, 0.8em);
+      pointer-events: none;
+    }
+    .nav-item:hover > a .hover-text-swap .text-cn { opacity: 0; }
+    .nav-item:hover > a .hover-text-swap .text-en { opacity: 1; }
+    .nav-dropdown-menu a:hover .hover-text-swap .text-cn { opacity: 0; }
+    .nav-dropdown-menu a:hover .hover-text-swap .text-en { opacity: 1; }
+    .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-cn { opacity: 0; }
+    .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-en { opacity: 1; }
+    /* ── 大类Tab按钮 lang-en 态（中英周期切换，含active） ── */
+    .lb-tab-btn.lang-en .hover-text-swap .text-cn { opacity: 0; }
+    .lb-tab-btn.lang-en .hover-text-swap .text-en { opacity: 1; }
+    /* ── lb-back 返回首页悬停显示英文 ── */
+    .lb-back:hover .hover-text-swap .text-cn { opacity: 0; }
+    .lb-back:hover .hover-text-swap .text-en { opacity: 1; }
+    /* ── nav-submit 提交成绩悬停显示英文 ── */
+    .nav-submit:hover .hover-text-swap .text-cn { opacity: 0; }
+    .nav-submit:hover .hover-text-swap .text-en { opacity: 1; }
+    /* ── lb-tab-btn 大类按钮悬停显示英文 ── */
+    /* hover时切换，active不强制：由JS lang-en控制 */
+    .lb-tab-btn:hover .hover-text-swap .text-cn { opacity: 0; }
+    .lb-tab-btn:hover .hover-text-swap .text-en { opacity: 1; }
+    /* ── shame-btn 作弊公示悬停显示英文 ── */
+    .shame-btn:hover .shame-cn { opacity: 0; transform: translateY(-5px); }
+    .shame-btn:hover .shame-en { opacity: 1; transform: translateY(0); }
+    .lb-badge-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+    .lb-badge-en { opacity: 0; position: relative; pointer-events: none; transition: opacity .5s ease; }
+    .lb-badge-cn { position: absolute; inset: 0; opacity: 1; transition: opacity .5s ease; }
+    .lb-badge-wrap.show-en .lb-badge-en { opacity: 1; }
+    .lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; }
+    /* 移动端菜单：桌面隐藏 */
+    .nav-more-mobile { display: none; } /* mob-more-panel由global.css的max-height动画控制，无需此处设置 */
+    @media screen and (max-width: 860px) {
+      .nav-more-mobile { display: flex !important; }
+      /* mob-more-panel.open 由 global.css max-height 控制 */
+    }
+
+    /* ══════════════════════════════════════════════
+       物品检索页面专属样式 — 暗金风格(沿用世界状态页配色)
+       ══════════════════════════════════════════════ */
+    :root {
+      --ws-gold:        #c9a432;
+      --ws-gold-bright: #e2c060;
+      --ws-gold-line:   rgba(201,164,50,.28);
+      --ws-card-bg:     rgba(16,12,7,.88);
+      --ws-panel-bg:    rgba(22,16,9,.92);
+      --ws-text:        rgba(230,210,168,.92);
+      --ws-text-dim:    rgba(175,148,100,.62);
+      --ws-sep:         rgba(201,164,50,.1);
+    }
+    .it-main {
+      position: relative; z-index: 1;
+      max-width: 1080px; margin: 0 auto;
+      padding: calc(70px + 2rem) 1.4rem 5rem;
+      letter-spacing: .03em;
+    }
+    .it-header { text-align: center; margin-bottom: 2rem; }
+    .it-title {
+      font-family: var(--f-sci, 'Rajdhani', sans-serif);
+      font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800;
+      color: var(--ws-gold-bright); letter-spacing: .12em; margin: 0;
+      text-shadow: 0 0 24px rgba(201,164,50,.35);
+    }
+    .it-title .it-en { display: block; font-size: .42em; letter-spacing: .4em; color: var(--ws-text-dim); margin-top: .3rem; }
+    .it-sub { color: var(--ws-text-dim); font-size: .9rem; margin-top: .8rem; }
+
+    /* ── 搜索框 + 自动补全 ── */
+    .it-search-wrap { position: relative; max-width: 620px; margin: 2rem auto 0; }
+    .it-search-box {
+      display: flex; align-items: center; gap: .6rem;
+      background: var(--ws-panel-bg);
+      border: 1.5px solid var(--ws-gold-line); border-radius: 10px;
+      padding: .15rem .15rem .15rem 1rem;
+      box-shadow: 0 0 22px rgba(201,164,50,.12), 0 6px 24px rgba(0,0,0,.5);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .it-search-box:focus-within { border-color: var(--ws-gold); box-shadow: 0 0 30px rgba(201,164,50,.28), 0 6px 24px rgba(0,0,0,.55); }
+    .it-search-input {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: var(--ws-text); font-family: var(--f-sci, 'Rajdhani', sans-serif);
+      font-size: 1.08rem; padding: .7rem 0;
+    }
+    .it-search-input::placeholder { color: var(--ws-text-dim); }
+    .it-search-btn {
+      flex: none; width: 46px; height: 46px; border-radius: 8px;
+      border: none; cursor: pointer; color: #1a1206;
+      background: linear-gradient(135deg, var(--ws-gold-bright), var(--ws-gold));
+      display: flex; align-items: center; justify-content: center;
+      transition: filter .2s;
+    }
+    .it-search-btn:hover { filter: brightness(1.12); }
+    .it-ac {
+      position: absolute; left: 0; right: 0; top: calc(100% + .4rem);
+      background: var(--ws-panel-bg); border: 1px solid var(--ws-gold-line);
+      border-radius: 8px; max-height: 360px; overflow-y: auto; z-index: 40;
+      box-shadow: 0 10px 30px rgba(0,0,0,.6); display: none;
+    }
+    .it-ac.show { display: block; }
+    .it-ac-item {
+      display: flex; align-items: center; gap: .7rem; padding: .5rem .8rem;
+      cursor: pointer; border-bottom: 1px solid var(--ws-sep);
+    }
+    .it-ac-item:last-child { border-bottom: none; }
+    .it-ac-item.active, .it-ac-item:hover { background: rgba(201,164,50,.1); }
+    .it-ac-img { width: 34px; height: 34px; object-fit: contain; flex: none; background: rgba(0,0,0,.3); border-radius: 4px; }
+    .it-ac-names { min-width: 0; }
+    .it-ac-zh { color: var(--ws-text); font-size: .95rem; }
+    .it-ac-en { color: var(--ws-text-dim); font-size: .78rem; }
+
+    /* ── 结果区 ── */
+    .it-results { margin-top: 2.2rem; display: none; }
+    .it-results.show { display: block; animation: itFade .5s ease; }
+    @keyframes itFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .it-item-head {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.4rem;
+      padding-bottom: 1rem; border-bottom: 1px solid var(--ws-gold-line);
+    }
+    .it-item-icon { width: 72px; height: 72px; object-fit: contain; background: rgba(0,0,0,.3); border-radius: 8px; border: 1px solid var(--ws-sep); flex: none; }
+    .it-item-titles { min-width: 0; }
+    .it-item-zh { font-family: var(--f-sci, 'Rajdhani', sans-serif); font-size: 1.5rem; font-weight: 700; color: var(--ws-gold-bright); }
+    .it-item-en { color: var(--ws-text-dim); font-size: .95rem; margin-top: .2rem; }
+    .it-item-meta { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .5rem; }
+    .it-badge {
+      font-size: .74rem; padding: .12rem .5rem; border-radius: 3px;
+      border: 1px solid var(--ws-gold-line); color: var(--ws-gold); background: rgba(201,164,50,.08);
+    }
+    .it-badge.vaulted { color: #d98; border-color: rgba(221,153,136,.4); background: rgba(221,153,136,.08); }
+
+    .it-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; }
+    .it-card {
+      background: var(--ws-card-bg); border: 1px solid var(--ws-card-border, rgba(201,164,50,.2));
+      border-radius: 10px; padding: 1.1rem 1.2rem; min-width: 0;
+    }
+    .it-card-hd {
+      display: flex; align-items: center; gap: .5rem; margin-bottom: .9rem;
+      font-family: var(--f-sci, 'Rajdhani', sans-serif); font-weight: 700;
+      color: var(--ws-gold-bright); font-size: 1.05rem; letter-spacing: .06em;
+    }
+    .it-card-hd .it-card-en { color: var(--ws-text-dim); font-size: .72rem; font-weight: 400; letter-spacing: .12em; }
+    .it-card.it-card-wide { grid-column: 1 / -1; }
+
+    /* 掉落来源行 */
+    .it-drop-row {
+      display: grid; grid-template-columns: 1fr auto; gap: .4rem 1rem; align-items: baseline;
+      padding: .5rem 0; border-bottom: 1px solid var(--ws-sep); font-size: .9rem;
+    }
+    .it-drop-row:last-child { border-bottom: none; }
+    .it-drop-src { color: var(--ws-text); }
+    .it-drop-src .it-drop-sec { color: var(--ws-text-dim); font-size: .78rem; display: block; }
+    .it-drop-rot { color: var(--ws-gold); font-size: .78rem; }
+    .it-drop-chance { color: var(--ws-gold-bright); font-family: 'Orbitron', sans-serif; font-size: .85rem; white-space: nowrap; }
+    .it-rar-Common, .it-rar-Uncommon { color: var(--ws-text); }
+    .it-drop-more { text-align: center; color: var(--ws-text-dim); font-size: .8rem; margin-top: .6rem; cursor: pointer; }
+    .it-drop-more:hover { color: var(--ws-gold); }
+
+    /* WM 订单行 */
+    .it-ord-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .it-ord-col-title { font-size: .82rem; color: var(--ws-text-dim); margin-bottom: .5rem; letter-spacing: .08em; }
+    .it-ord-row {
+      display: grid; grid-template-columns: auto 1fr auto; gap: .5rem; align-items: center;
+      padding: .42rem 0; border-bottom: 1px solid var(--ws-sep); font-size: .86rem;
+    }
+    .it-ord-row:last-child { border-bottom: none; }
+    .it-ord-plat { font-family: 'Orbitron', sans-serif; color: var(--ws-gold-bright); font-weight: 600; }
+    .it-ord-user { color: var(--ws-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .it-ord-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+    .it-ord-dot.ingame { background: #41ff8e; box-shadow: 0 0 6px #41ff8e; }
+    .it-ord-dot.online { background: #f6c264; box-shadow: 0 0 6px #f6c264; }
+    .it-ord-dot.offline { background: #6b7280; }
+    .it-ord-qty { color: var(--ws-text-dim); font-size: .76rem; }
+    .it-wm-link {
+      display: inline-block; margin-top: .9rem; font-size: .82rem; color: var(--ws-gold);
+      border: 1px solid var(--ws-gold-line); border-radius: 5px; padding: .35rem .8rem; text-decoration: none;
+    }
+    .it-wm-link:hover { background: rgba(201,164,50,.12); }
+
+    /* 维基链接卡 */
+    .it-wiki-links { display: flex; gap: .8rem; flex-wrap: wrap; }
+    .it-wiki-btn {
+      flex: 1; min-width: 160px; text-align: center; text-decoration: none;
+      padding: .8rem 1rem; border-radius: 8px; border: 1px solid var(--ws-gold-line);
+      background: rgba(201,164,50,.06); color: var(--ws-text); transition: background .2s, border-color .2s;
+    }
+    .it-wiki-btn:hover { background: rgba(201,164,50,.14); border-color: var(--ws-gold); }
+    .it-wiki-btn b { display: block; color: var(--ws-gold-bright); font-size: 1rem; margin-bottom: .2rem; }
+    .it-wiki-btn span { font-size: .76rem; color: var(--ws-text-dim); }
+
+    .it-empty { color: var(--ws-text-dim); text-align: center; padding: 1.5rem 0; font-size: .9rem; }
+    .it-loading { color: var(--ws-gold); text-align: center; padding: 1rem 0; font-size: .85rem; }
+
+    @media (max-width: 720px) {
+      .it-cards { grid-template-columns: 1fr; }
+      .it-ord-cols { grid-template-columns: 1fr; gap: 1.2rem; }
+      .it-item-icon { width: 56px; height: 56px; }
+      .it-item-zh { font-size: 1.25rem; }
+    }
+
+    /* ══ 水墨 + logo 过渡(与世界状态切换按钮同款，用于本页跳转/查询过渡) ══ */
+    .it-ink-overlay {
+      position: fixed; inset: 0; z-index: 9990;
+      pointer-events: none; opacity: 0; visibility: hidden;
+    }
+    .it-ink-overlay.on { opacity: 1; visibility: visible; }
+    #it-ink-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  </style>
+</head>
+<body>
+<canvas id="star-canvas"></canvas>
+<div class="nebula-bg"></div>
+<div class="page-wrap lb-page">
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="https://wfspeed.run">
+        <span class="logo-title">Warframe Speed</span>
+        <span class="logo-domain">→ WFSPEED.RUN</span>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item has-dropdown">
+          <a href="disruption.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">中断竞速榜单</span><span class="text-en">Disruption</span></span></a>
+          <div class="nav-dropdown-menu">
+            <a href="disruption.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">单人</span><span class="text-en">Solo</span></span></a>
+            <a href="disruption-duo.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">双人</span><span class="text-en">Duo</span></span></a>
+            <a href="disruption-multi.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">多人</span><span class="text-en">Multi</span></span></a>
+          </div>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="eidolon.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">夜灵竞速榜单</span><span class="text-en">Eidolon</span></span></a>
+          <div class="nav-dropdown-menu">
+            <a href="eidolon.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">有限制</span><span class="text-en">Restricted</span></span></a>
+            <a href="eidolon-macro.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">无限制</span><span class="text-en">Non-restricted</span></span></a>
+          </div>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="profit-taker.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">蜘蛛竞速榜单</span><span class="text-en">Profit-Taker</span></span></a>
+          <div class="nav-dropdown-menu">
+            <a href="profit-taker.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">有限制</span><span class="text-en">Restricted</span></span></a>
+            <a href="profit-taker-macro.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">无限制</span><span class="text-en">Non-restricted</span></span></a>
+          </div>
+        </div>
+        <button class="nav-more-btn" id="nav-more-btn" aria-label="更多榜单"><span class="nm-wrap"><span class="nm-cn">更多榜单</span><span class="nm-en">Others</span></span></button>
+        <div class="nav-item">
+          <a href="about.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">关于本站</span><span class="text-en">About</span></span></a>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="#" onclick="return false;">
+            <span class="hover-text-swap">
+              <span class="text-cn">功能扩展</span>
+              <span class="text-en">Tools</span>
+            </span>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="search.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">全站搜索</span><span class="text-en">Search</span></span></a>
+            <a href="worldstate.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">世界状态</span><span class="text-en">World State</span></span></a>
+            <a href="item.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">物品查询</span><span class="text-en">Super Search</span></span></a>
+            <a href="eelog.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">日志解析</span><span class="text-en">EE.LOG</span></span></a>
+          </div>
+        </div>
+        <!-- 移动端：更多榜单 -->
+        <button class="nav-more-mobile" id="nav-more-mobile" aria-label="更多榜单">更多榜单</button>
+        <div class="mob-more-panel" id="mob-more-panel">
+          <a href="capture.html" target="_self" rel="noopener">捕获</a>
+          <a href="exterminate.html" target="_self" rel="noopener">歼灭</a>
+          <a href="rescue.html" target="_self" rel="noopener">救援</a>
+          <a href="sabotage.html" target="_self" rel="noopener">破坏</a>
+          <a href="spy.html" target="_self" rel="noopener">间谍</a>
+          <a href="assassination.html" target="_self" rel="noopener">刺杀</a>
+          <a href="special_challenge.html" target="_self" rel="noopener">特殊挑战</a>
+          <a href="defense-relic.html" target="_self" rel="noopener">防御裂缝60轮</a>
+          <a href="cambire.html" target="_self" rel="noopener">元素转换</a>
+          <a href="hollvania.html" target="_self" rel="noopener">1999 任务</a>
+          <a href="ropalolyst.html" target="_self" rel="noopener">蝠力使</a>
+          <a href="skirmish.html" target="_self" rel="noopener">面纱前哨战</a>
+          <a href="defection.html" target="_self" rel="noopener">叛逃任务</a>
+          <a href="arbitration.html" target="_self" rel="noopener">仲裁任务</a>
+          <a href="special-events.html" target="_self" rel="noopener">站内特殊活动</a>
+        </div>
+      </div>
+      <button class="nav-hamburger" aria-label="打开菜单"><span></span><span></span><span></span></button>
+      <div class="nav-rules-wrap">
+        <a class="nav-rules" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FPmFYdf0gXoR8EBxIY6dcr3UKn0f&title=%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99%E6%80%BB%E8%A7%88&from=capture.html" target="_blank" rel="noopener">
+          <span class="hover-text-swap"><span class="text-cn">查看提交规则</span><span class="text-en">Rules</span></span>
+        </a>
+        <div class="nav-rules-dropdown">
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FT65jdhc61ohAOSxHopTcpOd8njc&title=%E4%B8%AD%E6%96%AD%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=capture.html" target="_blank" rel="noopener">中断竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FUxmXdbcHUoo0iCxQUXccUMTNncf&title=%E5%A4%9C%E7%81%B5%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=capture.html" target="_blank" rel="noopener">夜灵竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FJCBfdkdJpoAfkgxD37ic1VVcnkf&title=%E8%9C%98%E8%9B%9B%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=capture.html" target="_blank" rel="noopener">蜘蛛竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FAaMCdHX7Toa8hrxah1DcMQnJnNe&title=%E6%9B%B4%E5%A4%9A%E7%AB%9E%E9%80%9F%E9%A1%B9%E7%9B%AE&from=capture.html" target="_blank" rel="noopener">更多项目</a>
+        </div>
+      </div>
+      <a class="nav-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=capture.html" target="_blank" rel="noopener">
+        <span class="hover-text-swap"><span class="text-cn">提交成绩</span><span class="text-en">Submit</span></span>
+      </a>
+    </div>
+  </nav>
+  <!-- ══ 超级导航面板 ══ -->
+  <div class="super-nav-overlay" id="super-nav-overlay" style="display:none;opacity:0;transition:opacity .35s ease;"></div>
+  <div class="super-nav-panel" id="super-nav-panel">
+    <div class="snav-scan-v"></div><div class="snav-scan-v"></div><div class="snav-scan-v"></div>
+    <div class="super-nav-grid">
+      <div class="super-nav-row">
+        <a class="snav-btn" href="capture.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">捕获</span><span class="snav-en">Capture</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="exterminate.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">歼灭</span><span class="snav-en">Exterminate</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="rescue.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">救援</span><span class="snav-en">Rescue</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="sabotage.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">破坏</span><span class="snav-en">Sabotage</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="spy.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">间谍</span><span class="snav-en">Spy</span></div><span class="snav-btmglow"></span></a>
+      </div>
+      <div class="super-nav-row">
+        <a class="snav-btn" href="assassination.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">刺杀</span><span class="snav-en">Assassination</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="special_challenge.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">特殊挑战</span><span class="snav-en">Special Challenge</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="defense-relic.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">防御裂缝60轮</span><span class="snav-en">Defense Relic</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="cambire.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">元素转换</span><span class="snav-en">Cambire</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="hollvania.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">1999 任务</span><span class="snav-en">Höllvania</span></div><span class="snav-btmglow"></span></a>
+      </div>
+      <div class="super-nav-row">
+        <a class="snav-btn" href="ropalolyst.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">蝠力使</span><span class="snav-en">Ropalolyst</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="skirmish.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">面纱前哨战</span><span class="snav-en">Skirmish</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="defection.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">叛逃任务</span><span class="snav-en">Defection</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="arbitration.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">仲裁任务</span><span class="snav-en">Arbitration</span></div><span class="snav-btmglow"></span></a>
+        <a class="snav-btn" href="special-events.html" target="_self" rel="noopener"><span class="snav-topline"></span><div class="snav-text-wrap"><span class="snav-cn">站内特殊活动</span><span class="snav-en">Special Events</span></div><span class="snav-btmglow"></span></a>
+      </div>
+    </div>
+  </div>
+  <main class="it-main">
+    <div class="it-header">
+      <h1 class="it-title">物品检索<span class="it-en">SUPER SEARCH</span></h1>
+      <p class="it-sub">输入物品中文名或英文名 — 融合游戏掉落来源、Warframe.market 实时买卖、中英维基查询</p>
+    </div>
+
+    <div class="it-search-wrap">
+      <div class="it-search-box">
+        <input class="it-search-input" id="it-input" type="text" autocomplete="off" spellcheck="false"
+          placeholder="例如：异化容器 / Mirage Prime 蓝图 / Serration…">
+        <button class="it-search-btn" id="it-btn" aria-label="检索">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.9"/><path d="M13 13L17 17" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="it-ac" id="it-ac"></div>
+    </div>
+
+    <div class="it-results" id="it-results"></div>
+  </main>
+  <footer class="site-footer home-footer">
+    <div class="beian-row"><a href="https://beian.miit.gov.cn/" target="_self" rel="noopener">沪ICP备2022033368号</a><img src="picture/gongan-beian.png" alt="公安备案" class="beian-icon"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=31015102000215" rel="noreferrer" target="_blank">沪公网安备31015102000215号</a></div>
+    <p>Copyright &copy; 2026 CSC Alliance All Rights Reserved.</p>
+    <p>特此声明：本站是纯公益性质，且首页的彩虹风格不代表支持性少数群体，望知悉</p>
+    <p>特别鸣谢：<a href="https://space.bilibili.com/147628438" target="_blank" rel="noopener">@&thinsp;兔子</a>、<a href="https://space.bilibili.com/627291901" target="_blank" rel="noopener">@&thinsp;Eas1on</a>、<a href="https://space.bilibili.com/1807185535" target="_blank" rel="noopener">@&thinsp;纸折折鸾</a>、<a href="https://space.bilibili.com/204443734" target="_blank" rel="noopener">@&thinsp;七一</a>、<a href="https://space.bilibili.com/1797156588" target="_blank" rel="noopener">@&thinsp;MC83</a></p>
+  </footer>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+/* ── 移动端有下拉框的链接点两次再跳转 ── */
+(function() {
+  if (!('ontouchstart' in window)) return; // 仅移动端
+  var firstTap = null;
+  document.querySelectorAll('.nav-item.has-dropdown > a').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var item = a.closest('.nav-item');
+      if (!item.classList.contains('mob-open')) {
+        e.preventDefault();
+        // 第一次点：展开下拉
+        document.querySelectorAll('.nav-item.has-dropdown').forEach(function(i) {
+          if (i !== item) i.classList.remove('mob-open');
+        });
+        item.classList.add('mob-open');
+      }
+      // 第二次点（mob-open已存在）：直接跳转（不阻止默认行为）
+    });
+  });
+  /* 移动端"更多榜单"展开子菜单 */
+/* mob-more-panel 交互由 main.js 的 initNav() 统一处理，此处不重复绑定 */
+})();
+</script>
+<script>
+/* ── 超级导航面板 ── */
+(function() {
+  var panel   = document.getElementById('super-nav-panel');
+  var overlay = document.getElementById('super-nav-overlay');
+  var btn     = document.getElementById('nav-more-btn');
+  if (!panel || !btn) return;
+
+  var isOpen = false;
+  var langTimer = null;
+
+  /* ══ 面板内背景粒子 canvas ══ */
+  var bgCanvas = null, bgCtx = null, bgAnim = null, bgParticles = [], bgSpriteNear = null, bgSpriteFar = null;
+
+  function initPanelCanvas() {
+    if (bgCanvas) return;
+    bgCanvas = document.createElement('canvas');
+    bgCanvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;opacity:.55;';
+    bgCanvas.className = 'snav-bg-canvas';
+    panel.insertBefore(bgCanvas, panel.firstChild);
+    bgCtx = bgCanvas.getContext('2d');
+    resizePanelCanvas();
+    spawnPanelParticles();
+    animatePanelCanvas();
+  }
+
+  function resizePanelCanvas() {
+    if (!bgCanvas) return;
+    bgCanvas.width  = panel.offsetWidth  || window.innerWidth;
+    bgCanvas.height = panel.offsetHeight || 200;
+  }
+
+  function spawnPanelParticles(){bgParticles=[];var W=bgCanvas.width,H=bgCanvas.height;for(var i=0;i<90;i++){var depth=Math.random();bgParticles.push({x:Math.random()*W,y:Math.random()*H,r:.6+depth*2.2,vx:(Math.random()-.5)*(.18+depth*.3),vy:(Math.random()-.5)*(.12+depth*.22),depth:depth,a:Math.random(),da:.004+Math.random()*.008});}}
+
+  function animatePanelCanvas(){if(!bgCtx)return;if(!bgSpriteNear){function mkBgSpr(core,mid,big){var SPR=big?40:22,s=document.createElement('canvas');s.width=s.height=SPR;var sc=s.getContext('2d');var g=sc.createRadialGradient(SPR/2,SPR/2,0,SPR/2,SPR/2,SPR/2);g.addColorStop(0,core);g.addColorStop(.4,mid);g.addColorStop(1,'rgba(255,200,60,0)');sc.fillStyle=g;sc.fillRect(0,0,SPR,SPR);return s;}bgSpriteNear=mkBgSpr('rgba(255,250,225,1)','rgba(255,210,80,.9)',false);bgSpriteFar=mkBgSpr('rgba(255,225,150,.85)','rgba(255,180,50,.55)',true);}bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);var W=bgCanvas.width,H=bgCanvas.height;bgParticles.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.a+=p.da;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;var alpha=(.15+.55*Math.abs(Math.sin(p.a)))*(.5+p.depth*.6);var spr=p.depth>.45?bgSpriteNear:bgSpriteFar;var s=p.r*(p.depth>.45?7:11);bgCtx.globalAlpha=alpha;bgCtx.drawImage(spr,p.x-s/2,p.y-s/2,s,s);});bgAnim=requestAnimationFrame(animatePanelCanvas);}
+
+  function destroyPanelCanvas() {
+    if (bgAnim) { cancelAnimationFrame(bgAnim); bgAnim = null; }
+    if (bgCanvas) { bgCanvas.remove(); bgCanvas = null; bgCtx = null; }
+    bgParticles = [];
+  }
+
+  /* ══ 彩虹粒子爆发（开场烟花） ══ */
+  function burst() {
+    var rect = btn.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.bottom + 2;
+
+    var c = document.createElement('canvas');
+    c.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9998;';
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    document.body.appendChild(c);
+    var ctx = c.getContext('2d');
+
+    /* 预渲染发光金粒子贴图（只算一次渐变），逐帧用 drawImage 代替 arc+shadowBlur，
+       shadowBlur 是逐图形软件光栅化、按帧重算，粒子一多就是掉帧元凶 */
+    var SPR = 28;
+    function makeSprite(core, mid) {
+      var s = document.createElement('canvas');
+      s.width = s.height = SPR;
+      var sc = s.getContext('2d');
+      var g = sc.createRadialGradient(SPR/2, SPR/2, 0, SPR/2, SPR/2, SPR/2);
+      g.addColorStop(0, core); g.addColorStop(.4, mid); g.addColorStop(1, 'rgba(255,180,0,0)');
+      sc.fillStyle = g; sc.fillRect(0, 0, SPR, SPR);
+      return s;
+    }
+    var sprites = [
+      makeSprite('rgba(255,252,235,1)', 'rgba(255,214,90,.95)'),
+      makeSprite('rgba(255,225,140,1)', 'rgba(255,180,40,.9)')
+    ];
+
+    var pts = [];
+    for (var i = 0; i < 56; i++) {
+      var a = (i / 56) * Math.PI * 2 + (Math.random() - .5) * .5;
+      var spd = 80 + Math.random() * 200;
+      pts.push({
+        x: cx, y: cy,
+        vx: Math.cos(a) * spd,
+        vy: Math.sin(a) * spd - 60,
+        r: 1.6 + Math.random() * 3.2,
+        spr: sprites[i % 2],
+        life: 1,
+        decay: .012 + Math.random() * .015,
+        trail: []
+      });
+    }
+
+    var last = performance.now();
+    function frame(now) {
+      var dt = Math.min((now - last) / 1000, .05); last = now;
+      ctx.clearRect(0, 0, c.width, c.height);
+
+      var alive = false;
+      pts.forEach(function(p) {
+        if (p.life <= 0) return;
+        p.trail.push({x:p.x, y:p.y});
+        if (p.trail.length > 5) p.trail.shift();
+
+        p.vx *= .96; p.vy += 220 * dt;
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        p.life -= p.decay;
+        alive = true;
+
+        /* 拖尾：单条 stroke，不叠 shadowBlur，便宜 */
+        if (p.trail.length > 1) {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.life) * .3;
+          ctx.strokeStyle = '#ffd76a';
+          ctx.lineWidth = p.r * .5;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(p.trail[0].x, p.trail[0].y);
+          for (var t = 1; t < p.trail.length; t++) ctx.lineTo(p.trail[t].x, p.trail[t].y);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        /* 粒子本体：贴图 drawImage（GPU 位图拷贝）代替逐帧重算的阴影发光 */
+        var s = p.r * 6;
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.drawImage(p.spr, p.x - s / 2, p.y - s / 2, s, s);
+      });
+
+      if (alive) requestAnimationFrame(frame); else c.remove();
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* ══ 按钮彩虹涟漪 ══ */
+  function ripple() {
+    var r = document.createElement('span');
+    r.style.cssText = [
+      'position:absolute','inset:0','border-radius:inherit','pointer-events:none',
+      'background:conic-gradient(from 0deg,#ffd700,#ffb347,#fff4cc,#ffaa00,#ffd700)',
+      'opacity:.6','transform:scale(0)',
+      'transition:transform .6s ease,opacity .6s ease'
+    ].join(';');
+    btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    btn.appendChild(r);
+    requestAnimationFrame(function() { r.style.transform='scale(4)'; r.style.opacity='0'; });
+    setTimeout(function() { r.remove(); }, 650);
+  }
+
+  /* ══ 打开面板 ══ */
+  function open() {
+    if (isOpen) return;
+    isOpen = true;
+    ripple(); burst();
+    btn.classList.add('open');
+    panel.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(function() { overlay.style.opacity = '1'; });
+    if (!langTimer) langTimer = setInterval(function() {
+      panel.classList.toggle('lang-en');
+    }, 3000);
+    setTimeout(function() { initPanelCanvas(); resizePanelCanvas(); }, 80);
+  }
+
+  /* ══ 关闭面板 ══ */
+  function close() {
+    if (!isOpen) return;
+    isOpen = false;
+    btn.classList.remove('open');
+    panel.classList.remove('open');
+    overlay.style.opacity = '0';
+    setTimeout(function() { if (!isOpen) overlay.style.display = 'none'; }, 430);
+    clearInterval(langTimer); langTimer = null;
+    setTimeout(function() { panel.classList.remove('lang-en'); }, 320);
+    setTimeout(destroyPanelCanvas, 450);
+  }
+
+  btn.addEventListener('click', function(e) { e.stopPropagation(); isOpen ? close() : open(); });
+  overlay.addEventListener('click', close);
+  document.addEventListener('click', function(e) {
+    if (isOpen && !panel.contains(e.target) && !btn.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', function(e) { if (e.key==='Escape') close(); });
+  window.addEventListener('resize', function() { if (isOpen) resizePanelCanvas(); });
+})();
+</script>
+
+<!-- ══ 水墨 + logo 过渡覆盖层(与世界状态切换按钮同款) ══ -->
+<div class="it-ink-overlay" id="it-ink-overlay" aria-hidden="true">
+  <canvas id="it-ink-canvas"></canvas>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   物品检索：融合 ①游戏掉落来源(官方掉落表反查) ②Warframe.market 实时买卖
+   ③中文维基搜索链接 ④英文维基搜索链接。
+   数据：data/wm-items.json(物品库) + data/drops-index.json(掉落反查)，
+   实时买卖经本站自有域的 WM 代理(WM_PROXY_BASE)读取(WM API 无 CORS，必须代理)。
+   ══════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  /* 部署 WM 代理 Worker 后，把它的公开地址填到这里(形如 https://wmproxy.<本站域>)。
+     留空时仍可用掉落来源 + 维基链接，只是实时买卖一栏会提示"未配置代理"。 */
+  var WM_PROXY_BASE = 'https://wfspeed-wm-proxy.xiang-kun.workers.dev';
+
+  var WIKI_ZH = 'https://warframe.huijiwiki.com/index.php?search=';
+  var WIKI_EN = 'https://wiki.warframe.com/?search=';
+
+  var inputEl   = document.getElementById('it-input');
+  var btnEl     = document.getElementById('it-btn');
+  var acEl      = document.getElementById('it-ac');
+  var resultsEl = document.getElementById('it-results');
+
+  var WM_ITEMS = null, WM_STATIC = 'https://warframe.market/static/assets/';
+  var DROPS = null;
+  var SEARCH = [];        // [{zh, en, slug, icon, ducats, vaulted, key(lower)}]
+  var loaded = false;
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+
+  function buildSearch() {
+    SEARCH = [];
+    var seenEn = {};
+    var wmItems = (WM_ITEMS && WM_ITEMS.items) || [];
+    wmItems.forEach(function (it) {
+      var rec = {
+        zh: it.zh || it.en, en: it.en, slug: it.slug || null,
+        icon: it.icon ? (WM_STATIC + it.icon) : null,
+        ducats: it.ducats || null, vaulted: !!it.vaulted
+      };
+      SEARCH.push(rec);
+      if (it.en) seenEn[it.en.toLowerCase()] = true;
+    });
+    // 把只在掉落表里、不在 WM 的物品(资源/缓存等)也加进可搜索集
+    var di = (DROPS && DROPS.items) || {};
+    Object.keys(di).forEach(function (en) {
+      if (seenEn[en.toLowerCase()]) return;
+      SEARCH.push({ zh: di[en].zh || en, en: en, slug: null, icon: null, ducats: null, vaulted: false });
+    });
+    SEARCH.forEach(function (r) { r.key = ((r.zh || '') + ' ' + (r.en || '')).toLowerCase(); });
+  }
+
+  function ensureLoaded() {
+    if (loaded) return Promise.resolve();
+    return Promise.all([
+      fetch('data/wm-items.json').then(function (r) { return r.json(); }).catch(function () { return null; }),
+      fetch('data/drops-index.json').then(function (r) { return r.json(); }).catch(function () { return null; })
+    ]).then(function (res) {
+      WM_ITEMS = res[0]; DROPS = res[1];
+      if (WM_ITEMS && WM_ITEMS.staticBase) WM_STATIC = WM_ITEMS.staticBase;
+      buildSearch();
+      loaded = true;
+    });
+  }
+
+  /* ── 自动补全 ── */
+  var acList = [], acIdx = -1;
+  function matchScore(r, q) {
+    var zh = (r.zh || '').toLowerCase(), en = (r.en || '').toLowerCase();
+    if (zh === q || en === q) return 0;                       // 完全等于名称
+    if (zh.indexOf(q) === 0 || en.indexOf(q) === 0) return 1; // 名称开头
+    if (r.key.indexOf(' ' + q) !== -1) return 2;             // 词边界(空格后)
+    if (r.key.indexOf(q) !== -1) return 3;                   // 任意位置包含
+    return -1;
+  }
+  function rankMatches(q) {
+    q = q.trim().toLowerCase();
+    if (!q) return [];
+    var hits = [];
+    for (var i = 0; i < SEARCH.length; i++) {
+      var sc = matchScore(SEARCH[i], q);
+      if (sc < 0) continue;
+      hits.push({ r: SEARCH[i], sc: sc, len: (SEARCH[i].en || '').length });
+      if (hits.length > 200) break;
+    }
+    hits.sort(function (a, b) { return a.sc - b.sc || a.len - b.len; });  // 分数升序,同分短名优先
+    return hits.slice(0, 12).map(function (x) { return x.r; });
+  }
+  function renderAc() {
+    if (!acList.length) { acEl.classList.remove('show'); acEl.innerHTML = ''; return; }
+    acEl.innerHTML = acList.map(function (r, i) {
+      var img = r.icon ? '<img class="it-ac-img" src="' + esc(r.icon) + '" alt="" loading="lazy">' : '<span class="it-ac-img"></span>';
+      return '<div class="it-ac-item' + (i === acIdx ? ' active' : '') + '" data-i="' + i + '">' + img +
+        '<div class="it-ac-names"><div class="it-ac-zh">' + esc(r.zh) + '</div><div class="it-ac-en">' + esc(r.en) + '</div></div></div>';
+    }).join('');
+    acEl.classList.add('show');
+  }
+  function doAc() {
+    ensureLoaded().then(function () {
+      acList = rankMatches(inputEl.value);
+      acIdx = -1;
+      renderAc();
+    });
+  }
+  inputEl.addEventListener('input', doAc);
+  inputEl.addEventListener('focus', function () { if (inputEl.value.trim()) doAc(); });
+  acEl.addEventListener('mousedown', function (e) {
+    var it = e.target.closest('.it-ac-item');
+    if (!it) return;
+    e.preventDefault();
+    pick(acList[parseInt(it.getAttribute('data-i'), 10)]);
+  });
+  inputEl.addEventListener('keydown', function (e) {
+    if (!acEl.classList.contains('show')) {
+      if (e.key === 'Enter') { triggerSearch(); }
+      return;
+    }
+    if (e.key === 'ArrowDown') { e.preventDefault(); acIdx = Math.min(acIdx + 1, acList.length - 1); renderAc(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); acIdx = Math.max(acIdx - 1, 0); renderAc(); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (acIdx >= 0 && acList[acIdx]) pick(acList[acIdx]); else triggerSearch(); }
+    else if (e.key === 'Escape') { acEl.classList.remove('show'); }
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.it-search-wrap')) acEl.classList.remove('show'); });
+  btnEl.addEventListener('click', triggerSearch);
+
+  function triggerSearch() {
+    ensureLoaded().then(function () {
+      var m = rankMatches(inputEl.value);
+      if (m.length) pick(m[0]);
+    });
+  }
+
+  /* ── 选中某物品 → 水墨过渡 → 渲染结果 ── */
+  function pick(rec) {
+    if (!rec) return;
+    acEl.classList.remove('show');
+    inputEl.value = rec.zh || rec.en;
+    inputEl.blur();
+    playInk(function () { renderResults(rec); });
+  }
+
+  function renderResults(rec) {
+    var icon = rec.icon ? '<img class="it-item-icon" src="' + esc(rec.icon) + '" alt="">' : '<span class="it-item-icon"></span>';
+    var badges = '';
+    if (rec.ducats) badges += '<span class="it-badge">杜卡德 ' + rec.ducats + '</span>';
+    if (rec.vaulted) badges += '<span class="it-badge vaulted">已绝版</span>';
+    if (rec.slug) badges += '<span class="it-badge">可交易</span>';
+
+    var head =
+      '<div class="it-item-head">' + icon +
+        '<div class="it-item-titles">' +
+          '<div class="it-item-zh">' + esc(rec.zh) + '</div>' +
+          '<div class="it-item-en">' + esc(rec.en) + '</div>' +
+          (badges ? '<div class="it-item-meta">' + badges + '</div>' : '') +
+        '</div>' +
+      '</div>';
+
+    var cards =
+      '<div class="it-cards">' +
+        dropCard(rec) +
+        ordersCard(rec) +
+        wikiCard(rec) +
+      '</div>';
+
+    resultsEl.innerHTML = head + cards;
+    resultsEl.classList.add('show');
+    if (rec.slug) loadOrders(rec.slug);
+  }
+
+  var RARITY_ZH = { 'Very Common': '极常见', 'Common': '常见', 'Uncommon': '不常见', 'Rare': '稀有', 'Ultra Rare': '超稀有', 'Legendary': '传奇' };
+  function dropCard(rec) {
+    var di = (DROPS && DROPS.items && DROPS.items[rec.en]) || null;
+    var inner;
+    if (!di || !di.sources || !di.sources.length) {
+      inner = '<div class="it-empty">官方掉落表中暂无该物品的掉落来源（可能为合成/商店/活动获取）。</div>';
+    } else {
+      var rows = di.sources.slice(0, 40).map(function (s) {
+        var rot = s.rotation ? '<span class="it-drop-rot"> · ' + esc(s.rotation) + '</span>' : '';
+        var chance = (s.chance != null ? s.chance + '%' : '');
+        var rar = s.rarity ? (RARITY_ZH[s.rarity] || s.rarity) : '';
+        return '<div class="it-drop-row">' +
+            '<div class="it-drop-src">' + esc(s.source) + rot +
+              '<span class="it-drop-sec">' + esc(s.section) + '</span></div>' +
+            '<div class="it-drop-chance">' + esc(rar) + ' ' + esc(chance) + '</div>' +
+          '</div>';
+      }).join('');
+      var more = di.sources.length > 40 ? '<div class="it-drop-more">共 ' + di.sources.length + ' 个来源，已显示前 40 个</div>' : '';
+      inner = rows + more;
+    }
+    return '<div class="it-card it-card-wide"><div class="it-card-hd">游戏掉落来源 <span class="it-card-en">DROP SOURCES</span></div>' + inner + '</div>';
+  }
+
+  function ordersCard(rec) {
+    var body;
+    if (!rec.slug) {
+      body = '<div class="it-empty">该物品在 Warframe.market 上不可交易。</div>';
+    } else if (!WM_PROXY_BASE) {
+      body = '<div class="it-empty">实时买卖需要配置 WM 代理（WM_PROXY_BASE）。</div>' +
+        '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(rec.slug) + '" target="_blank" rel="noopener">前往 Warframe.market 查看 ↗</a>';
+    } else {
+      body = '<div class="it-loading" id="it-ord-loading">正在获取实时买卖单…</div><div id="it-ord-body"></div>' +
+        '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(rec.slug) + '" target="_blank" rel="noopener">在 Warframe.market 打开 ↗</a>';
+    }
+    return '<div class="it-card it-card-wide"><div class="it-card-hd">Warframe.market 实时买卖 <span class="it-card-en">LIVE ORDERS</span></div>' + body + '</div>';
+  }
+
+  function loadOrders(slug) {
+    if (!WM_PROXY_BASE) return;
+    var url = WM_PROXY_BASE.replace(/\/$/, '') + '/v2/orders/item/' + encodeURIComponent(slug) + '/top?lang=zh-hans&platform=pc';
+    fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+      var data = d && d.data ? d.data : {};
+      var sell = data.sell || [], buy = data.buy || [];
+      var loading = document.getElementById('it-ord-loading');
+      var body = document.getElementById('it-ord-body');
+      if (loading) loading.style.display = 'none';
+      if (!body) return;
+      if (!sell.length && !buy.length) { body.innerHTML = '<div class="it-empty">当前无在线买卖单。</div>'; return; }
+      body.innerHTML = '<div class="it-ord-cols">' +
+        ordCol('卖单（向他买）', sell) + ordCol('买单（卖给他）', buy) + '</div>';
+    }).catch(function () {
+      var loading = document.getElementById('it-ord-loading');
+      if (loading) loading.textContent = '实时买卖单获取失败，请稍后重试或前往 Warframe.market。';
+    });
+  }
+  function ordCol(title, orders) {
+    var rows = orders.slice(0, 5).map(function (o) {
+      var u = o.user || {};
+      var st = (u.status === 'ingame') ? 'ingame' : (u.status === 'online' ? 'online' : 'offline');
+      return '<div class="it-ord-row">' +
+          '<span class="it-ord-dot ' + st + '"></span>' +
+          '<span class="it-ord-user">' + esc(u.ingameName || '—') + '</span>' +
+          '<span class="it-ord-plat">' + esc(o.platinum) + ' P</span>' +
+        '</div>' +
+        (o.quantity > 1 ? '<div class="it-ord-qty">×' + esc(o.quantity) + '</div>' : '');
+    }).join('');
+    return '<div><div class="it-ord-col-title">' + title + '</div>' + (rows || '<div class="it-empty">无</div>') + '</div>';
+  }
+
+  function wikiCard(rec) {
+    var q = encodeURIComponent(rec.zh || rec.en);
+    var qen = encodeURIComponent(rec.en || rec.zh);
+    return '<div class="it-card it-card-wide"><div class="it-card-hd">维基查询 <span class="it-card-en">WIKI</span></div>' +
+      '<div class="it-wiki-links">' +
+        '<a class="it-wiki-btn" href="' + WIKI_ZH + q + '" target="_blank" rel="noopener"><b>中文维基 ↗</b><span>灰机 Wiki 搜索结果</span></a>' +
+        '<a class="it-wiki-btn" href="' + WIKI_EN + qen + '" target="_blank" rel="noopener"><b>英文维基 ↗</b><span>Official Wiki 搜索结果</span></a>' +
+      '</div></div>';
+  }
+
+  /* ══ 水墨 + logo 过渡(canvas 粒子版，与世界状态切换按钮同款) ══ */
+  var _wfLogo = new Image(), _wfLogoReady = false, _wfRatio = 489.7 / 181.1;
+  _wfLogo.onload = function () { _wfLogoReady = true; };
+  _wfLogo.src = 'picture/warframe-logo.svg';
+  var _inkBusy = false;
+
+  function _seeds(w, h) {
+    var diag = Math.sqrt(w * w + h * h), cols = 7, rows = 5, cw = w / cols, ch = h / rows, s = [];
+    for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) s.push({
+      cx: (c + .5) * cw + (Math.random() - .5) * cw * .7, cy: (r + .5) * ch + (Math.random() - .5) * ch * .7,
+      maxR: diag * (.115 + Math.random() * .075), delay: Math.random(), wobble: .55 + Math.random() * .45,
+      pa: Math.random() * 6.28, pb: Math.random() * 6.28, pc: Math.random() * 6.28
+    });
+    for (var i = 0; i < 14; i++) s.push({
+      cx: Math.random() * w, cy: Math.random() * h, maxR: diag * (.05 + Math.random() * .045),
+      delay: Math.random(), wobble: .6 + Math.random() * .4, pa: Math.random() * 6.28, pb: Math.random() * 6.28, pc: Math.random() * 6.28
+    });
+    return s;
+  }
+  function _blot(path, sd, p, segs) {
+    var r = sd.maxR * p; if (r <= .5) return;
+    var pts = [], i;
+    for (i = 0; i < segs; i++) {
+      var a = i / segs * 6.283, n = Math.sin(a * 3 + sd.pa) * .16 + Math.sin(a * 5 - sd.pb) * .10 + Math.sin(a * 9 + sd.pc) * .06;
+      var rr = r * (1 + n * sd.wobble);
+      pts.push([sd.cx + Math.cos(a) * rr, sd.cy + Math.sin(a) * rr]);
+    }
+    path.moveTo(pts[0][0], pts[0][1]);
+    for (i = 1; i <= pts.length; i++) {
+      var p0 = pts[(i - 1) % pts.length], p1 = pts[i % pts.length];
+      path.quadraticCurveTo(p0[0], p0[1], (p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2);
+    }
+    path.closePath();
+  }
+  function _eoq(t) { return 1 - Math.pow(1 - t, 5); }
+  function _eioc(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function _logoAlpha(el, IN, HOLD, OUT) {
+    var fs = IN * .55;
+    if (el < fs) return 0;
+    if (el < IN) return (el - fs) / (IN - fs);
+    if (el < IN + HOLD) return 1;
+    var of = OUT * .4, io = el - IN - HOLD;
+    return io < of ? 1 - io / of : 0;
+  }
+  function _drawLogo(ctx, w, h, a) {
+    if (!_wfLogoReady || a <= .01) return;
+    var lw = Math.min(w, h) * .9, lh = lw / _wfRatio;
+    ctx.save(); ctx.globalAlpha = Math.min(1, a);
+    ctx.shadowColor = 'rgba(255,226,134,' + (.7 * a).toFixed(3) + ')'; ctx.shadowBlur = 30;
+    ctx.drawImage(_wfLogo, w / 2 - lw / 2, h / 2 - lh / 2, lw, lh); ctx.restore();
+  }
+  function playInk(onCovered) {
+    var ov = document.getElementById('it-ink-overlay'), cv = document.getElementById('it-ink-canvas');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (_inkBusy || !ov || !cv || !cv.getContext || reduce) { onCovered(); return; }
+    _inkBusy = true;
+    var ctx = cv.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), w = innerWidth, h = innerHeight;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cv.style.filter = 'blur(2.5px)';
+    var seeds = _seeds(w, h), SIN = 380, SOUT = 420, IN = 900, HOLD = 420, OUT = 1000, SEG = 22;
+    ov.classList.add('on');
+    var phase = 'in', t0 = performance.now(), ps = t0, fired = false;
+    function frame(now) {
+      var t = now - ps, el = now - t0; ctx.clearRect(0, 0, w, h);
+      if (phase === 'in') {
+        var done = true, sum = 0, path = new Path2D();
+        seeds.forEach(function (s) { var l = Math.max(0, Math.min(1, (t - s.delay * SIN) / (IN - SIN))); if (l < 1) done = false; var p = _eoq(l); sum += p; _blot(path, s, p, SEG); });
+        ctx.fillStyle = '#0a0704'; ctx.fill(path); _drawLogo(ctx, w, h, _logoAlpha(el, IN, HOLD, OUT));
+        if (sum / seeds.length > .985 && !fired) { fired = true; onCovered(); }
+        if (done) { phase = 'hold'; ps = now; }
+      } else if (phase === 'hold') {
+        var p2 = new Path2D(); seeds.forEach(function (s) { _blot(p2, s, 1, SEG); });
+        ctx.fillStyle = '#0a0704'; ctx.fill(p2); _drawLogo(ctx, w, h, _logoAlpha(el, IN, HOLD, OUT));
+        if (t >= HOLD) { phase = 'out'; ps = now; }
+      } else if (phase === 'out') {
+        var d2 = true, path3 = new Path2D();
+        seeds.forEach(function (s) { var l = Math.max(0, Math.min(1, (t - s.delay * SOUT) / (OUT - SOUT))); if (l < 1) d2 = false; var p = 1 - _eioc(l); _blot(path3, s, p, SEG); });
+        ctx.fillStyle = '#0a0704'; ctx.fill(path3); _drawLogo(ctx, w, h, _logoAlpha(el, IN, HOLD, OUT));
+        if (d2) phase = 'done';
+      }
+      if (phase !== 'done') requestAnimationFrame(frame);
+      else { ctx.clearRect(0, 0, w, h); ov.classList.remove('on'); _inkBusy = false; }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* 首屏：支持 ?q=xxx 直接检索；预加载数据 */
+  ensureLoaded().then(function () {
+    var m = (location.search.match(/[?&]q=([^&]+)/));
+    if (m) {
+      var q = decodeURIComponent(m[1].replace(/\+/g, ' '));
+      inputEl.value = q;
+      var r = rankMatches(q);
+      if (r.length) renderResults(r[0]);
+    }
+  });
+})();
+</script>
+</body>
+</html>
