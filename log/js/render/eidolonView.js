@@ -19,7 +19,7 @@ WF.eidolonView = (function () {
     // ---- 顶部仪表 ----
     const hero = U.el('div', 'hero-row');
     hero.appendChild(stat('夜晚标签', rec.label, 'accent'));
-    hero.appendChild(stat('真实时间（6轮合计）', U.fmtDurationLong(rec.realTime), 'big'));
+    hero.appendChild(stat(rec.full ? '真实时间（6轮合计）' : `真实时间（${rec.completeCount}轮合计）`, U.fmtDurationLong(rec.realTime), 'big'));
     hero.appendChild(stat('平均真实时间', U.fmtDuration(rec.avgTime), 'big'));
     hero.appendChild(stat('完整小轮', `${rec.completeCount}`, ''));
     container.appendChild(hero);
@@ -29,7 +29,11 @@ WF.eidolonView = (function () {
     container.appendChild(U.el('div', 'note',
       '计时口径与 idalon.com “real time” 一致：起点 = 夜晚开始，终点 = 水力使赋能掉落在地（捕获判定后约 15 秒）。'));
 
-    if (rec.completeCount > 6) {
+    if (!rec.full) {
+      container.appendChild(U.el('div', 'note',
+        `本夜仅完成 ${rec.completeCount} 个完整小轮，未达到 6×3 标准，数据仅供参考。`));
+    }
+    if (rec.full && rec.completeCount > 6) {
       container.appendChild(U.el('div', 'note',
         `共 ${rec.completeCount} 个完整小轮，计算采用平均最小的连续 6 轮：第 ${rec.window.start + 1} ~ ${rec.window.end + 1} 轮。`));
     }

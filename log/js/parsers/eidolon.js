@@ -77,30 +77,39 @@ WF.EidolonParser = (function () {
 
     function summarize(n, endT) {
       const completes = n.attempts.filter((a) => a.complete);
-      if (completes.length < 6) return null;
+      if (completes.length < 1) return null;
 
-      // 连续 6 个完整小轮的窗口，取平均最小者
+      const full = completes.length >= 6;
+      const windowSize = full ? 6 : completes.length;
+
+      // 连续 windowSize 个完整小轮的窗口，取平均最小者（不足 6 轮时窗口即全部小轮）
       let best = null;
-      for (let i = 0; i + 6 <= completes.length; i++) {
-        const win = completes.slice(i, i + 6);
+      for (let i = 0; i + windowSize <= completes.length; i++) {
+        const win = completes.slice(i, i + windowSize);
         const sum = win.reduce((s, r) => s + r.duration, 0);
         if (!best || sum < best.sum) best = { start: i, sum };
       }
 
-      // 额外捕获：第 6 个完整小轮之后的不完整尝试中的捕获数
-      const idxOf6th = n.attempts.indexOf(completes[5]);
+      // 额外捕获：第 6 个完整小轮之后的不完整尝试中的捕获数（仅满 6 轮时统计）
       let extraCaptures = 0;
       const extras = [];
-      n.attempts.forEach((a, i) => {
-        if (i > idxOf6th && !a.complete && a.captures.length > 0) {
-          extraCaptures += a.captures.length;
-          extras.push(a);
-        }
-      });
+      if (full) {
+        const idxOf6th = n.attempts.indexOf(completes[5]);
+        n.attempts.forEach((a, i) => {
+          if (i > idxOf6th && !a.complete && a.captures.length > 0) {
+            extraCaptures += a.captures.length;
+            extras.push(a);
+          }
+        });
+      }
 
       let label;
-      if (completes.length >= 7) label = `${completes.length}×3`;
-      else label = extraCaptures > 0 ? `6×3+${extraCaptures}` : '6×3';
+      if (full) {
+        if (completes.length >= 7) label = `${completes.length}×3`;
+        else label = extraCaptures > 0 ? `6×3+${extraCaptures}` : '6×3';
+      } else {
+        label = `${completes.length}×3未达标`;
+      }
 
       return {
         type: 'eidolon',
@@ -112,9 +121,10 @@ WF.EidolonParser = (function () {
         completeCount: completes.length,
         extraCaptures,
         extras,
-        window: { start: best.start, end: best.start + 5 },
+        full,
+        window: { start: best.start, end: best.start + windowSize - 1 },
         realTime: best.sum,
-        avgTime: best.sum / 6,
+        avgTime: best.sum / windowSize,
         squadInfo: sq.getSquadInfo(),
       };
     }

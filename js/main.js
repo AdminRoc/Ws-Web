@@ -775,16 +775,35 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
 /* ══════════════════════════════════════════════════════════
    8. 榜单渲染：夜灵类
    ══════════════════════════════════════════════════════════ */
-/* 捕获情况权重：数值越小排名越前；仅在 avgRealTime 相同时作为次要依据 */
-const CAPTURE_RANK = { '7×3':1,'6×3+2':2,'6×3+1':3,'6×3':4 };
-function captureWeight(s) { return CAPTURE_RANK[s] !== undefined ? CAPTURE_RANK[s] : 99; }
+/* 捕获情况分级：形如 "N×3" 或 "N×3+k"（k 为 6 轮之后的额外捕获数，不影响分级）。
+ * N≥6 视为"标准捕获情况"（tier 0）；N=5 为"十五连"（tier 1）；N=4 为"十二连"（tier 2）；
+ * 以此类推，N 越小 tier 越大，排行榜内 tier 越小越靠前；同 tier 内再按 avgRealTime 升序排序。
+ * 无法识别的旧格式（如 "3T"）归入最末 tier，仅按时间排序。 */
+function parseCaptureStatus(s) {
+  const m = /^(\d+)×3(?:\+(\d+))?/.exec((s || '').trim());
+  if (!m) return null;
+  return { n: parseInt(m[1], 10), extra: m[2] ? parseInt(m[2], 10) : 0 };
+}
+function captureTier(s) {
+  const p = parseCaptureStatus(s);
+  if (!p) return 999;
+  return p.n >= 6 ? 0 : (6 - p.n);
+}
+/* 同 tier、avgRealTime 相同时的次要依据：捕获更多者排前 */
+function captureWeight(s) {
+  const p = parseCaptureStatus(s);
+  return p ? -(p.n * 100 + p.extra) : 0;
+}
 
 function renderEidolonLeaderboard(records, tbodyId) {
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
 
-  /* 排名逻辑：avgRealTime 升序为第一依据；仅时间完全相同时，捕获情况权重更高者排前 */
+  /* 排名逻辑：先按捕获情况分级（tier 升序），同级内再按 avgRealTime 升序；
+     仅时间完全相同时，捕获情况权重更高者排前 */
   const sorted = [...records].sort((a,b) => {
+    const tierDiff = captureTier(a.captureStatus) - captureTier(b.captureStatus);
+    if (tierDiff !== 0) return tierDiff;
     const timeDiff = parseTimeMs(a.avgRealTime) - parseTimeMs(b.avgRealTime);
     return timeDiff !== 0 ? timeDiff : captureWeight(a.captureStatus) - captureWeight(b.captureStatus);
   });
