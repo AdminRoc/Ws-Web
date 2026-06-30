@@ -777,6 +777,7 @@
   function trMission(m) { return (window.WF_TR && ((WF_TR.MISSION_TYPE && WF_TR.MISSION_TYPE[m]) || (WF_TR.MISC && WF_TR.MISC[m]))) || m; }
   function trDropLoc(l) { return (window.WF_TR && WF_TR.DROP_LOCATION && WF_TR.DROP_LOCATION[l]) || l; }
   function trDropMisc(k) { return (window.WF_TR && WF_TR.DROP_MISC && WF_TR.DROP_MISC[k]) || null; }
+  function trDropSource(k) { return (window.WF_TR && WF_TR.DROP_SOURCE && WF_TR.DROP_SOURCE[k]) || null; }
   /* 节点专名、以及完全没查到对应翻译的专有名词(Boss/敌人/任务关名等)，不编翻译，
      改成可点击的中文维基搜索链接，方便用户自己点进去确认具体是什么——
      比硬塞一个英文裸词、或更糟地编一个没验证过的中文词都更负责任。 */
@@ -791,7 +792,8 @@
       var node = m[3].trim();
       var evtZh = trDropMisc('Event');
       var prefix = m[1] ? (evtZh ? '[' + esc(evtZh) + '] ' : esc(m[1])) : '';
-      return prefix + wikiLink(node) + esc('，' + trPlanet(m[2].trim()) + '（' + trMission(m[4].trim()) + '）');
+      var nodeZh = trDropSource(node);
+      return prefix + (nodeZh ? esc(nodeZh) : wikiLink(node)) + esc('，' + trPlanet(m[2].trim()) + '（' + trMission(m[4].trim()) + '）');
     }
     var b = s.match(/^Level (\d+)\s*-\s*(\d+)\s+(.+?)\s+Bounty$/);
     if (b) {
@@ -802,7 +804,7 @@
     if (s === 'Final Stage') { var fz = trDropMisc('Final Stage'); return fz ? esc(fz) : wikiLink(s); }
     var st = s.match(/^Stage\s*(\d+)/);
     if (st) { var stZh = trDropMisc('Stage'); return stZh ? esc(stZh + ' ' + st[1]) : wikiLink(s); }
-    return wikiLink(s);
+    var ds = trDropSource(s); return ds ? esc(ds) : wikiLink(s);
   }
   function translateSection(sec) {
     if (!sec) return sec;
