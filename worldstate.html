@@ -4792,7 +4792,7 @@
         ' <span class="ws-desc-cur">本周</span>' +
         ' <span class="ws-incur-timer" id="wt-desc-cur"></span></div>' + ch +
       '</div>' +
-      (nextOne ? '<div class="ws-aux-sub ws-desc-next">下次轮换时间：' + md(nextOne.expiry) + '</div>' : '');
+      '';
     if (cur.expiry) countdown(document.getElementById('wt-desc-cur'), cur.expiry - AUX_COUNTDOWN_LEAD_MS, true);
   }
 

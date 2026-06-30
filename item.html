@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Warframe 物品检索 — 融合官方掉落来源、Warframe.market 实时交易信息、中英维基查询 · WFSpeed.run">
-  <title>物品检索 Super Search — Warframe Speed</title>
+  <title>物品检索 Item Cross Search — Warframe Speed</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -179,7 +179,7 @@
     .it-ord-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .it-ord-col-title { font-size: .82rem; color: var(--ws-text-dim); margin-bottom: .5rem; letter-spacing: .08em; }
     .it-ord-row {
-      display: grid; grid-template-columns: auto 1fr auto; gap: .5rem; align-items: center;
+      display: grid; grid-template-columns: auto 1fr auto auto; gap: .5rem; align-items: center;
       padding: .42rem .3rem; border-bottom: 1px solid var(--ws-sep); font-size: .86rem;
       cursor: pointer; border-radius: 4px; transition: background .15s;
     }
@@ -192,7 +192,7 @@
     .it-ord-dot.ingame { background: #41ff8e; box-shadow: 0 0 6px #41ff8e; }
     .it-ord-dot.online { background: #f6c264; box-shadow: 0 0 6px #f6c264; }
     .it-ord-dot.offline { background: #6b7280; }
-    .it-ord-qty { color: var(--ws-text-dim); font-size: .76rem; }
+    .it-ord-qty { color: var(--ws-text-dim); font-size: .76rem; white-space: nowrap; }
     .it-wm-link {
       display: inline-block; margin-top: .9rem; font-size: .82rem; color: var(--ws-gold);
       border: 1px solid var(--ws-gold-line); border-radius: 5px; padding: .35rem .8rem; text-decoration: none;
@@ -286,7 +286,7 @@
           <div class="nav-dropdown-menu">
             <a href="search.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">全站搜索</span><span class="text-en">Search</span></span></a>
             <a href="worldstate.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">世界状态</span><span class="text-en">World State</span></span></a>
-            <a href="item.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">物品查询</span><span class="text-en">Super Search</span></span></a>
+            <a href="item.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">物品查询</span><span class="text-en">Item Search</span></span></a>
             <a href="eelog.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">日志解析</span><span class="text-en">EE.LOG</span></span></a>
           </div>
         </div>
@@ -357,7 +357,7 @@
   </div>
   <main class="it-main">
     <div class="it-header">
-      <h1 class="it-title">物品检索<span class="it-en">SUPER SEARCH</span></h1>
+      <h1 class="it-title">物品检索<span class="it-en">ITEM CROSS SEARCH</span></h1>
       <p class="it-sub">输入物品中文名或英文名 — 融合游戏掉落来源、Warframe.market 实时交易信息、中英维基查询</p>
     </div>
 
@@ -631,6 +631,7 @@
       var rec = {
         zh: it.zh || it.en, en: it.en, slug: it.slug || null,
         icon: it.icon ? (WM_STATIC + it.icon) : null,
+        iconPath: it.icon || null,
         ducats: it.ducats || null, vaulted: !!it.vaulted
       };
       SEARCH.push(rec);
@@ -684,7 +685,11 @@
   function renderAc() {
     if (!acList.length) { acEl.classList.remove('show'); acEl.innerHTML = ''; return; }
     acEl.innerHTML = acList.map(function (r, i) {
-      var img = r.icon ? '<img class="it-ac-img" src="' + esc(r.icon) + '" alt="" loading="lazy">' : '<span class="it-ac-img"></span>';
+      var acFallback = (WM_PROXY_BASE && r.iconPath) ? (WM_PROXY_BASE.replace(/\/$/, '') + '/static/' + r.iconPath) : '';
+      var img = r.icon ? '<img class="it-ac-img" src="' + esc(r.icon) + '" alt="" loading="lazy"' +
+          (acFallback ? ' data-fallback="' + esc(acFallback) + '" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback}else{this.style.display=\'none\'}"'
+                      : ' onerror="this.style.display=\'none\'"') +
+        '>' : '<span class="it-ac-img"></span>';
       return '<div class="it-ac-item' + (i === acIdx ? ' active' : '') + '" data-i="' + i + '">' + img +
         '<div class="it-ac-names"><div class="it-ac-zh">' + esc(r.zh) + '</div><div class="it-ac-en">' + esc(r.en) + '</div></div></div>';
     }).join('');
@@ -735,7 +740,11 @@
   }
 
   function renderResults(rec) {
-    var icon = rec.icon ? '<img class="it-item-icon" src="' + esc(rec.icon) + '" alt="">' : '<span class="it-item-icon"></span>';
+    var iconFallback = (WM_PROXY_BASE && rec.iconPath) ? (WM_PROXY_BASE.replace(/\/$/, '') + '/static/' + rec.iconPath) : '';
+    var icon = rec.icon ? '<img class="it-item-icon" src="' + esc(rec.icon) + '" alt=""' +
+        (iconFallback ? ' data-fallback="' + esc(iconFallback) + '" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback}else{this.style.display=\'none\'}"'
+                      : ' onerror="this.style.display=\'none\'"') +
+      '>' : '<span class="it-item-icon"></span>';
     var badges = '';
     if (rec.ducats) badges += '<span class="it-badge">杜卡德 ' + rec.ducats + '</span>';
     if (rec.vaulted) badges += '<span class="it-badge vaulted">已绝版</span>';
@@ -821,7 +830,7 @@
     var di = (DROPS && DROPS.items && DROPS.items[rec.en]) || null;
     var inner;
     if (!di || !di.sources || !di.sources.length) {
-      inner = '<div class="it-empty">官方掉落表中暂无该物品的掉落来源（可能为合成/商店/活动获取）。</div>';
+      inner = '<div class="it-empty">官方掉落表中暂无该物品的掉落来源（可能为合成/商店/活动/购买获取）。</div>';
     } else {
       var rows = di.sources.slice(0, 40).map(function (s) {
         var rot = s.rotation ? '<span class="it-drop-rot"> · ' + esc(s.rotation) + '</span>' : '';
@@ -863,7 +872,9 @@
     if (!WM_PROXY_BASE) return;
     _curRec = rec;
     var url = WM_PROXY_BASE.replace(/\/$/, '') + '/v2/orders/item/' + encodeURIComponent(rec.slug) + '/top?lang=zh-hans&platform=pc';
-    fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+    var ctrl = new AbortController();
+    setTimeout(function () { ctrl.abort(); }, 15000);
+    fetch(url, { signal: ctrl.signal }).then(function (r) { return r.json(); }).then(function (d) {
       var data = d && d.data ? d.data : {};
       _curSell = data.sell || []; _curBuy = data.buy || [];
       var loading = document.getElementById('it-ord-loading');
@@ -877,7 +888,10 @@
         '</div>';
     }).catch(function () {
       var loading = document.getElementById('it-ord-loading');
-      if (loading) loading.textContent = '实时交易信息获取失败，请稍后重试或前往 Warframe.market。';
+      var body = document.getElementById('it-ord-body');
+      if (loading) loading.style.display = 'none';
+      if (body) body.innerHTML = '<div class="it-empty">实时交易信息获取失败（网络受限），请直接前往：</div>' +
+        '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(_curRec.slug) + '" target="_blank" rel="noopener">在 Warframe.market 查看 ↗</a>';
     });
   }
   function ordCol(title, orders, side) {
@@ -888,8 +902,8 @@
           '<span class="it-ord-dot ' + st + '"></span>' +
           '<span class="it-ord-user">' + esc(u.ingameName || '—') + '</span>' +
           '<span class="it-ord-plat">' + esc(o.platinum) + ' P</span>' +
-        '</div>' +
-        (o.quantity > 1 ? '<div class="it-ord-qty">×' + esc(o.quantity) + '</div>' : '');
+          '<span class="it-ord-qty">×' + esc(o.quantity || 1) + '</span>' +
+        '</div>';
     }).join('');
     return '<div><div class="it-ord-col-title">' + title + '</div>' + (rows || '<div class="it-empty">无</div>') + '</div>';
   }
