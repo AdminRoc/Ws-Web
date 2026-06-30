@@ -150,6 +150,17 @@
     .it-ac-zh { color: var(--ws-text); font-size: .95rem; }
     .it-ac-en { color: var(--ws-text-dim); font-size: .78rem; }
 
+    /* 回车/点搜索命中多个结果时的概括列表，复用联想下拉同款视觉但是常驻在结果区(不是悬浮层)。 */
+    .it-multi-head { color: var(--ws-text-dim); font-size: .9rem; margin-bottom: .8rem; }
+    .it-multi-list { border: 1px solid var(--ws-sep); border-radius: 8px; overflow: hidden; }
+    .it-multi-item {
+      display: flex; align-items: center; gap: .7rem; padding: .6rem .9rem;
+      cursor: pointer; border-bottom: 1px solid var(--ws-sep);
+    }
+    .it-multi-item:last-child { border-bottom: none; }
+    .it-multi-item:hover { background: rgba(201,164,50,.1); }
+    .it-multi-img { width: 38px; height: 38px; object-fit: contain; flex: none; background: rgba(0,0,0,.3); border-radius: 4px; }
+
     /* ── 结果区 ── */
     .it-results { margin-top: 2.2rem; display: none; }
     .it-results.show { display: block; animation: itFade .5s ease; }
@@ -651,21 +662,54 @@
 
   var WM_ITEMS = null, WM_STATIC = 'https://warframe.market/static/assets/';
   var DROPS = null;
-  var WIKI_ICONS = null;  // data/wiki-icon-harvest.json：{ 原始物品名: 缩略图URL }，补 WM 不交易的资源/蓝图类条目
-  var SEARCH = [];        // [{zh, en, slug, icon, ducats, vaulted, key(lower)}]
+  var ZH_NAMES = null;     // data/item-names-zh.json：人工核对过的中文译名覆盖表，
+                            // 专门补 drops-index.json 里 zh 字段空缺(=没有官方译名/还没收录)
+                            // 的掉落表专属条目，否则这些条目只能用英文搜到，搜中文会落空。
+  var WIKI_ICONS = null;   // data/wiki-icon-harvest.json：{ 原始物品名: 远程缩略图URL }，本地缓存没命中时的兜底
+  var ICON_INDEX = null;   // data/icon-index.json：{ 原始物品名: {path, source} }，图片已实际下载缓存进本仓库
+                            // data/icons/<source>/...，是各页面(item.html/世界状态赏金缩略图/未来加速版WM站点)
+                            // 复用同一份缩略图的统一入口；来源可扩展(目前 wm/wiki，以后加新来源只需脚本侧改动)。
+  var SEARCH = [];        // [{zh, en, slug, icon, iconRemote, ducats, vaulted, key(lower)}]
   var loaded = false;
   var loadingPromise = null;
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+
+  // 缩略图 onerror 链式回退：data-fb 存的是用 "|" 拼接的剩余候选 URL 列表，每失败一次弹出
+  // 下一个再试，全部试完都失败就整个 <img> 从 DOM 里移除(不留空占位框)。
+  window.onIconError = function (img) {
+    var fb = img.getAttribute('data-fb');
+    if (!fb) { img.remove(); return; }
+    var parts = fb.split('|');
+    var next = parts.shift();
+    img.setAttribute('data-fb', parts.join('|'));
+    img.src = next;
+  };
+
+  /* 缩略图多级回退，按优先级排进 fallbacks 数组，渲染层 onerror 时依次尝试：
+     ①本仓库实际缓存的本地文件(data/icons/...，CDN长期缓存，最快最稳，作为 icon)
+     ②原始来源的远程热链(本地还没缓存到/缓存脚本还没跑过这一条时兜底)
+     ③(仅WM条目)走本站WM边缘代理(wm.wfspeed.run/static/...，处理跨域/区域加速)
+     ④以上全部失败就不画框，不留空占位框。 */
+  function resolveIcon(en, remoteUrl, wmIconPath) {
+    var idx = ICON_INDEX && ICON_INDEX[en];
+    var local = idx ? ('data/' + idx.path) : null;
+    var proxy = (WM_PROXY_BASE && wmIconPath) ? (WM_PROXY_BASE.replace(/\/$/, '') + '/static/' + wmIconPath) : null;
+    var chain = [local, remoteUrl, proxy].filter(function (u) { return !!u; });
+    var icon = chain.shift() || null;
+    return { icon: icon, fallbacks: chain };
+  }
 
   function buildSearch() {
     SEARCH = [];
     var seenEn = {};
     var wmItems = (WM_ITEMS && WM_ITEMS.items) || [];
     wmItems.forEach(function (it) {
+      var remote = it.icon ? (WM_STATIC + it.icon) : null;
+      var ic = resolveIcon(it.en, remote, it.icon);
       var rec = {
         zh: it.zh || it.en, en: it.en, slug: it.slug || null,
-        icon: it.icon ? (WM_STATIC + it.icon) : null,
+        icon: ic.icon, iconFallbacks: ic.fallbacks,
         iconPath: it.icon || null,
         ducats: it.ducats || null, vaulted: !!it.vaulted
       };
@@ -673,13 +717,15 @@
       if (it.en) seenEn[it.en.toLowerCase()] = true;
     });
     // 把只在掉落表里、不在 WM 的物品(资源/缓存等)也加进可搜索集；这部分没有 WM 图标，
-    // 优先用 wiki.warframe.com 抓回来的缩略图兜底(见 wiki-icon-harvest.json)。
+    // 优先用本地缓存(ICON_INDEX)，没有再退到 wiki.warframe.com 远程热链(wiki-icon-harvest.json)。
     var di = (DROPS && DROPS.items) || {};
     var wikiIcons = WIKI_ICONS || {};
+    var zhNames = ZH_NAMES || {};
     Object.keys(di).forEach(function (en) {
       if (seenEn[en.toLowerCase()]) return;
-      var wikiIcon = wikiIcons[en] || null;
-      SEARCH.push({ zh: di[en].zh || en, en: en, slug: null, icon: wikiIcon, iconPath: null, ducats: null, vaulted: false });
+      var ic = resolveIcon(en, wikiIcons[en] || null, null);
+      var zh = di[en].zh || zhNames[en] || en;
+      SEARCH.push({ zh: zh, en: en, slug: null, icon: ic.icon, iconFallbacks: ic.fallbacks, iconPath: null, ducats: null, vaulted: false });
     });
     SEARCH.forEach(function (r) { r.key = ((r.zh || '') + ' ' + (r.en || '')).toLowerCase(); });
   }
@@ -695,9 +741,14 @@
   function ensureLoaded() {
     if (loaded) return Promise.resolve();
     if (loadingPromise) return loadingPromise;
-    loadingPromise = fetch('data/wm-items.json').then(function (r) { return r.json(); }).catch(function () { return null; })
-      .then(function (items) {
-        WM_ITEMS = items;
+    // icon-index.json 体量很小(几千条 path 映射)，跟主索引一起拉，确保首次建出来的
+    // SEARCH 就直接用本地缓存图标，不会先短暂落到远程热链再"闪一下"切换。
+    loadingPromise = Promise.all([
+      fetch('data/wm-items.json').then(function (r) { return r.json(); }).catch(function () { return null; }),
+      fetch('data/icon-index.json').then(function (r) { return r.json(); }).catch(function () { return null; }),
+      fetch('data/item-names-zh.json').then(function (r) { return r.json(); }).catch(function () { return null; })
+    ]).then(function (res) {
+        WM_ITEMS = res[0]; ICON_INDEX = res[1]; ZH_NAMES = res[2];
         if (WM_ITEMS && WM_ITEMS.staticBase) WM_STATIC = WM_ITEMS.staticBase;
         buildSearch();
         loadingPromise = null;
@@ -717,7 +768,7 @@
         if (acEl.classList.contains('show')) { acList = rankMatches(inputEl.value); renderAc(); }
       }
     }).catch(function () {});
-    // wiki 缩略图补全表很小，同样后台拉取、到达后静默合并，不阻塞主索引。
+    // wiki 远程热链表只在"本地还没缓存到该条目"时当兜底用，同样后台拉取不阻塞。
     fetch('data/wiki-icon-harvest.json').then(function (r) { return r.json(); }).then(function (icons) {
       WIKI_ICONS = icons;
       if (loaded) {
@@ -750,27 +801,27 @@
     if (r.key.indexOf(q) !== -1) return 3;                   // 任意位置包含
     return -1;
   }
-  function rankMatches(q) {
+  function rankMatches(q, limit) {
     q = q.trim().toLowerCase();
     if (!q) return [];
+    limit = limit || 12;
     var hits = [];
     for (var i = 0; i < SEARCH.length; i++) {
       var sc = matchScore(SEARCH[i], q);
       if (sc < 0) continue;
       hits.push({ r: SEARCH[i], sc: sc, len: (SEARCH[i].en || '').length });
-      if (hits.length > 200) break;
+      if (hits.length > 500) break;
     }
     hits.sort(function (a, b) { return a.sc - b.sc || a.len - b.len; });  // 分数升序,同分短名优先
-    return hits.slice(0, 12).map(function (x) { return x.r; });
+    return hits.slice(0, limit).map(function (x) { return x.r; });
   }
   function renderAc() {
     if (!acList.length) { acEl.classList.remove('show'); acEl.innerHTML = ''; syncAcSpacer(); return; }
     acEl.innerHTML = acList.map(function (r, i) {
-      var acFallback = (WM_PROXY_BASE && r.iconPath) ? (WM_PROXY_BASE.replace(/\/$/, '') + '/static/' + r.iconPath) : '';
+      // 没有任何缩略图来源时直接不渲染图标框，不留空占位框(用户原话："缩略图不存在时这个小框应该不显示")。
       var img = r.icon ? '<img class="it-ac-img" src="' + esc(r.icon) + '" alt="" loading="lazy"' +
-          (acFallback ? ' data-fallback="' + esc(acFallback) + '" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback}else{this.style.display=\'none\'}"'
-                      : ' onerror="this.style.display=\'none\'"') +
-        '>' : '<span class="it-ac-img"></span>';
+          ' data-fb="' + esc((r.iconFallbacks || []).join('|')) + '" onerror="onIconError(this)"' +
+        '>' : '';
       return '<div class="it-ac-item' + (i === acIdx ? ' active' : '') + '" data-i="' + i + '">' + img +
         '<div class="it-ac-names"><div class="it-ac-zh">' + esc(r.zh) + '</div><div class="it-ac-en">' + esc(r.en) + '</div></div></div>';
     }).join('');
@@ -807,10 +858,37 @@
 
   function triggerSearch() {
     ensureLoaded().then(function () {
-      var m = rankMatches(inputEl.value);
-      if (m.length) pick(m[0]);
+      // 主动搜索(回车/点搜索按钮)用更宽的候选池，不像输入联想那样只截前12条，
+      // 避免关键词命中很多条目时用户压根看不到自己要找的那个。
+      var m = rankMatches(inputEl.value, 60);
+      if (!m.length) return;
+      if (m.length === 1) { pick(m[0]); return; }
+      showMultiResults(m);
     });
   }
+
+  /* ── 多结果列表(回车/点搜索命中多个条目时，先列概括卡片，点一下再看详情) ── */
+  var _multiList = [];
+  function showMultiResults(list) {
+    acEl.classList.remove('show');
+    syncAcSpacer();
+    _multiList = list;
+    var html = '<div class="it-multi-head">找到 ' + list.length + ' 个匹配结果，点击查看详情：</div>' +
+      '<div class="it-multi-list">' + list.map(function (r, i) {
+        var img = r.icon ? '<img class="it-multi-img" src="' + esc(r.icon) + '" alt="" loading="lazy"' +
+            ' data-fb="' + esc((r.iconFallbacks || []).join('|')) + '" onerror="onIconError(this)"' +
+          '>' : '';
+        return '<div class="it-multi-item" data-i="' + i + '">' + img +
+          '<div class="it-ac-names"><div class="it-ac-zh">' + esc(r.zh) + '</div><div class="it-ac-en">' + esc(r.en) + '</div></div></div>';
+      }).join('') + '</div>';
+    resultsEl.innerHTML = html;
+    resultsEl.classList.add('show');
+  }
+  resultsEl.addEventListener('click', function (e) {
+    var it = e.target.closest('.it-multi-item');
+    if (!it) return;
+    pick(_multiList[parseInt(it.getAttribute('data-i'), 10)]);
+  });
 
   /* ── 选中某物品 → 水墨过渡 → 渲染结果 ── */
   function pick(rec) {
@@ -823,11 +901,10 @@
   }
 
   function renderResults(rec) {
-    var iconFallback = (WM_PROXY_BASE && rec.iconPath) ? (WM_PROXY_BASE.replace(/\/$/, '') + '/static/' + rec.iconPath) : '';
+    // 没有任何缩略图来源时直接不渲染图标框，不留空占位框。
     var icon = rec.icon ? '<img class="it-item-icon" src="' + esc(rec.icon) + '" alt=""' +
-        (iconFallback ? ' data-fallback="' + esc(iconFallback) + '" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback}else{this.style.display=\'none\'}"'
-                      : ' onerror="this.style.display=\'none\'"') +
-      '>' : '<span class="it-item-icon"></span>';
+        ' data-fb="' + esc((rec.iconFallbacks || []).join('|')) + '" onerror="onIconError(this)"' +
+      '>' : '';
     var badges = '';
     if (rec.ducats) badges += '<span class="it-badge">杜卡德 ' + rec.ducats + '</span>';
     if (rec.vaulted) badges += '<span class="it-badge vaulted">已绝版</span>';
