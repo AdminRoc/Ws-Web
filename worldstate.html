@@ -3237,8 +3237,38 @@
       });
   }
 
+  /* 国服官方节点中文名：{ SolNodeID: 中文名 }，结构与 _exportRegions 不同
+     （直接就是名字，不需要再查 dict），7 天缓存，加载方式同 loadExportRegions */
+  var _cnSolNodes = null;
+  var CN_SOLNODES_LS = 'wf_cn_solnodes';
+  function loadCnSolNodes() {
+    try {
+      var raw = localStorage.getItem(CN_SOLNODES_LS);
+      if (raw) {
+        var obj = JSON.parse(raw);
+        if (obj && Date.now() - obj.ts < 7 * 86400000) {
+          _cnSolNodes = obj.data;
+          return Promise.resolve();
+        }
+      }
+    } catch (e) {}
+    return fetchT(WS_CN_SOLNODES_URL, 8000, true)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; })
+      .then(function (data) {
+        if (!data) return;
+        _cnSolNodes = data;
+        try { localStorage.setItem(CN_SOLNODES_LS, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
+      });
+  }
+
   /* 节点 ID → 显示名（使用 ExportRegions + dict 翻译） */
   function resolveNode(nodeId) {
+    /* 国服子状态优先用国服客户端原生节点名(更贴合国服玩家实际用语)，
+       覆盖不到的节点(国服未实装/新节点)再退回下方国际服词源的通用解析 */
+    if (_currentServer === 'cn' && _cnSolNodes && _cnSolNodes[nodeId]) {
+      return _cnSolNodes[nodeId];
+    }
     if (_exportRegions && _exportRegions[nodeId]) {
       var n = _exportRegions[nodeId];
       /* _dict（远程广字典）优先；未命中时用 WF.i18n.byLang 同源兜底（426 条正覆盖全部节点引用键），
@@ -3458,6 +3488,16 @@
   var WS_ITEM_ZH_URLS = [
     'data/item-names-zh.json'
   ];
+  /* 国服官方节点中文名(来自 Dreamsunqing/warframe-api-server 的 CH/solNodes.json，
+     由私库 gen_cn_solnodes.py 派生)：calamity-inc 的 ExportRegions+dict 给出的是
+     国际服词源的节点译名，渲染国服子状态时优先换成这份"国服客户端原生译名"，
+     更贴合国服玩家的实际游戏内用语；国际服渲染不受影响，resolveNode 里按
+     _currentServer 判断是否启用。 */
+  var WS_CN_SOLNODES_URL = 'data/cn-solnodes.json';
+  /* 国服世界状态补充源(api.null00.com 镜像，由私库 fetch_null00_cn.py 产出)：
+     与主快照 data/ws-cn-zh.json 互补——只补主快照缺失的字段，不覆盖已有数据，
+     见 fetch_null00_cn.py 文档注释里的"只补不抢"原则。 */
+  var WS_CN_NULL00_URL = 'data/ws-cn-null00.json';
 
   function getRawWS() {
     if (_rawWS && Date.now() - _rawWSTs < RAW_WS_TTL) return Promise.resolve(_rawWS);
@@ -3785,6 +3825,8 @@
                     ? Promise.resolve() : loadBountyCycle();
     /* 节点数据表：缓存 7 天 */
     var regP    = _exportRegions ? Promise.resolve() : loadExportRegions();
+    /* 国服官方节点中文名：缓存 7 天 */
+    var cnNodeP = _cnSolNodes   ? Promise.resolve() : loadCnSolNodes();
 
     /* 同源快照全量兜底（与 apiP/rawP 并发）：仅填充仍为空的键，不覆盖 API 数据。
        这是发起一次真正的网络请求重新拿同源文件，跟"开页面时内嵌的 WF_WS_SNAPSHOT"
@@ -3842,10 +3884,29 @@
         .catch(function () {});
     }));
 
+    /* 国服世界状态补充源(api.null00.com 镜像)：与 auxP 并发，只在主快照(ws-cn-zh.json)
+       缺失的顶层字段上兜底填充，绝不覆盖已有字段——该源是原生国服客户端解析结果，
+       schema 与 worldstate.wf.wiki 的同名字段不完全一致，只取"主快照没有"的键最安全。 */
+    var cnNull00P = auxP.then(function () {
+      return fetchT(WS_CN_NULL00_URL, 8000, true)
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+          if (!data) return;
+          if (!_auxByServer.cn) _auxByServer.cn = {};
+          Object.keys(data).forEach(function (k) {
+            if (_auxByServer.cn[k] === undefined || _auxByServer.cn[k] === null) {
+              _auxByServer.cn[k] = data[k];
+            }
+          });
+          if (_currentServer === 'cn') _auxState = _auxByServer.cn;
+        })
+        .catch(function () {});
+    });
+
     /* 等同源统一字典就绪，保证渲染时 tr/resolveNode 的同源兜底可用（尤其远程被墙时） */
     var i18nP = (window.WF && WF.i18n) ? WF.i18n.ready : Promise.resolve();
 
-    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, tenetCodaP, auxP, i18nP, bountyP, regP]).then(function () {
+    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, tenetCodaP, auxP, cnNull00P, i18nP, bountyP, regP, cnNodeP]).then(function () {
       /* 赏金任务板最终兜底：rawP（oracle.browse.wf / api.warframe.com）在大陆网络下
          可能也连不上，此时若 D.bounties 仍为空，用 GitHub 快照里的
          syndicateMissions（来自 apiP 或 fallbackP）重建同样结构的数据，
