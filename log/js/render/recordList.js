@@ -9,13 +9,17 @@ WF.recordList = (function () {
    * clock: logReader.makeClock 结果
    * summaryFn(rec) → {title, sub} 摘要文本
    * onSelect(rec, index)
+   * priorityFn(rec) → 数字，越小优先级越高（同优先级内仍按时间由近及远）；不传则全部同优先级
    */
-  function render(container, records, clock, summaryFn, onSelect) {
+  function render(container, records, clock, summaryFn, onSelect, priorityFn) {
     container.innerHTML = '';
     if (!records.length) return;
 
-    // 由近及远：优先用 endAbsT（多会话绝对序），回退到 endT（单会话）
+    const pri = priorityFn || (() => 0);
+    // 先按优先级分组，组内由近及远：优先用 endAbsT（多会话绝对序），回退到 endT（单会话）
     const sorted = records.slice().sort((a, b) => {
+      const pa = pri(a), pb = pri(b);
+      if (pa !== pb) return pa - pb;
       const aE = a.endAbsT !== undefined ? a.endAbsT : a.endT;
       const bE = b.endAbsT !== undefined ? b.endAbsT : b.endT;
       return bE - aE;

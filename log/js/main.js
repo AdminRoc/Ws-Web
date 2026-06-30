@@ -5,7 +5,7 @@
 
   const TABS = [
     { id: 'profile',     label: '个人信息', en: 'PROFILE',       special: true },
-    { id: 'eidolon',     label: '夜灵',    en: 'EIDOLON',       view: () => WF.eidolonView,     empty: '未找到满足 6×3 条件的夜灵捕获记录' },
+    { id: 'eidolon',     label: '夜灵',    en: 'EIDOLON',       view: () => WF.eidolonView,     empty: '未找到夜灵捕获记录', priority: (rec) => (rec.full ? 0 : 1) },
     { id: 'disruption',  label: '中断',    en: 'DISRUPTION',    view: () => WF.disruptionView,  empty: '未找到完成 ≥45 轮且成功结算的中断任务（需房主日志）' },
     { id: 'profitTaker', label: '大蜘蛛',  en: 'PROFIT-TAKER',  view: () => WF.profitTakerView, empty: '未找到完整的 Profit-Taker 击杀记录' },
     { id: 'arbitration', label: '仲裁',    en: 'ARBITRATION',   view: () => WF.arbitrationView, empty: '未找到有效的仲裁任务记录（需房主日志，时长 ≥60 秒）' },
@@ -217,7 +217,7 @@
     }
     WF.recordList.render(listBox, records, state.clock, view.summary, (rec) => {
       view.render(detailBox, rec, state.clock);
-    });
+    }, tab.priority);
   }
 
   document.addEventListener('DOMContentLoaded', init);
