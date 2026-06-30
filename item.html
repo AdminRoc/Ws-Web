@@ -651,6 +651,7 @@
 
   var WM_ITEMS = null, WM_STATIC = 'https://warframe.market/static/assets/';
   var DROPS = null;
+  var WIKI_ICONS = null;  // data/wiki-icon-harvest.json：{ 原始物品名: 缩略图URL }，补 WM 不交易的资源/蓝图类条目
   var SEARCH = [];        // [{zh, en, slug, icon, ducats, vaulted, key(lower)}]
   var loaded = false;
   var loadingPromise = null;
@@ -671,35 +672,62 @@
       SEARCH.push(rec);
       if (it.en) seenEn[it.en.toLowerCase()] = true;
     });
-    // 把只在掉落表里、不在 WM 的物品(资源/缓存等)也加进可搜索集
+    // 把只在掉落表里、不在 WM 的物品(资源/缓存等)也加进可搜索集；这部分没有 WM 图标，
+    // 优先用 wiki.warframe.com 抓回来的缩略图兜底(见 wiki-icon-harvest.json)。
     var di = (DROPS && DROPS.items) || {};
+    var wikiIcons = WIKI_ICONS || {};
     Object.keys(di).forEach(function (en) {
       if (seenEn[en.toLowerCase()]) return;
-      SEARCH.push({ zh: di[en].zh || en, en: en, slug: null, icon: null, ducats: null, vaulted: false });
+      var wikiIcon = wikiIcons[en] || null;
+      SEARCH.push({ zh: di[en].zh || en, en: en, slug: null, icon: wikiIcon, iconPath: null, ducats: null, vaulted: false });
     });
     SEARCH.forEach(function (r) { r.key = ((r.zh || '') + ' ' + (r.en || '')).toLowerCase(); });
   }
 
+  /* wm-items.json(637KB，可搜索物品名表)与 drops-index.json(4.4MB，逐物品掉落详情表)
+     体量差一个数量级。以前两个并发 fetch 完全 resolve 才标记 loaded，意味着每次首次
+     交互(打字/点搜索/回车)都得先等满 5MB 下完——这正是"输入后要等很久才联想、回车/
+     点搜索像没反应"的根因，并非搜索逻辑本身慢。改为两路独立：wm-items.json 一到就能
+     建出可搜索集合、标记 loaded，drops-index.json 继续在后台下载，到达后只追加掉落表
+     专属的资源类条目(buildSearch 里 DROPS 那段)并静默刷新一次自动补全，不阻塞任何人。
+     另外页面一打开就预热请求（而不是等用户敲第一个字才发起），多数情况用户开始打字
+     时 wm-items.json 早已到位，真正做到"无感"。 */
   function ensureLoaded() {
     if (loaded) return Promise.resolve();
     if (loadingPromise) return loadingPromise;
-    loadingPromise = Promise.all([
-      fetch('data/wm-items.json').then(function (r) { return r.json(); }).catch(function () { return null; }),
-      fetch('data/drops-index.json').then(function (r) { return r.json(); }).catch(function () { return null; })
-    ]).then(function (res) {
-      WM_ITEMS = res[0]; DROPS = res[1];
-      if (WM_ITEMS && WM_ITEMS.staticBase) WM_STATIC = WM_ITEMS.staticBase;
-      buildSearch();
-      loadingPromise = null;
-      if (SEARCH.length) {
-        loaded = true;
-        hideLoadErr();
-      } else {
-        showLoadErr();  // 两个数据源都没拉到：不标记 loaded，允许下次交互重试
+    loadingPromise = fetch('data/wm-items.json').then(function (r) { return r.json(); }).catch(function () { return null; })
+      .then(function (items) {
+        WM_ITEMS = items;
+        if (WM_ITEMS && WM_ITEMS.staticBase) WM_STATIC = WM_ITEMS.staticBase;
+        buildSearch();
+        loadingPromise = null;
+        if (SEARCH.length) {
+          loaded = true;
+          hideLoadErr();
+        } else {
+          showLoadErr();  // 主索引没拉到：不标记 loaded，允许下次交互重试
+        }
+      });
+    // 掉落表体量大，单独后台拉取，不拖慢主索引就绪时间；到达后补充资源类条目并
+    // 静默刷新一次当前自动补全(若用户此时正好在看建议列表)。
+    fetch('data/drops-index.json').then(function (r) { return r.json(); }).then(function (drops) {
+      DROPS = drops;
+      if (loaded) {
+        buildSearch();
+        if (acEl.classList.contains('show')) { acList = rankMatches(inputEl.value); renderAc(); }
       }
-    });
+    }).catch(function () {});
+    // wiki 缩略图补全表很小，同样后台拉取、到达后静默合并，不阻塞主索引。
+    fetch('data/wiki-icon-harvest.json').then(function (r) { return r.json(); }).then(function (icons) {
+      WIKI_ICONS = icons;
+      if (loaded) {
+        buildSearch();
+        if (acEl.classList.contains('show')) { acList = rankMatches(inputEl.value); renderAc(); }
+      }
+    }).catch(function () {});
     return loadingPromise;
   }
+  ensureLoaded();  // 页面一加载就预热，不等用户第一次交互再发请求
   var loadErrEl = null;
   function showLoadErr() {
     if (!loadErrEl) {

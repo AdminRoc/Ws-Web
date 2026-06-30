@@ -1,0 +1,16 @@
+# EdgeOne Pages 静态资源缓存规则（语法与 Cloudflare Pages 的 _headers 一致，EdgeOne Pages 原生支持）。
+#
+# data/*.json：物品检索索引(wm-items.json/drops-index.json)、世界状态镜像快照
+# (ws-intl-zh.json/ws-cn-zh.json)等由 GitHub Actions 定期写回仓库的"预先生成好的
+# 静态数据"，本来就该交给 CDN 长期缓存而不是每次都回源——这正是点5里要的"可搜索
+# 索引库 + 缩略图都走 CDN 长期缓存，多页面复用"的落地方式之一。
+#   - s-maxage=86400：边缘节点缓存 24 小时，命中率收益最大的一档。
+#   - max-age=600：浏览器本地只信 10 分钟，避免数据更新后用户长时间看到旧值。
+#   - stale-while-revalidate=3600：缓存过期后先吐旧值，后台悄悄换新，不让用户等。
+# 注意：EdgeOne Pages 每次新部署都会整体刷新该次构建产物的边缘缓存，旧版本数据
+# 不会因为这条缓存规则而"赖" CDN 不更新。
+/data/*.json
+  Cache-Control: public, max-age=600, s-maxage=86400, stale-while-revalidate=3600
+
+# 注：物品图标走的是 wm.wfspeed.run/static/*（EdgeOne 边缘函数自己的缓存逻辑，
+# 见 edgeone-function.js），不是本 Pages 站点下的路径，这里不需要也不应该重复配置。
