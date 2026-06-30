@@ -126,6 +126,7 @@ window.WF_TR = {
     "Stage": "阶段"
   },
   "DROP_SOURCE": {
+    "_provenance": "本分类与上面几类不同：上面的词条都是用户逐条手动确认过的；这一类是从公共网络抓取的公开数据源(drop.wf.wiki，一个自称'多语言精校'的Warframe官方掉落表镜像站)按英/中双语对照页面精确字符串提取的，覆盖官方掉落表里Boss/敌人/任务关名等专有名词，未经用户逐条人工复核。已知与本文件其他确认来源有出入的两处：①Albrecht's Laboratories 用户已确认译作'阿尔布雷希特的实验室'，但drop.wf.wiki页面内容用的是'英择谛实验室'(Entrati Lab，同一地点的不同称呼习惯)，本分类不收录这个key，调用方应以DROP_LOCATION的用户确认结果为准；②Hex 用户已确认译作'六人组'，drop.wf.wiki里同一赏金称'1999 赏金'，本分类同样不收录Hex这个key。",
     "Scaldra Screamer": "炽蛇军尖啸者",
     "Scaldra Ti-92": "炽蛇军 TI-92 运兵车",
     "H-09 Efervon Tank": "H-09 艾弗旺坦克",
@@ -1123,3 +1124,4 @@ window.WF_TR = {
     "Roathe": "罗瑟"
   }
 };
+
