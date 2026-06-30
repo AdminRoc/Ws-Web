@@ -666,6 +666,8 @@
                             // 专门补 drops-index.json 里 zh 字段空缺(=没有官方译名/还没收录)
                             // 的掉落表专属条目，否则这些条目只能用英文搜到，搜中文会落空。
   var WIKI_ICONS = null;   // data/wiki-icon-harvest.json：{ 原始物品名: 远程缩略图URL }，本地缓存没命中时的兜底
+  var ITEM_I18N = null;    // data/item-i18n-harvest.json：从官方客户端本地化数据批量收割的中文译名，
+                            // 覆盖面比 ZH_NAMES(65条人工表)大得多，同样只在 zh 字段空缺时兜底
   var ICON_INDEX = null;   // data/icon-index.json：{ 原始物品名: {path, source} }，图片已实际下载缓存进本仓库
                             // data/icons/<source>/...，是各页面(item.html/世界状态赏金缩略图/未来加速版WM站点)
                             // 复用同一份缩略图的统一入口；来源可扩展(目前 wm/wiki，以后加新来源只需脚本侧改动)。
@@ -721,10 +723,11 @@
     var di = (DROPS && DROPS.items) || {};
     var wikiIcons = WIKI_ICONS || {};
     var zhNames = ZH_NAMES || {};
+    var i18n = ITEM_I18N || {};
     Object.keys(di).forEach(function (en) {
       if (seenEn[en.toLowerCase()]) return;
       var ic = resolveIcon(en, wikiIcons[en] || null, null);
-      var zh = di[en].zh || zhNames[en] || en;
+      var zh = di[en].zh || zhNames[en] || i18n[en] || en;
       SEARCH.push({ zh: zh, en: en, slug: null, icon: ic.icon, iconFallbacks: ic.fallbacks, iconPath: null, ducats: null, vaulted: false });
     });
     SEARCH.forEach(function (r) { r.key = ((r.zh || '') + ' ' + (r.en || '')).toLowerCase(); });
@@ -771,6 +774,14 @@
     // wiki 远程热链表只在"本地还没缓存到该条目"时当兜底用，同样后台拉取不阻塞。
     fetch('data/wiki-icon-harvest.json').then(function (r) { return r.json(); }).then(function (icons) {
       WIKI_ICONS = icons;
+      if (loaded) {
+        buildSearch();
+        if (acEl.classList.contains('show')) { acList = rankMatches(inputEl.value); renderAc(); }
+      }
+    }).catch(function () {});
+    // 批量收割的中文译名表，体量比主索引大不少，同样后台拉取不阻塞首屏。
+    fetch('data/item-i18n-harvest.json').then(function (r) { return r.json(); }).then(function (i18n) {
+      ITEM_I18N = i18n;
       if (loaded) {
         buildSearch();
         if (acEl.classList.contains('show')) { acList = rankMatches(inputEl.value); renderAc(); }
