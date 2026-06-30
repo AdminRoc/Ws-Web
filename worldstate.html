@@ -2983,6 +2983,15 @@
    *   - "节点名 (星球名)" → 分别翻译再拼接
    *   - 单独星球名 → PLANET_ZH
    */
+  var WIKI_ZH = 'https://warframe.huijiwiki.com/index.php?search=';
+  /* 与 item.html 同款：完全没查到对应翻译的专有名词(Boss/敌人/任务关名等)，
+     不编翻译，改成可点击的中文维基搜索链接。只接受"干净"的名词本身，调用方
+     必须自己先把数量/等级等后缀切掉，这里不做任何二次解析，防止把
+     "Forma x3" 这类带数量后缀的字符串整串拿去搜索。 */
+  function wikiLink(text) {
+    if (!text || text === '--') return text || '--';
+    return '<a class="ws-wiki-link" href="' + WIKI_ZH + encodeURIComponent(text) + '" target="_blank" rel="noopener" title="在中文维基搜索此名称">' + text + '</a>';
+  }
   function trLocation(str) {
     if (!str || str === '--') return str || '--';
     if (/[一-鿿]/.test(str)) return str;          /* 已是中文 */
@@ -2998,11 +3007,11 @@
     if (m) {
       var node   = m[1].trim();
       var planet = m[2].trim();
-      var nz = PLANET_ZH[node]   || (tr(node)   !== node   ? tr(node)   : node);
-      var pz = PLANET_ZH[planet] || (tr(planet) !== planet ? tr(planet) : planet);
+      var nz = PLANET_ZH[node]   || (tr(node)   !== node   ? tr(node)   : wikiLink(node));
+      var pz = PLANET_ZH[planet] || (tr(planet) !== planet ? tr(planet) : wikiLink(planet));
       return nz + ' (' + pz + ')';
     }
-    return str;
+    return wikiLink(str);
   }
 
   /* ── 仲裁节点数据表 [节点名, 星球, 任务类型, 阵营] ── */
@@ -4338,7 +4347,7 @@
       el.innerHTML =
         '<div class="ws-mission-card">' +
           '<div class="ws-mission-hd">' +
-            '<span class="ws-mission-boss">' + (dCn.boss || '--') + '</span>' +
+            '<span class="ws-mission-boss">' + wikiLink(dCn.boss || '--') + '</span>' +
             '<span class="ws-mission-timer" id="wt-sortie"></span>' +
           '</div>' + (dCn.missions || []).map(cnMissionRowHtml).join('') + '</div>';
       if (dCn.expiry) countdown(document.getElementById('wt-sortie'), dCn.expiry);
@@ -4357,7 +4366,7 @@
     el.innerHTML =
       '<div class="ws-mission-card">' +
         '<div class="ws-mission-hd">' +
-          '<span class="ws-mission-boss">' + (d.boss || '--') + '</span>' +
+          '<span class="ws-mission-boss">' + wikiLink(d.boss || '--') + '</span>' +
           '<span class="ws-mission-timer" id="wt-sortie"></span>' +
         '</div>' + rows + '</div>';
     if (d.expiry) countdown(document.getElementById('wt-sortie'), new Date(d.expiry).getTime());
@@ -4373,7 +4382,7 @@
       el.innerHTML =
         '<div class="ws-mission-card">' +
           '<div class="ws-mission-hd">' +
-            '<span class="ws-mission-boss">' + (dCnA.boss || '--') + '</span>' +
+            '<span class="ws-mission-boss">' + wikiLink(dCnA.boss || '--') + '</span>' +
             '<span class="ws-mission-timer" id="wt-archon"></span>' +
           '</div>' + (dCnA.missions || []).map(cnMissionRowHtml).join('') + '</div>';
       if (dCnA.expiry) countdown(document.getElementById('wt-archon'), dCnA.expiry);
@@ -4391,7 +4400,7 @@
     el.innerHTML =
       '<div class="ws-mission-card">' +
         '<div class="ws-mission-hd">' +
-          '<span class="ws-mission-boss">' + (d.boss || '--') + '</span>' +
+          '<span class="ws-mission-boss">' + wikiLink(d.boss || '--') + '</span>' +
           '<span class="ws-mission-timer" id="wt-archon"></span>' +
         '</div>' + rows + '</div>';
     if (d.expiry) countdown(document.getElementById('wt-archon'), new Date(d.expiry).getTime());
@@ -4411,7 +4420,7 @@
         '<div class="ws-baro-inv-grid">' +
           invCnB.slice(0, 30).map(function (item) {
             return '<div class="ws-baro-item">' +
-              '<span class="ws-bi-name">' + (item.item || item.name || '--') + '</span>' +
+              '<span class="ws-bi-name">' + wikiLink(item.item || item.name || '--') + '</span>' +
               '<span class="ws-bi-cost">' + (item.ducats || 0) + ' 金质 + ' +
                 (item.credits || 0).toLocaleString() + ' 点数</span>' +
               '</div>';
@@ -4443,7 +4452,7 @@
       '<div class="ws-baro-inv-grid">' +
         inv.slice(0, 30).map(function (item) {
           return '<div class="ws-baro-item">' +
-            '<span class="ws-bi-name">' + (item.item || '--') + '</span>' +
+            '<span class="ws-bi-name">' + wikiLink(item.item || '--') + '</span>' +
             '<span class="ws-bi-cost">' + (item.ducats || 0) + ' 金质 + ' +
               (item.credits || 0).toLocaleString() + ' 点数</span>' +
             '</div>';
@@ -4511,7 +4520,7 @@
       var invHtmlCnV = (activeCnV && invCnV.length) ?
         '<div class="ws-baro-inv-grid">' +
           invCnV.slice(0, 60).map(function (item) {
-            return '<div class="ws-baro-item"><span class="ws-bi-name">' + (item.name || '--') + '</span></div>';
+            return '<div class="ws-baro-item"><span class="ws-bi-name">' + wikiLink(item.name || '--') + '</span></div>';
           }).join('') +
         '</div>' : (activeCnV ? '<div class="ws-empty">商人背包暂无物品数据</div>' : '');
       el.innerHTML =
@@ -4571,14 +4580,14 @@
     el.innerHTML =
       '<div class="ws-sp-current">' +
         '<span class="ws-sp-label">本周奖励</span>' +
-        '<span class="ws-sp-reward">' + (tr(cur.name) || '--') + '</span>' +
+        '<span class="ws-sp-reward">' + wikiLink(tr(cur.name) || '--') + '</span>' +
         '<span class="ws-sp-cost">' + (cur.cost || '--') + ' 精华</span>' +
         '<span class="ws-sp-timer" id="wt-sp"></span>' +
       '</div>' +
       (eg.length ?
         '<div class="ws-sp-evergreens">' +
           eg.map(function (item) {
-            return '<div class="ws-sp-item"><span>' + (tr(item.name) || '--') +
+            return '<div class="ws-sp-item"><span>' + wikiLink(tr(item.name) || '--') +
               '</span><span class="ws-sp-cost-sm">' + (item.cost || '--') + ' 精华</span></div>';
           }).join('') +
         '</div>' : '');
@@ -4691,7 +4700,7 @@
           '<span class="ws-alert-node">' + trLocation(m.node || '--') + '</span>' +
           '<span class="ws-alert-timer" id="wt-alert-' + i + '"></span>' +
         '</div>' +
-        '<div class="ws-alert-meta">' + trLocation(m.type || '--') + ' · ' + (m.faction || '--') +
+        '<div class="ws-alert-meta">' + trLocation(m.type || '--') + ' · ' + factionZh(m.faction) +
           (lvl ? ' · ' + lvl : '') + '</div>' +
         (chips.length ? '<div class="ws-alert-rewards">' + chips.join('') + '</div>' : '') +
         '</div>';
@@ -4758,12 +4767,12 @@
         '<div class="ws-inv-node">' + trLocation(inv.node || '--') + '</div>' +
         '<div class="ws-inv-vs">' +
           '<span class="ws-inv-side">' +
-            '<span class="ws-inv-faction">' + ((inv.attacker || {}).faction || '--') + '</span>' +
+            '<span class="ws-inv-faction">' + factionZh((inv.attacker || {}).faction) + '</span>' +
             '<span class="ws-inv-reward">' + reward(inv.attacker) + '</span>' +
           '</span>' +
           '<span class="ws-inv-divider">vs</span>' +
           '<span class="ws-inv-side">' +
-            '<span class="ws-inv-faction">' + ((inv.defender || {}).faction || '--') + '</span>' +
+            '<span class="ws-inv-faction">' + factionZh((inv.defender || {}).faction) + '</span>' +
             '<span class="ws-inv-reward">' + reward(inv.defender) + '</span>' +
           '</span>' +
         '</div>' +
@@ -5060,7 +5069,7 @@
   function bbRewardHtml(r) {
     var icon = r.icon ? '<img src="' + r.icon + '" alt="" loading="lazy">' : '';
     var cnt  = r.count ? ('×' + r.count) : '';
-    return '<span class="ws-bb-reward">' + icon + '<span>' + (r.name || '--') + (cnt ? ' ' + cnt : '') + '</span></span>';
+    return '<span class="ws-bb-reward">' + icon + '<span>' + wikiLink(r.name || '--') + (cnt ? ' ' + cnt : '') + '</span></span>';
   }
   function bbCardHtml(tag, entry) {
     var tid = 'wt-bb-' + tag;
@@ -5335,7 +5344,7 @@
       el.innerHTML = '<div class="ws-darvo-grid">' +
         dealsCnD.map(function (deal, i) {
           return '<div class="ws-darvo-item">' +
-            '<div class="ws-darvo-name">' + (deal.name || '--') + '</div>' +
+            '<div class="ws-darvo-name">' + wikiLink(deal.name || '--') + '</div>' +
             '<div class="ws-darvo-meta">' +
               '<span class="ws-darvo-sale">' + (deal.sale || 0).toLocaleString() + ' ₱</span>' +
               (deal.original ? '<span class="ws-darvo-orig">' + deal.original.toLocaleString() + ' ₱</span>' : '') +
@@ -5358,7 +5367,7 @@
     el.innerHTML = '<div class="ws-darvo-grid">' +
       deals.map(function (deal, i) {
         return '<div class="ws-darvo-item">' +
-          '<div class="ws-darvo-name">' + (tr(deal.item) || deal.item || '--') + '</div>' +
+          '<div class="ws-darvo-name">' + wikiLink(tr(deal.item) || deal.item || '--') + '</div>' +
           '<div class="ws-darvo-meta">' +
             '<span class="ws-darvo-sale">' + (deal.salePrice || 0).toLocaleString() + ' ₱</span>' +
             (deal.originalPrice ? '<span class="ws-darvo-orig">' + deal.originalPrice.toLocaleString() + ' ₱</span>' : '') +
