@@ -871,11 +871,22 @@
     ensureLoaded().then(function () {
       // 主动搜索(回车/点搜索按钮)用更宽的候选池，不像输入联想那样只截前12条，
       // 避免关键词命中很多条目时用户压根看不到自己要找的那个。
-      var m = rankMatches(inputEl.value, 60);
-      if (!m.length) return;
+      var q = inputEl.value.trim();
+      var m = rankMatches(q, 60);
+      if (!m.length) { showNoMatch(q); return; }
       if (m.length === 1) { pick(m[0]); return; }
       showMultiResults(m);
     });
+  }
+
+  /* ── 信息库里完全没有这个名字时，给个去维基搜的出口，而不是悄无声息地什么都不做 ── */
+  function showNoMatch(q) {
+    acEl.classList.remove('show');
+    syncAcSpacer();
+    if (!q) return;
+    resultsEl.innerHTML = '<div class="it-empty">本站检索库中未找到「' + esc(q) + '」，可能是收录暂缺/拼写不同，试试维基：</div>' +
+      wikiCard({ zh: q, en: q });
+    resultsEl.classList.add('show');
   }
 
   /* ── 多结果列表(回车/点搜索命中多个条目时，先列概括卡片，点一下再看详情) ── */
@@ -1080,8 +1091,9 @@
       var loading = document.getElementById('it-ord-loading');
       var body = document.getElementById('it-ord-body');
       if (loading) loading.style.display = 'none';
-      if (body) body.innerHTML = '<div class="it-empty">实时交易信息获取失败（网络受限），请直接前往：</div>' +
-        '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(_curRec.slug) + '" target="_blank" rel="noopener">在 Warframe.market 查看 ↗</a>';
+      // 下面卡片底部本就常驻一个"在 Warframe.market 打开"按钮，这里不再重复一个，
+      // 否则获取失败时会同时出现两个跳转按钮，显得臃肿。
+      if (body) body.innerHTML = '<div class="it-empty">实时交易信息获取失败（网络受限），请直接前往 Warframe.market 查看。</div>';
     });
   }
   /* 等级/小类徽标：moddable 物品（mod/arcane/riven 等）显示 "Lv.N"，
