@@ -120,9 +120,12 @@
       border: none; cursor: pointer; color: #1a1206;
       background: linear-gradient(135deg, var(--ws-gold-bright), var(--ws-gold));
       display: flex; align-items: center; justify-content: center;
-      transition: filter .2s;
+      transition: filter .2s, transform .12s;
     }
     .it-search-btn:hover { filter: brightness(1.12); }
+    .it-search-btn:active { transform: scale(.9); }
+    .it-search-btn.busy { pointer-events: none; }
+    .it-search-btn.busy svg { animation: itSpin .7s linear infinite; }
     .it-ac {
       position: absolute; left: 0; right: 0; top: calc(100% + .4rem);
       background: var(--ws-panel-bg); border: 1px solid var(--ws-gold-line);
@@ -160,6 +163,40 @@
     .it-multi-item:last-child { border-bottom: none; }
     .it-multi-item:hover { background: rgba(201,164,50,.1); }
     .it-multi-img { width: 38px; height: 38px; object-fit: contain; flex: none; background: rgba(0,0,0,.3); border-radius: 4px; }
+
+    /* ── 进入渐进动画(沿用站内暗金风格 cubic-bezier(.22,.68,0,1.2) 的逐项上浮入场，
+          与 global.css 里 navItemIn/ruleItemIn 同一套语汇) ── */
+    @keyframes itEnterUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+    .it-header  { opacity: 0; animation: itEnterUp .6s cubic-bezier(.22,.68,0,1.2) .05s forwards; }
+    .it-search-wrap { opacity: 0; animation: itEnterUp .6s cubic-bezier(.22,.68,0,1.2) .18s forwards; }
+    @media (prefers-reduced-motion: reduce) {
+      .it-header, .it-search-wrap { opacity: 1; animation: none; }
+    }
+
+    /* 自动补全/多结果项逐条上浮——搜索时的轻动效 */
+    @keyframes itItemIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+    .it-ac.show .it-ac-item, .it-multi-item { opacity: 0; animation: itItemIn .26s cubic-bezier(.22,.68,0,1.2) forwards; }
+    .it-ac.show .it-ac-item:nth-child(1), .it-multi-item:nth-child(1) { animation-delay: .02s; }
+    .it-ac.show .it-ac-item:nth-child(2), .it-multi-item:nth-child(2) { animation-delay: .05s; }
+    .it-ac.show .it-ac-item:nth-child(3), .it-multi-item:nth-child(3) { animation-delay: .08s; }
+    .it-ac.show .it-ac-item:nth-child(4), .it-multi-item:nth-child(4) { animation-delay: .11s; }
+    .it-ac.show .it-ac-item:nth-child(5), .it-multi-item:nth-child(5) { animation-delay: .14s; }
+    .it-ac.show .it-ac-item:nth-child(n+6), .it-multi-item:nth-child(n+6) { animation-delay: .17s; }
+
+    /* 旋转加载环(暗金) + 骨架占位条——搜索结果/WM 信息加载期间的等待动效 */
+    @keyframes itSpin { to { transform: rotate(360deg); } }
+    .it-spin {
+      display: inline-block; width: 16px; height: 16px; vertical-align: -3px; margin-right: .5rem;
+      border: 2px solid var(--ws-gold-line); border-top-color: var(--ws-gold-bright);
+      border-radius: 50%; animation: itSpin .7s linear infinite;
+    }
+    @keyframes itSkelSweep { 0% { background-position: 180% 0; } 100% { background-position: -180% 0; } }
+    .it-skel-row {
+      height: 30px; border-radius: 5px; margin: .45rem 0;
+      background: linear-gradient(90deg, rgba(201,164,50,.04) 25%, rgba(201,164,50,.15) 37%, rgba(201,164,50,.04) 63%);
+      background-size: 220% 100%; animation: itSkelSweep 1.3s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) { .it-skel-row { animation: none; } .it-spin { animation-duration: 1.4s; } }
 
     /* ── 结果区 ── */
     .it-results { margin-top: 2.2rem; display: none; }
@@ -867,11 +904,28 @@
   document.addEventListener('click', function (e) { if (!e.target.closest('.it-search-wrap')) { acEl.classList.remove('show'); syncAcSpacer(); } });
   btnEl.addEventListener('click', triggerSearch);
 
+  /* 每次写完结果 HTML 后重启一次淡入动画——只 add('show') 不会在已显示状态下重播，
+     这里 remove→强制回流→add 让多结果/无结果/加载态切换时都有一致的淡入。 */
+  function restartResults() {
+    resultsEl.classList.remove('show');
+    void resultsEl.offsetWidth;
+    resultsEl.classList.add('show');
+  }
+  function showResultsLoading() {
+    acEl.classList.remove('show'); syncAcSpacer();
+    resultsEl.innerHTML = '<div class="it-loading"><span class="it-spin"></span>正在检索…</div>';
+    restartResults();
+  }
+
   function triggerSearch() {
+    var q = inputEl.value.trim();
+    if (!q) return;
+    // 数据尚未就绪时(首次交互)先给加载动效，避免点了搜索却一片空白。
+    if (!loaded) { showResultsLoading(); btnEl.classList.add('busy'); }
     ensureLoaded().then(function () {
+      btnEl.classList.remove('busy');
       // 主动搜索(回车/点搜索按钮)用更宽的候选池，不像输入联想那样只截前12条，
       // 避免关键词命中很多条目时用户压根看不到自己要找的那个。
-      var q = inputEl.value.trim();
       var m = rankMatches(q, 60);
       if (!m.length) { showNoMatch(q); return; }
       if (m.length === 1) { pick(m[0]); return; }
@@ -886,7 +940,7 @@
     if (!q) return;
     resultsEl.innerHTML = '<div class="it-empty">本站检索库中未找到「' + esc(q) + '」，可能是收录暂缺/拼写不同，试试维基：</div>' +
       wikiCard({ zh: q, en: q });
-    resultsEl.classList.add('show');
+    restartResults();
   }
 
   /* ── 多结果列表(回车/点搜索命中多个条目时，先列概括卡片，点一下再看详情) ── */
@@ -904,7 +958,7 @@
           '<div class="it-ac-names"><div class="it-ac-zh">' + esc(r.zh) + '</div><div class="it-ac-en">' + esc(r.en) + '</div></div></div>';
       }).join('') + '</div>';
     resultsEl.innerHTML = html;
-    resultsEl.classList.add('show');
+    restartResults();
   }
   resultsEl.addEventListener('click', function (e) {
     var it = e.target.closest('.it-multi-item');
@@ -949,7 +1003,7 @@
       '</div>';
 
     resultsEl.innerHTML = head + cards;
-    resultsEl.classList.add('show');
+    restartResults();
     if (rec.slug) loadOrders(rec);
   }
 
@@ -1038,7 +1092,9 @@
       body = '<div class="it-empty">实时交易信息需要配置 WM 代理（WM_PROXY_BASE）。</div>' +
         '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(rec.slug) + '" target="_blank" rel="noopener">前往 Warframe.market 查看 ↗</a>';
     } else {
-      body = '<div class="it-loading" id="it-ord-loading">正在获取实时交易信息…</div><div id="it-ord-body"></div>' +
+      var skelCol = '<div>' + '<div class="it-skel-row"></div><div class="it-skel-row"></div><div class="it-skel-row"></div><div class="it-skel-row"></div>' + '</div>';
+      body = '<div class="it-loading" id="it-ord-loading"><span class="it-spin"></span>正在获取实时交易信息…</div>' +
+        '<div id="it-ord-body"><div class="it-ord-cols">' + skelCol + skelCol + '</div></div>' +
         '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(rec.slug) + '" target="_blank" rel="noopener">在 Warframe.market 打开 ↗</a>';
     }
     return '<div class="it-card it-card-wide"><div class="it-card-hd">Warframe.market 实时交易信息 <span class="it-card-en">LIVE ORDERS</span></div>' + body + '</div>';
