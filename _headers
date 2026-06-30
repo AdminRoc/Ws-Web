@@ -12,5 +12,12 @@
 /data/*.json
   Cache-Control: public, max-age=600, s-maxage=86400, stale-while-revalidate=3600
 
-# 注：物品图标走的是 wm.wfspeed.run/static/*（EdgeOne 边缘函数自己的缓存逻辑，
-# 见 edgeone-function.js），不是本 Pages 站点下的路径，这里不需要也不应该重复配置。
+# data/icons/*：实际下载缓存进本仓库的物品缩略图文件（见 cache_item_icons.py /
+# cache-item-icons.yml），文件名本身已经带版本含义(WM图标文件名、wiki条目名)，同名
+# 文件内容不会变，可以放心长期不过期缓存，不需要像 json 数据那样留短revalidate窗口。
+/data/icons/*
+  Cache-Control: public, max-age=2592000, s-maxage=2592000, immutable
+
+# 注：另有一部分物品图标走的是 wm.wfspeed.run/static/*（EdgeOne 边缘函数自己的缓存
+# 逻辑，见 edgeone-function.js），那是本地缓存没命中时的兜底路径，不是本 Pages 站点下
+# 的路径，这里不需要也不应该重复配置。
