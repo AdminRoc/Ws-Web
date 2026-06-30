@@ -1,10 +1,13 @@
 name: 生成共享翻译产物
 
-# 通用汉化主源 data/wf-translations.json 已迁私库 AdminRoc/Ws-Web-core，由它派生两个公库产物：
+# 通用汉化主源 data/wf-translations.json 已迁私库 AdminRoc/Ws-Web-core，由它派生三个公库产物：
 #   js/wf-translations.js   （worldstate + eelog 前端直接 <script> 加载）
-#   log/js/solNodes.js      （eelog 节点名映射，含 WFCD 节点数据）
-# 生成脚本 gen_wf_translations.py / gen_solnodes.py 也在私库。本工作流 checkout 私库覆盖后
-# 在公库工作树里运行它们（此时输出路径 js/、log/js/ 才正确），只把这两个产物提交回公库。
+#   log/js/solNodes.js      （eelog 节点名映射，含 WFCD 节点数据，英文节点考据翻译）
+#   data/cn-solnodes.json   （worldstate.html 国服子状态用，国服官方中文节点全名，
+#                             来自 Dreamsunqing/warframe-api-server，与上面那份词源不同不混用）
+# 生成脚本 gen_wf_translations.py / gen_solnodes.py / gen_cn_solnodes.py 也在私库。
+# 本工作流 checkout 私库覆盖后在公库工作树里运行它们（此时输出路径 js/、log/js/、data/
+# 才正确），只把这三个产物提交回公库。
 #
 # 何时触发：① 改了私库 data/wf-translations.json 后手动 Run；
 #           ② （可选）由 Cloudflare 定时触发，让 solNodes.js 跟随游戏新增节点保持新鲜。
@@ -44,11 +47,14 @@ jobs:
       - name: 生成 log/js/solNodes.js
         run: python3 .github/scripts/gen_solnodes.py
 
-      - name: 提交并推送（只提交这两个产物，无变化时跳过）
+      - name: 生成 data/cn-solnodes.json（国服官方节点中文名，worldstate.html 国服子状态用）
+        run: python3 .github/scripts/gen_cn_solnodes.py
+
+      - name: 提交并推送（只提交这三个产物，无变化时跳过）
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add js/wf-translations.js log/js/solNodes.js
+          git add js/wf-translations.js log/js/solNodes.js data/cn-solnodes.json
           git diff --staged --quiet && { echo "无实质变动,跳过提交"; exit 0; }
           git commit -m "build: regenerate shared translation products [skip ci]"
           # 跨工作流并发推送同一 main 会撞车(non-fast-forward),fetch+rebase+重试自愈

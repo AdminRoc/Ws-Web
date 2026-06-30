@@ -3,7 +3,8 @@ name: 镜像世界状态(辅助源)
 # 把一个辅助世界状态接口(server=intl/cn × lang=zh/en)镜像成同源静态 JSON,
 # 交给腾讯云 CDN 分发,供前端按"国服/国际服 + 中/英"切换读取。
 # 抓取脚本 build_aux_state.py 在私库 AdminRoc/Ws-Web-core;运行前 checkout 私库覆盖进
-# 工作树,产物(4 个 ws-*.json)提交回公库,私库脚本绝不提交回公库。
+# 工作树,产物(4 个 ws-*.json + 国服补充源 ws-cn-null00.json 共 5 个)提交回公库,
+# 私库脚本绝不提交回公库。
 #
 # 定时触发由 Cloudflare Workers Cron Triggers 负责(每 2 分钟;见私库 cloudflare-worker/),
 # 弥补 GitHub 自带 schedule 对不活跃仓库的延迟/跳过。
@@ -40,11 +41,14 @@ jobs:
       - name: 镜像世界状态(4 组合)
         run: python3 .github/scripts/build_aux_state.py
 
+      - name: 镜像国服补充数据源(api.null00.com)
+        run: python3 .github/scripts/fetch_null00_cn.py
+
       - name: 提交并推送(只提交产物,无变化时跳过)
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ws-intl-zh.json data/ws-intl-en.json data/ws-cn-zh.json data/ws-cn-en.json
+          git add data/ws-intl-zh.json data/ws-intl-en.json data/ws-cn-zh.json data/ws-cn-en.json data/ws-cn-null00.json
           git diff --staged --quiet && { echo "无实质变动,跳过提交"; exit 0; }
           git commit -m "data: update aux-state [skip ci]"
           # 多个定时工作流(本工作流 + 更新世界状态全量数据 等)各自按 cron 推送同一 main 分支,
