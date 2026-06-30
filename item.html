@@ -287,6 +287,8 @@
     .it-wiki-btn span { font-size: .76rem; color: var(--ws-text-dim); }
 
     .it-empty { color: var(--ws-text-dim); text-align: center; padding: 1.5rem 0; font-size: .9rem; }
+    .it-cross-link { color: var(--ws-gold); text-decoration: none; border-bottom: 1px dashed var(--ws-gold-line); white-space: nowrap; }
+    .it-cross-link:hover { color: var(--ws-gold-bright); border-bottom-color: var(--ws-gold); }
     .it-loading { color: var(--ws-gold); text-align: center; padding: 1rem 0; font-size: .85rem; }
 
     /* 复制成功提示 */
@@ -461,6 +463,8 @@
 
 <script src="js/main.js"></script>
 <script src="js/wf-translations.js"></script>
+<script src="js/pinyin-search.js"></script>
+<script>if (window.PYS) PYS.load('data/pinyin-map.json');</script>
 <script>
 /* ── 移动端有下拉框的链接点两次再跳转 ── */
 (function() {
@@ -847,6 +851,12 @@
     if (zh.indexOf(q) === 0 || en.indexOf(q) === 0) return 1; // 名称开头
     if (r.key.indexOf(' ' + q) !== -1) return 2;             // 词边界(空格后)
     if (r.key.indexOf(q) !== -1) return 3;                   // 任意位置包含
+    // 以下为兜底匹配层(仅当上面精确匹配全未命中)：拼音/模糊都只对拉丁查询生效，
+    // 中文字符查询本身已被上面的 indexOf 覆盖，无需再拼音化。
+    if (/^[a-z0-9 ]+$/.test(q) && window.PYS) {
+      if (PYS.pyHit(r.zh, q)) return 4;                       // 拼音(全拼/首字母)命中
+      if (q.length >= 3 && PYS.subseq(en, q)) return 5;       // 英文名模糊(子序列容错)
+    }
     return -1;
   }
   function rankMatches(q, limit) {
@@ -938,7 +948,10 @@
     acEl.classList.remove('show');
     syncAcSpacer();
     if (!q) return;
-    resultsEl.innerHTML = '<div class="it-empty">本站检索库中未找到「' + esc(q) + '」，可能是收录暂缺/拼写不同，试试维基：</div>' +
+    // 物品库查无此项时，除了维基出口，再给一个去"全站榜单搜索"的回链——
+    // 用户也许搜的是地图/榜单名(那属于 search.html)，两个搜索互相兜底不留死胡同。
+    resultsEl.innerHTML = '<div class="it-empty">本站物品库中未找到「' + esc(q) + '」，可能是收录暂缺/拼写不同。' +
+        '也许在找地图或榜单？<a class="it-cross-link" href="search.html?q=' + encodeURIComponent(q) + '">前往全站榜单搜索 →</a></div>' +
       wikiCard({ zh: q, en: q });
     restartResults();
   }
@@ -1316,14 +1329,14 @@
     requestAnimationFrame(frame);
   }
 
-  /* 首屏：支持 ?q=xxx 直接检索；预加载数据 */
+  /* 首屏：支持 ?q=xxx 直接检索(也是 search.html 回链进来的入口)；预加载数据。
+     走 triggerSearch 统一逻辑，单条直达详情、多条列概览、无果给维基+榜单搜索回链。 */
   ensureLoaded().then(function () {
     var m = (location.search.match(/[?&]q=([^&]+)/));
     if (m) {
       var q = decodeURIComponent(m[1].replace(/\+/g, ' '));
       inputEl.value = q;
-      var r = rankMatches(q);
-      if (r.length) renderResults(r[0]);
+      triggerSearch();
     }
   });
 })();

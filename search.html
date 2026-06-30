@@ -109,7 +109,8 @@ a{text-decoration:none;color:inherit;}
   mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude;z-index:-1;}
 .result-inner{background:rgba(6,8,18,.95);border-radius:15px;overflow:hidden;transition:background .3s;}
-.result-card:hover .result-inner{background:rgba(0,160,255,.04);}
+.result-card:hover .result-inner,.result-card.kbsel .result-inner{background:rgba(0,160,255,.07);}
+.result-card.kbsel{box-shadow:0 0 0 1.5px rgba(0,212,255,.55),0 0 22px rgba(0,160,255,.25);}
 
 /* card head — issue #6 sizes */
 .card-head{padding:15px 24px;border-bottom:1px solid rgba(0,212,255,.09);}
@@ -342,6 +343,8 @@ function loadData(cb){
 </script>
 
 <!-- ══ SEARCH ENGINE + EXIT TUNNEL + UI ══ -->
+<script src="js/pinyin-search.js"></script>
+<script>if (window.PYS) PYS.load('data/pinyin-map.json');</script>
 <script>
 function getRecs(n){
   try{var r=window[n];if(Array.isArray(r))return r;}catch(e){}
@@ -362,8 +365,24 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 /* 将查询字符串拆分为词列表（按空格，过滤空串，全部小写） */
 function parseWords(q){return q.toLowerCase().split(/\s+/).filter(Boolean);}
 
-/* 判断 words 中每个词是否都出现在 text（小写）中 */
-function allMatch(words,text){var t=text.toLowerCase();return words.every(function(w){return t.includes(w);});}
+/* 单个词命中：精确子串 优先；拉丁词再试拼音(全拼/首字母，py 为该榜单中文名的拼音blob)；
+   ≥3 字符再试模糊(子序列容错)。py 由调用方按 IDX 条目预算好传入。 */
+function wordHit(w,text,py){
+  if(text.indexOf(w)!==-1)return true;
+  if(py&&/^[a-z0-9]+$/.test(w)&&py.indexOf(w)!==-1)return true;
+  if(w.length>=3&&window.PYS&&PYS.subseq(text,w))return true;
+  return false;
+}
+/* 判断 words 中每个词是否都命中 text（含拼音/模糊兜底）；py 可选(中文名拼音blob) */
+function allMatch(words,text,py){var t=text.toLowerCase();return words.every(function(w){return wordHit(w,t,py);});}
+/* 取(并缓存)某榜单条目中文名的拼音blob：全拼 + 空格 + 首字母 */
+function entryPy(e){
+  if(e._py===undefined){
+    var k=window.PYS?PYS.keys((e.titleCn||'')+(e.ctx||'')):{full:'',init:''};
+    e._py=k.full+' '+k.init;
+  }
+  return e._py;
+}
 
 function runSearch(raw){
   var q=raw.trim();if(!q)return[];
@@ -376,8 +395,8 @@ function runSearch(raw){
     /* 榜单维度的可搜字符串（标题+语言+子分类名） */
     var titleStr=[e.titleCn,e.titleEn,e.ctx,e.ctxEn].join(' ');
 
-    /* ── 判断是否"纯标题命中"：所有词都在 titleStr 里 ── */
-    if(allMatch(words,titleStr)){
+    /* ── 判断是否"纯标题命中"：所有词都命中 titleStr(含拼音/模糊兜底) ── */
+    if(allMatch(words,titleStr,entryPy(e))){
       var k='T|'+e.varName;if(seen.has(k))return;seen.add(k);
       res.push({page:e.page,titleCn:e.titleCn,titleEn:e.titleEn,ctx:e.ctx,ctxEn:e.ctxEn,
         rows:recs.slice(0,3),matchIdx:-2,startRank:0,recCount:recs.length});
@@ -388,7 +407,7 @@ function runSearch(raw){
     recs.forEach(function(rec,idx){
       var rowStr=recStr(rec);
       var combined=titleStr+' '+rowStr;
-      if(!allMatch(words,combined))return;
+      if(!allMatch(words,combined,entryPy(e)))return;
       var k='D|'+e.varName+'|'+idx;if(seen.has(k))return;seen.add(k);
       var n=recs.length,start,mpos;
       if(idx===0){start=0;mpos=0;}
@@ -500,9 +519,16 @@ function playExitCollapse(dest){
 /* ── render ── */
 function renderResults(results){
   var area=document.getElementById('results-area');
+  _kbIdx=-1;
   area.classList.remove('visible');area.innerHTML='';area.offsetHeight;
   if(!results||results.length===0){
-    area.innerHTML='<div class="no-results">· 未找到相关结果 ·<br><span style="font-size:.8rem">No results found</span></div>';
+    /* 全站榜单里查无此项时，给一个去"物品检索"的出口——用户搜的也许是物品名，
+       那属于 item.html 的领域；两个搜索互相兜底，不让用户走进死胡同。 */
+    var qx=encodeURIComponent(_lastTerm||'');
+    area.innerHTML='<div class="no-results">· 未找到相关榜单 ·<br><span style="font-size:.8rem">No leaderboard match</span>'+
+      '<div style="margin-top:18px"><a href="item.html?q='+qx+'" style="display:inline-block;padding:9px 18px;border-radius:8px;'+
+      'border:1px solid rgba(0,212,255,.4);color:rgba(120,210,255,.9);text-decoration:none;font-size:.82rem;letter-spacing:.05em;">'+
+      '也许在找物品？前往物品检索 →</a></div></div>';
     area.classList.add('visible');return;}
   /* 结果数量提示 */
   var countDiv=document.createElement('div');
@@ -558,8 +584,10 @@ function _updateResultsTop(){
     if(t>60)document.getElementById('results-area').style.top=t+'px';}
 }
 
+var _lastTerm='';
 function doSearch(){
   var term=inp.value.trim();if(!term)return;
+  _lastTerm=term;
   var area=document.getElementById('results-area');
   var minMs=2500+Math.random()*2500;
   var dataReady=false,timerReady=false,pendingRes=null;
@@ -586,8 +614,38 @@ function doSearch(){
   setTimeout(function(){timerReady=true;tryShow();},minMs);
 }
 
-document.getElementById('search-btn').addEventListener('click',doSearch);
-inp.addEventListener('keydown',function(e){if(e.key==='Enter')doSearch();});
+/* 键盘上下选择结果卡片 + 回车打开选中项(无选中则发起搜索) */
+var _kbIdx=-1;
+function _cards(){return document.querySelectorAll('#results-area .result-card');}
+function _setKb(i){
+  var cs=_cards();if(!cs.length)return;
+  if(_kbIdx>=0&&cs[_kbIdx])cs[_kbIdx].classList.remove('kbsel');
+  _kbIdx=(i+cs.length)%cs.length;
+  cs[_kbIdx].classList.add('kbsel');
+  cs[_kbIdx].scrollIntoView({block:'nearest'});
+}
+document.getElementById('search-btn').addEventListener('click',function(){doSearch();});
+inp.addEventListener('keydown',function(e){
+  var cs=_cards();
+  if((e.key==='ArrowDown'||e.key==='ArrowUp')&&cs.length){
+    e.preventDefault();_setKb(_kbIdx+(e.key==='ArrowDown'?1:-1));return;
+  }
+  if(e.key==='Enter'){
+    if(_kbIdx>=0&&cs[_kbIdx]){e.preventDefault();playExitCollapse(cs[_kbIdx].dataset.dest);return;}
+    doSearch();
+  }
+});
+
+/* 支持 item.html 等页面用 ?q=xxx 跳转过来直接检索(两搜索打通的回链入口) */
+(function(){
+  var m=location.search.match(/[?&]q=([^&]*)/);
+  if(!m)return;
+  var q=decodeURIComponent(m[1].replace(/\+/g,' '));
+  if(!q)return;
+  function go(){inp.value=q;doSearch();}
+  if(document.readyState==='complete')setTimeout(go,150);
+  else window.addEventListener('load',function(){setTimeout(go,150);});
+})();
 </script>
 </body>
 </html>
