@@ -1271,6 +1271,8 @@
     .ws-bj-type { color: var(--ws-text); min-width: 0; overflow-wrap: break-word; }
     .ws-bj-title { color: var(--ws-gold); font-weight: 600; margin-bottom: .15rem; }
     .ws-bj-desc  { color: var(--ws-text); font-size: .92em; line-height: 1.5; }
+    .ws-wiki-link { color: var(--ws-text); text-decoration: none; border-bottom: 1px dashed var(--ws-gold-line); }
+    .ws-wiki-link:hover { color: var(--ws-gold-bright); border-bottom-color: var(--ws-gold); }
     .ws-bj-rep  { color: var(--ws-text-dim); font-size: .78rem; text-align: right; white-space: nowrap; }
     .ws-bounty-rot {
       font-size: .7rem; font-family: 'Orbitron', sans-serif;
@@ -5117,6 +5119,21 @@
            '<div class="ws-bj-desc">' + text.slice(idx + 1) + '</div>';
   }
 
+  /* 国际服 oracle.browse.wf/bounty-cycle 给的 challenge 字段是引擎内部类型路径
+     (如 /Lotus/Types/Challenges/Zariman/ZarimanKillGrineerEasyChallenge)，不是
+     现成可读文本——国服同源镜像走的是另一条数据源，challenge 已经是人话，两边
+     处理逻辑天然不同。这里先做"路径取末段 + 去 Challenge 后缀 + 驼峰转空格"
+     的轻量人话化，效果是英文短句而非中文，后续要出准确中文译名需要专门建立
+     该 challenge id → 官方本地化文案的对照表(harvest 流水线)，先以可读英文+
+     维基跳转兜底，不让用户看见完全无意义的原始路径字符串。 */
+  function humanizeChallenge(raw) {
+    if (!raw) return '';
+    var seg = String(raw).split('/').pop();
+    seg = seg.replace(/Challenge$/, '');
+    seg = seg.replace(/([a-z0-9])([A-Z])/g, '$1 $2').replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2');
+    return seg.trim();
+  }
+
   function renderBounties() {
     var el = document.getElementById('ws-bounties');
     if (!el) return;
@@ -5168,11 +5185,13 @@
         var jobsHtml = jobs.map(function (j, idx) {
           var range   = lvls[idx] ? lvls[idx][0] + '–' + lvls[idx][1] : '--';
           var name    = resolveNode(j.node);
+          var chTxt   = humanizeChallenge(j.challenge);
+          var typeTxt = name + (chTxt ? '：' + wikiLink(chTxt) : '');
           var allyRaw = j.ally ? j.ally.split('/').pop() : null;
           var ally    = allyRaw ? (HEX_ALLIES[allyRaw] || allyRaw) : null;
           return '<div class="ws-bounty-job">' +
               '<span class="ws-bj-lvl">Lv ' + range + '</span>' +
-              '<div class="ws-bj-type">' + bountyJobTypeHtml(name) + '</div>' +
+              '<div class="ws-bj-type">' + bountyJobTypeHtml(typeTxt) + '</div>' +
               (ally ? '<span class="ws-bj-ally">' + ally + '</span>' : '') +
             '</div>';
         }).join('');
