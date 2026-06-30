@@ -3499,6 +3499,15 @@
   var WS_ITEM_ZH_URLS = [
     'data/item-names-zh.json'
   ];
+  /* 掉落表物品中文名收割表（与 item.html 共用同一份 data/item-i18n-harvest.json，
+     1000+ 条，源自官方客户端 dict.zh.json 批量收割）：作为 _dict 的最低优先级兜底，
+     专补入侵/虚空商人/突击等奖励里那些远程 dict 与 item-names-zh.json 都没覆盖到的
+     物品名。只填空、绝不覆盖已有译名(远程 dict 与手工表优先)；并跳过"数量前缀被
+     norm() 吃掉、译名丢了数量"的条目(如 "1000 Endo"→"内融核心")——那类在搜索页
+     无所谓，但在世界状态里直接展示会误导，故按"值里没保留原数量"识别并丢弃。 */
+  var WS_ITEM_I18N_URLS = [
+    'data/item-i18n-harvest.json'
+  ];
   /* 国服官方节点中文名(来自 Dreamsunqing/warframe-api-server 的 CH/solNodes.json，
      由私库 gen_cn_solnodes.py 派生)：calamity-inc 的 ExportRegions+dict 给出的是
      国际服词源的节点译名，渲染国服子状态时优先换成这份"国服客户端原生译名"，
@@ -3860,6 +3869,24 @@
       });
     });
 
+    /* 收割表兜底：必须等远程 dict + 手工表都合并完(故链在 dictP/itemZhP 之后)，
+       再只填二者仍没覆盖到的物品名，保证收割表始终是最低优先级、绝不抢已有译名。
+       同时跳过"数量前缀丢失"的收割条目，避免世界状态里把 "1000 Endo" 显示成
+       光秃秃的 "内融核心"。 */
+    var QTY_LOSS_RE = /^([\d,]+)\s*[xX]?\s+/;
+    var itemI18nP = Promise.all([dictP, itemZhP]).then(function () {
+      return fetchFirstOk(WS_ITEM_I18N_URLS).then(function (data) {
+        if (!data) return;
+        if (!_dict) _dict = {};
+        Object.keys(data).forEach(function (k) {
+          if (_dict[k]) return;
+          var m = k.match(QTY_LOSS_RE);
+          if (m && data[k].indexOf(m[1]) === -1) return; /* 译名丢了数量，跳过 */
+          _dict[k] = data[k];
+        });
+      });
+    });
+
     /* 信条/终幕武器轮换：本地静态表(TENET_GROUPS/CODA_BATCHES)只是没有这份同源
        文件时的最后兜底，这里才是真正可信的来源 */
     var tenetCodaP = fetchFirstOk(WS_TENET_CODA_URLS).then(function (data) {
@@ -3917,7 +3944,7 @@
     /* 等同源统一字典就绪，保证渲染时 tr/resolveNode 的同源兜底可用（尤其远程被墙时） */
     var i18nP = (window.WF && WF.i18n) ? WF.i18n.ready : Promise.resolve();
 
-    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, tenetCodaP, auxP, cnNull00P, i18nP, bountyP, regP, cnNodeP]).then(function () {
+    return Promise.all([apiP, rawP, fallbackP, arbP, dictP, itemZhP, itemI18nP, tenetCodaP, auxP, cnNull00P, i18nP, bountyP, regP, cnNodeP]).then(function () {
       /* 赏金任务板最终兜底：rawP（oracle.browse.wf / api.warframe.com）在大陆网络下
          可能也连不上，此时若 D.bounties 仍为空，用 GitHub 快照里的
          syndicateMissions（来自 apiP 或 fallbackP）重建同样结构的数据，
