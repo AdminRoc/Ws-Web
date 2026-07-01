@@ -1307,6 +1307,12 @@ body.profile-active #detail-wrap {
 ::-webkit-scrollbar-thumb:hover { background: rgba(95, 208, 232, 0.35); }
 ::-webkit-scrollbar-track { background: transparent; }
 
+/* ================= 分割线 ================= */
+.section-sep {
+  border: none; border-top: 1px solid rgba(255,255,255,0.07);
+  margin: 28px 0 20px;
+}
+
 /* ================= 对话记录 ================= */
 .chat-log-list { display: flex; flex-direction: column; gap: 6px; }
 .chat-log-row { display: flex; align-items: baseline; gap: 8px; font-size: 14px; line-height: 1.6; }

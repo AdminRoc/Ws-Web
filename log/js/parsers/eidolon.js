@@ -34,7 +34,8 @@ WF.EidolonParser = (function () {
     let pendingEnterPlains = false; // 已发出 streaming layer 255，等 LEVEL LOADER DONE
     let night = null;   // 当前夜晚 {startT, lastEventT, attempts:[], endingT}
     let round = null;   // 当前小轮尝试
-    const sq = WF.squadMixin.create();
+    const sq   = WF.squadMixin.create();
+    const chat = WF.chatMixin.create();
 
     function newRound(t) {
       round = {
@@ -126,12 +127,14 @@ WF.EidolonParser = (function () {
         realTime: best.sum,
         avgTime: best.sum / windowSize,
         squadInfo: sq.getSquadInfo(),
+        chatLog:   chat.getChatLog(n.startT, n.startT, endT),
       };
     }
 
     return {
       feed(t, line) {
         sq.feed(line);
+        chat.feed(t, line);
         // ---- 区域/加载状态 ----
         if (line.indexOf(PAT.connected) !== -1) {
           if (line.indexOf(PAT.plains) !== -1) {

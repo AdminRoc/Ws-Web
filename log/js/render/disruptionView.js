@@ -154,6 +154,8 @@ WF.disruptionView = (function () {
 
     container.appendChild(U.el('div', 'note',
       '每轮信息依赖任务房主（Host）日志。击杀/生成均限于轮次战斗期间（ModeState=3→4）。折线图可点击全屏查看；悬停标记可见精确时间戳。'));
+
+    WF.chatMixin.renderChatLog(container, rec);
   }
 
   // ── SVG 字符串构建（纯函数，W 可变，供全屏缩放重渲染） ──────

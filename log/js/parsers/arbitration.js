@@ -60,7 +60,8 @@ WF.ArbitrationParser = (function () {
 
   function create() {
     const records = [];
-    const sq = WF.squadMixin.create();
+    const sq   = WF.squadMixin.create();
+    const chat = WF.chatMixin.create();
     let m = null;
 
     function newMission(t, name) {
@@ -118,6 +119,7 @@ WF.ArbitrationParser = (function () {
           score,
           scoreLabel: scoreLabel(score),
           squadInfo: sq.getSquadInfo(),
+          chatLog:   chat.getChatLog(m.startedT, m.startedT, endT),
         });
       }
       m = null;
@@ -126,6 +128,7 @@ WF.ArbitrationParser = (function () {
     return {
       feed(t, line) {
         sq.feed(line);
+        chat.feed(t, line);
         // ---- 任务识别 ----
         let nm = null;
         if (line.indexOf('ThemedSquadOverlay.lua') !== -1) {

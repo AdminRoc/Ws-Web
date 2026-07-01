@@ -106,6 +106,7 @@ WF.eidolonView = (function () {
       container.appendChild(box);
     }
 
+    WF.chatMixin.renderChatLog(container, rec);
   }
 
   function stat(label, value, cls) {
