@@ -727,14 +727,22 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: .5rem;
+  flex-wrap: wrap;
+  gap: .4rem .7rem;
 }
-.beian-row a { display: inline; }
+.beian-row a { display: inline; white-space: nowrap; }
 .beian-icon {
   width: 16px;
   height: 16px;
   vertical-align: middle;
   flex-shrink: 0;
+}
+@media (max-width: 480px) {
+  .beian-row {
+    flex-direction: column;
+    gap: .25rem;
+  }
+  .beian-row .beian-icon { display: none; }
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -1762,3 +1770,9 @@ a.mnd-item:active               { background: rgba(185,142,52,.07); color: var(-
 .nav-dropdown-menu a .hover-text-swap .text-en { font-size: .92em !important; }
 .nav-rules-dropdown a .hover-text-swap .text-en { font-size: .92em !important; }
 
+/* ── 全站自定义滚动条 ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(185,142,52,.3); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(185,142,52,.55); }
+* { scrollbar-width: thin; scrollbar-color: rgba(185,142,52,.3) transparent; }

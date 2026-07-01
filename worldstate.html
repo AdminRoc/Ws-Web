@@ -2994,6 +2994,63 @@
     if (!text || text === '--') return text || '--';
     return '<a class="ws-wiki-link" href="' + WIKI_ZH + encodeURIComponent(text) + '" target="_blank" rel="noopener" title="在中文维基搜索此名称">' + text + '</a>';
   }
+  /* 仅国际服加超链接，国服返回纯文本 */
+  function cwikiLink(text) {
+    return (_currentServer === 'cn') ? (text || '--') : wikiLink(text);
+  }
+
+  /* 赏金任务 challenge 英文人话 → 中文（国际服/国服共用） */
+  var CHALLENGE_ZH = {
+    /* 守望者 (Zariman) */
+    'Zariman Kill Grineer Easy':              '击杀Grineer·简单',
+    'Zariman Kill Grineer Hard':              '击杀Grineer·困难',
+    'Zariman Use Void Rifts Easy':            '使用虚空裂隙·简单',
+    'Zariman Survival Above 50 Easy':         '生存·简单',
+    'Zariman Survival Above 50 Hard':         '生存·困难',
+    'Zariman Survival Above50 Easy':          '生存·简单',
+    'Zariman Survival Above50 Hard':          '生存·困难',
+    'Zariman Find Melica Cache':              '寻找遗迹缓存',
+    'Zariman Kill As Operator Very Hard':     '以操纵者击杀·极难',
+    /* 科维兽 (Entrati Lab) */
+    'Entrati Lab Loot Crates':                '拾取板条箱',
+    'Entrati Lab Defeat Doppelganger':        '击败变体',
+    'Entrati Lab Kill Murmur':                '击杀扪心之敌',
+    'Entrati Lab Destroy Decoration':         '摧毁装饰品',
+    'Entrati Lab Alchemy Grenade Electric Hard': '电子炼金弹·困难',
+    /* 六人组 (The Hex) */
+    'Vania Safe Cracker':                     '破解保险箱',
+    'Vania High Kill Easy':                   '高击杀·简单',
+    'Vania Infested Crossfire':               '感染交火',
+    'Vania Destroy Hazards Hard':             '消除危险·困难',
+    'Vania Destroy Props Very Hard':          '摧毁道具·极难',
+    'Vania Mercy Very Hard':                  '仁慈·极难',
+  };
+  function translateChallenge(raw) {
+    if (!raw) return '';
+    return CHALLENGE_ZH[raw] || raw;
+  }
+
+  /* 国服突击 Boss 名称原始 key → 中文 */
+  var CN_SORTIE_BOSS_ZH = {
+    'SORTIE_BOSS_JACKAL':         '机甲豺狼',
+    'SORTIE_BOSS_HYENA':          '鬣狗猎杀小队',
+    'SORTIE_BOSS_AMBULAS':        '阿姆布拉斯',
+    'SORTIE_BOSS_VOR':            '冯·普莱将军',
+    'SORTIE_BOSS_HEK':            '副指挥官赫克',
+    'SORTIE_BOSS_KELA':           '卡拉·德·塔利姆',
+    'SORTIE_BOSS_RAPTORS':        '猛禽小队',
+    'SORTIE_BOSS_SARGAS_RUK':     '萨尔加斯·鲁克',
+    'SORTIE_BOSS_LECH_KRIL':      '勒奇·克里尔',
+    'SORTIE_BOSS_ALAD_V':         '阿拉德·V',
+    'SORTIE_BOSS_ZANUKA':         '扎努卡',
+    'SORTIE_BOSS_NEF_ANYO':       '奈夫·阿尼约',
+    'SORTIE_BOSS_CAPTAIN_VOR':    '冯·普莱船长',
+    'SORTIE_BOSS_CORRUPTED_VOR':  '堕落冯·普莱',
+    'SORTIE_BOSS_PHORID':         '孢立得',
+    'SORTIE_BOSS_JORDAS_GOLEM':   '约达斯傀儡',
+    'SORTIE_BOSS_TYL_REGOR':      '泰尔·雷戈尔',
+    'SORTIE_BOSS_TUSK_THUMPER_DOMA': '暮地狂奔巨兽',
+  };
   function trLocation(str) {
     if (!str || str === '--') return str || '--';
     if (/[一-鿿]/.test(str)) return str;          /* 已是中文 */
@@ -4106,13 +4163,13 @@
       var d = _advanceCycle(D[def.key], def.key);
       if (!d) {
         card.innerHTML =
-          '<div class="ws-cycle-name">' + def.name +
+          '<div class="ws-cycle-name">' + cwikiLink(def.name) +
           ' <span class="ws-cycle-en">' + def.en + '</span></div>' +
           '<div class="ws-cycle-state ws-err" style="font-size:.85rem">数据不可用</div>';
       } else {
         var tid = 'wct' + idx;
         card.innerHTML =
-          '<div class="ws-cycle-name">' + def.name +
+          '<div class="ws-cycle-name">' + cwikiLink(def.name) +
           ' <span class="ws-cycle-en">' + def.en + '</span></div>' +
           '<div class="ws-cycle-state" style="color:' + def.color(d) + '">' + def.state(d) + '</div>' +
           '<div class="ws-cycle-timer" id="' + tid + '"></div>';
@@ -4373,10 +4430,12 @@
     if (_currentServer === 'cn') {
       var dCn = _auxState && _auxState.sortie;
       if (!dCn) { el.innerHTML = '<div class="ws-empty">加载中…</div>'; return; }
+      var cnBossRaw = dCn.boss || '--';
+      var cnBossZh  = CN_SORTIE_BOSS_ZH[cnBossRaw] || cnBossRaw;
       el.innerHTML =
         '<div class="ws-mission-card">' +
           '<div class="ws-mission-hd">' +
-            '<span class="ws-mission-boss">' + wikiLink(dCn.boss || '--') + '</span>' +
+            '<span class="ws-mission-boss">' + cnBossZh + '</span>' +
             '<span class="ws-mission-timer" id="wt-sortie"></span>' +
           '</div>' + (dCn.missions || []).map(cnMissionRowHtml).join('') + '</div>';
       if (dCn.expiry) countdown(document.getElementById('wt-sortie'), dCn.expiry);
@@ -4549,7 +4608,7 @@
       var invHtmlCnV = (activeCnV && invCnV.length) ?
         '<div class="ws-baro-inv-grid">' +
           invCnV.slice(0, 60).map(function (item) {
-            return '<div class="ws-baro-item"><span class="ws-bi-name">' + wikiLink(item.name || '--') + '</span></div>';
+            return '<div class="ws-baro-item"><span class="ws-bi-name">' + (item.name || '--') + '</span></div>';
           }).join('') +
         '</div>' : (activeCnV ? '<div class="ws-empty">商人背包暂无物品数据</div>' : '');
       el.innerHTML =
@@ -4580,8 +4639,9 @@
     var invHTML = (active && inv.length) ?
       '<div class="ws-baro-inv-grid">' +
         inv.slice(0, 60).map(function (item) {
+          var nameZh = _varziaItemZh(item);
           return '<div class="ws-baro-item">' +
-            '<span class="ws-bi-name">' + _varziaItemZh(item) + '</span>' +
+            '<span class="ws-bi-name">' + wikiLink(nameZh) + '</span>' +
             '</div>';
         }).join('') +
       '</div>' : (active ? '<div class="ws-empty">商人背包暂无物品数据</div>' : '');
@@ -4861,7 +4921,7 @@
           '<div class="ws-aux-hd"><span class="ws-aux-title">' + zhOrTr(m.faction) + ' · ' + (m.mission || '') + '</span></div>' +
           dev + risk + '</div>';
       }).join('');
-      return '<div class="ws-aux-group"><div class="ws-aux-group-title">' + (round.type || '') + '</div>' + missions + '</div>';
+      return '<div class="ws-aux-group"><div class="ws-aux-group-title">' + cwikiLink(round.type || '') + '</div>' + missions + '</div>';
     }).join('');
   }
 
@@ -4950,7 +5010,7 @@
         '<span class="ws-incur-timer">' + p.toFixed(1) + '%</span></div>' +
         '<div class="ws-bar"><div class="ws-bar-fill" style="width:' + p + '%"></div></div></div>';
     }
-    el.innerHTML = bar('Grineer 巨人战舰', data.fomorian) + bar('Corpus 利刃豺狼舰队', data.razorback);
+    el.innerHTML = bar(cwikiLink('Grineer 巨人战舰'), data.fomorian) + bar(cwikiLink('Corpus 利刃豺狼舰队'), data.razorback);
   }
 
   /* ══ 渲染：限时活动(Events，来自辅助数据源) ══ */
@@ -5184,7 +5244,10 @@
             var range   = lvls[idx] ? lvls[idx][0] + '–' + lvls[idx][1] : '--';
             var allyRaw = j.ally ? j.ally.split('/').pop() : j.ally;
             var ally    = allyRaw ? (HEX_ALLIES[allyRaw] || allyRaw) : null;
-            var typeTxt = (j.node || '--') + ' · ' + (j.mission || '--') + (j.challenge ? '：' + j.challenge : '');
+            var locNode = j.node || '--';
+            var locMiss = (j.mission && j.mission !== j.node) ? (' · ' + j.mission) : '';
+            var chZh    = j.challenge ? translateChallenge(j.challenge) : '';
+            var typeTxt = locNode + locMiss + (chZh ? '：' + chZh : '');
             return '<div class="ws-bounty-job">' +
                 '<span class="ws-bj-lvl">Lv ' + range + '</span>' +
                 '<div class="ws-bj-type">' + bountyJobTypeHtml(typeTxt) + '</div>' +
@@ -5212,8 +5275,9 @@
         var jobsHtml = jobs.map(function (j, idx) {
           var range   = lvls[idx] ? lvls[idx][0] + '–' + lvls[idx][1] : '--';
           var name    = resolveNode(j.node);
-          var chTxt   = humanizeChallenge(j.challenge);
-          var typeTxt = name + (chTxt ? '：' + wikiLink(chTxt) : '');
+          var chRaw   = humanizeChallenge(j.challenge);
+          var chZh    = chRaw ? translateChallenge(chRaw) : '';
+          var typeTxt = name + (chZh ? '：' + chZh : '');
           var allyRaw = j.ally ? j.ally.split('/').pop() : null;
           var ally    = allyRaw ? (HEX_ALLIES[allyRaw] || allyRaw) : null;
           return '<div class="ws-bounty-job">' +
@@ -5370,9 +5434,15 @@
   /* 生成武器条目 HTML（中文名在上，英文名在下） */
   function weapItemHtml(name, elem, pct) {
     var zh = WEAPON_ZH[name] || '';
-    var nameHtml = zh
-      ? '<span class="ws-weap-iname"><span class="ws-weap-zh">' + zh + '</span><span class="ws-weap-en">' + name + '</span></span>'
-      : '<span class="ws-weap-iname ws-weap-zh">' + name + '</span>';
+    var linkTarget = zh || name;
+    var inner = zh
+      ? '<span class="ws-weap-zh">' + zh + '</span><span class="ws-weap-en">' + name + '</span>'
+      : name;
+    var nameHtml = _currentServer !== 'cn'
+      ? '<span class="ws-weap-iname"><a class="ws-wiki-link" href="' + WIKI_ZH + encodeURIComponent(linkTarget) + '" target="_blank" rel="noopener">' + inner + '</a></span>'
+      : (zh
+          ? '<span class="ws-weap-iname"><span class="ws-weap-zh">' + zh + '</span><span class="ws-weap-en">' + name + '</span></span>'
+          : '<span class="ws-weap-iname ws-weap-zh">' + name + '</span>');
     return '<div class="ws-weap-item">' + nameHtml +
       (elem ? '<span class="ws-weap-elem ' + elemCss(elem) + '">' + elemZh(elem) + '</span>' : '') +
       (pct  ? '<span class="ws-weap-pct">' + pct + '</span>' : '') +
