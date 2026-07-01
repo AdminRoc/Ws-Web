@@ -1,0 +1,56 @@
+name: 收割 WM 可交易物品中文译名
+
+# 每 6 小时从 warframe.market v2 API 拉取 EN→ZH 映射，
+# 合并进 data/item-i18n-harvest.json（WM 条目优先覆盖同名 key）。
+# 脚本在私库 AdminRoc/Ws-Web-core，与其他 harvest-* 约定一致。
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 0,6,12,18 * * *'   # 每日 00:15 / 06:15 / 12:15 / 18:15 UTC
+
+concurrency:
+  group: harvest-wm-items-i18n
+  cancel-in-progress: false
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout 公库
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: 拉取私库(收割脚本)
+        uses: actions/checkout@v5
+        with:
+          repository: AdminRoc/Ws-Web-core
+          token: ${{ secrets.PRIVATE_REPO_PAT }}
+          path: _private
+
+      - name: 覆盖私库脚本进工作树(不会被提交回公库)
+        run: |
+          mkdir -p .github/scripts
+          cp _private/.github/scripts/harvest_wm_items_i18n.py .github/scripts/
+          rm -rf _private
+
+      - name: 收割 WM 物品中文译名
+        run: python3 .github/scripts/harvest_wm_items_i18n.py
+
+      - name: 提交并推送(无变化时跳过)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/item-i18n-harvest.json
+          git diff --staged --quiet && { echo "无实质变动，跳过提交"; exit 0; }
+          git commit -m "data: refresh WM items i18n harvest [skip ci]"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "推送成功(第 $i 次)"; exit 0; fi
+            echo "推送被拒(第 $i 次)，拉取远端后 rebase 重试..."
+            git pull --rebase --autostash origin main || true
+          done
+          echo "重试多次仍推送失败" >&2
+          exit 1
