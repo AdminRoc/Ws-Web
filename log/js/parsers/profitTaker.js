@@ -48,7 +48,8 @@ WF.ProfitTakerParser = (function () {
 
   function create() {
     const records = [];
-    const sq = WF.squadMixin.create();
+    const sq   = WF.squadMixin.create();
+    const chat = WF.chatMixin.create();
 
     let run = null; // 当前战斗
 
@@ -114,6 +115,7 @@ WF.ProfitTakerParser = (function () {
         },
         bugged: run.bugged === true,
         squadInfo: sq.getSquadInfo(),
+        chatLog:   chat.getChatLog(run.startT, run.startT, t),
       });
       run = null;
     }
@@ -127,6 +129,7 @@ WF.ProfitTakerParser = (function () {
     return {
       feed(t, line) {
         sq.feed(line);
+        chat.feed(t, line);
         if (line.indexOf(PAT.heistStart) !== -1) {
           newRun(t);
           return;

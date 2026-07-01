@@ -142,6 +142,8 @@ WF.arbitrationView = (function () {
 
     container.appendChild(U.el('div', 'note',
       '无人机统计与轮次边界依赖房主（Host）日志。评分基于满 Buff 期望母液/小时（S ≥ 800 / A 600-799 / B 400-599 / C 200-399 / D < 200）。'));
+
+    WF.chatMixin.renderChatLog(container, rec);
   }
 
   // 内联常量供模板计算（避免引用解析器内部）

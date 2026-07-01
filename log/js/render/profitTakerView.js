@@ -136,6 +136,8 @@ WF.profitTakerView = (function () {
       grid.appendChild(card);
     });
     container.appendChild(grid);
+
+    WF.chatMixin.renderChatLog(container, rec);
   }
 
   function _st(label, value, cls) {
