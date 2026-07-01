@@ -1307,6 +1307,28 @@ body.profile-active #detail-wrap {
 ::-webkit-scrollbar-thumb:hover { background: rgba(95, 208, 232, 0.35); }
 ::-webkit-scrollbar-track { background: transparent; }
 
+/* ================= 对话记录 ================= */
+.chat-log-list { display: flex; flex-direction: column; gap: 6px; }
+.chat-log-row { display: flex; align-items: baseline; gap: 8px; font-size: 14px; line-height: 1.6; }
+.chat-log-tag {
+  flex-shrink: 0; font-size: 11px; letter-spacing: 1px; padding: 1px 6px;
+  border-radius: 3px; background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12); color: var(--c-text2);
+}
+.chat-log-to { flex-shrink: 0; font-size: 12px; color: var(--c-teal-dim); letter-spacing: 0.5px; }
+.chat-log-msg { color: var(--c-text); word-break: break-all; }
+
+/* 频道 tag 配色 */
+.chat-tag-squad    { border-color: rgba(65,255,142,0.35); color: #41ff8e; }
+.chat-tag-clan     { border-color: rgba(255,182,72,0.35); color: var(--c-gold); }
+.chat-tag-alliance { border-color: rgba(168,107,255,0.4); color: #a86bff; }
+.chat-tag-dojo     { border-color: rgba(168,107,255,0.2); color: #8b5fd0; }
+.chat-tag-trade    { border-color: rgba(95,208,232,0.35); color: var(--c-teal); }
+.chat-tag-whisper  { border-color: rgba(255,95,110,0.35); color: var(--c-red); }
+.chat-tag-region   { border-color: rgba(200,200,200,0.2); color: #a0a8c0; }
+.chat-tag-global   { border-color: rgba(200,200,200,0.2); color: #a0a8c0; }
+.chat-tag-hub      { border-color: rgba(200,200,200,0.2); color: #a0a8c0; }
+
 /* ================= 响应式 ================= */
 @media (max-width: 1100px) {
   .nav-inner { gap: 12px; padding: 0 14px; }

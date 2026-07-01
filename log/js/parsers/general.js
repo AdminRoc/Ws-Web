@@ -79,7 +79,30 @@ WF.GeneralParser = (function () {
     // Kill / spawn
     killed:          'was killed by',
     agentCreated:    'OnAgentCreated',
+    // Chat
+    ircPrivmsg:      'IRC out: PRIVMSG ',
   };
+
+  // 频道前缀 → 中文 tag
+  const CHANNEL_TAG = [
+    [/^#S/,                '小队'],
+    [/^#C/,                '氏族'],
+    [/^#A/,                '联盟'],
+    [/^#J/,                '道场'],
+    [/^#R_/,               '区域'],
+    [/^#Q_/,               '区域'],
+    [/^#G_/,               '全体'],
+    [/^#T_/,               '交易'],
+    [/^#H_/,               '枢纽'],
+  ];
+
+  function _channelTag(target) {
+    if (!target.startsWith('#')) return { tag: '私聊', to: target };
+    for (let i = 0; i < CHANNEL_TAG.length; i++) {
+      if (CHANNEL_TAG[i][0].test(target)) return { tag: CHANNEL_TAG[i][1] };
+    }
+    return { tag: '频道' };
+  }
 
   // NPC path substrings indicating non-combat agents (pets, players, objectives, drones)
   const AGENT_SKIP = ['PetAgent', 'PlayerPawnAgent', 'DefenseAgent', 'CleaningDroneAgent', 'CrewAgent', 'CrewmemberAgent'];
@@ -140,6 +163,7 @@ WF.GeneralParser = (function () {
     let _sessionOffset = 0;    // 多会话绝对排序偏移（由 logReader 传入）
     let _sessionAnchor = null; // 当前会话 wall-clock 锚点（由 logReader 传入）
     const sq = WF.squadMixin.create();
+    const allChat = [];  // 全局收集 IRC PRIVMSG，finalize 时按时间窗口筛入记录
 
     function reset() { m = null; }
 
@@ -234,6 +258,8 @@ WF.GeneralParser = (function () {
         kills:           m.kills,
         spawned:         m.spawned,
         squadInfo:       sq.getSquadInfo(),
+        // 对话记录：取任务载入→结束时间窗口内的所有消息
+        chatLog:         allChat.filter(c => c.t >= (m.loadT || start) && c.t <= end),
       });
       reset();
     }
@@ -290,6 +316,17 @@ WF.GeneralParser = (function () {
           }
           pendingSync = null;
           newMission(t, carry);
+          return;
+        }
+
+        // ── IRC 对话（全局收集，不依赖 m） ───────────────────────
+        if (line.indexOf(PAT.ircPrivmsg) !== -1) {
+          // 格式: Net [Info]: IRC out: PRIVMSG TARGET :MESSAGE
+          const rx = /IRC out: PRIVMSG (\S+) :(.*)$/.exec(line);
+          if (rx) {
+            const ch = _channelTag(rx[1]);
+            allChat.push({ t, target: rx[1], tag: ch.tag, to: ch.to || null, msg: rx[2] });
+          }
           return;
         }
 

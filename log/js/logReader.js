@@ -35,6 +35,8 @@ WF.logReader = (function () {
     'MissionIntro.lua', 'EOM missionLocationUnlocked', 'CommitInventoryChangesToDB',
     'HUD REDUX', 'SyncAutoPopulatedConsumables', 'was killed by', 'missionType=',
     'SetSquadMissionResult', 'MapRedux::NodeRollOver', 'Cached mission name=',
+    // 对话记录
+    'IRC out: PRIVMSG',
   ];
 
   /* 快速判断是否应送入解析器 */
