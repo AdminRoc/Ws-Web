@@ -320,10 +320,7 @@
     #load-overlay{position:fixed;inset:0;z-index:150;display:flex;flex-direction:column;
       align-items:center;justify-content:center;gap:clamp(14px,2.8vh,28px);
       width:100vw;height:100vh;height:100dvh;overflow:hidden;padding:0 4vw;
-      background:radial-gradient(circle at 50% 42%,rgba(6,14,34,.97) 0%,rgba(2,3,8,.985) 70%);
-      opacity:0;animation:loIn 1s ease .12s forwards;}
-    @keyframes loIn{from{opacity:0;filter:blur(8px);transform:scale(1.03);}
-      to{opacity:1;filter:blur(0);transform:scale(1);}}
+      background:radial-gradient(circle at 50% 42%,rgba(6,14,34,.97) 0%,rgba(2,3,8,.985) 70%);}
     #load-overlay.lo-close{animation:loOut .9s cubic-bezier(.55,0,.85,.36) forwards;pointer-events:none;}
     @keyframes loOut{
       0%{opacity:1;transform:skewX(0deg) scale(1);filter:blur(0) hue-rotate(0deg);}
@@ -441,6 +438,7 @@
 </div>
 
 <div class="page-wrap lb-page" id="page-wrap">
+<script>document.getElementById('page-wrap').style.opacity='0';</script>
   <nav class="site-nav">
     <div class="nav-inner">
       <a class="nav-logo" href="https://wfspeed.run">
@@ -798,8 +796,6 @@
 <script>
 /* ── 加载遮罩控制 ── */
 (function() {
-  var pw = document.getElementById('page-wrap');
-  if (pw) pw.style.opacity = '0';
   var _loShownAt = performance.now();
   window._itDismissLoadOverlay = function() {
     var lo = document.getElementById('load-overlay');
