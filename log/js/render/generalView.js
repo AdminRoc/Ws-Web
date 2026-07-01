@@ -102,6 +102,9 @@ WF.generalView = (function () {
       '总时长 = SS_STARTED → EOM，与游戏结算界面一致。' +
       '首帧 = HUD REDUX 首次渲染。尾帧 = 最先触发的 EOM 信号。' +
       '波次/轮次时间相对首帧计算。生成（近似）来自 OnAgentCreated，已过滤宠物/目标实体。'));
+
+    // ── 对话记录 ─────────────────────────────────────────────
+    _renderChatLog(container, rec);
   }
 
   // ── 防御 / 镜像防御 波次表 ─────────────────────────────────
@@ -296,6 +299,33 @@ WF.generalView = (function () {
     tblWrap.appendChild(tbl);
     section.appendChild(tblWrap);
     container.appendChild(section);
+  }
+
+  // ── 对话记录 ─────────────────────────────────────────────
+  function _renderChatLog(container, rec) {
+    if (!rec.chatLog || rec.chatLog.length === 0) return;
+    const section = U.el('div', 'gen-section');
+    section.appendChild(U.el('div', 'gen-section-title', `对话记录（共 ${rec.chatLog.length} 条）`));
+    const list = U.el('div', 'chat-log-list');
+    rec.chatLog.forEach(function (c) {
+      const row = U.el('div', 'chat-log-row');
+      const tagEl = U.el('span', 'chat-log-tag chat-tag-' + encodeTagCls(c.tag), c.tag);
+      row.appendChild(tagEl);
+      if (c.to) {
+        const toEl = U.el('span', 'chat-log-to', '→ ' + c.to);
+        row.appendChild(toEl);
+      }
+      row.appendChild(U.el('span', 'chat-log-msg', c.msg));
+      list.appendChild(row);
+    });
+    section.appendChild(list);
+    container.appendChild(section);
+  }
+
+  function encodeTagCls(tag) {
+    const map = { '小队': 'squad', '氏族': 'clan', '联盟': 'alliance', '道场': 'dojo',
+                  '区域': 'region', '全体': 'global', '交易': 'trade', '枢纽': 'hub', '私聊': 'whisper', '频道': 'other' };
+    return map[tag] || 'other';
   }
 
   // ── 单轮任务敌人生成概况 ─────────────────────────────────
