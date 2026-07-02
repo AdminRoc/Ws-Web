@@ -812,7 +812,8 @@
       }, 950);
     }, wait);
   };
-  window.addEventListener('pageshow', function() {
+  window.addEventListener('pageshow', function(e) {
+    if (!e.persisted) return;  // 仅处理 bfcache 回退；正常加载绝不能跳过遮罩强制展示时长
     var lo2 = document.getElementById('load-overlay');
     if (lo2 && lo2.parentNode) lo2.parentNode.removeChild(lo2);
     var pw3 = document.getElementById('page-wrap');
