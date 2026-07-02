@@ -15,7 +15,7 @@ on:
     - cron: '37 4 * * 1'   # 每周一，错开 wm-items/drops-index/wiki-icon-harvest 各自的刷新时间点
 
 concurrency:
-  group: cache-item-icons
+  group: ws-web-git-push-lock   # 所有会 git push main 的工作流共用同一把锁，串行执行，杜绝互相撞车
   cancel-in-progress: false
 
 jobs:

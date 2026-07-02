@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: bundle-data
+  group: ws-web-git-push-lock   # 所有会 git push main 的工作流共用同一把锁，串行执行，杜绝互相撞车
   cancel-in-progress: false
 
 jobs:
