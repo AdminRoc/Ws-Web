@@ -10,7 +10,7 @@ on:
     - cron: '15 0,6,12,18 * * *'   # 每日 00:15 / 06:15 / 12:15 / 18:15 UTC
 
 concurrency:
-  group: harvest-wm-items-i18n
+  group: ws-web-git-push-lock   # 所有会 git push main 的工作流共用同一把锁，串行执行，杜绝互相撞车
   cancel-in-progress: false
 
 jobs:
