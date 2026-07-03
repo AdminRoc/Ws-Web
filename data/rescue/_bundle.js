@@ -139,9 +139,9 @@ var rescue_calibanRecords = [
   },
   {
     playerId:   "Salat",
-    clearTime:  "0:22.550",
-    uploadTime: "2026-06-22",
-    videoUrls:  ["https://www.youtube.com/watch?v=ASu7Ay0o80U"],
+    clearTime:  "0:20.333",
+    uploadTime: "2026-06-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=Oeynh5Y3rjc"],
   },
   {
     playerId:   "PrimedDarkeN",
@@ -376,9 +376,9 @@ var rescue_martialisNotice_en = "";
 var rescue_metisRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:32.933",
-    uploadTime: "2025-12-27",
-    videoUrls:  ["https://www.youtube.com/watch?v=xT4O1JZ1uVc"],
+    clearTime:  "0:32.317",
+    uploadTime: "2026-06-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=KVlpZpbt8To"],
   },
   {
     playerId:   "L1ndell",
@@ -627,9 +627,9 @@ var rescue_nuovoNotice_en = "";
 var rescue_oriasRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:12.900",
-    uploadTime: "2025-11-26",
-    videoUrls:  ["https://www.youtube.com/watch?v=0pQeD2uILGs"],
+    clearTime:  "0:11.700",
+    uploadTime: "2026-06-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=aFtNjyklIEI"],
   },
   {
     playerId:   "L1ndell",
