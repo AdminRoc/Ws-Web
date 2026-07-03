@@ -368,11 +368,25 @@
     .it-auc-count { font-size: .78rem; color: var(--ws-text-dim); }
     .it-auc-list { display: flex; flex-direction: column; gap: .55rem; max-height: 640px; overflow-y: auto; }
     .it-auc-row {
-      display: flex; align-items: center; justify-content: space-between; gap: .8rem;
-      padding: .6rem .8rem; border: 1px solid var(--ws-sep); border-radius: 8px;
-      text-decoration: none; color: inherit; transition: background .15s, border-color .15s;
+      display: flex; align-items: center; gap: .5rem;
+      border: 1px solid var(--ws-sep); border-radius: 8px;
+      transition: background .15s, border-color .15s;
     }
     .it-auc-row:hover { background: rgba(201,164,50,.08); border-color: var(--ws-gold-line); }
+    .it-auc-row-link {
+      display: flex; align-items: center; justify-content: space-between; gap: .8rem;
+      flex: 1; min-width: 0; padding: .6rem .8rem;
+      text-decoration: none; color: inherit;
+    }
+    .it-auc-wtb {
+      flex-shrink: 0; margin-right: .5rem;
+      padding: .25rem .6rem; font-size: .72rem; border-radius: 5px; cursor: pointer;
+      border: 1px solid var(--ws-sep); color: var(--ws-text-dim); background: none;
+      transition: color .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .it-auc-wtb:hover { color: var(--ws-gold-bright); border-color: var(--ws-gold); }
+    .it-auc-wtb.is-copied { color: #6ee7a8; border-color: rgba(110,231,168,.5); }
     .it-auc-chips { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .3rem; }
     .it-auc-chip { font-size: .7rem; padding: .06rem .4rem; border-radius: 4px; border: 1px solid var(--ws-sep); color: var(--ws-text-dim); }
     .it-auc-chip.pos { color: #6ee7a8; border-color: rgba(110,231,168,.35); }
@@ -1059,6 +1073,8 @@
     }
 
     SEARCH.forEach(function (r) { r.key = ((r.zh || '') + ' ' + (r.en || '')).toLowerCase(); });
+    // 拍卖武器 urlName 白名单——仅这些 key 才会触发 probeAuctions，避免 mod/warframe 等乱请求
+    AUC_WEAPON_KEYS = new Set((WM_ZH_SUPP && WM_ZH_SUPP.weapons || []).map(function (w) { return w.urlName; }));
   }
 
   /* wm-items.json(637KB，可搜索物品名表)与 drops-index.json(4.4MB，逐物品掉落详情表)
@@ -1309,7 +1325,7 @@
       '<div id="it-view-auction" style="display:none;"></div>';
     restartResults();
     if (rec.slug) loadOrders(rec);
-    if (rec.slug || rec.auctionWeaponUrlName) probeAuctions(rec);
+    probeAuctions(rec);
     if (typeof buildQuickNav === 'function') buildQuickNav();
   }
 
@@ -1606,6 +1622,7 @@
     { slug: 'electricity', zh: '电击' }, { slug: 'toxin', zh: '毒素' }
   ];
   var AUC_RETRY_MAX = 3;
+  var AUC_WEAPON_KEYS = null; // buildSearch() 后填充，仅含可拍卖武器的 urlName
   var _aucCache = {};     // 拍卖武器 key -> { riven:[...], lich:[...], sister:[...] }
   var _aucCurType = null;
   var _aucCurRec = null;
@@ -1647,6 +1664,8 @@
   function probeAuctions(rec) {
     var key = _aucKey(rec);
     if (!WM_PROXY_BASE || !key) return;
+    // 仅对已知可拍卖武器探测，避免对 mod/warframe/资源等发起无意义请求
+    if (AUC_WEAPON_KEYS && !AUC_WEAPON_KEYS.has(key)) return;
     if (_aucCache[key]) { _renderAuctionEntryBtn(rec); return; }
     var types = ['riven', 'lich', 'sister'];
     Promise.all(types.map(function (t) {
@@ -1850,7 +1869,7 @@
     countEl.textContent = '共 ' + list.length + ' 条' + (list.length > AUC_LIST_MAX ? '（仅显示前 ' + AUC_LIST_MAX + ' 条）' : '');
     var shown = list.slice(0, AUC_LIST_MAX);
     if (!shown.length) { listEl.innerHTML = '<div class="it-empty">没有匹配的拍卖，请调整筛选条件。</div>'; return; }
-    listEl.innerHTML = shown.map(function (a) {
+    listEl.innerHTML = shown.map(function (a, idx) {
       var item = a.item || {};
       var owner = a.owner || {};
       var st = (owner.status || '').toLowerCase();
@@ -1873,13 +1892,34 @@
           (item.having_ephemera ? '<span class="it-auc-chip">幻纹</span>' : '');
       }
       var href = 'https://warframe.market/zh-hans/auction/' + esc(a.id || '');
-      return '<a class="it-auc-row" href="' + href + '" target="_blank" rel="noopener">' +
-          '<div><div class="it-auc-owner"><span class="it-ord-dot ' + stCls + '"></span>' + esc(owner.ingame_name || '—') + ' · ' + stTxt + '</div>' +
-            '<div class="it-auc-chips">' + chips + '</div></div>' +
-          '<div class="it-auc-side"><span class="it-auc-price">' + esc(_aucPrice(a)) + ' P</span>' +
-            '<span style="font-size:.7rem;color:var(--ws-text-dim);">' + (isBuyout ? '一口价' : '起拍价') + '</span></div>' +
-        '</a>';
+      return '<div class="it-auc-row">' +
+          '<a class="it-auc-row-link" href="' + href + '" target="_blank" rel="noopener">' +
+            '<div><div class="it-auc-owner"><span class="it-ord-dot ' + stCls + '"></span>' + esc(owner.ingame_name || '—') + ' · ' + stTxt + '</div>' +
+              '<div class="it-auc-chips">' + chips + '</div></div>' +
+            '<div class="it-auc-side"><span class="it-auc-price">' + esc(_aucPrice(a)) + ' P</span>' +
+              '<span style="font-size:.7rem;color:var(--ws-text-dim);">' + (isBuyout ? '一口价' : '起拍价') + '</span></div>' +
+          '</a>' +
+          '<button class="it-auc-wtb" data-idx="' + idx + '">复制求购</button>' +
+        '</div>';
     }).join('');
+    // 复制求购：生成游戏内 /w 私聊指令
+    listEl.querySelectorAll('.it-auc-wtb').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var a = shown[+btn.dataset.idx];
+        var owner = (a.owner && a.owner.ingame_name) || '';
+        var price = a.buyout_price != null ? a.buyout_price : (a.starting_price || 0);
+        var wEn = (_aucCurRec && _aucCurRec.en) || '';
+        var what = _aucCurType === 'riven'  ? wEn + "'s Riven Mod"
+                 : _aucCurType === 'lich'   ? wEn + ' Lich'
+                 :                            wEn + ' Sister';
+        var msg = '/w ' + owner + ' Hi! I WTB your ' + what + ' in ' + price + ' platinum.';
+        try { navigator.clipboard && navigator.clipboard.writeText(msg); } catch (ex) {}
+        var orig = btn.textContent;
+        btn.textContent = '✓ 已复制'; btn.classList.add('is-copied');
+        setTimeout(function () { btn.textContent = orig; btn.classList.remove('is-copied'); }, 1500);
+      });
+    });
   }
 
   /* ══════════════════════════════════════════════
