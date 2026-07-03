@@ -971,7 +971,13 @@
   var ICON_INDEX = null;   // data/icon-index.json：{ 原始物品名: {path, source} }，图片已实际下载缓存进本仓库
                             // data/icons/<source>/...，是各页面(item.html/世界状态赏金缩略图/未来加速版WM站点)
                             // 复用同一份缩略图的统一入口；来源可扩展(目前 wm/wiki，以后加新来源只需脚本侧改动)。
-  var SEARCH = [];        // [{zh, en, slug, icon, iconRemote, ducats, vaulted, key(lower)}]
+  var WM_ZH_SUPP = null;   // data/wm-zh-supplement.json：源自社区维护的 WM 全量物品库快照，两部分：
+                            // ① extraZh：EN->ZH 兜底翻译，覆盖面比 WM v2 items 接口更广；
+                            // ② weapons：裂罅Mod/玄骸/姐妹武器的武器名列表——这些武器本体很多并不在
+                            //   WM Orders 可交易物品表里(只在 Auction API 用 weapon_url_name 出现)，
+                            //   例如"Sobek"(鳄神)本体不可直接下单，只有其裂罅词条和 Kuva 变种可交易，
+                            //   不补这份数据搜"鳄神"这类名字会联想不到任何结果。
+  var SEARCH = [];        // [{zh, en, slug, icon, iconRemote, ducats, vaulted, key(lower), auctionWeaponUrlName, auctionTypeHint}]
   var loaded = false;
   var loadingPromise = null;
 
@@ -1029,7 +1035,29 @@
       var ic = resolveIcon(en, wikiIcons[en] || null, null);
       var zh = di[en].zh || zhNames[en] || i18n[en] || en;
       SEARCH.push({ zh: zh, en: en, slug: null, icon: ic.icon, iconFallbacks: ic.fallbacks, iconPath: null, ducats: null, vaulted: false });
+      seenEn[en.toLowerCase()] = true;
     });
+
+    // ── 补充数据(wm-zh-supplement.json)：① 给已有条目里 zh===en(未翻译)的兜底中文名
+    //    ② 补入裂罅Mod/玄骸/姐妹武器的专属武器名(本体常常不在上面任何一个来源里) ──
+    if (WM_ZH_SUPP) {
+      var extraZh = WM_ZH_SUPP.extraZh || {};
+      SEARCH.forEach(function (r) {
+        if (r.zh === r.en && extraZh[r.en]) r.zh = extraZh[r.en];
+      });
+      (WM_ZH_SUPP.weapons || []).forEach(function (w) {
+        if (!w.en || seenEn[w.en.toLowerCase()]) return;
+        seenEn[w.en.toLowerCase()] = true;
+        var ic = resolveIcon(w.en, null, null);
+        SEARCH.push({
+          zh: w.zh || w.en, en: w.en, slug: null,
+          icon: ic.icon, iconFallbacks: ic.fallbacks, iconPath: null,
+          ducats: null, vaulted: false,
+          auctionWeaponUrlName: w.urlName, auctionTypeHint: w.auctionType
+        });
+      });
+    }
+
     SEARCH.forEach(function (r) { r.key = ((r.zh || '') + ' ' + (r.en || '')).toLowerCase(); });
   }
 
@@ -1049,9 +1077,10 @@
     loadingPromise = Promise.all([
       fetch('data/wm-items.json').then(function (r) { return r.json(); }).catch(function () { return null; }),
       fetch('data/icon-index.json').then(function (r) { return r.json(); }).catch(function () { return null; }),
-      fetch('data/item-names-zh.json').then(function (r) { return r.json(); }).catch(function () { return null; })
+      fetch('data/item-names-zh.json').then(function (r) { return r.json(); }).catch(function () { return null; }),
+      fetch('data/wm-zh-supplement.json').then(function (r) { return r.json(); }).catch(function () { return null; })
     ]).then(function (res) {
-        WM_ITEMS = res[0]; ICON_INDEX = res[1]; ZH_NAMES = res[2];
+        WM_ITEMS = res[0]; ICON_INDEX = res[1]; ZH_NAMES = res[2]; WM_ZH_SUPP = res[3];
         if (WM_ITEMS && WM_ITEMS.staticBase) WM_STATIC = WM_ITEMS.staticBase;
         buildSearch();
         loadingPromise = null;
@@ -1280,7 +1309,7 @@
       '<div id="it-view-auction" style="display:none;"></div>';
     restartResults();
     if (rec.slug) loadOrders(rec);
-    if (rec.slug) probeAuctions(rec);
+    if (rec.slug || rec.auctionWeaponUrlName) probeAuctions(rec);
     if (typeof buildQuickNav === 'function') buildQuickNav();
   }
 
@@ -1577,16 +1606,23 @@
     { slug: 'electricity', zh: '电击' }, { slug: 'toxin', zh: '毒素' }
   ];
   var AUC_RETRY_MAX = 3;
-  var _aucCache = {};     // slug -> { riven:[...], lich:[...], sister:[...] }
+  var _aucCache = {};     // 拍卖武器 key -> { riven:[...], lich:[...], sister:[...] }
   var _aucCurType = null;
   var _aucCurRec = null;
   var _aucSort = 'price_asc';
   var _aucOnline = 'all';
   var _aucFilters = {};   // { positive:[], negative:'', polarity:'', element:'', ephemera:'', mrMin:'', mrMax:'' }
 
+  /* 拍卖检索用的武器 key：优先用 wm-zh-supplement.json 明确给出的 auctionWeaponUrlName
+     (裂罅/玄骸/姐妹武器很多本体没有 Orders slug，例如"Sobek"/鳄神)，否则退回该物品自身
+     的 WM slug(常规可交易武器同时也是裂罅武器时，两者通常一致)。 */
+  function _aucKey(rec) { return rec && (rec.auctionWeaponUrlName || rec.slug); }
+
   function _aucUrl(type, slug) {
+    // v1 Auction API 不接受 platform 参数(该参数是 v2 Orders API 才有的字段，
+    // 拍卖列表本身就是全平台混合展示)，误带会被官方 API 拒绝返回 400。
     return WM_PROXY_BASE.replace(/\/$/, '') + '/v1/auctions/search?type=' + type +
-      '&weapon_url_name=' + encodeURIComponent(slug) + '&platform=pc';
+      '&weapon_url_name=' + encodeURIComponent(slug);
   }
   function _fetchJsonRetry(url, attempt, maxAttempt) {
     return fetch(url).then(function (r) {
@@ -1602,18 +1638,19 @@
   }
 
   function probeAuctions(rec) {
-    if (!WM_PROXY_BASE || !rec.slug) return;
-    if (_aucCache[rec.slug]) { _renderAuctionEntryBtn(rec); return; }
+    var key = _aucKey(rec);
+    if (!WM_PROXY_BASE || !key) return;
+    if (_aucCache[key]) { _renderAuctionEntryBtn(rec); return; }
     var types = ['riven', 'lich', 'sister'];
     Promise.all(types.map(function (t) {
-      return _fetchJsonRetry(_aucUrl(t, rec.slug), 1, AUC_RETRY_MAX)
+      return _fetchJsonRetry(_aucUrl(t, key), 1, AUC_RETRY_MAX)
         .then(function (d) { return (d && Array.isArray(d.data)) ? d.data : []; })
         .catch(function () { return []; });
     })).then(function (results) {
       if (_curRec !== rec) return; // 期间用户已切换物品，丢弃过期结果
       var found = {};
       types.forEach(function (t, i) { found[t] = results[i]; });
-      _aucCache[rec.slug] = found;
+      _aucCache[key] = found;
       _renderAuctionEntryBtn(rec);
     });
   }
@@ -1622,7 +1659,7 @@
     if (_curRec !== rec) return;
     var meta = document.getElementById('it-item-meta');
     if (!meta) return;
-    var found = _aucCache[rec.slug];
+    var found = _aucCache[_aucKey(rec)];
     if (!found) return;
     var anyHit = Object.keys(found).some(function (t) { return found[t].length > 0; });
     if (!anyHit) return;
@@ -1635,7 +1672,7 @@
   }
 
   function openAuctionView(rec) {
-    var found = _aucCache[rec.slug];
+    var found = _aucCache[_aucKey(rec)];
     if (!found) return;
     var firstType = ['riven', 'lich', 'sister'].filter(function (t) { return found[t].length > 0; })[0];
     if (!firstType) return;
@@ -1671,7 +1708,7 @@
   function switchAuctionType(type) {
     _aucCurType = type;
     _aucFilters = {};
-    var found = _aucCache[_aucCurRec.slug];
+    var found = _aucCache[_aucKey(_aucCurRec)];
     var tabsEl = document.getElementById('it-auc-tabs');
     tabsEl.innerHTML = ['riven', 'lich', 'sister'].filter(function (t) { return found[t].length > 0; })
       .map(function (t) {
@@ -1685,7 +1722,7 @@
     renderAuctionList();
   }
 
-  function _aucList() { return (_aucCache[_aucCurRec.slug] && _aucCache[_aucCurRec.slug][_aucCurType]) || []; }
+  function _aucList() { var k = _aucKey(_aucCurRec); return (_aucCache[k] && _aucCache[k][_aucCurType]) || []; }
 
   /* 属性/极性等筛选项从实际返回数据里动态收集，不依赖额外字典接口 */
   function renderAuctionFilters() {
