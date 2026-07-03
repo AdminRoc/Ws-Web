@@ -1626,10 +1626,17 @@
   }
   function _fetchJsonRetry(url, attempt, maxAttempt) {
     return fetch(url).then(function (r) {
-      if (!r.ok) throw new Error('http ' + r.status);
+      // 4xx(如"该武器不支持这个拍卖类型")是确定性错误，重试不会变成功，
+      // 只会白白多打请求、更容易撞到边缘代理的限流；只对 5xx/网络异常重试。
+      if (!r.ok) {
+        var err = new Error('http ' + r.status);
+        err.status = r.status;
+        err.retryable = r.status >= 500;
+        throw err;
+      }
       return r.json();
     }).catch(function (e) {
-      if (attempt < maxAttempt) {
+      if (attempt < maxAttempt && e.retryable !== false) {
         return new Promise(function (resolve) { setTimeout(resolve, 700 * attempt); })
           .then(function () { return _fetchJsonRetry(url, attempt + 1, maxAttempt); });
       }
@@ -1644,7 +1651,10 @@
     var types = ['riven', 'lich', 'sister'];
     Promise.all(types.map(function (t) {
       return _fetchJsonRetry(_aucUrl(t, key), 1, AUC_RETRY_MAX)
-        .then(function (d) { return (d && Array.isArray(d.data)) ? d.data : []; })
+        // WM v1 Auction API 响应形状是 { payload: { auctions: [...] } }，
+        // 和 v2 Orders API 的 { data: [...] } 不是一回事，之前误用了后者的
+        // 解析路径，导致哪怕真的有在售拍卖也会被解析成空数组、按钮永远不出现。
+        .then(function (d) { return (d && d.payload && Array.isArray(d.payload.auctions)) ? d.payload.auctions : []; })
         .catch(function () { return []; });
     })).then(function (results) {
       if (_curRec !== rec) return; // 期间用户已切换物品，丢弃过期结果
