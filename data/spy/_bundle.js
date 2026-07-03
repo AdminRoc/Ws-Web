@@ -455,35 +455,36 @@ var spy_allow_pagoRecords = [
     uploadTime: "2026-06-02",
     videoUrls:  ["https://www.youtube.com/watch?v=BDDeN9A2Uco"],
   },
-  
   {
     playerId:   "Salat",
     clearTime:  "0:47.533",
     uploadTime: "2026-05-12",
     videoUrls:  ["https://www.youtube.com/watch?v=IyjwNdvyEWA"],
   },
-
   {
     playerId:   "Txdo",
     clearTime:  "0:50.750",
     uploadTime: "2025-04-30",
     videoUrls:  ["https://www.youtube.com/watch?v=q0r6N3Kdi0U"],
   },
-
   {
     playerId:   "PrimedDarkeN",
     clearTime:  "0:50.933",
     uploadTime: "2024-10-07",
     videoUrls:  ["https://www.youtube.com/watch?v=FAwYm2izNaQ"],
   },
-
   {
     playerId:   "Endryx_Ow",
     clearTime:  "0:57.000",
     uploadTime: "2024-11-07",
     videoUrls:  ["https://www.youtube.com/watch?v=f8o03xAonnA"],
   },
-  
+  {
+    playerId:   "4MIR",
+    clearTime:  "1:00.000",
+    uploadTime: "2026-06-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=p0Gdcwxzz8o"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

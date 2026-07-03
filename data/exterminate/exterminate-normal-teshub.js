@@ -22,7 +22,12 @@
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_teshubRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "AeThERQAQ",
+    clearTime:  "0:14.033",
+    uploadTime: "2026-07-02",
+    videoUrls:  ["https://www.douyin.com/video/7657938440760016881"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

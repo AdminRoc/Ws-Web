@@ -24,23 +24,29 @@
 var capture_isosRecords = [
 
   {
-  playerId:   "Salat",
-  clearTime:  "0:20.517",
-  uploadTime: "2026-06-09",
-  videoUrls:  ["https://www.youtube.com/watch?v=_c9DC9nPnig"],
-},
-{
-  playerId:   "Mortar",
-  clearTime:  "0:21.733",
-  uploadTime: "2021-03-07",
-  videoUrls:  ["https://www.youtube.com/watch?v=MjdROzRLVfA"],
-},
-{
-  playerId:   "L1ndell",
-  clearTime:  "0:25.033",
-  uploadTime: "2021-11-07",
-  videoUrls:  ["https://www.youtube.com/watch?v=3jX2ZH2EL44"],
-},
+    playerId:   "Salat",
+    clearTime:  "0:20.517",
+    uploadTime: "2026-06-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=_c9DC9nPnig"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:21.733",
+    uploadTime: "2021-03-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=MjdROzRLVfA"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:25.033",
+    uploadTime: "2021-11-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=3jX2ZH2EL44"],
+  },
+  {
+    playerId:   "Hera4v",
+    clearTime:  "0:20.517",
+    uploadTime: "2026-07-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=g7FnYl3mhmo"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

@@ -41,6 +41,12 @@ var exterminate_steel_dakataRecords = [
     uploadTime: "2026-01-07",
     videoUrls:  ["https://www.youtube.com/watch?v=Z14y_uo7HMY"],
   },
+  {
+    playerId:   "FrostMainer",
+    clearTime:  "0:29.000",
+    uploadTime: "2026-06-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=nyRf6CMiwvQ"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

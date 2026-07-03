@@ -31,9 +31,9 @@ var exterminate_normal_oxomocoRecords = [
   },
   {
        playerId:   "yukkpo",
-       clearTime:  "0:14.933",
-       uploadTime: "2026-05-23",
-       videoUrls:  ["https://www.bilibili.com/video/BV1d4G56PEFM"],
+       clearTime:  "0:13.600",
+       uploadTime: "2026-06-26",
+       videoUrls:  ["https://www.youtube.com/watch?v=WVMP9hl3CqI"],
   },
   {
        playerId:   "nykroze",

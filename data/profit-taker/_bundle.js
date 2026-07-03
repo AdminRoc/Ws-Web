@@ -279,6 +279,12 @@ var profitTakerRecords = [
     uploadTime: "2026-06-14",
     videoUrls:     ["https://www.youtube.com/watch?v=q0OezvFJSac"]
   },
+  {
+    clearTime:  "00:54.917",
+    playerId:   "noemamp3",
+    uploadTime: "2026-06-22",
+    videoUrls:     ["https://www.youtube.com/watch?v=X-yePpSYhOk"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

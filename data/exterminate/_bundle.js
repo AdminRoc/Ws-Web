@@ -355,9 +355,9 @@ var exterminate_normal_e_primeRecords = [
 
   {
     playerId:   "Salat",
-    clearTime:  "0:08.617",
-    uploadTime: "2026-05-30",
-    videoUrls:  ["https://www.youtube.com/watch?v=oLzkX1REEuE"],
+    clearTime:  "0:07.967",
+    uploadTime: "2026-06-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=og4ee2mO3-s"],
   },
   {
     playerId:   "Jagdtor",
@@ -382,6 +382,12 @@ var exterminate_normal_e_primeRecords = [
     clearTime:  "0:37.000",
     uploadTime: "2026-06-11",
     videoUrls:  ["https://www.youtube.com/watch?v=dPKnAniDfRI"],
+  },
+  {
+    playerId:   "wergoud",
+    clearTime:  "0:14.000",
+    uploadTime: "2026-06-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=6px97n3HxAE"],
   },
 ];
 
@@ -462,9 +468,9 @@ var exterminate_normal_halako_perimeterNotice_en = "";
 var exterminate_normal_hellasRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:13.000",
-    uploadTime: "2026-02-12",
-    videoUrls:  ["https://www.youtube.com/watch?v=Ksi_rZ3SWig"],
+    clearTime:  "0:11.417",
+    uploadTime: "2026-07-01",
+    videoUrls:  ["https://www.youtube.com/watch?v=wDM83hQ2qtw"],
   },
   {
     playerId:   "Hvna",
@@ -824,9 +830,9 @@ var exterminate_normal_oxomocoRecords = [
   },
   {
        playerId:   "yukkpo",
-       clearTime:  "0:14.933",
-       uploadTime: "2026-05-23",
-       videoUrls:  ["https://www.bilibili.com/video/BV1d4G56PEFM"],
+       clearTime:  "0:13.600",
+       uploadTime: "2026-06-26",
+       videoUrls:  ["https://www.youtube.com/watch?v=WVMP9hl3CqI"],
   },
   {
        playerId:   "nykroze",
@@ -1320,7 +1326,12 @@ var exterminate_normal_telestoNotice_en = "";
  * ════════════════════════════════════════════════════════════ */
 
 var exterminate_normal_teshubRecords = [
-  /* 暂无记录 */
+  {
+    playerId:   "AeThERQAQ",
+    clearTime:  "0:14.033",
+    uploadTime: "2026-07-02",
+    videoUrls:  ["https://www.douyin.com/video/7657938440760016881"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -1599,9 +1610,9 @@ var exterminate_steel_carpoRecords = [
 
   {
     playerId:   "FrostMainer",
-    clearTime:  "0:40.000",
-    uploadTime: "2026-05-20",
-    videoUrls:  ["https://www.youtube.com/watch?v=ml6OHHkBRsY"],
+    clearTime:  "0:34.000",
+    uploadTime: "2026-06-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=S7RWM1X1XrU"],
   },
   {
     playerId:   "oTonJleHue",
@@ -1680,6 +1691,12 @@ var exterminate_steel_dakataRecords = [
     clearTime:  "1:31.000",
     uploadTime: "2026-01-07",
     videoUrls:  ["https://www.youtube.com/watch?v=Z14y_uo7HMY"],
+  },
+  {
+    playerId:   "FrostMainer",
+    clearTime:  "0:29.000",
+    uploadTime: "2026-06-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=nyRf6CMiwvQ"],
   },
 ];
 
@@ -2373,9 +2390,9 @@ var exterminate_steel_pallasRecords = [
   },
   {
     playerId:   "FrostMainer",
-    clearTime:  "0:37.000",
-    uploadTime: "2026-06-08",
-    videoUrls:  ["https://www.youtube.com/watch?v=qwkRKuHQqYU"],
+    clearTime:  "0:27.000",
+    uploadTime: "2026-06-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=o_4WfjoCkrQ"],
   },
 ];
 

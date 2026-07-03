@@ -24,9 +24,9 @@
 var rescue_oriasRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:12.900",
-    uploadTime: "2025-11-26",
-    videoUrls:  ["https://www.youtube.com/watch?v=0pQeD2uILGs"],
+    clearTime:  "0:11.700",
+    uploadTime: "2026-06-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=aFtNjyklIEI"],
   },
   {
     playerId:   "L1ndell",

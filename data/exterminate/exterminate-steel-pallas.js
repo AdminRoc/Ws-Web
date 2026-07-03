@@ -42,9 +42,9 @@ var exterminate_steel_pallasRecords = [
   },
   {
     playerId:   "FrostMainer",
-    clearTime:  "0:37.000",
-    uploadTime: "2026-06-08",
-    videoUrls:  ["https://www.youtube.com/watch?v=qwkRKuHQqYU"],
+    clearTime:  "0:27.000",
+    uploadTime: "2026-06-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=o_4WfjoCkrQ"],
   },
 ];
 

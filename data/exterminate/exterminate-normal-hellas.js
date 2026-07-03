@@ -24,9 +24,9 @@
 var exterminate_normal_hellasRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:13.000",
-    uploadTime: "2026-02-12",
-    videoUrls:  ["https://www.youtube.com/watch?v=Ksi_rZ3SWig"],
+    clearTime:  "0:11.417",
+    uploadTime: "2026-07-01",
+    videoUrls:  ["https://www.youtube.com/watch?v=wDM83hQ2qtw"],
   },
   {
     playerId:   "Hvna",
