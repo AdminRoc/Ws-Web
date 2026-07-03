@@ -25,9 +25,9 @@ var assassination_normal_mutalist_alad_vRecords = [
 
   {
     playerId:   "Salat",
-    clearTime:  "0:29.000",
-    uploadTime: "2025-04-12",
-    videoUrls:  ["https://www.youtube.com/watch?v=Na6bgUYTSCg"],
+    clearTime:  "0:26.000",
+    uploadTime: "2026-06-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=GgroVaXyX6g"],
   },
   {
     playerId:   "Mortar",

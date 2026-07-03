@@ -25,9 +25,9 @@ var exterminate_normal_e_primeRecords = [
 
   {
     playerId:   "Salat",
-    clearTime:  "0:08.617",
-    uploadTime: "2026-05-30",
-    videoUrls:  ["https://www.youtube.com/watch?v=oLzkX1REEuE"],
+    clearTime:  "0:07.967",
+    uploadTime: "2026-06-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=og4ee2mO3-s"],
   },
   {
     playerId:   "Jagdtor",

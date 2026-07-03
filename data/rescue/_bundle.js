@@ -139,9 +139,9 @@ var rescue_calibanRecords = [
   },
   {
     playerId:   "Salat",
-    clearTime:  "0:23.083",
-    uploadTime: "2026-01-30",
-    videoUrls:  ["https://www.youtube.com/watch?v=9v_UvJl-5LI"],
+    clearTime:  "0:22.550",
+    uploadTime: "2026-06-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=ASu7Ay0o80U"],
   },
   {
     playerId:   "PrimedDarkeN",

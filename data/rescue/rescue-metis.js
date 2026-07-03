@@ -24,9 +24,9 @@
 var rescue_metisRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:32.933",
-    uploadTime: "2025-12-27",
-    videoUrls:  ["https://www.youtube.com/watch?v=xT4O1JZ1uVc"],
+    clearTime:  "0:32.317",
+    uploadTime: "2026-06-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=KVlpZpbt8To"],
   },
   {
     playerId:   "L1ndell",

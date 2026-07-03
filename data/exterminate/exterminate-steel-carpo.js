@@ -25,9 +25,9 @@ var exterminate_steel_carpoRecords = [
 
   {
     playerId:   "FrostMainer",
-    clearTime:  "0:40.000",
-    uploadTime: "2026-05-20",
-    videoUrls:  ["https://www.youtube.com/watch?v=ml6OHHkBRsY"],
+    clearTime:  "0:34.000",
+    uploadTime: "2026-06-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=S7RWM1X1XrU"],
   },
   {
     playerId:   "oTonJleHue",
