@@ -53,6 +53,12 @@ var exterminate_normal_e_primeRecords = [
     uploadTime: "2026-06-11",
     videoUrls:  ["https://www.youtube.com/watch?v=dPKnAniDfRI"],
   },
+  {
+    playerId:   "wergoud",
+    clearTime:  "0:14.000",
+    uploadTime: "2026-06-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=6px97n3HxAE"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
