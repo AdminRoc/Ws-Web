@@ -383,6 +383,12 @@ var exterminate_normal_e_primeRecords = [
     uploadTime: "2026-06-11",
     videoUrls:  ["https://www.youtube.com/watch?v=dPKnAniDfRI"],
   },
+  {
+    playerId:   "wergoud",
+    clearTime:  "0:14.000",
+    uploadTime: "2026-06-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=6px97n3HxAE"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -462,9 +468,9 @@ var exterminate_normal_halako_perimeterNotice_en = "";
 var exterminate_normal_hellasRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:13.000",
-    uploadTime: "2026-02-12",
-    videoUrls:  ["https://www.youtube.com/watch?v=Ksi_rZ3SWig"],
+    clearTime:  "0:11.417",
+    uploadTime: "2026-07-01",
+    videoUrls:  ["https://www.youtube.com/watch?v=wDM83hQ2qtw"],
   },
   {
     playerId:   "Hvna",
@@ -824,9 +830,9 @@ var exterminate_normal_oxomocoRecords = [
   },
   {
        playerId:   "yukkpo",
-       clearTime:  "0:14.933",
-       uploadTime: "2026-05-23",
-       videoUrls:  ["https://www.bilibili.com/video/BV1d4G56PEFM"],
+       clearTime:  "0:13.600",
+       uploadTime: "2026-06-26",
+       videoUrls:  ["https://www.youtube.com/watch?v=WVMP9hl3CqI"],
   },
   {
        playerId:   "nykroze",
