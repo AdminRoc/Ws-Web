@@ -24,7 +24,7 @@
 var exterminate_normal_teshubRecords = [
   {
     playerId:   "AeThERQAQ",
-    clearTime:  "0:14.060",
+    clearTime:  "0:14.033",
     uploadTime: "2026-07-02",
     videoUrls:  ["https://www.douyin.com/video/7657938440760016881"],
   },
