@@ -269,6 +269,17 @@
       border: 1px solid var(--ws-sep); border-radius: 3px; padding: .04rem .35rem;
     }
     .it-ord-more { grid-column: 1 / -1; text-align: center; color: var(--ws-text-dim); font-size: .76rem; margin-top: .4rem; }
+    /* 满级/非满级 分组 */
+    .it-ord-grp { margin-bottom: .7rem; }
+    .it-ord-grp:last-child { margin-bottom: 0; }
+    .it-ord-grp-title {
+      font-size: .72rem; letter-spacing: .1em; color: var(--ws-gold);
+      display: flex; align-items: center; gap: .4rem; margin: .5rem 0 .3rem;
+    }
+    .it-ord-grp-title::before, .it-ord-grp-title::after {
+      content: ''; flex: 1; height: 1px; background: var(--ws-gold-line);
+    }
+    .it-ord-retry { color: var(--ws-gold); text-align: center; padding: .4rem 0; font-size: .78rem; }
     .it-wm-link {
       display: inline-block; margin-top: .9rem; font-size: .82rem; color: var(--ws-gold);
       border: 1px solid var(--ws-gold-line); border-radius: 5px; padding: .35rem .8rem; text-decoration: none;
@@ -306,6 +317,102 @@
       .it-ord-cols { grid-template-columns: 1fr; gap: 1.2rem; }
       .it-item-icon { width: 56px; height: 56px; }
       .it-item-zh { font-size: 1.25rem; }
+    }
+
+    /* ── "搜索拍卖信息" 入口按钮 ── */
+    .it-auc-entry-btn {
+      display: inline-flex; align-items: center; gap: .35rem; font-size: .78rem;
+      padding: .18rem .65rem; border-radius: 999px; cursor: pointer;
+      border: 1px solid rgba(155,232,255,.4); color: #9be8ff; background: rgba(0,180,255,.08);
+      transition: background .2s, border-color .2s;
+    }
+    .it-auc-entry-btn:hover { background: rgba(0,180,255,.18); border-color: #9be8ff; }
+
+    /* ── 拍卖搜索视图 ── */
+    .it-auc-back {
+      display: inline-flex; align-items: center; gap: .4rem; margin-bottom: 1.1rem;
+      font-size: .84rem; color: var(--ws-gold); background: none; cursor: pointer;
+      border: 1px solid var(--ws-gold-line); border-radius: 6px; padding: .4rem .9rem;
+    }
+    .it-auc-back:hover { background: rgba(201,164,50,.1); }
+    .it-auc-head { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .it-auc-title { font-size: 1.1rem; color: var(--ws-gold-bright); font-weight: 600; }
+    .it-auc-tabs { display: flex; gap: .5rem; }
+    .it-auc-tab {
+      font-size: .8rem; padding: .3rem .85rem; border-radius: 6px; cursor: pointer;
+      border: 1px solid var(--ws-gold-line); color: var(--ws-text-dim); background: none;
+    }
+    .it-auc-tab.active { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.1); }
+    .it-auc-filters {
+      display: flex; flex-wrap: wrap; gap: .6rem; padding: .9rem; margin-bottom: 1rem;
+      border: 1px solid var(--ws-sep); border-radius: 8px; background: rgba(0,0,0,.15);
+    }
+    .it-auc-filters label { font-size: .74rem; color: var(--ws-text-dim); display: flex; flex-direction: column; gap: .25rem; }
+    .it-auc-filters select, .it-auc-filters input {
+      background: var(--ws-panel-bg); border: 1px solid var(--ws-sep); color: var(--ws-text);
+      border-radius: 5px; padding: .3rem .5rem; font-size: .82rem; min-width: 110px;
+    }
+    .it-auc-multichip { display: flex; flex-wrap: wrap; gap: .3rem; max-width: 320px; }
+    .it-auc-multichip span {
+      font-size: .72rem; padding: .12rem .5rem; border-radius: 999px; cursor: pointer;
+      border: 1px solid var(--ws-sep); color: var(--ws-text-dim); user-select: none;
+    }
+    .it-auc-multichip span.on { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.12); }
+    .it-auc-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; margin-bottom: .8rem; }
+    .it-auc-sortbar { display: flex; gap: .4rem; }
+    .it-auc-sortbtn, .it-auc-onlbtn {
+      font-size: .76rem; padding: .25rem .7rem; border-radius: 999px; cursor: pointer;
+      border: 1px solid var(--ws-sep); color: var(--ws-text-dim); background: none;
+    }
+    .it-auc-sortbtn.active, .it-auc-onlbtn.active { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.1); }
+    .it-auc-count { font-size: .78rem; color: var(--ws-text-dim); }
+    .it-auc-list { display: flex; flex-direction: column; gap: .55rem; max-height: 640px; overflow-y: auto; }
+    .it-auc-row {
+      display: flex; align-items: center; justify-content: space-between; gap: .8rem;
+      padding: .6rem .8rem; border: 1px solid var(--ws-sep); border-radius: 8px;
+      text-decoration: none; color: inherit; transition: background .15s, border-color .15s;
+    }
+    .it-auc-row:hover { background: rgba(201,164,50,.08); border-color: var(--ws-gold-line); }
+    .it-auc-chips { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .3rem; }
+    .it-auc-chip { font-size: .7rem; padding: .06rem .4rem; border-radius: 4px; border: 1px solid var(--ws-sep); color: var(--ws-text-dim); }
+    .it-auc-chip.pos { color: #6ee7a8; border-color: rgba(110,231,168,.35); }
+    .it-auc-chip.neg { color: #ff8a8a; border-color: rgba(255,138,138,.35); }
+    .it-auc-owner { display: flex; align-items: center; gap: .35rem; font-size: .8rem; color: var(--ws-text-dim); white-space: nowrap; }
+    .it-auc-price { font-family: 'Orbitron', sans-serif; color: var(--ws-gold-bright); font-weight: 700; font-size: 1rem; white-space: nowrap; }
+    .it-auc-side { display: flex; flex-direction: column; align-items: flex-end; gap: .3rem; }
+
+    /* ── 快速导航（简化版，风格对齐世界状态暗金主题） ── */
+    .it-qnav {
+      position: fixed; right: 22px; bottom: 28px; z-index: 500;
+      display: none; flex-direction: column; align-items: flex-end; gap: .5rem;
+    }
+    .it-qnav.show { display: flex; }
+    .it-qnav-btn {
+      width: 46px; height: 46px; border-radius: 50%; cursor: pointer;
+      background: radial-gradient(circle at 35% 30%, #3a2c0f, #14100a 72%);
+      border: 1px solid var(--ws-gold-line); color: var(--ws-gold-bright);
+      font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 14px rgba(201,164,50,.28), 0 4px 14px rgba(0,0,0,.5);
+      transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s;
+    }
+    .it-qnav-btn:hover { box-shadow: 0 0 22px rgba(201,164,50,.5), 0 4px 14px rgba(0,0,0,.5); }
+    .it-qnav.open .it-qnav-btn { transform: rotate(45deg); }
+    .it-qnav-list {
+      display: flex; flex-direction: column; gap: .4rem; align-items: flex-end;
+      opacity: 0; pointer-events: none; transform: translateY(8px);
+      transition: opacity .22s ease, transform .22s ease;
+    }
+    .it-qnav.open .it-qnav-list { opacity: 1; pointer-events: auto; transform: none; }
+    .it-qnav-item {
+      font-size: .78rem; padding: .4rem .9rem; border-radius: 999px; white-space: nowrap;
+      background: rgba(10,10,16,.9); border: 1px solid var(--ws-gold-line); color: var(--ws-text);
+      cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,.4);
+    }
+    .it-qnav-item:hover { color: var(--ws-gold-bright); border-color: var(--ws-gold); }
+
+    @media (max-width: 720px) {
+      .it-auc-row { flex-wrap: wrap; }
+      .it-qnav { right: 12px; bottom: 16px; }
     }
 
     /* ══ 水墨 + logo 过渡(与世界状态切换按钮同款，用于本页跳转/查询过渡) ══ */
@@ -571,6 +678,11 @@
 
     <div class="it-results" id="it-results"></div>
   </main>
+
+  <div class="it-qnav" id="it-qnav">
+    <div class="it-qnav-list" id="it-qnav-list"></div>
+    <button class="it-qnav-btn" id="it-qnav-btn" type="button" aria-label="快速导航">☰</button>
+  </div>
   <footer class="site-footer home-footer">
     <div class="beian-row"><a href="https://beian.miit.gov.cn/" target="_self" rel="noopener">沪ICP备2022033368号</a><img src="picture/gongan-beian.png" alt="公安备案" class="beian-icon"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=31015102000215" rel="noreferrer" target="_blank">沪公网安备31015102000215号</a></div>
     <p>Copyright &copy; 2026 CSC Alliance All Rights Reserved.</p>
@@ -1149,24 +1261,27 @@
     if (rec.slug) badges += '<span class="it-badge">可交易</span>';
 
     var head =
-      '<div class="it-item-head">' + icon +
+      '<div class="it-item-head" id="it-item-head">' + icon +
         '<div class="it-item-titles">' +
           '<div class="it-item-zh">' + esc(rec.zh) + '</div>' +
           '<div class="it-item-en">' + esc(rec.en) + '</div>' +
-          (badges ? '<div class="it-item-meta">' + badges + '</div>' : '') +
+          (badges ? '<div class="it-item-meta" id="it-item-meta">' + badges + '</div>' : '<div class="it-item-meta" id="it-item-meta"></div>') +
         '</div>' +
       '</div>';
 
     var cards =
-      '<div class="it-cards">' +
+      '<div class="it-cards" id="it-cards">' +
         ordersCard(rec) +
         wikiCard(rec) +
         dropCard(rec) +
       '</div>';
 
-    resultsEl.innerHTML = head + cards;
+    resultsEl.innerHTML = '<div id="it-view-search">' + head + cards + '</div>' +
+      '<div id="it-view-auction" style="display:none;"></div>';
     restartResults();
     if (rec.slug) loadOrders(rec);
+    if (rec.slug) probeAuctions(rec);
+    if (typeof buildQuickNav === 'function') buildQuickNav();
   }
 
   var RARITY_ZH = { 'Very Common': '极常见', 'Common': '常见', 'Uncommon': '不常见', 'Rare': '稀有', 'Ultra Rare': '超稀有', 'Legendary': '传奇' };
@@ -1243,7 +1358,7 @@
       var more = di.sources.length > 40 ? '<div class="it-drop-more">共 ' + di.sources.length + ' 个来源，已显示前 40 个</div>' : '';
       inner = rows + more;
     }
-    return '<div class="it-card it-card-wide"><div class="it-card-hd">游戏掉落来源 <span class="it-card-en">DROP SOURCES</span></div>' + inner + '</div>';
+    return '<div class="it-card it-card-wide" id="it-card-drops"><div class="it-card-hd">游戏掉落来源 <span class="it-card-en">DROP SOURCES</span></div>' + inner + '</div>';
   }
 
   function ordersCard(rec) {
@@ -1259,7 +1374,7 @@
         '<div id="it-ord-body"><div class="it-ord-cols">' + skelCol + skelCol + '</div></div>' +
         '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(rec.slug) + '" target="_blank" rel="noopener">在 Warframe.market 打开 ↗</a>';
     }
-    return '<div class="it-card it-card-wide"><div class="it-card-hd">Warframe.market 实时交易信息 <span class="it-card-en">LIVE ORDERS</span></div>' + body + '</div>';
+    return '<div class="it-card it-card-wide" id="it-card-orders"><div class="it-card-hd">Warframe.market 实时交易信息 <span class="it-card-en">LIVE ORDERS</span></div>' + body + '</div>';
   }
 
   /* 点击某条出售/求购单，按 Warframe.market 站内喊话的标准格式自动复制交易消息：
@@ -1274,17 +1389,28 @@
   function _ordStatusRank(u) {
     return (u && u.status === 'ingame') ? 0 : ((u && u.status === 'online') ? 1 : 2);
   }
-  var ORD_DISPLAY_MAX = 35;
+  var ORD_DISPLAY_MAX = 100;      /* 出售/求购 各自最多显示条数 */
+  var ORD_GRP_MAX     = 50;       /* 满级/非满级 各自最多显示条数（合计 = ORD_DISPLAY_MAX） */
+  var ORD_RETRY_MAX   = 3;        /* 自动重试拉取总次数（含首次） */
 
   function loadOrders(rec) {
     if (!WM_PROXY_BASE) return;
     _curRec = rec;
+    _fetchOrdersWithRetry(rec, 1);
+  }
+
+  function _fetchOrdersWithRetry(rec, attempt) {
     var url = WM_PROXY_BASE.replace(/\/$/, '') + '/v2/orders/item/' + encodeURIComponent(rec.slug) + '?platform=pc';
     var ctrl = new AbortController();
     /* 18s：边缘函数自身超时已调到 12s（完整订单接口热门物品上千条挂单实测较慢），
        这里留出余量接收其响应流，不在边缘函数还没超时前就被客户端先掐断。 */
     setTimeout(function () { ctrl.abort(); }, 18000);
-    fetch(url, { signal: ctrl.signal }).then(function (r) { return r.json(); }).then(function (d) {
+    fetch(url, { signal: ctrl.signal }).then(function (r) {
+      if (!r.ok) throw new Error('http ' + r.status);
+      return r.json();
+    }).then(function (d) {
+      // 若这期间用户已切换到别的物品，丢弃这次过期响应，避免串号
+      if (_curRec !== rec) return;
       var list = (d && Array.isArray(d.data)) ? d.data : [];
       function bySide(type, priceDir) {
         return list.filter(function (o) { return o.type === type && o.visible !== false; })
@@ -1305,13 +1431,21 @@
         ordCol('出售（点击复制求购消息）', _curSell, 'sell') +
         ordCol('求购（点击复制出售消息）', _curBuy, 'buy') +
         '</div>';
+      if (typeof onOrdersRendered === 'function') onOrdersRendered(rec);
     }).catch(function () {
-      var loading = document.getElementById('it-ord-loading');
+      if (_curRec !== rec) return;
+      if (attempt < ORD_RETRY_MAX) {
+        var loading = document.getElementById('it-ord-loading');
+        if (loading) loading.innerHTML = '<span class="it-spin"></span>获取失败，正在自动重试（' + (attempt + 1) + '/' + ORD_RETRY_MAX + '）…';
+        setTimeout(function () { _fetchOrdersWithRetry(rec, attempt + 1); }, 900 * attempt);
+        return;
+      }
+      var loading2 = document.getElementById('it-ord-loading');
       var body = document.getElementById('it-ord-body');
-      if (loading) loading.style.display = 'none';
+      if (loading2) loading2.style.display = 'none';
       // 下面卡片底部本就常驻一个"在 Warframe.market 打开"按钮，这里不再重复一个，
       // 否则获取失败时会同时出现两个跳转按钮，显得臃肿。
-      if (body) body.innerHTML = '<div class="it-empty">实时交易信息获取失败（网络受限），请直接前往 Warframe.market 查看。</div>';
+      if (body) body.innerHTML = '<div class="it-empty">实时交易信息获取失败（已重试 ' + ORD_RETRY_MAX + ' 次，网络受限），请直接前往 Warframe.market 查看。</div>';
     });
   }
   /* 等级/小类徽标：moddable 物品（mod/arcane/riven 等）显示 "Lv.N"，
@@ -1326,21 +1460,58 @@
        避免无等级/小类的行少一个元素导致后面价格/数量列错位。 */
     return '<span class="it-ord-badge">' + esc(text) + '</span>';
   }
+  function _ordRank(o) { return (o.mod_rank != null) ? o.mod_rank : (o.rank != null ? o.rank : null); }
+
+  function _ordRow(o, side, i) {
+    var u = o.user || {};
+    var st = (u.status === 'ingame') ? 'ingame' : (u.status === 'online' ? 'online' : 'offline');
+    return '<div class="it-ord-row" data-side="' + side + '" data-i="' + i + '">' +
+        '<span class="it-ord-dot ' + st + '"></span>' +
+        '<span class="it-ord-user">' + esc(u.ingameName || '—') + '</span>' +
+        orderBadge(o) +
+        '<span class="it-ord-plat">' + esc(o.platinum) + ' P</span>' +
+        '<span class="it-ord-qty">×' + esc(o.quantity || 1) + '</span>' +
+      '</div>';
+  }
+
+  /* 出售/求购 单列渲染：最多 ORD_DISPLAY_MAX(100) 条。
+     若该物品带等级(mod_rank/rank，如 mod/arcane/riven)，按"满级"(该列表内出现过的最高等级)
+     与"非满级"拆成两个分割小节，满级在上、非满级在下，各自最多 ORD_GRP_MAX(50) 条；
+     不带等级信息的物品（普通道具/组件等）不适用该概念，直接单列最多 100 条。
+     注：data-i 用于点击复制交易消息时反查原始 order 对象，这里用"物品在原始已排序数组中的下标"，
+     而不是"在分组子列表中的下标"，否则会因分组重排导致取错对象。 */
   function ordCol(title, orders, side) {
-    var rows = orders.slice(0, ORD_DISPLAY_MAX).map(function (o, i) {
-      var u = o.user || {};
-      var st = (u.status === 'ingame') ? 'ingame' : (u.status === 'online' ? 'online' : 'offline');
-      return '<div class="it-ord-row" data-side="' + side + '" data-i="' + i + '">' +
-          '<span class="it-ord-dot ' + st + '"></span>' +
-          '<span class="it-ord-user">' + esc(u.ingameName || '—') + '</span>' +
-          orderBadge(o) +
-          '<span class="it-ord-plat">' + esc(o.platinum) + ' P</span>' +
-          '<span class="it-ord-qty">×' + esc(o.quantity || 1) + '</span>' +
-        '</div>';
-    }).join('');
-    var countNote = orders.length > ORD_DISPLAY_MAX
-      ? '<div class="it-ord-more">仅显示前 ' + ORD_DISPLAY_MAX + ' 条，共 ' + orders.length + ' 条在线挂单</div>' : '';
-    return '<div><div class="it-ord-col-title">' + title + '</div>' + (rows || '<div class="it-empty">无</div>') + countNote + '</div>';
+    var indexed = orders.map(function (o, i) { return { o: o, i: i }; });
+    var ranks = indexed.map(function (x) { return _ordRank(x.o); }).filter(function (r) { return r != null; });
+    var hasRank = ranks.length > 0;
+    var body;
+    var totalShown = 0;
+    if (hasRank) {
+      var maxRank = Math.max.apply(null, ranks);
+      var full = indexed.filter(function (x) { return _ordRank(x.o) === maxRank; });
+      var rest = indexed.filter(function (x) { return _ordRank(x.o) !== maxRank; });
+      var fullShown = full.slice(0, ORD_GRP_MAX);
+      var restShown = rest.slice(0, ORD_GRP_MAX);
+      totalShown = fullShown.length + restShown.length;
+      function grp(label, items, totalCount) {
+        if (!items.length) return '';
+        var rows = items.map(function (x) { return _ordRow(x.o, side, x.i); }).join('');
+        var more = totalCount > items.length
+          ? '<div class="it-ord-more">仅显示前 ' + items.length + ' 条，共 ' + totalCount + ' 条</div>' : '';
+        return '<div class="it-ord-grp"><div class="it-ord-grp-title">' + label + '</div>' + rows + more + '</div>';
+      }
+      body = grp('满级 · Lv.' + maxRank, fullShown, full.length) +
+             grp('非满级', restShown, rest.length);
+      if (!body) body = '<div class="it-empty">无</div>';
+    } else {
+      var shown = indexed.slice(0, ORD_DISPLAY_MAX);
+      totalShown = shown.length;
+      var rows2 = shown.map(function (x) { return _ordRow(x.o, side, x.i); }).join('');
+      var more2 = orders.length > ORD_DISPLAY_MAX
+        ? '<div class="it-ord-more">仅显示前 ' + ORD_DISPLAY_MAX + ' 条，共 ' + orders.length + ' 条在线挂单</div>' : '';
+      body = rows2 ? (rows2 + more2) : '<div class="it-empty">无</div>';
+    }
+    return '<div><div class="it-ord-col-title">' + title + '</div>' + body + '</div>';
   }
   function orderVariant(o) {
     if (!o) return '';
@@ -1384,12 +1555,328 @@
   function wikiCard(rec) {
     var q = encodeURIComponent(rec.zh || rec.en);
     var qen = encodeURIComponent(rec.en || rec.zh);
-    return '<div class="it-card it-card-wide"><div class="it-card-hd">维基查询 <span class="it-card-en">WIKI</span></div>' +
+    return '<div class="it-card it-card-wide" id="it-card-wiki"><div class="it-card-hd">维基查询 <span class="it-card-en">WIKI</span></div>' +
       '<div class="it-wiki-links">' +
         '<a class="it-wiki-btn" href="' + WIKI_ZH + q + '" target="_blank" rel="noopener"><b>中文维基 ↗</b><span>灰机 Wiki 搜索结果</span></a>' +
         '<a class="it-wiki-btn" href="' + WIKI_EN + qen + '" target="_blank" rel="noopener"><b>英文维基 ↗</b><span>Official Wiki 搜索结果</span></a>' +
       '</div></div>';
   }
+
+  /* ══════════════════════════════════════════════
+     拍卖信息（裂罅Mod / 玄骸武器 / 姐妹武器）—— 仅查询，无需登录。
+     WM 的 Auction API（v1/auctions/search）与 Orders API 是两套独立体系，
+     只覆盖这三类"可改造属性"的特殊交易品，用普通物品的 slug 当 weapon_url_name
+     去探测：命中就是该武器确实存在这类拍卖，未命中 WM 直接回空数组，不会报错。
+     ══════════════════════════════════════════════ */
+  var AUC_TYPE_LABEL = { riven: '裂罅Mod', lich: '玄骸武器', sister: '姐妹武器' };
+  var AUC_ELEMENTS = [
+    { slug: 'radiation', zh: '辐射' }, { slug: 'magnetic', zh: '磁力' },
+    { slug: 'viral', zh: '病毒' }, { slug: 'gas', zh: '毒气' },
+    { slug: 'corrosive', zh: '腐蚀' }, { slug: 'blast', zh: '爆炸' },
+    { slug: 'heat', zh: '火焰' }, { slug: 'cold', zh: '冰冻' },
+    { slug: 'electricity', zh: '电击' }, { slug: 'toxin', zh: '毒素' }
+  ];
+  var AUC_RETRY_MAX = 3;
+  var _aucCache = {};     // slug -> { riven:[...], lich:[...], sister:[...] }
+  var _aucCurType = null;
+  var _aucCurRec = null;
+  var _aucSort = 'price_asc';
+  var _aucOnline = 'all';
+  var _aucFilters = {};   // { positive:[], negative:'', polarity:'', element:'', ephemera:'', mrMin:'', mrMax:'' }
+
+  function _aucUrl(type, slug) {
+    return WM_PROXY_BASE.replace(/\/$/, '') + '/v1/auctions/search?type=' + type +
+      '&weapon_url_name=' + encodeURIComponent(slug) + '&platform=pc';
+  }
+  function _fetchJsonRetry(url, attempt, maxAttempt) {
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error('http ' + r.status);
+      return r.json();
+    }).catch(function (e) {
+      if (attempt < maxAttempt) {
+        return new Promise(function (resolve) { setTimeout(resolve, 700 * attempt); })
+          .then(function () { return _fetchJsonRetry(url, attempt + 1, maxAttempt); });
+      }
+      throw e;
+    });
+  }
+
+  function probeAuctions(rec) {
+    if (!WM_PROXY_BASE || !rec.slug) return;
+    if (_aucCache[rec.slug]) { _renderAuctionEntryBtn(rec); return; }
+    var types = ['riven', 'lich', 'sister'];
+    Promise.all(types.map(function (t) {
+      return _fetchJsonRetry(_aucUrl(t, rec.slug), 1, AUC_RETRY_MAX)
+        .then(function (d) { return (d && Array.isArray(d.data)) ? d.data : []; })
+        .catch(function () { return []; });
+    })).then(function (results) {
+      if (_curRec !== rec) return; // 期间用户已切换物品，丢弃过期结果
+      var found = {};
+      types.forEach(function (t, i) { found[t] = results[i]; });
+      _aucCache[rec.slug] = found;
+      _renderAuctionEntryBtn(rec);
+    });
+  }
+
+  function _renderAuctionEntryBtn(rec) {
+    if (_curRec !== rec) return;
+    var meta = document.getElementById('it-item-meta');
+    if (!meta) return;
+    var found = _aucCache[rec.slug];
+    if (!found) return;
+    var anyHit = Object.keys(found).some(function (t) { return found[t].length > 0; });
+    if (!anyHit) return;
+    var btn = document.createElement('span');
+    btn.className = 'it-auc-entry-btn';
+    btn.textContent = '✦ 搜索拍卖信息';
+    btn.addEventListener('click', function () { openAuctionView(rec); });
+    meta.appendChild(btn);
+    if (typeof buildQuickNav === 'function') buildQuickNav();
+  }
+
+  function openAuctionView(rec) {
+    var found = _aucCache[rec.slug];
+    if (!found) return;
+    var firstType = ['riven', 'lich', 'sister'].filter(function (t) { return found[t].length > 0; })[0];
+    if (!firstType) return;
+    _aucCurRec = rec;
+    _aucFilters = {};
+    _aucSort = 'price_asc'; _aucOnline = 'all';
+    document.getElementById('it-view-search').style.display = 'none';
+    var view = document.getElementById('it-view-auction');
+    view.style.display = '';
+    view.innerHTML =
+      '<button class="it-auc-back" id="it-auc-back-btn">← 返回搜索结果</button>' +
+      '<div class="it-auc-head">' +
+        '<div class="it-auc-title">拍卖信息 · ' + esc(rec.zh || rec.en) + '</div>' +
+        '<div class="it-auc-tabs" id="it-auc-tabs"></div>' +
+      '</div>' +
+      '<div class="it-auc-filters" id="it-auc-filters"></div>' +
+      '<div class="it-auc-toolbar">' +
+        '<div class="it-auc-sortbar" id="it-auc-sortbar"></div>' +
+        '<span class="it-auc-count" id="it-auc-count"></span>' +
+      '</div>' +
+      '<div class="it-auc-list" id="it-auc-list"></div>';
+    document.getElementById('it-auc-back-btn').addEventListener('click', closeAuctionView);
+    switchAuctionType(firstType);
+    if (typeof buildQuickNav === 'function') buildQuickNav();
+  }
+
+  function closeAuctionView() {
+    document.getElementById('it-view-auction').style.display = 'none';
+    document.getElementById('it-view-search').style.display = '';
+    if (typeof buildQuickNav === 'function') buildQuickNav();
+  }
+
+  function switchAuctionType(type) {
+    _aucCurType = type;
+    _aucFilters = {};
+    var found = _aucCache[_aucCurRec.slug];
+    var tabsEl = document.getElementById('it-auc-tabs');
+    tabsEl.innerHTML = ['riven', 'lich', 'sister'].filter(function (t) { return found[t].length > 0; })
+      .map(function (t) {
+        return '<button class="it-auc-tab' + (t === type ? ' active' : '') + '" data-t="' + t + '">' + AUC_TYPE_LABEL[t] + '（' + found[t].length + '）</button>';
+      }).join('');
+    tabsEl.querySelectorAll('.it-auc-tab').forEach(function (b) {
+      b.addEventListener('click', function () { switchAuctionType(b.getAttribute('data-t')); });
+    });
+    renderAuctionFilters();
+    renderAuctionSortbar();
+    renderAuctionList();
+  }
+
+  function _aucList() { return (_aucCache[_aucCurRec.slug] && _aucCache[_aucCurRec.slug][_aucCurType]) || []; }
+
+  /* 属性/极性等筛选项从实际返回数据里动态收集，不依赖额外字典接口 */
+  function renderAuctionFilters() {
+    var box = document.getElementById('it-auc-filters');
+    var list = _aucList();
+    if (_aucCurType === 'riven') {
+      var attrSet = {}, polSet = {};
+      list.forEach(function (a) {
+        ((a.item && a.item.attributes) || []).forEach(function (at) { attrSet[at.url_name] = true; });
+        if (a.item && a.item.polarity) polSet[a.item.polarity] = true;
+      });
+      var attrs = Object.keys(attrSet).sort();
+      box.innerHTML =
+        '<label>正词条(可多选)<div class="it-auc-multichip" id="it-auc-pos-chips">' +
+          attrs.map(function (a) { return '<span data-a="' + esc(a) + '">' + esc(_aucAttrLabel(a)) + '</span>'; }).join('') +
+        '</div></label>' +
+        '<label>负词条<select id="it-auc-neg"><option value="">不限</option>' +
+          attrs.map(function (a) { return '<option value="' + esc(a) + '">' + esc(_aucAttrLabel(a)) + '</option>'; }).join('') +
+        '</select></label>' +
+        '<label>极性<select id="it-auc-pol"><option value="">不限</option>' +
+          Object.keys(polSet).sort().map(function (p) { return '<option value="' + esc(p) + '">' + esc(p) + '</option>'; }).join('') +
+        '</select></label>' +
+        '<label>MR 下限<input type="number" id="it-auc-mr-min" min="0" max="16" placeholder="0"></label>' +
+        '<label>MR 上限<input type="number" id="it-auc-mr-max" min="0" max="16" placeholder="16"></label>';
+      box.querySelectorAll('#it-auc-pos-chips span').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          chip.classList.toggle('on');
+          _aucFilters.positive = Array.prototype.slice.call(box.querySelectorAll('#it-auc-pos-chips span.on')).map(function (c) { return c.getAttribute('data-a'); });
+          renderAuctionList();
+        });
+      });
+      ['it-auc-neg', 'it-auc-pol', 'it-auc-mr-min', 'it-auc-mr-max'].forEach(function (id) {
+        var el = document.getElementById(id);
+        el.addEventListener('input', function () {
+          _aucFilters.negative = document.getElementById('it-auc-neg').value;
+          _aucFilters.polarity = document.getElementById('it-auc-pol').value;
+          _aucFilters.mrMin = document.getElementById('it-auc-mr-min').value;
+          _aucFilters.mrMax = document.getElementById('it-auc-mr-max').value;
+          renderAuctionList();
+        });
+      });
+    } else {
+      box.innerHTML =
+        '<label>元素<select id="it-auc-el"><option value="">不限</option>' +
+          AUC_ELEMENTS.map(function (e) { return '<option value="' + e.slug + '">' + e.zh + '</option>'; }).join('') +
+        '</select></label>' +
+        '<label>幻纹<select id="it-auc-eph"><option value="">不限</option><option value="yes">有</option><option value="no">无</option></select></label>';
+      ['it-auc-el', 'it-auc-eph'].forEach(function (id) {
+        document.getElementById(id).addEventListener('input', function () {
+          _aucFilters.element = document.getElementById('it-auc-el').value;
+          _aucFilters.ephemera = document.getElementById('it-auc-eph').value;
+          renderAuctionList();
+        });
+      });
+    }
+  }
+  function _aucAttrLabel(urlName) {
+    return String(urlName || '').replace(/_/g, ' ');
+  }
+
+  function renderAuctionSortbar() {
+    var bar = document.getElementById('it-auc-sortbar');
+    var sorts = [['price_asc', '价格↑'], ['price_desc', '价格↓'], ['online_first', '在线优先']];
+    var onls = [['all', '全部状态'], ['ingame', '游戏中'], ['online', '在线']];
+    bar.innerHTML =
+      sorts.map(function (s) { return '<button class="it-auc-sortbtn' + (s[0] === _aucSort ? ' active' : '') + '" data-s="' + s[0] + '">' + s[1] + '</button>'; }).join('') +
+      onls.map(function (o) { return '<button class="it-auc-onlbtn' + (o[0] === _aucOnline ? ' active' : '') + '" data-o="' + o[0] + '">' + o[1] + '</button>'; }).join('');
+    bar.querySelectorAll('.it-auc-sortbtn').forEach(function (b) {
+      b.addEventListener('click', function () { _aucSort = b.getAttribute('data-s'); renderAuctionSortbar(); renderAuctionList(); });
+    });
+    bar.querySelectorAll('.it-auc-onlbtn').forEach(function (b) {
+      b.addEventListener('click', function () { _aucOnline = b.getAttribute('data-o'); renderAuctionSortbar(); renderAuctionList(); });
+    });
+  }
+
+  function _aucPrice(a) { return a.buyout_price != null ? a.buyout_price : (a.starting_price || 0); }
+  function _aucOnlineRank(a) {
+    var s = ((a.owner && a.owner.status) || '').toLowerCase();
+    return s === 'ingame' ? 0 : (s === 'online' ? 1 : 2);
+  }
+  var AUC_LIST_MAX = 300;
+
+  function renderAuctionList() {
+    var listEl = document.getElementById('it-auc-list');
+    var countEl = document.getElementById('it-auc-count');
+    var list = _aucList().filter(function (a) {
+      var item = a.item || {};
+      if (_aucOnline !== 'all' && ((a.owner && a.owner.status) || '').toLowerCase() !== _aucOnline) return false;
+      if (_aucCurType === 'riven') {
+        var attrs = (item.attributes || []);
+        if (_aucFilters.positive && _aucFilters.positive.length) {
+          var posSet = attrs.filter(function (x) { return x.positive; }).map(function (x) { return x.url_name; });
+          if (!_aucFilters.positive.every(function (p) { return posSet.indexOf(p) !== -1; })) return false;
+        }
+        if (_aucFilters.negative) {
+          var negHit = attrs.some(function (x) { return !x.positive && x.url_name === _aucFilters.negative; });
+          if (!negHit) return false;
+        }
+        if (_aucFilters.polarity && item.polarity !== _aucFilters.polarity) return false;
+        if (_aucFilters.mrMin !== '' && _aucFilters.mrMin != null && item.mastery_level != null && item.mastery_level < +_aucFilters.mrMin) return false;
+        if (_aucFilters.mrMax !== '' && _aucFilters.mrMax != null && item.mastery_level != null && item.mastery_level > +_aucFilters.mrMax) return false;
+      } else {
+        if (_aucFilters.element && item.element !== _aucFilters.element) return false;
+        if (_aucFilters.ephemera === 'yes' && !item.having_ephemera) return false;
+        if (_aucFilters.ephemera === 'no' && item.having_ephemera) return false;
+      }
+      return true;
+    });
+    list = list.slice().sort(function (a, b) {
+      if (_aucSort === 'price_asc')  return _aucPrice(a) - _aucPrice(b);
+      if (_aucSort === 'price_desc') return _aucPrice(b) - _aucPrice(a);
+      if (_aucSort === 'online_first') return _aucOnlineRank(a) - _aucOnlineRank(b) || _aucPrice(a) - _aucPrice(b);
+      return 0;
+    });
+    countEl.textContent = '共 ' + list.length + ' 条' + (list.length > AUC_LIST_MAX ? '（仅显示前 ' + AUC_LIST_MAX + ' 条）' : '');
+    var shown = list.slice(0, AUC_LIST_MAX);
+    if (!shown.length) { listEl.innerHTML = '<div class="it-empty">没有匹配的拍卖，请调整筛选条件。</div>'; return; }
+    listEl.innerHTML = shown.map(function (a) {
+      var item = a.item || {};
+      var owner = a.owner || {};
+      var st = (owner.status || '').toLowerCase();
+      var stCls = st === 'ingame' ? 'ingame' : (st === 'online' ? 'online' : 'offline');
+      var stTxt = st === 'ingame' ? '游戏中' : (st === 'online' ? '在线' : '离线');
+      var isBuyout = a.buyout_price != null;
+      var chips;
+      if (_aucCurType === 'riven') {
+        chips = (item.attributes || []).map(function (at) {
+          var sign = at.value > 0 ? '+' : '';
+          return '<span class="it-auc-chip ' + (at.positive ? 'pos' : 'neg') + '">' + esc(_aucAttrLabel(at.url_name)) + ' ' + sign + esc(at.value) + '</span>';
+        }).join('') +
+        (item.re_rolls != null ? '<span class="it-auc-chip">循环 ' + esc(item.re_rolls) + '</span>' : '') +
+        (item.mastery_level != null ? '<span class="it-auc-chip">MR ' + esc(item.mastery_level) + '</span>' : '') +
+        (item.polarity ? '<span class="it-auc-chip">' + esc(item.polarity) + '</span>' : '');
+      } else {
+        var elDef = AUC_ELEMENTS.filter(function (e) { return e.slug === item.element; })[0];
+        chips = (elDef ? '<span class="it-auc-chip pos">' + elDef.zh + '</span>' : '') +
+          (item.damage != null ? '<span class="it-auc-chip">伤害 ' + esc(item.damage) + '%</span>' : '') +
+          (item.having_ephemera ? '<span class="it-auc-chip">幻纹</span>' : '');
+      }
+      var href = 'https://warframe.market/zh-hans/auction/' + esc(a.id || '');
+      return '<a class="it-auc-row" href="' + href + '" target="_blank" rel="noopener">' +
+          '<div><div class="it-auc-owner"><span class="it-ord-dot ' + stCls + '"></span>' + esc(owner.ingame_name || '—') + ' · ' + stTxt + '</div>' +
+            '<div class="it-auc-chips">' + chips + '</div></div>' +
+          '<div class="it-auc-side"><span class="it-auc-price">' + esc(_aucPrice(a)) + ' P</span>' +
+            '<span style="font-size:.7rem;color:var(--ws-text-dim);">' + (isBuyout ? '一口价' : '起拍价') + '</span></div>' +
+        '</a>';
+    }).join('');
+  }
+
+  /* ══════════════════════════════════════════════
+     快速导航（简化版指挥环，风格对齐世界状态页）：
+     结果渲染后按当前可见的卡片区块动态生成跳转项，点击平滑滚动到对应位置。
+     ══════════════════════════════════════════════ */
+  var _qnavOpen = false;
+  function buildQuickNav() {
+    var qnav = document.getElementById('it-qnav');
+    var listEl = document.getElementById('it-qnav-list');
+    if (!qnav || !listEl) return;
+    var sections = [];
+    if (document.getElementById('it-view-auction') && document.getElementById('it-view-auction').style.display !== 'none') {
+      sections.push(['it-auc-head', '拍卖信息']);
+      if (document.getElementById('it-auc-filters')) sections.push(['it-auc-filters', '筛选条件']);
+      if (document.getElementById('it-auc-list')) sections.push(['it-auc-list', '拍卖列表']);
+    } else {
+      sections.push(['it-item-head', '物品信息']);
+      if (document.getElementById('it-card-orders')) sections.push(['it-card-orders', '实时交易']);
+      if (document.getElementById('it-card-drops')) sections.push(['it-card-drops', '掉落来源']);
+      if (document.getElementById('it-card-wiki')) sections.push(['it-card-wiki', '维基查询']);
+    }
+    if (sections.length < 2) { qnav.classList.remove('show'); return; }
+    qnav.classList.add('show');
+    listEl.innerHTML = sections.map(function (s) {
+      return '<div class="it-qnav-item" data-target="' + s[0] + '">' + s[1] + '</div>';
+    }).join('');
+    listEl.querySelectorAll('.it-qnav-item').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var target = document.getElementById(el.getAttribute('data-target'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        _qnavOpen = false; qnav.classList.remove('open');
+      });
+    });
+  }
+  (function () {
+    var btn = document.getElementById('it-qnav-btn');
+    var qnav = document.getElementById('it-qnav');
+    if (!btn || !qnav) return;
+    btn.addEventListener('click', function () {
+      _qnavOpen = !_qnavOpen;
+      qnav.classList.toggle('open', _qnavOpen);
+    });
+  })();
 
   /* ══ 水墨 + logo 过渡(canvas 粒子版，与世界状态切换按钮同款) ══ */
   var _wfLogo = new Image(), _wfLogoReady = false, _wfRatio = 489.7 / 181.1;
