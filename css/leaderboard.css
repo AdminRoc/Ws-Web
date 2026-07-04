@@ -622,6 +622,66 @@
 }
 
 /* ══════════════════════════════════════════════════════════
+   ★ FUI 数据可视化强化 — 行入场多层动效（纯叠加，零数据逻辑）
+   ══════════════════════════════════════════════════════════ */
+
+/* rank-badge 弹射入场：从缩小+旋转 → 弹跳至正常（rank-4+ 适用；rank-1/2/3 被更高优先级覆盖） */
+.lb-row-in .rank-badge {
+  animation: lbBadgePop .52s cubic-bezier(.22,.68,0,1.55) forwards;
+}
+@keyframes lbBadgePop {
+  0%   { opacity: 0; transform: scale(.45) rotate(-25deg); }
+  65%  { opacity: 1; transform: scale(1.14) rotate(4deg); }
+  100% { opacity: 1; transform: scale(1)   rotate(0deg); }
+}
+
+/* time-col 数字滚入：clip-path 从底部向上揭开，模拟槽机滚动 */
+.lb-row-in .time-col {
+  animation: lbTimeReveal .5s cubic-bezier(.22,.68,0,1.2) .06s forwards;
+}
+@keyframes lbTimeReveal {
+  from { clip-path: inset(0 0 100% 0); opacity: 0; transform: translateY(6px); }
+  to   { clip-path: inset(0 0 0%   0); opacity: 1; transform: translateY(0); }
+}
+
+/* player-col 从右侧渐显 */
+.lb-row-in .player-col {
+  animation: lbPlayerIn .4s ease .1s forwards;
+  opacity: 0;
+}
+@keyframes lbPlayerIn {
+  from { opacity: 0; transform: translateX(8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* rank-2 银色持续脉冲（与 rank-1 金脉冲对称） */
+.lb-table tbody tr.rank-2 .rank-badge {
+  animation: rankTwoPulse 3.2s ease-in-out infinite;
+}
+@keyframes rankTwoPulse {
+  0%,100% { box-shadow: 0 0 8px rgba(192,208,232,.35), 0 0 18px rgba(192,208,232,.15); }
+  50%     { box-shadow: 0 0 14px rgba(192,208,232,.65), 0 0 30px rgba(192,208,232,.35); }
+}
+
+/* rank-3 古铜色持续脉冲 */
+.lb-table tbody tr.rank-3 .rank-badge {
+  animation: rankThreePulse 3.8s ease-in-out infinite;
+}
+@keyframes rankThreePulse {
+  0%,100% { box-shadow: 0 0 8px rgba(205,140,70,.3),  0 0 18px rgba(205,140,70,.12); }
+  50%     { box-shadow: 0 0 13px rgba(205,140,70,.55), 0 0 28px rgba(205,140,70,.28); }
+}
+
+/* rank-1 time-col 持续闪烁，与 WR 地位匹配 */
+.lb-table tbody tr.rank-1 .time-col {
+  animation: rankOneTimePulse 3s ease-in-out infinite;
+}
+@keyframes rankOneTimePulse {
+  0%,100% { filter: drop-shadow(0 0 4px rgba(255,215,0,.45)); }
+  50%     { filter: drop-shadow(0 0 10px rgba(255,215,0,.85)) drop-shadow(0 0 20px rgba(255,215,0,.4)); }
+}
+
+/* ══════════════════════════════════════════════════════════
    ★ WR 扫光 — #1 行金色光束横扫
    ══════════════════════════════════════════════════════════ */
 .lb-table tbody tr.rank-1 { position: relative; overflow: hidden; }

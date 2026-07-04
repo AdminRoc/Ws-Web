@@ -180,6 +180,74 @@ html[data-fui-theme="cyber"] .ws-theme-toggle {
 }
 @keyframes fuiToggleFlow { to { background-position: 0 0, 300% 0; } }
 
+/* ─── Worldstate 循环计时器 HUD 强化 ─── */
+/* 计时数字：金色呼吸光晕，覆盖原有 dim 灰色 */
+.ws-cycle-timer {
+  color: var(--fui-accent) !important;
+  animation: wsTimerGlow 2.2s ease-in-out infinite;
+}
+@keyframes wsTimerGlow {
+  0%,100% { text-shadow: 0 0 4px  rgba(var(--g-primary),.25); }
+  50%     { text-shadow: 0 0 10px rgba(var(--g-primary),.7),
+                         0 0 22px rgba(var(--g-primary),.25); }
+}
+
+/* 卡片整体呼吸光框 */
+.ws-cycle-card {
+  animation: wsCardAura 5s ease-in-out infinite;
+}
+@keyframes wsCardAura {
+  0%,100% { box-shadow: none; }
+  50%     { box-shadow: 0 0 12px rgba(var(--g-primary),.07),
+                        inset 0 0 18px rgba(var(--g-primary),.04); }
+}
+
+/* 状态文字扫光——悬停时加速响应 */
+.ws-cycle-state {
+  animation: wsStateShimmer 4s ease-in-out infinite;
+}
+@keyframes wsStateShimmer {
+  0%,85%,100% { opacity: 1; }
+  90%         { opacity: .65; }
+}
+
+/* ─── 物品来源掉落率行 FUI 扫描动效 ─── */
+.it-drop-row {
+  position: relative;
+  overflow: hidden;
+}
+/* 每行一道细扫光，交错延迟 */
+.it-drop-row::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0;
+  left: -45%; width: 45%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(var(--g-primary),.05) 40%,
+    rgba(var(--g-primary),.12) 60%,
+    transparent);
+  pointer-events: none;
+  animation: dropScan 4s linear infinite;
+}
+.it-drop-row:nth-child(2n)::after   { animation-delay: -2s; }
+.it-drop-row:nth-child(3n)::after   { animation-delay: -1s; }
+.it-drop-row:nth-child(4n)::after   { animation-delay: -3s; }
+@keyframes dropScan {
+  0%   { left: -45%; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { left: 110%; opacity: 0; }
+}
+
+/* 掉落概率数字持续微光 */
+.it-drop-chance {
+  animation: dropChancePulse 3s ease-in-out infinite;
+}
+@keyframes dropChancePulse {
+  0%,100% { text-shadow: none; }
+  50%     { text-shadow: 0 0 8px currentColor; }
+}
+
 /* ─── 无障碍：尊重 reduced-motion ─── */
 @media (prefers-reduced-motion: reduce) {
   #fui-boot::after,
@@ -187,6 +255,12 @@ html[data-fui-theme="cyber"] .ws-theme-toggle {
   .fui-boot-reticle .fui-ring-inner,
   .fui-boot-reticle .fui-tick,
   .fui-boot-reticle .fui-core-dot,
-  .fui-boot-progress::before { animation: none !important; }
+  .fui-boot-progress::before,
+  .ws-cycle-timer,
+  .ws-cycle-card,
+  .ws-cycle-state,
+  .it-drop-row::after,
+  .it-drop-chance { animation: none !important; }
+  .ws-cycle-timer { color: var(--fui-accent) !important; }
   [data-fui-reveal] > * { opacity: 1 !important; transform: none !important; animation: none !important; }
 }
