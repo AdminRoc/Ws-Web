@@ -395,22 +395,43 @@
     .it-auc-price { font-family: 'Orbitron', sans-serif; color: var(--ws-gold-bright); font-weight: 700; font-size: 1rem; white-space: nowrap; }
     .it-auc-side { display: flex; flex-direction: column; align-items: flex-end; gap: .3rem; }
 
-    /* ── 快速导航（简化版，风格对齐世界状态暗金主题） ── */
+    /* ── 快速导航（pill 样式，对齐世界状态 ws-dna-main 暗金风格） ── */
     .it-qnav {
       position: fixed; right: 22px; bottom: 28px; z-index: 500;
       display: none; flex-direction: column; align-items: flex-end; gap: .5rem;
     }
     .it-qnav.show { display: flex; }
+    /* scroll-margin-top 补偿顶部固定导航栏 */
+    #it-item-head, #it-card-orders, #it-card-drops, #it-card-wiki { scroll-margin-top: 80px; }
     .it-qnav-btn {
-      width: 46px; height: 46px; border-radius: 50%; cursor: pointer;
-      background: radial-gradient(circle at 35% 30%, #3a2c0f, #14100a 72%);
-      border: 1px solid var(--ws-gold-line); color: var(--ws-gold-bright);
-      font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 14px rgba(201,164,50,.28), 0 4px 14px rgba(0,0,0,.5);
-      transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s;
+      position: relative; display: inline-flex; align-items: center;
+      background: rgba(14,10,5,.96);
+      border: 2px solid rgba(201,164,50,.52); border-radius: 40px;
+      padding: 6px 18px 6px 6px; cursor: pointer;
+      box-shadow: 0 0 18px rgba(201,164,50,.28), 0 4px 18px rgba(0,0,0,.55);
+      transition: background .2s, border-color .2s, box-shadow .2s, transform .25s cubic-bezier(.34,1.56,.64,1);
+      transform-origin: bottom right;
     }
-    .it-qnav-btn:hover { box-shadow: 0 0 22px rgba(201,164,50,.5), 0 4px 14px rgba(0,0,0,.5); }
-    .it-qnav.open .it-qnav-btn { transform: rotate(45deg); }
+    .it-qnav-btn:hover, .it-qnav.open .it-qnav-btn {
+      background: rgba(25,18,6,.97); border-color: rgba(201,164,50,.82);
+      box-shadow: 0 0 24px rgba(201,164,50,.48), 0 4px 22px rgba(0,0,0,.6);
+      transform: translateY(-1px) scale(1.04);
+    }
+    .it-qnav-logo-wrap {
+      position: relative; width: 38px; height: 38px; flex-shrink: 0; z-index: 1;
+    }
+    .it-qnav-logo-wrap::before {
+      content: ''; position: absolute; inset: -3px; border-radius: 50%;
+      background: conic-gradient(rgba(201,164,50,.7) 0deg, transparent 120deg, rgba(201,164,50,.4) 240deg, transparent 360deg);
+      animation: itQnavSpin 3.2s linear infinite;
+    }
+    @keyframes itQnavSpin { to { transform: rotate(360deg); } }
+    .it-qnav-logo { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; position: relative; z-index: 1; }
+    .it-qnav-label {
+      position: relative; z-index: 1; padding-left: .75rem;
+      font-family: 'Orbitron', sans-serif; font-size: .78rem; font-weight: 600;
+      color: var(--ws-gold-bright); letter-spacing: .08em; white-space: nowrap;
+    }
     .it-qnav-list {
       display: flex; flex-direction: column; gap: .4rem; align-items: flex-end;
       opacity: 0; pointer-events: none; transform: translateY(8px);
@@ -695,7 +716,10 @@
 
   <div class="it-qnav" id="it-qnav">
     <div class="it-qnav-list" id="it-qnav-list"></div>
-    <button class="it-qnav-btn" id="it-qnav-btn" type="button" aria-label="快速导航">☰</button>
+    <button class="it-qnav-btn" id="it-qnav-btn" type="button" aria-label="快速导航">
+      <span class="it-qnav-logo-wrap"><img class="it-qnav-logo" src="picture/WS-logo-2.png" alt="WS"></span>
+      <span class="it-qnav-label">导航</span>
+    </button>
   </div>
   <footer class="site-footer home-footer">
     <div class="beian-row"><a href="https://beian.miit.gov.cn/" target="_self" rel="noopener">沪ICP备2022033368号</a><img src="picture/gongan-beian.png" alt="公安备案" class="beian-icon"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=31015102000215" rel="noreferrer" target="_blank">沪公网安备31015102000215号</a></div>
@@ -1909,10 +1933,12 @@
         var a = shown[+btn.dataset.idx];
         var owner = (a.owner && a.owner.ingame_name) || '';
         var price = a.buyout_price != null ? a.buyout_price : (a.starting_price || 0);
+        var item = a.item || {};
         var wEn = (_aucCurRec && _aucCurRec.en) || '';
+        var dmgStr = (item.damage != null) ? ' ' + item.damage + '%' : '';
         var what = _aucCurType === 'riven'  ? wEn + "'s Riven Mod"
-                 : _aucCurType === 'lich'   ? wEn + ' Lich'
-                 :                            wEn + ' Sister';
+                 : _aucCurType === 'lich'   ? wEn + dmgStr + ' Lich'
+                 :                            wEn + dmgStr + ' Sister';
         var msg = '/w ' + owner + ' Hi! I WTB your ' + what + ' in ' + price + ' platinum.';
         try { navigator.clipboard && navigator.clipboard.writeText(msg); } catch (ex) {}
         var orig = btn.textContent;
@@ -1931,18 +1957,22 @@
     var qnav = document.getElementById('it-qnav');
     var listEl = document.getElementById('it-qnav-list');
     if (!qnav || !listEl) return;
-    var sections = [];
+    // 拍卖视图中：只显示一个「回到顶端」按钮
     if (document.getElementById('it-view-auction') && document.getElementById('it-view-auction').style.display !== 'none') {
-      sections.push(['it-auc-head', '拍卖信息']);
-      if (document.getElementById('it-auc-filters')) sections.push(['it-auc-filters', '筛选条件']);
-      if (document.getElementById('it-auc-list')) sections.push(['it-auc-list', '拍卖列表']);
-    } else {
-      sections.push(['it-item-head', '物品信息']);
-      if (document.getElementById('it-card-orders')) sections.push(['it-card-orders', '实时交易']);
-      if (document.getElementById('it-card-drops')) sections.push(['it-card-drops', '掉落来源']);
-      if (document.getElementById('it-card-wiki')) sections.push(['it-card-wiki', '维基查询']);
+      qnav.classList.add('show');
+      listEl.innerHTML = '<div class="it-qnav-item" id="it-qnav-top">↑ 回到顶端</div>';
+      document.getElementById('it-qnav-top').addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        _qnavOpen = false; qnav.classList.remove('open');
+      });
+      return;
     }
-    if (sections.length < 2) { qnav.classList.remove('show'); return; }
+    // 搜索结果视图：交易查询 / 维基百科 / 掉落来源
+    var sections = [];
+    if (document.getElementById('it-card-orders')) sections.push(['it-card-orders', '交易查询']);
+    if (document.getElementById('it-card-wiki'))   sections.push(['it-card-wiki',   '维基百科']);
+    if (document.getElementById('it-card-drops'))  sections.push(['it-card-drops',  '掉落来源']);
+    if (sections.length === 0) { qnav.classList.remove('show'); return; }
     qnav.classList.add('show');
     listEl.innerHTML = sections.map(function (s) {
       return '<div class="it-qnav-item" data-target="' + s[0] + '">' + s[1] + '</div>';
