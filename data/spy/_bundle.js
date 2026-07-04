@@ -481,9 +481,9 @@ var spy_allow_pagoRecords = [
   },
   {
     playerId:   "4MIR",
-    clearTime:  "1:00.000",
-    uploadTime: "2026-06-25",
-    videoUrls:  ["https://www.youtube.com/watch?v=p0Gdcwxzz8o"],
+    clearTime:  "0:59.000",
+    uploadTime: "2026-07-04",
+    videoUrls:  ["https://www.youtube.com/watch?v=zsGZ69dQidM"],
   },
 ];
 
