@@ -348,10 +348,37 @@
       border: 1px solid var(--ws-sep); border-radius: 8px; background: rgba(0,0,0,.15);
     }
     .it-auc-filters label { font-size: .74rem; color: var(--ws-text-dim); display: flex; flex-direction: column; gap: .25rem; }
-    .it-auc-filters select, .it-auc-filters input {
+    .it-auc-filters input[type="number"] {
       background: var(--ws-panel-bg); border: 1px solid var(--ws-sep); color: var(--ws-text);
-      border-radius: 5px; padding: .3rem .5rem; font-size: .82rem; min-width: 110px;
+      border-radius: 5px; padding: .3rem .5rem; font-size: .82rem; width: 70px;
     }
+    /* 自定义下拉（替代原生 select） */
+    .it-csel { position: relative; display: inline-block; }
+    .it-csel-btn {
+      display: flex; align-items: center; gap: .4rem; cursor: pointer;
+      background: var(--ws-panel-bg); border: 1px solid var(--ws-sep); border-radius: 5px;
+      padding: .32rem .55rem .32rem .65rem; font-size: .82rem; color: var(--ws-text);
+      min-width: 90px; white-space: nowrap; user-select: none;
+      transition: border-color .15s;
+    }
+    .it-csel-btn:hover, .it-csel.open .it-csel-btn { border-color: var(--ws-gold-line); color: var(--ws-gold-bright); }
+    .it-csel-arrow { font-size: .6rem; color: var(--ws-text-dim); margin-left: auto; transition: transform .15s; }
+    .it-csel.open .it-csel-arrow { transform: rotate(180deg); }
+    .it-csel-list {
+      position: absolute; top: calc(100% + 4px); left: 0; z-index: 600;
+      background: rgba(14,10,5,.97); border: 1px solid var(--ws-gold-line); border-radius: 7px;
+      min-width: 100%; max-height: 220px; overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,.6);
+      opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity .16s ease, transform .16s ease;
+    }
+    .it-csel.open .it-csel-list { opacity: 1; pointer-events: auto; transform: none; }
+    .it-csel-opt {
+      padding: .38rem .75rem; font-size: .82rem; color: var(--ws-text); cursor: pointer;
+      white-space: nowrap; transition: background .1s, color .1s;
+    }
+    .it-csel-opt:hover { background: rgba(201,164,50,.12); color: var(--ws-gold-bright); }
+    .it-csel-opt.sel { color: var(--ws-gold-bright); background: rgba(201,164,50,.08); }
     .it-auc-multichip { display: flex; flex-wrap: wrap; gap: .3rem; max-width: 320px; }
     .it-auc-multichip span {
       font-size: .72rem; padding: .12rem .5rem; border-radius: 999px; cursor: pointer;
@@ -1823,18 +1850,16 @@
         if (a.item && a.item.polarity) polSet[a.item.polarity] = true;
       });
       var attrs = Object.keys(attrSet).sort();
+      var negOpts = [{value:'',label:'不限'}].concat(attrs.map(function(a){return {value:a,label:_aucAttrLabel(a)};}));
+      var polOpts = [{value:'',label:'不限'}].concat(Object.keys(polSet).sort().map(function(p){return {value:p,label:p};}));
       box.innerHTML =
         '<label>正词条(可多选)<div class="it-auc-multichip" id="it-auc-pos-chips">' +
           attrs.map(function (a) { return '<span data-a="' + esc(a) + '">' + esc(_aucAttrLabel(a)) + '</span>'; }).join('') +
         '</div></label>' +
-        '<label>负词条<select id="it-auc-neg"><option value="">不限</option>' +
-          attrs.map(function (a) { return '<option value="' + esc(a) + '">' + esc(_aucAttrLabel(a)) + '</option>'; }).join('') +
-        '</select></label>' +
-        '<label>极性<select id="it-auc-pol"><option value="">不限</option>' +
-          Object.keys(polSet).sort().map(function (p) { return '<option value="' + esc(p) + '">' + esc(p) + '</option>'; }).join('') +
-        '</select></label>' +
-        '<label>MR 下限<input type="number" id="it-auc-mr-min" min="0" max="16" placeholder="0"></label>' +
-        '<label>MR 上限<input type="number" id="it-auc-mr-max" min="0" max="16" placeholder="16"></label>';
+        '<label>负词条' + _customSelect('it-auc-neg', negOpts, _aucFilters.negative || '') + '</label>' +
+        '<label>极性' + _customSelect('it-auc-pol', polOpts, _aucFilters.polarity || '') + '</label>' +
+        '<label>MR 下限<input type="number" id="it-auc-mr-min" min="0" max="16" placeholder="0" value="' + esc(_aucFilters.mrMin||'') + '"></label>' +
+        '<label>MR 上限<input type="number" id="it-auc-mr-max" min="0" max="16" placeholder="16" value="' + esc(_aucFilters.mrMax||'') + '"></label>';
       box.querySelectorAll('#it-auc-pos-chips span').forEach(function (chip) {
         chip.addEventListener('click', function () {
           chip.classList.toggle('on');
@@ -1842,34 +1867,75 @@
           renderAuctionList();
         });
       });
-      ['it-auc-neg', 'it-auc-pol', 'it-auc-mr-min', 'it-auc-mr-max'].forEach(function (id) {
-        var el = document.getElementById(id);
-        el.addEventListener('input', function () {
-          _aucFilters.negative = document.getElementById('it-auc-neg').value;
-          _aucFilters.polarity = document.getElementById('it-auc-pol').value;
+      _bindCustomSelects(box, function(id, val) {
+        if (id === 'it-auc-neg') _aucFilters.negative = val;
+        if (id === 'it-auc-pol') _aucFilters.polarity = val;
+        renderAuctionList();
+      });
+      ['it-auc-mr-min', 'it-auc-mr-max'].forEach(function (id) {
+        document.getElementById(id).addEventListener('input', function () {
           _aucFilters.mrMin = document.getElementById('it-auc-mr-min').value;
           _aucFilters.mrMax = document.getElementById('it-auc-mr-max').value;
           renderAuctionList();
         });
       });
     } else {
+      var elOpts = [{value:'',label:'不限'}].concat(AUC_ELEMENTS.map(function(e){return {value:e.slug,label:e.zh};}));
+      var ephOpts = [{value:'',label:'不限'},{value:'yes',label:'有'},{value:'no',label:'无'}];
       box.innerHTML =
-        '<label>元素<select id="it-auc-el"><option value="">不限</option>' +
-          AUC_ELEMENTS.map(function (e) { return '<option value="' + e.slug + '">' + e.zh + '</option>'; }).join('') +
-        '</select></label>' +
-        '<label>幻纹<select id="it-auc-eph"><option value="">不限</option><option value="yes">有</option><option value="no">无</option></select></label>';
-      ['it-auc-el', 'it-auc-eph'].forEach(function (id) {
-        document.getElementById(id).addEventListener('input', function () {
-          _aucFilters.element = document.getElementById('it-auc-el').value;
-          _aucFilters.ephemera = document.getElementById('it-auc-eph').value;
-          renderAuctionList();
-        });
+        '<label>元素' + _customSelect('it-auc-el', elOpts, _aucFilters.element || '') + '</label>' +
+        '<label>幻纹' + _customSelect('it-auc-eph', ephOpts, _aucFilters.ephemera || '') + '</label>';
+      _bindCustomSelects(box, function(id, val) {
+        if (id === 'it-auc-el')  _aucFilters.element  = val;
+        if (id === 'it-auc-eph') _aucFilters.ephemera = val;
+        renderAuctionList();
       });
     }
   }
   function _aucAttrLabel(urlName) {
     return String(urlName || '').replace(/_/g, ' ');
   }
+
+  /* 自定义下拉：_customSelect(id, options, onChange)
+     options = [{value, label}]，返回 HTML 字符串；
+     调用后需 _bindCustomSelects() 绑定事件 */
+  function _customSelect(id, options, currentVal) {
+    var curLabel = (options.find(function(o){return o.value===currentVal;}) || options[0]).label;
+    return '<div class="it-csel" id="' + id + '" data-val="' + esc(currentVal) + '">' +
+      '<div class="it-csel-btn"><span class="it-csel-cur">' + esc(curLabel) + '</span><span class="it-csel-arrow">▼</span></div>' +
+      '<div class="it-csel-list">' +
+        options.map(function(o){
+          return '<div class="it-csel-opt' + (o.value === currentVal ? ' sel' : '') + '" data-val="' + esc(o.value) + '">' + esc(o.label) + '</div>';
+        }).join('') +
+      '</div></div>';
+  }
+
+  /* 批量绑定所有 .it-csel 的事件（在 innerHTML 写完后调用一次） */
+  var _cselCloseAll = function() {
+    document.querySelectorAll('.it-csel.open').forEach(function(el){ el.classList.remove('open'); });
+  };
+  function _bindCustomSelects(container, onChange) {
+    container.querySelectorAll('.it-csel').forEach(function(sel) {
+      sel.querySelector('.it-csel-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        var wasOpen = sel.classList.contains('open');
+        _cselCloseAll();
+        if (!wasOpen) sel.classList.add('open');
+      });
+      sel.querySelectorAll('.it-csel-opt').forEach(function(opt) {
+        opt.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var val = opt.getAttribute('data-val');
+          sel.setAttribute('data-val', val);
+          sel.querySelector('.it-csel-cur').textContent = opt.textContent;
+          sel.querySelectorAll('.it-csel-opt').forEach(function(o){ o.classList.toggle('sel', o === opt); });
+          sel.classList.remove('open');
+          onChange(sel.id, val);
+        });
+      });
+    });
+  }
+  document.addEventListener('click', function() { _cselCloseAll(); });
 
   function renderAuctionSortbar() {
     var bar = document.getElementById('it-auc-sortbar');
