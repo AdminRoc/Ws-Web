@@ -724,3 +724,18 @@ var disruptionUrSoloRecords = [
 var disruptionUrSoloNotice_cn = "";
 var disruptionUrSoloNotice_en = "";
 ;
+
+/* ===== data/disruption/disruption-olympus-solo.js ===== */
+var disruptionOlympusSoloRecords = [];
+var disruptionOlympusSoloNotice_cn = "";
+var disruptionOlympusSoloNotice_en = "";
+
+/* ===== data/disruption/disruption-olympus-duo.js ===== */
+var disruptionOlympusDuoRecords = [];
+var disruptionOlympusDuoNotice_cn = "";
+var disruptionOlympusDuoNotice_en = "";
+
+/* ===== data/disruption/disruption-olympus-multi.js ===== */
+var disruptionOlympusMultiRecords = [];
+var disruptionOlympusMultiNotice_cn = "";
+var disruptionOlympusMultiNotice_en = "";

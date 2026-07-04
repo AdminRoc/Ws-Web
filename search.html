@@ -258,7 +258,7 @@ var IDX=[];
   [['Solo','单人','disruption.html','中断竞速排行榜','Disruption Speedrun'],
    ['Duo','双人','disruption-duo.html','中断竞速排行榜','Disruption Speedrun'],
    ['Multi','多人','disruption-multi.html','中断竞速排行榜','Disruption Speedrun']].forEach(function(md){
-    [['Apollo','Apollo'],['Armatus','Armatus'],['Kappa','Kappa'],['Tamu','Tamu'],['Ur','Ur']].forEach(function(m){
+    [['Apollo','Apollo'],['Armatus','Armatus'],['Kappa','Kappa'],['Olympus','Olympus'],['Tamu','Tamu'],['Ur','Ur']].forEach(function(m){
       add(md[2],md[3],md[4],md[1]+' · '+m[0],md[0]+' · '+m[1],'disruption'+m[0]+md[0]+'Records');});});
   [['Solo','单人'],['Duo','双人'],['Trio','三人'],['Quad','四人']].forEach(function(m){
     add('eidolon.html','夜灵竞速排行榜（有限制）','Eidolon Speedrun Restricted',m[1],m[0],'eidolon'+m[0]+'Records');
@@ -353,6 +353,20 @@ function getRecs(n){
   try{var r=(0,eval)(n);if(Array.isArray(r))return r;}catch(e){}
   return null;}
 
+function _parseTimeMs(s){
+  if(!s)return Infinity;
+  var p=s.split(':'),ms=0;
+  if(p.length===3)ms=(parseInt(p[0],10)*3600+parseInt(p[1],10)*60+parseFloat(p[2]))*1000;
+  else if(p.length===2)ms=(parseInt(p[0],10)*60+parseFloat(p[1]))*1000;
+  else ms=parseFloat(p[0])*1000;
+  return isNaN(ms)?Infinity:ms;}
+function _sortedRecs(arr){
+  if(!arr||!arr.length)return arr;
+  var f=arr[0].clearTime!=null?'clearTime':arr[0].avgRealTime!=null?'avgRealTime':null;
+  if(!f)return arr;
+  return arr.slice().sort(function(a,b){return _parseTimeMs(a[f])-_parseTimeMs(b[f]);});
+}
+
 /* 从记录对象提取所有可搜索字符串（含 avgRealTime、captureStatus 等特殊字段） */
 function recStr(r){
   return Object.values(r).map(function(v){
@@ -393,7 +407,7 @@ function runSearch(raw){
   var res=[],seen=new Set();
 
   IDX.forEach(function(e){
-    var recs=getRecs(e.varName);if(!Array.isArray(recs))return;
+    var recs=_sortedRecs(getRecs(e.varName));if(!Array.isArray(recs))return;
     /* 榜单维度的可搜字符串（标题+语言+子分类名） */
     var titleStr=[e.titleCn,e.titleEn,e.ctx,e.ctxEn].join(' ');
 
