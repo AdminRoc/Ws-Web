@@ -366,6 +366,13 @@
     }
     .it-auc-sortbtn.active, .it-auc-onlbtn.active { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.1); }
     .it-auc-count { font-size: .78rem; color: var(--ws-text-dim); }
+    .it-auc-ctrl-label { font-size: .72rem; color: var(--ws-text-dim); margin-right: .15rem; }
+    .it-auc-onlpri {
+      font-size: .75rem; padding: .28rem .7rem; border-radius: 6px; cursor: pointer;
+      border: 1px solid var(--ws-sep); color: var(--ws-text-dim); background: none;
+      transition: color .15s, border-color .15s, background .15s;
+    }
+    .it-auc-onlpri.active { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.1); }
     .it-auc-list { display: flex; flex-direction: column; gap: .55rem; max-height: 640px; overflow-y: auto; }
     .it-auc-row {
       display: flex; align-items: center; gap: .5rem;
@@ -1650,8 +1657,9 @@
   var _aucCache = {};     // 拍卖武器 key -> { riven:[...], lich:[...], sister:[...] }
   var _aucCurType = null;
   var _aucCurRec = null;
-  var _aucSort = 'price_asc';
-  var _aucOnline = 'all';
+  var _aucSort = 'price_asc';   // 'price_asc' | 'price_desc'
+  var _aucOnlinePri = true;     // 在线优先：ingame > online > offline 置顶
+  var _aucOnline = 'all';       // 过滤器（全部/在线/游戏中）— 保留兼容
   var _aucFilters = {};   // { positive:[], negative:'', polarity:'', element:'', ephemera:'', mrMin:'', mrMax:'' }
 
   /* 拍卖检索用的武器 key：优先用 wm-zh-supplement.json 明确给出的 auctionWeaponUrlName
@@ -1722,7 +1730,7 @@
   function _buildAucViewShell(rec) {
     _aucCurRec = rec;
     _aucFilters = {};
-    _aucSort = 'price_asc'; _aucOnline = 'all';
+    _aucSort = 'price_asc'; _aucOnlinePri = true; _aucOnline = 'all';
     document.getElementById('it-view-search').style.display = 'none';
     var view = document.getElementById('it-view-auction');
     view.style.display = '';
@@ -1863,16 +1871,20 @@
 
   function renderAuctionSortbar() {
     var bar = document.getElementById('it-auc-sortbar');
-    var sorts = [['price_asc', '价格↑'], ['price_desc', '价格↓'], ['online_first', '在线优先']];
-    var onls = [['all', '全部状态'], ['ingame', '游戏中'], ['online', '在线']];
     bar.innerHTML =
-      sorts.map(function (s) { return '<button class="it-auc-sortbtn' + (s[0] === _aucSort ? ' active' : '') + '" data-s="' + s[0] + '">' + s[1] + '</button>'; }).join('') +
-      onls.map(function (o) { return '<button class="it-auc-onlbtn' + (o[0] === _aucOnline ? ' active' : '') + '" data-o="' + o[0] + '">' + o[1] + '</button>'; }).join('');
+      '<span class="it-auc-ctrl-label">排序</span>' +
+      '<button class="it-auc-sortbtn' + (_aucSort === 'price_asc'  ? ' active' : '') + '" data-s="price_asc">价格升序</button>' +
+      '<button class="it-auc-sortbtn' + (_aucSort === 'price_desc' ? ' active' : '') + '" data-s="price_desc">价格降序</button>' +
+      '<button class="it-auc-onlpri' + (_aucOnlinePri ? ' active' : '') + '" id="it-auc-onlpri-btn">在线优先</button>';
     bar.querySelectorAll('.it-auc-sortbtn').forEach(function (b) {
-      b.addEventListener('click', function () { _aucSort = b.getAttribute('data-s'); renderAuctionSortbar(); renderAuctionList(); });
+      b.addEventListener('click', function () {
+        _aucSort = b.getAttribute('data-s');
+        renderAuctionSortbar(); renderAuctionList();
+      });
     });
-    bar.querySelectorAll('.it-auc-onlbtn').forEach(function (b) {
-      b.addEventListener('click', function () { _aucOnline = b.getAttribute('data-o'); renderAuctionSortbar(); renderAuctionList(); });
+    document.getElementById('it-auc-onlpri-btn').addEventListener('click', function () {
+      _aucOnlinePri = !_aucOnlinePri;
+      renderAuctionSortbar(); renderAuctionList();
     });
   }
 
@@ -1881,7 +1893,6 @@
     var s = ((a.owner && a.owner.status) || '').toLowerCase();
     return s === 'ingame' ? 0 : (s === 'online' ? 1 : 2);
   }
-  var AUC_LIST_MAX = 300;
 
   function renderAuctionList() {
     var listEl = document.getElementById('it-auc-list');
@@ -1910,13 +1921,16 @@
       return true;
     });
     list = list.slice().sort(function (a, b) {
-      if (_aucSort === 'price_asc')  return _aucPrice(a) - _aucPrice(b);
-      if (_aucSort === 'price_desc') return _aucPrice(b) - _aucPrice(a);
-      if (_aucSort === 'online_first') return _aucOnlineRank(a) - _aucOnlineRank(b) || _aucPrice(a) - _aucPrice(b);
-      return 0;
+      // 在线优先：ingame(0) > online(1) > offline(2)，作为第一排序键（若开启）
+      if (_aucOnlinePri) {
+        var rankDiff = _aucOnlineRank(a) - _aucOnlineRank(b);
+        if (rankDiff !== 0) return rankDiff;
+      }
+      // 价格排序作为第二排序键
+      return _aucSort === 'price_desc' ? _aucPrice(b) - _aucPrice(a) : _aucPrice(a) - _aucPrice(b);
     });
-    countEl.textContent = '共 ' + list.length + ' 条' + (list.length > AUC_LIST_MAX ? '（仅显示前 ' + AUC_LIST_MAX + ' 条）' : '');
-    var shown = list.slice(0, AUC_LIST_MAX);
+    countEl.textContent = '共 ' + list.length + ' 条';
+    var shown = list; // 不分页，全量显示
     if (!shown.length) { listEl.innerHTML = '<div class="it-empty">没有匹配的拍卖，请调整筛选条件。</div>'; return; }
     listEl.innerHTML = shown.map(function (a, idx) {
       var item = a.item || {};
