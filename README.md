@@ -56,7 +56,6 @@
 | `search.html` | 全站搜索，跨所有榜单按玩家/地图/分类检索 |
 | `worldstate.html` | 实时世界状态：周期、裂缝、仲裁、电波、特卖、武器轮换等 |
 | `eelog.html`（及 `log/analyzer.html`） | EE.log 全能分析器（任何已结算的任务日志都可分析、且可以查看个人资料+可生成分享图） |
-| `droptable.html`（及 `droptable/droptable.html`） | Warframe的全部掉落信息查询页（中英文完美映射） |
 | `player.html` | 玩家主页，汇总该玩家在各榜单的提交记录，且可以一键生成分享图（动态图片） |
 | `viewer.html` | 过渡加载页 |
 | `about.html` | 讨贼檄文 |
@@ -196,7 +195,6 @@ Tools and info pages:
 | `search.html` | Site-wide search across every leaderboard by player / map / category |
 | `worldstate.html` | Live world state: cycles, fissures, arbitration, Nightwave, sales, weapon rotations, etc. |
 | `eelog.html` (and `log/analyzer.html`) | EE.log all-in-one analyzer (analyzes any completed mission log, includes a personal profile view, and can generate shareable images) |
-| `droptable.html` (and `droptable/droptable.html`) | Full Warframe drop-table lookup (with complete Chinese/English name mapping) |
 | `player.html` | Player profile aggregating one player's submissions across all leaderboards, with one-click shareable image (animated) generation |
 | `viewer.html` | Loading/transition screen |
 | `about.html` | Manifesto |
