@@ -488,50 +488,7 @@
     .it-ink-overlay.on { opacity: 1; visibility: visible; }
     #it-ink-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
-    /* ══ 页面进入加载遮罩 — 基础样式由 fui-core.css 提供 ══ */
-    /* 页面专有：金→赛博主题切换标题动效 */
-    .lo-sweep-wrap{position:relative;display:inline-block;}
-    .ls-gold{color:#d4a84a;
-      background-image:linear-gradient(180deg,#f6e27a 0%,#d4a84a 36%,#8a6a23 54%,#e8c264 76%,#6f5417 100%);
-      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-      text-shadow:0 1px 2px rgba(60,40,0,.55);
-      animation:loStyleGold 3.5s ease-in-out forwards;}
-    .ls-cyber{position:absolute;left:0;top:0;width:100%;
-      color:#9be8ff;
-      text-shadow:0 0 6px rgba(0,212,255,.95),0 0 16px rgba(0,212,255,.55),
-        0 0 34px rgba(139,92,246,.45),1.5px 0 0 rgba(255,0,200,.5),-1.5px 0 0 rgba(0,255,255,.5);
-      opacity:0;
-      animation:loStyleCyber 3.5s ease-in-out forwards,
-                loNeonFlick 2.1s linear 2.25s infinite,
-                loCyberJitter 2.4s steps(1,end) 2.25s infinite;}
-    @keyframes loStyleGold{0%,36%{opacity:1;}64%,100%{opacity:0;}}
-    @keyframes loStyleCyber{0%,36%{opacity:0;}64%,100%{opacity:1;}}
-    @keyframes loNeonFlick{
-      0%,50%,100%{filter:brightness(1);}
-      54%{filter:brightness(1.4);}57%{filter:brightness(.6);}
-      61%{filter:brightness(1.3);}65%{filter:brightness(1);}
-      82%{filter:brightness(.75);}86%{filter:brightness(1.2);}}
-    @keyframes loCyberJitter{
-      0%,16%,38%,60%,82%,100%{transform:translate(0,0) skewX(0);}
-      6%{transform:translate(-3px,1px) skewX(-3deg);}10%{transform:translate(3px,-1px) skewX(2deg);}
-      44%{transform:translate(2px,1px) skewX(1.5deg);}50%{transform:translate(-2px,-1px) skewX(-2deg);}
-      68%{transform:translate(3px,0) skewX(2.5deg);}74%{transform:translate(-2px,1px) skewX(-1.5deg);}}
-    .ls-cyber::before,.ls-cyber::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;
-      text-shadow:none;opacity:0;pointer-events:none;}
-    .ls-cyber::before{color:rgba(0,255,255,.9);clip-path:inset(0 0 52% 0);
-      animation:loSliceA 2.3s steps(1,end) 2.25s infinite;}
-    .ls-cyber::after{color:rgba(255,0,220,.85);clip-path:inset(55% 0 0 0);
-      animation:loSliceB 2.9s steps(1,end) 2.25s infinite;}
-    @keyframes loSliceA{
-      0%,14%,42%,58%,86%,100%{opacity:0;transform:translate(0,0);}
-      6%{opacity:.9;transform:translate(-6px,2px);}10%{opacity:.8;transform:translate(4px,-1px);}
-      48%{opacity:.9;transform:translate(6px,-2px);}52%{opacity:.65;transform:translate(-4px,1px);}
-      78%{opacity:.85;transform:translate(-5px,0);}82%{opacity:.6;transform:translate(3px,2px);}}
-    @keyframes loSliceB{
-      0%,18%,46%,64%,90%,100%{opacity:0;transform:translate(0,0);}
-      8%{opacity:.85;transform:translate(5px,-2px);}13%{opacity:.7;transform:translate(-3px,1px);}
-      52%{opacity:.85;transform:translate(-6px,2px);}57%{opacity:.6;transform:translate(4px,0);}
-      82%{opacity:.8;transform:translate(4px,1px);}86%{opacity:.55;transform:translate(-3px,-1px);}}
+    /* ══ 页面进入加载遮罩 — 由 fui-core.css / fui-core.js 统一提供 ══ */
     #page-wrap{transition:opacity .9s ease;}
   </style>
   <link rel="stylesheet" href="css/fui-core.css">

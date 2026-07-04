@@ -1,6 +1,10 @@
 # 备份文件
 *.bak
 
+# 本地开发临时产物（预览服务器日志、临时测试脚本）
+server.log
+_test_*.js
+
 # Claude Code 本地配置：launch.json(预览服务器配置)纳入仓库以便换机继续开发；
 # settings.local.json 是本机权限设置，不应同步，忽略掉。
 /.claude/settings.local.json
