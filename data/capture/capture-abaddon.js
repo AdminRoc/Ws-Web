@@ -41,7 +41,12 @@ var capture_abaddonRecords = [
     uploadTime: "2022-03-08",
     videoUrls:  ["https://www.youtube.com/watch?v=HwTsH8l07T8"],
   },
-
+  {
+    playerId:   "Hera4v",
+    clearTime:  "0:21.050",
+    uploadTime: "2026-07-04",
+    videoUrls:  ["https://www.youtube.com/watch?v=gYopFbIKMx4"],
+  },
 
 ];
 

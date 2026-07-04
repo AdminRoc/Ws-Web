@@ -86,10 +86,10 @@ var profitTakerRecords = [
     videoUrls:     ["https://youtu.be/h6r_L9IDXIw?si=zSxLh91qIjadKodC"]
   },
   {
-    clearTime:  "00:54.800",
+    clearTime:  "00:50.917",
     playerId:   "Insomnia_fs",
-    uploadTime: "2026-04-18",
-    videoUrls:     ["https://youtu.be/GREhY2bTVg4?si=spsOJMvEJpPkKt3p"]
+    uploadTime: "2026-07-03",
+    videoUrls:     ["https://www.youtube.com/watch?v=K5yyPjKoy64"]
   },
   {
     clearTime:  "00:55.288",
@@ -266,10 +266,10 @@ var profitTakerRecords = [
     videoUrls:     ["https://www.youtube.com/watch?v=clTmtE3HKpk"]
   },
   {
-    clearTime:  "01:20.400",
+    clearTime:  "01:17.933",
     playerId:   "psAGATHOS",
-    uploadTime: "2026-06-14",
-    videoUrls:     ["https://www.youtube.com/watch?v=q0OezvFJSac"]
+    uploadTime: "2026-06-29",
+    videoUrls:     ["https://www.youtube.com/watch?v=8i8mN8Arscs"]
   },
   {
     clearTime:  "00:54.917",
