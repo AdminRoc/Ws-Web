@@ -344,6 +344,15 @@ function getDomain(url) {
   catch(e) { return url.slice(0, 24); }
 }
 
+/* HTML 转义：仅用于把外部数据（玩家名/时间/来源域名等，均可经构造的 EE.log 注入）
+   安全写入 innerHTML 文本上下文，防止存储型 XSS。排序/解析等数据逻辑一律使用原始
+   字段、绝不经过本函数，故不影响任何榜单映射与排序。合法数据不含 &<>"' ，渲染无变化。 */
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
 /* ══════════════════════════════════════════════════════════
    5. 多视角弹窗（注入样式 + 创建 DOM）
    ══════════════════════════════════════════════════════════ */
@@ -655,7 +664,7 @@ function _showPopup(anchorEl, urls, rec) {
       <span class="vp-num">${i+1}</span>
       <span class="vp-label">
         ${label}
-        <span class="vp-domain">${domain}</span>
+        <span class="vp-domain">${esc(domain)}</span>
       </span>
       <span class="vp-arrow">→</span>
     </a>`;
@@ -758,9 +767,9 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
     /* 无"录像"字，改为仅凭 cursor:pointer 暗示可点 */
     tr.innerHTML = `
       <td class="rank-col" style="vertical-align:middle"><span class="rank-badge">#${rank}</span></td>
-      <td class="time-col" style="vertical-align:middle">${rec[timeField] || '—'}</td>
-      <td class="player-col" style="vertical-align:middle">${(rec.playerId2||rec.playerId3||rec.playerId4) ? '<span class="player-line1">'+(rec.playerId||'—')+'</span>' : (rec.playerId||'—')}${rec.playerId2 ? '<span class="player-line2">'+rec.playerId2+'</span>' : ''}${rec.playerId3 ? '<span class="player-line2">'+rec.playerId3+'</span>' : ''}${rec.playerId4 ? '<span class="player-line2">'+rec.playerId4+'</span>' : ''}</td>
-      <td style="vertical-align:middle">${rec.uploadTime || '—'}</td>`;
+      <td class="time-col" style="vertical-align:middle">${esc(rec[timeField] || '—')}</td>
+      <td class="player-col" style="vertical-align:middle">${(rec.playerId2||rec.playerId3||rec.playerId4) ? '<span class="player-line1">'+esc(rec.playerId||'—')+'</span>' : esc(rec.playerId||'—')}${rec.playerId2 ? '<span class="player-line2">'+esc(rec.playerId2)+'</span>' : ''}${rec.playerId3 ? '<span class="player-line2">'+esc(rec.playerId3)+'</span>' : ''}${rec.playerId4 ? '<span class="player-line2">'+esc(rec.playerId4)+'</span>' : ''}</td>
+      <td style="vertical-align:middle">${esc(rec.uploadTime || '—')}</td>`;
 
     _bindRow(tr, urls, rec);
     _bindPlayerCell(tr, rec);
@@ -822,10 +831,10 @@ function renderEidolonLeaderboard(records, tbodyId) {
 
     tr.innerHTML = `
       <td class="rank-col"><span class="rank-badge">#${rank}</span></td>
-      <td class="time-col">${rec.avgRealTime || '—'}</td>
-      <td>${rec.captureStatus || '—'}</td>
-      <td class="player-col">${rec.playerId || '—'}</td>
-      <td>${rec.uploadTime || '—'}</td>`;
+      <td class="time-col">${esc(rec.avgRealTime || '—')}</td>
+      <td>${esc(rec.captureStatus || '—')}</td>
+      <td class="player-col">${esc(rec.playerId || '—')}</td>
+      <td>${esc(rec.uploadTime || '—')}</td>`;
 
     _bindRow(tr, urls, rec);
     _bindPlayerCell(tr, rec);

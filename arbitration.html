@@ -322,9 +322,9 @@
       if (rank <= 3) tr.classList.add('rank-' + rank);
       tr.innerHTML =
         '<td class="rank-col" style="vertical-align:middle"><span class="rank-badge">#' + rank + '</span></td>' +
-        '<td class="time-col" style="vertical-align:middle">' + (rec.essenceCount != null && rec.essenceCount !== '' ? rec.essenceCount : '—') + '</td>' +
-        '<td class="player-col" style="vertical-align:middle">' + ((rec.playerId2||rec.playerId3||rec.playerId4) ? '<span class="player-line1">'+(rec.playerId||'—')+'</span>' : (rec.playerId||'—')) + (rec.playerId2 ? '<span class="player-line2">'+rec.playerId2+'</span>' : '') + (rec.playerId3 ? '<span class="player-line2">'+rec.playerId3+'</span>' : '') + (rec.playerId4 ? '<span class="player-line2">'+rec.playerId4+'</span>' : '') + '</td>' +
-        '<td style="vertical-align:middle">' + (rec.uploadTime || '—') + '</td>';
+        '<td class="time-col" style="vertical-align:middle">' + esc(rec.essenceCount != null && rec.essenceCount !== '' ? rec.essenceCount : '—') + '</td>' +
+        '<td class="player-col" style="vertical-align:middle">' + ((rec.playerId2||rec.playerId3||rec.playerId4) ? '<span class="player-line1">'+esc(rec.playerId||'—')+'</span>' : esc(rec.playerId||'—')) + (rec.playerId2 ? '<span class="player-line2">'+esc(rec.playerId2)+'</span>' : '') + (rec.playerId3 ? '<span class="player-line2">'+esc(rec.playerId3)+'</span>' : '') + (rec.playerId4 ? '<span class="player-line2">'+esc(rec.playerId4)+'</span>' : '') + '</td>' +
+        '<td style="vertical-align:middle">' + esc(rec.uploadTime || '—') + '</td>';
       _bindRow(tr, urls, rec);
       _bindPlayerCell(tr, rec);
       tbody.appendChild(tr);

@@ -341,7 +341,7 @@ function loadData(cb){
 <script>
 /* 问题H-fix: 移除间接 eval，window[n] 已完全覆盖全部数据访问场景 */
 function getRecs(n){try{var r=window[n];if(Array.isArray(r))return r;}catch(e){}return null;}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];});}
 
 function parseMs(t){
   if(!t)return Infinity;

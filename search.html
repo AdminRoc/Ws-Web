@@ -362,7 +362,7 @@ function recStr(r){
   }).join(' ');
 }
 
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];});}
 
 /* 将查询字符串拆分为词列表（按空格，过滤空串，全部小写） */
 function parseWords(q){return q.toLowerCase().split(/\s+/).filter(Boolean);}
