@@ -1688,34 +1688,29 @@
   function probeAuctions(rec) {
     var key = _aucKey(rec);
     if (!WM_PROXY_BASE || !key) return;
-    // 仅对已知可拍卖武器探测，避免对 mod/warframe/资源等发起无意义请求
+    // 仅对已知可拍卖武器操作，避免对 mod/warframe/资源等发起无意义请求
     if (AUC_WEAPON_KEYS && !AUC_WEAPON_KEYS.has(key)) return;
-    if (_aucCache[key]) { _renderAuctionEntryBtn(rec); return; }
+    // 立刻显示按钮（无需等待探测结果），点击时再实时拉取
+    _renderAuctionEntryBtn(rec);
+    // 后台预取，命中后缓存以便点击时秒开
+    if (_aucCache[key]) return;
     var types = ['riven', 'lich', 'sister'];
     Promise.all(types.map(function (t) {
       return _fetchJsonRetry(_aucUrl(t, key), 1, AUC_RETRY_MAX)
-        // WM v1 Auction API 响应形状是 { payload: { auctions: [...] } }，
-        // 和 v2 Orders API 的 { data: [...] } 不是一回事，之前误用了后者的
-        // 解析路径，导致哪怕真的有在售拍卖也会被解析成空数组、按钮永远不出现。
         .then(function (d) { return (d && d.payload && Array.isArray(d.payload.auctions)) ? d.payload.auctions : []; })
         .catch(function () { return []; });
     })).then(function (results) {
-      if (_curRec !== rec) return; // 期间用户已切换物品，丢弃过期结果
+      if (_curRec !== rec) return;
       var found = {};
       types.forEach(function (t, i) { found[t] = results[i]; });
       _aucCache[key] = found;
-      _renderAuctionEntryBtn(rec);
     });
   }
 
   function _renderAuctionEntryBtn(rec) {
     if (_curRec !== rec) return;
     var meta = document.getElementById('it-item-meta');
-    if (!meta) return;
-    var found = _aucCache[_aucKey(rec)];
-    if (!found) return;
-    var anyHit = Object.keys(found).some(function (t) { return found[t].length > 0; });
-    if (!anyHit) return;
+    if (!meta || meta.querySelector('.it-auc-entry-btn')) return; // 已存在则不重复添加
     var btn = document.createElement('span');
     btn.className = 'it-auc-entry-btn';
     btn.textContent = '✦ 搜索拍卖信息';
@@ -1724,11 +1719,7 @@
     if (typeof buildQuickNav === 'function') buildQuickNav();
   }
 
-  function openAuctionView(rec) {
-    var found = _aucCache[_aucKey(rec)];
-    if (!found) return;
-    var firstType = ['riven', 'lich', 'sister'].filter(function (t) { return found[t].length > 0; })[0];
-    if (!firstType) return;
+  function _buildAucViewShell(rec) {
     _aucCurRec = rec;
     _aucFilters = {};
     _aucSort = 'price_asc'; _aucOnline = 'all';
@@ -1748,8 +1739,42 @@
       '</div>' +
       '<div class="it-auc-list" id="it-auc-list"></div>';
     document.getElementById('it-auc-back-btn').addEventListener('click', closeAuctionView);
-    switchAuctionType(firstType);
     if (typeof buildQuickNav === 'function') buildQuickNav();
+  }
+
+  function openAuctionView(rec) {
+    var key = _aucKey(rec);
+    _buildAucViewShell(rec);
+    var found = _aucCache[key];
+    if (found) {
+      // 缓存命中：直接渲染
+      var firstType = ['riven', 'lich', 'sister'].filter(function (t) { return found[t].length > 0; })[0];
+      if (firstType) {
+        switchAuctionType(firstType);
+      } else {
+        document.getElementById('it-auc-list').innerHTML = '<div class="it-empty">暂无在售拍卖，稍后再试。</div>';
+      }
+      return;
+    }
+    // 缓存未命中：实时拉取并显示 loading
+    document.getElementById('it-auc-list').innerHTML = '<div class="it-empty">正在拉取拍卖数据…</div>';
+    var types = ['riven', 'lich', 'sister'];
+    Promise.all(types.map(function (t) {
+      return _fetchJsonRetry(_aucUrl(t, key), 1, AUC_RETRY_MAX)
+        .then(function (d) { return (d && d.payload && Array.isArray(d.payload.auctions)) ? d.payload.auctions : []; })
+        .catch(function () { return []; });
+    })).then(function (results) {
+      if (_aucCurRec !== rec) return; // 用户已切换物品
+      var newFound = {};
+      types.forEach(function (t, i) { newFound[t] = results[i]; });
+      _aucCache[key] = newFound;
+      var firstType = types.filter(function (t) { return newFound[t].length > 0; })[0];
+      if (firstType) {
+        switchAuctionType(firstType);
+      } else {
+        document.getElementById('it-auc-list').innerHTML = '<div class="it-empty">暂无在售拍卖，稍后再试。</div>';
+      }
+    });
   }
 
   function closeAuctionView() {
