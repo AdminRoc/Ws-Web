@@ -1698,6 +1698,8 @@
     if (!WM_PROXY_BASE || !key) return;
     // 仅对已知可拍卖武器操作，避免对 mod/warframe/资源等发起无意义请求
     if (AUC_WEAPON_KEYS && !AUC_WEAPON_KEYS.has(key)) return;
+    // 确保 _curRec 已设置（无 slug 的补充武器不走 loadOrders，_curRec 会停在 null）
+    _curRec = rec;
     // 立刻显示按钮（无需等待探测结果），点击时再实时拉取
     _renderAuctionEntryBtn(rec);
     // 后台预取，命中后缓存以便点击时秒开
