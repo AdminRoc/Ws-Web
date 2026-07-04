@@ -535,26 +535,12 @@
     #page-wrap{transition:opacity .9s ease;}
   </style>
   <link rel="stylesheet" href="css/fui-core.css">
+  <script>window.__fuiBootManual = true;</script>
   <script src="js/fui-core.js"></script>
 </head>
 <body>
 <canvas id="star-canvas"></canvas>
 <div class="nebula-bg"></div>
-
-<!-- ── 进入加载遮罩 ── -->
-<div id="load-overlay" aria-hidden="true">
-  <div class="lo-grid"></div>
-  <div class="lo-scan"></div>
-  <div class="lo-core">
-    <div class="lo-ring lo-ring1"></div>
-    <div class="lo-ring lo-ring2"></div>
-    <div class="lo-ring lo-ring3"></div>
-    <img class="lo-logo" src="picture/WS-logo-2.png" alt="WS">
-  </div>
-  <div class="lo-title"><span class="lo-sweep-wrap"><span class="ls-gold">ITEM SEARCH</span><span class="ls-cyber" data-text="ITEM SEARCH" aria-hidden="true">ITEM SEARCH</span></span></div>
-  <div class="lo-sub"><span class="lo-sweep-wrap"><span class="ls-gold">物品索引加载中，请稍候</span><span class="ls-cyber" data-text="物品索引加载中，请稍候" aria-hidden="true">物品索引加载中，请稍候</span></span><span class="lo-d">·</span><span class="lo-d">·</span><span class="lo-d">·</span></div>
-  <div class="lo-bar"><span></span></div>
-</div>
 
 <div class="page-wrap lb-page" id="page-wrap">
 <script>document.getElementById('page-wrap').style.opacity='0';</script>
@@ -923,26 +909,13 @@
 <script>
 /* ── 加载遮罩控制 ── */
 (function() {
-  var _loShownAt = performance.now();
   window._itDismissLoadOverlay = function() {
-    var lo = document.getElementById('load-overlay');
     var pw2 = document.getElementById('page-wrap');
-    if (!lo) { if (pw2) { pw2.style.opacity = '1'; } return; }
-    if (lo._closing) return;
-    lo._closing = true;
-    var wait = Math.max(0, 3500 - (performance.now() - _loShownAt));
-    setTimeout(function() {
-      lo.classList.add('lo-close');
-      setTimeout(function() {
-        if (lo.parentNode) lo.parentNode.removeChild(lo);
-        if (pw2) { pw2.style.opacity = '1'; }
-      }, 950);
-    }, wait);
+    if (window.__fuiBoot) window.__fuiBoot.done();
+    if (pw2) pw2.style.opacity = '1';
   };
   window.addEventListener('pageshow', function(e) {
-    if (!e.persisted) return;  // 仅处理 bfcache 回退；正常加载绝不能跳过遮罩强制展示时长
-    var lo2 = document.getElementById('load-overlay');
-    if (lo2 && lo2.parentNode) lo2.parentNode.removeChild(lo2);
+    if (!e.persisted) return;
     var pw3 = document.getElementById('page-wrap');
     if (pw3) pw3.style.opacity = '1';
   });
