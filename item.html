@@ -488,49 +488,8 @@
     .it-ink-overlay.on { opacity: 1; visibility: visible; }
     #it-ink-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
-    /* ══ 页面进入加载遮罩（与 player.html 同款） ══ */
-    #load-overlay{position:fixed;inset:0;z-index:150;display:flex;flex-direction:column;
-      align-items:center;justify-content:center;gap:clamp(14px,2.8vh,28px);
-      width:100vw;height:100vh;height:100dvh;overflow:hidden;padding:0 4vw;
-      background:radial-gradient(circle at 50% 42%,rgba(6,14,34,.97) 0%,rgba(2,3,8,.985) 70%);}
-    #load-overlay.lo-close{animation:loOut .9s cubic-bezier(.55,0,.85,.36) forwards;pointer-events:none;}
-    @keyframes loOut{
-      0%{opacity:1;transform:skewX(0deg) scale(1);filter:blur(0) hue-rotate(0deg);}
-      28%{opacity:.95;transform:skewX(7deg) scale(1.02);filter:blur(1px) hue-rotate(50deg);}
-      52%{opacity:.8;transform:skewX(-12deg) scaleY(.94);filter:blur(3px) hue-rotate(140deg);}
-      78%{opacity:.4;transform:skewX(15deg) scale(1.08,.85);filter:blur(8px) hue-rotate(230deg);}
-      100%{opacity:0;transform:skewX(22deg) scale(1.16,.7);filter:blur(16px) hue-rotate(330deg);}
-    }
-    .lo-grid{position:absolute;inset:0;pointer-events:none;opacity:.28;
-      background:linear-gradient(rgba(0,212,255,.13) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,212,255,.13) 1px,transparent 1px);
-      background-size:48px 48px;
-      -webkit-mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 75%);
-      mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 75%);
-      animation:loGridMove 6s linear infinite;}
-    @keyframes loGridMove{from{background-position:0 0,0 0;}to{background-position:0 48px,48px 0;}}
-    .lo-scan{position:absolute;left:0;right:0;height:90px;top:-90px;pointer-events:none;
-      background:linear-gradient(to bottom,transparent,rgba(0,212,255,.07),rgba(0,212,255,.2),transparent);
-      animation:loScan 3.2s linear infinite;}
-    @keyframes loScan{from{top:-90px;}to{top:100%;}}
-    .lo-core{position:relative;width:clamp(170px,30vmin,300px);height:clamp(170px,30vmin,300px);flex-shrink:0;}
-    .lo-ring{position:absolute;border-radius:50%;}
-    .lo-ring1{inset:0;border:2px solid transparent;border-top-color:#e8c264;
-      border-right-color:rgba(212,168,74,.28);animation:loSpin 1.6s linear infinite;
-      box-shadow:0 0 26px rgba(212,168,74,.25),inset 0 0 18px rgba(212,168,74,.08);}
-    .lo-ring2{inset:7%;border:2px solid transparent;border-bottom-color:#a87b2a;
-      border-left-color:rgba(168,123,42,.32);animation:loSpin 2.4s linear infinite reverse;}
-    .lo-ring3{inset:15%;border:1.5px dashed rgba(255,200,80,.45);animation:loSpin 7s linear infinite;}
-    .lo-logo{position:absolute;inset:17%;width:66%;height:66%;
-      border-radius:50%;object-fit:cover;mix-blend-mode:screen;pointer-events:none;
-      animation:loLogoPulse 2.4s ease-in-out infinite;}
-    @keyframes loSpin{to{transform:rotate(360deg);}}
-    @keyframes loLogoPulse{
-      0%,100%{transform:scale(.94);filter:drop-shadow(0 0 8px rgba(255,200,80,.3)) brightness(.95);}
-      50%{transform:scale(1.04);filter:drop-shadow(0 0 22px rgba(255,200,80,.7)) brightness(1.18);}}
-    .lo-title{position:relative;font-family:'Orbitron','Xszt',sans-serif;
-      font-size:clamp(1.1rem,3.4vmin,1.9rem);font-weight:800;letter-spacing:.42em;text-indent:.42em;
-      text-align:center;white-space:nowrap;color:#d4a84a;}
+    /* ══ 页面进入加载遮罩 — 基础样式由 fui-core.css 提供 ══ */
+    /* 页面专有：金→赛博主题切换标题动效 */
     .lo-sweep-wrap{position:relative;display:inline-block;}
     .ls-gold{color:#d4a84a;
       background-image:linear-gradient(180deg,#f6e27a 0%,#d4a84a 36%,#8a6a23 54%,#e8c264 76%,#6f5417 100%);
@@ -573,20 +532,6 @@
       8%{opacity:.85;transform:translate(5px,-2px);}13%{opacity:.7;transform:translate(-3px,1px);}
       52%{opacity:.85;transform:translate(-6px,2px);}57%{opacity:.6;transform:translate(4px,0);}
       82%{opacity:.8;transform:translate(4px,1px);}86%{opacity:.55;transform:translate(-3px,-1px);}}
-    .lo-sub{font-size:clamp(.9rem,2.3vmin,1.15rem);letter-spacing:.16em;text-align:center;color:#d4a84a;}
-    .lo-d{display:inline-block;margin-left:.3em;animation:loDot 1.4s ease-in-out infinite;color:#a78bfa;}
-    .lo-d:nth-child(2){animation-delay:.22s;}.lo-d:nth-child(3){animation-delay:.44s;}
-    @keyframes loDot{0%,100%{opacity:.15;transform:translateY(0);}50%{opacity:1;transform:translateY(-3px);}}
-    .lo-bar{width:clamp(220px,38vmin,360px);max-width:80vw;height:3px;border-radius:2px;overflow:hidden;
-      background:rgba(0,212,255,.12);flex-shrink:0;}
-    .lo-bar span{display:block;height:100%;width:40%;border-radius:2px;
-      background:linear-gradient(90deg,transparent,#00d4ff,#8b5cf6,transparent);
-      animation:loBar 1.6s cubic-bezier(.45,.05,.55,.95) infinite;}
-    @keyframes loBar{from{transform:translateX(-110%);}to{transform:translateX(290%);}}
-    @media(max-height:560px){
-      .lo-core{width:clamp(120px,24vmin,200px);height:clamp(120px,24vmin,200px);}
-      #load-overlay{gap:clamp(8px,1.8vh,16px);}
-    }
     #page-wrap{transition:opacity .9s ease;}
   </style>
   <link rel="stylesheet" href="css/fui-core.css">

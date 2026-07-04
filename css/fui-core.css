@@ -40,90 +40,111 @@ html[data-fui-theme="cyber"] {
   --g-hi:      255,42,109;
 }
 
-/* ─── 开机加载遮罩 ─── */
-#fui-boot {
-  position: fixed; inset: 0; z-index: 99999;
-  background: var(--fui-boot-bg);
+/* ─── 全站共用页面加载遮罩（暗金带Logo，用户原设计） ─── */
+#load-overlay {
+  position: fixed; inset: 0; z-index: 9500;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 1.6rem;
-  opacity: 1;
-  transition: opacity .55s var(--fui-ease-out), visibility 0s linear .55s;
+  align-items: center; justify-content: center;
+  gap: clamp(14px, 2.8vh, 28px);
+  width: 100vw; height: 100vh; height: 100dvh;
+  overflow: hidden; padding: 0 4vw;
+  background: radial-gradient(circle at 50% 42%, rgba(6,14,34,.97) 0%, rgba(2,3,8,.985) 70%);
 }
-#fui-boot.fui-done { opacity: 0; visibility: hidden; pointer-events: none; }
+#load-overlay.lo-close {
+  animation: loOut .9s cubic-bezier(.55,0,.85,.36) forwards;
+  pointer-events: none;
+}
+@keyframes loOut {
+  0%   { opacity: 1; transform: skewX(0) scale(1); filter: blur(0) hue-rotate(0); }
+  28%  { opacity: .95; transform: skewX(7deg) scale(1.02); filter: blur(1px) hue-rotate(50deg); }
+  52%  { opacity: .8; transform: skewX(-12deg) scaleY(.94); filter: blur(3px) hue-rotate(140deg); }
+  78%  { opacity: .4; transform: skewX(15deg) scale(1.08,.85); filter: blur(8px) hue-rotate(230deg); }
+  100% { opacity: 0; transform: skewX(22deg) scale(1.16,.7); filter: blur(16px) hue-rotate(330deg); }
+}
+.lo-grid {
+  position: absolute; inset: 0; pointer-events: none; opacity: .28;
+  background: linear-gradient(rgba(0,212,255,.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,.13) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(circle at 50% 45%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(circle at 50% 45%, #000 0%, transparent 75%);
+  animation: loGridMove 6s linear infinite;
+}
+@keyframes loGridMove { from { background-position: 0 0, 0 0; } to { background-position: 0 48px, 48px 0; } }
+.lo-scan {
+  position: absolute; left: 0; right: 0; height: 90px; top: -90px; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(0,212,255,.07), rgba(0,212,255,.2), transparent);
+  animation: loScan 3.2s linear infinite;
+}
+@keyframes loScan { from { top: -90px; } to { top: 100%; } }
+.lo-core {
+  position: relative;
+  width: clamp(170px, 30vmin, 300px); height: clamp(170px, 30vmin, 300px);
+  flex-shrink: 0;
+}
+.lo-ring { position: absolute; border-radius: 50%; }
+.lo-ring1 {
+  inset: 0; border: 2px solid transparent;
+  border-top-color: #e8c264; border-right-color: rgba(212,168,74,.28);
+  animation: loSpin 1.6s linear infinite;
+  box-shadow: 0 0 26px rgba(212,168,74,.25), inset 0 0 18px rgba(212,168,74,.08);
+}
+.lo-ring2 {
+  inset: 7%; border: 2px solid transparent;
+  border-bottom-color: #a87b2a; border-left-color: rgba(168,123,42,.32);
+  animation: loSpin 2.4s linear infinite reverse;
+}
+.lo-ring3 {
+  inset: 15%; border: 1.5px dashed rgba(255,200,80,.45);
+  animation: loSpin 7s linear infinite;
+}
+.lo-logo {
+  position: absolute; inset: 17%; width: 66%; height: 66%;
+  border-radius: 50%; object-fit: cover; mix-blend-mode: screen; pointer-events: none;
+  animation: loLogoPulse 2.4s ease-in-out infinite;
+}
+@keyframes loSpin { to { transform: rotate(360deg); } }
+@keyframes loLogoPulse {
+  0%,100% { transform: scale(.94); filter: drop-shadow(0 0 8px rgba(255,200,80,.3)) brightness(.95); }
+  50%     { transform: scale(1.04); filter: drop-shadow(0 0 22px rgba(255,200,80,.7)) brightness(1.18); }
+}
+.lo-title {
+  position: relative;
+  font-family: 'Orbitron','Xszt',sans-serif;
+  font-size: clamp(1.1rem, 3.4vmin, 1.9rem);
+  font-weight: 800; letter-spacing: .42em; text-indent: .42em;
+  text-align: center; white-space: nowrap;
+  color: #d4a84a;
+}
+.lo-sub {
+  font-size: clamp(.9rem, 2.3vmin, 1.15rem);
+  letter-spacing: .16em; text-align: center; color: #d4a84a;
+}
+.lo-d {
+  display: inline-block; margin-left: .3em;
+  animation: loDot 1.4s ease-in-out infinite; color: #a78bfa;
+}
+.lo-d:nth-child(2) { animation-delay: .22s; }
+.lo-d:nth-child(3) { animation-delay: .44s; }
+@keyframes loDot {
+  0%,100% { opacity: .15; transform: translateY(0); }
+  50%     { opacity: 1; transform: translateY(-3px); }
+}
+.lo-bar {
+  width: clamp(220px, 38vmin, 360px); max-width: 80vw; height: 3px;
+  border-radius: 2px; overflow: hidden; background: rgba(0,212,255,.12); flex-shrink: 0;
+}
+.lo-bar span {
+  display: block; height: 100%; width: 40%; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #00d4ff, #8b5cf6, transparent);
+  animation: loBar 1.6s cubic-bezier(.45,.05,.55,.95) infinite;
+}
+@keyframes loBar { from { transform: translateX(-110%); } to { transform: translateX(290%); } }
+@media (max-height: 560px) {
+  .lo-core { width: clamp(120px, 24vmin, 200px); height: clamp(120px, 24vmin, 200px); }
+  #load-overlay { gap: clamp(8px, 1.8vh, 16px); }
+}
 
-/* 扫描线纹理 */
-#fui-boot::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: repeating-linear-gradient(0deg,
-    transparent 0 2px, rgba(255,255,255,.02) 2px 3px);
-}
-/* 横扫光柱 */
-#fui-boot::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 40vw;
-  background: linear-gradient(90deg, transparent, var(--fui-accent-glow), transparent);
-  opacity: .12; filter: blur(20px);
-  animation: fuiBootSweep 2.4s ease-in-out infinite;
-}
-@keyframes fuiBootSweep { 0% { left: -40vw; } 100% { left: 100vw; } }
-
-/* HUD 瞄准环 */
-.fui-boot-reticle {
-  width: 108px; height: 108px; position: relative; z-index: 1;
-  color: var(--fui-accent);
-  filter: drop-shadow(0 0 12px var(--fui-accent-glow));
-}
-.fui-boot-reticle .fui-ring-outer {
-  fill: none; stroke: currentColor; stroke-width: 1.5;
-  stroke-dasharray: 276; stroke-dashoffset: 276;
-  transform-origin: 50% 50%;
-  animation: fuiRingDraw 1.1s var(--fui-ease-out) forwards, fuiSpin 6s linear infinite 1.1s;
-}
-.fui-boot-reticle .fui-ring-inner {
-  fill: none; stroke: currentColor; stroke-width: 1; opacity: .5;
-  stroke-dasharray: 4 6; transform-origin: 50% 50%;
-  animation: fuiSpinRev 8s linear infinite;
-}
-.fui-boot-reticle .fui-tick {
-  stroke: currentColor; stroke-width: 1.5; transform-origin: 50% 50%;
-  animation: fuiSpin 4s linear infinite;
-}
-.fui-boot-reticle .fui-core-dot {
-  fill: var(--fui-accent-2);
-  animation: fuiCorePulse 1.4s ease-in-out infinite;
-}
-@keyframes fuiRingDraw  { to { stroke-dashoffset: 0; } }
-@keyframes fuiSpin      { to { transform: rotate(360deg); } }
-@keyframes fuiSpinRev   { to { transform: rotate(-360deg); } }
-@keyframes fuiCorePulse {
-  0%,100% { opacity: 1;   transform: scale(1); }
-  50%     { opacity: .4;  transform: scale(1.6); }
-}
-
-/* 品牌字 + 进度条 */
-.fui-boot-brand {
-  position: relative; z-index: 1; text-align: center;
-  font-family: 'Orbitron','Rajdhani',sans-serif;
-  color: var(--fui-accent-2);
-  letter-spacing: .34em; font-weight: 900; font-size: .82rem;
-  text-shadow: 0 0 18px var(--fui-accent-glow);
-  opacity: 0; animation: fuiFadeUp .6s var(--fui-ease-out) .5s forwards;
-}
-.fui-boot-brand small {
-  display: block; margin-top: .4rem;
-  font-size: .56rem; letter-spacing: .5em; opacity: .5; font-weight: 700;
-}
-.fui-boot-progress {
-  position: relative; z-index: 1;
-  width: 160px; height: 2px; overflow: hidden;
-  background: rgba(255,255,255,.06);
-}
-.fui-boot-progress::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, var(--fui-accent), var(--fui-accent-2), transparent);
-  transform: translateX(-100%);
-  animation: fuiProgress 1.3s var(--fui-ease-out) infinite;
-}
-@keyframes fuiProgress { to { transform: translateX(100%); } }
 @keyframes fuiFadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -250,17 +271,9 @@ html[data-fui-theme="cyber"] .ws-theme-toggle {
 
 /* ─── 无障碍：尊重 reduced-motion ─── */
 @media (prefers-reduced-motion: reduce) {
-  #fui-boot::after,
-  .fui-boot-reticle .fui-ring-outer,
-  .fui-boot-reticle .fui-ring-inner,
-  .fui-boot-reticle .fui-tick,
-  .fui-boot-reticle .fui-core-dot,
-  .fui-boot-progress::before,
-  .ws-cycle-timer,
-  .ws-cycle-card,
-  .ws-cycle-state,
-  .it-drop-row::after,
-  .it-drop-chance { animation: none !important; }
+  .lo-grid, .lo-scan, .lo-ring, .lo-logo, .lo-d, .lo-bar span,
+  .ws-cycle-timer, .ws-cycle-card, .ws-cycle-state,
+  .it-drop-row::after, .it-drop-chance { animation: none !important; }
   .ws-cycle-timer { color: var(--fui-accent) !important; }
   [data-fui-reveal] > * { opacity: 1 !important; transform: none !important; animation: none !important; }
 }
