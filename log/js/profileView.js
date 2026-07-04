@@ -1101,7 +1101,7 @@ WF.profileView = (function () {
     });
     return grid;
   }
-  function _esc(str){ return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function _esc(str){ return String(str==null?'':str).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
   function _fmtNum(n){ return Number(n).toLocaleString(); }
 
   return { render: render };
