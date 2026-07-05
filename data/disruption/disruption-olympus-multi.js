@@ -13,6 +13,12 @@
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusMultiRecords = [
+  {
+    clearTime:  "54:46.000",
+    playerId:   "DishonoredFNG / not21dropper / X3NDRIX / krisplntfleamrkt",
+    uploadTime: "2025-03-05",
+    videoUrls:     ["https://www.youtube.com/watch?v=a28C4NDsyb4"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

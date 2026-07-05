@@ -13,6 +13,18 @@
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusSoloRecords = [
+  {
+    clearTime:  "69:43.000",
+    playerId:   "FrostMainer",
+    uploadTime: "2026-06-28",
+    videoUrls:     ["https://www.youtube.com/watch?v=jbMK9rRmCxY"]
+  },
+  {
+    clearTime:  "67:55.000",
+    playerId:   "NamelessDeity",
+    uploadTime: "2024-11-04",
+    videoUrls:     ["https://www.youtube.com/watch?v=F6q3pDLAGg8"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

@@ -13,6 +13,12 @@
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusDuoRecords = [
+  {
+    clearTime:  "45:38.000",
+    playerId:   "NamelessDeity / Yamarashi",
+    uploadTime: "2026-04-20",
+    videoUrls:     ["https://www.youtube.com/watch?v=NYAiXoPQgHA"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
