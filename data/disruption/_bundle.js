@@ -504,6 +504,12 @@ var disruptionKappaSoloNotice_en = "";
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusDuoRecords = [
+  {
+    clearTime:  "45:38.000",
+    playerId:   "NamelessDeity / Yamarashi",
+    uploadTime: "2026-04-20",
+    videoUrls:     ["https://www.youtube.com/watch?v=NYAiXoPQgHA"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -530,6 +536,12 @@ var disruptionOlympusDuoNotice_en = "";
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusMultiRecords = [
+  {
+    clearTime:  "54:46.000",
+    playerId:   "DishonoredFNG / not21dropper / X3NDRIX / krisplntfleamrkt",
+    uploadTime: "2025-03-05",
+    videoUrls:     ["https://www.youtube.com/watch?v=a28C4NDsyb4"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -556,6 +568,18 @@ var disruptionOlympusMultiNotice_en = "";
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusSoloRecords = [
+  {
+    clearTime:  "69:43.000",
+    playerId:   "FrostMainer",
+    uploadTime: "2026-06-28",
+    videoUrls:     ["https://www.youtube.com/watch?v=jbMK9rRmCxY"]
+  },
+  {
+    clearTime:  "67:55.000",
+    playerId:   "NamelessDeity",
+    uploadTime: "2024-11-04",
+    videoUrls:     ["https://www.youtube.com/watch?v=F6q3pDLAGg8"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
