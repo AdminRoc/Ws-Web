@@ -31,3 +31,4 @@ __pycache__/
 # 可选：忽略其他潜在编译产物
 *.pyo
 *.pyd
+log/仲裁.log
