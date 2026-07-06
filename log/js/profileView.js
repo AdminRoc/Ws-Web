@@ -64,7 +64,10 @@ WF.profileView = (function () {
   function render(detailEl, state) {
     detailEl.innerHTML = '';
     if (!state.accountId) {
-      detailEl.appendChild(_el('div', 'empty-state', '请先上传 EE.log — 系统将自动提取账号 ID 并加载个人资料'));
+      // 账号 ID 只在客户端完整冷启动的登录握手行才带括号；日志若从中途片段开始
+      // （常见于长任务、日志轮转裁切），可能只提取到玩家名而没有账号 ID——
+      // 不再是死胡同提示，改为让用户手动补充账号 ID 后继续同一套流程。
+      _renderAccountIdFallback(detailEl, state);
       return;
     }
     if (state.profileJson) {
@@ -73,6 +76,44 @@ WF.profileView = (function () {
     }
     // 无 profileJson → 显示剪贴板引导（默认流程，无需代理）
     _renderManualFallback(detailEl, state);
+  }
+
+  /* ════════════════════════════════════════
+     账号 ID 缺失时的手动补充面板
+  ════════════════════════════════════════ */
+  function _renderAccountIdFallback(el, state) {
+    var box = _el('div', 'pf-manual-box');
+    if (state.playerName) {
+      var idLine = _el('div', 'pf-guide-id-line');
+      idLine.appendChild(_el('span', 'pf-guide-player-name', state.playerName));
+      idLine.appendChild(_el('span', 'pf-guide-account-id', '账号 ID 未识别'));
+      box.appendChild(idLine);
+    }
+    box.appendChild(_el('div', 'pf-manual-title', '未能从本段日志自动识别账号 ID'));
+    box.appendChild(_el('div', 'pf-manual-desc',
+      '账号 ID 只出现在客户端完整启动时的登录记录中；若本次 EE.log 是从任务中途开始记录（常见于长时间任务或日志轮转），会只留下玩家名而没有账号 ID。' +
+      (state.playerName ? '已识别玩家名「' + state.playerName + '」，' : '') +
+      '可在下方手动填入账号 ID 继续查看个人资料（可从 Warframe 官网个人主页地址中获取，通常是一段 24 位十六进制字符串）。'));
+    var row = _el('div', 'pf-manual-idrow');
+    var input = document.createElement('input');
+    input.type = 'text'; input.className = 'pf-manual-idinput';
+    input.placeholder = '例如：5c8a1f2e9b0d3a4f5e6c7b8a';
+    input.maxLength = 40;
+    var err = _el('div', 'pf-guide-err', '');
+    var okBtn = _el('button', 'pf-guide-btn pf-guide-btn-primary', '确认');
+    okBtn.onclick = function () {
+      var v = input.value.trim().toLowerCase();
+      if (!/^[a-f0-9]{16,32}$/.test(v)) {
+        err.textContent = '格式不对：应为 16-32 位十六进制字符（0-9、a-f）。';
+        return;
+      }
+      state.accountId = v;
+      render(el, state);
+    };
+    row.appendChild(input); row.appendChild(okBtn);
+    box.appendChild(row);
+    box.appendChild(err);
+    el.appendChild(box);
   }
 
   /* ════════════════════════════════════════

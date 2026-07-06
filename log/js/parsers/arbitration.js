@@ -1,11 +1,13 @@
 /* 仲裁 (Arbitration) 解析器
  * 全部识别逻辑均由本项目对客户端 EE.log 的字段实测归纳得出：
- *   - 磁盾无人机：OnAgentCreated /Npc/CorpusEliteShieldDroneAgent（每行一只，Live/Spawned 字段随行给出）
+ *   - 磁盾无人机：OnAgentCreated /Npc/CorpusEliteShieldDroneAgent（每行一只，Spawned/MonitoredTicking 字段随行给出）
  *   - 敌人生成数：OnAgentCreated 行的 "Spawned N" 取全程最大值（累计生成计数）
- *   - 存活饱和度：OnAgentCreated 行的 "Live N" 字段（当前存活单位数），按驻留时长加权分布
+ *   - 存活饱和度：OnAgentCreated 行的 "MonitoredTicking N" 字段（当前受 AI 监控的活跃敌人数），按驻留时长加权分布
  *   - 轮/波边界：DefenseReward::TransitionOut（防御/拦截/镜像防御的每轮结算一次）；
  *                生存则用 SurvivalMission 奖励层
- *   - 任务窗口：SS_STARTED 起，至最后一次轮次结算（无尽任务的有效计时终点）
+ *   - 主机时长：SS_STARTED 起，至最后一次轮次结算（无尽任务的有效计时终点）
+ *   - 队内在场时长：各队伍成员对应网络连接最后一次同步诊断的时间戳，取其中最早出现
+ *     静默的一个——反映"全员仍稳定在场"的窗口，常年短于主机时长（房主经常独自续留farm）
  *   - 节点/星球/派系/类型：任务名行 + 关卡资源路径（/Lotus/Levels/.../Proc/<派系>/<关卡名>）
  * 关键修复：无尽任务里 EndOfMatch.lua:Initialize 每轮都会触发，不能据此结束任务，
  *          否则会把一场 1 小时的仲裁误截成开局几分钟。
@@ -26,23 +28,25 @@ WF.ArbitrationParser = (function () {
     stateEnding:      /GameRulesImpl - changing state from SS_STARTED to SS_ENDING/,
     droneCreated:     /OnAgentCreated \/Npc\/CorpusEliteShieldDroneAgent\d*\b/,
     // OnAgentCreated ... Spawned M ... MonitoredTicking K
-    //   Spawned=累计生成（敌人生成总数）；MonitoredTicking=当前受 AI 监控的活跃敌人数（饱和度取此值，
-    //   不含友军/无人机之外的静默单位，峰值与实战存活敌人数一致）
     agentSpawned:         /OnAgentCreated\b.*?\bSpawned\s+(\d+)\b/,
     agentMonitoredTick:   /\bMonitoredTicking\s+(\d+)\b/,
     defenseReward:    /DefenseReward\.lua: DefenseReward::TransitionOut\b/,
     survivalTier:     /SurvivalMission\.lua: Survival: Gave reward tier (\d+) at ([\d.]+)/,
     interceptionRound:/InterceptionNewRound|InterNewRoundLotusTransmission/,
+    // 每个远端队伍连接独立的网络诊断行，形如 "Net [Info]: 2: Retransmit throttle: ..."
+    // 连接编号是每名非本机队员各自的通信通道；某一路长时间不再出现即视为该成员早于
+    // 主机停止稳定在场（例如提前挂机/切出游戏，房主自己继续 farm 到本轮结算）。
+    netPeerLine:      /Net \[Info\]: (\d+): Retransmit throttle/,
   };
   const ARB_NAME_MARK = '- 仲裁';
 
-  // 期望赋灵母液常量（本项目按掉落规则实测标定）
+  // 期望生息常量（本项目按掉落规则实测标定）
   const BASE_DROP       = 0.06;                 // 每只磁盾无人机的基础期望
   const EXTRA_PER_ROUND = 1 + 0.1 * 3;          // 每轮额外 1.3（10% 概率多掉 3）
   const FULL_BUFF_MUL   = 2 * 1.18 * 2 * 1.25;  // 蓝盒×富足×黄盒×祝福 = 5.9（仅作用于无人机项）
   const DRONE_BATCH_GAP = 0.3;                  // 同批次无人机的最大间隔（秒）
   const SAT_DWELL_CAP   = 10;                   // 饱和度采样两点间最大计入驻留（秒）
-  const VACUUM_BUCKETS  = [0.5, 1, 1.5, 2, 3, 4, 6, 8, 10, 15, 20, 30, 40, 50]; // 真空期分桶上界
+  const VACUUM_BUCKETS  = [0.5, 1, 1.5, 2, 3, 4, 6, 8, 10, 15, 20, 30, 40, 50]; // 生成间隔分桶上界
 
   // ── 派系中文名 ──
   const FACTION_ZH = {
@@ -110,35 +114,66 @@ WF.ArbitrationParser = (function () {
     return out;
   }
 
-  /* ── 评分体系（0-120 分）──
-   * 三个指标，逐层递进：
-   *   1) 生息效率 essenceEff：期望生息/小时 相对 600/时 高标准基准的达成度（0-100%+）
-   *      —— 衡量"这一局单位时间的生息产出"。
-   *   2) 击杀效率 killEff：由无人机稀疏度(敌人生成÷无人机生成)换算，稀疏度越低说明
-   *      单位无人机对应的杂兵越少、击杀越干净利落（0-100%）。
-   *   3) 熟练度 proficiency：生息效率与击杀效率的综合，衡量队伍整体的走位、节奏与
-   *      击杀手法（0-100%+）。这是决定综合评分的核心指标。
-   * 综合评分 = 熟练度 映射到 0-120，分数带（不使用字母等级称谓）：
-   *   101-120 巅峰 ｜ 80-100 优秀 ｜ 70-79 良好 ｜ 60-69 及格 ｜ 0-59 待提升
-   */
-  const ESS_TARGET      = 600;   // 期望生息/小时 高标准基准（满 4 Buff）
-  const SPARSITY_GREAT  = 4;     // 稀疏度达到此值即满击杀效率
-  const SPARSITY_POOR   = 10;    // 稀疏度到此值击杀效率归零
+  /* ══════════════════════════════════════════════════════════════
+     评分体系（0-120 分，全过程透明可推导，不做任何隐藏加权）
+     ══════════════════════════════════════════════════════════════
+     子指标一：生息效率 —— 期望生息/小时 相对一个"高标准基准"（默认 600/小时，
+       本项目暂无排行榜数据、故长期沿用该基准）的达成度。基准的 60% 记 0 分，
+       达到基准记 100 分，二者之间用凸曲线过渡（低分段增长慢，越接近基准每一分
+       进步换来的得分越多）；超过基准后曲线继续外推，允许突破 100。
+     子指标二：击杀效率 —— 由"无人机稀疏度"（敌人生成 ÷ 无人机生成）换算，
+       稀疏度越低代表火力越集中在无人机身上、杂兵清理越干净。稀疏度 20 记 0 分，
+       5 记 100 分，同样用凸曲线过渡，越逼近满分曲线越陡，允许突破 100。
+     综合：熟练度 —— 两个子指标先按各自权重（约 54:46，生息效率略重）做"弹性
+       替代"加权（不是普通加权平均——两者不能互相完全替代，任一项偏低都会明显
+       拉低总分，兼顾发展的队伍得分才会高于单项突出但另一项拖后腿的队伍），再经一条
+       平滑曲线拉伸至百分比（低分段被压缩、越接近满分提升越明显），两个子指标同时
+       达到 100 时熟练度精确为 100。
+     最终把熟练度乘以 1.2 映射到 0-120 分，为顶尖表现留出"超出满分"的展示空间。
+     ══════════════════════════════════════════════════════════════ */
+  const ESS_BASELINE     = 600;   // 生息效率基准（默认／暂无排行榜时恒定使用）
+  const ESS_FLOOR_RATIO  = 0.6;   // 基准的 60% 记 0 分
+  const ESS_CURVE_K      = 3;     // 生息效率凸曲线陡峭度
+  const SPARSITY_FLOOR   = 20;    // 稀疏度 20 记 0 分
+  const SPARSITY_TOP     = 5;     // 稀疏度 5 记 100 分
+  const KILL_CURVE_K     = 3;     // 击杀效率凸曲线陡峭度
+  const W_ESS  = Math.PI / (Math.PI + Math.E);  // ≈ 0.536，生息效率权重
+  const W_KILL = Math.E  / (Math.PI + Math.E);  // ≈ 0.464，击杀效率权重
+  const CES_RHO   = 0.6;   // 弹性替代的替代弹性参数（<1，任一项偏低都拖累整体）
+  const FINAL_POW = 1.4;   // 末端平滑曲线指数（低段压缩、高段陡峭）
+
   function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
-  // 生息效率（%）：达标基准 600/时；上限 120% 留给超常发挥
-  function essenceEfficiency(perHour) { return clamp(perHour / ESS_TARGET * 100, 0, 120); }
-  // 击杀效率（%）：稀疏度线性映射，越低越高
+  // 凸曲线映射：progress∈[0,1]→[0,100]，可外推至 >100（progress>1 时）
+  function convexCurve(progress, k) {
+    return 100 * (Math.exp(k * progress) - 1) / (Math.exp(k) - 1);
+  }
+  // 生息效率（%）
+  function essenceEfficiency(perHour) {
+    const floor = ESS_BASELINE * ESS_FLOOR_RATIO;
+    if (perHour <= floor) return 0;
+    const progress = (perHour - floor) / (ESS_BASELINE - floor);
+    return Math.max(0, convexCurve(progress, ESS_CURVE_K));
+  }
+  // 击杀效率（%）：稀疏度越低越好
   function killEfficiency(sparsity) {
     if (!isFinite(sparsity) || sparsity <= 0) return 0;
-    return clamp((SPARSITY_POOR - sparsity) / (SPARSITY_POOR - SPARSITY_GREAT) * 100, 0, 100);
+    if (sparsity >= SPARSITY_FLOOR) return 0;
+    const progress = (SPARSITY_FLOOR - sparsity) / (SPARSITY_FLOOR - SPARSITY_TOP);
+    return Math.max(0, convexCurve(progress, KILL_CURVE_K));
   }
-  // 熟练度（%）：生息效率 60% + 击杀效率 40% 加权综合
-  function proficiency(perHour, sparsity) {
-    return 0.6 * essenceEfficiency(perHour) + 0.4 * killEfficiency(sparsity);
+  // 熟练度（%）：两项弹性替代加权 + 末端平滑拉伸
+  function proficiency(essEffPct, killEffPct) {
+    const a = Math.max(0, essEffPct), b = Math.max(0, killEffPct);
+    if (a === 0 && b === 0) return 0;
+    const ces = Math.pow(
+      W_ESS * Math.pow(a, CES_RHO) + W_KILL * Math.pow(b, CES_RHO),
+      1 / CES_RHO
+    );
+    const capped = clamp(ces, 0, 999); // 极端情况下防止数值溢出
+    return 100 * Math.pow(clamp(capped / 100, 0, 10), FINAL_POW);
   }
-  // 综合评分（0-120）：熟练度 ×1.2 映射，给顶尖局留出"巅峰"空间
-  function computeScore(perHour, sparsity) {
-    return Math.round(clamp(proficiency(perHour, sparsity) * 1.2, 0, 120));
+  function computeScore(essEffPct, killEffPct) {
+    return Math.round(clamp(proficiency(essEffPct, killEffPct) * 1.2, 0, 120));
   }
   function scoreTierName(s) {
     if (s >= 101) return '巅峰';
@@ -148,7 +183,7 @@ WF.ArbitrationParser = (function () {
     return '待提升';
   }
 
-  // ── 分布计算：无人机真空期（相邻生成间隔，按时长加权分桶）──
+  // ── 分布计算：无人机生成间隔（相邻生成时间差，按时长加权分桶）──
   function vacuumDist(times) {
     if (times.length < 2) return null;
     const edges = VACUUM_BUCKETS;
@@ -173,7 +208,7 @@ WF.ArbitrationParser = (function () {
     return { rows, over2Pct: over2 / total * 100, maxGap };
   }
 
-  // ── 分布计算：敌人饱和度（Live 采样，按驻留时长加权，5 宽分桶）──
+  // ── 分布计算：清图效率（受监控活跃敌人数采样，按驻留时长加权，5 宽分桶）──
   function saturationDist(samples) {
     if (samples.length < 2) return null;
     let maxLive = 1;
@@ -211,7 +246,7 @@ WF.ArbitrationParser = (function () {
     for (const s of sizes) if (s >= 1 && s <= maxSize) hist[s - 1]++;
     const totalBatches = sizes.length;
     const rows = hist.map((c, i) => ({ size: i + 1, count: c, pct: totalBatches > 0 ? c / totalBatches * 100 : 0 }));
-    return { rows, totalBatches, gt2Pct: 0 };
+    return { rows, totalBatches };
   }
 
   function create() {
@@ -231,11 +266,13 @@ WF.ArbitrationParser = (function () {
         levelName: null,
         startedT:  null,
         type:      'unknown',
-        droneTimes: [],    // 无人机生成绝对时刻（秒）
-        maxSpawned: 0,     // 累计敌人生成数（Spawned 峰值）
-        satSamples: [],    // {t(相对), live}
-        rounds:     0,     // 已结算轮/波数
-        lastRoundT: null,  // 最后一次轮次结算的绝对时刻（无尽任务有效终点）
+        droneTimes: [],      // 无人机生成绝对时刻（秒）
+        maxSpawned: 0,       // 累计敌人生成数（Spawned 峰值）
+        satSamples: [],      // {t(相对), live}
+        rounds:     0,       // 已结算轮/波数
+        lastRoundT: null,    // 最后一次轮次结算的绝对时刻（无尽任务有效终点）
+        roundBoundaries: [], // {label, t(绝对), droneCum, spawnedCum} 每轮结算时的快照
+        netLastSeen: {},     // 连接编号 -> 最后一次网络诊断行的绝对时刻
         endT:       null,
       };
     }
@@ -261,6 +298,10 @@ WF.ArbitrationParser = (function () {
       }
     }
 
+    function recordRoundBoundary(label, t) {
+      m.roundBoundaries.push({ label, t, droneCum: m.droneTimes.length, spawnedCum: m.maxSpawned });
+    }
+
     function finalize(fallbackEndT, viaEnding) {
       if (!m || m.startedT == null) { m = null; return; }
       // 无尽任务的有效终点：最后一次轮次结算；否则退回状态结束/日志末尾
@@ -280,10 +321,10 @@ WF.ArbitrationParser = (function () {
         const fullBuffPerMin = duration > 0 ? fullBuffTotal * 60 / duration : 0;
         const dronesPerMin   = duration > 0 ? droneCount / (duration / 60) : 0;
         const sparsity       = droneCount > 0 ? m.maxSpawned / droneCount : 0;
-        const essEff         = essenceEfficiency(fullBuffPerHour);
-        const killEff        = killEfficiency(sparsity);
-        const prof           = proficiency(fullBuffPerHour, sparsity);
-        const score          = computeScore(fullBuffPerHour, sparsity);
+        const essEff  = essenceEfficiency(fullBuffPerHour);
+        const killEff = killEfficiency(sparsity);
+        const prof    = proficiency(essEff, killEff);
+        const score   = computeScore(essEff, killEff);
 
         // 权威节点库解析：节点名 / 星球 / 类型 / 派系（优先，回退到日志解析）
         const resolved = resolveNode(m.nodeId, m);
@@ -296,11 +337,52 @@ WF.ArbitrationParser = (function () {
         const roundGuarantee = rounds * 1;                   // 轮次保底
         const roundExtra     = rounds * 0.3;                 // 轮次额外期望（10%×3）
 
+        // 队内在场时长：各连接最后一次诊断时间戳中最早的一个（相对任务开始）
+        const netIdxs = Object.keys(m.netLastSeen);
+        let lastClientEndAbs = null;
+        if (netIdxs.length) {
+          lastClientEndAbs = Math.min.apply(null, netIdxs.map((k) => m.netLastSeen[k]));
+        }
+        const lastClientDuration = (lastClientEndAbs != null && lastClientEndAbs > m.startedT)
+          ? lastClientEndAbs - m.startedT : null;
+
+        // 每轮明细：按 roundBoundaries 做相邻差分，得到每轮新增无人机/敌人生成与对应期望生息
+        const roundDetail = [];
+        let prevT = 0, prevDrone = 0, prevSpawn = 0;
+        m.roundBoundaries.forEach((b, i) => {
+          const relT = b.t - m.startedT;
+          const segDrone = b.droneCum - prevDrone;
+          const segSpawn = b.spawnedCum - prevSpawn;
+          const segEssence = segDrone * BASE_DROP * FULL_BUFF_MUL + EXTRA_PER_ROUND;
+          roundDetail.push({
+            index: i + 1, label: b.label,
+            durSec: relT - prevT, atSec: relT,
+            drones: segDrone, spawned: segSpawn,
+            sparsity: segDrone > 0 ? segSpawn / segDrone : null,
+            essence: segEssence,
+          });
+          prevT = relT; prevDrone = b.droneCum; prevSpawn = b.spawnedCum;
+        });
+        // 末段（未结算的尾巴，仍计入无人机产出但没有轮次保底）
+        const tailDrone = droneCount - prevDrone;
+        const tailSpawn = m.maxSpawned - prevSpawn;
+        if (tailDrone > 0 || tailSpawn > 0) {
+          roundDetail.push({
+            index: roundDetail.length + 1, label: '未结算尾段',
+            durSec: duration - prevT, atSec: duration,
+            drones: tailDrone, spawned: tailSpawn,
+            sparsity: tailDrone > 0 ? tailSpawn / tailDrone : null,
+            essence: tailDrone * BASE_DROP * FULL_BUFF_MUL,
+            incomplete: true,
+          });
+        }
+
         records.push({
           type:            'arbitration',
           startT:          m.startedT,
           endT:            hostEnd,
           duration,
+          lastClientDuration,
           node:            resolved.node,
           planet:          resolved.planet,
           nodeId:          m.nodeId,
@@ -314,6 +396,7 @@ WF.ArbitrationParser = (function () {
           maxSpawned:      m.maxSpawned,
           sparsity,
           rounds,
+          roundDetail,
           dronesPerMin,
           complete:        viaEnding || m.lastRoundT != null,
           essence: {
@@ -391,20 +474,29 @@ WF.ArbitrationParser = (function () {
           sampleAgentLine(line, t);
           return;
         }
+        // 队员网络连接诊断（用于推断"队内在场时长"）
+        if (line.indexOf('Retransmit throttle') !== -1) {
+          const np = RE.netPeerLine.exec(line);
+          if (np) m.netLastSeen[np[1]] = t;
+          return;
+        }
 
         // 轮/波结算（防御/拦截/镜像防御）
         if (RE.defenseReward.test(line)) {
           m.rounds++;
           m.lastRoundT = t;
           if (m.type === 'unknown') m.type = 'rounds';
+          recordRoundBoundary('轮 ' + m.rounds, t);
           return;
         }
         // 生存奖励层（生存任务的轮）
         let r;
         if ((r = RE.survivalTier.exec(line))) {
           m.type = 'survival';
-          m.rounds = Math.max(m.rounds, parseInt(r[1], 10));
+          const tier = parseInt(r[1], 10);
+          m.rounds = Math.max(m.rounds, tier);
           m.lastRoundT = t;
+          recordRoundBoundary('轮 ' + tier, t);
           return;
         }
         if (m.type === 'unknown' && RE.interceptionRound.test(line)) {
@@ -428,5 +520,5 @@ WF.ArbitrationParser = (function () {
     };
   }
 
-  return { create, computeScore, scoreTierName };
+  return { create, computeScore, scoreTierName, essenceEfficiency, killEfficiency, proficiency };
 })();

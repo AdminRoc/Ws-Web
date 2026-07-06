@@ -30,7 +30,7 @@ WF.logReader = (function () {
     // 仲裁 Arbitration
     'CorpusEliteShieldDroneAgent', 'OnAgentCreated',
     'WaveDefend.lua', 'LoopDefend.lua', 'HudRedux.lua: Queuing',
-    'DefenseReward.lua', 'SurvivalMission.lua', '仲裁', 'EliteAlert',
+    'DefenseReward.lua', 'SurvivalMission.lua', '仲裁', 'EliteAlert', 'Retransmit throttle',
     // 通用任务 General
     'MissionIntro.lua', 'EOM missionLocationUnlocked', 'CommitInventoryChangesToDB',
     'HUD REDUX', 'SyncAutoPopulatedConsumables', 'was killed by', 'missionType=',

@@ -66,15 +66,15 @@ WF.GeneralParser = (function () {
     failed:          'EndOfMatch.lua: Mission Failed',
     // Defense / wave tracking
     waveStart:       'WaveDefend.lua: Starting wave ',        // "Starting wave N, spawning a total of M"
-    defenseWaveAlt:  'WaveDefend.lua: Defense wave:',         // "Defense wave: N" (arbitration / reference pattern)
+    defenseWaveAlt:  'WaveDefend.lua: Defense wave:',         // "Defense wave: N"
     waveSpawned:     'total spawned in current wave:',
     waveLeft:        'WaveDefend.lua: WaveDefend: num enemies left ',
-    // Mirror defense (LoopDefend) — source: wxhn1225/warframe-arbitration
+    // 镜像防御（LoopDefend）
     loopDefWave:     'LoopDefend.lua: Loop Defense wave:',
-    // Interception round markers — source: wxhn1225/warframe-arbitration
+    // 拦截新一轮开始信号
     interRoundStart: 'InterNewRoundLotusTransmission',
     defenseReward:   'DefenseReward::TransitionOut',
-    // Survival tier markers — source: wxhn1225/warframe-arbitration
+    // 生存轮次奖励层
     survivalTier:    'Survival: Gave reward tier',
     // Kill / spawn
     killed:          'was killed by',
@@ -393,7 +393,7 @@ WF.GeneralParser = (function () {
           return;
         }
 
-        // ── Defense alt: "Defense wave: N" (ref: wxhn1225) ───
+        // ── Defense alt: "Defense wave: N" ───
         if (line.indexOf(PAT.defenseWaveAlt) !== -1) {
           const rx = /Defense wave:\s*(\d+)/.exec(line);
           if (rx) {
@@ -415,7 +415,7 @@ WF.GeneralParser = (function () {
           return;
         }
 
-        // ── Mirror Defense: "Loop Defense wave: N" (ref: wxhn1225) ─
+        // ── Mirror Defense: "Loop Defense wave: N" ─
         if (line.indexOf(PAT.loopDefWave) !== -1) {
           const rx = /Loop Defense wave:\s*(\d+)/.exec(line);
           if (rx) {
@@ -460,7 +460,7 @@ WF.GeneralParser = (function () {
           return;
         }
 
-        // ── Interception: new round start signal (ref: wxhn1225) ──────────
+        // ── Interception: new round start signal ──────────
         // Fires AFTER DefenseReward::TransitionOut. Use to confirm type and
         // update interSegStart for the upcoming round.
         if (line.indexOf(PAT.interRoundStart) !== -1) {
@@ -469,7 +469,7 @@ WF.GeneralParser = (function () {
           return;
         }
 
-        // ── Survival tier reward (ref: wxhn1225) ──────────────
+        // ── Survival tier reward ──────────────
         // "Survival: Gave reward tier N at TIME" — fires at each 5-min reward checkpoint
         if (line.indexOf(PAT.survivalTier) !== -1) {
           const rx = /Survival: Gave reward tier (\d+)/.exec(line);

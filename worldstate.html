@@ -3442,7 +3442,7 @@
     SolNode719:['Deimos Node','Deimos','Dual Defense','The Murmur']
   };
 
-  /* ── 仲裁推荐等级表（3=最高 / 2=次高 / 1=推荐，来自 warframe-arbitration 项目） ── */
+  /* ── 仲裁推荐等级表（3=最高 / 2=次高 / 1=推荐） ── */
   var TIER_MAP = {};
   (function () {
     var t = {
@@ -3741,10 +3741,9 @@
     });
   }
 
-  /* ── 仲裁时刻表 v2（原数据来自 wxhn1225/warframe-arbitration 项目，覆盖到 2029-10，
+  /* ── 仲裁时刻表 v2（社区维护的仲裁排期数据快照，覆盖到 2029-10，
      schema:2，nodes 为纯 SolNode ID 字符串数组，seq 是下标索引）。
-     该仓库后来转为私有，直接读 git 内容的 raw.githubusercontent.com / jsdelivr 都会 404；
-     即便当时还能从其 GitHub Pages 站点读到，那也是别人的站点，随时可能下线/删除/改版。
+     原始来源后续不再稳定可访问，直接依赖外部地址随时可能 404 或下线/改版。
      为避免这份数据彻底丢失，已完整下载并提交进本仓库 data/arbitration-schedule-v2.json，
      不再依赖任何外部地址。 */
   var _arbV2 = null;

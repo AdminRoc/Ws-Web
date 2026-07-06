@@ -102,10 +102,15 @@
           // 每次新上传都重置个人资料状态，避免旧数据/旧 loading 状态阻塞新流程
           state.profileState = { accountId: null, playerName: null, profileJson: null };
 
-          // 从 EE.log 提取账号 ID（格式："Logged in DisplayName (accountId)"）
-          const loginM = text.match(/Logged in ([^(]+)\(([a-f0-9]{16,})\)/i);
+          // 从 EE.log 提取账号 ID（标准格式："Logged in DisplayName (accountId)"）。
+          // 账号 ID 只在客户端完整冷启动的登录握手行才会带括号；日志若从中途片段
+          // 开始（常见于长任务/日志轮转裁切），可能只留下不带括号的 "Logged in Name"，
+          // 此时账号 ID 无法从本地日志推断——不臆造，转入下方手动补充流程。
+          const loginFull = text.match(/Logged in ([^(\r\n]+?)\s*\(([a-f0-9]{16,})\)/i);
+          const loginNameOnly = text.match(/Logged in ([^(\r\n]+?)\s*$/im);
+          const loginM = loginFull || loginNameOnly;
           if (loginM) {
-            state.profileState.accountId  = loginM[2].trim();
+            if (loginFull) state.profileState.accountId = loginFull[2].trim();
             // 白名单：只保留名字合法字符，彻底移除 Warframe 日志中任何未知后缀
             state.profileState.playerName = loginM[1]
               .replace(/[^\w\-. #|À-ɏ一-鿿぀-ヿ가-힯]/g, '').trim();
