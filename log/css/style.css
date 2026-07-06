@@ -68,7 +68,7 @@ body::before {
   color: transparent;
 }
 
-main { position: relative; z-index: 1; max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 32px; }
 
 /* ================= 顶部导航 ================= */
 .site-nav {
@@ -79,8 +79,8 @@ main { position: relative; z-index: 1; max-width: 1320px; margin: 0 auto; paddin
   border-bottom: 1px solid var(--c-border);
 }
 .nav-inner {
-  max-width: 1320px; margin: 0 auto; height: 100%;
-  display: flex; align-items: center; gap: 20px; padding: 0 24px;
+  width: 100%; margin: 0; height: 100%;
+  display: flex; align-items: center; gap: 20px; padding: 0 32px;
 }
 .nav-glow {
   position: absolute; bottom: -1px; left: 0; right: 0; height: 1px;
@@ -248,16 +248,16 @@ body.profile-active #detail-wrap {
   background: rgba(13, 16, 27, 0.8); border: 1px solid var(--c-border);
   border-radius: var(--r-md); padding: 15px 22px 12px; min-width: 140px;
 }
-.stat-value { font-size: 24px; color: var(--c-white); letter-spacing: 1px; }
+.stat-value { font-size: 24px; color: var(--c-white); letter-spacing: 1px; white-space: nowrap; }
 .stat.big .stat-value {
-  font-size: 32px; color: var(--c-gold);
+  font-size: 26px; color: var(--c-gold);
   text-shadow: 0 0 18px rgba(255, 182, 72, 0.35);
 }
 .stat.accent .stat-value {
   background: var(--rainbow);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.stat-label { font-size: 13px; color: var(--c-text2); margin-top: 6px; letter-spacing: 2px; }
+.stat-label { font-size: 13px; color: var(--c-text2); margin-top: 6px; letter-spacing: 2px; white-space: nowrap; }
 
 .note { color: var(--c-text2); font-size: 14px; margin: 8px 2px 16px; line-height: 1.8; }
 .section-title { font-size: 17px; letter-spacing: 3px; margin-bottom: 10px;
@@ -426,7 +426,7 @@ body.profile-active #detail-wrap {
 /* 8格指标网格 */
 .arb-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 12px; margin-bottom: 18px;
 }
 
@@ -1516,4 +1516,34 @@ body.profile-active #detail-wrap {
 @media (prefers-reduced-motion: reduce) {
   .cyber-nav-ring { animation: none; }
   .cyber-nav-btn:hover, .cyber-nav.open .cyber-nav-btn { transform: scale(1.05); }
+}
+
+/* ========================================================================
+   一键分享按钮（右下角，位于赛博导航按钮上方）
+   ======================================================================== */
+.share-card-btn {
+  position: fixed; right: 26px; bottom: 100px; z-index: 900;
+  display: none; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: 24px; cursor: pointer;
+  font-family: var(--f-px); font-size: 13px; letter-spacing: 1px; color: #dffbff;
+  background: linear-gradient(120deg, rgba(20,10,40,.94), rgba(6,26,40,.94));
+  border: 1px solid rgba(33,230,255,.4);
+  box-shadow: 0 0 18px rgba(33,230,255,.25), inset 0 0 14px rgba(138,91,255,.12);
+  backdrop-filter: blur(8px);
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s, border-color .2s;
+}
+.share-card-btn.show { display: inline-flex; }
+.share-card-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,61,240,.6);
+  box-shadow: 0 0 24px rgba(255,61,240,.35), inset 0 0 14px rgba(33,230,255,.16);
+}
+.share-card-btn.busy { opacity: .8; pointer-events: none; }
+.share-card-ico {
+  font-size: 14px; color: #21e6ff; text-shadow: 0 0 8px rgba(33,230,255,.7);
+}
+.share-card-btn.busy .share-card-ico { animation: shareSpin 1s linear infinite; }
+@keyframes shareSpin { to { transform: rotate(360deg); } }
+@media (max-width: 640px) {
+  .share-card-btn { right: 14px; bottom: 78px; padding: 8px 12px; font-size: 12px; }
 }
