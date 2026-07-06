@@ -74,27 +74,71 @@ WF.ArbitrationParser = (function () {
     for (const [re, key] of TYPE_KEY) if (re.test(levelName)) return key;
     return null;
   }
+  // 中文任务类型名 → 内部 key（用于节点库回填 missionType）
+  const TYPE_NAME_TO_KEY = (() => {
+    const map = {};
+    Object.keys(TYPE_NAMES).forEach((k) => { map[TYPE_NAMES[k]] = k; });
+    return map;
+  })();
 
-  /* ── 综合评分（本项目自有的 0-120 透明评分体系）──
-   * 两个客观子项：
-   *   生息效率 essenceEff = 满 Buff 母液/小时 相对 600 基准（1.0 = 达标）
-   *   击杀效率 killEff     = 由稀疏度(敌人生成/无人机)换算，越低越好
-   * 综合分 = 0.65×生息效率 + 0.35×击杀效率，映射到 0-120。
-   * 分数带（不使用字母等级称谓）：
+  /* 节点解析：优先查权威节点库 WF.SOL_NODES（由 solNodes.js 提供，格式：
+   *   "Cinxia, 谷神星 (拦截 - Grineer)"），回退到日志内解析出的节点名/星球/派系/类型。 */
+  function resolveNode(nodeId, m) {
+    const out = {
+      node: m.node, planet: m.planet,
+      faction: FACTION_ZH[m.faction] || m.faction || null,
+      typeKey: m.type, typeName: TYPE_NAMES[m.type] || m.type,
+    };
+    const db = (typeof WF !== 'undefined' && WF.SOL_NODES) ? WF.SOL_NODES[nodeId] : null;
+    if (db) {
+      // 格式："节点名, 星球 (类型 - 派系)" 或 "节点名 (类型 - 派系)"
+      const mm = /^(.+?)(?:,\s*([^(),]+?))?\s*\(([^()]*?)\s*-\s*([^()]+?)\)\s*$/.exec(db);
+      if (mm) {
+        out.node    = mm[1].trim();
+        if (mm[2]) out.planet = mm[2].trim();
+        const tName = (mm[3] || '').trim();
+        const fName = (mm[4] || '').trim();
+        if (fName) out.faction = fName;
+        if (tName) {
+          out.typeName = tName;
+          if (TYPE_NAME_TO_KEY[tName]) out.typeKey = TYPE_NAME_TO_KEY[tName];
+        }
+      } else {
+        out.node = db;
+      }
+    }
+    return out;
+  }
+
+  /* ── 评分体系（0-120 分）──
+   * 三个指标，逐层递进：
+   *   1) 生息效率 essenceEff：期望生息/小时 相对 600/时 高标准基准的达成度（0-100%+）
+   *      —— 衡量"这一局单位时间的生息产出"。
+   *   2) 击杀效率 killEff：由无人机稀疏度(敌人生成÷无人机生成)换算，稀疏度越低说明
+   *      单位无人机对应的杂兵越少、击杀越干净利落（0-100%）。
+   *   3) 熟练度 proficiency：生息效率与击杀效率的综合，衡量队伍整体的走位、节奏与
+   *      击杀手法（0-100%+）。这是决定综合评分的核心指标。
+   * 综合评分 = 熟练度 映射到 0-120，分数带（不使用字母等级称谓）：
    *   101-120 巅峰 ｜ 80-100 优秀 ｜ 70-79 良好 ｜ 60-69 及格 ｜ 0-59 待提升
    */
-  const ESS_TARGET      = 600;   // 满 Buff 母液/小时基准
+  const ESS_TARGET      = 600;   // 期望生息/小时 高标准基准（满 4 Buff）
   const SPARSITY_GREAT  = 4;     // 稀疏度达到此值即满击杀效率
   const SPARSITY_POOR   = 10;    // 稀疏度到此值击杀效率归零
   function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
-  function essenceEfficiency(perHour) { return clamp(perHour / ESS_TARGET, 0, 1.2); }
+  // 生息效率（%）：达标基准 600/时；上限 120% 留给超常发挥
+  function essenceEfficiency(perHour) { return clamp(perHour / ESS_TARGET * 100, 0, 120); }
+  // 击杀效率（%）：稀疏度线性映射，越低越高
   function killEfficiency(sparsity) {
     if (!isFinite(sparsity) || sparsity <= 0) return 0;
-    return clamp((SPARSITY_POOR - sparsity) / (SPARSITY_POOR - SPARSITY_GREAT), 0, 1.2);
+    return clamp((SPARSITY_POOR - sparsity) / (SPARSITY_POOR - SPARSITY_GREAT) * 100, 0, 100);
   }
+  // 熟练度（%）：生息效率 60% + 击杀效率 40% 加权综合
+  function proficiency(perHour, sparsity) {
+    return 0.6 * essenceEfficiency(perHour) + 0.4 * killEfficiency(sparsity);
+  }
+  // 综合评分（0-120）：熟练度 ×1.2 映射，给顶尖局留出"巅峰"空间
   function computeScore(perHour, sparsity) {
-    const raw = 0.65 * essenceEfficiency(perHour) + 0.35 * killEfficiency(sparsity);
-    return Math.round(clamp(raw * 100, 0, 120));
+    return Math.round(clamp(proficiency(perHour, sparsity) * 1.2, 0, 120));
   }
   function scoreTierName(s) {
     if (s >= 101) return '巅峰';
@@ -236,24 +280,35 @@ WF.ArbitrationParser = (function () {
         const fullBuffPerMin = duration > 0 ? fullBuffTotal * 60 / duration : 0;
         const dronesPerMin   = duration > 0 ? droneCount / (duration / 60) : 0;
         const sparsity       = droneCount > 0 ? m.maxSpawned / droneCount : 0;
+        const essEff         = essenceEfficiency(fullBuffPerHour);
+        const killEff        = killEfficiency(sparsity);
+        const prof           = proficiency(fullBuffPerHour, sparsity);
         const score          = computeScore(fullBuffPerHour, sparsity);
+
+        // 权威节点库解析：节点名 / 星球 / 类型 / 派系（优先，回退到日志解析）
+        const resolved = resolveNode(m.nodeId, m);
 
         // 无人机相对时刻（供分布/表格）
         const relTimes = m.droneTimes.map((x) => x - m.startedT);
+
+        // 生息细分（对齐"无人机项 + 轮次奖励期望"口径）
+        const droneFullBuff  = fromDrones * FULL_BUFF_MUL;   // 无人机期望生息（满 Buff）
+        const roundGuarantee = rounds * 1;                   // 轮次保底
+        const roundExtra     = rounds * 0.3;                 // 轮次额外期望（10%×3）
 
         records.push({
           type:            'arbitration',
           startT:          m.startedT,
           endT:            hostEnd,
           duration,
-          node:            m.node,
-          planet:          m.planet,
+          node:            resolved.node,
+          planet:          resolved.planet,
           nodeId:          m.nodeId,
-          faction:         m.faction,
-          factionZh:       FACTION_ZH[m.faction] || m.faction || null,
-          name:            m.node,                    // 兼容旧字段
-          missionType:     m.type,
-          missionTypeName: TYPE_NAMES[m.type] || m.type,
+          faction:         resolved.faction,
+          factionZh:       resolved.faction,
+          name:            resolved.node,               // 兼容旧字段
+          missionType:     resolved.typeKey,
+          missionTypeName: resolved.typeName,
           droneCount,
           drones:          relTimes,
           maxSpawned:      m.maxSpawned,
@@ -264,6 +319,7 @@ WF.ArbitrationParser = (function () {
           essence: {
             fromDrones, fromRounds, total,
             fullBuffTotal, perHour, fullBuffPerHour, perMin, fullBuffPerMin,
+            droneFullBuff, roundGuarantee, roundExtra, buffMul: FULL_BUFF_MUL,
           },
           dist: {
             vacuum:      vacuumDist(relTimes),
@@ -271,8 +327,9 @@ WF.ArbitrationParser = (function () {
             consecutive: consecutiveDist(m.droneTimes),
           },
           eff: {
-            essence: essenceEfficiency(fullBuffPerHour) * 100,
-            kill:    killEfficiency(sparsity) * 100,
+            essence: essEff,       // 生息效率 %
+            kill:    killEff,      // 击杀效率 %
+            proficiency: prof,     // 熟练度 %
           },
           score,
           scoreTier: scoreTierName(score),

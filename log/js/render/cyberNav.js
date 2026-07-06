@@ -1,0 +1,98 @@
+/* 赛博导航按钮
+ * 右下角常驻按钮，鼠标悬停时以赛博蒸汽风格展开，列出当前详情区内所有可见模块，
+ * 点击任一模块名精准平滑滚动定位。列表随详情内容变化自动重建（MutationObserver）。
+ * 与暗金主题无关，独立赛博配色（青/品红霓虹）。 */
+window.WF = window.WF || {};
+
+WF.cyberNav = (function () {
+  // 详情区内代表"模块标题"的选择器（涵盖各任务类型的分节标题）
+  const HEADING_SEL = '.arb-meta-title, .squad-title, .section-title, .arb-dist-title, .gen-section-title';
+  const HEADER_OFFSET = 84; // 顶部固定导航栏高度补偿
+
+  let root, listEl, detail, observer, rebuildTimer;
+
+  function build() {
+    if (root) return;
+    root = document.createElement('div');
+    root.className = 'cyber-nav';
+    root.innerHTML =
+      '<div class="cyber-nav-panel" id="cyber-nav-panel">' +
+        '<div class="cyber-nav-hd"><span>导航</span><i>NAV</i></div>' +
+        '<div class="cyber-nav-list" id="cyber-nav-list"></div>' +
+      '</div>' +
+      '<button class="cyber-nav-btn" type="button" aria-label="模块导航">' +
+        '<span class="cyber-nav-core"></span>' +
+        '<span class="cyber-nav-ring"></span>' +
+        '<span class="cyber-nav-glyph">☰</span>' +
+      '</button>';
+    document.body.appendChild(root);
+    listEl = root.querySelector('#cyber-nav-list');
+
+    // 悬停展开；移动端点击切换
+    const btn = root.querySelector('.cyber-nav-btn');
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      root.classList.toggle('open');
+    });
+    document.addEventListener('click', function () { root.classList.remove('open'); });
+    root.querySelector('.cyber-nav-panel').addEventListener('click', function (e) { e.stopPropagation(); });
+  }
+
+  function labelOf(el) {
+    // 取标题文本首段（去掉英文副标题/计数括注），保持简短
+    let t = (el.textContent || '').trim();
+    t = t.replace(/（.*?）|\(.*?\)/g, '').replace(/\s+/g, ' ').trim();
+    // meta-title 可能很长（节点·星球·类型·派系），压成"任务概览"
+    if (el.classList.contains('arb-meta-title')) return '任务概览';
+    return t.length > 10 ? t.slice(0, 10) : t;
+  }
+
+  function rebuild() {
+    if (!detail) return;
+    const heads = Array.from(detail.querySelectorAll(HEADING_SEL))
+      .filter((el) => el.offsetParent !== null && (el.textContent || '').trim());
+    if (!heads.length) { root.classList.remove('show'); return; }
+    root.classList.add('show');
+    listEl.innerHTML = '';
+    // 顶部锚
+    addItem('▲ 顶部', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    heads.forEach((el) => {
+      addItem(labelOf(el), () => {
+        const y = el.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      });
+    });
+  }
+
+  function addItem(text, onClick) {
+    const it = document.createElement('button');
+    it.className = 'cyber-nav-item';
+    it.type = 'button';
+    it.innerHTML = '<span class="cyber-nav-dot"></span><span>' + text + '</span>';
+    it.addEventListener('click', function (e) {
+      e.stopPropagation();
+      onClick();
+      root.classList.remove('open');
+    });
+    listEl.appendChild(it);
+  }
+
+  function scheduleRebuild() {
+    clearTimeout(rebuildTimer);
+    rebuildTimer = setTimeout(rebuild, 80);
+  }
+
+  function init() {
+    detail = document.getElementById('detail');
+    if (!detail) return;
+    build();
+    observer = new MutationObserver(scheduleRebuild);
+    observer.observe(detail, { childList: true, subtree: true });
+    scheduleRebuild();
+  }
+
+  return { init };
+})();
+
+if (document.readyState !== 'loading') WF.cyberNav.init();
+else document.addEventListener('DOMContentLoaded', WF.cyberNav.init);
