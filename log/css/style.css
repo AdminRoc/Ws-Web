@@ -440,6 +440,47 @@ body.profile-active #detail-wrap {
 .arb-ess-key  { color: var(--c-text2); letter-spacing: 1px; flex-shrink: 0; }
 .arb-ess-val  { color: var(--c-white); text-align: right; }
 
+/* 评分徽章：0-120 数字 + 分数带 */
+.arb-score-tier { font-size: 15px; letter-spacing: 2px; color: var(--c-text2); margin-top: 4px; }
+.grade-s .arb-score-tier { color: #41ff8e; }
+.grade-a .arb-score-tier { color: var(--c-teal); }
+.grade-b .arb-score-tier { color: var(--c-gold); }
+.grade-c .arb-score-tier { color: #c87840; }
+
+/* 分布图区 */
+.arb-dist-wrap {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 14px; margin-bottom: 18px;
+}
+.arb-dist {
+  background: rgba(13, 16, 27, 0.75); border: 1px solid var(--c-border);
+  border-radius: var(--r-md); padding: 14px 16px;
+}
+.arb-dist-hd { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+.arb-dist-title { font-size: 15px; letter-spacing: 1px; color: var(--c-white); }
+.arb-dist-en { font-size: 12px; color: var(--c-text2); }
+.arb-dist-max { margin-left: auto; font-size: 12px; color: var(--c-text2); font-family: var(--f-px); }
+.arb-bar-row { display: flex; align-items: center; gap: 8px; margin: 4px 0; font-size: 12px; }
+.arb-bar-label { width: 44px; flex-shrink: 0; color: var(--c-text2); font-family: var(--f-px); text-align: right; }
+.arb-bar-track { flex: 1; height: 12px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
+.arb-bar-fill { height: 100%; border-radius: 3px; min-width: 2px; transition: width var(--ease-med); }
+.arb-bar-fill.zero { min-width: 0; }
+.arb-bar-pct { width: 46px; flex-shrink: 0; text-align: right; color: var(--c-white); font-family: var(--f-px); }
+.arb-bar-right { width: 56px; flex-shrink: 0; text-align: right; color: var(--c-text2); font-family: var(--f-px); }
+.arb-dist-foot { margin-top: 8px; text-align: right; font-size: 12px; color: var(--c-gold); letter-spacing: 1px; }
+
+/* 分数带说明 */
+.arb-scale-box {
+  background: rgba(13, 16, 27, 0.75); border: 1px solid var(--c-border);
+  border-radius: var(--r-md); padding: 16px 20px; margin-bottom: 18px;
+}
+.arb-scale-rows { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; }
+.arb-scale-row { display: flex; align-items: baseline; gap: 12px; font-size: 13px; padding: 4px 8px; border-radius: 4px; }
+.arb-scale-row.cur { background: rgba(95, 208, 232, 0.1); }
+.arb-scale-range { width: 84px; flex-shrink: 0; color: var(--c-white); font-family: var(--f-px); }
+.arb-scale-tier { width: 56px; flex-shrink: 0; color: var(--c-gold); letter-spacing: 1px; }
+.arb-scale-desc { color: var(--c-text2); letter-spacing: 1px; }
+
 /* ================= 主页（index.html） ================= */
 .page-home body, body.page-home { /* 主页无需 padding-top 覆盖 */}
 
