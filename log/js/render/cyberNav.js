@@ -6,7 +6,9 @@ window.WF = window.WF || {};
 
 WF.cyberNav = (function () {
   // 详情区内代表"模块标题"的选择器（涵盖各任务类型的分节标题）
-  const HEADING_SEL = '.arb-meta-title, .squad-title, .section-title, .arb-dist-title, .gen-section-title, .dis-tl-title, .pt-sec-title, .gen-timing-title';
+  // 大蜘蛛 Profit-Taker 页面只用 .squad-title 和 .pt-bar-label（全程时间轴），
+  // .pt-sec-title 等小节标题不加入，避免导航冗余。
+  const HEADING_SEL = '.arb-meta-title, .squad-title, .section-title, .arb-dist-title, .gen-section-title, .dis-tl-title, .pt-bar-label, .gen-timing-title';
   const HEADER_OFFSET = 84; // 顶部固定导航栏高度补偿
 
   let root, listEl, detail, observer, rebuildTimer;
@@ -61,6 +63,8 @@ WF.cyberNav = (function () {
     t = t.replace(/（.*?）|\(.*?\)/g, '').replace(/\s+/g, ' ').trim();
     // meta-title 可能很长（节点·星球·类型·派系），压成"任务概览"
     if (el.classList.contains('arb-meta-title')) return '任务概览';
+    // 大蜘蛛全程时间轴专用标签
+    if (el.classList.contains('pt-bar-label')) return '全程时间轴';
     return t.length > 10 ? t.slice(0, 10) : t;
   }
 

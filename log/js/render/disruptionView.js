@@ -45,7 +45,7 @@ WF.disruptionView = (function () {
     svg += '</svg>';
     const chartBox = U.el('div', 'chart-box dis-tl-wrap');
     chartBox.appendChild(U.el('div', 'dis-tl-title', '每轮耗时概览'));
-    chartBox.appendChild(U.el('div', 'dis-tl-sub', '每条横条对应一轮，长度 = 本轮耗时；绿色为本轮导管全部守住，红色为存在失守'));
+    chartBox.appendChild(U.el('div', 'dis-tl-sub', '每条横条对应一轮，长度 = 本轮耗时；青蓝色为本轮导管全部守住，红色为存在失守'));
     const chartSvg = U.el('div');
     chartSvg.innerHTML = svg;
     chartBox.appendChild(chartSvg);
@@ -465,12 +465,15 @@ WF.disruptionView = (function () {
     return `
       <defs>
         <linearGradient id="cyber-bar-ok" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#41ff8e"/>
-          <stop offset="100%" stop-color="#3affd5"/>
+          <stop offset="0%" stop-color="#0a2d3a"/>
+          <stop offset="45%" stop-color="#0d4a5a"/>
+          <stop offset="80%" stop-color="#1a7a8a"/>
+          <stop offset="100%" stop-color="#3ad0e8"/>
         </linearGradient>
         <linearGradient id="cyber-bar-fail" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#ff5f6b"/>
-          <stop offset="100%" stop-color="#ff7a5f"/>
+          <stop offset="0%" stop-color="#5a1a22"/>
+          <stop offset="55%" stop-color="#a83a42"/>
+          <stop offset="100%" stop-color="#ff6b75"/>
         </linearGradient>
         <linearGradient id="cyber-bar-gradient" x1="0" y1="1" x2="0" y2="0">
           <stop offset="0%" stop-color="#0a3a4a"/>

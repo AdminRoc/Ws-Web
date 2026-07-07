@@ -1673,14 +1673,17 @@ body.profile-active #detail-wrap {
 }
 .round-chart .bar-ok {
   fill: url(#cyber-bar-ok);
-  filter: drop-shadow(0 0 3px rgba(65,255,142,0.35));
+  filter: drop-shadow(0 0 3px rgba(58,208,232,0.22));
 }
 .round-chart .bar-fail {
   fill: url(#cyber-bar-fail);
-  filter: drop-shadow(0 0 3px rgba(255,95,107,0.35));
+  filter: drop-shadow(0 0 3px rgba(255,107,117,0.28));
 }
 .round-chart rect:hover {
-  filter: drop-shadow(0 0 6px rgba(255,255,255,0.5));
+  filter: drop-shadow(0 0 5px rgba(58,208,232,0.45));
+}
+.round-chart .bar-fail:hover {
+  filter: drop-shadow(0 0 5px rgba(255,107,117,0.55));
 }
 
 /* 导管情况图增强 */
