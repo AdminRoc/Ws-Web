@@ -137,14 +137,14 @@ WF.generalView = (function () {
       const bw = Math.max(2, ((w.duration || 0) / maxDur) * (svgW - 60));
       const y  = i * (barH + barGap);
       const sp = w.actualSpawned || w.totalEnemies || w.spawned || 0;
-      svg += `<rect x="50" y="${y}" width="${bw}" height="${barH}" rx="2" class="bar-ok">` +
+      svg += `<rect x="50" y="${y}" width="${bw}" height="${barH}" rx="2" fill="#3a8ba0">` +
         `<title>第 ${w.index} 波：${U.fmtDuration(w.duration)} | 击杀 ${w.kills} / 生成 ${sp}</title></rect>`;
       if (i % 5 === 4 || i === 0)
         svg += `<text x="44" y="${y + barH}" class="bar-label" text-anchor="end">${w.index}</text>`;
     });
     svg += '</svg>';
     const chartBox = U.el('div', 'chart-box');
-    chartBox.innerHTML = svg;
+    chartBox.innerHTML = '<div style="font-size:12px;color:var(--c-text2);margin-bottom:6px;letter-spacing:1px;">每波时长概览</div>' + svg;
     section.appendChild(chartBox);
 
     // 波次明细表
@@ -208,13 +208,13 @@ WF.generalView = (function () {
       const bw = Math.max(2, ((sg.duration || 0) / maxDur) * (svgW - 60));
       const y  = i * (barH + barGap);
       const spawnTip = hasSpawnData ? ` | 生成 ${sg.spawned || 0}` : '';
-      svg += `<rect x="50" y="${y}" width="${bw}" height="${barH}" rx="2" class="bar-ok">` +
+      svg += `<rect x="50" y="${y}" width="${bw}" height="${barH}" rx="2" fill="#3a8ba0">` +
         `<title>第 ${sg.tier} 档：${U.fmtDuration(sg.duration)}${spawnTip}</title></rect>`;
       svg += `<text x="44" y="${y + barH}" class="bar-label" text-anchor="end">${sg.tier}</text>`;
     });
     svg += '</svg>';
     const chartBox = U.el('div', 'chart-box');
-    chartBox.innerHTML = svg;
+    chartBox.innerHTML = '<div style="font-size:12px;color:var(--c-text2);margin-bottom:6px;letter-spacing:1px;">每档时长概览</div>' + svg;
     section.appendChild(chartBox);
 
     // 档次明细表
@@ -269,13 +269,13 @@ WF.generalView = (function () {
     segs.forEach((sg, i) => {
       const bw = Math.max(2, ((sg.duration || 0) / maxDur) * (svgW - 60));
       const y  = i * (barH + barGap);
-      svg += `<rect x="50" y="${y}" width="${bw}" height="${barH}" rx="2" class="bar-ok">` +
+      svg += `<rect x="50" y="${y}" width="${bw}" height="${barH}" rx="2" fill="#3a8ba0">` +
         `<title>第 ${sg.round} 轮：${U.fmtDuration(sg.duration)}</title></rect>`;
       svg += `<text x="44" y="${y + barH}" class="bar-label" text-anchor="end">${sg.round}</text>`;
     });
     svg += '</svg>';
     const chartBox = U.el('div', 'chart-box');
-    chartBox.innerHTML = svg;
+    chartBox.innerHTML = '<div style="font-size:12px;color:var(--c-text2);margin-bottom:6px;letter-spacing:1px;">每轮时长概览</div>' + svg;
     section.appendChild(chartBox);
 
     // 轮次明细表

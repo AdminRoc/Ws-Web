@@ -1064,8 +1064,10 @@ body.profile-active #detail-wrap {
 .squad-section {
   margin-top: 14px;
   margin-bottom: 22px;
-  padding-top: 12px;
-  border-top: 1px solid var(--c-border);
+  padding: 14px 16px;
+  background: rgba(13, 16, 27, 0.75);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
 }
 .squad-title {
   font-size: 14px;
