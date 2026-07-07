@@ -1492,12 +1492,16 @@ body.profile-active #detail-wrap {
 /* ========================================================================
    赛博导航按钮（右下角悬浮 · 青/品红霓虹蒸汽风）
    ======================================================================== */
+/* .cyber-nav 的可命中区域只应等于按钮本身大小：展开面板用 position:absolute 脱离
+   文档流，不透明度为 0 时再叠加 pointer-events:none——这样收起状态下面板既不占布局
+   空间、也不参与命中测试，鼠标划过按钮上方那片"看不见的面板"不会被误判成已经
+   悬停到位，避免面板在鼠标真正到达图标之前就抢先弹出挡住内容。 */
 .cyber-nav {
   position: fixed; right: 26px; bottom: 30px; z-index: 900;
-  display: none; align-items: flex-end; flex-direction: column; gap: 12px;
+  display: none; width: 58px; height: 58px;
   --cy-cyan: #21e6ff; --cy-mag: #ff3df0; --cy-vio: #8a5bff;
 }
-.cyber-nav.show { display: flex; }
+.cyber-nav.show { display: block; }
 
 /* 主按钮 */
 .cyber-nav-btn {
@@ -1527,8 +1531,9 @@ body.profile-active #detail-wrap {
 }
 .cyber-nav.open .cyber-nav-glyph { color: var(--cy-mag); text-shadow: 0 0 10px var(--cy-mag); }
 
-/* 展开面板 */
+/* 展开面板：绝对定位、悬浮在按钮正上方，收起时完全脱离布局与命中测试 */
 .cyber-nav-panel {
+  position: absolute; right: 0; bottom: calc(100% + 12px);
   min-width: 168px; max-height: 62vh; overflow-y: auto;
   padding: 12px; border-radius: 14px;
   background: linear-gradient(160deg, rgba(20,10,40,.92), rgba(6,20,34,.92));
@@ -1576,7 +1581,7 @@ body.profile-active #detail-wrap {
 .cyber-nav-panel::-webkit-scrollbar-thumb { background: rgba(33,230,255,.35); border-radius: 3px; }
 
 @media (max-width: 640px) {
-  .cyber-nav { right: 14px; bottom: 18px; }
+  .cyber-nav { right: 14px; bottom: 18px; width: 50px; height: 50px; }
   .cyber-nav-btn { width: 50px; height: 50px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1612,4 +1617,14 @@ body.profile-active #detail-wrap {
 @keyframes shareSpin { to { transform: rotate(360deg); } }
 @media (max-width: 640px) {
   .share-card-btn { left: 14px; bottom: 18px; padding: 8px 12px; font-size: 12px; }
+}
+
+/* 仲裁：紧凑柱状趋势图（每分钟无人机生成 / 敌人生成速率） */
+.arb-trend-wrap { width: 100%; }
+.arb-trend-svg { width: 100%; height: 120px; display: block; }
+.arb-trend-bar { fill: #5fd0e8; transition: fill .15s; }
+.arb-trend-bar:hover { fill: #ff5fc0; }
+.arb-trend-axis {
+  display: flex; justify-content: space-between; font-size: 11px;
+  color: var(--c-text2); margin-top: 4px; font-family: var(--f-px);
 }

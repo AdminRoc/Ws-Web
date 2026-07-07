@@ -249,6 +249,20 @@ WF.ArbitrationParser = (function () {
     return { rows, totalBatches };
   }
 
+  // ── 分布计算：按分钟切片的无人机生成 / 敌人生成速率趋势 ──
+  function perMinuteTrend(buckets, durationSec) {
+    if (!buckets || !buckets.length) return null;
+    const totalMin = Math.max(1, Math.ceil(durationSec / 60));
+    const rows = [];
+    for (let i = 0; i < totalMin; i++) {
+      const b = buckets[i] || { drones: 0, spawn: 0 };
+      rows.push({ minute: i + 1, drones: b.drones, spawn: b.spawn });
+    }
+    const maxDrones = Math.max(1, ...rows.map((r) => r.drones));
+    const maxSpawn  = Math.max(1, ...rows.map((r) => r.spawn));
+    return { rows, maxDrones, maxSpawn };
+  }
+
   function create() {
     const records = [];
     const sq   = WF.squadMixin.create();
@@ -273,14 +287,26 @@ WF.ArbitrationParser = (function () {
         lastRoundT: null,    // 最后一次轮次结算的绝对时刻（无尽任务有效终点）
         roundBoundaries: [], // {label, t(绝对), droneCum, spawnedCum} 每轮结算时的快照
         netLastSeen: {},     // 连接编号 -> 最后一次网络诊断行的绝对时刻
+        minuteBuckets: [],   // 按分钟切片：[{drones, spawn}]，用于生成 / 敌人速率趋势
         endT:       null,
       };
+    }
+
+    // 把某个时间点的一次增量计入对应分钟切片（drones 或 spawn 累加 delta）
+    function bumpMinute(t, field, delta) {
+      const idx = Math.floor((t - m.startedT) / 60);
+      if (idx < 0) return;
+      if (!m.minuteBuckets[idx]) m.minuteBuckets[idx] = { drones: 0, spawn: 0 };
+      m.minuteBuckets[idx][field] += delta;
     }
 
     // 从 OnAgentCreated 行采样：累计生成峰值 + 活跃敌人饱和度
     function sampleAgentLine(line, t) {
       const sp = RE.agentSpawned.exec(line);
-      if (sp) { const v = parseInt(sp[1], 10); if (v > m.maxSpawned) m.maxSpawned = v; }
+      if (sp) {
+        const v = parseInt(sp[1], 10);
+        if (v > m.maxSpawned) { bumpMinute(t, 'spawn', v - m.maxSpawned); m.maxSpawned = v; }
+      }
       const mt = RE.agentMonitoredTick.exec(line);
       if (mt) m.satSamples.push({ t: t - m.startedT, live: parseInt(mt[1], 10) });
     }
@@ -337,11 +363,15 @@ WF.ArbitrationParser = (function () {
         const roundGuarantee = rounds * 1;                   // 轮次保底
         const roundExtra     = rounds * 0.3;                 // 轮次额外期望（10%×3）
 
-        // 队内在场时长：各连接最后一次诊断时间戳中最早的一个（相对任务开始）
-        const netIdxs = Object.keys(m.netLastSeen);
+        // 队内在场时长：各连接最后一次诊断时间戳中最早的一个（相对任务开始）。
+        // 诊断行本身按网络波动触发、频率并不均匀——样本数过少的连接（<5 次）
+        // 大概率只是全程网络很干净、没触发几次诊断，并非真的提前退场，
+        // 排除掉这类连接以避免把"信号稀疏"误判成"提前离场"。
+        const NET_MIN_SAMPLES = 5;
+        const netIdxs = Object.keys(m.netLastSeen).filter((k) => m.netLastSeen[k].count >= NET_MIN_SAMPLES);
         let lastClientEndAbs = null;
         if (netIdxs.length) {
-          lastClientEndAbs = Math.min.apply(null, netIdxs.map((k) => m.netLastSeen[k]));
+          lastClientEndAbs = Math.min.apply(null, netIdxs.map((k) => m.netLastSeen[k].last));
         }
         const lastClientDuration = (lastClientEndAbs != null && lastClientEndAbs > m.startedT)
           ? lastClientEndAbs - m.startedT : null;
@@ -408,6 +438,7 @@ WF.ArbitrationParser = (function () {
             vacuum:      vacuumDist(relTimes),
             saturation:  saturationDist(m.satSamples),
             consecutive: consecutiveDist(m.droneTimes),
+            perMinute:   perMinuteTrend(m.minuteBuckets, duration),
           },
           eff: {
             essence: essEff,       // 生息效率 %
@@ -466,6 +497,7 @@ WF.ArbitrationParser = (function () {
         // 磁盾无人机（每行一只）
         if (RE.droneCreated.test(line)) {
           m.droneTimes.push(t);
+          bumpMinute(t, 'drones', 1);
           sampleAgentLine(line, t);
           return;
         }
@@ -477,7 +509,12 @@ WF.ArbitrationParser = (function () {
         // 队员网络连接诊断（用于推断"队内在场时长"）
         if (line.indexOf('Retransmit throttle') !== -1) {
           const np = RE.netPeerLine.exec(line);
-          if (np) m.netLastSeen[np[1]] = t;
+          if (np) {
+            const idx = np[1];
+            if (!m.netLastSeen[idx]) m.netLastSeen[idx] = { last: t, count: 0 };
+            m.netLastSeen[idx].last = t;
+            m.netLastSeen[idx].count++;
+          }
           return;
         }
 

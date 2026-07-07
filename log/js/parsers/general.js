@@ -194,6 +194,22 @@ WF.GeneralParser = (function () {
       m.currentWave = null;
     }
 
+    // 收尾时把"进行中但还没被 defenseReward 关闭"的最后一轮拦截补上——
+    // 结算流程里 "EOM missionLocationUnlocked" 往往比最后一轮真正的
+    // DefenseReward::TransitionOut 早几十毫秒触发，若不在这里补上，
+    // 最后一轮会被直接丢弃（例如 10 轮的任务只统计出 9 轮）。
+    function closeCurrentInterSeg(endT) {
+      if (!m || m.endlessType !== 'interception') return;
+      if (m.interSegStart == null || endT <= m.interSegStart) return;
+      m.interSegs.push({
+        round:    m.interSegs.length + 1,
+        startT:   m.interSegStart,
+        endT,
+        duration: endT - m.interSegStart,
+      });
+      m.interSegStart = endT;
+    }
+
     function resolveDisplay() {
       if (m.locationDisplay) return m.locationDisplay;
       if (m.locationNode && nodeNameMap[m.locationNode]) return nodeNameMap[m.locationNode];
@@ -207,6 +223,7 @@ WF.GeneralParser = (function () {
       const end   = m.endT || t;
       if (end - start < MIN_DURATION) { reset(); return; }
       closeCurrentWave(end);
+      closeCurrentInterSeg(end);
       const anchor = m.sessionAnchor;
       const offset = m.sessionOffset || 0;
       records.push({
@@ -437,18 +454,19 @@ WF.GeneralParser = (function () {
         }
 
         // ── DefenseReward TransitionOut: marks round end for interception ─
-        // IMPORTANT: fires BEFORE InterNewRoundLotusTransmission each round.
-        // Defense/loopDefense/survival already have their type set before rewards fire,
-        // so if m.endlessType is still null here → this must be an interception mission.
+        // 每轮结算只应由这一个事件驱动边界（同时充当"上一轮结束"与"下一轮开始"）。
+        // 注意：InterNewRoundLotusTransmission（下面那个信号）会在这次结算前 1~2 秒
+        // 提前触发，如果也用它来刷新 interSegStart，会把边界提前到资源加载的那一刻，
+        // 导致每轮时长被腰斩成"资源加载信号 → 结算信号"之间的 1~3 秒空档，
+        // 而不是真正的整轮时长——所以该信号只用于确认任务类型，不参与边界计算。
         if (line.indexOf(PAT.defenseReward) !== -1) {
           const et = m.endlessType;
           if (et !== null && et !== 'interception') return;  // defense/survival use other trackers
-          if (et === null) {
-            // Round 1 boundary arrived before InterNewRound confirmed type
-            m.endlessType = 'interception';
-            m.interSegStart = m.startT || m.loadT;  // round 1 started at SS_STARTED
-          }
-          if (m.interSegStart != null) {
+          if (et === null) m.endlessType = 'interception';
+          if (m.endlessType === 'interception') {
+            // interSegStart 的初始化只看它自己有没有被设过，不依赖 endlessType 是否
+            // 早于本行就被 interRoundStart 提前确认——否则第一轮的起点永远不会被设置。
+            if (m.interSegStart == null) m.interSegStart = m.startT || m.loadT;
             m.interSegs.push({
               round:    m.interSegs.length + 1,
               startT:   m.interSegStart,
@@ -461,11 +479,10 @@ WF.GeneralParser = (function () {
         }
 
         // ── Interception: new round start signal ──────────
-        // Fires AFTER DefenseReward::TransitionOut. Use to confirm type and
-        // update interSegStart for the upcoming round.
+        // 仅用于在 DefenseReward 尚未出现前提前确认任务类型为拦截，不参与边界计算
+        // （原因见上面 defenseReward 分支的注释）。
         if (line.indexOf(PAT.interRoundStart) !== -1) {
           if (!m.endlessType) m.endlessType = 'interception';
-          if (m.endlessType === 'interception') m.interSegStart = t;
           return;
         }
 

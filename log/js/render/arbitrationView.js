@@ -3,6 +3,7 @@
  *   综合评分徽章 + 任务标题/元信息（主机时长 + 队内在场时长）+ 熟练度速览
  *   → 队伍成员 → 核心指标网格 → 每轮明细（可展开）→ 效率指标（生息/击杀/熟练度）
  *   → 三张分布图（清图效率 / 无人机刷新间隔 / 无人机刷新连续度）
+ *   → 两张时间序列趋势图（每分钟无人机生成 / 敌人生成速率）
  *   → 生息计算 → 评分说明 → 对话记录 */
 window.WF = window.WF || {};
 
@@ -74,6 +75,39 @@ WF.arbitrationView = (function () {
     container.appendChild(box);
   }
 
+  // 紧凑 SVG 柱状趋势图（用于分钟数较多的时间序列，避免逐行列表撑爆版面）
+  function trendChart(container, opts) {
+    // opts: { title, values:[num], unit, footer }
+    const box = U.el('div', 'arb-dist cy-panel arb-trend');
+    const hd = U.el('div', 'arb-dist-hd');
+    hd.appendChild(U.el('span', 'arb-dist-title', opts.title));
+    box.appendChild(hd);
+
+    const vals = opts.values;
+    const n = vals.length;
+    const max = Math.max(1, ...vals);
+    const W = 700, H = 120, padL = 4, padR = 4, gap = n > 40 ? 1 : 2;
+    const bw = Math.max(1, (W - padL - padR) / n - gap);
+    let svg = `<svg viewBox="0 0 ${W} ${H}" class="arb-trend-svg" preserveAspectRatio="none">`;
+    vals.forEach((v, i) => {
+      const h = Math.max(1, (v / max) * (H - 14));
+      const x = padL + i * (bw + gap);
+      const y = H - 14 - h;
+      svg += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="1" class="arb-trend-bar">` +
+        `<title>第 ${i + 1} 分钟：${v}${opts.unit || ''}</title></rect>`;
+    });
+    svg += '</svg>';
+    const chartWrap = U.el('div', 'arb-trend-wrap');
+    chartWrap.innerHTML = svg;
+    box.appendChild(chartWrap);
+    const axis = U.el('div', 'arb-trend-axis');
+    axis.appendChild(U.el('span', '', '第 1 分钟'));
+    axis.appendChild(U.el('span', '', `第 ${n} 分钟`));
+    box.appendChild(axis);
+    if (opts.footer) box.appendChild(U.el('div', 'arb-dist-foot', opts.footer));
+    container.appendChild(box);
+  }
+
   function render(container, rec) {
     container.innerHTML = '';
     const eff = rec.eff || { essence: 0, kill: 0, proficiency: 0 };
@@ -98,7 +132,7 @@ WF.arbitrationView = (function () {
     if (rec.lastClientDuration != null) {
       const cliRow = U.el('div', 'arb-meta-sub arb-meta-hint');
       cliRow.appendChild(document.createTextNode('队内在场时长 ' + fmtHMS(rec.lastClientDuration) + `（${U.fmtDurationLong(rec.lastClientDuration)}）`));
-      cliRow.title = '取各队伍成员对应网络连接"最后一次同步诊断"时间戳中最早的一个：只要有一名成员早于房主停止稳定在场（例如提前挂机/退出），这里就会先于主机时长停止推进，反映"全员仍在场farm"的实际窗口。';
+      cliRow.title = '本项目自有指标（口径与其他分析工具可能不同）：房主本地日志会为每一名队员各自的网络连接单独记录同步诊断行，取这些连接"最后一次诊断"时间戳中最早出现的一个。只要有一名队员早于房主停止发出这类诊断（例如提前挂机、切出游戏、或提前退出留房主单刷），这里就会先于主机时长停止推进——反映的是"全员仍稳定在场"的窗口，而非整场任务的时长。为避免把"这名队员网络一直很干净、诊断行本来就少"误判成"提前离场"，诊断次数低于 5 次的连接不参与判定；若全队诊断样本都太少，则不显示本行。';
       cliRow.classList.add('has-tip');
       meta.appendChild(cliRow);
     }
@@ -163,7 +197,6 @@ WF.arbitrationView = (function () {
       const sat = rec.dist.saturation;
       distBars(distWrap, {
         title: '清图效率',
-        headRight: 'Max ' + sat.maxLive,
         rows: sat.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
         footer: `高压占比（≥15）：${sat.geq15Pct.toFixed(1)}%`,
       });
@@ -172,7 +205,6 @@ WF.arbitrationView = (function () {
       const vac = rec.dist.vacuum;
       distBars(distWrap, {
         title: '无人机刷新间隔',
-        headRight: '最长 ' + vac.maxGap.toFixed(1) + 's',
         rows: vac.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
         footer: `>2s 占比：${vac.over2Pct.toFixed(1)}%`,
       });
@@ -186,6 +218,23 @@ WF.arbitrationView = (function () {
       });
     }
     container.appendChild(distWrap);
+
+    /* ─── 时间序列趋势（紧凑柱状图，分钟数多时避免逐行列表撑爆版面） ─── */
+    if (rec.dist && rec.dist.perMinute && rec.dist.perMinute.rows.length > 1) {
+      const pm = rec.dist.perMinute;
+      const trendWrap = U.el('div', 'arb-dist-wrap');
+      trendChart(trendWrap, {
+        title: '无人机生成趋势（每分钟）',
+        values: pm.rows.map((r) => r.drones), unit: ' 只',
+        footer: '按任务进行时间切片，观察产出节奏是否随时间衰减或提升',
+      });
+      trendChart(trendWrap, {
+        title: '敌人生成速率（每分钟）',
+        values: pm.rows.map((r) => r.spawn), unit: ' 个',
+        footer: '突增 / 骤降的分钟段通常对应地图切换或走位调整',
+      });
+      container.appendChild(trendWrap);
+    }
 
     /* ─── 生息计算（紧凑双列对齐） ─── */
     const essBox = U.el('div', 'arb-ess-box');
@@ -245,7 +294,7 @@ WF.arbitrationView = (function () {
     });
     explain.appendChild(scaleTable);
     explain.appendChild(U.el('div', 'note',
-      '无人机、敌人生成、清图效率、轮次结算均取自房主（Host）本地日志对应字段；轮次结算不足 1 分钟的记录已自动排除。' +
+      '无人机、敌人生成、清图效率、轮次结算均取自房主（Host）本地日志对应字段；此处的"1 分钟"是针对整场任务的门槛——只有当整局仲裁的主机时长不足 1 分钟（例如误触任务、中途放弃重开）时，这整条记录才会被判定为无效数据并整体排除，与单轮时长无关，单轮低于 1 分钟的正常结算完全会被保留计入。' +
       '受限于客户端日志的记录范围，任务实际结算获得的生息精华数量无法被读取——本页展示的"生息"均为按掉落规则推算出的统计期望值，并非实际到手数量。'));
     container.appendChild(explain);
 
