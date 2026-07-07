@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Capture Missions / Lex / Co-op */
+/* level_id=ldy2grrw | 共 8 条 */
+var capture_missions_lex_coopRecords = [
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:15.950",
+    uploadTime: "2025-12-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=z7xCPDyFhJU", "https://youtu.be/8OtqoiAS2DA"],
+    src:        "srdc",
+    srId:       "yw5r6q2y",
+  },
+  {
+    playerId:   "FXCloud / Salat / Mortar",
+    clearTime:  "0:17.000",
+    uploadTime: "2019-09-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=SPohhs7XoU8"],
+    src:        "srdc",
+    srId:       "yv3qqnxz",
+  },
+  {
+    playerId:   "PrimedDarkeN / Mortar",
+    clearTime:  "0:17.300",
+    uploadTime: "2020-09-14",
+    videoUrls:  ["https://www.youtube.com/watch?v=Uy7DtwNP4wM"],
+    src:        "srdc",
+    srId:       "me68l9qz",
+  },
+  {
+    playerId:   "SuiEXE / KaiMartin",
+    clearTime:  "0:22.433",
+    uploadTime: "2021-04-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=GKSOvl0R-S8"],
+    src:        "srdc",
+    srId:       "zx6enn8z",
+  },
+  {
+    playerId:   "silverdk / lucasengenho / Mortar",
+    clearTime:  "0:24.000",
+    uploadTime: "2019-08-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=u3_mBJhkRuI"],
+    src:        "srdc",
+    srId:       "z1jx2erz",
+  },
+  {
+    playerId:   "--Q--EValueAction / .cat",
+    clearTime:  "0:26.000",
+    uploadTime: "2018-12-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=sS7du4SSx6A&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "mr8lwn2y",
+  },
+  {
+    playerId:   "ShiftDelete / CreepingChamp",
+    clearTime:  "0:45.000",
+    uploadTime: "2020-08-20",
+    videoUrls:  ["https://youtu.be/rYmUGtrFWeE"],
+    src:        "srdc",
+    srId:       "y8rqq5nm",
+  },
+  {
+    playerId:   "zopney / MunchkinMel",
+    clearTime:  "0:52.000",
+    uploadTime: "2018-12-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=spILS5IGE7g"],
+    src:        "srdc",
+    srId:       "yd322evz",
+  },
+];

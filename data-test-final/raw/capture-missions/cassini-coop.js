@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Capture Missions / Cassini / Co-op */
+/* level_id=29vlkqqw | 共 8 条 */
+var capture_missions_cassini_coopRecords = [
+  {
+    playerId:   "Salat / Mortar",
+    clearTime:  "0:19.000",
+    uploadTime: "2019-09-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=Jl76gtESL0U"],
+    src:        "srdc",
+    srId:       "y8186lwz",
+  },
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:21.150",
+    uploadTime: "2025-12-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=VFzft_a4KMg", "https://youtu.be/uuwD1gT61zk"],
+    src:        "srdc",
+    srId:       "mr5l9e7y",
+  },
+  {
+    playerId:   "PrimedDarkeN / Mortar",
+    clearTime:  "0:24.867",
+    uploadTime: "2020-12-18",
+    videoUrls:  ["https://www.youtube.com/watch?v=WnepK4B127k"],
+    src:        "srdc",
+    srId:       "zgvj82jz",
+  },
+  {
+    playerId:   "Wambo / CreepingChamp",
+    clearTime:  "0:29.700",
+    uploadTime: "2020-12-06",
+    videoUrls:  ["https://youtu.be/j9qRAWs2d2E"],
+    src:        "srdc",
+    srId:       "m75o34wz",
+  },
+  {
+    playerId:   "silverdk / Ceejay",
+    clearTime:  "0:35.000",
+    uploadTime: "2019-07-05",
+    videoUrls:  ["https://youtu.be/DbpPtqbxa5E"],
+    src:        "srdc",
+    srId:       "m3112xqz",
+  },
+  {
+    playerId:   "lucasengenho / silverdk",
+    clearTime:  "0:38.000",
+    uploadTime: "2019-07-03",
+    videoUrls:  ["https://youtu.be/BfhunP_j6x8"],
+    src:        "srdc",
+    srId:       "mk22ok5m",
+  },
+  {
+    playerId:   "ShiftDelete / CreepingChamp",
+    clearTime:  "0:45.000",
+    uploadTime: "2020-08-20",
+    videoUrls:  ["https://youtu.be/dfRCJ2Ja57Q?list=PLOoCYdaYurpzssoavUuncOcivAmO4XJcr"],
+    src:        "srdc",
+    srId:       "m3gddeqz",
+  },
+  {
+    playerId:   "zopney / MunchkinMel",
+    clearTime:  "0:54.000",
+    uploadTime: "2018-12-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=1JtaNQTUcGo"],
+    src:        "srdc",
+    srId:       "z03xx79z",
+  },
+];

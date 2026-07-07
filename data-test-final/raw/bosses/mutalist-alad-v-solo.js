@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Bosses / Mutalist Alad V / Solo */
+/* level_id=xd0qxj19 | 共 8 条 */
+var bosses_mutalist_alad_v_soloRecords = [
+  {
+    playerId:   "Salat",
+    clearTime:  "0:26.000",
+    uploadTime: "2026-06-27",
+    videoUrls:  ["https://youtu.be/GgroVaXyX6g"],
+    src:        "srdc",
+    srId:       "y9qorwkz",
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:30.000",
+    uploadTime: "2024-03-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=j--OZMsCUiU"],
+    src:        "srdc",
+    srId:       "zp63l5xm",
+  },
+  {
+    playerId:   "mashor2004",
+    clearTime:  "0:35.000",
+    uploadTime: "2019-08-23",
+    videoUrls:  ["https://youtu.be/p5lDZaa59O8"],
+    src:        "srdc",
+    srId:       "znr19kly",
+  },
+  {
+    playerId:   "zukerben",
+    clearTime:  "0:39.000",
+    uploadTime: "2019-05-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=2nWQqt0i54E"],
+    src:        "srdc",
+    srId:       "zp07gg8m",
+  },
+  {
+    playerId:   "Nusmag",
+    clearTime:  "0:48.232",
+    uploadTime: "2018-07-13",
+    videoUrls:  ["https://youtu.be/lUlRC6JN-Z4"],
+    src:        "srdc",
+    srId:       "m3o16wgm",
+  },
+  {
+    playerId:   "-Rekken-",
+    clearTime:  "0:51.850",
+    uploadTime: "2018-06-14",
+    videoUrls:  ["https://youtu.be/txFzHuNBnuQ"],
+    src:        "srdc",
+    srId:       "ywp13jpz",
+  },
+  {
+    playerId:   "jetstream64",
+    clearTime:  "1:05.150",
+    uploadTime: "2018-02-05",
+    videoUrls:  ["https://www.youtube.com/watch?v=mccXdcvPaOY"],
+    src:        "srdc",
+    srId:       "z5og4x5y",
+  },
+  {
+    playerId:   "Euphoria3843",
+    clearTime:  "1:44.000",
+    uploadTime: "2021-03-16",
+    videoUrls:  ["https://streamable.com/l32n39"],
+    src:        "srdc",
+    srId:       "yo9qx9dy",
+  },
+];

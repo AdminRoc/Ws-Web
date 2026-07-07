@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Mastery Rank Tests / Test 12 / Solo */
+/* level_id=xd01gz0w | 共 8 条 */
+var mastery_rank_tests_test_12_soloRecords = [
+  {
+    playerId:   "Salat",
+    clearTime:  "0:49.717",
+    uploadTime: "2026-06-16",
+    videoUrls:  ["https://youtu.be/_xfZJnbTEaA"],
+    src:        "srdc",
+    srId:       "m38px96y",
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:49.966",
+    uploadTime: "2024-03-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=AZZcMV7SMMc"],
+    src:        "srdc",
+    srId:       "yvl2828z",
+  },
+  {
+    playerId:   "Akemi",
+    clearTime:  "0:50.350",
+    uploadTime: "2026-03-30",
+    videoUrls:  ["https://youtu.be/jdKN-yvOenY"],
+    src:        "srdc",
+    srId:       "yjr5legz",
+  },
+  {
+    playerId:   "waterwaterwater",
+    clearTime:  "0:51.467",
+    uploadTime: "2022-09-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=BllHO70QM_4&ab_channel=kodamizuki"],
+    src:        "srdc",
+    srId:       "z1glop7z",
+  },
+  {
+    playerId:   "HL_BAN",
+    clearTime:  "0:52.252",
+    uploadTime: "2023-05-14",
+    videoUrls:  ["https://youtu.be/JYQKFUFLoyU"],
+    src:        "srdc",
+    srId:       "m70qgdwy",
+  },
+  {
+    playerId:   "NightmarePlays",
+    clearTime:  "0:56.500",
+    uploadTime: "2023-09-02",
+    videoUrls:  ["https://www.youtube.com/watch?v=lddzbcWVnuY"],
+    src:        "srdc",
+    srId:       "y865j1dm",
+  },
+  {
+    playerId:   "apilliancj",
+    clearTime:  "0:57.450",
+    uploadTime: "2021-11-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=VPWDvnTPdpY"],
+    src:        "srdc",
+    srId:       "m37p85wz",
+  },
+  {
+    playerId:   "Shredmachine",
+    clearTime:  "1:32.727",
+    uploadTime: "2026-03-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=BPwu4ohuY3Q"],
+    src:        "srdc",
+    srId:       "z5ndj3dz",
+  },
+];

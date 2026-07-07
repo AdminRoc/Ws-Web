@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Bosses / Captain Vor & Lieutenant Lech Kril / Co-op */
+/* level_id=owo6yvyw | 共 7 条 */
+var bosses_captain_vor_lieutenant_lech_kril_coopRecords = [
+  {
+    playerId:   "Salat / lucasengenho / Mortar",
+    clearTime:  "0:45.616",
+    uploadTime: "2019-10-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=cN-s9PQ3sqE"],
+    src:        "srdc",
+    srId:       "zqr9575y",
+  },
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:51.000",
+    uploadTime: "2025-12-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=8xElm80Dk7c", "https://youtu.be/7lkJLPYEaVM"],
+    src:        "srdc",
+    srId:       "zn5v683z",
+  },
+  {
+    playerId:   "PrimedDarkeN / Boll",
+    clearTime:  "0:54.000",
+    uploadTime: "2021-01-13",
+    videoUrls:  ["https://www.youtube.com/watch?v=UZSjjnS_vCY&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "y8v3jo1z",
+  },
+  {
+    playerId:   "Bloody_001 / Dacami",
+    clearTime:  "0:55.000",
+    uploadTime: "2021-01-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=xX5ORRj5ceM"],
+    src:        "srdc",
+    srId:       "z539kvdy",
+  },
+  {
+    playerId:   "-dicht.Arogamers- / -Rekken-",
+    clearTime:  "1:00.010",
+    uploadTime: "2018-04-16",
+    videoUrls:  ["https://youtu.be/HcwD4cwItRE"],
+    src:        "srdc",
+    srId:       "y97qqvrm",
+  },
+  {
+    playerId:   "IRojaz / Akemi / Mekarazium / Nusmag",
+    clearTime:  "1:08.000",
+    uploadTime: "2018-03-15",
+    videoUrls:  ["https://youtu.be/s17Dkk15lTY"],
+    src:        "srdc",
+    srId:       "y97gjpvm",
+  },
+  {
+    playerId:   "ShiftDelete / CreepingChamp",
+    clearTime:  "1:29.000",
+    uploadTime: "2020-08-20",
+    videoUrls:  ["https://youtu.be/Lcmz3i09JwE?list=PLOoCYdaYurpzssoavUuncOcivAmO4XJcr"],
+    src:        "srdc",
+    srId:       "yo3441jy",
+  },
+];

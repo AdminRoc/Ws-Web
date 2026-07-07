@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Bosses / General Sargus Ruk / Co-op */
+/* level_id=y9mx8v1w | 共 8 条 */
+var bosses_general_sargus_ruk_coopRecords = [
+  {
+    playerId:   "Koto / Divlyn",
+    clearTime:  "0:30.000",
+    uploadTime: "2018-04-07",
+    videoUrls:  ["https://www.youtube.com/watch?v=L72KIfEAusA"],
+    src:        "srdc",
+    srId:       "mk4ng5vy",
+  },
+  {
+    playerId:   "bing / Akemi",
+    clearTime:  "0:32.082",
+    uploadTime: "2018-04-02",
+    videoUrls:  ["https://youtu.be/AkLhhBZ8NpU"],
+    src:        "srdc",
+    srId:       "m79jr09y",
+  },
+  {
+    playerId:   "V-_-iniciu-_-s / issaFoxy",
+    clearTime:  "0:34.000",
+    uploadTime: "2019-10-31",
+    videoUrls:  ["https://www.youtube.com/watch?v=PQxGsP4u758", "https://www.youtube.com/watch?v=f-HxxX9SnRE"],
+    src:        "srdc",
+    srId:       "zxknd15m",
+  },
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:36.000",
+    uploadTime: "2025-12-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=5T01pupl6HY", "https://youtu.be/phKGyJ07IKM"],
+    src:        "srdc",
+    srId:       "zp5w60xy",
+  },
+  {
+    playerId:   "Nusmag / OverusedMemes / lovesz / Akemi",
+    clearTime:  "0:41.741",
+    uploadTime: "2018-03-30",
+    videoUrls:  ["https://youtu.be/sxhgMVB7aSo"],
+    src:        "srdc",
+    srId:       "m79jo40y",
+  },
+  {
+    playerId:   "PrimedDarkeN / Boll",
+    clearTime:  "0:42.000",
+    uploadTime: "2020-12-31",
+    videoUrls:  ["https://youtu.be/MDMy3VeGdVA"],
+    src:        "srdc",
+    srId:       "y2d6627z",
+  },
+  {
+    playerId:   "Dosler / Luxisp",
+    clearTime:  "0:53.000",
+    uploadTime: "2022-11-11",
+    videoUrls:  ["https://youtu.be/Rbz-qtKZfyM"],
+    src:        "srdc",
+    srId:       "m3x43ewm",
+  },
+  {
+    playerId:   "ShiftDelete / CreepingChamp",
+    clearTime:  "1:05.000",
+    uploadTime: "2020-08-20",
+    videoUrls:  ["https://youtu.be/Q5z943Z7EQ4?list=PLOoCYdaYurpzssoavUuncOcivAmO4XJcr"],
+    src:        "srdc",
+    srId:       "yd0qqk0z",
+  },
+];

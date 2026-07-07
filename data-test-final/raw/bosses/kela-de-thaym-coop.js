@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Bosses / Kela de Thaym / Co-op */
+/* level_id=rw6o307w | 共 7 条 */
+var bosses_kela_de_thaym_coopRecords = [
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "1:47.783",
+    uploadTime: "2025-12-20",
+    videoUrls:  ["https://youtu.be/2NHpeDmQhdo"],
+    src:        "srdc",
+    srId:       "y682nnjz",
+  },
+  {
+    playerId:   "Mortar / Salat",
+    clearTime:  "1:53.000",
+    uploadTime: "2019-10-27",
+    videoUrls:  ["https://youtu.be/jzrHGOm7IDo"],
+    src:        "srdc",
+    srId:       "yl0n9n3y",
+  },
+  {
+    playerId:   "OverusedMemes / Nusmag",
+    clearTime:  "1:57.000",
+    uploadTime: "2018-03-29",
+    videoUrls:  ["https://youtu.be/dBf7oedWTNM"],
+    src:        "srdc",
+    srId:       "zn862g8z",
+  },
+  {
+    playerId:   "PrimedDarkeN / Boll",
+    clearTime:  "1:58.000",
+    uploadTime: "2020-12-31",
+    videoUrls:  ["https://www.youtube.com/watch?v=DWK5rrJxchs&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "ylv22lxm",
+  },
+  {
+    playerId:   "ShiftDelete / CreepingChamp",
+    clearTime:  "2:59.000",
+    uploadTime: "2020-08-20",
+    videoUrls:  ["https://youtu.be/6LYaPFJQPLk?list=PLOoCYdaYurpzssoavUuncOcivAmO4XJcr"],
+    src:        "srdc",
+    srId:       "mk844j5m",
+  },
+  {
+    playerId:   "Hejryt12 / zopney / MunchkinMel / ExplosivePowerxD",
+    clearTime:  "3:50.000",
+    uploadTime: "2018-08-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=uzkybWX8tSI"],
+    src:        "srdc",
+    srId:       "ywpd573z",
+  },
+  {
+    playerId:   "NewYorksVenom / Flashgordonahhha / djcell38 / kamikaz4000",
+    clearTime:  "5:33.000",
+    uploadTime: "2016-07-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=GmaKvUdzTYU"],
+    src:        "srdc",
+    srId:       "y671wl6m",
+  },
+];

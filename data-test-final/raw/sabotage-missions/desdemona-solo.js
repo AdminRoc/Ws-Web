@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Sabotage Missions / Desdemona / Solo */
+/* level_id=5wkqyrqw | 共 7 条 */
+var sabotage_missions_desdemona_soloRecords = [
+  {
+    playerId:   "Salat",
+    clearTime:  "1:39.533",
+    uploadTime: "2026-01-30",
+    videoUrls:  ["https://youtu.be/mvKgfrXTXD0"],
+    src:        "srdc",
+    srId:       "yv5ekoxm",
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "1:44.000",
+    uploadTime: "2021-11-17",
+    videoUrls:  ["https://www.youtube.com/watch?v=FyGpu9Q2rW4"],
+    src:        "srdc",
+    srId:       "z1x40p9m",
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "1:47.000",
+    uploadTime: "2021-11-16",
+    videoUrls:  ["https://youtu.be/7aHqEV-by4Y"],
+    src:        "srdc",
+    srId:       "zn0lxnly",
+  },
+  {
+    playerId:   "Wasamii",
+    clearTime:  "2:00.000",
+    uploadTime: "2021-11-10",
+    videoUrls:  ["https://youtu.be/d8mDURYVvfM"],
+    src:        "srdc",
+    srId:       "zn062qvy",
+  },
+  {
+    playerId:   "CreepingChamp",
+    clearTime:  "2:24.000",
+    uploadTime: "2020-12-03",
+    videoUrls:  ["https://youtu.be/bLKkepYo4zI"],
+    src:        "srdc",
+    srId:       "yd02o4xz",
+  },
+  {
+    playerId:   "LeChat930",
+    clearTime:  "2:37.000",
+    uploadTime: "2023-07-15",
+    videoUrls:  ["https://www.youtube.com/watch?v=1UXcn9cSvsM"],
+    src:        "srdc",
+    srId:       "zx3w425z",
+  },
+  {
+    playerId:   "LucianPlaysAllDay",
+    clearTime:  "4:21.000",
+    uploadTime: "2020-11-27",
+    videoUrls:  ["https://www.twitch.tv/videos/817245679"],
+    src:        "srdc",
+    srId:       "z09jnkjz",
+  },
+];

@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Bosses / Raptors / Co-op */
+/* level_id=ewpxrvzd | 共 7 条 */
+var bosses_raptors_coopRecords = [
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:36.917",
+    uploadTime: "2025-12-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=XXx8SQyUeXk", "https://youtu.be/B55a8QRBlhQ"],
+    src:        "srdc",
+    srId:       "mepljj8y",
+  },
+  {
+    playerId:   "Salat / Mortar",
+    clearTime:  "0:37.000",
+    uploadTime: "2019-10-28",
+    videoUrls:  ["https://www.youtube.com/watch?v=77As81BMvy4"],
+    src:        "srdc",
+    srId:       "zxknvn8m",
+  },
+  {
+    playerId:   "IRojaz / Akemi / Nusmag",
+    clearTime:  "0:53.000",
+    uploadTime: "2018-03-15",
+    videoUrls:  ["https://youtu.be/UAxbh-YOIKs"],
+    src:        "srdc",
+    srId:       "y45v6nnm",
+  },
+  {
+    playerId:   "PrimedDarkeN / Boll",
+    clearTime:  "0:59.000",
+    uploadTime: "2020-12-31",
+    videoUrls:  ["https://youtu.be/SjfgOO2-TVc"],
+    src:        "srdc",
+    srId:       "y91ggkrm",
+  },
+  {
+    playerId:   "Wambo / CreepingChamp",
+    clearTime:  "1:01.000",
+    uploadTime: "2020-12-06",
+    videoUrls:  ["https://youtu.be/DQlR2eqtwM8"],
+    src:        "srdc",
+    srId:       "mr9v0q7m",
+  },
+  {
+    playerId:   "LucianPlaysAllDay / HelpMeDie09 / Gammer--2007 / Only_01-left",
+    clearTime:  "2:05.000",
+    uploadTime: "2020-11-15",
+    videoUrls:  ["https://www.twitch.tv/videos/812582151"],
+    src:        "srdc",
+    srId:       "zq4eddrm",
+  },
+  {
+    playerId:   "CaptainTyler425 / Cmdr / Gunner1138",
+    clearTime:  "3:21.000",
+    uploadTime: "2021-01-29",
+    videoUrls:  ["https://www.youtube.com/watch?v=uTq-2EdLx-Y"],
+    src:        "srdc",
+    srId:       "zno3499y",
+  },
+];

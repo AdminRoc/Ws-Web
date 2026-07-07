@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Mastery Rank Tests / Test 08 / Solo */
+/* level_id=r9g4xe29 | 共 7 条 */
+var mastery_rank_tests_test_08_soloRecords = [
+  {
+    playerId:   "Salat",
+    clearTime:  "0:14.317",
+    uploadTime: "2026-05-02",
+    videoUrls:  ["https://youtu.be/oklAsP3MD4o"],
+    src:        "srdc",
+    srId:       "mkxq7p1z",
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:14.400",
+    uploadTime: "2019-08-18",
+    videoUrls:  ["https://www.youtube.com/watch?v=YWHblv91SME"],
+    src:        "srdc",
+    srId:       "yl0qq7ny",
+  },
+  {
+    playerId:   "OverusedMemes",
+    clearTime:  "0:16.717",
+    uploadTime: "2018-03-29",
+    videoUrls:  ["https://www.youtube.com/watch?v=eiDfPBqzlyA"],
+    src:        "srdc",
+    srId:       "yo48w47m",
+  },
+  {
+    playerId:   "-Rekken-",
+    clearTime:  "0:17.666",
+    uploadTime: "2018-03-29",
+    videoUrls:  ["https://youtu.be/X6EFJ8VogN0"],
+    src:        "srdc",
+    srId:       "yjkro73m",
+  },
+  {
+    playerId:   "Eurosion",
+    clearTime:  "0:20.416",
+    uploadTime: "2023-06-23",
+    videoUrls:  ["https://youtu.be/wk-60m1OYdA"],
+    src:        "srdc",
+    srId:       "z5pvwwgm",
+  },
+  {
+    playerId:   "Nusmag",
+    clearTime:  "0:23.740",
+    uploadTime: "2017-06-16",
+    videoUrls:  ["https://youtu.be/ZS560ENxjGw"],
+    src:        "srdc",
+    srId:       "zgnk1lvy",
+  },
+  {
+    playerId:   "Shredmachine",
+    clearTime:  "0:47.847",
+    uploadTime: "2025-04-18",
+    videoUrls:  ["https://www.youtube.com/watch?v=GnbCw6bD6rE"],
+    src:        "srdc",
+    srId:       "zxjee3qy",
+  },
+];

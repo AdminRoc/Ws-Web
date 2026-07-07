@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Spy Missions / Nereid / Co-op */
+/* level_id=29v78q39 | 共 8 条 */
+var spy_missions_nereid_coopRecords = [
+  {
+    playerId:   "Endryx_Ow / Salat / L1ndell",
+    clearTime:  "0:39.000",
+    uploadTime: "2026-02-09",
+    videoUrls:  ["https://youtu.be/uT8CtqBtglM"],
+    src:        "srdc",
+    srId:       "z17evojz",
+  },
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:44.000",
+    uploadTime: "2026-01-03",
+    videoUrls:  ["https://youtu.be/xTRykGQwWRQ"],
+    src:        "srdc",
+    srId:       "yl5d5vnz",
+  },
+  {
+    playerId:   "PrimedDarkeN / Boll / Menadion",
+    clearTime:  "0:47.000",
+    uploadTime: "2020-12-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=e3gNOSLqGgk&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "zn3gek3y",
+  },
+  {
+    playerId:   "-Rekken- / QuasarWF / ThatBlue",
+    clearTime:  "0:50.967",
+    uploadTime: "2018-06-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=KxDrZYQsdbo&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "yvjgkxey",
+  },
+  {
+    playerId:   "PrimedDarkeN / Boll",
+    clearTime:  "1:03.000",
+    uploadTime: "2020-12-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=-8fGH2CeBSE&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "y2dnl47z",
+  },
+  {
+    playerId:   "Wambo / CreepingChamp",
+    clearTime:  "1:51.000",
+    uploadTime: "2020-12-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=ZQzMDfxGHv4"],
+    src:        "srdc",
+    srId:       "z1o9rqjm",
+  },
+  {
+    playerId:   "Wambo / CreepingChamp",
+    clearTime:  "1:51.000",
+    uploadTime: "2020-12-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=ZQzMDfxGHv4"],
+    src:        "srdc",
+    srId:       "mk8pgv3m",
+  },
+  {
+    playerId:   "LucianPlaysAllDay / Panzof / HelpMeDie09",
+    clearTime:  "1:57.000",
+    uploadTime: "2020-11-15",
+    videoUrls:  ["https://www.twitch.tv/videos/812772699"],
+    src:        "srdc",
+    srId:       "z09ndn9z",
+  },
+];

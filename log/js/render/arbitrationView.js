@@ -150,7 +150,7 @@ WF.arbitrationView = (function () {
       { label: rec.missionType === 'survival' ? '生存轮次' : '轮 / 波次', value: String(rec.rounds), cls: '' },
       { label: '敌人负荷比',  value: rec.sparsity.toFixed(2),              cls: '' },
       { label: '期望生息',      value: rec.essence.fullBuffTotal.toFixed(3), cls: 'accent' },
-      { label: '生息速率 / 小时', value: rec.essence.fullBuffPerHour.toFixed(1), cls: '' },
+      { label: '期望生息 / 小时', value: rec.essence.fullBuffPerHour.toFixed(1), cls: '' },
     ];
     metrics.forEach(({ label, value, cls }) => {
       const cell = U.el('div', 'stat ' + cls);
@@ -180,7 +180,7 @@ WF.arbitrationView = (function () {
       ? `相对本节点历史最高 ${rec.essBaseline.toFixed(1)}/时 换算`
       : `相对默认基准 ${(rec.essBaseline || 600).toFixed(0)}/时 换算（本节点暂无人上传战绩）`;
     effBar(effGrid, '生息效率', eff.essence,
-      `生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时 · ${baseHint}（权重 55%）`);
+      `期望生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时 · ${baseHint}（权重 55%）`);
     effBar(effGrid, '清图效率', eff.clear != null ? eff.clear : 50,
       eff.clear != null
         ? `场上≥15只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%，越低越好（权重 25%）`
@@ -252,8 +252,8 @@ WF.arbitrationView = (function () {
       ['无人机期望生息',   `${e.droneFullBuff.toFixed(3)}`],
       ['轮次奖励期望',     rec.rounds > 0 ? `保底 ${e.roundGuarantee.toFixed(1)} + 额外 ${e.roundExtra.toFixed(1)} = ${e.fromRounds.toFixed(2)}` : '—'],
       ['期望生息（合计）', `${e.fullBuffTotal.toFixed(3)}`],
-      ['生息速率 / 小时',  `${e.fullBuffPerHour.toFixed(1)}`],
-      ['生息速率 / 分钟',  `${e.fullBuffPerMin.toFixed(2)}`],
+      ['期望生息 / 小时',  `${e.fullBuffPerHour.toFixed(1)}`],
+      ['期望生息 / 分钟',  `${e.fullBuffPerMin.toFixed(2)}`],
     ];
     const essTable = U.el('div', 'arb-ess-grid');
     essRows.forEach(([k, v]) => {
@@ -270,7 +270,7 @@ WF.arbitrationView = (function () {
 
     const defWrap = U.el('div', 'arb-explain-defs');
     [
-      ['生息效率（55%）', '把期望生息 ÷ 任务时长换算成生息速率（每小时全 Buff 产出），再除以节点基准，得到这里的百分比。基准优先取该节点的历史最高生息速率（不同节点天然产出节奏不同，不能用同一数字硬套）；某节点暂无人上传过战绩时，退回默认基准 600/时。达到节点历史最高 = 100%，超过则可突破 100%，属顶尖水平。'],
+      ['生息效率（55%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再除以节点基准，得到这里的百分比。期望生息按掉落规则推算，不受单次运气影响；节点基准同样取对方排行榜上传的期望值，两边口径一致。基准优先取该节点的历史最高期望生息速率；某节点暂无人上传过战绩时，退回默认基准 600/时。达到节点历史最高 = 100%，超过则可突破 100%，属顶尖水平。'],
       ['清图效率（25%）', '依据房主日志中每次敌人生成行的 MonitoredTicking 字段采样，统计全场中场上同时受 AI 监控的活跃敌人数 ≥15 的时间占比（geq15Pct），取 100 − geq15Pct 作为得分。清图越干净、场上高压时段越少，这项得分越高。完全来自日志内采样，不依赖任何外部基准。'],
       ['击杀效率（20%）', '利用每分钟切片数据：击杀数 ≈ 本分钟新增生成数 − 本分钟末活跃监控数相对上分钟末的净变化，对全程各分钟求和得到累计近似击杀数，再除以总敌人生成数（maxSpawned），得到全局消灭率百分比。反映生成的敌人有多大比例被及时清理；仅依赖日志数据，近似推算，供参考走势。若数据不足则以 50 分中性值占位。'],
     ].forEach(([k, v]) => {

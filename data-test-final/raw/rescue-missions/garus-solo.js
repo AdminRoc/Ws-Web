@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Rescue Missions / Garus / Solo */
+/* level_id=z98m1jpw | 共 8 条 */
+var rescue_missions_garus_soloRecords = [
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:21.067",
+    uploadTime: "2026-05-25",
+    videoUrls:  ["https://youtu.be/B_49gG68ER4"],
+    src:        "srdc",
+    srId:       "z5nwxqjz",
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:21.983",
+    uploadTime: "2026-05-20",
+    videoUrls:  ["https://youtu.be/xlwjJRZTNTs"],
+    src:        "srdc",
+    srId:       "yven8p4m",
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:28.000",
+    uploadTime: "2022-06-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=q8jO5iVe8uI"],
+    src:        "srdc",
+    srId:       "m76ndvwy",
+  },
+  {
+    playerId:   "Febi",
+    clearTime:  "0:34.000",
+    uploadTime: "2021-06-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=wIkext62rkE"],
+    src:        "srdc",
+    srId:       "zxg3eogy",
+  },
+  {
+    playerId:   "Wasamii",
+    clearTime:  "0:41.000",
+    uploadTime: "2021-04-29",
+    videoUrls:  ["https://youtu.be/Uj4RF6nYWpw"],
+    src:        "srdc",
+    srId:       "z5rjknny",
+  },
+  {
+    playerId:   "zukerben",
+    clearTime:  "0:46.000",
+    uploadTime: "2020-11-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=i7BvPMsbizE"],
+    src:        "srdc",
+    srId:       "m750p59z",
+  },
+  {
+    playerId:   "Dark_Zucker",
+    clearTime:  "0:48.041",
+    uploadTime: "2020-11-13",
+    videoUrls:  ["https://youtu.be/Yeru4qvoklE"],
+    src:        "srdc",
+    srId:       "zq47q2rm",
+  },
+  {
+    playerId:   "CreepingChamp",
+    clearTime:  "0:54.000",
+    uploadTime: "2020-11-13",
+    videoUrls:  ["https://youtu.be/okACO7dU418"],
+    src:        "srdc",
+    srId:       "zpl9k7vm",
+  },
+];

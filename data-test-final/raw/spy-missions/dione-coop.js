@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Spy Missions / Dione / Co-op */
+/* level_id=rdnzmyqd | 共 8 条 */
+var spy_missions_dione_coopRecords = [
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:30.000",
+    uploadTime: "2026-01-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=LIiiyHDu7jI", "https://youtu.be/gZVV6IsyuuU"],
+    src:        "srdc",
+    srId:       "zg9o3gem",
+  },
+  {
+    playerId:   "PrimedDarkeN / Menadion / Boll",
+    clearTime:  "0:33.000",
+    uploadTime: "2021-01-25",
+    videoUrls:  ["https://www.youtube.com/watch?v=AbJwUJGltPg"],
+    src:        "srdc",
+    srId:       "zgxk68nm",
+  },
+  {
+    playerId:   "PrimedDarkeN / Boll",
+    clearTime:  "0:44.000",
+    uploadTime: "2020-12-18",
+    videoUrls:  ["https://www.youtube.com/watch?v=9jTsSDEDgR4&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "yo3qe4jy",
+  },
+  {
+    playerId:   "-Rekken- / QuasarWF / ThatBlue",
+    clearTime:  "0:48.114",
+    uploadTime: "2018-06-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=PWHtUhNgW9A&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "zq36nv1y",
+  },
+  {
+    playerId:   "QuasarWF / Ceejay / -Rekken-",
+    clearTime:  "0:55.000",
+    uploadTime: "2018-06-16",
+    videoUrls:  ["https://youtu.be/rxcydEWxVO0"],
+    src:        "srdc",
+    srId:       "yj4k2l7y",
+  },
+  {
+    playerId:   "Wambo / CreepingChamp",
+    clearTime:  "1:05.000",
+    uploadTime: "2020-12-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=qXCgAmLhpls"],
+    src:        "srdc",
+    srId:       "yv9l10xz",
+  },
+  {
+    playerId:   "Wambo / CreepingChamp",
+    clearTime:  "1:05.000",
+    uploadTime: "2020-12-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=qXCgAmLhpls"],
+    src:        "srdc",
+    srId:       "zn321q9y",
+  },
+  {
+    playerId:   "Panzof / LucianPlaysAllDay / Gammer--2007 / Malakiahdark",
+    clearTime:  "2:02.000",
+    uploadTime: "2020-11-25",
+    videoUrls:  ["https://www.twitch.tv/videos/816167544"],
+    src:        "srdc",
+    srId:       "mk80g5lm",
+  },
+];

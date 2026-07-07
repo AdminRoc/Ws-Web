@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Exterminate / Carpo / Solo */
+/* level_id=wo7ypey9 | 共 8 条 */
+var exterminate_carpo_soloRecords = [
+  {
+    playerId:   "Jagdtor",
+    clearTime:  "0:19.483",
+    uploadTime: "2026-04-28",
+    videoUrls:  ["https://www.youtube.com/watch?v=-E0pAZHzHns"],
+    src:        "srdc",
+    srId:       "y9g8k8nm",
+  },
+  {
+    playerId:   "Hvna",
+    clearTime:  "0:20.533",
+    uploadTime: "2026-02-19",
+    videoUrls:  ["https://youtu.be/NtjVlU2EOR8"],
+    src:        "srdc",
+    srId:       "zpvnpnnz",
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:22.566",
+    uploadTime: "2026-02-11",
+    videoUrls:  ["https://youtu.be/jaFmRfDNCvE"],
+    src:        "srdc",
+    srId:       "y40p3r2z",
+  },
+  {
+    playerId:   "FrostMainer",
+    clearTime:  "0:34.000",
+    uploadTime: "2026-06-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=S7RWM1X1XrU"],
+    src:        "srdc",
+    srId:       "z10w83gm",
+  },
+  {
+    playerId:   "oTonJleHue",
+    clearTime:  "0:50.000",
+    uploadTime: "2026-02-13",
+    videoUrls:  ["https://youtu.be/C0lxFaDO3fE"],
+    src:        "srdc",
+    srId:       "yj7n50ny",
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:54.000",
+    uploadTime: "2026-02-09",
+    videoUrls:  ["https://youtu.be/l3aW41nsVh0?si=eFJ78Ir3ZAyzVADf"],
+    src:        "srdc",
+    srId:       "z56qgxgy",
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "1:03.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://youtu.be/ws3wMH24tVo?si=2qZJWoqJAI--mXuh&t=355"],
+    src:        "srdc",
+    srId:       "m32j0lqy",
+  },
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "1:17.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://youtu.be/1cDxpQDgWX4"],
+    src:        "srdc",
+    srId:       "z0kqj3om",
+  },
+];

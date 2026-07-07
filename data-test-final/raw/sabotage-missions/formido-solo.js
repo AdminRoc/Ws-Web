@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Sabotage Missions / Formido / Solo */
+/* level_id=495m78jw | 共 8 条 */
+var sabotage_missions_formido_soloRecords = [
+  {
+    playerId:   "Salat",
+    clearTime:  "1:56.000",
+    uploadTime: "2026-04-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=Q0kPDW4oS7A"],
+    src:        "srdc",
+    srId:       "y8l0jewm",
+  },
+  {
+    playerId:   "Endryx_Ow",
+    clearTime:  "2:00.000",
+    uploadTime: "2025-01-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=CjGUuHJ-IVg"],
+    src:        "srdc",
+    srId:       "zgjxxqnz",
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "2:07.000",
+    uploadTime: "2022-06-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=qsavy4RoMoU"],
+    src:        "srdc",
+    srId:       "z0pnnley",
+  },
+  {
+    playerId:   "Febi",
+    clearTime:  "2:22.000",
+    uploadTime: "2021-03-15",
+    videoUrls:  ["https://www.youtube.com/watch?v=duCgTdssk-8"],
+    src:        "srdc",
+    srId:       "y8vo831z",
+  },
+  {
+    playerId:   "Wasamii",
+    clearTime:  "2:24.000",
+    uploadTime: "2021-11-07",
+    videoUrls:  ["https://youtu.be/o5qHf_a0rMc"],
+    src:        "srdc",
+    srId:       "z1x0dxrm",
+  },
+  {
+    playerId:   "CreepingChamp",
+    clearTime:  "2:33.000",
+    uploadTime: "2020-12-01",
+    videoUrls:  ["https://youtu.be/6HI0UTl8ek0"],
+    src:        "srdc",
+    srId:       "yj6wxqnz",
+  },
+  {
+    playerId:   "LeChat930",
+    clearTime:  "2:51.000",
+    uploadTime: "2023-07-15",
+    videoUrls:  ["https://www.youtube.com/watch?v=x_uctCZTN_s"],
+    src:        "srdc",
+    srId:       "zge83xey",
+  },
+  {
+    playerId:   "LucianPlaysAllDay",
+    clearTime:  "3:53.000",
+    uploadTime: "2020-11-27",
+    videoUrls:  ["https://www.twitch.tv/videos/817251199"],
+    src:        "srdc",
+    srId:       "mk80vx3m",
+  },
+];

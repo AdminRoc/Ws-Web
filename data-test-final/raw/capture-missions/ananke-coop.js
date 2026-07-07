@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Capture Missions / Ananke / Co-op */
+/* level_id=rdq37jmw | 共 7 条 */
+var capture_missions_ananke_coopRecords = [
+  {
+    playerId:   "L1ndell / Salat",
+    clearTime:  "0:21.583",
+    uploadTime: "2025-12-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=7ajtc2xWW6A", "https://youtu.be/C8Bac2G5gPQ"],
+    src:        "srdc",
+    srId:       "zx5wvrgm",
+  },
+  {
+    playerId:   "PrimedDarkeN / Mortar",
+    clearTime:  "0:22.663",
+    uploadTime: "2020-07-31",
+    videoUrls:  ["https://www.youtube.com/watch?v=ZZfWJYiFM5Y"],
+    src:        "srdc",
+    srId:       "m35vxjqy",
+  },
+  {
+    playerId:   "lucasengenho / Mortar",
+    clearTime:  "0:23.000",
+    uploadTime: "2019-10-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=2aUsArGip8o"],
+    src:        "srdc",
+    srId:       "yojdp17m",
+  },
+  {
+    playerId:   "Maktoob / Seiso / LeChat930",
+    clearTime:  "0:33.833",
+    uploadTime: "2023-08-14",
+    videoUrls:  ["https://www.youtube.com/watch?v=KP_PTW-CPdU"],
+    src:        "srdc",
+    srId:       "zpwvrdny",
+  },
+  {
+    playerId:   "YiiXou / Touds_",
+    clearTime:  "0:34.067",
+    uploadTime: "2024-04-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=i5tBbzzMnd4"],
+    src:        "srdc",
+    srId:       "z0dlojey",
+  },
+  {
+    playerId:   "Likhann_ / LeChat930",
+    clearTime:  "0:41.000",
+    uploadTime: "2023-07-21",
+    videoUrls:  ["https://youtu.be/WdmXVeSbVoY"],
+    src:        "srdc",
+    srId:       "ydjlqkjy",
+  },
+  {
+    playerId:   "willy69892 / TheEnd0802",
+    clearTime:  "2:02.000",
+    uploadTime: "2020-06-17",
+    videoUrls:  ["https://youtu.be/-LOauBB-aXc"],
+    src:        "srdc",
+    srId:       "m35xvl4y",
+  },
+];

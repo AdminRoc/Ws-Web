@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Capture Missions / Copernicus / Co-op */
+/* level_id=n93o4xz9 | 共 7 条 */
+var capture_missions_copernicus_coopRecords = [
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:18.917",
+    uploadTime: "2025-12-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=013tVnRlnqo", "https://youtu.be/CsLrlxUsrEA"],
+    src:        "srdc",
+    srId:       "yo5n3kjz",
+  },
+  {
+    playerId:   "PrimedDarkeN / Mortar",
+    clearTime:  "0:20.233",
+    uploadTime: "2020-09-14",
+    videoUrls:  ["https://www.youtube.com/watch?v=94I9mA20EaI"],
+    src:        "srdc",
+    srId:       "y6r7q36y",
+  },
+  {
+    playerId:   "zxcMolniya / L1ndell",
+    clearTime:  "0:20.267",
+    uploadTime: "2021-12-02",
+    videoUrls:  ["https://youtu.be/73DcF-zE_Tc"],
+    src:        "srdc",
+    srId:       "zxl97kkz",
+  },
+  {
+    playerId:   "Salat / lucasengenho / Mortar",
+    clearTime:  "0:22.000",
+    uploadTime: "2019-09-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=lX1zUA0-ciM"],
+    src:        "srdc",
+    srId:       "zp4299xz",
+  },
+  {
+    playerId:   "lucasengenho / silverdk",
+    clearTime:  "0:30.000",
+    uploadTime: "2019-07-03",
+    videoUrls:  ["https://youtu.be/1-LwGJJadC8"],
+    src:        "srdc",
+    srId:       "z577l2em",
+  },
+  {
+    playerId:   "ShiftDelete / CreepingChamp",
+    clearTime:  "0:45.733",
+    uploadTime: "2020-08-20",
+    videoUrls:  ["https://youtu.be/XjGx96gggFY"],
+    src:        "srdc",
+    srId:       "y4e55pkm",
+  },
+  {
+    playerId:   "zopney / MunchkinMel",
+    clearTime:  "1:12.000",
+    uploadTime: "2018-12-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=TW2b50D3oqY"],
+    src:        "srdc",
+    srId:       "yj4ww5dy",
+  },
+];

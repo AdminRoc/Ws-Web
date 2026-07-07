@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Exterminate / Adaro / Solo */
+/* level_id=wj7pq8zw | 共 8 条 */
+var exterminate_adaro_soloRecords = [
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:19.000",
+    uploadTime: "2024-03-24",
+    videoUrls:  ["https://youtu.be/r38Fq1Pubxg"],
+    src:        "srdc",
+    srId:       "zx5x60km",
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:21.000",
+    uploadTime: "2024-03-22",
+    videoUrls:  ["https://youtu.be/my5eSjH_BN4"],
+    src:        "srdc",
+    srId:       "y40l2n2z",
+  },
+  {
+    playerId:   "FrostMainer",
+    clearTime:  "0:40.000",
+    uploadTime: "2026-06-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=5tafvW8rkSI"],
+    src:        "srdc",
+    srId:       "m384gw6y",
+  },
+  {
+    playerId:   "NamelessDeity",
+    clearTime:  "0:41.000",
+    uploadTime: "2026-04-29",
+    videoUrls:  ["https://www.youtube.com/watch?v=0mhKjSUwPZk"],
+    src:        "srdc",
+    srId:       "zn6v507y",
+  },
+  {
+    playerId:   "oTonJleHue",
+    clearTime:  "0:46.000",
+    uploadTime: "2026-02-13",
+    videoUrls:  ["https://youtu.be/EZcRF2DNHF4"],
+    src:        "srdc",
+    srId:       "zg94r5nm",
+  },
+  {
+    playerId:   "Salat",
+    clearTime:  "0:48.000",
+    uploadTime: "2026-01-08",
+    videoUrls:  ["https://youtu.be/wI6LTQLvWtU"],
+    src:        "srdc",
+    srId:       "zx5xjw8m",
+  },
+  {
+    playerId:   "PrimedDarkeN",
+    clearTime:  "0:53.000",
+    uploadTime: "2021-02-27",
+    videoUrls:  ["https://youtu.be/Cyh5xTP9JU8"],
+    src:        "srdc",
+    srId:       "yw5x02ny",
+  },
+  {
+    playerId:   "RoniPrime",
+    clearTime:  "1:10.000",
+    uploadTime: "2026-01-07",
+    videoUrls:  ["https://youtu.be/B5XHqdMt7oQ"],
+    src:        "srdc",
+    srId:       "m7vo099m",
+  },
+];

@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Spy Missions / Unda / Co-op */
+/* level_id=kwj16z0w | 共 7 条 */
+var spy_missions_unda_coopRecords = [
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:37.000",
+    uploadTime: "2026-01-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=AIpWwQQfiCc", "https://youtu.be/zrVkK20_zOY"],
+    src:        "srdc",
+    srId:       "z0kdk6om",
+  },
+  {
+    playerId:   "PrimedDarkeN / Akula / Febi",
+    clearTime:  "0:42.000",
+    uploadTime: "2023-01-29",
+    videoUrls:  ["https://www.twitch.tv/videos/1715169074?t=0h54m43s"],
+    src:        "srdc",
+    srId:       "ywv3e79z",
+  },
+  {
+    playerId:   "PrimedDarkeN / Boll / Menadion",
+    clearTime:  "0:44.000",
+    uploadTime: "2020-12-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=tv1h7hLlBM8&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "m75l3qez",
+  },
+  {
+    playerId:   "PrimedDarkeN / Boll",
+    clearTime:  "0:55.000",
+    uploadTime: "2020-12-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=FHzyU8WimMU&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "z53w5eny",
+  },
+  {
+    playerId:   "Wambo / CreepingChamp",
+    clearTime:  "1:04.000",
+    uploadTime: "2020-12-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=NhkkHHn3ufk"],
+    src:        "srdc",
+    srId:       "zxdqgngy",
+  },
+  {
+    playerId:   "Wambo / CreepingChamp",
+    clearTime:  "1:04.000",
+    uploadTime: "2020-12-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=NhkkHHn3ufk"],
+    src:        "srdc",
+    srId:       "z538redy",
+  },
+  {
+    playerId:   "LucianPlaysAllDay / Panzof / HelpMeDie09",
+    clearTime:  "1:45.000",
+    uploadTime: "2020-11-15",
+    videoUrls:  ["https://www.twitch.tv/videos/812760714"],
+    src:        "srdc",
+    srId:       "ywdvg60z",
+  },
+];

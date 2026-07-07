@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Mastery Rank Tests / Test 27 / Solo */
+/* level_id=495r5omd | 共 7 条 */
+var mastery_rank_tests_test_27_soloRecords = [
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:28.933",
+    uploadTime: "2023-12-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=MpjPc2NZFYM"],
+    src:        "srdc",
+    srId:       "m73nddey",
+  },
+  {
+    playerId:   "Akemi",
+    clearTime:  "0:44.166",
+    uploadTime: "2023-11-27",
+    videoUrls:  ["https://youtu.be/SBFDjQKy7HE"],
+    src:        "srdc",
+    srId:       "yd21o6vm",
+  },
+  {
+    playerId:   "Nononom12",
+    clearTime:  "0:50.266",
+    uploadTime: "2023-11-26",
+    videoUrls:  ["https://www.twitch.tv/videos/1988164552", "https://youtu.be/C5B_dUOtdYM"],
+    src:        "srdc",
+    srId:       "z1kq2l9y",
+  },
+  {
+    playerId:   "HL_BAN",
+    clearTime:  "1:23.650",
+    uploadTime: "2023-05-16",
+    videoUrls:  ["https://youtu.be/BrsfuikVoZQ"],
+    src:        "srdc",
+    srId:       "m70q2owy",
+  },
+  {
+    playerId:   "PINK_POMA",
+    clearTime:  "1:40.299",
+    uploadTime: "2021-03-06",
+    videoUrls:  ["https://youtu.be/bqGOiPbOe7o"],
+    src:        "srdc",
+    srId:       "yd92k0qz",
+  },
+  {
+    playerId:   "Andy.",
+    clearTime:  "2:04.633",
+    uploadTime: "2020-10-03",
+    videoUrls:  ["https://youtu.be/cPAv_XF6U5o"],
+    src:        "srdc",
+    srId:       "y915q4km",
+  },
+  {
+    playerId:   "Deavicius",
+    clearTime:  "2:42.100",
+    uploadTime: "2020-07-09",
+    videoUrls:  ["https://youtu.be/LDu3Bpg1EWM"],
+    src:        "srdc",
+    srId:       "y4w658km",
+  },
+];

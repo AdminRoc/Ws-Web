@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Spy Missions / Bode / Co-op */
+/* level_id=kwjz0gr9 | 共 7 条 */
+var spy_missions_bode_coopRecords = [
+  {
+    playerId:   "Endryx_Ow / Salat / L1ndell",
+    clearTime:  "0:23.000",
+    uploadTime: "2026-02-09",
+    videoUrls:  ["https://youtu.be/QYlYzZPPKZI"],
+    src:        "srdc",
+    srId:       "y40djwqz",
+  },
+  {
+    playerId:   "PrimedDarkeN / Kuremento / Mortar",
+    clearTime:  "0:25.000",
+    uploadTime: "2021-04-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=PJ0f_MdBrD0", "https://youtu.be/MVtz5izXatA", "https://www.youtube.com/watch?v=v_bnUO488lE"],
+    src:        "srdc",
+    srId:       "y2vopo9z",
+  },
+  {
+    playerId:   "PrimedDarkeN / Menadion / Mortar",
+    clearTime:  "0:27.000",
+    uploadTime: "2020-09-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=XWIB728Cx-o", "https://www.youtube.com/watch?v=j1ibVbQXT-0"],
+    src:        "srdc",
+    srId:       "yj64283z",
+  },
+  {
+    playerId:   "Ceejay / silverdk / lucasengenho / Mortar",
+    clearTime:  "0:47.000",
+    uploadTime: "2019-08-23",
+    videoUrls:  ["https://www.youtube.com/watch?v=1sj-D6FgLmM", "https://www.youtube.com/watch?v=5wAttTAf5rY"],
+    src:        "srdc",
+    srId:       "mre1wv2y",
+  },
+  {
+    playerId:   "-Rekken- / ThatBlue",
+    clearTime:  "0:48.531",
+    uploadTime: "2018-08-14",
+    videoUrls:  ["https://youtu.be/2ZRgVqKEcLg"],
+    src:        "srdc",
+    srId:       "me86g48m",
+  },
+  {
+    playerId:   "holleufer98 / Nusmag",
+    clearTime:  "0:49.700",
+    uploadTime: "2018-07-09",
+    videoUrls:  ["https://youtu.be/8fV7LvOrVoA"],
+    src:        "srdc",
+    srId:       "me8xkwqm",
+  },
+  {
+    playerId:   "-Rekken- / QuasarWF / ThatBlue",
+    clearTime:  "0:54.888",
+    uploadTime: "2018-05-12",
+    videoUrls:  ["https://youtu.be/b3De8UMWqxI"],
+    src:        "srdc",
+    srId:       "mekr303m",
+  },
+];

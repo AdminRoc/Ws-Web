@@ -1,0 +1,305 @@
+﻿section,sr_level,mode,level_id,sr_count,raw_file,matched_wfspeed_file,match_detail
+Unique Categories,Advanced Movement Tutorial,Solo,592q57r9,22,raw/unique-categories/advanced-movement-tutorial-solo.js,,
+Unique Categories,Advanced Movement Tutorial,Co-op,592q57r9,0,raw/unique-categories/advanced-movement-tutorial-coop.js,,
+Unique Categories,Assault: Koro,Solo,49554349,35,raw/unique-categories/assault-koro-solo.js,,
+Unique Categories,Assault: Koro,Co-op,49554349,14,raw/unique-categories/assault-koro-coop.js,,
+Unique Categories,Dojo Obstacle Course,Solo,5wk6p7q9,124,raw/unique-categories/dojo-obstacle-course-solo.js,data/special_challenge/special-challenge-obstacle-course.js,special_challenge/special-challenge-obstacle-course.js=6
+Unique Categories,Dojo Obstacle Course,Co-op,5wk6p7q9,0,raw/unique-categories/dojo-obstacle-course-coop.js,,
+Unique Categories,High Index,Solo,5d7rz7g9,7,raw/unique-categories/high-index-solo.js,,
+Unique Categories,High Index,Co-op,5d7rz7g9,1,raw/unique-categories/high-index-coop.js,,
+Unique Categories,Incident Archive 2318-H,Solo,y9mx8o1w,30,raw/unique-categories/incident-archive-2318-h-solo.js,,
+Unique Categories,Incident Archive 2318-H,Co-op,y9mx8o1w,0,raw/unique-categories/incident-archive-2318-h-coop.js,,
+Unique Categories,Netracell: Testudo,Solo,dy1pv8zd,16,raw/unique-categories/netracell-testudo-solo.js,,special_challenge/special-challenge-netracell.js=5; sabotage/sabotage-stribog.js=1
+Unique Categories,Netracell: Testudo,Co-op,dy1pv8zd,2,raw/unique-categories/netracell-testudo-coop.js,,
+Unique Categories,Ollie's Crash Course,Solo,9m5jmq5d,4,raw/unique-categories/ollie-s-crash-course-solo.js,data/special_challenge/special-challenge-ollies-crash-course.js,special_challenge/special-challenge-ollies-crash-course.js=4
+Unique Categories,Ollie's Crash Course,Co-op,9m5jmq5d,0,raw/unique-categories/ollie-s-crash-course-coop.js,,
+Unique Categories,Orokin Vault,Solo,y9m8755d,16,raw/unique-categories/orokin-vault-solo.js,,
+Unique Categories,Orokin Vault,Co-op,y9m8755d,7,raw/unique-categories/orokin-vault-coop.js,,
+Bosses,Alad V,Solo,xd12xo6w,67,raw/bosses/alad-v-solo.js,data/assassination/assassination-normal-themisto.js,assassination/assassination-normal-themisto.js=2
+Bosses,Alad V,Co-op,xd12xo6w,11,raw/bosses/alad-v-coop.js,,
+Bosses,Ambulas,Solo,29v72vn9,25,raw/bosses/ambulas-solo.js,data/assassination/assassination-normal-hades.js,assassination/assassination-normal-hades.js=3
+Bosses,Ambulas,Co-op,29v72vn9,9,raw/bosses/ambulas-coop.js,,
+Bosses,Captain Vor,Solo,o9x74v1d,60,raw/bosses/captain-vor-solo.js,data/assassination/assassination-normal-tolstoj.js,assassination/assassination-normal-tolstoj.js=3
+Bosses,Captain Vor,Co-op,o9x74v1d,12,raw/bosses/captain-vor-coop.js,,
+Bosses,Captain Vor & Lieutenant Lech Kril,Solo,owo6yvyw,19,raw/bosses/captain-vor-lieutenant-lech-kril-solo.js,data/assassination/assassination-normal-exta.js,assassination/assassination-normal-exta.js=3
+Bosses,Captain Vor & Lieutenant Lech Kril,Co-op,owo6yvyw,7,raw/bosses/captain-vor-lieutenant-lech-kril-coop.js,,
+Bosses,Councilor Vay Hek,Solo,rdq7lv19,20,raw/bosses/councilor-vay-hek-solo.js,data/assassination/assassination-normal-oro.js,assassination/assassination-normal-oro.js=3
+Bosses,Councilor Vay Hek,Co-op,rdq7lv19,7,raw/bosses/councilor-vay-hek-coop.js,,
+Bosses,The Fragmented,Solo,d40xzr89,3,raw/bosses/the-fragmented-solo.js,,assassination/assassination-normal-iliad.js=3; assassination/assassination-normal-effervo.js=3
+Bosses,The Fragmented,Co-op,d40xzr89,0,raw/bosses/the-fragmented-coop.js,,
+Bosses,The Fragmented One,Solo,9vm2x5x9,1,raw/bosses/the-fragmented-one-solo.js,data/assassination/assassination-steel-the-fragmented-one.js,assassination/assassination-steel-the-fragmented-one.js=1
+Bosses,The Fragmented One,Co-op,9vm2x5x9,0,raw/bosses/the-fragmented-one-coop.js,,
+Bosses,General Sargus Ruk,Solo,y9mx8v1w,24,raw/bosses/general-sargus-ruk-solo.js,data/assassination/assassination-normal-tethys.js,assassination/assassination-normal-tethys.js=4
+Bosses,General Sargus Ruk,Co-op,y9mx8v1w,8,raw/bosses/general-sargus-ruk-coop.js,,
+Bosses,The Guilty,Solo,d1j6126d,0,raw/bosses/the-guilty-solo.js,,
+Bosses,The Guilty,Co-op,d1j6126d,0,raw/bosses/the-guilty-coop.js,,
+Bosses,Hyena Pack,Solo,592q51r9,48,raw/bosses/hyena-pack-solo.js,data/assassination/assassination-normal-psamathe.js,assassination/assassination-normal-psamathe.js=2
+Bosses,Hyena Pack,Co-op,592q51r9,9,raw/bosses/hyena-pack-coop.js,,
+Bosses,H-09 Apex Tank,Solo,rdnnzmvd,2,raw/bosses/h-09-apex-tank-solo.js,data/hollvania/hollvania-victory-plaza-apex.js,hollvania/hollvania-victory-plaza-apex.js=1
+Bosses,H-09 Apex Tank,Co-op,rdnnzmvd,1,raw/bosses/h-09-apex-tank-coop.js,data/hollvania/hollvania-victory-plaza-apex.js,hollvania/hollvania-victory-plaza-apex.js=1
+Bosses,H-09 Efervon Tank,Solo,r9ggjn29,3,raw/bosses/h-09-efervon-tank-solo.js,data/hollvania/hollvania-victory-plaza-normal.js,hollvania/hollvania-victory-plaza-normal.js=3
+Bosses,H-09 Efervon Tank,Co-op,r9ggjn29,3,raw/bosses/h-09-efervon-tank-coop.js,data/hollvania/hollvania-victory-plaza-normal.js,hollvania/hollvania-victory-plaza-normal.js=2
+Bosses,Jackal,Solo,495540j9,58,raw/bosses/jackal-solo.js,,assassination/assassination-normal-fossa.js=3; rescue/rescue-orias.js=1
+Bosses,Jackal,Co-op,495540j9,14,raw/bosses/jackal-coop.js,,
+Bosses,Janus Captain Vor,Solo,wo7lx6y9,2,raw/bosses/janus-captain-vor-solo.js,data/assassination/assassination-steel-tolstoj.js,assassination/assassination-steel-tolstoj.js=2
+Bosses,Janus Captain Vor,Co-op,wo7lx6y9,0,raw/bosses/janus-captain-vor-coop.js,,
+Bosses,Jordas Golem,Solo,xd42xmpw,40,raw/bosses/jordas-golem-solo.js,data/assassination/assassination-normal-jordas-golem.js,assassination/assassination-normal-jordas-golem.js=2
+Bosses,Jordas Golem,Co-op,xd42xmpw,16,raw/bosses/jordas-golem-coop.js,,
+Bosses,Kela de Thaym,Solo,rw6o307w,17,raw/bosses/kela-de-thaym-solo.js,data/assassination/assassination-normal-merrow.js,assassination/assassination-normal-merrow.js=1
+Bosses,Kela de Thaym,Co-op,rw6o307w,7,raw/bosses/kela-de-thaym-coop.js,,
+Bosses,Lephantis,Solo,n934oped,29,raw/bosses/lephantis-solo.js,data/assassination/assassination-normal-magnacidium.js,assassination/assassination-normal-magnacidium.js=3
+Bosses,Lephantis,Co-op,n934oped,14,raw/bosses/lephantis-coop.js,,
+Bosses,Lieutenant Lech Kril,Solo,5d7480vd,18,raw/bosses/lieutenant-lech-kril-solo.js,data/assassination/assassination-normal-war.js,assassination/assassination-normal-war.js=3
+Bosses,Lieutenant Lech Kril,Co-op,5d7480vd,6,raw/bosses/lieutenant-lech-kril-coop.js,,
+Bosses,Mutalist Alad V,Solo,xd0qxj19,8,raw/bosses/mutalist-alad-v-solo.js,,assassination/assassination-normal-mutalist-alad-v.js=3; exterminate/exterminate-normal-neso.js=1
+Bosses,Mutalist Alad V,Co-op,xd0qxj19,5,raw/bosses/mutalist-alad-v-coop.js,,
+Bosses,Raptors,Solo,ewpxrvzd,22,raw/bosses/raptors-solo.js,data/assassination/assassination-normal-naamah.js,assassination/assassination-normal-naamah.js=2
+Bosses,Raptors,Co-op,ewpxrvzd,7,raw/bosses/raptors-coop.js,,
+Bosses,Ropalolyst,Solo,r9grp4kw,38,raw/bosses/ropalolyst-solo.js,data/ropalolyst/ropalolyst-normal.js,ropalolyst/ropalolyst-normal.js=4
+Bosses,Ropalolyst,Co-op,r9grp4kw,6,raw/bosses/ropalolyst-coop.js,data/ropalolyst/ropalolyst-normal.js,ropalolyst/ropalolyst-normal.js=2
+Bosses,S̶e̶r̶g̶e̶a̶n̶t̶ The Iliad Tileset,Solo,kwjzpmz9,112,raw/bosses/sergeant-the-iliad-tileset-solo.js,,
+Bosses,S̶e̶r̶g̶e̶a̶n̶t̶ The Iliad Tileset,Co-op,kwjzpmz9,12,raw/bosses/sergeant-the-iliad-tileset-coop.js,,
+Bosses,Tyl Regor,Solo,5wk6pvq9,27,raw/bosses/tyl-regor-solo.js,data/assassination/assassination-normal-titania.js,assassination/assassination-normal-titania.js=3
+Bosses,Tyl Regor,Co-op,5wk6pvq9,13,raw/bosses/tyl-regor-coop.js,,
+Bosses,Zealoid Prelate,Solo,69zelx69,11,raw/bosses/zealoid-prelate-solo.js,data/assassination/assassination-normal-exequias.js,assassination/assassination-normal-exequias.js=5
+Bosses,Zealoid Prelate,Co-op,69zelx69,3,raw/bosses/zealoid-prelate-coop.js,,
+Break Narmer (Kahl missions),Junk Run,Solo,920j5rgd,2,raw/break-narmer-kahl-missions/junk-run-solo.js,,
+Break Narmer (Kahl missions),Junk Run,Co-op,920j5rgd,0,raw/break-narmer-kahl-missions/junk-run-coop.js,,
+Break Narmer (Kahl missions),Prison Break,Solo,9vmy2n19,2,raw/break-narmer-kahl-missions/prison-break-solo.js,,
+Break Narmer (Kahl missions),Prison Break,Co-op,9vmy2n19,0,raw/break-narmer-kahl-missions/prison-break-coop.js,,
+Break Narmer (Kahl missions),Sneaky Sabotage,Solo,wkk2pe5w,3,raw/break-narmer-kahl-missions/sneaky-sabotage-solo.js,,
+Break Narmer (Kahl missions),Sneaky Sabotage,Co-op,wkk2pe5w,0,raw/break-narmer-kahl-missions/sneaky-sabotage-coop.js,,
+Capture Missions,Abaddon,Solo,r9gx45kw,28,raw/capture-missions/abaddon-solo.js,data/capture/capture-abaddon.js,capture/capture-abaddon.js=4
+Capture Missions,Abaddon,Co-op,r9gx45kw,9,raw/capture-missions/abaddon-coop.js,,
+Capture Missions,Ananke,Solo,rdq37jmw,21,raw/capture-missions/ananke-solo.js,data/capture/capture-ananke.js,capture/capture-ananke.js=4
+Capture Missions,Ananke,Co-op,rdq37jmw,7,raw/capture-missions/ananke-coop.js,,
+Capture Missions,Ara,Solo,n93o4xe9,38,raw/capture-missions/ara-solo.js,data/capture/capture-ara.js,capture/capture-ara.js=3
+Capture Missions,Ara,Co-op,n93o4xe9,13,raw/capture-missions/ara-coop.js,,
+Capture Missions,Ariel,Solo,z98n7ol9,19,raw/capture-missions/ariel-solo.js,data/capture/capture-ariel.js,capture/capture-ariel.js=3
+Capture Missions,Ariel,Co-op,z98n7ol9,9,raw/capture-missions/ariel-coop.js,,
+Capture Missions,Cassini,Solo,29vlkqqw,36,raw/capture-missions/cassini-solo.js,,capture/capture-cassini.js=4; exterminate/exterminate-steel-hellas.js=1
+Capture Missions,Cassini,Co-op,29vlkqqw,8,raw/capture-missions/cassini-coop.js,,
+Capture Missions,Copernicus,Solo,n93o4xz9,21,raw/capture-missions/copernicus-solo.js,data/capture/capture-copernicus.js,capture/capture-copernicus.js=3
+Capture Missions,Copernicus,Co-op,n93o4xz9,7,raw/capture-missions/copernicus-coop.js,,
+Capture Missions,Elion,Solo,nwl3omrw,19,raw/capture-missions/elion-solo.js,data/capture/capture-elion.js,capture/capture-elion.js=3
+Capture Missions,Elion,Co-op,nwl3omrw,10,raw/capture-missions/elion-coop.js,,
+Capture Missions,Galatea,Solo,o9x47q1d,32,raw/capture-missions/galatea-solo.js,data/capture/capture-galatea.js,capture/capture-galatea.js=3
+Capture Missions,Galatea,Co-op,o9x47q1d,12,raw/capture-missions/galatea-coop.js,,
+Capture Missions,Horend,Solo,z98n7op9,21,raw/capture-missions/horend-solo.js,data/capture/capture-horend.js,capture/capture-horend.js=3
+Capture Missions,Horend,Co-op,z98n7op9,5,raw/capture-missions/horend-coop.js,,
+Capture Missions,Hydra,Solo,ywel5vr9,29,raw/capture-missions/hydra-solo.js,data/capture/capture-hydra.js,capture/capture-hydra.js=3
+Capture Missions,Hydra,Co-op,ywel5vr9,8,raw/capture-missions/hydra-coop.js,,
+Capture Missions,Isos,Solo,rdnnzm7d,18,raw/capture-missions/isos-solo.js,data/capture/capture-isos.js,capture/capture-isos.js=4
+Capture Missions,Isos,Co-op,rdnnzm7d,7,raw/capture-missions/isos-coop.js,,
+Capture Missions,Lex,Solo,ldy2grrw,24,raw/capture-missions/lex-solo.js,data/capture/capture-lex.js,capture/capture-lex.js=2
+Capture Missions,Lex,Co-op,ldy2grrw,8,raw/capture-missions/lex-coop.js,,
+Capture Missions,Mantle,Solo,ldy2grzw,54,raw/capture-missions/mantle-solo.js,data/capture/capture-mantle.js,capture/capture-mantle.js=3
+Capture Missions,Mantle,Co-op,ldy2grzw,14,raw/capture-missions/mantle-coop.js,,
+Capture Missions,Ukko,Solo,29v278ld,177,raw/capture-missions/ukko-solo.js,,capture/capture-ukko.js=4; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-normal-adaro.js=1; exterminate/exterminate-steel-e-prime.js=1
+Capture Missions,Ukko,Co-op,29v278ld,24,raw/capture-missions/ukko-coop.js,,
+Disruption Missions,Apollo,Solo,920ojeod,4,raw/disruption-missions/apollo-solo.js,data/disruption/disruption-apollo-solo.js,disruption/disruption-apollo-solo.js=1
+Disruption Missions,Apollo,Co-op,920ojeod,2,raw/disruption-missions/apollo-coop.js,data/disruption/disruption-apollo-duo.js,disruption/disruption-apollo-duo.js=1
+Disruption Missions,Armatus,Solo,dnopv2vw,3,raw/disruption-missions/armatus-solo.js,,assassination/assassination-normal-exequias.js=1; disruption/disruption-armatus-solo.js=1
+Disruption Missions,Armatus,Co-op,dnopv2vw,1,raw/disruption-missions/armatus-coop.js,,
+Disruption Missions,Ganymede,Solo,d1j50yed,4,raw/disruption-missions/ganymede-solo.js,,
+Disruption Missions,Ganymede,Co-op,d1j50yed,2,raw/disruption-missions/ganymede-coop.js,,
+Disruption Missions,Kappa,Solo,9m5pe45d,12,raw/disruption-missions/kappa-solo.js,data/disruption/disruption-kappa-solo.js,disruption/disruption-kappa-solo.js=6
+Disruption Missions,Kappa,Co-op,9m5pe45d,20,raw/disruption-missions/kappa-coop.js,,disruption/disruption-kappa-multi.js=11; disruption/disruption-kappa-duo.js=6; disruption/disruption-kappa-solo.js=1
+Disruption Missions,Laomedeia,Solo,wo72k5o9,2,raw/disruption-missions/laomedeia-solo.js,,
+Disruption Missions,Laomedeia,Co-op,wo72k5o9,2,raw/disruption-missions/laomedeia-coop.js,,
+Disruption Missions,Olympus,Solo,wj7ey6nw,5,raw/disruption-missions/olympus-solo.js,,disruption/disruption-olympus-solo.js=2; assassination/assassination-normal-exequias.js=1
+Disruption Missions,Olympus,Co-op,wj7ey6nw,4,raw/disruption-missions/olympus-coop.js,,disruption/disruption-olympus-duo.js=1; disruption/disruption-olympus-multi.js=1
+Disruption Missions,Tamu,Solo,wkkr242w,5,raw/disruption-missions/tamu-solo.js,data/disruption/disruption-tamu-solo.js,disruption/disruption-tamu-solo.js=1
+Disruption Missions,Tamu,Co-op,wkkr242w,2,raw/disruption-missions/tamu-coop.js,data/disruption/disruption-tamu-duo.js,disruption/disruption-tamu-duo.js=1
+Disruption Missions,Ur,Solo,wp7qp4kw,4,raw/disruption-missions/ur-solo.js,data/disruption/disruption-ur-solo.js,disruption/disruption-ur-solo.js=2
+Disruption Missions,Ur,Co-op,wp7qp4kw,3,raw/disruption-missions/ur-coop.js,data/disruption/disruption-ur-duo.js,disruption/disruption-ur-duo.js=2
+Exterminate,Acheron,Solo,d7y8mevd,9,raw/exterminate/acheron-solo.js,,exterminate/exterminate-steel-acheron.js=5; exterminate/exterminate-normal-acheron.js=4; exterminate/exterminate-steel-neso.js=1; exterminate/exterminate-steel-hellas.js=1; exterminate/exterminate-steel-halako-perimeter.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-dakata.js=1
+Exterminate,Acheron,Co-op,d7y8mevd,0,raw/exterminate/acheron-coop.js,,
+Exterminate,Adaro,Solo,wj7pq8zw,8,raw/exterminate/adaro-solo.js,,exterminate/exterminate-steel-adaro.js=5; exterminate/exterminate-normal-adaro.js=3; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-halako-perimeter.js=1; exterminate/exterminate-steel-hellas.js=1
+Exterminate,Adaro,Co-op,wj7pq8zw,2,raw/exterminate/adaro-coop.js,data/exterminate/exterminate-normal-adaro.js,exterminate/exterminate-normal-adaro.js=1
+Exterminate,Carpo,Solo,wo7ypey9,8,raw/exterminate/carpo-solo.js,,exterminate/exterminate-steel-carpo.js=5; exterminate/exterminate-normal-carpo.js=3; exterminate/exterminate-steel-narcissus.js=2; exterminate/exterminate-steel-neso.js=2; exterminate/exterminate-steel-pallas.js=2; exterminate/exterminate-steel-hellas.js=2; exterminate/exterminate-steel-nex.js=2; exterminate/exterminate-steel-puck.js=2; exterminate/exterminate-steel-halako-perimeter.js=1; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-dakata.js=1; exterminate/exterminate-steel-plato.js=1; exterminate/exterminate-steel-mariana.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-telesto.js=1; exterminate/exterminate-steel-e-prime.js=1; exterminate/exterminate-steel-oxomoco.js=1; hollvania/hollvania-1999-exterminate.js=1
+Exterminate,Carpo,Co-op,wo7ypey9,1,raw/exterminate/carpo-coop.js,,
+Exterminate,Dakata,Solo,dnon12vw,5,raw/exterminate/dakata-solo.js,,exterminate/exterminate-steel-dakata.js=4; exterminate/exterminate-steel-mariana.js=2; exterminate/exterminate-normal-dakata.js=1; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-plato.js=1; exterminate/exterminate-steel-narcissus.js=1; exterminate/exterminate-steel-carpo.js=1; exterminate/exterminate-steel-neso.js=1; exterminate/exterminate-steel-pallas.js=1; exterminate/exterminate-steel-hellas.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-nex.js=1; exterminate/exterminate-steel-puck.js=1; exterminate/exterminate-steel-acheron.js=1
+Exterminate,Dakata,Co-op,dnon12vw,0,raw/exterminate/dakata-coop.js,,
+Exterminate,E Prime,Solo,d1jxq36d,12,raw/exterminate/e-prime-solo.js,,exterminate/exterminate-steel-e-prime.js=7; exterminate/exterminate-normal-e-prime.js=5; exterminate/exterminate-steel-telesto.js=1; exterminate/exterminate-steel-narcissus.js=1; exterminate/exterminate-steel-neso.js=1; exterminate/exterminate-steel-carpo.js=1; exterminate/exterminate-steel-oxomoco.js=1; exterminate/exterminate-steel-pallas.js=1; hollvania/hollvania-1999-exterminate.js=1; exterminate/exterminate-steel-hellas.js=1; exterminate/exterminate-steel-nex.js=1; exterminate/exterminate-steel-puck.js=1
+Exterminate,E Prime,Co-op,d1jxq36d,2,raw/exterminate/e-prime-coop.js,data/exterminate/exterminate-normal-e-prime.js,exterminate/exterminate-normal-e-prime.js=1
+Exterminate,Halako Perimeter,Solo,wp7r6zzw,5,raw/exterminate/halako-perimeter-solo.js,,exterminate/exterminate-steel-halako-perimeter.js=4; exterminate/exterminate-normal-halako-perimeter.js=1; rescue/rescue-zeipel.js=1; exterminate/exterminate-steel-carpo.js=1; exterminate/exterminate-steel-acheron.js=1; exterminate/exterminate-steel-hellas.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-adaro.js=1
+Exterminate,Halako Perimeter,Co-op,wp7r6zzw,0,raw/exterminate/halako-perimeter-coop.js,,
+Exterminate,Hellas,Solo,9m58or1d,6,raw/exterminate/hellas-solo.js,,exterminate/exterminate-steel-hellas.js=4; exterminate/exterminate-normal-hellas.js=2; exterminate/exterminate-steel-narcissus.js=2; exterminate/exterminate-steel-nex.js=2; exterminate/exterminate-steel-puck.js=2; exterminate/exterminate-steel-carpo.js=2; exterminate/exterminate-steel-neso.js=2; exterminate/exterminate-steel-pallas.js=2; capture/capture-cassini.js=1; exterminate/exterminate-steel-plato.js=1; exterminate/exterminate-steel-halako-perimeter.js=1; exterminate/exterminate-steel-mariana.js=1; exterminate/exterminate-steel-acheron.js=1; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-dakata.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-telesto.js=1; exterminate/exterminate-steel-e-prime.js=1; exterminate/exterminate-steel-oxomoco.js=1; hollvania/hollvania-1999-exterminate.js=1; exterminate/exterminate-steel-adaro.js=1
+Exterminate,Hellas,Co-op,9m58or1d,2,raw/exterminate/hellas-coop.js,data/exterminate/exterminate-normal-hellas.js,exterminate/exterminate-normal-hellas.js=1
+Exterminate,Höllvania/1999,Solo,wkkp7nqw,13,raw/exterminate/hollvania-1999-solo.js,,hollvania/hollvania-1999-exterminate.js=6; exterminate/exterminate-steel-telesto.js=2; exterminate/exterminate-steel-narcissus.js=2; exterminate/exterminate-steel-e-prime.js=2; exterminate/exterminate-steel-neso.js=2; exterminate/exterminate-steel-carpo.js=2; exterminate/exterminate-steel-oxomoco.js=2; exterminate/exterminate-steel-pallas.js=2; exterminate/exterminate-steel-hellas.js=2; exterminate/exterminate-steel-nex.js=2; exterminate/exterminate-steel-puck.js=2
+Exterminate,Höllvania/1999,Co-op,wkkp7nqw,0,raw/exterminate/hollvania-1999-coop.js,,
+Exterminate,Mariana,Solo,wj7p22rw,4,raw/exterminate/mariana-solo.js,,exterminate/exterminate-normal-mariana.js=2; exterminate/exterminate-steel-mariana.js=2; exterminate/exterminate-steel-dakata.js=2; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-plato.js=1; exterminate/exterminate-steel-narcissus.js=1; exterminate/exterminate-steel-carpo.js=1; exterminate/exterminate-steel-neso.js=1; exterminate/exterminate-steel-pallas.js=1; exterminate/exterminate-steel-hellas.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-nex.js=1; exterminate/exterminate-steel-puck.js=1
+Exterminate,Mariana,Co-op,wj7p22rw,2,raw/exterminate/mariana-coop.js,data/exterminate/exterminate-normal-mariana.js,exterminate/exterminate-normal-mariana.js=1
+Exterminate,Narcissus,Solo,920578rd,6,raw/exterminate/narcissus-solo.js,,exterminate/exterminate-steel-narcissus.js=4; exterminate/exterminate-normal-narcissus.js=2; exterminate/exterminate-steel-oxomoco.js=2; exterminate/exterminate-steel-carpo.js=2; exterminate/exterminate-steel-neso.js=2; exterminate/exterminate-steel-pallas.js=2; exterminate/exterminate-steel-hellas.js=2; exterminate/exterminate-steel-nex.js=2; exterminate/exterminate-steel-puck.js=2; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-dakata.js=1; exterminate/exterminate-steel-plato.js=1; exterminate/exterminate-steel-mariana.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-telesto.js=1; exterminate/exterminate-steel-e-prime.js=1; hollvania/hollvania-1999-exterminate.js=1
+Exterminate,Narcissus,Co-op,920578rd,0,raw/exterminate/narcissus-coop.js,,
+Exterminate,Neso,Solo,9vm2rln9,6,raw/exterminate/neso-solo.js,,exterminate/exterminate-steel-neso.js=4; exterminate/exterminate-normal-neso.js=2; exterminate/exterminate-steel-plato.js=2; exterminate/exterminate-steel-narcissus.js=2; exterminate/exterminate-steel-carpo.js=2; exterminate/exterminate-steel-pallas.js=2; exterminate/exterminate-steel-hellas.js=2; exterminate/exterminate-steel-nex.js=2; exterminate/exterminate-steel-puck.js=2; assassination/assassination-normal-mutalist-alad-v.js=1; exterminate/exterminate-steel-acheron.js=1; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-dakata.js=1; exterminate/exterminate-steel-mariana.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-telesto.js=1; exterminate/exterminate-steel-e-prime.js=1; exterminate/exterminate-steel-oxomoco.js=1; hollvania/hollvania-1999-exterminate.js=1
+Exterminate,Neso,Co-op,9vm2rln9,1,raw/exterminate/neso-coop.js,,
+Exterminate,Nex,Solo,d40xoyp9,6,raw/exterminate/nex-solo.js,,exterminate/exterminate-steel-nex.js=5; exterminate/exterminate-steel-plato.js=2; exterminate/exterminate-steel-narcissus.js=2; exterminate/exterminate-steel-carpo.js=2; exterminate/exterminate-steel-neso.js=2; exterminate/exterminate-steel-pallas.js=2; exterminate/exterminate-steel-hellas.js=2; exterminate/exterminate-steel-puck.js=2; exterminate/exterminate-normal-nex.js=1; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-dakata.js=1; exterminate/exterminate-steel-mariana.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-telesto.js=1; exterminate/exterminate-steel-e-prime.js=1; exterminate/exterminate-steel-oxomoco.js=1; hollvania/hollvania-1999-exterminate.js=1
+Exterminate,Nex,Co-op,d40xoyp9,0,raw/exterminate/nex-coop.js,,
+Exterminate,Oxomoco,Solo,d0kx5219,10,raw/exterminate/oxomoco-solo.js,,exterminate/exterminate-normal-oxomoco.js=5; exterminate/exterminate-steel-oxomoco.js=5; exterminate/exterminate-steel-narcissus.js=2; exterminate/exterminate-steel-telesto.js=1; exterminate/exterminate-steel-e-prime.js=1; exterminate/exterminate-steel-neso.js=1; exterminate/exterminate-steel-carpo.js=1; exterminate/exterminate-steel-pallas.js=1; hollvania/hollvania-1999-exterminate.js=1; exterminate/exterminate-steel-hellas.js=1; exterminate/exterminate-steel-nex.js=1; exterminate/exterminate-steel-puck.js=1
+Exterminate,Oxomoco,Co-op,d0kx5219,1,raw/exterminate/oxomoco-coop.js,,
+Exterminate,Pallas,Solo,w6q36l7d,6,raw/exterminate/pallas-solo.js,,exterminate/exterminate-steel-pallas.js=4; exterminate/exterminate-normal-pallas.js=2; exterminate/exterminate-steel-telesto.js=2; exterminate/exterminate-steel-narcissus.js=2; exterminate/exterminate-steel-carpo.js=2; exterminate/exterminate-steel-neso.js=2; exterminate/exterminate-steel-hellas.js=2; exterminate/exterminate-steel-nex.js=2; exterminate/exterminate-steel-puck.js=2; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-dakata.js=1; exterminate/exterminate-steel-plato.js=1; exterminate/exterminate-steel-mariana.js=1; exterminate/exterminate-steel-saxis.js=1; spy/spy-allow-nereid.js=1; exterminate/exterminate-steel-e-prime.js=1; exterminate/exterminate-steel-oxomoco.js=1; hollvania/hollvania-1999-exterminate.js=1; spy/spy-allow-oceanum.js=1
+Exterminate,Pallas,Co-op,w6q36l7d,1,raw/exterminate/pallas-coop.js,,
+Exterminate,Phlegyas,Solo,93qojnew,4,raw/exterminate/phlegyas-solo.js,,exterminate/exterminate-steel-phlegyas.js=3; exterminate/exterminate-normal-phlegyas.js=1; exterminate/exterminate-steel-dakata.js=1; exterminate/exterminate-steel-plato.js=1; exterminate/exterminate-steel-narcissus.js=1; exterminate/exterminate-steel-mariana.js=1; exterminate/exterminate-steel-carpo.js=1; exterminate/exterminate-steel-neso.js=1; exterminate/exterminate-steel-pallas.js=1; exterminate/exterminate-steel-hellas.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-nex.js=1; exterminate/exterminate-steel-puck.js=1
+Exterminate,Phlegyas,Co-op,93qojnew,1,raw/exterminate/phlegyas-coop.js,,
+Exterminate,Plato,Solo,98rnkzld,4,raw/exterminate/plato-solo.js,,exterminate/exterminate-steel-plato.js=3; exterminate/exterminate-steel-neso.js=2; exterminate/exterminate-normal-plato.js=1; exterminate/exterminate-normal-nex.js=1; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-dakata.js=1; exterminate/exterminate-steel-narcissus.js=1; exterminate/exterminate-steel-mariana.js=1; exterminate/exterminate-steel-carpo.js=1; exterminate/exterminate-steel-pallas.js=1; exterminate/exterminate-steel-hellas.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-nex.js=1; exterminate/exterminate-steel-puck.js=1
+Exterminate,Plato,Co-op,98rnkzld,0,raw/exterminate/plato-coop.js,,
+Exterminate,Puck,Solo,dnon1lvw,4,raw/exterminate/puck-solo.js,,exterminate/exterminate-steel-puck.js=3; exterminate/exterminate-steel-narcissus.js=2; exterminate/exterminate-steel-carpo.js=2; exterminate/exterminate-steel-neso.js=2; exterminate/exterminate-steel-pallas.js=2; exterminate/exterminate-steel-hellas.js=2; exterminate/exterminate-steel-nex.js=2; exterminate/exterminate-normal-puck.js=1; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-dakata.js=1; exterminate/exterminate-steel-plato.js=1; exterminate/exterminate-steel-mariana.js=1; exterminate/exterminate-steel-saxis.js=1; exterminate/exterminate-steel-telesto.js=1; exterminate/exterminate-steel-e-prime.js=1; exterminate/exterminate-steel-oxomoco.js=1; hollvania/hollvania-1999-exterminate.js=1
+Exterminate,Puck,Co-op,dnon1lvw,0,raw/exterminate/puck-coop.js,,
+Exterminate,Saxis,Solo,dy12z5zd,5,raw/exterminate/saxis-solo.js,,exterminate/exterminate-steel-saxis.js=3; exterminate/exterminate-normal-saxis.js=2; exterminate/exterminate-normal-adaro.js=1; exterminate/exterminate-steel-plato.js=1; exterminate/exterminate-steel-halako-perimeter.js=1; exterminate/exterminate-steel-narcissus.js=1; exterminate/exterminate-steel-mariana.js=1; exterminate/exterminate-steel-nex.js=1; exterminate/exterminate-steel-puck.js=1; exterminate/exterminate-steel-acheron.js=1; exterminate/exterminate-steel-phlegyas.js=1; exterminate/exterminate-steel-dakata.js=1; exterminate/exterminate-steel-carpo.js=1; exterminate/exterminate-steel-neso.js=1; exterminate/exterminate-steel-pallas.js=1; exterminate/exterminate-steel-hellas.js=1
+Exterminate,Saxis,Co-op,dy12z5zd,0,raw/exterminate/saxis-coop.js,,
+Exterminate,Telesto,Solo,drp238zw,4,raw/exterminate/telesto-solo.js,,exterminate/exterminate-steel-telesto.js=3; exterminate/exterminate-steel-pallas.js=2; exterminate/exterminate-normal-telesto.js=1; spy/spy-allow-amalthea.js=1; exterminate/exterminate-steel-narcissus.js=1; exterminate/exterminate-steel-e-prime.js=1; exterminate/exterminate-steel-neso.js=1; exterminate/exterminate-steel-carpo.js=1; exterminate/exterminate-steel-oxomoco.js=1; hollvania/hollvania-1999-exterminate.js=1; exterminate/exterminate-steel-hellas.js=1; exterminate/exterminate-steel-nex.js=1; exterminate/exterminate-steel-puck.js=1
+Exterminate,Telesto,Co-op,drp238zw,0,raw/exterminate/telesto-coop.js,,
+Limited Events,Fomorian Sabotage,Solo,5923znod,17,raw/limited-events/fomorian-sabotage-solo.js,,
+Limited Events,Fomorian Sabotage,Co-op,5923znod,15,raw/limited-events/fomorian-sabotage-coop.js,,
+Limited Events,Plague Star,Solo,y9myj159,34,raw/limited-events/plague-star-solo.js,,
+Limited Events,Plague Star,Co-op,y9myj159,26,raw/limited-events/plague-star-coop.js,,
+Limited Events,Razorback,Solo,5wk8j12w,17,raw/limited-events/razorback-solo.js,,
+Limited Events,Razorback,Co-op,5wk8j12w,5,raw/limited-events/razorback-coop.js,,
+Mastery Rank Tests,Test 01,Solo,xd12xq6w,21,raw/mastery-rank-tests/test-01-solo.js,,
+Mastery Rank Tests,Test 01,Co-op,xd12xq6w,0,raw/mastery-rank-tests/test-01-coop.js,,
+Mastery Rank Tests,Test 02,Solo,29v72rn9,12,raw/mastery-rank-tests/test-02-solo.js,,
+Mastery Rank Tests,Test 02,Co-op,29v72rn9,0,raw/mastery-rank-tests/test-02-coop.js,,
+Mastery Rank Tests,Test 03,Solo,xd42xopw,24,raw/mastery-rank-tests/test-03-solo.js,,
+Mastery Rank Tests,Test 03,Co-op,xd42xopw,0,raw/mastery-rank-tests/test-03-coop.js,,
+Mastery Rank Tests,Test 05,Solo,xd0qx519,11,raw/mastery-rank-tests/test-05-solo.js,,
+Mastery Rank Tests,Test 05,Co-op,xd0qx519,0,raw/mastery-rank-tests/test-05-coop.js,,
+Mastery Rank Tests,Test 06,Solo,rw6o367w,13,raw/mastery-rank-tests/test-06-solo.js,,
+Mastery Rank Tests,Test 06,Co-op,rw6o367w,0,raw/mastery-rank-tests/test-06-coop.js,,
+Mastery Rank Tests,Test 07,Solo,29v63o1w,5,raw/mastery-rank-tests/test-07-solo.js,,
+Mastery Rank Tests,Test 07,Co-op,29v63o1w,0,raw/mastery-rank-tests/test-07-coop.js,,
+Mastery Rank Tests,Test 08,Solo,r9g4xe29,7,raw/mastery-rank-tests/test-08-solo.js,,
+Mastery Rank Tests,Test 08,Co-op,r9g4xe29,0,raw/mastery-rank-tests/test-08-coop.js,,
+Mastery Rank Tests,Test 09,Solo,ldy204rw,12,raw/mastery-rank-tests/test-09-solo.js,,
+Mastery Rank Tests,Test 09,Co-op,ldy204rw,0,raw/mastery-rank-tests/test-09-coop.js,,
+Mastery Rank Tests,Test 10,Solo,xd41jq0d,5,raw/mastery-rank-tests/test-10-solo.js,,
+Mastery Rank Tests,Test 10,Co-op,xd41jq0d,0,raw/mastery-rank-tests/test-10-coop.js,,
+Mastery Rank Tests,Test 11,Solo,5d748ned,15,raw/mastery-rank-tests/test-11-solo.js,,
+Mastery Rank Tests,Test 11,Co-op,5d748ned,0,raw/mastery-rank-tests/test-11-coop.js,,
+Mastery Rank Tests,Test 12,Solo,xd01gz0w,8,raw/mastery-rank-tests/test-12-solo.js,,
+Mastery Rank Tests,Test 12,Co-op,xd01gz0w,0,raw/mastery-rank-tests/test-12-coop.js,,
+Mastery Rank Tests,Test 13,Solo,rw614jn9,5,raw/mastery-rank-tests/test-13-solo.js,,
+Mastery Rank Tests,Test 13,Co-op,rw614jn9,0,raw/mastery-rank-tests/test-13-coop.js,,
+Mastery Rank Tests,Test 14,Solo,r9gl41kw,5,raw/mastery-rank-tests/test-14-solo.js,,
+Mastery Rank Tests,Test 14,Co-op,r9gl41kw,0,raw/mastery-rank-tests/test-14-coop.js,,
+Mastery Rank Tests,Test 16,Solo,o9xg731d,4,raw/mastery-rank-tests/test-16-solo.js,,
+Mastery Rank Tests,Test 16,Co-op,o9xg731d,0,raw/mastery-rank-tests/test-16-coop.js,,
+Mastery Rank Tests,Test 17,Solo,49525lj9,4,raw/mastery-rank-tests/test-17-solo.js,,
+Mastery Rank Tests,Test 17,Co-op,49525lj9,0,raw/mastery-rank-tests/test-17-coop.js,,
+Mastery Rank Tests,Test 18,Solo,rdq8751d,3,raw/mastery-rank-tests/test-18-solo.js,,
+Mastery Rank Tests,Test 18,Co-op,rdq8751d,0,raw/mastery-rank-tests/test-18-coop.js,,
+Mastery Rank Tests,Test 19,Solo,kwjzpx19,7,raw/mastery-rank-tests/test-19-solo.js,,
+Mastery Rank Tests,Test 19,Co-op,kwjzpx19,0,raw/mastery-rank-tests/test-19-coop.js,,
+Mastery Rank Tests,Test 21,Solo,rdqnz12d,5,raw/mastery-rank-tests/test-21-solo.js,,
+Mastery Rank Tests,Test 21,Co-op,rdqnz12d,0,raw/mastery-rank-tests/test-21-coop.js,,
+Mastery Rank Tests,Test 22,Solo,ldyxg5z9,2,raw/mastery-rank-tests/test-22-solo.js,,
+Mastery Rank Tests,Test 22,Co-op,ldyxg5z9,0,raw/mastery-rank-tests/test-22-coop.js,,
+Mastery Rank Tests,Test 23,Solo,gdrnx8z9,3,raw/mastery-rank-tests/test-23-solo.js,,
+Mastery Rank Tests,Test 23,Co-op,gdrnx8z9,0,raw/mastery-rank-tests/test-23-coop.js,,
+Mastery Rank Tests,Test 25,Solo,xd12xkyw,10,raw/mastery-rank-tests/test-25-solo.js,,
+Mastery Rank Tests,Test 25,Co-op,xd12xkyw,0,raw/mastery-rank-tests/test-25-coop.js,,
+Mastery Rank Tests,Test 26,Solo,o9xz753w,2,raw/mastery-rank-tests/test-26-solo.js,,
+Mastery Rank Tests,Test 26,Co-op,o9xz753w,0,raw/mastery-rank-tests/test-26-coop.js,,
+Mastery Rank Tests,Test 27,Solo,495r5omd,7,raw/mastery-rank-tests/test-27-solo.js,,
+Mastery Rank Tests,Test 27,Co-op,495r5omd,0,raw/mastery-rank-tests/test-27-coop.js,,
+Mastery Rank Tests,Test 28,Solo,nwl5oyrd,3,raw/mastery-rank-tests/test-28-solo.js,,
+Mastery Rank Tests,Test 28,Co-op,nwl5oyrd,0,raw/mastery-rank-tests/test-28-coop.js,,
+Mastery Rank Tests,Test 29,Solo,ywey5jrd,4,raw/mastery-rank-tests/test-29-solo.js,,
+Mastery Rank Tests,Test 29,Co-op,ywey5jrd,0,raw/mastery-rank-tests/test-29-coop.js,,
+Mastery Rank Tests,Test 30,Solo,69z52qo9,5,raw/mastery-rank-tests/test-30-solo.js,,
+Mastery Rank Tests,Test 30,Co-op,69z52qo9,0,raw/mastery-rank-tests/test-30-coop.js,,
+Orb Vallis,Exploiter,Solo,gdrg166w,8,raw/orb-vallis/exploiter-solo.js,,
+Orb Vallis,Exploiter,Co-op,gdrg166w,5,raw/orb-vallis/exploiter-coop.js,,
+Orb Vallis,Heist 2,Solo,ldyj43zd,21,raw/orb-vallis/heist-2-solo.js,,
+Orb Vallis,Heist 2,Co-op,ldyj43zd,3,raw/orb-vallis/heist-2-coop.js,,
+Orb Vallis,Profit-Taker,Solo,rdnrkqvw,293,raw/orb-vallis/profit-taker-solo.js,data/profit-taker/profit-taker.js,profit-taker/profit-taker.js=41
+Orb Vallis,Profit-Taker,Co-op,rdnrkqvw,64,raw/orb-vallis/profit-taker-coop.js,,
+Rescue Missions,Brugia,Solo,n93m60zd,11,raw/rescue-missions/brugia-solo.js,,rescue/rescue-brugia.js=5; rescue/rescue-caliban.js=1; rescue/rescue-nuovo.js=1
+Rescue Missions,Brugia,Co-op,n93m60zd,5,raw/rescue-missions/brugia-coop.js,,
+Rescue Missions,Caliban,Solo,z98m1jlw,9,raw/rescue-missions/caliban-solo.js,,rescue/rescue-caliban.js=3; rescue/rescue-brugia.js=1; rescue/rescue-nuovo.js=1; rescue/rescue-martialis.js=1
+Rescue Missions,Caliban,Co-op,z98m1jlw,5,raw/rescue-missions/caliban-coop.js,,
+Rescue Missions,Garus,Solo,z98m1jpw,8,raw/rescue-missions/garus-solo.js,data/rescue/rescue-garus.js,rescue/rescue-garus.js=3
+Rescue Missions,Garus,Co-op,z98m1jpw,5,raw/rescue-missions/garus-coop.js,,
+Rescue Missions,Martialis,Solo,yweq64rw,11,raw/rescue-missions/martialis-solo.js,data/rescue/rescue-martialis.js,rescue/rescue-martialis.js=5
+Rescue Missions,Martialis,Co-op,yweq64rw,6,raw/rescue-missions/martialis-coop.js,,
+Rescue Missions,Metis,Solo,gdry5jzw,9,raw/rescue-missions/metis-solo.js,,rescue/rescue-metis.js=3; spy/spy-allow-bode.js=1
+Rescue Missions,Metis,Co-op,gdry5jzw,5,raw/rescue-missions/metis-coop.js,,
+Rescue Missions,Naga,Solo,rdnqe57d,12,raw/rescue-missions/naga-solo.js,data/rescue/rescue-naga.js,rescue/rescue-naga.js=3
+Rescue Missions,Naga,Co-op,rdnqe57d,6,raw/rescue-missions/naga-coop.js,,
+Rescue Missions,Numa,Solo,rdnqe5vd,9,raw/rescue-missions/numa-solo.js,data/rescue/rescue-numa.js,rescue/rescue-numa.js=2
+Rescue Missions,Numa,Co-op,rdnqe5vd,6,raw/rescue-missions/numa-coop.js,data/rescue/rescue-numa.js,rescue/rescue-numa.js=1
+Rescue Missions,Nuovo,Solo,nwl2r6rd,10,raw/rescue-missions/nuovo-solo.js,,rescue/rescue-nuovo.js=3; rescue/rescue-brugia.js=1; rescue/rescue-caliban.js=1
+Rescue Missions,Nuovo,Co-op,nwl2r6rd,6,raw/rescue-missions/nuovo-coop.js,,
+Rescue Missions,Orias,Solo,ldy3mez9,10,raw/rescue-missions/orias-solo.js,,rescue/rescue-orias.js=3; exterminate/exterminate-normal-adaro.js=1
+Rescue Missions,Orias,Co-op,ldy3mez9,5,raw/rescue-missions/orias-coop.js,,
+Rescue Missions,Regna,Solo,rw6mjvg9,11,raw/rescue-missions/regna-solo.js,,rescue/rescue-regna.js=2; rescue/rescue-brugia.js=1; rescue/rescue-caliban.js=1; rescue/rescue-nuovo.js=1
+Rescue Missions,Regna,Co-op,rw6mjvg9,6,raw/rescue-missions/regna-coop.js,,
+Rescue Missions,Triton,Solo,ldy3mer9,18,raw/rescue-missions/triton-solo.js,data/rescue/rescue-triton.js,rescue/rescue-triton.js=2
+Rescue Missions,Triton,Co-op,ldy3mer9,6,raw/rescue-missions/triton-coop.js,,
+Rescue Missions,Zeipel,Solo,n93m60ed,9,raw/rescue-missions/zeipel-solo.js,,rescue/rescue-zeipel.js=2; exterminate/exterminate-normal-halako-perimeter.js=1
+Rescue Missions,Zeipel,Co-op,n93m60ed,7,raw/rescue-missions/zeipel-coop.js,,
+Sabotage Missions,Ares,Solo,y9m2lp1d,18,raw/sabotage-missions/ares-solo.js,,sabotage/sabotage-ares.js=1; rescue/rescue-zeipel.js=1
+Sabotage Missions,Ares,Co-op,y9m2lp1d,5,raw/sabotage-missions/ares-coop.js,,
+Sabotage Missions,Cervantes,Solo,xd4kq3pw,16,raw/sabotage-missions/cervantes-solo.js,data/sabotage/sabotage-cervantes.js,sabotage/sabotage-cervantes.js=3
+Sabotage Missions,Cervantes,Co-op,xd4kq3pw,5,raw/sabotage-missions/cervantes-coop.js,,
+Sabotage Missions,Cypress,Solo,rdqnx11d,12,raw/sabotage-missions/cypress-solo.js,data/sabotage/sabotage-cypress.js,sabotage/sabotage-cypress.js=1
+Sabotage Missions,Cypress,Co-op,rdqnx11d,6,raw/sabotage-missions/cypress-coop.js,,
+Sabotage Missions,Desdemona,Solo,5wkqyrqw,7,raw/sabotage-missions/desdemona-solo.js,data/sabotage/sabotage-desdemona.js,sabotage/sabotage-desdemona.js=2
+Sabotage Missions,Desdemona,Co-op,5wkqyrqw,5,raw/sabotage-missions/desdemona-coop.js,,
+Sabotage Missions,Enceladus,Solo,5924xorw,17,raw/sabotage-missions/enceladus-solo.js,data/sabotage/sabotage-enceladus.js,sabotage/sabotage-enceladus.js=1
+Sabotage Missions,Enceladus,Co-op,5924xorw,4,raw/sabotage-missions/enceladus-coop.js,,
+Sabotage Missions,Formido,Solo,495m78jw,8,raw/sabotage-missions/formido-solo.js,data/sabotage/sabotage-formido.js,sabotage/sabotage-formido.js=1
+Sabotage Missions,Formido,Co-op,495m78jw,4,raw/sabotage-missions/formido-coop.js,,
+Sabotage Missions,Ker,Solo,ewp8gqz9,19,raw/sabotage-missions/ker-solo.js,data/sabotage/sabotage-ker.js,sabotage/sabotage-ker.js=2
+Sabotage Missions,Ker,Co-op,ewp8gqz9,5,raw/sabotage-missions/ker-coop.js,,
+Sabotage Missions,Kokabiel,Solo,xd14g56d,12,raw/sabotage-missions/kokabiel-solo.js,data/sabotage/sabotage-kokabiel.js,sabotage/sabotage-kokabiel.js=1
+Sabotage Missions,Kokabiel,Co-op,xd14g56d,5,raw/sabotage-missions/kokabiel-coop.js,,
+Sabotage Missions,Marduk,Solo,r9g7v3k9,13,raw/sabotage-missions/marduk-solo.js,data/sabotage/sabotage-marduk.js,sabotage/sabotage-marduk.js=1
+Sabotage Missions,Marduk,Co-op,r9g7v3k9,4,raw/sabotage-missions/marduk-coop.js,,
+Sabotage Missions,Naeglar,Solo,kwjvnezw,10,raw/sabotage-missions/naeglar-solo.js,data/sabotage/sabotage-naeglar.js,sabotage/sabotage-naeglar.js=2
+Sabotage Missions,Naeglar,Co-op,kwjvnezw,4,raw/sabotage-missions/naeglar-coop.js,,
+Sabotage Missions,Rusalka,Solo,5d72o3vw,18,raw/sabotage-missions/rusalka-solo.js,data/sabotage/sabotage-rusalka.js,sabotage/sabotage-rusalka.js=2
+Sabotage Missions,Rusalka,Co-op,5d72o3vw,6,raw/sabotage-missions/rusalka-coop.js,,
+Sabotage Missions,Sao,Solo,owo3z2yw,16,raw/sabotage-missions/sao-solo.js,data/sabotage/sabotage-sao.js,sabotage/sabotage-sao.js=1
+Sabotage Missions,Sao,Co-op,owo3z2yw,5,raw/sabotage-missions/sao-coop.js,,
+Sabotage Missions,Stribog,Solo,o9xxpl19,10,raw/sabotage-missions/stribog-solo.js,,special_challenge/special-challenge-netracell.js=1; sabotage/sabotage-stribog.js=1
+Sabotage Missions,Stribog,Co-op,o9xxpl19,4,raw/sabotage-missions/stribog-coop.js,,
+Sabotage Missions,Thebe,Solo,29vzoknd,12,raw/sabotage-missions/thebe-solo.js,data/sabotage/sabotage-thebe.js,sabotage/sabotage-thebe.js=1
+Sabotage Missions,Thebe,Co-op,29vzoknd,6,raw/sabotage-missions/thebe-coop.js,,
+Spy Missions,Amalthea,Solo,r9g4qkk9,26,raw/spy-missions/amalthea-solo.js,,spy/spy-allow-amalthea.js=3; exterminate/exterminate-steel-telesto.js=1
+Spy Missions,Amalthea,Co-op,r9g4qkk9,12,raw/spy-missions/amalthea-coop.js,,
+Spy Missions,Arval,Solo,o9x7rm1d,26,raw/spy-missions/arval-solo.js,data/spy/spy-allow-arval.js,spy/spy-allow-arval.js=3
+Spy Missions,Arval,Co-op,o9x7rm1d,9,raw/spy-missions/arval-coop.js,,
+Spy Missions,Bode,Solo,kwjz0gr9,20,raw/spy-missions/bode-solo.js,,spy/spy-allow-bode.js=4; rescue/rescue-metis.js=2
+Spy Missions,Bode,Co-op,kwjz0gr9,7,raw/spy-missions/bode-coop.js,,
+Spy Missions,Cambria,Solo,xd12zzqw,41,raw/spy-missions/cambria-solo.js,,spy/spy-allow-cambria.js=2; spy/spy-allow-oceanum.js=1; spy/spy-allow-nereid.js=1; exterminate/exterminate-steel-pallas.js=1
+Spy Missions,Cambria,Co-op,xd12zzqw,6,raw/spy-missions/cambria-coop.js,,
+Spy Missions,Dione,Solo,rdnzmyqd,16,raw/spy-missions/dione-solo.js,data/spy/spy-allow-dione.js,spy/spy-allow-dione.js=2
+Spy Missions,Dione,Co-op,rdnzmyqd,8,raw/spy-missions/dione-coop.js,data/rescue/rescue-numa.js,rescue/rescue-numa.js=1
+Spy Missions,Kelpie,Solo,ldygr6jd,21,raw/spy-missions/kelpie-solo.js,data/spy/spy-allow-kelpie.js,spy/spy-allow-kelpie.js=3
+Spy Missions,Kelpie,Co-op,ldygr6jd,11,raw/spy-missions/kelpie-coop.js,,
+Spy Missions,Oceanum,Solo,xd425l2w,34,raw/spy-missions/oceanum-solo.js,,
+Spy Missions,Oceanum,Co-op,xd425l2w,20,raw/spy-missions/oceanum-coop.js,,
+Spy Missions,Nereid,Solo,29v78q39,16,raw/spy-missions/nereid-solo.js,,spy/spy-allow-nereid.js=2; spy/spy-allow-oceanum.js=2; exterminate/exterminate-steel-pallas.js=1
+Spy Missions,Nereid,Co-op,29v78q39,8,raw/spy-missions/nereid-coop.js,,
+Spy Missions,Pago,Solo,xd0qe8x9,56,raw/spy-missions/pago-solo.js,data/spy/spy-allow-pago.js,spy/spy-allow-pago.js=6
+Spy Missions,Pago,Co-op,xd0qe8x9,10,raw/spy-missions/pago-coop.js,,
+Spy Missions,Pavlov,Solo,rw6o7zrw,71,raw/spy-missions/pavlov-solo.js,,
+Spy Missions,Pavlov,Co-op,rw6o7zrw,16,raw/spy-missions/pavlov-coop.js,,
+Spy Missions,Rosalind,Solo,n934xrnd,22,raw/spy-missions/rosalind-solo.js,data/spy/spy-allow-rosalind.js,spy/spy-allow-rosalind.js=3
+Spy Missions,Rosalind,Co-op,n934xrnd,10,raw/spy-missions/rosalind-coop.js,,
+Spy Missions,Unda,Solo,kwj16z0w,13,raw/spy-missions/unda-solo.js,data/spy/spy-allow-unda.js,spy/spy-allow-unda.js=3
+Spy Missions,Unda,Co-op,kwj16z0w,7,raw/spy-missions/unda-coop.js,,
+Legacy Categories,Defense (Legacy),Solo,n9354pnw,21,raw/legacy-categories/defense-legacy-solo.js,,
+Legacy Categories,Defense (Legacy),Co-op,n9354pnw,10,raw/legacy-categories/defense-legacy-coop.js,,
+Legacy Categories,Nabuk (legacy),Solo,gdr2x0z9,6,raw/legacy-categories/nabuk-legacy-solo.js,,
+Legacy Categories,Nabuk (legacy),Co-op,gdr2x0z9,2,raw/legacy-categories/nabuk-legacy-coop.js,,
+Legacy Categories,Test 20,Solo,owo6yo3w,11,raw/legacy-categories/test-20-solo.js,,
+Legacy Categories,Test 20,Co-op,owo6yo3w,0,raw/legacy-categories/test-20-coop.js,,
+Legacy Categories,Teralyst,Solo,nwlomj0w,58,raw/legacy-categories/teralyst-solo.js,,
+Legacy Categories,Teralyst,Co-op,nwlomj0w,19,raw/legacy-categories/teralyst-coop.js,,
+Legacy Categories,Tridolons,Solo,5wkj3vvd,42,raw/legacy-categories/tridolons-solo.js,,
+Legacy Categories,Tridolons,Co-op,5wkj3vvd,24,raw/legacy-categories/tridolons-coop.js,,
+Legacy Categories,Valac (legacy),Solo,z987oxgw,11,raw/legacy-categories/valac-legacy-solo.js,data/spy/spy-allow-valac.js,spy/spy-allow-valac.js=4
+Legacy Categories,Valac (legacy),Co-op,z987oxgw,1,raw/legacy-categories/valac-legacy-coop.js,,

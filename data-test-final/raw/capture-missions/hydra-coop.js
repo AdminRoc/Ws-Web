@@ -1,0 +1,68 @@
+/* speedrun.com 原始抓取数据 — Capture Missions / Hydra / Co-op */
+/* level_id=ywel5vr9 | 共 8 条 */
+var capture_missions_hydra_coopRecords = [
+  {
+    playerId:   "Salat / Mortar",
+    clearTime:  "0:18.000",
+    uploadTime: "2019-09-17",
+    videoUrls:  ["https://www.youtube.com/watch?v=gujL61oRxec"],
+    src:        "srdc",
+    srId:       "yv3q0x8z",
+  },
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:20.617",
+    uploadTime: "2025-12-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=XhSD2ZUWm2Q", "https://youtu.be/w_G4X6VSAdM"],
+    src:        "srdc",
+    srId:       "y682r5jz",
+  },
+  {
+    playerId:   "Febi / PrimedDarkeN",
+    clearTime:  "0:22.333",
+    uploadTime: "2021-02-18",
+    videoUrls:  ["https://www.youtube.com/watch?v=9Rh_yi9jB8M"],
+    src:        "srdc",
+    srId:       "m3n3q96y",
+  },
+  {
+    playerId:   "PrimedDarkeN / Mortar",
+    clearTime:  "0:24.167",
+    uploadTime: "2020-09-14",
+    videoUrls:  ["https://www.youtube.com/watch?v=6bVUwDDlNy0"],
+    src:        "srdc",
+    srId:       "y917rd2m",
+  },
+  {
+    playerId:   ".cat / Nonqui",
+    clearTime:  "0:26.000",
+    uploadTime: "2019-06-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=7OA0V1VAxjA&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "yojjdkjm",
+  },
+  {
+    playerId:   "--Q--EValueAction / .cat",
+    clearTime:  "0:30.000",
+    uploadTime: "2018-12-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=qIS0fzuthOg&feature=youtu.be"],
+    src:        "srdc",
+    srId:       "z03jkkoz",
+  },
+  {
+    playerId:   "ShiftDelete / CreepingChamp",
+    clearTime:  "0:55.700",
+    uploadTime: "2020-08-20",
+    videoUrls:  [],
+    src:        "srdc",
+    srId:       "z09eev8z",
+  },
+  {
+    playerId:   "zopney / MunchkinMel",
+    clearTime:  "0:59.000",
+    uploadTime: "2018-12-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=kWZggP2dlsg"],
+    src:        "srdc",
+    srId:       "y6pqq96m",
+  },
+];

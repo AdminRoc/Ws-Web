@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Capture Missions / Isos / Co-op */
+/* level_id=rdnnzm7d | 共 7 条 */
+var capture_missions_isos_coopRecords = [
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:25.317",
+    uploadTime: "2025-12-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=NIyrZQoGLXQ", "https://youtu.be/orHEwfTMPNg"],
+    src:        "srdc",
+    srId:       "yv5p96em",
+  },
+  {
+    playerId:   "Salat / Mortar",
+    clearTime:  "0:27.000",
+    uploadTime: "2019-09-17",
+    videoUrls:  ["https://www.youtube.com/watch?v=8E36LXhyCnU"],
+    src:        "srdc",
+    srId:       "y95lxe2z",
+  },
+  {
+    playerId:   "PrimedDarkeN / Febi",
+    clearTime:  "0:27.500",
+    uploadTime: "2023-01-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=mxuDDMz3API"],
+    src:        "srdc",
+    srId:       "yv8ox4om",
+  },
+  {
+    playerId:   "PrimedDarkeN / Mortar",
+    clearTime:  "0:30.467",
+    uploadTime: "2020-11-03",
+    videoUrls:  ["https://youtu.be/Nyw_Qy52p50?t=87"],
+    src:        "srdc",
+    srId:       "z0978o4z",
+  },
+  {
+    playerId:   "Cryogenian / silverdk",
+    clearTime:  "0:33.000",
+    uploadTime: "2019-06-30",
+    videoUrls:  ["https://youtu.be/bxRHW0gr-OM"],
+    src:        "srdc",
+    srId:       "zp449vvz",
+  },
+  {
+    playerId:   "zopney / MunchkinMel",
+    clearTime:  "1:05.000",
+    uploadTime: "2018-12-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=qQwqAJ0wcZo"],
+    src:        "srdc",
+    srId:       "y89kkedm",
+  },
+  {
+    playerId:   "ShiftDelete / CreepingChamp",
+    clearTime:  "1:07.300",
+    uploadTime: "2020-08-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=-9FyD-jRboA"],
+    src:        "srdc",
+    srId:       "y6r77kjy",
+  },
+];

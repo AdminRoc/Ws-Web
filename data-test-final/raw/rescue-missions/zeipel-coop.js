@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Rescue Missions / Zeipel / Co-op */
+/* level_id=n93m60ed | 共 7 条 */
+var rescue_missions_zeipel_coopRecords = [
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:31.000",
+    uploadTime: "2025-12-21",
+    videoUrls:  ["https://www.youtube.com/watch?v=sZu8tJKgk6Q", "https://youtu.be/bKxAZTfqmb4"],
+    src:        "srdc",
+    srId:       "y68q6ljz",
+  },
+  {
+    playerId:   "L1ndell / FXCloud",
+    clearTime:  "0:32.000",
+    uploadTime: "2025-11-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=vtFrvIRbx_k", "https://youtu.be/2dg2HjsiJRg"],
+    src:        "srdc",
+    srId:       "yw5jo33y",
+  },
+  {
+    playerId:   "L1ndell / K1nky",
+    clearTime:  "0:33.000",
+    uploadTime: "2022-01-09",
+    videoUrls:  ["https://youtu.be/kktv6ZbCoZg"],
+    src:        "srdc",
+    srId:       "mr6nj78m",
+  },
+  {
+    playerId:   "PrimedDarkeN / Febi",
+    clearTime:  "0:40.000",
+    uploadTime: "2021-04-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=Anp7UjBDNFs"],
+    src:        "srdc",
+    srId:       "m7d9vlwm",
+  },
+  {
+    playerId:   "PrimedDarkeN / Boll",
+    clearTime:  "0:41.000",
+    uploadTime: "2021-02-12",
+    videoUrls:  ["https://youtu.be/d8lB6tnXbc4"],
+    src:        "srdc",
+    srId:       "zqgvlg1m",
+  },
+  {
+    playerId:   "Wambo / CreepingChamp",
+    clearTime:  "0:53.000",
+    uploadTime: "2020-12-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=bhjeTCvfJqI"],
+    src:        "srdc",
+    srId:       "y4e6roqm",
+  },
+  {
+    playerId:   "Panzof / Gammer--2007 / LucianPlaysAllDay / Only_01-left",
+    clearTime:  "1:30.000",
+    uploadTime: "2020-11-26",
+    videoUrls:  ["https://www.twitch.tv/videos/816448614"],
+    src:        "srdc",
+    srId:       "y9183pnm",
+  },
+];

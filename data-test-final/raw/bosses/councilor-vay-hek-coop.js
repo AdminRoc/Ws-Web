@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Bosses / Councilor Vay Hek / Co-op */
+/* level_id=rdq7lv19 | 共 7 条 */
+var bosses_councilor_vay_hek_coopRecords = [
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "1:04.000",
+    uploadTime: "2025-12-20",
+    videoUrls:  ["https://www.youtube.com/watch?v=0UJORnAG54k", "https://youtu.be/I-BLUYrTTkI"],
+    src:        "srdc",
+    srId:       "y682q81z",
+  },
+  {
+    playerId:   "Txdo / DishonoredFNG / _Dopa",
+    clearTime:  "1:08.000",
+    uploadTime: "2025-02-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=Ut6sfu2Eneo&ab_channel=Txdo"],
+    src:        "srdc",
+    srId:       "zgjlw90z",
+  },
+  {
+    playerId:   "PrimedDarkeN / Mortar",
+    clearTime:  "1:18.000",
+    uploadTime: "2020-09-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=I_q8czqyZOE"],
+    src:        "srdc",
+    srId:       "ywd1463z",
+  },
+  {
+    playerId:   "Divlyn / Koto / KĀII",
+    clearTime:  "1:23.216",
+    uploadTime: "2018-04-08",
+    videoUrls:  ["https://www.youtube.com/watch?v=3TWhe0efRqY"],
+    src:        "srdc",
+    srId:       "yvgdl74y",
+  },
+  {
+    playerId:   "Nusmag / IRojaz / Mekarazium / Akemi",
+    clearTime:  "1:24.868",
+    uploadTime: "2018-03-15",
+    videoUrls:  ["https://youtu.be/C_rmJI9_dF8"],
+    src:        "srdc",
+    srId:       "zgn96rjy",
+  },
+  {
+    playerId:   "ShiftDelete / CreepingChamp",
+    clearTime:  "2:08.000",
+    uploadTime: "2020-08-20",
+    videoUrls:  ["https://youtu.be/toZTFsaH7XA?list=PLOoCYdaYurpzssoavUuncOcivAmO4XJcr"],
+    src:        "srdc",
+    srId:       "zplqq7rm",
+  },
+  {
+    playerId:   "Zenefen / AuhertBrahma",
+    clearTime:  "3:13.000",
+    uploadTime: "2020-01-01",
+    videoUrls:  ["https://youtu.be/bUTr1jaEqA4"],
+    src:        "srdc",
+    srId:       "m31jxk6z",
+  },
+];

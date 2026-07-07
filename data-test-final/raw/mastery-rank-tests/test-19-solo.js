@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Mastery Rank Tests / Test 19 / Solo */
+/* level_id=kwjzpx19 | 共 7 条 */
+var mastery_rank_tests_test_19_soloRecords = [
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:22.333",
+    uploadTime: "2022-12-02",
+    videoUrls:  ["https://www.youtube.com/watch?v=CRKjdlb9OGM"],
+    src:        "srdc",
+    srId:       "zg234rvy",
+  },
+  {
+    playerId:   "-Rekken-",
+    clearTime:  "0:29.966",
+    uploadTime: "2018-03-29",
+    videoUrls:  ["https://youtu.be/yAz3yH--ejE"],
+    src:        "srdc",
+    srId:       "y67wer6m",
+  },
+  {
+    playerId:   "Skyline__19",
+    clearTime:  "0:30.633",
+    uploadTime: "2020-10-30",
+    videoUrls:  ["https://youtu.be/ylEbLATvvtM"],
+    src:        "srdc",
+    srId:       "z09rv24z",
+  },
+  {
+    playerId:   "Nusmag",
+    clearTime:  "0:30.914",
+    uploadTime: "2018-03-29",
+    videoUrls:  ["https://youtu.be/3E1bThBTiao"],
+    src:        "srdc",
+    srId:       "ydqpl3vm",
+  },
+  {
+    playerId:   "HL_BAN",
+    clearTime:  "0:31.131",
+    uploadTime: "2023-05-14",
+    videoUrls:  ["https://youtu.be/UqyChAkpcYI"],
+    src:        "srdc",
+    srId:       "y4o1wrkz",
+  },
+  {
+    playerId:   "Reaper261292",
+    clearTime:  "0:36.917",
+    uploadTime: "2020-06-05",
+    videoUrls:  ["https://youtu.be/H4qkao1qZlI"],
+    src:        "srdc",
+    srId:       "y8289l5y",
+  },
+  {
+    playerId:   "zzzzzhou",
+    clearTime:  "1:50.599",
+    uploadTime: "2020-04-13",
+    videoUrls:  ["https://youtu.be/OhytQUAgsvw"],
+    src:        "srdc",
+    srId:       "z053k84m",
+  },
+];

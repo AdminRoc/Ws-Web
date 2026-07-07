@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Unique Categories / High Index / Solo */
+/* level_id=5d7rz7g9 | 共 7 条 */
+var unique_categories_high_index_soloRecords = [
+  {
+    playerId:   "Shumy",
+    clearTime:  "2:29.717",
+    uploadTime: "2022-11-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=p0qzHGYAhPk"],
+    src:        "srdc",
+    srId:       "m3xenwwm",
+  },
+  {
+    playerId:   "MeisterKleister",
+    clearTime:  "2:32.183",
+    uploadTime: "2022-10-29",
+    videoUrls:  ["https://www.youtube.com/watch?v=3Q3l2Upkuuo"],
+    src:        "srdc",
+    srId:       "zq95qvxy",
+  },
+  {
+    playerId:   "LuisGuerra",
+    clearTime:  "2:35.300",
+    uploadTime: "2022-08-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=0dLR24ZUe88"],
+    src:        "srdc",
+    srId:       "y8x9xwnm",
+  },
+  {
+    playerId:   "Musgi",
+    clearTime:  "2:35.349",
+    uploadTime: "2023-06-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=6UatqJGk3EY"],
+    src:        "srdc",
+    srId:       "y86vg31m",
+  },
+  {
+    playerId:   "ManInTheWall",
+    clearTime:  "2:37.283",
+    uploadTime: "2022-10-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=9Lp3IKMjKbE"],
+    src:        "srdc",
+    srId:       "y4xlnxnz",
+  },
+  {
+    playerId:   "_LordKlaymOfTau",
+    clearTime:  "2:44.900",
+    uploadTime: "2022-07-28",
+    videoUrls:  ["https://youtu.be/cJhmBknyVDc"],
+    src:        "srdc",
+    srId:       "z1pw4jrz",
+  },
+  {
+    playerId:   "ROFLCOPTER1",
+    clearTime:  "4:05.499",
+    uploadTime: "2022-06-12",
+    videoUrls:  ["https://youtu.be/HLVy1Rf27qY"],
+    src:        "srdc",
+    srId:       "znpvwg8m",
+  },
+];

@@ -1,0 +1,60 @@
+/* speedrun.com 原始抓取数据 — Unique Categories / Orokin Vault / Co-op */
+/* level_id=y9m8755d | 共 7 条 */
+var unique_categories_orokin_vault_coopRecords = [
+  {
+    playerId:   "Salat / L1ndell",
+    clearTime:  "0:18.750",
+    uploadTime: "2025-12-21",
+    videoUrls:  ["https://youtu.be/884z7eixgIA"],
+    src:        "srdc",
+    srId:       "ydo2950z",
+  },
+  {
+    playerId:   "Mortar / Salat",
+    clearTime:  "0:19.400",
+    uploadTime: "2019-09-17",
+    videoUrls:  ["https://www.youtube.com/watch?v=3HiaZ9fkocE"],
+    src:        "srdc",
+    srId:       "znr7qevy",
+  },
+  {
+    playerId:   "PrimedDarkeN / Mortar",
+    clearTime:  "0:19.821",
+    uploadTime: "2020-09-12",
+    videoUrls:  ["https://www.youtube.com/watch?v=Q2u7eb-Erto"],
+    src:        "srdc",
+    srId:       "z53o7rny",
+  },
+  {
+    playerId:   "Salat / kasmeufo",
+    clearTime:  "0:33.866",
+    uploadTime: "2019-03-10",
+    videoUrls:  ["https://youtu.be/uksyvZWNBnY"],
+    src:        "srdc",
+    srId:       "zn45v98m",
+  },
+  {
+    playerId:   "JoejoeMojo / TrashBoat221",
+    clearTime:  "0:50.000",
+    uploadTime: "2021-11-09",
+    videoUrls:  ["https://youtu.be/slrFSmmClaA"],
+    src:        "srdc",
+    srId:       "ydepjevm",
+  },
+  {
+    playerId:   "zopney / MunchkinMel",
+    clearTime:  "1:34.000",
+    uploadTime: "2018-12-11",
+    videoUrls:  ["https://www.youtube.com/watch?v=huFu-a9Qegg"],
+    src:        "srdc",
+    srId:       "y8960gnm",
+  },
+  {
+    playerId:   "Sr_Heredia / XcoleX1168 / Hadesso987 / ViveroxGamer",
+    clearTime:  "2:45.000",
+    uploadTime: "2018-11-27",
+    videoUrls:  ["https://www.youtube.com/watch?v=Lj2pUmOckUI"],
+    src:        "srdc",
+    srId:       "y896d6nm",
+  },
+];
