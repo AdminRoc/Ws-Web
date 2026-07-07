@@ -17,6 +17,7 @@
       var sz = 9 + Math.floor(Math.random() * 11);
       var deg = Math.floor(Math.random() * 360);
       el.textContent = 'FUCK';
+      var delay = i * 55;
       el.style.cssText = [
         'position:fixed',
         'left:' + cx + 'px',
@@ -35,13 +36,16 @@
         'transform:translate(-50%,-50%)',
         '--tx:' + tx + 'px',
         '--ty:' + ty + 'px',
-        'animation:wordFly 5s ease-out forwards',
-        'animation-delay:' + (i * 55) + 'ms',
+        'animation:wordFly 3s ease-out forwards',
+        'animation-delay:' + delay + 'ms',
       ].join(';');
       document.body.appendChild(el);
-      (function (node, delay) {
-        setTimeout(function () { node.remove(); }, 5500 + delay);
-      })(el, i * 55);
+      // animationend 保证动画一结束就立刻移除（不依赖 setTimeout，不受浏览器节流影响）
+      el.addEventListener('animationend', function () { el.remove(); }, { once: true });
+      // 备用：若 animationend 未触发（极少见），3s + delay + 800ms 缓冲后强制清除
+      (function (node, d) {
+        setTimeout(function () { if (node.parentNode) node.remove(); }, 3800 + d);
+      })(el, delay);
     }
   }
 

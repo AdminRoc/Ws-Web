@@ -77,6 +77,38 @@ WF.DisruptionParser = (function () {
 
     function reset() { mission = null; roundStartT = null; }
 
+    // 提取存档逻辑为独立函数，供 eom 和 finish() 复用
+    function saveMission(endT) {
+      if (!mission || !mission.isDisruption) return;
+      // 关闭还未结算的尾轮
+      if (mission.roundOpen) closeRoundAt(endT);
+      if (mission.rounds.length < MIN_ROUNDS) return;
+      const start  = mission.startT || mission.loadT;
+      const dur    = endT - start;
+      if (dur <= 0) return;
+      const n      = mission.rounds.length;
+      const successConds = mission.rounds.reduce((s, r) => s + r.conduits.filter(c => c.success === true).length, 0);
+      const totalConds   = mission.rounds.reduce((s, r) => s + r.conduits.filter(c => c.success !== null).length, 0);
+      const condRate  = totalConds > 0 ? successConds / totalConds : 1;
+      const rndPerMin = n / (dur / 60);
+      const effScore  = Math.min(70, (rndPerMin / 1.8) * 70);
+      const ps = Math.round(effScore + condRate * 30);
+      const pg = ps >= 90 ? 'S' : ps >= 75 ? 'A' : ps >= 55 ? 'B' : ps >= 35 ? 'C' : 'D';
+      records.push({
+        type: 'disruption',
+        startT: start, endT,
+        totalDuration: dur,
+        name: mission.name, score: mission.score,
+        rounds: mission.rounds, roundCount: n,
+        roundsPerMin: rndPerMin, conduitRate: condRate,
+        successConduits: successConds, totalConduits: totalConds,
+        perfScore: ps, perfGrade: pg,
+        killEvents: mission.killEvents,
+        squadInfo: sq.getSquadInfo(),
+        chatLog:   chat.getChatLog(mission.loadT, start, endT),
+      });
+    }
+
     function newMission(t) {
       mission = {
         loadT: t, startT: null,
@@ -142,6 +174,10 @@ WF.DisruptionParser = (function () {
         if (line.indexOf(PAT.connected) !== -1) {
           newMission(t);
           return;
+        }
+        // 日志从中途开始时无 connected 行——遇到中断专属行时自动建立 mission
+        if (!mission && line.indexOf('SentientArtifactMission.lua') !== -1) {
+          newMission(t);
         }
         if (!mission) return;
 
@@ -260,31 +296,7 @@ WF.DisruptionParser = (function () {
           return;
         }
         if (line.indexOf(PAT.eom) !== -1) {
-          if (mission.isDisruption && mission.rounds.length >= MIN_ROUNDS) {
-            const start  = mission.startT || mission.loadT;
-            const dur    = t - start;
-            const n      = mission.rounds.length;
-            const successConds = mission.rounds.reduce((s, r) => s + r.conduits.filter(c => c.success === true).length, 0);
-            const totalConds   = mission.rounds.reduce((s, r) => s + r.conduits.filter(c => c.success !== null).length, 0);
-            const condRate  = totalConds > 0 ? successConds / totalConds : 1;
-            const rndPerMin = n / (dur / 60);
-            const effScore  = Math.min(70, (rndPerMin / 1.8) * 70);
-            const ps = Math.round(effScore + condRate * 30);
-            const pg = ps >= 90 ? 'S' : ps >= 75 ? 'A' : ps >= 55 ? 'B' : ps >= 35 ? 'C' : 'D';
-            records.push({
-              type: 'disruption',
-              startT: start, endT: t,
-              totalDuration: dur,
-              name: mission.name, score: mission.score,
-              rounds: mission.rounds, roundCount: n,
-              roundsPerMin: rndPerMin, conduitRate: condRate,
-              successConduits: successConds, totalConduits: totalConds,
-              perfScore: ps, perfGrade: pg,
-              killEvents: mission.killEvents,
-              squadInfo: sq.getSquadInfo(),
-              chatLog:   chat.getChatLog(mission.loadT, start, t),
-            });
-          }
+          saveMission(t);
           reset();
           return;
         }
@@ -293,7 +305,9 @@ WF.DisruptionParser = (function () {
         }
       },
 
-      finish() {},
+      finish(lastT) {
+        if (mission) { saveMission(lastT); reset(); }
+      },
       results() { return records; },
       MIN_ROUNDS,
     };
