@@ -36,15 +36,15 @@
         'transform:translate(-50%,-50%)',
         '--tx:' + tx + 'px',
         '--ty:' + ty + 'px',
-        'animation:wordFly 3s ease-out forwards',
+        'animation:wordFly 1.7s ease-out forwards',
         'animation-delay:' + delay + 'ms',
       ].join(';');
       document.body.appendChild(el);
       // animationend 保证动画一结束就立刻移除（不依赖 setTimeout，不受浏览器节流影响）
       el.addEventListener('animationend', function () { el.remove(); }, { once: true });
-      // 备用：若 animationend 未触发（极少见），3s + delay + 800ms 缓冲后强制清除
+      // 备用：若 animationend 未触发（极少见），1.7s + delay + 500ms 缓冲后强制清除
       (function (node, d) {
-        setTimeout(function () { if (node.parentNode) node.remove(); }, 3800 + d);
+        setTimeout(function () { if (node.parentNode) node.remove(); }, 2200 + d);
       })(el, delay);
     }
   }

@@ -1,10 +1,10 @@
 /* 仲裁详情视图
  * 布局（自上而下，信息层层递进）：
  *   综合评分徽章 + 任务标题/元信息（主机时长 + 队内在场时长）+ 综合熟练度速览
- *   → 队伍成员 → 核心指标网格 → 每轮明细（可展开）→ 效率指标（生息/击杀/综合熟练度）
+ *   → 队伍成员 → 核心指标网格 → 每轮明细（可展开）→ 效率指标（生息/清图/综合效率）
  *   → 六张分布图，单列纵向排列，统一横向柱状条风格：
  *     无人机刷新间隔 → 无人机生成趋势（每分钟）→ 无人机刷新连续度 →
- *     敌人生成速率（每分钟）→ 敌人击杀速率（每分钟，近似推算）→ 清图效率
+ *     敌人生成速率（每分钟）→ 清图压力趋势（每分钟）→ 清图效率
  *   → 生息计算 → 评分说明 → 对话记录 */
 window.WF = window.WF || {};
 
@@ -88,7 +88,7 @@ WF.arbitrationView = (function () {
     const nb = WF.ArbNodeBaseline.lookup(rec.nodeId);
     if (!nb) return;
     const essEff = P.essenceEfficiency(rec.essence.fullBuffPerHour, nb.perHour);
-    const score  = P.computeScore(essEff, rec.eff.clear, rec.eff.kill);
+    const score  = P.computeScore(essEff, rec.eff.clear, rec.eff.clearComp);
     rec.eff.essence = essEff;
     rec.score = score;
     rec.scoreTier = P.scoreTierName(score);
@@ -99,7 +99,7 @@ WF.arbitrationView = (function () {
   function render(container, rec) {
     container.innerHTML = '';
     maybeRecalcWithNodeBaseline(rec);
-    const eff = rec.eff || { essence: 0, kill: 0, proficiency: 0 };
+    const eff = rec.eff || { essence: 0, clear: 0, clearComp: 0, proficiency: 0 };
 
     /* ─── 顶行：综合评分徽章 + 任务元信息 ─── */
     const topRow = U.el('div', 'arb-top-row');
@@ -132,9 +132,9 @@ WF.arbitrationView = (function () {
     ].filter(Boolean);
     metaSubs.forEach((s) => meta.appendChild(U.el('div', 'arb-meta-sub', s)));
     const clearStr = eff.clear != null ? eff.clear.toFixed(1) + '%' : '—';
-    const killStr  = eff.kill  != null ? eff.kill.toFixed(1)  + '%' : '—';
+    const clearCompStr = eff.clearComp != null ? eff.clearComp.toFixed(1) + '%' : '—';
     meta.appendChild(U.el('div', 'arb-grade-desc',
-      `生息效率 ${eff.essence.toFixed(1)}% · 清图效率 ${clearStr} · 击杀效率 ${killStr}`));
+      `生息效率 ${eff.essence.toFixed(1)}% · 清图效率 ${clearStr} · 综合效率 ${clearCompStr}`));
     topRow.appendChild(meta);
     container.appendChild(topRow);
 
@@ -143,14 +143,14 @@ WF.arbitrationView = (function () {
     /* ─── 核心指标网格 ─── */
     const grid = U.el('div', 'arb-metrics-grid');
     const metrics = [
-      { label: '无人机生成',    value: String(rec.droneCount),               cls: 'accent' },
-      { label: '敌人生成',      value: String(rec.maxSpawned),               cls: '' },
-      { label: '无人机 / 分钟',  value: rec.dronesPerMin.toFixed(2),          cls: '' },
-      { label: '总时间',        value: fmtHMS(rec.duration),                 cls: 'big' },
-      { label: rec.missionType === 'survival' ? '生存轮次' : '轮 / 波次', value: String(rec.rounds), cls: '' },
-      { label: '敌人负荷比',  value: rec.sparsity.toFixed(2),              cls: '' },
-      { label: '期望生息',      value: rec.essence.fullBuffTotal.toFixed(3), cls: 'accent' },
-      { label: '期望生息 / 小时', value: rec.essence.fullBuffPerHour.toFixed(1), cls: '' },
+      { label: '无人机生成',      value: String(rec.droneCount),               cls: 'accent' },
+      { label: '敌人生成',        value: String(rec.maxSpawned),               cls: 'accent' },
+      { label: '无人机 / 分钟',   value: rec.dronesPerMin.toFixed(2),          cls: 'accent' },
+      { label: '总时间',          value: fmtHMS(rec.duration),                 cls: 'big' },
+      { label: rec.missionType === 'survival' ? '生存轮次' : '轮 / 波次', value: String(rec.rounds), cls: 'accent' },
+      { label: '期望生息',        value: rec.essence.fullBuffTotal.toFixed(3), cls: 'accent' },
+      { label: '期望生息 / 小时',  value: rec.essence.fullBuffPerHour.toFixed(1), cls: 'accent' },
+      { label: '期望生息 / 分钟',  value: rec.essence.fullBuffPerMin.toFixed(2), cls: 'accent' },
     ];
     metrics.forEach(({ label, value, cls }) => {
       const cell = U.el('div', 'stat ' + cls);
@@ -158,6 +158,7 @@ WF.arbitrationView = (function () {
       cell.appendChild(U.el('div', 'stat-label', label));
       grid.appendChild(cell);
     });
+
     container.appendChild(grid);
 
     /* ─── 每轮明细（可展开）─── */
@@ -172,7 +173,7 @@ WF.arbitrationView = (function () {
       });
     }
 
-    /* ─── 效率指标（生息 / 击杀 / 综合熟练度）─── */
+    /* ─── 效率指标（生息 / 清图 / 综合效率）─── */
     const effBox = U.el('div', 'arb-eff-box');
     effBox.appendChild(U.el('div', 'section-title', '效率指标'));
     const effGrid = U.el('div', 'arb-eff-grid');
@@ -185,9 +186,9 @@ WF.arbitrationView = (function () {
       eff.clear != null
         ? `场上≥15只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%，越低越好（权重 25%）`
         : '采样数据不足，本维度以 50 分中性值计入（权重 25%）');
-    effBar(effGrid, '击杀效率', eff.kill != null ? eff.kill : 50,
-      eff.kill != null
-        ? `累计击杀 / 总敌人生成 = ${eff.kill.toFixed(1)}%（权重 20%）`
+    effBar(effGrid, '综合效率', eff.clearComp != null ? eff.clearComp : 50,
+      eff.clearComp != null
+        ? `清洁度 × 70% + 操作稳定度 × 30% = ${eff.clearComp.toFixed(1)}%（权重 20%）`
         : '数据不足，本维度以 50 分中性值计入（权重 20%）');
     effBox.appendChild(effGrid);
     container.appendChild(effBox);
@@ -226,17 +227,17 @@ WF.arbitrationView = (function () {
         footer: '突增 / 骤降的分钟段通常对应地图切换或走位调整',
       });
       distBars(distWrap, {
-        title: '敌人击杀速率（每分钟，近似）',
-        rows: pm.rows.map((r) => ({ label: 'M' + r.minute, pct: pm.maxKilled > 0 ? r.killed / pm.maxKilled * 100 : 0, right: r.killed + ' 个' })),
-        footer: '由生成数与活跃监控数的净变化反推，非直接日志字段，仅供参考走势',
+        title: '清图压力趋势（每分钟）',
+        rows: pm.rows.map((r) => ({ label: 'M' + r.minute, pct: pm.maxCleared > 0 ? r.cleared / pm.maxCleared * 100 : 0, right: r.cleared + ' 个' })),
+        footer: '由生成数与活跃监控数的净变化反推每分钟清图量，反映各分钟段清图压力的起伏',
       });
     }
-    if (rec.dist && rec.dist.saturation) {
-      const sat = rec.dist.saturation;
+    if (rec.dist && rec.dist.liveDist) {
+      const ld = rec.dist.liveDist;
       distBars(distWrap, {
         title: '清图效率',
-        rows: sat.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
-        footer: `高压占比（≥15）：${sat.geq15Pct.toFixed(1)}%`,
+        rows: ld.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
+        footer: `高压占比（≥15）：${ld.geq15Pct.toFixed(1)}%`,
       });
     }
     container.appendChild(distWrap);
@@ -270,9 +271,9 @@ WF.arbitrationView = (function () {
 
     const defWrap = U.el('div', 'arb-explain-defs');
     [
-      ['生息效率（55%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再除以节点基准，得到这里的百分比。期望生息按掉落规则推算，不受单次运气影响；节点基准同样取对方排行榜上传的期望值，两边口径一致。基准优先取该节点的历史最高期望生息速率；某节点暂无人上传过战绩时，退回默认基准 600/时。达到节点历史最高 = 100%，超过则可突破 100%，属顶尖水平。'],
-      ['清图效率（25%）', '依据房主日志中每次敌人生成行的 MonitoredTicking 字段采样，统计全场中场上同时受 AI 监控的活跃敌人数 ≥15 的时间占比（geq15Pct），取 100 − geq15Pct 作为得分。清图越干净、场上高压时段越少，这项得分越高。完全来自日志内采样，不依赖任何外部基准。'],
-      ['击杀效率（20%）', '利用每分钟切片数据：击杀数 ≈ 本分钟新增生成数 − 本分钟末活跃监控数相对上分钟末的净变化，对全程各分钟求和得到累计近似击杀数，再除以总敌人生成数（maxSpawned），得到全局消灭率百分比。反映生成的敌人有多大比例被及时清理；仅依赖日志数据，近似推算，供参考走势。若数据不足则以 50 分中性值占位。'],
+      ['生息效率（55%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再除以基准数量，得到这里的百分比。此外，期望生息按掉落规则进行推算，排除运气影响。'],
+      ['清图效率（25%）', '依据房主日志中，每次敌人生成行的 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥15 的时间占比（geq15Pct），取 100 − geq15Pct 作为得分。清图越干净、场上高压时段越少，这项得分越高。完全来自日志内采样，不依赖任何外部基准。'],
+      ['综合效率（20%）', '由两个独立维度融合而成：① 清洁度（70%）——按活跃敌人分布区间评分，第1区间=100分、第2区间=80分、第3区间=70分、第4区间=30分、超过=0分，再按各区间的驻留时长加权平均；② 操作稳定度（30%）——扫描日志中所有从≥15只敌人回到<15只的恢复事件，计算平均恢复时间（秒），按 100 − 平均恢复时间×2 换算得分。操作稳定度的数值越高，说明队伍的稳定程度越高。'],
     ].forEach(([k, v]) => {
       const d = U.el('div', 'arb-def-row');
       d.appendChild(U.el('span', 'arb-def-key', k));
@@ -281,13 +282,13 @@ WF.arbitrationView = (function () {
     });
     explain.appendChild(defWrap);
 
-    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 0.55×生息效率 + 0.25×清图效率 + 0.20×击杀效率，上限 120 分。清图与击杀两项完全由日志推算，不依赖外部排行榜数据，确保节点基准数据缺失时评分仍具参考价值。'));
+    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 0.55×生息效率 + 0.25×清图效率 + 0.20×综合效率，上限 120 分。清图效率与综合效率两项完全由日志推算，不依赖外部排行榜数据，确保节点基准数据缺失时评分仍具参考价值。'));
     const scaleRows = [
-      ['101 - 120', '巅峰',  '生息超出节点历史最高，且清图与击杀效率同样出色，属顶尖水平'],
-      ['80 - 100',  '优秀',  '三维均衡发展，产出稳定、清图流畅、击杀率高，属高效队伍'],
+      ['101 - 120', '巅峰',  '生息超出节点历史最高，且清图与综合效率同样出色，属顶尖水平'],
+      ['80 - 100',  '优秀',  '三维均衡发展，产出稳定、清图流畅、整体清洁度高，属高效队伍'],
       ['70 - 79',   '良好',  '整体表现不错，某一维度仍有明显提升空间'],
       ['60 - 69',   '及格',  '达到基本效率，某维度偏弱拉低了整体'],
-      ['0 - 59',    '待提升', '三维中有一项或多项明显偏低，建议优化配装、走位或击杀节奏'],
+      ['0 - 59',    '待提升', '三维中有一项或多项明显偏低，建议优化配装、走位或清图节奏'],
     ];
     const scaleTable = U.el('div', 'arb-scale-rows');
     scaleRows.forEach(([range, tier, desc]) => {

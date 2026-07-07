@@ -64,6 +64,21 @@ WF.cyberNav = (function () {
     return t.length > 10 ? t.slice(0, 10) : t;
   }
 
+  function smoothScrollTo(targetY) {
+    const startY = window.pageYOffset;
+    const diff = targetY - startY;
+    const duration = 600; // ms
+    const startTime = performance.now();
+    function step(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      window.scrollTo(0, startY + diff * eased);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   function rebuild() {
     if (!detail) return;
     const heads = Array.from(detail.querySelectorAll(HEADING_SEL))
@@ -72,11 +87,11 @@ WF.cyberNav = (function () {
     root.classList.add('show');
     listEl.innerHTML = '';
     // 顶部锚
-    addItem('▲ 顶部', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    addItem('▲ 顶部', () => smoothScrollTo(0));
     heads.forEach((el) => {
       addItem(labelOf(el), () => {
         const y = el.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
-        window.scrollTo({ top: y, behavior: 'smooth' });
+        smoothScrollTo(y);
       });
     });
   }
