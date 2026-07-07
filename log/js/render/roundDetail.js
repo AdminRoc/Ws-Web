@@ -29,7 +29,7 @@ WF.roundDetail = (function () {
     const table = U.el('table', 'rd-table');
     const cols = ['轮次 / 波次', '用时', opts.countALabel || '数量'];
     if (opts.countBLabel) cols.push(opts.countBLabel);
-    if (opts.showSparsity) cols.push('稀疏度');
+    if (opts.showSparsity) cols.push('负荷比');
     if (opts.showEssence) cols.push('期望生息');
     const thead = U.el('thead');
     const trh = U.el('tr');

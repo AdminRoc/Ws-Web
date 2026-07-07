@@ -121,8 +121,8 @@ WF.ArbitrationParser = (function () {
        本项目暂无排行榜数据、故长期沿用该基准）的达成度。基准的 60% 记 0 分，
        达到基准记 100 分，二者之间用凸曲线过渡（低分段增长慢，越接近基准每一分
        进步换来的得分越多）；超过基准后曲线继续外推，允许突破 100。
-     子指标二：击杀效率 —— 由"无人机稀疏度"（敌人生成 ÷ 无人机生成）换算，
-       稀疏度越低代表火力越集中在无人机身上、杂兵清理越干净。稀疏度 20 记 0 分，
+     子指标二：击杀效率 —— 由"杂兵负荷比"（敌人生成 ÷ 无人机生成）换算，
+       负荷比越低代表火力越集中在无人机身上、杂兵清理越干净。负荷比 20 记 0 分，
        5 记 100 分，同样用凸曲线过渡，越逼近满分曲线越陡，允许突破 100。
      综合：综合熟练度 —— 两个子指标先按各自权重（约 54:46，生息效率略重）做"弹性
        替代"加权（不是普通加权平均——两者不能互相完全替代，任一项偏低都会明显
@@ -134,8 +134,8 @@ WF.ArbitrationParser = (function () {
   const ESS_BASELINE     = 600;   // 生息效率基准（默认／暂无排行榜时恒定使用）
   const ESS_FLOOR_RATIO  = 0.6;   // 基准的 60% 记 0 分
   const ESS_CURVE_K      = 3;     // 生息效率凸曲线陡峭度
-  const SPARSITY_FLOOR   = 20;    // 稀疏度 20 记 0 分
-  const SPARSITY_TOP     = 5;     // 稀疏度 5 记 100 分
+  const SPARSITY_FLOOR   = 20;    // 负荷比 20 记 0 分
+  const SPARSITY_TOP     = 5;     // 负荷比 5 记 100 分
   const KILL_CURVE_K     = 3;     // 击杀效率凸曲线陡峭度
   const W_ESS  = Math.PI / (Math.PI + Math.E);  // ≈ 0.536，生息效率权重
   const W_KILL = Math.E  / (Math.PI + Math.E);  // ≈ 0.464，击杀效率权重
@@ -154,7 +154,7 @@ WF.ArbitrationParser = (function () {
     const progress = (perHour - floor) / (ESS_BASELINE - floor);
     return Math.max(0, convexCurve(progress, ESS_CURVE_K));
   }
-  // 击杀效率（%）：稀疏度越低越好
+  // 击杀效率（%）：负荷比越低越好
   function killEfficiency(sparsity) {
     if (!isFinite(sparsity) || sparsity <= 0) return 0;
     if (sparsity >= SPARSITY_FLOOR) return 0;
