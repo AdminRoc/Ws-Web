@@ -33,41 +33,41 @@
     "weapons": [
       {
         "name": "Coda Bassocyst",
-        "element": "Heat",
-        "bonusPct": 50.0
+        "element": "Electricity",
+        "bonusPct": 26.7
       },
       {
         "name": "Coda Bubonico",
-        "element": "Heat",
-        "bonusPct": 26.2
+        "element": "Electricity",
+        "bonusPct": 57.1
       },
       {
         "name": "Coda Caustacyst",
-        "element": "Toxin",
-        "bonusPct": 56.5
+        "element": "Heat",
+        "bonusPct": 31.8
       },
       {
         "name": "Coda Hirudo",
-        "element": "Toxin",
-        "bonusPct": 25.4
+        "element": "Impact",
+        "bonusPct": 43.0
       },
       {
         "name": "Coda Pathocyst",
         "element": "Impact",
-        "bonusPct": 45.9
+        "bonusPct": 37.6
       },
       {
         "name": "Coda Synapse",
-        "element": "Magnetic",
-        "bonusPct": 29.5
+        "element": "Toxin",
+        "bonusPct": 47.3
       },
       {
         "name": "Coda Tysis",
-        "element": "Magnetic",
-        "bonusPct": 52.2
+        "element": "Impact",
+        "bonusPct": 25.2
       }
     ]
   },
   "source": "https://docs.google.com/spreadsheets/d/1hyWSyPqw1072vJR2eacYVcpBiL_cdL0E3MCs5Vb6s40",
-  "fetchedAt": "2026-07-07T05:07:53Z"
+  "fetchedAt": "2026-07-07T06:07:58Z"
 }
