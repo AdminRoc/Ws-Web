@@ -217,45 +217,6 @@ body.fui-in [data-fui-reveal] > *:nth-child(4) { animation-delay: .22s; }
 body.fui-in [data-fui-reveal] > *:nth-child(5) { animation-delay: .28s; }
 body.fui-in [data-fui-reveal] > *:nth-child(n+6) { animation-delay: .34s; }
 
-/* ─── 风格切换按钮（注入到 footer.site-footer 尾部） ─── */
-.ws-theme-toggle-row {
-  margin-top: .8rem; display: flex; justify-content: center;
-}
-.ws-theme-toggle {
-  display: inline-flex; align-items: center; gap: .5rem;
-  padding: .38rem .9rem;
-  background: rgba(var(--g-primary, 212,168,74), .06);
-  border: 1px solid var(--fui-accent);
-  border-radius: 999px;
-  color: var(--fui-accent-2);
-  font-family: 'Orbitron','Rajdhani',inherit; font-size: .7rem; font-weight: 700;
-  letter-spacing: .1em; cursor: pointer;
-  transition: background var(--fui-dur) var(--fui-ease-out),
-              box-shadow var(--fui-dur) var(--fui-ease-out),
-              color var(--fui-dur);
-}
-.ws-theme-toggle:hover {
-  background: rgba(var(--g-primary, 212,168,74), .14);
-  box-shadow: 0 0 16px var(--fui-accent-glow);
-}
-.ws-theme-toggle-icon {
-  font-size: .88rem; line-height: 1;
-  filter: drop-shadow(0 0 6px var(--fui-accent-glow));
-  transition: transform var(--fui-dur-slow) var(--fui-ease-spring);
-}
-.ws-theme-toggle:hover .ws-theme-toggle-icon { transform: rotate(180deg); }
-
-/* 赛博皮下多霓虹流动边框 */
-html[data-fui-theme="cyber"] .ws-theme-toggle {
-  border-color: transparent;
-  background:
-    linear-gradient(rgba(13,2,33,.9), rgba(13,2,33,.9)) padding-box,
-    linear-gradient(90deg, #ff2a6d, #7700ff, #05d9e8, #ff2a6d) border-box;
-  background-size: auto, 300% 100%;
-  animation: fuiToggleFlow 3s linear infinite;
-}
-@keyframes fuiToggleFlow { to { background-position: 0 0, 300% 0; } }
-
 /* ─── Worldstate 循环计时器 HUD 强化 ─── */
 /* 计时数字：金色呼吸光晕，覆盖原有 dim 灰色 */
 .ws-cycle-timer {
@@ -633,16 +594,7 @@ html[data-fui-theme="cyber"] .fui-spl-footer {
   color: rgba(5,217,232,.28);
 }
 
-/* 6) 风格切换按钮 cyber 态强化 */
-html[data-fui-theme="cyber"] .ws-theme-toggle-row {
-  margin-top: 1rem;
-}
-html[data-fui-theme="cyber"] .ws-theme-toggle {
-  color: #dffbff;
-  text-shadow: 0 0 8px rgba(5,217,232,.6);
-}
-
-/* 7) 底部 footer 通用链接 cyber 态 */
+/* 6) 底部 footer 通用链接 cyber 态 */
 html[data-fui-theme="cyber"] footer.site-footer a:hover,
 html[data-fui-theme="cyber"] .footer-link:hover {
   color: var(--c-gold-bright);

@@ -7,50 +7,6 @@
 (function () {
   'use strict';
 
-  /* ── 主题 ── */
-  var THEME_KEY = 'fui_theme';
-  var _htmlAttr = document.documentElement.getAttribute('data-fui-theme') || 'gold';
-  var _theme = _htmlAttr;
-  try { var _s = localStorage.getItem(THEME_KEY); if (_s) _theme = _s; } catch (e) {}
-  function applyTheme(t) {
-    if (t === 'cyber') document.documentElement.setAttribute('data-fui-theme', 'cyber');
-    else document.documentElement.removeAttribute('data-fui-theme');
-  }
-  applyTheme(_theme);
-
-  function updateToggleLabels() {
-    document.querySelectorAll('.ws-theme-toggle').forEach(function(b) {
-      b.setAttribute('data-theme', _theme);
-      var l = b.querySelector('.ws-theme-toggle-label');
-      if (l) l.textContent = _theme === 'cyber' ? '赛博朋克' : 'Orokin 金';
-    });
-  }
-  window.fuiTheme = {
-    get: function() { return _theme; },
-    set: function(t) {
-      _theme = t === 'cyber' ? 'cyber' : 'gold';
-      try { localStorage.setItem(THEME_KEY, _theme); } catch (e) {}
-      applyTheme(_theme); updateToggleLabels();
-    },
-    toggle: function() { this.set(_theme === 'cyber' ? 'gold' : 'cyber'); }
-  };
-  document.addEventListener('click', function(e) {
-    var t = e.target.closest && e.target.closest('.ws-theme-toggle');
-    if (t) { e.preventDefault(); window.fuiTheme.toggle(); }
-  });
-  document.addEventListener('DOMContentLoaded', function() {
-    var footer = document.querySelector('footer.site-footer');
-    if (footer && !footer.querySelector('.ws-theme-toggle')) {
-      var w = document.createElement('div');
-      w.className = 'ws-theme-toggle-row';
-      w.innerHTML = '<button class="ws-theme-toggle" type="button" aria-label="切换视觉风格">'
-        + '<span class="ws-theme-toggle-icon" aria-hidden="true">◈</span>'
-        + '<span class="ws-theme-toggle-label">Orokin 金</span></button>';
-      footer.appendChild(w);
-    }
-    updateToggleLabels();
-  });
-
   /* ── 各页面标题映射 ── */
   var PAGE_TITLES = {
     'arbitration.html':      { cn: '仲裁竞速',   en: 'ARBITRATION SPEED' },
