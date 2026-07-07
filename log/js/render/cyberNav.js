@@ -6,7 +6,7 @@ window.WF = window.WF || {};
 
 WF.cyberNav = (function () {
   // 详情区内代表"模块标题"的选择器（涵盖各任务类型的分节标题）
-  const HEADING_SEL = '.arb-meta-title, .squad-title, .section-title, .arb-dist-title, .gen-section-title';
+  const HEADING_SEL = '.arb-meta-title, .squad-title, .section-title, .arb-dist-title, .gen-section-title, .dis-tl-title, .pt-sec-title, .gen-timing-title';
   const HEADER_OFFSET = 84; // 顶部固定导航栏高度补偿
 
   let root, listEl, detail, observer, rebuildTimer;

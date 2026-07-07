@@ -13,6 +13,7 @@ WF.DisruptionParser = (function () {
     conduitDone:   'SentientArtifactMission.lua: Disruption: Completed defense for artifact',
     conduitFail:   'SentientArtifactMission.lua: Disruption: Failed defense for artifact',
     totalScore:    'SentientArtifactMission.lua: Disruption: Total score is',
+    intervalEnded: 'SentientArtifactMission.lua: Disruption: Interval timer ended',
     eom:           'ExtractionTimer.lua: EOM: All players extracting',
     abort:         'TopMenu.lua: Abort',
     failed:        'EndOfMatch.lua: Mission Failed',
@@ -123,6 +124,7 @@ WF.DisruptionParser = (function () {
         currentRoundSpawned: 0,
         killEvents: [],
         areaEffects: {},      // area 1-4 → {kind:'buff'|'debuff', id:N} for current round
+        intervalEndedT: null, // Interval timer ended timestamp (precise round start for rounds > 1)
         _prevLiveAfter: null, // Live count after previous enemy agent was created (for kill delta)
       };
       roundStartT = null;
@@ -200,10 +202,22 @@ WF.DisruptionParser = (function () {
             mission.roundOpen = true;
             mission.areaEffects = {};   // reset for new round
             mission._prevLiveAfter = null; // reset Live-delta tracking for new round
-            roundStartT = t;
+            // 轮次起点精度优化：
+            // 第1轮没有 Interval timer ended，用 ModeState=3 时间；
+            // 后续轮次若已记录 Interval timer ended，则用该更精确时刻作为起点。
+            if (mission.rounds.length === 0 || mission.intervalEndedT == null) {
+              roundStartT = t;
+            } else {
+              roundStartT = mission.intervalEndedT;
+            }
+            mission.intervalEndedT = null;
           } else if (state === 4) {
             closeRoundAt(t);
           }
+          return;
+        }
+        if (line.indexOf(PAT.intervalEnded) !== -1) {
+          mission.intervalEndedT = t;
           return;
         }
         if (line.indexOf(PAT.randomized) !== -1) {

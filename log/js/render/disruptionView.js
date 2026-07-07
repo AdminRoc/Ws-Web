@@ -34,6 +34,7 @@ WF.disruptionView = (function () {
     const barH = 6, gap = 2, w = 760;
     const h = rec.rounds.length * (barH + gap);
     let svg = `<svg viewBox="0 0 ${w} ${h}" height="${h}" class="round-chart" preserveAspectRatio="none">`;
+    svg += _svgDefs();
     rec.rounds.forEach((r, i) => {
       const bw  = Math.max(2, (r.duration / maxDur) * (w - 60));
       const y   = i * (barH + gap);
@@ -103,6 +104,9 @@ WF.disruptionView = (function () {
 
     // ── 击杀走势折线图（点击全屏） ───────────────────────────
     container.appendChild(_buildKillChart(rec));
+
+    // ── 每轮前10秒击杀数 ─────────────────────────────────────
+    container.appendChild(_buildOpeningKillsChart(rec));
 
     // ── 轮次详情表格 ─────────────────────────────────────────
     const tblSection = U.el('div', 'chart-box dis-tl-wrap');
@@ -454,6 +458,134 @@ WF.disruptionView = (function () {
     overlay.addEventListener('click', close);
     document.addEventListener('keydown', onKey);
     document.body.appendChild(overlay);
+  }
+
+  // ── SVG 共享渐变定义 ──────────────────────────────────────
+  function _svgDefs() {
+    return `
+      <defs>
+        <linearGradient id="cyber-bar-ok" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#41ff8e"/>
+          <stop offset="100%" stop-color="#3affd5"/>
+        </linearGradient>
+        <linearGradient id="cyber-bar-fail" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ff5f6b"/>
+          <stop offset="100%" stop-color="#ff7a5f"/>
+        </linearGradient>
+        <linearGradient id="cyber-bar-gradient" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="#0a3a4a"/>
+          <stop offset="40%" stop-color="#1a7a9a"/>
+          <stop offset="100%" stop-color="#5fd0e8"/>
+        </linearGradient>
+        <linearGradient id="cyber-bar-hover" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="#0a4a5a"/>
+          <stop offset="40%" stop-color="#2a9aca"/>
+          <stop offset="100%" stop-color="#8eefff"/>
+        </linearGradient>
+      </defs>
+    `;
+  }
+
+  // ── 每轮前 10 秒击杀数赛博柱状图 ──────────────────────────
+  function _buildOpeningKillsChart(rec) {
+    const WINDOW = 10;
+    const data = rec.rounds.map(r => {
+      const end = r.startT + WINDOW;
+      const count = (rec.killEvents || []).filter(t => t >= r.startT && t < end).length;
+      return { index: r.index, count };
+    });
+    const maxCount = Math.max(1, ...data.map(d => d.count));
+
+    const chartW = 760;
+    const chartH = 220;
+    const ml = 44, mr = 16, mt = 28, mb = 40;
+    const plotW = chartW - ml - mr;
+    const plotH = chartH - mt - mb;
+    const barGap = Math.max(2, Math.min(8, plotW / data.length / 4));
+    const barW = Math.max(4, (plotW / data.length) - barGap);
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', `0 0 ${chartW} ${chartH}`);
+    svg.setAttribute('class', 'opening-kills-chart');
+    svg.innerHTML = _svgDefs();
+
+    // 网格背景
+    const grid = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    for (let i = 0; i <= 4; i++) {
+      const y = mt + (plotH * i / 4);
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', ml);
+      line.setAttribute('y1', y);
+      line.setAttribute('x2', chartW - mr);
+      line.setAttribute('y2', y);
+      line.setAttribute('class', 'cyber-grid-line');
+      grid.appendChild(line);
+    }
+    svg.appendChild(grid);
+
+    // 柱子
+    data.forEach((d, i) => {
+      const h = (d.count / maxCount) * plotH;
+      const x = ml + i * (barW + barGap) + barGap / 2;
+      const y = mt + plotH - h;
+
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.setAttribute('class', 'cyber-bar-group');
+
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', y);
+      rect.setAttribute('width', barW);
+      rect.setAttribute('height', h);
+      rect.setAttribute('rx', Math.min(3, barW / 2));
+      rect.setAttribute('class', 'cyber-bar');
+
+      const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+      title.textContent = `第 ${d.index} 轮\n前 ${WINDOW} 秒击杀：${d.count}`;
+      g.appendChild(rect);
+      g.appendChild(title);
+
+      // 轮次标签，每 5 轮或首尾显示
+      if (i === 0 || i === data.length - 1 || (d.index) % 5 === 0) {
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', x + barW / 2);
+        label.setAttribute('y', chartH - mb + 16);
+        label.setAttribute('text-anchor', 'middle');
+        label.setAttribute('class', 'cyber-axis-text');
+        label.textContent = d.index;
+        g.appendChild(label);
+      }
+
+      // 顶部数值：固定在柱子正上方，若与标题区/网格顶部重叠则不显示
+      const valY = y - 7;
+      if (barW >= 10 && valY >= mt + 4) {
+        const val = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        val.setAttribute('x', x + barW / 2);
+        val.setAttribute('y', valY);
+        val.setAttribute('text-anchor', 'middle');
+        val.setAttribute('class', 'cyber-bar-value');
+        val.textContent = d.count;
+        g.appendChild(val);
+      }
+
+      svg.appendChild(g);
+    });
+
+    // Y 轴标题
+    const yTitle = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    yTitle.setAttribute('transform', `rotate(-90, ${ml - 34}, ${mt + plotH / 2})`);
+    yTitle.setAttribute('x', ml - 34);
+    yTitle.setAttribute('y', mt + plotH / 2);
+    yTitle.setAttribute('text-anchor', 'middle');
+    yTitle.setAttribute('class', 'cyber-axis-title');
+    yTitle.textContent = '前10秒击杀数';
+    svg.appendChild(yTitle);
+
+    const section = U.el('div', 'chart-box dis-tl-wrap cyber-chart-box');
+    section.appendChild(U.el('div', 'dis-tl-title', '每轮前10秒击杀数'));
+    section.appendChild(U.el('div', 'dis-tl-sub', '每轮战斗开始10秒内的击杀总数；数值高意味着起手清场速度快'));
+    section.appendChild(svg);
+    return section;
   }
 
   // ── Conduit effect helpers ────────────────────────────────
