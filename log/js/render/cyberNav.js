@@ -28,14 +28,31 @@ WF.cyberNav = (function () {
     document.body.appendChild(root);
     listEl = root.querySelector('#cyber-nav-list');
 
-    // 悬停展开；移动端点击切换
-    const btn = root.querySelector('.cyber-nav-btn');
+    // 悬停展开：改用 JS 控制 + 延迟收起，而不是纯 CSS :hover。
+    // 面板与按钮之间隔着一小段间距（视觉呼吸感），鼠标从按钮斜向移动到面板条目
+    // 途中会短暂离开两者的盒子范围——纯 CSS :hover 没有记忆，一旦离开哪怕一帧
+    // 就立刻收起，导致正在挪向条目时导航栏突然关掉。加一个短暂延迟，只要在延迟
+    // 时间内重新进入按钮或面板就会取消收起，跨越间隙也不会误关。
+    const btn   = root.querySelector('.cyber-nav-btn');
+    const panel = root.querySelector('.cyber-nav-panel');
+    let closeTimer = null;
+    function openNow() { clearTimeout(closeTimer); root.classList.add('open'); }
+    function closeSoon() {
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(function () { root.classList.remove('open'); }, 260);
+    }
+    btn.addEventListener('mouseenter', openNow);
+    btn.addEventListener('mouseleave', closeSoon);
+    panel.addEventListener('mouseenter', openNow);
+    panel.addEventListener('mouseleave', closeSoon);
+    // 移动端 / 无 hover 场景：点击切换
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
+      clearTimeout(closeTimer);
       root.classList.toggle('open');
     });
-    document.addEventListener('click', function () { root.classList.remove('open'); });
-    root.querySelector('.cyber-nav-panel').addEventListener('click', function (e) { e.stopPropagation(); });
+    document.addEventListener('click', function () { clearTimeout(closeTimer); root.classList.remove('open'); });
+    panel.addEventListener('click', function (e) { e.stopPropagation(); });
   }
 
   function labelOf(el) {

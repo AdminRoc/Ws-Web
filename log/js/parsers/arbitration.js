@@ -124,12 +124,12 @@ WF.ArbitrationParser = (function () {
      子指标二：击杀效率 —— 由"无人机稀疏度"（敌人生成 ÷ 无人机生成）换算，
        稀疏度越低代表火力越集中在无人机身上、杂兵清理越干净。稀疏度 20 记 0 分，
        5 记 100 分，同样用凸曲线过渡，越逼近满分曲线越陡，允许突破 100。
-     综合：熟练度 —— 两个子指标先按各自权重（约 54:46，生息效率略重）做"弹性
+     综合：综合熟练度 —— 两个子指标先按各自权重（约 54:46，生息效率略重）做"弹性
        替代"加权（不是普通加权平均——两者不能互相完全替代，任一项偏低都会明显
        拉低总分，兼顾发展的队伍得分才会高于单项突出但另一项拖后腿的队伍），再经一条
        平滑曲线拉伸至百分比（低分段被压缩、越接近满分提升越明显），两个子指标同时
-       达到 100 时熟练度精确为 100。
-     最终把熟练度乘以 1.2 映射到 0-120 分，为顶尖表现留出"超出满分"的展示空间。
+       达到 100 时综合熟练度精确为 100。
+     最终把综合熟练度乘以 1.2 映射到 0-120 分，为顶尖表现留出"超出满分"的展示空间。
      ══════════════════════════════════════════════════════════════ */
   const ESS_BASELINE     = 600;   // 生息效率基准（默认／暂无排行榜时恒定使用）
   const ESS_FLOOR_RATIO  = 0.6;   // 基准的 60% 记 0 分
@@ -161,7 +161,7 @@ WF.ArbitrationParser = (function () {
     const progress = (SPARSITY_FLOOR - sparsity) / (SPARSITY_FLOOR - SPARSITY_TOP);
     return Math.max(0, convexCurve(progress, KILL_CURVE_K));
   }
-  // 熟练度（%）：两项弹性替代加权 + 末端平滑拉伸
+  // 综合熟练度（%）：两项弹性替代加权 + 末端平滑拉伸
   function proficiency(essEffPct, killEffPct) {
     const a = Math.max(0, essEffPct), b = Math.max(0, killEffPct);
     if (a === 0 && b === 0) return 0;
@@ -232,7 +232,7 @@ WF.ArbitrationParser = (function () {
     return { rows, maxLive, geq15Pct: geq15 / total * 100 };
   }
 
-  // ── 分布计算：无人机连续生成（同批次数量直方图）──
+  // ── 分布计算：无人机刷新连续度（同批次数量直方图）──
   function consecutiveDist(times) {
     if (!times.length) return null;
     const sizes = [1];
@@ -249,18 +249,25 @@ WF.ArbitrationParser = (function () {
     return { rows, totalBatches };
   }
 
-  // ── 分布计算：按分钟切片的无人机生成 / 敌人生成速率趋势 ──
+  // ── 分布计算：按分钟切片的无人机生成 / 敌人生成 / 敌人击杀速率趋势 ──
+  // 击杀速率为近似推算，非直接日志字段：本分钟净消灭数 ≈ 本分钟新增生成数 −
+  // 本分钟末活跃监控数相对上一分钟末的净变化（若活跃数下降说明消灭快于生成）。
   function perMinuteTrend(buckets, durationSec) {
     if (!buckets || !buckets.length) return null;
     const totalMin = Math.max(1, Math.ceil(durationSec / 60));
     const rows = [];
+    let prevLive = 0;
     for (let i = 0; i < totalMin; i++) {
-      const b = buckets[i] || { drones: 0, spawn: 0 };
-      rows.push({ minute: i + 1, drones: b.drones, spawn: b.spawn });
+      const b = buckets[i] || { drones: 0, spawn: 0, liveEnd: null };
+      const liveEnd = b.liveEnd != null ? b.liveEnd : prevLive;
+      const killed = Math.max(0, b.spawn - (liveEnd - prevLive));
+      rows.push({ minute: i + 1, drones: b.drones, spawn: b.spawn, killed });
+      prevLive = liveEnd;
     }
     const maxDrones = Math.max(1, ...rows.map((r) => r.drones));
     const maxSpawn  = Math.max(1, ...rows.map((r) => r.spawn));
-    return { rows, maxDrones, maxSpawn };
+    const maxKilled = Math.max(1, ...rows.map((r) => r.killed));
+    return { rows, maxDrones, maxSpawn, maxKilled };
   }
 
   function create() {
@@ -296,8 +303,16 @@ WF.ArbitrationParser = (function () {
     function bumpMinute(t, field, delta) {
       const idx = Math.floor((t - m.startedT) / 60);
       if (idx < 0) return;
-      if (!m.minuteBuckets[idx]) m.minuteBuckets[idx] = { drones: 0, spawn: 0 };
+      if (!m.minuteBuckets[idx]) m.minuteBuckets[idx] = { drones: 0, spawn: 0, liveEnd: null };
       m.minuteBuckets[idx][field] += delta;
+    }
+    // 记录某个时间点所在分钟切片"末尾时刻"的活跃监控数快照（同一分钟内反复覆盖，
+    // 最终留下的就是这一分钟最后一次采样值，供击杀速率近似推算使用）
+    function setMinuteLive(t, live) {
+      const idx = Math.floor((t - m.startedT) / 60);
+      if (idx < 0) return;
+      if (!m.minuteBuckets[idx]) m.minuteBuckets[idx] = { drones: 0, spawn: 0, liveEnd: null };
+      m.minuteBuckets[idx].liveEnd = live;
     }
 
     // 从 OnAgentCreated 行采样：累计生成峰值 + 活跃敌人饱和度
@@ -308,7 +323,11 @@ WF.ArbitrationParser = (function () {
         if (v > m.maxSpawned) { bumpMinute(t, 'spawn', v - m.maxSpawned); m.maxSpawned = v; }
       }
       const mt = RE.agentMonitoredTick.exec(line);
-      if (mt) m.satSamples.push({ t: t - m.startedT, live: parseInt(mt[1], 10) });
+      if (mt) {
+        const live = parseInt(mt[1], 10);
+        m.satSamples.push({ t: t - m.startedT, live });
+        setMinuteLive(t, live);
+      }
     }
 
     function applyName(raw) {
@@ -443,7 +462,7 @@ WF.ArbitrationParser = (function () {
           eff: {
             essence: essEff,       // 生息效率 %
             kill:    killEff,      // 击杀效率 %
-            proficiency: prof,     // 熟练度 %
+            proficiency: prof,     // 综合熟练度 %
           },
           score,
           scoreTier: scoreTierName(score),

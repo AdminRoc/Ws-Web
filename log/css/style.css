@@ -478,9 +478,9 @@ body.profile-active #detail-wrap {
 .grade-b .arb-score-tier { color: var(--c-gold); }
 .grade-c .arb-score-tier { color: #c87840; }
 
-/* 分布图区 */
+/* 分布图区：单列纵向排列，六张图统一横向柱状条风格 */
 .arb-dist-wrap {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  display: flex; flex-direction: column;
   gap: 14px; margin-bottom: 18px;
 }
 .arb-dist.cy-panel {
@@ -527,11 +527,10 @@ body.profile-active #detail-wrap {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 18px; margin-top: 12px;
 }
-/* 3 项内容（生息/击杀/熟练度、三张分布图）在中等宽度下不够放 3 列时，
-   直接降为 1 列整齐堆叠，避免出现"2 项一行 + 1 项单独落单"的畸零布局 */
+/* 生息/击杀/综合熟练度 3 项在中等宽度下不够放 3 列时，直接降为 1 列整齐堆叠，
+   避免出现"2 项一行 + 1 项单独落单"的畸零布局（分布图区已固定单列，不受影响） */
 @media (max-width: 1100px) {
   .arb-eff-grid { grid-template-columns: 1fr; }
-  .arb-dist-wrap { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {
   .arb-metrics-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1544,7 +1543,9 @@ body.profile-active #detail-wrap {
   pointer-events: none;
   transition: opacity .28s ease, transform .34s cubic-bezier(.34,1.56,.64,1);
 }
-.cyber-nav:hover .cyber-nav-panel, .cyber-nav.open .cyber-nav-panel {
+/* 展开态完全由 JS（mouseenter/mouseleave + 延迟收起）驱动，不再用纯 CSS :hover——
+   避免按钮与面板之间的间隙导致"正在挪向条目时突然关闭"。 */
+.cyber-nav.open .cyber-nav-panel {
   opacity: 1; transform: none; pointer-events: auto;
 }
 .cyber-nav-hd {
@@ -1617,14 +1618,4 @@ body.profile-active #detail-wrap {
 @keyframes shareSpin { to { transform: rotate(360deg); } }
 @media (max-width: 640px) {
   .share-card-btn { left: 14px; bottom: 18px; padding: 8px 12px; font-size: 12px; }
-}
-
-/* 仲裁：紧凑柱状趋势图（每分钟无人机生成 / 敌人生成速率） */
-.arb-trend-wrap { width: 100%; }
-.arb-trend-svg { width: 100%; height: 120px; display: block; }
-.arb-trend-bar { fill: #5fd0e8; transition: fill .15s; }
-.arb-trend-bar:hover { fill: #ff5fc0; }
-.arb-trend-axis {
-  display: flex; justify-content: space-between; font-size: 11px;
-  color: var(--c-text2); margin-top: 4px; font-family: var(--f-px);
 }

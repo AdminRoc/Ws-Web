@@ -1,9 +1,10 @@
 /* 仲裁详情视图
  * 布局（自上而下，信息层层递进）：
- *   综合评分徽章 + 任务标题/元信息（主机时长 + 队内在场时长）+ 熟练度速览
- *   → 队伍成员 → 核心指标网格 → 每轮明细（可展开）→ 效率指标（生息/击杀/熟练度）
- *   → 三张分布图（清图效率 / 无人机刷新间隔 / 无人机刷新连续度）
- *   → 两张时间序列趋势图（每分钟无人机生成 / 敌人生成速率）
+ *   综合评分徽章 + 任务标题/元信息（主机时长 + 队内在场时长）+ 综合熟练度速览
+ *   → 队伍成员 → 核心指标网格 → 每轮明细（可展开）→ 效率指标（生息/击杀/综合熟练度）
+ *   → 六张分布图，单列纵向排列，统一横向柱状条风格：
+ *     无人机刷新间隔 → 无人机生成趋势（每分钟）→ 无人机刷新连续度 →
+ *     敌人生成速率（每分钟）→ 敌人击杀速率（每分钟，近似推算）→ 清图效率
  *   → 生息计算 → 评分说明 → 对话记录 */
 window.WF = window.WF || {};
 
@@ -75,38 +76,6 @@ WF.arbitrationView = (function () {
     container.appendChild(box);
   }
 
-  // 紧凑 SVG 柱状趋势图（用于分钟数较多的时间序列，避免逐行列表撑爆版面）
-  function trendChart(container, opts) {
-    // opts: { title, values:[num], unit, footer }
-    const box = U.el('div', 'arb-dist cy-panel arb-trend');
-    const hd = U.el('div', 'arb-dist-hd');
-    hd.appendChild(U.el('span', 'arb-dist-title', opts.title));
-    box.appendChild(hd);
-
-    const vals = opts.values;
-    const n = vals.length;
-    const max = Math.max(1, ...vals);
-    const W = 700, H = 120, padL = 4, padR = 4, gap = n > 40 ? 1 : 2;
-    const bw = Math.max(1, (W - padL - padR) / n - gap);
-    let svg = `<svg viewBox="0 0 ${W} ${H}" class="arb-trend-svg" preserveAspectRatio="none">`;
-    vals.forEach((v, i) => {
-      const h = Math.max(1, (v / max) * (H - 14));
-      const x = padL + i * (bw + gap);
-      const y = H - 14 - h;
-      svg += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="1" class="arb-trend-bar">` +
-        `<title>第 ${i + 1} 分钟：${v}${opts.unit || ''}</title></rect>`;
-    });
-    svg += '</svg>';
-    const chartWrap = U.el('div', 'arb-trend-wrap');
-    chartWrap.innerHTML = svg;
-    box.appendChild(chartWrap);
-    const axis = U.el('div', 'arb-trend-axis');
-    axis.appendChild(U.el('span', '', '第 1 分钟'));
-    axis.appendChild(U.el('span', '', `第 ${n} 分钟`));
-    box.appendChild(axis);
-    if (opts.footer) box.appendChild(U.el('div', 'arb-dist-foot', opts.footer));
-    container.appendChild(box);
-  }
 
   function render(container, rec) {
     container.innerHTML = '';
@@ -119,7 +88,7 @@ WF.arbitrationView = (function () {
     badge.appendChild(U.el('div', 'arb-score-num', String(rec.score)));
     badge.appendChild(U.el('div', 'arb-score-sub', '/ 120'));
     badge.appendChild(U.el('div', 'arb-score-tier', rec.scoreTier || ''));
-    badge.title = `熟练度 ${eff.proficiency.toFixed(1)}%`;
+    badge.title = `综合熟练度 ${eff.proficiency.toFixed(1)}%`;
     topRow.appendChild(badge);
 
     const meta = U.el('div', 'arb-meta');
@@ -143,7 +112,7 @@ WF.arbitrationView = (function () {
     ].filter(Boolean);
     metaSubs.forEach((s) => meta.appendChild(U.el('div', 'arb-meta-sub', s)));
     meta.appendChild(U.el('div', 'arb-grade-desc',
-      `熟练度 ${eff.proficiency.toFixed(1)}% ／ 生息效率 ${eff.essence.toFixed(1)}% ・ 击杀效率 ${eff.kill.toFixed(1)}%`));
+      `综合熟练度 ${eff.proficiency.toFixed(1)}% ／ 生息效率 ${eff.essence.toFixed(1)}% ・ 击杀效率 ${eff.kill.toFixed(1)}%`));
     topRow.appendChild(meta);
     container.appendChild(topRow);
 
@@ -181,32 +150,33 @@ WF.arbitrationView = (function () {
       });
     }
 
-    /* ─── 效率指标（生息 / 击杀 / 熟练度）─── */
+    /* ─── 效率指标（生息 / 击杀 / 综合熟练度）─── */
     const effBox = U.el('div', 'arb-eff-box');
     effBox.appendChild(U.el('div', 'section-title', '效率指标'));
     const effGrid = U.el('div', 'arb-eff-grid');
     effBar(effGrid, '生息效率', eff.essence, `期望生息/小时 ${rec.essence.fullBuffPerHour.toFixed(1)} · 相对基准换算`);
     effBar(effGrid, '击杀效率', eff.kill, `由稀疏度 ${rec.sparsity.toFixed(2)} 换算 · 越低越高`);
-    effBar(effGrid, '熟练度',   eff.proficiency, '生息效率与击杀效率的综合');
+    effBar(effGrid, '综合熟练度',   eff.proficiency, '生息效率与击杀效率的综合');
     effBox.appendChild(effGrid);
     container.appendChild(effBox);
 
-    /* ─── 分布图区（赛博风） ─── */
+    /* ─── 分布图区（赛博风，单列纵向排列，统一横向柱状条风格） ─── */
     const distWrap = U.el('div', 'arb-dist-wrap');
-    if (rec.dist && rec.dist.saturation) {
-      const sat = rec.dist.saturation;
-      distBars(distWrap, {
-        title: '清图效率',
-        rows: sat.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
-        footer: `高压占比（≥15）：${sat.geq15Pct.toFixed(1)}%`,
-      });
-    }
+    const pm = rec.dist && rec.dist.perMinute;
+
     if (rec.dist && rec.dist.vacuum) {
       const vac = rec.dist.vacuum;
       distBars(distWrap, {
         title: '无人机刷新间隔',
         rows: vac.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
         footer: `>2s 占比：${vac.over2Pct.toFixed(1)}%`,
+      });
+    }
+    if (pm && pm.rows.length > 1) {
+      distBars(distWrap, {
+        title: '无人机生成趋势（每分钟）',
+        rows: pm.rows.map((r) => ({ label: 'M' + r.minute, pct: pm.maxDrones > 0 ? r.drones / pm.maxDrones * 100 : 0, right: r.drones + ' 只' })),
+        footer: '按任务进行时间切片，观察产出节奏是否随时间衰减或提升',
       });
     }
     if (rec.dist && rec.dist.consecutive) {
@@ -217,24 +187,27 @@ WF.arbitrationView = (function () {
         footer: `共生成 ${con.totalBatches} 批次`,
       });
     }
-    container.appendChild(distWrap);
-
-    /* ─── 时间序列趋势（紧凑柱状图，分钟数多时避免逐行列表撑爆版面） ─── */
-    if (rec.dist && rec.dist.perMinute && rec.dist.perMinute.rows.length > 1) {
-      const pm = rec.dist.perMinute;
-      const trendWrap = U.el('div', 'arb-dist-wrap');
-      trendChart(trendWrap, {
-        title: '无人机生成趋势（每分钟）',
-        values: pm.rows.map((r) => r.drones), unit: ' 只',
-        footer: '按任务进行时间切片，观察产出节奏是否随时间衰减或提升',
-      });
-      trendChart(trendWrap, {
+    if (pm && pm.rows.length > 1) {
+      distBars(distWrap, {
         title: '敌人生成速率（每分钟）',
-        values: pm.rows.map((r) => r.spawn), unit: ' 个',
+        rows: pm.rows.map((r) => ({ label: 'M' + r.minute, pct: pm.maxSpawn > 0 ? r.spawn / pm.maxSpawn * 100 : 0, right: r.spawn + ' 个' })),
         footer: '突增 / 骤降的分钟段通常对应地图切换或走位调整',
       });
-      container.appendChild(trendWrap);
+      distBars(distWrap, {
+        title: '敌人击杀速率（每分钟，近似）',
+        rows: pm.rows.map((r) => ({ label: 'M' + r.minute, pct: pm.maxKilled > 0 ? r.killed / pm.maxKilled * 100 : 0, right: r.killed + ' 个' })),
+        footer: '由生成数与活跃监控数的净变化反推，非直接日志字段，仅供参考走势',
+      });
     }
+    if (rec.dist && rec.dist.saturation) {
+      const sat = rec.dist.saturation;
+      distBars(distWrap, {
+        title: '清图效率',
+        rows: sat.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
+        footer: `高压占比（≥15）：${sat.geq15Pct.toFixed(1)}%`,
+      });
+    }
+    container.appendChild(distWrap);
 
     /* ─── 生息计算（紧凑双列对齐） ─── */
     const essBox = U.el('div', 'arb-ess-box');
@@ -267,7 +240,7 @@ WF.arbitrationView = (function () {
     [
       ['生息效率', '期望生息 ÷ 任务时长换算成每小时产出，相对一个恒定的高标准基准（600/小时，本项目暂无排行榜数据、故长期沿用此基准）取达成度。基准的 60% 记 0 分、达到基准记 100 分，中间用凸曲线过渡——越接近基准，每一分进步换来的得分越多；超过基准后曲线继续外推，允许突破 100%。'],
       ['击杀效率', '由无人机稀疏度（敌人生成 ÷ 无人机生成）换算。稀疏度 20 记 0 分、5 记 100 分，同样是凸曲线过渡，越逼近满分越陡；低于 5 可突破 100%。稀疏度越低，说明火力越集中在无人机身上、杂兵清理越干净利落。'],
-      ['熟练度',   '生息效率与击杀效率并非简单加权平均，而是按各自权重做"弹性替代"合成——任一项明显偏低都会拉低整体，兼顾发展的队伍得分会高于单项突出但另一项拖后腿的队伍；合成值最后经一条平滑曲线拉伸成百分比（低分段压缩、越接近满分提升越明显），两项都达到 100% 时熟练度精确为 100%。'],
+      ['综合熟练度',   '生息效率与击杀效率并非简单加权平均，而是按各自权重做"弹性替代"合成——任一项明显偏低都会拉低整体，兼顾发展的队伍得分会高于单项突出但另一项拖后腿的队伍；合成值最后经一条平滑曲线拉伸成百分比（低分段压缩、越接近满分提升越明显），两项都达到 100% 时综合熟练度精确为 100%。'],
     ].forEach(([k, v]) => {
       const d = U.el('div', 'arb-def-row');
       d.appendChild(U.el('span', 'arb-def-key', k));
@@ -276,7 +249,7 @@ WF.arbitrationView = (function () {
     });
     explain.appendChild(defWrap);
 
-    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 熟练度 × 1.2，映射到 0-120 分（为顶尖表现留出"超出满分"的展示空间）'));
+    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 综合熟练度 × 1.2，映射到 0-120 分（为顶尖表现留出"超出满分"的展示空间）'));
     const scaleRows = [
       ['101 - 120', '巅峰',  '生息与击杀俱佳，两项均接近或突破基准，属顶尖水平'],
       ['80 - 100',  '优秀',  '产出稳定且击杀干净，两项均衡发展，属高效队伍'],
