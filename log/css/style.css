@@ -524,13 +524,8 @@ body.profile-active #detail-wrap {
   border-radius: var(--r-md); padding: 16px 20px; margin-bottom: 18px;
 }
 .arb-eff-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: 1fr;
   gap: 18px; margin-top: 12px;
-}
-/* 生息/击杀/综合熟练度 3 项在中等宽度下不够放 3 列时，直接降为 1 列整齐堆叠，
-   避免出现"2 项一行 + 1 项单独落单"的畸零布局（分布图区已固定单列，不受影响） */
-@media (max-width: 1100px) {
-  .arb-eff-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {
   .arb-metrics-grid { grid-template-columns: repeat(2, 1fr); }

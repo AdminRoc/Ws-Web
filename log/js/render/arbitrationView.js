@@ -88,10 +88,8 @@ WF.arbitrationView = (function () {
     const nb = WF.ArbNodeBaseline.lookup(rec.nodeId);
     if (!nb) return;
     const essEff = P.essenceEfficiency(rec.essence.fullBuffPerHour, nb.perHour);
-    const prof   = P.proficiency(essEff, rec.eff.kill);
-    const score  = P.computeScore(essEff, rec.eff.kill);
+    const score  = P.computeScore(rec.essence.fullBuffPerHour, nb.perHour);
     rec.eff.essence = essEff;
-    rec.eff.proficiency = prof;
     rec.score = score;
     rec.scoreTier = P.scoreTierName(score);
     rec.essBaseline = nb.perHour;
@@ -110,7 +108,7 @@ WF.arbitrationView = (function () {
     badge.appendChild(U.el('div', 'arb-score-num', String(rec.score)));
     badge.appendChild(U.el('div', 'arb-score-sub', '/ 120'));
     badge.appendChild(U.el('div', 'arb-score-tier', rec.scoreTier || ''));
-    badge.title = `综合熟练度 ${eff.proficiency.toFixed(1)}%`;
+    badge.title = `生息效率 ${eff.essence.toFixed(1)}%`;
     topRow.appendChild(badge);
 
     const meta = U.el('div', 'arb-meta');
@@ -134,7 +132,7 @@ WF.arbitrationView = (function () {
     ].filter(Boolean);
     metaSubs.forEach((s) => meta.appendChild(U.el('div', 'arb-meta-sub', s)));
     meta.appendChild(U.el('div', 'arb-grade-desc',
-      `综合熟练度 ${eff.proficiency.toFixed(1)}% ／ 生息效率 ${eff.essence.toFixed(1)}% ・ 击杀效率 ${eff.kill.toFixed(1)}%`));
+      `生息效率 ${eff.essence.toFixed(1)}% ／ 节点基准 ${(rec.essBaseline || 600).toFixed(0)}/时`));
     topRow.appendChild(meta);
     container.appendChild(topRow);
 
@@ -148,7 +146,7 @@ WF.arbitrationView = (function () {
       { label: '无人机 / 分钟',  value: rec.dronesPerMin.toFixed(2),          cls: '' },
       { label: '总时间',        value: fmtHMS(rec.duration),                 cls: 'big' },
       { label: rec.missionType === 'survival' ? '生存轮次' : '轮 / 波次', value: String(rec.rounds), cls: '' },
-      { label: '杂兵负荷比',  value: rec.sparsity.toFixed(2),              cls: '' },
+      { label: '敌人负荷比',  value: rec.sparsity.toFixed(2),              cls: '' },
       { label: '期望生息',      value: rec.essence.fullBuffTotal.toFixed(3), cls: 'accent' },
       { label: '生息速率 / 小时', value: rec.essence.fullBuffPerHour.toFixed(1), cls: '' },
     ];
@@ -179,9 +177,7 @@ WF.arbitrationView = (function () {
     const baseHint = rec.essBaselineIsNode
       ? `相对本节点历史最高 ${rec.essBaseline.toFixed(1)}/时 换算`
       : `相对默认基准 ${(rec.essBaseline || 600).toFixed(0)}/时 换算（本节点暂无人上传战绩）`;
-    effBar(effGrid, '生息效率', eff.essence, `期望生息/小时 ${rec.essence.fullBuffPerHour.toFixed(1)} · ${baseHint}`);
-    effBar(effGrid, '击杀效率', eff.kill, `由负荷比 ${rec.sparsity.toFixed(2)} 换算 · 越低越高`);
-    effBar(effGrid, '综合熟练度',   eff.proficiency, '生息效率与击杀效率的综合');
+    effBar(effGrid, '生息效率', eff.essence, `生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时 · ${baseHint}`);
     effBox.appendChild(effGrid);
     container.appendChild(effBox);
 
@@ -263,9 +259,7 @@ WF.arbitrationView = (function () {
 
     const defWrap = U.el('div', 'arb-explain-defs');
     [
-      ['生息效率', '先把期望生息 ÷ 任务时长换算成"生息速率"（每小时产出，即上方"生息速率/小时"），再相对一个基准取达成度，得到这里的百分比。基准优先取该节点的历史最高生息速率（同一节点天然节奏不同、不能用一个数字硬套所有节点）；某节点暂无人上传过战绩时，退回默认基准 600/小时。基准的 60% 记 0 分、达到基准记 100 分，中间用凸曲线过渡——越接近基准，每一分进步换来的得分越多；超过基准后曲线继续外推，允许突破 100%。'],
-      ['击杀效率', '由杂兵负荷比（敌人生成 ÷ 无人机生成）换算。负荷比 20 记 0 分、5 记 100 分，同样是凸曲线过渡，越逼近满分越陡；低于 5 可突破 100%。负荷比越低，说明火力越集中在无人机身上、杂兵清理越干净利落。'],
-      ['综合熟练度',   '生息效率与击杀效率并非简单加权平均，而是按各自权重做"弹性替代"合成——任一项明显偏低都会拉低整体，兼顾发展的队伍得分会高于单项突出但另一项拖后腿的队伍；合成值最后经一条平滑曲线拉伸成百分比（低分段压缩、越接近满分提升越明显），两项都达到 100% 时综合熟练度精确为 100%。'],
+      ['生息效率', '把期望生息 ÷ 任务时长换算成生息速率（每小时产出），再除以节点基准，得到这里的百分比。基准优先取该节点的历史最高生息速率（不同节点天然产出节奏不同，不能用同一数字硬套）；某节点暂无人上传过战绩时，退回默认基准 600/时。达到节点历史最高 = 100%、超过则可突破 100%；综合评分直接由此线性换算，完全透明，无隐藏加权。场上敌人压力已在下方"清图效率"图表中单独可视化，不重复参与评分。'],
     ].forEach(([k, v]) => {
       const d = U.el('div', 'arb-def-row');
       d.appendChild(U.el('span', 'arb-def-key', k));
@@ -274,13 +268,13 @@ WF.arbitrationView = (function () {
     });
     explain.appendChild(defWrap);
 
-    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 综合熟练度 × 1.2，映射到 0-120 分（为顶尖表现留出"超出满分"的展示空间）'));
+    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 生息速率 ÷ 节点基准 × 100，上限 120 分；达到节点历史最高即得 100 分，超过方可进入"巅峰"区间'));
     const scaleRows = [
-      ['101 - 120', '巅峰',  '生息与击杀俱佳，两项均接近或突破基准，属顶尖水平'],
-      ['80 - 100',  '优秀',  '产出稳定且击杀干净，两项均衡发展，属高效队伍'],
-      ['70 - 79',   '良好',  '整体表现不错，某一项仍有明显提升空间'],
-      ['60 - 69',   '及格',  '达到基本效率，产出或击杀效率有一项偏弱'],
-      ['0 - 59',    '待提升', '两项效率均偏低，建议优化配装、走位或击杀节奏'],
+      ['101 - 120', '巅峰',  '生息速率超过节点历史最高，顶尖水平'],
+      ['80 - 100',  '优秀',  '生息产出达到节点最高水平的 80% 以上，属高效队伍'],
+      ['70 - 79',   '良好',  '节点最高水平 70%-79%，整体表现不错，仍有提升空间'],
+      ['60 - 69',   '及格',  '节点最高水平 60%-69%，达到基本效率'],
+      ['0 - 59',    '待提升', '节点最高水平 60% 以下，建议优化配装、走位或击杀节奏'],
     ];
     const scaleTable = U.el('div', 'arb-scale-rows');
     scaleRows.forEach(([range, tier, desc]) => {
