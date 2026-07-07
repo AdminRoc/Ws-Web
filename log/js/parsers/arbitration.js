@@ -115,25 +115,48 @@ WF.ArbitrationParser = (function () {
   }
 
   /* ══════════════════════════════════════════════════════════════
-     评分体系（0-120 分，透明线性公式，无隐藏加权）
+     评分体系（0-120 分，三维加权，数据全部来自日志，不依赖单一外部基准）
      ══════════════════════════════════════════════════════════════
-     分数 = 期望生息速率（全 Buff，/时）÷ 节点基准 × 100
-       · 节点基准：优先取该节点的历史最高生息速率（见 WF.ArbNodeBaseline）；
-         某节点暂无人上传过战绩时，退回默认基准 600/时。
-       · 达到节点历史最高时得 100 分，超过则最高可得 120 分（"巅峰"段）。
-       · 场上敌人清图效率已在"清图效率"图表中单独可视化，不再参与评分计算，
-         避免用一个衍生比值重复度量视图中已充分展示的信息。
+     ① 生息效率（权重 55%）：
+        生息速率（全 Buff，/时）÷ 节点基准 × 100，线性，可超过 100。
+        节点基准优先取该节点历史最高（WF.ArbNodeBaseline），无数据时退回 600/时。
+     ② 清图效率（权重 25%）：
+        100 − geq15Pct。geq15Pct = 场上同时受 AI 监控的活跃敌人数 ≥15 的时间占比。
+        完全来自日志内采样，不依赖任何外部基准；清图越干净这项得分越高。
+     ③ 击杀效率（权重 20%）：
+        min(每分钟数据累计击杀数 / 总敌人生成数, 1) × 100。
+        反映全局消灭率：生成的敌人有多大比例被击杀；同样仅依赖日志数据。
+     ──────────────────────────────────────────────────────────────
+     综合评分 = 0.55×生息效率 + 0.25×清图效率 + 0.20×击杀效率，上限 120。
+     若某项数据缺失（无采样 / 任务极短），该项退回 50 分（中性占位，不影响其他两项）。
      ══════════════════════════════════════════════════════════════ */
   const ESS_BASELINE = 600;   // 默认基准（该节点暂无分节点基准数据时兜底使用）
+  const W_ESS   = 0.55;       // 生息效率权重（主轴）
+  const W_CLEAR = 0.25;       // 清图效率权重（场上敌人压力）
+  const W_KILL  = 0.20;       // 击杀效率权重（真实消灭率）
 
   function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
-  // 生息效率（%）：perHour ÷ baseline × 100，线性，允许超过 100
+  // ① 生息效率（%）：perHour ÷ baseline × 100，线性，允许超过 100
   function essenceEfficiency(perHour, baseline) {
     const base = baseline > 0 ? baseline : ESS_BASELINE;
     return Math.max(0, perHour / base * 100);
   }
-  function computeScore(perHour, baseline) {
-    return Math.round(clamp(essenceEfficiency(perHour, baseline), 0, 120));
+  // ② 清图效率（%）：由 saturationDist 的 geq15Pct 取反；数据缺失时返回 null
+  function clearEfficiency(geq15Pct) {
+    if (geq15Pct == null || !isFinite(geq15Pct)) return null;
+    return Math.max(0, 100 - geq15Pct);
+  }
+  // ③ 击杀效率（%）：累计击杀数 ÷ 总敌人生成数 × 100；数据缺失时返回 null
+  function killEfficiency(totalKilled, maxSpawned) {
+    if (!maxSpawned || maxSpawned <= 0) return null;
+    return Math.min(100, Math.max(0, totalKilled / maxSpawned * 100));
+  }
+  // 三维加权综合评分（某项为 null 时用 50 中性兜底）
+  function computeScore(essEff, clearEff, killEff) {
+    const e = essEff  != null ? essEff  : 50;
+    const c = clearEff != null ? clearEff : 50;
+    const k = killEff != null ? killEff  : 50;
+    return Math.round(clamp(W_ESS * e + W_CLEAR * c + W_KILL * k, 0, 120));
   }
   function scoreTierName(s) {
     if (s >= 101) return '巅峰';
@@ -224,10 +247,12 @@ WF.ArbitrationParser = (function () {
       rows.push({ minute: i + 1, drones: b.drones, spawn: b.spawn, killed });
       prevLive = liveEnd;
     }
+    let totalKilled = 0;
+    for (const r of rows) totalKilled += r.killed;
     const maxDrones = Math.max(1, ...rows.map((r) => r.drones));
     const maxSpawn  = Math.max(1, ...rows.map((r) => r.spawn));
     const maxKilled = Math.max(1, ...rows.map((r) => r.killed));
-    return { rows, maxDrones, maxSpawn, maxKilled };
+    return { rows, maxDrones, maxSpawn, maxKilled, totalKilled };
   }
 
   function create() {
@@ -338,8 +363,14 @@ WF.ArbitrationParser = (function () {
           ? WF.ArbNodeBaseline.lookup(m.nodeId) : null;
         const essBaseline = nodeBase ? nodeBase.perHour : ESS_BASELINE;
 
-        const essEff  = essenceEfficiency(fullBuffPerHour, essBaseline);
-        const score   = computeScore(fullBuffPerHour, essBaseline);
+        // 提前计算分布数据，以便从中抽取清图/击杀评分维度
+        const satDistData  = saturationDist(m.satSamples);
+        const perMinData   = perMinuteTrend(m.minuteBuckets, duration);
+
+        const essEff   = essenceEfficiency(fullBuffPerHour, essBaseline);
+        const clearEff = clearEfficiency(satDistData ? satDistData.geq15Pct : null);
+        const killEff  = killEfficiency(perMinData ? perMinData.totalKilled : 0, m.maxSpawned);
+        const score    = computeScore(essEff, clearEff, killEff);
 
         // 无人机相对时刻（供分布/表格）
         const relTimes = m.droneTimes.map((x) => x - m.startedT);
@@ -422,12 +453,14 @@ WF.ArbitrationParser = (function () {
           },
           dist: {
             vacuum:      vacuumDist(relTimes),
-            saturation:  saturationDist(m.satSamples),
+            saturation:  satDistData,
             consecutive: consecutiveDist(m.droneTimes),
-            perMinute:   perMinuteTrend(m.minuteBuckets, duration),
+            perMinute:   perMinData,
           },
           eff: {
-            essence: essEff,       // 生息效率 %（perHour / baseline × 100，线性）
+            essence: essEff,    // 生息效率 %（perHour / baseline × 100，线性，可>100）
+            clear:   clearEff,  // 清图效率 %（100 − geq15Pct；null = 采样不足）
+            kill:    killEff,   // 击杀效率 %（累计击杀 / 总生成 × 100；null = 数据不足）
           },
           essBaseline,                          // 本局评分实际采用的生息效率基准（/时）
           essBaselineIsNode: !!nodeBase,         // 是否命中了节点专属基准（否则为默认基准兜底）
@@ -543,5 +576,5 @@ WF.ArbitrationParser = (function () {
     };
   }
 
-  return { create, computeScore, scoreTierName, essenceEfficiency };
+  return { create, computeScore, scoreTierName, essenceEfficiency, clearEfficiency, killEfficiency };
 })();

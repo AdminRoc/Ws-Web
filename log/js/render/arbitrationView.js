@@ -88,7 +88,7 @@ WF.arbitrationView = (function () {
     const nb = WF.ArbNodeBaseline.lookup(rec.nodeId);
     if (!nb) return;
     const essEff = P.essenceEfficiency(rec.essence.fullBuffPerHour, nb.perHour);
-    const score  = P.computeScore(rec.essence.fullBuffPerHour, nb.perHour);
+    const score  = P.computeScore(essEff, rec.eff.clear, rec.eff.kill);
     rec.eff.essence = essEff;
     rec.score = score;
     rec.scoreTier = P.scoreTierName(score);
@@ -131,8 +131,10 @@ WF.arbitrationView = (function () {
       !rec.complete ? '（未检测到完整结算，时长为估算值）' : null,
     ].filter(Boolean);
     metaSubs.forEach((s) => meta.appendChild(U.el('div', 'arb-meta-sub', s)));
+    const clearStr = eff.clear != null ? eff.clear.toFixed(1) + '%' : '—';
+    const killStr  = eff.kill  != null ? eff.kill.toFixed(1)  + '%' : '—';
     meta.appendChild(U.el('div', 'arb-grade-desc',
-      `生息效率 ${eff.essence.toFixed(1)}% ／ 节点基准 ${(rec.essBaseline || 600).toFixed(0)}/时`));
+      `生息效率 ${eff.essence.toFixed(1)}% · 清图效率 ${clearStr} · 击杀效率 ${killStr}`));
     topRow.appendChild(meta);
     container.appendChild(topRow);
 
@@ -177,7 +179,16 @@ WF.arbitrationView = (function () {
     const baseHint = rec.essBaselineIsNode
       ? `相对本节点历史最高 ${rec.essBaseline.toFixed(1)}/时 换算`
       : `相对默认基准 ${(rec.essBaseline || 600).toFixed(0)}/时 换算（本节点暂无人上传战绩）`;
-    effBar(effGrid, '生息效率', eff.essence, `生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时 · ${baseHint}`);
+    effBar(effGrid, '生息效率', eff.essence,
+      `生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时 · ${baseHint}（权重 55%）`);
+    effBar(effGrid, '清图效率', eff.clear != null ? eff.clear : 50,
+      eff.clear != null
+        ? `场上≥15只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%，越低越好（权重 25%）`
+        : '采样数据不足，本维度以 50 分中性值计入（权重 25%）');
+    effBar(effGrid, '击杀效率', eff.kill != null ? eff.kill : 50,
+      eff.kill != null
+        ? `累计击杀 / 总敌人生成 = ${eff.kill.toFixed(1)}%（权重 20%）`
+        : '数据不足，本维度以 50 分中性值计入（权重 20%）');
     effBox.appendChild(effGrid);
     container.appendChild(effBox);
 
@@ -259,7 +270,9 @@ WF.arbitrationView = (function () {
 
     const defWrap = U.el('div', 'arb-explain-defs');
     [
-      ['生息效率', '把期望生息 ÷ 任务时长换算成生息速率（每小时产出），再除以节点基准，得到这里的百分比。基准优先取该节点的历史最高生息速率（不同节点天然产出节奏不同，不能用同一数字硬套）；某节点暂无人上传过战绩时，退回默认基准 600/时。达到节点历史最高 = 100%、超过则可突破 100%；综合评分直接由此线性换算，完全透明，无隐藏加权。场上敌人压力已在下方"清图效率"图表中单独可视化，不重复参与评分。'],
+      ['生息效率（55%）', '把期望生息 ÷ 任务时长换算成生息速率（每小时全 Buff 产出），再除以节点基准，得到这里的百分比。基准优先取该节点的历史最高生息速率（不同节点天然产出节奏不同，不能用同一数字硬套）；某节点暂无人上传过战绩时，退回默认基准 600/时。达到节点历史最高 = 100%，超过则可突破 100%，属顶尖水平。'],
+      ['清图效率（25%）', '依据房主日志中每次敌人生成行的 MonitoredTicking 字段采样，统计全场中场上同时受 AI 监控的活跃敌人数 ≥15 的时间占比（geq15Pct），取 100 − geq15Pct 作为得分。清图越干净、场上高压时段越少，这项得分越高。完全来自日志内采样，不依赖任何外部基准。'],
+      ['击杀效率（20%）', '利用每分钟切片数据：击杀数 ≈ 本分钟新增生成数 − 本分钟末活跃监控数相对上分钟末的净变化，对全程各分钟求和得到累计近似击杀数，再除以总敌人生成数（maxSpawned），得到全局消灭率百分比。反映生成的敌人有多大比例被及时清理；仅依赖日志数据，近似推算，供参考走势。若数据不足则以 50 分中性值占位。'],
     ].forEach(([k, v]) => {
       const d = U.el('div', 'arb-def-row');
       d.appendChild(U.el('span', 'arb-def-key', k));
@@ -268,13 +281,13 @@ WF.arbitrationView = (function () {
     });
     explain.appendChild(defWrap);
 
-    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 生息速率 ÷ 节点基准 × 100，上限 120 分；达到节点历史最高即得 100 分，超过方可进入"巅峰"区间'));
+    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 0.55×生息效率 + 0.25×清图效率 + 0.20×击杀效率，上限 120 分。清图与击杀两项完全由日志推算，不依赖外部排行榜数据，确保节点基准数据缺失时评分仍具参考价值。'));
     const scaleRows = [
-      ['101 - 120', '巅峰',  '生息速率超过节点历史最高，顶尖水平'],
-      ['80 - 100',  '优秀',  '生息产出达到节点最高水平的 80% 以上，属高效队伍'],
-      ['70 - 79',   '良好',  '节点最高水平 70%-79%，整体表现不错，仍有提升空间'],
-      ['60 - 69',   '及格',  '节点最高水平 60%-69%，达到基本效率'],
-      ['0 - 59',    '待提升', '节点最高水平 60% 以下，建议优化配装、走位或击杀节奏'],
+      ['101 - 120', '巅峰',  '生息超出节点历史最高，且清图与击杀效率同样出色，属顶尖水平'],
+      ['80 - 100',  '优秀',  '三维均衡发展，产出稳定、清图流畅、击杀率高，属高效队伍'],
+      ['70 - 79',   '良好',  '整体表现不错，某一维度仍有明显提升空间'],
+      ['60 - 69',   '及格',  '达到基本效率，某维度偏弱拉低了整体'],
+      ['0 - 59',    '待提升', '三维中有一项或多项明显偏低，建议优化配装、走位或击杀节奏'],
     ];
     const scaleTable = U.el('div', 'arb-scale-rows');
     scaleRows.forEach(([range, tier, desc]) => {
