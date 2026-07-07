@@ -117,8 +117,10 @@ WF.ArbitrationParser = (function () {
   /* ══════════════════════════════════════════════════════════════
      评分体系（0-120 分，全过程透明可推导，不做任何隐藏加权）
      ══════════════════════════════════════════════════════════════
-     子指标一：生息效率 —— 期望生息/小时 相对一个"高标准基准"（默认 600/小时，
-       本项目暂无排行榜数据、故长期沿用该基准）的达成度。基准的 60% 记 0 分，
+     子指标一：生息效率 —— 期望生息/小时 相对一个"高标准基准"的达成度。基准优先
+       取该节点的历史最高生息速率（见 WF.ArbNodeBaseline，不同节点天然产出节奏
+       不同，不能用同一个数字硬套所有节点）；某节点暂无人上传过战绩时，退回
+       默认基准 600/小时。基准的 60% 记 0 分，
        达到基准记 100 分，二者之间用凸曲线过渡（低分段增长慢，越接近基准每一分
        进步换来的得分越多）；超过基准后曲线继续外推，允许突破 100。
      子指标二：击杀效率 —— 由"杂兵负荷比"（敌人生成 ÷ 无人机生成）换算，
@@ -131,7 +133,7 @@ WF.ArbitrationParser = (function () {
        达到 100 时综合熟练度精确为 100。
      最终把综合熟练度乘以 1.2 映射到 0-120 分，为顶尖表现留出"超出满分"的展示空间。
      ══════════════════════════════════════════════════════════════ */
-  const ESS_BASELINE     = 600;   // 生息效率基准（默认／暂无排行榜时恒定使用）
+  const ESS_BASELINE     = 600;   // 默认基准（该节点暂无分节点基准数据时兜底使用）
   const ESS_FLOOR_RATIO  = 0.6;   // 基准的 60% 记 0 分
   const ESS_CURVE_K      = 3;     // 生息效率凸曲线陡峭度
   const SPARSITY_FLOOR   = 20;    // 负荷比 20 记 0 分
@@ -147,11 +149,13 @@ WF.ArbitrationParser = (function () {
   function convexCurve(progress, k) {
     return 100 * (Math.exp(k * progress) - 1) / (Math.exp(k) - 1);
   }
-  // 生息效率（%）
-  function essenceEfficiency(perHour) {
-    const floor = ESS_BASELINE * ESS_FLOOR_RATIO;
+  // 生息效率（%）：baseline 缺省为默认基准 600/时，若调用方传入该节点的
+  // 历史最高生息速率（来自分节点基准数据），则改用节点专属基准换算，更公平。
+  function essenceEfficiency(perHour, baseline) {
+    const base = baseline > 0 ? baseline : ESS_BASELINE;
+    const floor = base * ESS_FLOOR_RATIO;
     if (perHour <= floor) return 0;
-    const progress = (perHour - floor) / (ESS_BASELINE - floor);
+    const progress = (perHour - floor) / (base - floor);
     return Math.max(0, convexCurve(progress, ESS_CURVE_K));
   }
   // 击杀效率（%）：负荷比越低越好
@@ -366,13 +370,22 @@ WF.ArbitrationParser = (function () {
         const fullBuffPerMin = duration > 0 ? fullBuffTotal * 60 / duration : 0;
         const dronesPerMin   = duration > 0 ? droneCount / (duration / 60) : 0;
         const sparsity       = droneCount > 0 ? m.maxSpawned / droneCount : 0;
-        const essEff  = essenceEfficiency(fullBuffPerHour);
-        const killEff = killEfficiency(sparsity);
-        const prof    = proficiency(essEff, killEff);
-        const score   = computeScore(essEff, killEff);
 
         // 权威节点库解析：节点名 / 星球 / 类型 / 派系（优先，回退到日志解析）
         const resolved = resolveNode(m.nodeId, m);
+
+        // 分节点生息效率基准：若已加载到该节点的历史最高生息速率（见
+        // WF.ArbNodeBaseline，数据来源见 build_arb_baseline.py），用它替代
+        // 默认的 600/时，不同节点天然产出节奏不同、按节点比较更公平；
+        // 查不到时（该节点暂无人上传过战绩）退回默认基准。
+        const nodeBase = (typeof WF !== 'undefined' && WF.ArbNodeBaseline)
+          ? WF.ArbNodeBaseline.lookup(m.nodeId) : null;
+        const essBaseline = nodeBase ? nodeBase.perHour : ESS_BASELINE;
+
+        const essEff  = essenceEfficiency(fullBuffPerHour, essBaseline);
+        const killEff = killEfficiency(sparsity);
+        const prof    = proficiency(essEff, killEff);
+        const score   = computeScore(essEff, killEff);
 
         // 无人机相对时刻（供分布/表格）
         const relTimes = m.droneTimes.map((x) => x - m.startedT);
@@ -464,6 +477,8 @@ WF.ArbitrationParser = (function () {
             kill:    killEff,      // 击杀效率 %
             proficiency: prof,     // 综合熟练度 %
           },
+          essBaseline,                          // 本局评分实际采用的生息效率基准（/时）
+          essBaselineIsNode: !!nodeBase,         // 是否命中了节点专属基准（否则为默认基准兜底）
           score,
           scoreTier: scoreTierName(score),
           squadInfo: sq.getSquadInfo(),

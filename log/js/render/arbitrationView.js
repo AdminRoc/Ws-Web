@@ -77,8 +77,30 @@ WF.arbitrationView = (function () {
   }
 
 
+  // 分节点基准数据是页面打开时异步加载的，体量很小、几乎总能在用户点开某条
+  // 记录之前就绪；但仍留一道保险——如果解析当时基准还没到位（用了默认 600
+  // 兜底），这里发现现在已经有该节点的专属基准了，就用它重新算一遍评分再展示，
+  // 而不是让用户看到一个本该更准确却没用上节点基准的结果。
+  function maybeRecalcWithNodeBaseline(rec) {
+    if (rec.essBaselineIsNode) return;
+    const P = WF.ArbitrationParser;
+    if (!WF.ArbNodeBaseline || !P) return;
+    const nb = WF.ArbNodeBaseline.lookup(rec.nodeId);
+    if (!nb) return;
+    const essEff = P.essenceEfficiency(rec.essence.fullBuffPerHour, nb.perHour);
+    const prof   = P.proficiency(essEff, rec.eff.kill);
+    const score  = P.computeScore(essEff, rec.eff.kill);
+    rec.eff.essence = essEff;
+    rec.eff.proficiency = prof;
+    rec.score = score;
+    rec.scoreTier = P.scoreTierName(score);
+    rec.essBaseline = nb.perHour;
+    rec.essBaselineIsNode = true;
+  }
+
   function render(container, rec) {
     container.innerHTML = '';
+    maybeRecalcWithNodeBaseline(rec);
     const eff = rec.eff || { essence: 0, kill: 0, proficiency: 0 };
 
     /* ─── 顶行：综合评分徽章 + 任务元信息 ─── */
@@ -154,7 +176,10 @@ WF.arbitrationView = (function () {
     const effBox = U.el('div', 'arb-eff-box');
     effBox.appendChild(U.el('div', 'section-title', '效率指标'));
     const effGrid = U.el('div', 'arb-eff-grid');
-    effBar(effGrid, '生息效率', eff.essence, `期望生息/小时 ${rec.essence.fullBuffPerHour.toFixed(1)} · 相对基准换算`);
+    const baseHint = rec.essBaselineIsNode
+      ? `相对本节点历史最高 ${rec.essBaseline.toFixed(1)}/时 换算`
+      : `相对默认基准 ${(rec.essBaseline || 600).toFixed(0)}/时 换算（本节点暂无人上传战绩）`;
+    effBar(effGrid, '生息效率', eff.essence, `期望生息/小时 ${rec.essence.fullBuffPerHour.toFixed(1)} · ${baseHint}`);
     effBar(effGrid, '击杀效率', eff.kill, `由负荷比 ${rec.sparsity.toFixed(2)} 换算 · 越低越高`);
     effBar(effGrid, '综合熟练度',   eff.proficiency, '生息效率与击杀效率的综合');
     effBox.appendChild(effGrid);
@@ -238,7 +263,7 @@ WF.arbitrationView = (function () {
 
     const defWrap = U.el('div', 'arb-explain-defs');
     [
-      ['生息效率', '先把期望生息 ÷ 任务时长换算成"生息速率"（每小时产出，即上方"生息速率/小时"），再相对一个恒定的高标准基准（600/小时，本项目暂无排行榜数据、故长期沿用此基准）取达成度，得到这里的百分比。基准的 60% 记 0 分、达到基准记 100 分，中间用凸曲线过渡——越接近基准，每一分进步换来的得分越多；超过基准后曲线继续外推，允许突破 100%。'],
+      ['生息效率', '先把期望生息 ÷ 任务时长换算成"生息速率"（每小时产出，即上方"生息速率/小时"），再相对一个基准取达成度，得到这里的百分比。基准优先取该节点的历史最高生息速率（同一节点天然节奏不同、不能用一个数字硬套所有节点）；某节点暂无人上传过战绩时，退回默认基准 600/小时。基准的 60% 记 0 分、达到基准记 100 分，中间用凸曲线过渡——越接近基准，每一分进步换来的得分越多；超过基准后曲线继续外推，允许突破 100%。'],
       ['击杀效率', '由杂兵负荷比（敌人生成 ÷ 无人机生成）换算。负荷比 20 记 0 分、5 记 100 分，同样是凸曲线过渡，越逼近满分越陡；低于 5 可突破 100%。负荷比越低，说明火力越集中在无人机身上、杂兵清理越干净利落。'],
       ['综合熟练度',   '生息效率与击杀效率并非简单加权平均，而是按各自权重做"弹性替代"合成——任一项明显偏低都会拉低整体，兼顾发展的队伍得分会高于单项突出但另一项拖后腿的队伍；合成值最后经一条平滑曲线拉伸成百分比（低分段压缩、越接近满分提升越明显），两项都达到 100% 时综合熟练度精确为 100%。'],
     ].forEach(([k, v]) => {
