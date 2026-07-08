@@ -49,6 +49,12 @@ var disruptionKappaDuoRecords = [
     uploadTime: "2024-12-07",
     videoUrls:     ["https://www.bilibili.com/video/BV1r2qLY7EeB"]
   },
+  {
+    clearTime:  "58:35.858",
+    playerId:   "Xiyangbujita / EroticBlue",
+    uploadTime: "2026-07-08",
+    videoUrls:     ["https://www.bilibili.com/video/BV1mUMG6qE2P"]
+  },
   // ─── 在此处继续添加新条目 ───
 ];
 
