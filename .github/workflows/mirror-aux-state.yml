@@ -50,7 +50,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ws-intl-zh.json data/ws-intl-en.json data/ws-cn-zh.json data/ws-cn-en.json data/ws-cn-null00.json
           git diff --staged --quiet && { echo "无实质变动,跳过提交"; exit 0; }
-          git commit -m "data: update aux-state [skip ci]"
+          git commit -m "2026-07-08"
           # 多个定时工作流(本工作流 + 更新世界状态全量数据 等)各自按 cron 推送同一 main 分支,
           # concurrency 只能串行"同名"工作流,跨工作流仍会撞车导致 push 被拒(non-fast-forward)。
           # 本工作流由外部 Cloudflare Worker 每 2 分钟触发一次,撞车概率比其它慢周期工作流更高,

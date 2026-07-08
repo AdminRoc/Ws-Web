@@ -50,7 +50,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/item-i18n-harvest.json
           git diff --staged --quiet && { echo "无实质变动,跳过提交"; exit 0; }
-          git commit -m "data: refresh item i18n harvest [skip ci]"
+          git commit -m "2026-07-08"
           for i in 1 2 3 4 5; do
             if git push; then echo "推送成功(第 $i 次)"; exit 0; fi
             echo "推送被拒(第 $i 次),拉取远端后 rebase 重试..."
