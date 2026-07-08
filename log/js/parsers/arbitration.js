@@ -6,7 +6,7 @@
  *   - 轮/波边界：DefenseReward::TransitionOut（防御/拦截/镜像防御的每轮结算一次）；
  *                生存则用 SurvivalMission 奖励层
  *   - 主机时长：SS_STARTED 起，至最后一次轮次结算（无尽任务的有效计时终点）
- *   - 队内在场时长：各队伍成员对应网络连接最后一次同步诊断的时间戳，取其中最早出现
+ *   - 整队满编时长：各队伍成员对应网络连接最后一次同步诊断的时间戳，取其中最早出现
  *     静默的一个——反映"全员仍稳定在场"的窗口，常年短于主机时长（房主经常独自续留farm）
  *   - 节点/星球/派系/类型：任务名行 + 关卡资源路径（/Lotus/Levels/.../Proc/<派系>/<关卡名>）
  * 关键修复：无尽任务里 EndOfMatch.lua:Initialize 每轮都会触发，不能据此结束任务，
@@ -427,7 +427,7 @@ WF.ArbitrationParser = (function () {
         const roundGuarantee = rounds * 1;                   // 轮次保底
         const roundExtra     = rounds * 0.3;                 // 轮次额外期望（10%×3）
 
-        // 队内在场时长：各连接最后一次诊断时间戳中最早的一个（相对任务开始）。
+        // 整队满编时长：各连接最后一次诊断时间戳中最早的一个（相对任务开始）。
         // 诊断行本身按网络波动触发、频率并不均匀——样本数过少的连接（<5 次）
         // 大概率只是全程网络很干净、没触发几次诊断，并非真的提前退场，
         // 排除掉这类连接以避免把"信号稀疏"误判成"提前离场"。
@@ -572,7 +572,7 @@ WF.ArbitrationParser = (function () {
           sampleAgentLine(line, t);
           return;
         }
-        // 队员网络连接诊断（用于推断"队内在场时长"）
+        // 队员网络连接诊断（用于推断"整队满编时长"）
         if (line.indexOf('Retransmit throttle') !== -1) {
           const np = RE.netPeerLine.exec(line);
           if (np) {

@@ -1,6 +1,6 @@
 /* 仲裁详情视图
  * 布局（自上而下，信息层层递进）：
- *   综合评分徽章 + 任务标题/元信息（主机时长 + 队内在场时长）+ 综合熟练度速览
+ *   综合评分徽章 + 任务标题/元信息（主机时长 + 整队满编时长）+ 综合熟练度速览
  *   → 队伍成员 → 核心指标网格 → 每轮明细（可展开）→ 效率指标（生息/清图/综合效率）
  *   → 六张分布图，单列纵向排列，统一横向柱状条风格：
  *     无人机刷新间隔 → 无人机生成趋势（每分钟）→ 无人机刷新连续度 →
@@ -120,7 +120,7 @@ WF.arbitrationView = (function () {
     meta.appendChild(durRow);
     if (rec.lastClientDuration != null) {
       const cliRow = U.el('div', 'arb-meta-sub arb-meta-hint');
-      cliRow.appendChild(document.createTextNode('队内在场时长 ' + fmtHMS(rec.lastClientDuration) + `（${U.fmtDurationLong(rec.lastClientDuration)}）`));
+      cliRow.appendChild(document.createTextNode('整队满编时长 ' + fmtHMS(rec.lastClientDuration) + `（${U.fmtDurationLong(rec.lastClientDuration)}）`));
       cliRow.title = '本项目自有指标（口径与其他分析工具可能不同）：房主本地日志会为每一名队员各自的网络连接单独记录同步诊断行，取这些连接"最后一次诊断"时间戳中最早出现的一个。只要有一名队员早于房主停止发出这类诊断（例如提前挂机、切出游戏、或提前退出留房主单刷），这里就会先于主机时长停止推进——反映的是"全员仍稳定在场"的窗口，而非整场任务的时长。为避免把"这名队员网络一直很干净、诊断行本来就少"误判成"提前离场"，诊断次数低于 5 次的连接不参与判定；若全队诊断样本都太少，则不显示本行。';
       cliRow.classList.add('has-tip');
       meta.appendChild(cliRow);
@@ -284,11 +284,11 @@ WF.arbitrationView = (function () {
 
     explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 0.55×生息效率 + 0.25×清图效率 + 0.20×综合效率，上限 120 分。清图效率与综合效率两项完全由日志推算，不依赖外部排行榜数据，确保节点基准数据缺失时评分仍具参考价值。'));
     const scaleRows = [
-      ['101 - 120', '巅峰',  '生息超出节点历史最高，且清图与综合效率同样出色，属顶尖水平'],
-      ['80 - 100',  '优秀',  '三维均衡发展，产出稳定、清图流畅、整体清洁度高，属高效队伍'],
-      ['70 - 79',   '良好',  '整体表现不错，某一维度仍有明显提升空间'],
-      ['60 - 69',   '及格',  '达到基本效率，某维度偏弱拉低了整体'],
-      ['0 - 59',    '待提升', '三维中有一项或多项明显偏低，建议优化配装、走位或清图节奏'],
+      ['101 - 120', '顶尖', '综合效率与操作水平的提升空间已经不大，整体表现趋近完美'],
+      ['80 - 100',  '优秀', '操作表现较为稳定、清图流畅、地图整体的清洁度高，属广义上的高效队伍'],
+      ['70 - 79',   '良好', '整体表现不错，但至少某一维度仍有明显提升空间'],
+      ['60 - 69',   '及格', '勉强达到了能够正常执行任务的水平，建议多加练习'],
+      ['0 - 59',    '初学', '建议寻找靠谱的学习资料，优化配装、继续在实战中提升熟练度'],
     ];
     const scaleTable = U.el('div', 'arb-scale-rows');
     scaleRows.forEach(([range, tier, desc]) => {
