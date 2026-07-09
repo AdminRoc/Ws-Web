@@ -1165,37 +1165,51 @@ body.profile-active #detail-wrap {
 
 /* 剪贴板引导面板 */
 .pf-guide-id-line {
-  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
-  margin-bottom: 18px;
+  display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 .pf-guide-player-name {
   font-size: 22px; color: var(--c-white); letter-spacing: 2px;
 }
 .pf-guide-account-id {
-  font-size: 13px; color: rgba(95,208,232,0.7); letter-spacing: 1px; font-family: monospace;
+  font-size: 14px; color: rgba(95,208,232,0.7); letter-spacing: 1px; font-family: monospace;
 }
 .pf-manual-box {
-  max-width: 620px; margin: 24px auto;
+  position: relative;
+  max-width: 660px; margin: 24px auto;
   background: var(--c-bg2); border: 1px solid rgba(255,182,72,0.25);
-  border-radius: 10px; padding: 24px 28px; display: flex; flex-direction: column; gap: 16px;
+  border-radius: 10px; padding: 28px 32px; display: flex; flex-direction: column; gap: 18px;
+  box-shadow: 0 0 20px rgba(255,182,72,0.06), inset 0 1px 0 rgba(255,182,72,0.06);
 }
-.pf-manual-title { font-size: 14px; color: var(--c-gold); letter-spacing: 2px; }
-.pf-manual-desc  { font-size: 12px; color: var(--c-text2); line-height: 1.7; }
-.pf-manual-steps { display: flex; flex-direction: column; gap: 8px; }
+.pf-manual-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, rgba(255,182,72,0.6), rgba(95,208,232,0.4));
+  border-radius: 10px 10px 0 0; pointer-events: none;
+}
+.pf-manual-title {
+  position: relative; z-index: 1;
+  font-size: 17px; color: var(--c-gold); letter-spacing: 3px; padding-left: 12px;
+  border-left: 3px solid var(--c-gold);
+}
+.pf-manual-desc  {
+  font-size: 13.5px; color: var(--c-text2); line-height: 1.8;
+}
+.pf-manual-steps { display: flex; flex-direction: column; gap: 12px; }
 .pf-manual-step  { display: flex; align-items: flex-start; gap: 10px; }
 .pf-manual-stepnum {
-  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; margin-top: 1px;
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; margin-top: 1px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 11px; background: rgba(95,208,232,0.1); border: 1px solid rgba(95,208,232,0.3); color: var(--c-teal);
+  font-size: 13px; font-weight: 700;
+  background: rgba(95,208,232,0.12); border: 1px solid rgba(95,208,232,0.4); color: var(--c-teal);
 }
-.pf-manual-steptxt { font-size: 12px; color: var(--c-text); line-height: 1.6; }
+.pf-manual-steptxt { font-size: 13.5px; color: var(--c-text); line-height: 1.8; }
 .pf-manual-idrow { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .pf-manual-idinput {
-  flex: 1; min-width: 220px; padding: 9px 12px; border-radius: 7px;
+  flex: 1; min-width: 220px; padding: 10px 14px; border-radius: 7px;
   background: rgba(0,0,0,0.25); border: 1px solid var(--c-border); color: var(--c-white);
-  font-family: monospace; font-size: 13px; letter-spacing: .5px;
+  font-family: monospace; font-size: 14px; letter-spacing: .5px;
 }
-.pf-manual-idinput:focus { outline: none; border-color: rgba(95,208,232,0.55); }
+.pf-manual-idinput:focus { outline: none; border-color: rgba(95,208,232,0.55); box-shadow: 0 0 8px rgba(95,208,232,0.1); }
 
 /* Header */
 .pf-header {
@@ -1339,19 +1353,19 @@ body.profile-active #detail-wrap {
 
 /* ─── 手动降级引导按钮 ─── */
 .pf-guide-btn {
-  font-family: var(--f-px); font-size: 11px; letter-spacing: 1px;
-  padding: 8px 18px; border-radius: 5px; cursor: pointer;
+  font-family: var(--f-px); font-size: 13px; letter-spacing: 1px;
+  padding: 10px 22px; border-radius: 5px; cursor: pointer;
   background: rgba(107,118,144,0.1); border: 1px solid rgba(107,118,144,0.3);
-  color: var(--c-text2); transition: background 0.15s, border-color 0.15s, color 0.15s;
+  color: var(--c-text2); transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
 }
 .pf-guide-btn:hover:not(:disabled) { background: rgba(107,118,144,0.2); border-color: rgba(107,118,144,0.5); color: var(--c-text); }
 .pf-guide-btn:disabled { opacity: 0.55; cursor: default; }
 .pf-guide-btn-primary {
-  background: rgba(95,208,232,0.08); border-color: rgba(95,208,232,0.3); color: var(--c-teal);
+  background: rgba(95,208,232,0.1); border-color: rgba(95,208,232,0.35); color: var(--c-teal);
 }
-.pf-guide-btn-primary:hover:not(:disabled) { background: rgba(95,208,232,0.16); border-color: rgba(95,208,232,0.55); color: var(--c-white); }
-.pf-guide-or  { font-size: 10px; color: var(--c-text2); text-align: center; opacity: 0.6; }
-.pf-guide-err { font-size: 11px; color: var(--c-red); min-height: 14px; }
+.pf-guide-btn-primary:hover:not(:disabled) { background: rgba(95,208,232,0.18); border-color: rgba(95,208,232,0.55); color: var(--c-white); box-shadow: 0 0 12px rgba(95,208,232,0.12); }
+.pf-guide-or  { font-size: 12px; color: var(--c-text2); text-align: center; opacity: 0.65; padding: 4px 0; }
+.pf-guide-err { font-size: 13px; color: var(--c-red); min-height: 16px; }
 
 /* ─── 成就卡片网格 ─── */
 .pf-ach-grid {
