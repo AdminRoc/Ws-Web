@@ -168,6 +168,12 @@ var netracellRecords = [
     uploadTime: "2026-04-29",
     videoUrls:  ["https://www.youtube.com/watch?v=z4331IVDtJo"],
   },
+  {
+    playerId:   "Bbouddha",
+    clearTime:  "2:03.000",
+    uploadTime: "2026-07-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=qh8Rgr3YhDE"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
