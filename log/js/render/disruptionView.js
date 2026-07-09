@@ -33,7 +33,7 @@ WF.disruptionView = (function () {
     const maxDur = Math.max(...rec.rounds.map(r => r.duration));
     const barH = 6, gap = 2, w = 760;
     const h = rec.rounds.length * (barH + gap);
-    let svg = `<svg viewBox="0 0 ${w} ${h}" height="${h}" class="round-chart" preserveAspectRatio="none">`;
+    let svg = `<svg viewBox="0 0 ${w} ${h}" height="${h}" class="round-chart" style="max-width:${w}px">`;
     svg += _svgDefs();
     rec.rounds.forEach((r, i) => {
       const bw  = Math.max(2, (r.duration / maxDur) * (w - 60));

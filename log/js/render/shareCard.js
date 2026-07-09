@@ -22,10 +22,61 @@ WF.shareCard = (function () {
     btn.classList.toggle('show', !!has);
   }
 
-  /* ═══════════════════════════════════════════════════════════════
+  /* ════════════════════════════════════════════════════════════════
+     字体预加载：将 XSZT 字体转为 Base64 Data URL，供克隆文档内嵌使用
+     ════════════════════════════════════════════════════════════════ */
+  let cachedFont = null;
+  function loadFontAsDataURL() {
+    if (cachedFont) return Promise.resolve(cachedFont);
+    const tryFetch = (path) => fetch(path).then(r =>
+      r.ok ? r.blob().then(b => ({ blob: b, path })) : Promise.reject(new Error('fetch failed: ' + path))
+    );
+    const toBase64 = ({ blob, path }) => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve({ dataUrl: reader.result, path });
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+    // 字体相对 log/analyzer.html 的路径为 ../fonts/
+    return tryFetch('../fonts/xszt.woff2')
+      .catch(() => tryFetch('../fonts/xszt.ttf'))
+      .then(toBase64)
+      .then(({ dataUrl, path }) => {
+        const format = path.endsWith('.woff2') ? 'woff2' : 'truetype';
+        cachedFont = { dataUrl, format };
+        return cachedFont;
+      })
+      .catch(err => {
+        console.warn('Share card font preload failed:', err);
+        return null;
+      });
+  }
+
+  function injectFontFace(doc, font) {
+    if (!font || !font.dataUrl) return;
+    try {
+      const style = doc.createElement('style');
+      style.id = 'share-font-style';
+      style.textContent = `
+        @font-face {
+          font-family: 'XSZT';
+          src: url("${font.dataUrl}") format("${font.format}");
+          font-weight: normal;
+          font-style: normal;
+          font-display: block;
+        }
+        #detail, #detail * { font-family: 'XSZT', 'Microsoft YaHei', monospace !important; }
+      `;
+      doc.head.appendChild(style);
+    } catch (e) {
+      console.warn('injectFontFace error:', e);
+    }
+  }
+
+  /* ════════════════════════════════════════════════════════════════
      截图克隆修复（所有 DOM 操作都包裹 try-catch，确保不导致 html2canvas 失败）
-     ═══════════════════════════════════════════════════════════════ */
-  function fixClone(doc) {
+     ════════════════════════════════════════════════════════════════ */
+  function fixClone(doc, font) {
     try {
       const style = doc.createElement('style');
       style.id = 'share-fix-style';
@@ -115,6 +166,20 @@ WF.shareCard = (function () {
         .bar-ok:hover { fill: #5fd0e8 !important; }
 
         svg { overflow: visible !important; }
+        .round-chart { max-width: 100% !important; height: auto !important; }
+        .dis-tl-wrap .round-chart { width: auto !important; min-width: 0 !important; display: block !important; }
+
+        /* 击杀走势图在分享图中完整显示（取消横向滚动，等比缩放） */
+        .dis-chart-zoom {
+          overflow: visible !important;
+          width: 100% !important;
+        }
+        .dis-chart-zoom svg {
+          width: 100% !important;
+          height: auto !important;
+          max-width: 100% !important;
+          display: block !important;
+        }
 
         .share-card-btn, .cyber-nav, .rd-toggle-btn,
         .record-card::before, .tab-btn::after,
@@ -130,6 +195,9 @@ WF.shareCard = (function () {
         .round-no, .arb-def-key, .arb-scale-range { color: #c9d4e8 !important; }
       `;
       doc.head.appendChild(style);
+
+      /* 注入内嵌 XSZT 字体，确保分享图中使用 sxzt 像素字体 */
+      injectFontFace(doc, font);
 
       /* JS 兜底：渐变文字 */
       const fixes = [
@@ -162,17 +230,31 @@ WF.shareCard = (function () {
         }
       }
 
-      /* html2canvas 不支持 outline，将黄色 outline 转为 border */
+      /* html2canvas 不支持 outline，将黄色 outline 转为 border + box-shadow */
       const cdNodes = doc.querySelectorAll('.cd');
       for (let i = 0; i < cdNodes.length; i++) {
         const el = cdNodes[i];
-        const outline = el.style.outline;
-        if (outline && outline.includes('#ffd700')) {
+        const outline = (el.style.outline || '').toLowerCase();
+        const outlineColor = (el.style.outlineColor || '').toLowerCase();
+        const isGold = outline.includes('#ffd700') || outline.includes('rgb(255, 215, 0)') ||
+                       outline.includes('gold') || outlineColor.includes('#ffd700') ||
+                       outlineColor.includes('rgb(255, 215, 0)') || outlineColor.includes('gold');
+        if (isGold) {
           el.style.outline = 'none';
-          el.style.border = '1.5px solid #ffd700';
+          el.style.border = '2px solid #ffd700';
+          el.style.boxShadow = '0 0 0 1px #ffd700';
           el.style.padding = '1px 3px';
           el.style.borderRadius = '2px';
         }
+      }
+
+      /* 等待 XSZT 字体在克隆文档中绘制就绪（若已注入） */
+      try {
+        if (doc.fonts && typeof doc.fonts.load === 'function') {
+          doc.fonts.load("16px 'XSZT'");
+        }
+      } catch (e) {
+        /* ignore */
       }
     } catch (e) {
       console.error('fixClone error:', e);
@@ -304,39 +386,41 @@ WF.shareCard = (function () {
       }
     });
 
-    html2canvas(detail, {
-      backgroundColor: '#04050c',
-      scale: 1.5,
-      useCORS: true,
-      allowTaint: true,
-      imageTimeout: 0,
-      logging: false,
-      scrollX: 0,
-      scrollY: 0,
-      onclone: (doc) => fixClone(doc),
-    }).then((rawCanvas) => {
-      hideEls.forEach(el => { el.style.visibility = ''; });
-      window.scrollTo(0, savedScroll);
+    loadFontAsDataURL().then((font) => {
+      html2canvas(detail, {
+        backgroundColor: '#04050c',
+        scale: 1.5,
+        useCORS: true,
+        allowTaint: true,
+        imageTimeout: 0,
+        logging: false,
+        scrollX: 0,
+        scrollY: 0,
+        onclone: (doc) => fixClone(doc, font),
+      }).then((rawCanvas) => {
+        hideEls.forEach(el => { el.style.visibility = ''; });
+        window.scrollTo(0, savedScroll);
 
-      const finalCanvas = decorateCanvas(rawCanvas);
+        const finalCanvas = decorateCanvas(rawCanvas);
 
-      finalCanvas.toBlob((blob) => {
-        if (!blob) { setBusy(false, '生成失败'); resetSoon(); return; }
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
-        a.href = url; a.download = 'EElog分析_' + stamp + '.png';
-        document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 4000);
-        setBusy(false, '已保存 ✓'); resetSoon();
-      }, 'image/png');
-    }).catch((err) => {
-      console.error('Share card capture error:', err);
-      console.error('Error stack:', err.stack);
-      console.error('Error message:', err.message);
-      hideEls.forEach(el => { el.style.visibility = ''; });
-      window.scrollTo(0, savedScroll);
-      setBusy(false, '生成失败'); resetSoon();
+        finalCanvas.toBlob((blob) => {
+          if (!blob) { setBusy(false, '生成失败'); resetSoon(); return; }
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+          a.href = url; a.download = 'EElog分析_' + stamp + '.png';
+          document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 4000);
+          setBusy(false, '已保存 ✓'); resetSoon();
+        }, 'image/png');
+      }).catch((err) => {
+        console.error('Share card capture error:', err);
+        console.error('Error stack:', err.stack);
+        console.error('Error message:', err.message);
+        hideEls.forEach(el => { el.style.visibility = ''; });
+        window.scrollTo(0, savedScroll);
+        setBusy(false, '生成失败'); resetSoon();
+      });
     });
   }
 
