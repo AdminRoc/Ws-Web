@@ -94,9 +94,8 @@ WF.profileView = (function () {
     descEl.innerHTML =
       '账号 ID 只出现在客户端完整启动时的登录记录中；若本次 EE.log 是从任务中途开始记录（常见于长时间任务或日志轮转），会只留下玩家名而没有账号 ID。' +
       (state.playerName ? '已识别玩家名「' + state.playerName + '」，' : '') +
-      '请在 warframe.com 登录后，访问 ' +
-      '<a href="https://www.warframe.com/api/user-data" target="_blank" rel="noopener" style="color:var(--c-teal);text-decoration:underline">warframe.com/api/user-data</a>，' +
-      '在返回的 JSON 中找到 <code style="font-family:monospace;color:var(--c-teal);background:rgba(95,208,232,0.08);padding:1px 5px;border-radius:3px">user_id</code> 字段的值，填入下方。';
+      '请在您的 EE.log 中搜索类似 <code style="font-family:monospace;color:var(--c-teal);background:rgba(95,208,232,0.08);padding:1px 5px;border-radius:3px">Login: ' + _esc(state.playerName || '玩家名') + ' (xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)</code> 的行，' +
+      '括号内的十六进制字符串就是账号 ID，复制粘贴到下方即可。';
     box.appendChild(descEl);
     var row = _el('div', 'pf-manual-idrow');
     var input = document.createElement('input');
