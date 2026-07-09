@@ -14,10 +14,10 @@
  */
 var disruptionOlympusSoloRecords = [
   {
-    clearTime:  "69:43.000",
+    clearTime:  "64:31.000",
     playerId:   "FrostMainer",
-    uploadTime: "2026-06-28",
-    videoUrls:     ["https://www.youtube.com/watch?v=jbMK9rRmCxY"]
+    uploadTime: "2026-07-04",
+    videoUrls:     ["https://www.youtube.com/watch?v=Wq3Nv10YSME"]
   },
   {
     clearTime:  "67:55.000",

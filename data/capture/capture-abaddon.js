@@ -25,9 +25,9 @@ var capture_abaddonRecords = [
 
   {
     playerId:   "Salat",
-    clearTime:  "0:18.667",
-    uploadTime: "2025-03-04",
-    videoUrls:  ["https://www.youtube.com/watch?v=Rki7F6QXba4"],
+    clearTime:  "0:18.167",
+    uploadTime: "2026-07-06",
+    videoUrls:  ["https://www.youtube.com/watch?v=YpLpIT0Ahn0"],
   },
   {
     playerId:   "Mortar",
