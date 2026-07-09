@@ -65,7 +65,12 @@ WF.shareCard = (function () {
           font-style: normal;
           font-display: block;
         }
-        #detail, #detail * { font-family: 'XSZT', 'Microsoft YaHei', monospace !important; }
+        #detail, #detail *, #detail *::before, #detail *::after,
+        #detail svg text, #detail svg tspan, #detail svg,
+        .opening-kills-chart text, .dis-chart-zoom text,
+        .round-chart text { font-family: 'XSZT', 'Microsoft YaHei', monospace !important; }
+        /* SVG 内文本最小字体大小保底（XSZT 字体在过小尺寸下难以识别，12px起） */
+        #detail svg text, #detail svg tspan, #detail text { font-size: inherit !important; }
       `;
       doc.head.appendChild(style);
     } catch (e) {
@@ -78,6 +83,7 @@ WF.shareCard = (function () {
      ════════════════════════════════════════════════════════════════ */
   function fixClone(doc, font) {
     try {
+      /* ── 1. 注入通用样式规则 ── */
       const style = doc.createElement('style');
       style.id = 'share-fix-style';
       style.textContent = `
@@ -90,18 +96,21 @@ WF.shareCard = (function () {
 
         #detail {
           display: block !important;
+          position: static !important;
           width: 960px !important;
           min-width: 960px !important;
           max-width: 960px !important;
+          height: auto !important;
+          min-height: 0 !important;
+          max-height: none !important;
           background: #04050c !important;
           padding: 28px 36px 36px !important;
           margin: 0 !important;
           overflow: visible !important;
-          max-height: none !important;
           border: none !important;
           box-sizing: border-box !important;
         }
-        #detail-wrap { background: transparent !important; border: none !important; padding: 0 !important; }
+        #detail-wrap { background: transparent !important; border: none !important; padding: 0 !important; overflow: visible !important; min-width: 0 !important; }
         #detail-wrap > .panel-label { display: none !important; }
 
         /* 统一卡片间距与边框 */
@@ -194,13 +203,35 @@ WF.shareCard = (function () {
         .rd-table th { background: #0a0d16 !important; }
         .round-table tr:hover td, .rd-table tr:hover td { background: transparent !important; }
 
-        /* 确保 SVG 条形图填充色可见（html2canvas 有时无法解析 CSS 变量） */
+        /* 确保 SVG 条形图填充色可见（html2canvas 有时无法解析 CSS 变量和 url(#gradient) 引用） */
         .bar-ok { fill: #3a8ba0 !important; }
         .bar-ok:hover { fill: #5fd0e8 !important; }
+        .bar-fail { fill: #ff6b75 !important; }
+        .bar-fail:hover { fill: #ff8e96 !important; }
+
+        /* 每轮前10秒击杀数柱状图：覆盖 url(#cyber-bar-gradient) 为实色，确保克隆文档中有效 */
+        .cyber-bar { fill: #1a7a9a !important; filter: none !important; }
+        .cyber-bar-group:hover .cyber-bar { fill: #2a9aca !important; }
+        .cyber-grid-line { stroke: rgba(95,208,232,0.18) !important; stroke-width: 1; stroke-dasharray: 3 3; }
+        .cyber-axis-text { fill: #6b7690 !important; font-family: 'XSZT', 'Microsoft YaHei', monospace !important; font-size: 10px !important; }
+        .cyber-axis-title { fill: #5fd0e8 !important; font-family: 'XSZT', 'Microsoft YaHei', monospace !important; font-size: 11px !important; }
+        .cyber-bar-value { fill: #dffbff !important; font-family: 'XSZT', 'Microsoft YaHei', monospace !important; font-size: 10px !important; }
+        /* 柱状图容器在克隆中关闭动画和伪元素 */
+        .cyber-chart-box::before, .cyber-chart-box::after, .chart-box.dis-tl-wrap::before, .chart-box.dis-tl-wrap::after { display: none !important; }
+        .cyber-bar-group { animation: none !important; }
 
         svg { overflow: visible !important; }
         .round-chart { max-width: 100% !important; height: auto !important; }
         .dis-tl-wrap .round-chart { width: auto !important; min-width: 0 !important; display: block !important; }
+
+        /* 每轮前10秒击杀数 SVG —— 固定 760px 宽度并等比缩放 */
+        .opening-kills-chart {
+          width: 760px !important;
+          max-width: 100% !important;
+          height: auto !important;
+          display: block !important;
+          font-family: 'XSZT', 'Microsoft YaHei', monospace !important;
+        }
 
         /* 击杀走势图在分享图中完整显示（取消横向滚动，等比缩放） */
         .dis-chart-zoom {
@@ -213,6 +244,9 @@ WF.shareCard = (function () {
           max-width: 100% !important;
           display: block !important;
         }
+
+        /* 强制所有 SVG 文本在分享图中使用 XSZT 字体 */
+        svg text, svg tspan { font-family: 'XSZT', 'Microsoft YaHei', monospace !important; }
 
         .share-card-btn, .cyber-nav, .rd-toggle-btn,
         .record-card::before, .tab-btn::after,
@@ -229,11 +263,51 @@ WF.shareCard = (function () {
       `;
       doc.head.appendChild(style);
 
-      /* 注入内嵌 XSZT 字体，确保分享图中使用 sxzt 像素字体 */
+      /* ── 2. 直接在克隆元素上设置内联样式，确保 html2canvas 读取到正确的宽高 ── */
+      var detailClone = doc.getElementById('detail');
+      if (detailClone) {
+        detailClone.style.display = 'block';
+        detailClone.style.position = 'static';
+        detailClone.style.width = '960px';
+        detailClone.style.minWidth = '960px';
+        detailClone.style.maxWidth = '960px';
+        detailClone.style.height = 'auto';
+        detailClone.style.minHeight = '0';
+        detailClone.style.maxHeight = 'none';
+        detailClone.style.overflow = 'visible';
+        detailClone.style.padding = '28px 36px 36px';
+        detailClone.style.margin = '0';
+        detailClone.style.border = 'none';
+        detailClone.style.boxSizing = 'border-box';
+        detailClone.style.background = '#04050c';
+      }
+      var detailWrap = doc.getElementById('detail-wrap');
+      if (detailWrap) {
+        detailWrap.style.background = 'transparent';
+        detailWrap.style.border = 'none';
+        detailWrap.style.padding = '0';
+        detailWrap.style.overflow = 'visible';
+        detailWrap.style.minWidth = '0';
+      }
+
+      /* ── 3. 注入内嵌 XSZT 字体 ── */
       injectFontFace(doc, font);
 
-      /* JS 兜底：渐变文字 */
-      const fixes = [
+      /* ── 4. 在分享图中隐藏导管成功率的具体数字，只显示百分比 ── */
+      var statLabels = doc.querySelectorAll('.stat-label');
+      for (var i = 0; i < statLabels.length; i++) {
+        var label = statLabels[i];
+        if (label.textContent.trim() === '导管成功率') {
+          var stat = label.parentElement;
+          var valueEl = stat && stat.querySelector('.stat-value');
+          if (valueEl) {
+            valueEl.textContent = valueEl.textContent.replace(/\s*[（(].*?[）)]/g, '');
+          }
+        }
+      }
+
+      /* ── 5. JS 兜底：渐变文字 ── */
+      var fixes = [
         ['.arb-score-num', '#e8f6ff'],
         ['.grade-s .arb-score-num', '#41ff8e'],
         ['.grade-a .arb-score-num', '#5fd0e8'],
@@ -249,12 +323,12 @@ WF.shareCard = (function () {
         ['.rainbow', '#5fd0e8'],
         ['.squad-title', '#5fd0e8'],
       ];
-      for (let f = 0; f < fixes.length; f++) {
-        const sel = fixes[f][0];
-        const color = fixes[f][1];
-        const nodes = doc.querySelectorAll(sel);
-        for (let i = 0; i < nodes.length; i++) {
-          const el = nodes[i];
+      for (var f = 0; f < fixes.length; f++) {
+        var sel = fixes[f][0];
+        var color = fixes[f][1];
+        var nodes = doc.querySelectorAll(sel);
+        for (var j = 0; j < nodes.length; j++) {
+          var el = nodes[j];
           el.style.background = 'none';
           el.style.webkitBackgroundClip = 'border-box';
           el.style.backgroundClip = 'border-box';
@@ -263,32 +337,31 @@ WF.shareCard = (function () {
         }
       }
 
-      /* html2canvas 不支持 outline，将黄色 outline 转为 border + box-shadow */
-      const cdNodes = doc.querySelectorAll('.cd');
-      for (let i = 0; i < cdNodes.length; i++) {
-        const el = cdNodes[i];
-        const outline = (el.style.outline || '').toLowerCase();
-        const outlineColor = (el.style.outlineColor || '').toLowerCase();
-        const isGold = outline.includes('#ffd700') || outline.includes('rgb(255, 215, 0)') ||
-                       outline.includes('gold') || outlineColor.includes('#ffd700') ||
-                       outlineColor.includes('rgb(255, 215, 0)') || outlineColor.includes('gold');
+      /* ── 6. html2canvas 不支持 outline，将黄色 outline 转为 border + box-shadow ── */
+      var cdNodes = doc.querySelectorAll('.cd');
+      for (var k = 0; k < cdNodes.length; k++) {
+        var cd = cdNodes[k];
+        var outline = (cd.style.outline || '').toLowerCase();
+        var outlineColor = (cd.style.outlineColor || '').toLowerCase();
+        var isGold = outline.indexOf('#ffd700') >= 0 || outline.indexOf('rgb(255, 215, 0)') >= 0 ||
+                     outline.indexOf('gold') >= 0 || outlineColor.indexOf('#ffd700') >= 0 ||
+                     outlineColor.indexOf('rgb(255, 215, 0)') >= 0 || outlineColor.indexOf('gold') >= 0;
         if (isGold) {
-          el.style.outline = 'none';
-          el.style.border = '2px solid #ffd700';
-          el.style.boxShadow = '0 0 0 1px #ffd700';
-          el.style.padding = '1px 3px';
-          el.style.borderRadius = '2px';
+          cd.style.outline = 'none';
+          cd.style.border = '2px solid #ffd700';
+          cd.style.boxShadow = '0 0 0 1px #ffd700';
+          cd.style.padding = '1px 3px';
+          cd.style.borderRadius = '2px';
         }
       }
 
-      /* 等待 XSZT 字体在克隆文档中绘制就绪（若已注入） */
+      /* ── 7. XSZT 字体预加载（同步触发，不 await —— 克隆文档中 FontFaceSet 可能不响应） ── */
       try {
-        if (doc.fonts && typeof doc.fonts.load === 'function') {
+        if (doc.fonts && typeof doc.fonts.load === 'function' && font && font.dataUrl) {
           doc.fonts.load("16px 'XSZT'");
+          doc.fonts.load("24px 'XSZT'");
         }
-      } catch (e) {
-        /* ignore */
-      }
+      } catch (e) { /* ignore */ }
     } catch (e) {
       console.error('fixClone error:', e);
     }
@@ -389,14 +462,15 @@ WF.shareCard = (function () {
     ctx.fill();
     ctx.stroke();
 
-    /* 网站名：SUPER EELOG */
+    /* 网站名：SUPER EELOG（先画灰色 SUPER，量宽度，再画青色 EELOG，永不错位） */
     ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#c9d4e8';
     ctx.font = `500 22px ${fontFamily}`;
-    ctx.fillText('SUPER', logoX + 40, logoY - 7);
-    ctx.fillStyle = '#5fd0e8';
+    ctx.fillStyle = '#c9d4e8';
+    ctx.fillText('SUPER', logoX + 38, logoY - 7);
+    const superW = ctx.measureText('SUPER').width;
     ctx.font = `600 22px ${fontFamily}`;
-    ctx.fillText('EELOG', logoX + 104, logoY - 7);
+    ctx.fillStyle = '#5fd0e8';
+    ctx.fillText('EELOG', logoX + 38 + superW + 6, logoY - 7);
 
     /* 副标题 */
     ctx.fillStyle = 'rgba(107,118,144,0.75)';
@@ -480,8 +554,10 @@ WF.shareCard = (function () {
     btn.querySelector('.share-card-txt').textContent = text || '一键分享';
   }
 
-  /* 将生成的 PNG Blob 写入用户指定的 Downloads 目录 */
+  /* 将生成的 PNG Blob 写入用户指定的 Downloads 目录（已禁用 showSaveFilePicker，
+     因为该 API 需要用户手势才能调用，在分享图生成的异步流程中不可用） */
   function saveToDownloads(blob, fileName) {
+    // 尝试 File System Access API（只在实际用户点击流中可用），静默失败即可
     try {
       if (typeof showSaveFilePicker === 'function') {
         showSaveFilePicker({
@@ -490,12 +566,10 @@ WF.shareCard = (function () {
         }).then(handle => handle.createWritable().then(writable => {
           writable.write(blob);
           return writable.close();
-        })).catch(err => console.warn('saveToDownloads picker failed:', err));
-      } else {
-        console.warn('saveToDownloads: File System Access API not available; falling back to default download.');
+        })).catch(function() { /* 静默 */ });
       }
     } catch (e) {
-      console.warn('saveToDownloads error:', e);
+      /* 静默 */
     }
   }
 
@@ -516,19 +590,61 @@ WF.shareCard = (function () {
       }
     });
 
+    /* ═══ 关键：临时将真实页面上的 #detail 改为 960px，html2canvas 据此测量宽高 ═══ */
+    var origDetailWidth = detail.style.width;
+    var origDetailMinW = detail.style.minWidth;
+    var origDetailMaxW = detail.style.maxWidth;
+    var origDetailOverflow = detail.style.overflow;
+    var origDetailMargin = detail.style.margin;
+    var origDetailBoxSizing = detail.style.boxSizing;
+
+    var origWrapOverflow, origWrapMinW;
+    var detailWrap = document.getElementById('detail-wrap');
+    if (detailWrap) {
+      origWrapOverflow = detailWrap.style.overflow;
+      origWrapMinW = detailWrap.style.minWidth;
+      detailWrap.style.overflow = 'visible';
+      detailWrap.style.minWidth = '0';
+    }
+
+    detail.style.width = '960px';
+    detail.style.minWidth = '960px';
+    detail.style.maxWidth = '960px';
+    detail.style.overflow = 'visible';
+    detail.style.margin = '0';
+    detail.style.boxSizing = 'border-box';
+    /* 强制浏览器重新计算布局，确保 html2canvas 读取到新的宽高 */
+    void detail.offsetWidth;
+
+    function restorePage() {
+      detail.style.width = origDetailWidth;
+      detail.style.minWidth = origDetailMinW;
+      detail.style.maxWidth = origDetailMaxW;
+      detail.style.overflow = origDetailOverflow;
+      detail.style.margin = origDetailMargin;
+      detail.style.boxSizing = origDetailBoxSizing;
+      if (detailWrap) {
+        detailWrap.style.overflow = origWrapOverflow;
+        detailWrap.style.minWidth = origWrapMinW;
+      }
+      hideEls.forEach(el => { el.style.visibility = ''; });
+    }
+
     loadFontAsDataURL().then((font) => {
       html2canvas(detail, {
         backgroundColor: '#04050c',
         scale: 1.5,
+        width: 960,
+        windowWidth: 960,
         useCORS: true,
         allowTaint: true,
         imageTimeout: 0,
         logging: false,
         scrollX: 0,
         scrollY: 0,
-        onclone: (doc) => fixClone(doc, font),
+        onclone: function(doc) { fixClone(doc, font); },
       }).then((rawCanvas) => {
-        hideEls.forEach(el => { el.style.visibility = ''; });
+        restorePage();
         window.scrollTo(0, savedScroll);
 
         const { canvas: finalCanvas, w: finalW, h: finalH } = decorateCanvas(rawCanvas, font && font.dataUrl ? 'XSZT' : null);
@@ -552,7 +668,7 @@ WF.shareCard = (function () {
         console.error('Share card capture error:', err);
         console.error('Error stack:', err.stack);
         console.error('Error message:', err.message);
-        hideEls.forEach(el => { el.style.visibility = ''; });
+        restorePage();
         window.scrollTo(0, savedScroll);
         setBusy(false, '生成失败'); resetSoon();
       });

@@ -22,7 +22,7 @@ WF.disruptionView = (function () {
     hero.appendChild(_st('平均每轮时长', U.fmtDuration(avgRound), ''));
     if (rec.totalConduits > 0) {
       const rate = (rec.conduitRate * 100).toFixed(1) + '%';
-      hero.appendChild(_st('导管成功率', `${rate}（${rec.successConduits}/${rec.totalConduits}）`, ''));
+      hero.appendChild(_st('导管成功率', rate, ''));
     }
     if (rec.name) hero.appendChild(_st('任务地图', rec.name, ''));
     container.appendChild(hero);
