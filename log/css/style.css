@@ -314,6 +314,26 @@ body.profile-active #detail-wrap {
 .bar-fail { fill: #a8424c; }
 .bar-label { fill: var(--c-text2); font-size: 9px; font-family: var(--f-px); }
 
+/* 条形图悬浮 tooltip */
+.chart-bar-tooltip {
+  position: fixed;
+  z-index: 1000;
+  display: none;
+  pointer-events: none;
+  background: rgba(4, 5, 12, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--r-sm);
+  padding: 4px 10px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #e8e8e8;
+  white-space: nowrap;
+  font-family: var(--f-px, monospace);
+}
+.chart-bar-tooltip.visible {
+  display: block;
+}
+
 .arb-line { fill: none; stroke: var(--c-teal); stroke-width: 1.5; opacity: 0.9; }
 .arb-area { fill: rgba(95, 208, 232, 0.09); stroke: none; }
 .arb-drone { fill: var(--c-gold); opacity: 0.9; }

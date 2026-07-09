@@ -146,6 +146,7 @@ WF.generalView = (function () {
     const chartBox = U.el('div', 'chart-box');
     chartBox.innerHTML = '<div style="font-size:12px;color:var(--c-text2);margin-bottom:6px;letter-spacing:1px;">每波时长概览</div>' + svg;
     section.appendChild(chartBox);
+    _addBarTooltip(chartBox, rec.waves);
 
     // 波次进程总览表
     const tblBox = U.el('div', 'chart-box dis-tl-wrap');
@@ -337,6 +338,34 @@ WF.generalView = (function () {
     row.appendChild(valEl);
     if (hint) row.appendChild(U.el('span', 'gen-timing-hint', hint));
     grid.appendChild(row);
+  }
+
+  // ── 条形图悬浮 tooltip ────────────────────────────────────
+  function _addBarTooltip(container, waves) {
+    const svg = container.querySelector('svg.round-chart');
+    if (!svg || !waves.length) return;
+
+    const tt = U.el('div', 'chart-bar-tooltip');
+    container.appendChild(tt);
+
+    const rects = svg.querySelectorAll('rect');
+    rects.forEach((rect, i) => {
+      if (i >= waves.length) return;
+      const w = waves[i];
+      const sp = w.actualSpawned || w.totalEnemies || w.spawned || 0;
+      const label = `第 ${w.index} 波：${U.fmtDuration(w.duration)} | 击杀 ${w.kills} / 生成 ${sp}`;
+      rect.addEventListener('mouseenter', () => {
+        tt.textContent = label;
+        tt.classList.add('visible');
+      });
+      rect.addEventListener('mousemove', e => {
+        tt.style.left = (e.clientX + 12) + 'px';
+        tt.style.top  = (e.clientY - 28) + 'px';
+      });
+      rect.addEventListener('mouseleave', () => {
+        tt.classList.remove('visible');
+      });
+    });
   }
 
   return { render, summary };
