@@ -21,7 +21,7 @@ var disruptionKappaDuoRecords = [
   {
     clearTime:  "39:03.000 [违规]",
     playerId:   "Endryx_Ow / Gamer123169",
-    playerId2:   "无主机视角，且客机的敌人频繁瞬移，视为利用Tab作弊",
+    playerId2:   "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab作弊",
     uploadTime: "2026-01-23",
     videoUrls:     ["https://youtu.be/5S4gQwVw5aE?si=nCYw-Ta6n-gevNus"]
   },
@@ -54,8 +54,18 @@ var disruptionKappaDuoRecords = [
     playerId:   "Xiyangbujita / EroticBlue",
     uploadTime: "2026-07-08",
     videoUrls:     ["https://www.bilibili.com/video/BV1mUMG6qE2P"]
-  }
-  // ─── 在此处继续添加新条目 ───
+  },
+
+/*
+
+  {
+    clearTime:  "37:21.000[待审查]",
+    playerId:   "Endryx_Ow / Gamer123169",
+    uploadTime: "2026-07-04",
+    videoUrls:     ["https://www.youtube.com/watch?v=Tg13HYpuNBg","https://www.youtube.com/watch?v=cWl9P4dsuD4"]
+  },
+
+*/
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
