@@ -138,8 +138,8 @@ WF.profileView = (function () {
     var stepList = _el('div', 'pf-manual-steps');
     [
       { n:'1', text:'点击下方按钮，在新标签页打开您的个人资料数据页面。' },
-      { n:'2', text:'在新标签页按 Ctrl+S 将页面保存为 .json 文件，或按 Ctrl+A 全选再 Ctrl+C 复制全部内容。' },
-      { n:'3', text:'返回此页面，上传 JSON 文件或粘贴读取。' },
+      { n:'2', text:'在新标签页按 Ctrl+A 全选，再按 Ctrl+C 复制全部内容。' },
+      { n:'3', text:'返回此页面，点击"粘贴并读取"按钮。' },
     ].forEach(function (s) {
       var row = _el('div', 'pf-manual-step');
       row.appendChild(_el('span', 'pf-manual-stepnum', s.n));
