@@ -90,10 +90,14 @@ WF.profileView = (function () {
       box.appendChild(idLine);
     }
     box.appendChild(_el('div', 'pf-manual-title', '未能从本段日志自动识别账号 ID'));
-    box.appendChild(_el('div', 'pf-manual-desc',
+    var descEl = _el('div', 'pf-manual-desc');
+    descEl.innerHTML =
       '账号 ID 只出现在客户端完整启动时的登录记录中；若本次 EE.log 是从任务中途开始记录（常见于长时间任务或日志轮转），会只留下玩家名而没有账号 ID。' +
       (state.playerName ? '已识别玩家名「' + state.playerName + '」，' : '') +
-      '可在下方手动填入账号 ID 继续查看个人资料（可从 Warframe 官网个人主页地址中获取，通常是一段 24 位十六进制字符串）。'));
+      '请在 warframe.com 登录后，访问 ' +
+      '<a href="https://www.warframe.com/api/user-data" target="_blank" rel="noopener" style="color:var(--c-teal);text-decoration:underline">warframe.com/api/user-data</a>，' +
+      '在返回的 JSON 中找到 <code style="font-family:monospace;color:var(--c-teal);background:rgba(95,208,232,0.08);padding:1px 5px;border-radius:3px">user_id</code> 字段的值，填入下方。';
+    box.appendChild(descEl);
     var row = _el('div', 'pf-manual-idrow');
     var input = document.createElement('input');
     input.type = 'text'; input.className = 'pf-manual-idinput';
@@ -130,12 +134,12 @@ WF.profileView = (function () {
       box.appendChild(idLine);
     }
     box.appendChild(_el('div', 'pf-manual-title', '获取 Warframe 个人资料'));
-    box.appendChild(_el('div', 'pf-manual-desc', '请按以下步骤操作，约需 10 秒：'));
+    box.appendChild(_el('div', 'pf-manual-desc', '请按以下步骤操作：'));
     var stepList = _el('div', 'pf-manual-steps');
     [
       { n:'1', text:'点击下方按钮，在新标签页打开您的个人资料数据页面。' },
-      { n:'2', text:'在新标签页按 Ctrl+A 全选，再按 Ctrl+C 复制全部内容。' },
-      { n:'3', text:'返回此页面，点击"粘贴并读取"按钮。' },
+      { n:'2', text:'在新标签页按 Ctrl+S 将页面保存为 .json 文件，或按 Ctrl+A 全选再 Ctrl+C 复制全部内容。' },
+      { n:'3', text:'返回此页面，上传 JSON 文件或粘贴读取。' },
     ].forEach(function (s) {
       var row = _el('div', 'pf-manual-step');
       row.appendChild(_el('span', 'pf-manual-stepnum', s.n));
