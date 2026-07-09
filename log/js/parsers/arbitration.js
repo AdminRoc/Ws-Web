@@ -6,8 +6,7 @@
  *   - 轮/波边界：DefenseReward::TransitionOut（防御/拦截/镜像防御的每轮结算一次）；
  *                生存则用 SurvivalMission 奖励层
  *   - 主机时长：SS_STARTED 起，至最后一次轮次结算（无尽任务的有效计时终点）
- *   - 整队满编时长：各队伍成员对应网络连接最后一次同步诊断的时间戳，取其中最早出现
- *     静默的一个——反映"全员仍稳定在场"的窗口，常年短于主机时长（房主经常独自续留farm）
+ *   - 最后客机时间：任务结束时间 − 最后一个外部玩家实体创建时刻。
  *   - 节点/星球/派系/类型：任务名行 + 关卡资源路径（/Lotus/Levels/.../Proc/<派系>/<关卡名>）
  * 关键修复：无尽任务里 EndOfMatch.lua:Initialize 每轮都会触发，不能据此结束任务，
  *          否则会把一场 1 小时的仲裁误截成开局几分钟。
@@ -37,6 +36,7 @@ WF.ArbitrationParser = (function () {
     // 连接编号是每名非本机队员各自的通信通道；某一路长时间不再出现即视为该成员早于
     // 主机停止稳定在场（例如提前挂机/切出游戏，房主自己继续 farm 到本轮结算）。
     netPeerLine:      /Net \[Info\]: (\d+): Retransmit throttle/,
+    clientCreated:    /Game \[Info\]: CreatePlayerForClient\. id=(\d+), user name=(.+)$/,
   };
   const ARB_NAME_MARK = '- 仲裁';
 
@@ -119,7 +119,7 @@ WF.ArbitrationParser = (function () {
      ══════════════════════════════════════════════════════════════
      ① 生息效率（权重 55%）：
         期望生息速率（全 Buff，/时）÷ 节点基准 × 100，线性，可超过 100。
-        节点基准优先取该节点历史最高（WF.ArbNodeBaseline），无数据时退回 600/时。
+        节点基准优先取该节点基准数据（WF.ArbNodeBaseline），无数据时退回 600/时。
      ② 清图效率（权重 25%）：
         100 − geq15Pct。geq15Pct = 场上同时受 AI 监控的活跃敌人数 ≥15 的时间占比。
         完全来自日志内采样，不依赖任何外部基准；清图越干净这项得分越高。
@@ -325,7 +325,8 @@ WF.ArbitrationParser = (function () {
         rounds:     0,       // 已结算轮/波数
         lastRoundT: null,    // 最后一次轮次结算的绝对时刻（无尽任务有效终点）
         roundBoundaries: [], // {label, t(绝对), droneCum, spawnedCum} 每轮结算时的快照
-        netLastSeen: {},     // 连接编号 -> 最后一次网络诊断行的绝对时刻
+        netLastSeen: {},     // 连接编号 -> 最后一次网络诊断行的绝对时刻（保留，仅不再用于客机时长）
+        lastClientJoinTime: null, // 最晚的外部玩家实体创建时刻（绝对值）
         minuteBuckets: [],   // 按分钟切片：[{drones, spawn}]，用于生成 / 敌人速率趋势
         endT:       null,
       };
@@ -402,10 +403,10 @@ WF.ArbitrationParser = (function () {
         // 权威节点库解析：节点名 / 星球 / 类型 / 派系（优先，回退到日志解析）
         const resolved = resolveNode(m.nodeId, m);
 
-        // 分节点生息效率基准：若已加载到该节点的历史最高生息速率（见
+        // 分节点生息效率基准：若已加载到该节点的基准生息速率（见
         // WF.ArbNodeBaseline，数据来源见 build_arb_baseline.py），用它替代
         // 默认的 600/时，不同节点天然产出节奏不同、按节点比较更公平；
-        // 查不到时（该节点暂无人上传过战绩）退回默认基准。
+        // 查不到时退回默认基准。
         const nodeBase = (typeof WF !== 'undefined' && WF.ArbNodeBaseline)
           ? WF.ArbNodeBaseline.lookup(m.nodeId) : null;
         const essBaseline = nodeBase ? nodeBase.perHour : ESS_BASELINE;
@@ -427,18 +428,10 @@ WF.ArbitrationParser = (function () {
         const roundGuarantee = rounds * 1;                   // 轮次保底
         const roundExtra     = rounds * 0.3;                 // 轮次额外期望（10%×3）
 
-        // 整队满编时长：各连接最后一次诊断时间戳中最早的一个（相对任务开始）。
-        // 诊断行本身按网络波动触发、频率并不均匀——样本数过少的连接（<5 次）
-        // 大概率只是全程网络很干净、没触发几次诊断，并非真的提前退场，
-        // 排除掉这类连接以避免把"信号稀疏"误判成"提前离场"。
-        const NET_MIN_SAMPLES = 5;
-        const netIdxs = Object.keys(m.netLastSeen).filter((k) => m.netLastSeen[k].count >= NET_MIN_SAMPLES);
-        let lastClientEndAbs = null;
-        if (netIdxs.length) {
-          lastClientEndAbs = Math.min.apply(null, netIdxs.map((k) => m.netLastSeen[k].last));
-        }
-        const lastClientDuration = (lastClientEndAbs != null && lastClientEndAbs > m.startedT)
-          ? lastClientEndAbs - m.startedT : null;
+        // 最后客机时间：任务结束时间 − 最后一个外部玩家实体创建时刻。
+        // 测量的是"全员到齐后一起玩的有效时长"。
+        const lastClientDuration = (m.lastClientJoinTime != null && m.lastClientJoinTime > m.startedT)
+          ? (hostEnd - m.lastClientJoinTime) : null;
 
         // 每轮明细：按 roundBoundaries 做相邻差分，得到每轮新增无人机/敌人生成与对应期望生息
         const roundDetail = [];
@@ -572,7 +565,7 @@ WF.ArbitrationParser = (function () {
           sampleAgentLine(line, t);
           return;
         }
-        // 队员网络连接诊断（用于推断"整队满编时长"）
+        // 队员网络连接诊断
         if (line.indexOf('Retransmit throttle') !== -1) {
           const np = RE.netPeerLine.exec(line);
           if (np) {
@@ -580,6 +573,19 @@ WF.ArbitrationParser = (function () {
             if (!m.netLastSeen[idx]) m.netLastSeen[idx] = { last: t, count: 0 };
             m.netLastSeen[idx].last = t;
             m.netLastSeen[idx].count++;
+          }
+          return;
+        }
+        // 外部玩家实体创建事件（id>0 = 非主机）—— 记录最晚时刻
+        if (line.indexOf('CreatePlayerForClient') !== -1) {
+          const cc = RE.clientCreated.exec(line);
+          if (cc) {
+            const pid = parseInt(cc[1], 10);
+            if (pid > 0) {
+              if (m.lastClientJoinTime == null || t > m.lastClientJoinTime) {
+                m.lastClientJoinTime = t;
+              }
+            }
           }
           return;
         }

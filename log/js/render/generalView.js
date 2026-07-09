@@ -101,7 +101,7 @@ WF.generalView = (function () {
     container.appendChild(U.el('div', 'note',
       '总时长 = SS_STARTED → EOM，与游戏结算界面一致。' +
       '首帧 = HUD REDUX 首次渲染。尾帧 = 最先触发的 EOM 信号。' +
-      '波次/轮次时间相对首帧计算。生成（近似）来自 OnAgentCreated，已过滤宠物/目标实体。'));
+      '波次/轮次时间为各段独立耗时+累计。生成（近似）来自 OnAgentCreated，已过滤宠物/目标实体。'));
 
     // ── 对话记录 ─────────────────────────────────────────────
     WF.chatMixin.renderChatLog(container, rec);
@@ -147,29 +147,35 @@ WF.generalView = (function () {
     chartBox.innerHTML = '<div style="font-size:12px;color:var(--c-text2);margin-bottom:6px;letter-spacing:1px;">每波时长概览</div>' + svg;
     section.appendChild(chartBox);
 
-    // 波次明细表
-    const timeBase = rec.firstFrameT != null ? rec.firstFrameT : rec.startT;
+    // 波次进程总览表
+    const tblBox = U.el('div', 'chart-box dis-tl-wrap');
+    tblBox.appendChild(U.el('div', 'dis-tl-title', '防御任务进程总览'));
     const tbl = U.el('table', 'round-table');
-    tbl.innerHTML = '<thead><tr><th>波次</th><th>起始（相对首帧）</th><th>结束（相对首帧）</th><th>波次时长</th><th>击杀 / 生成</th></tr></thead>';
+    const totalEnemiesCol = rec.waves.some(w => w.totalEnemies) ? '<th>波次敌人上限</th>' : '';
+    tbl.innerHTML = `<thead><tr><th>波次</th><th>波次耗时</th><th>累计耗时</th><th>击杀 / 生成</th>${totalEnemiesCol}</tr></thead>`;
     const tbody = U.el('tbody');
+    let cumulative = 0;
     rec.waves.forEach(w => {
+      cumulative += w.duration || 0;
       const tr = U.el('tr');
       tr.appendChild(U.el('td', 'td-idx', String(w.index)));
-      tr.appendChild(U.el('td', 'td-mono', U.fmtDuration(w.startT - timeBase)));
-      tr.appendChild(U.el('td', 'td-mono', w.endT != null ? U.fmtDuration(w.endT - timeBase) : '—'));
       tr.appendChild(U.el('td', 'td-mono', w.duration != null ? U.fmtDuration(w.duration) : '—'));
+      tr.appendChild(U.el('td', 'td-mono', U.fmtDurationLong(cumulative)));
       const sp = w.actualSpawned || w.totalEnemies || w.spawned || 0;
       const killCell = U.el('td', 'td-mono');
       killCell.textContent = `${w.kills} / ${sp}`;
-      if (w.totalEnemies) killCell.title = `波次上限 ${w.totalEnemies} 只`;
       if (w.kills < sp) killCell.style.color = 'var(--c-text2)';
       tr.appendChild(killCell);
+      if (totalEnemiesCol) {
+        const teCell = U.el('td', 'td-mono');
+        teCell.textContent = w.totalEnemies ? String(w.totalEnemies) : '—';
+        tr.appendChild(teCell);
+      }
       tbody.appendChild(tr);
     });
     tbl.appendChild(tbody);
-    const tblWrap = U.el('div', 'table-wrap');
-    tblWrap.appendChild(tbl);
-    section.appendChild(tblWrap);
+    tblBox.appendChild(tbl);
+    section.appendChild(tblBox);
     container.appendChild(section);
   }
 
@@ -217,19 +223,18 @@ WF.generalView = (function () {
     chartBox.innerHTML = '<div style="font-size:12px;color:var(--c-text2);margin-bottom:6px;letter-spacing:1px;">每档时长概览</div>' + svg;
     section.appendChild(chartBox);
 
-    // 档次明细表
-    const timeBase = rec.firstFrameT != null ? rec.firstFrameT : rec.startT;
+    // 生存进程总览表
+    const tblBox = U.el('div', 'chart-box dis-tl-wrap');
+    tblBox.appendChild(U.el('div', 'dis-tl-title', '生存任务进程总览'));
     const tbl = U.el('table', 'round-table');
     const spawnTh = hasSpawnData ? '<th>生成（近似）</th>' : '';
-    tbl.innerHTML = `<thead><tr><th>档次</th><th>开始（相对首帧）</th><th>结束（相对首帧）</th><th>本档时长</th><th>累计生存</th>${spawnTh}</tr></thead>`;
+    tbl.innerHTML = `<thead><tr><th>档次</th><th>段落耗时</th><th>累计耗时</th>${spawnTh}</tr></thead>`;
     const tbody = U.el('tbody');
     let cumulative = 0;
     segs.forEach(sg => {
       cumulative += sg.duration || 0;
       const tr = U.el('tr');
       tr.appendChild(U.el('td', 'td-idx',  `第 ${sg.tier} 档`));
-      tr.appendChild(U.el('td', 'td-mono', U.fmtDuration(sg.startT - timeBase)));
-      tr.appendChild(U.el('td', 'td-mono', sg.endT != null ? U.fmtDuration(sg.endT - timeBase) : '—'));
       tr.appendChild(U.el('td', 'td-mono', sg.duration != null ? U.fmtDuration(sg.duration) : '—'));
       tr.appendChild(U.el('td', 'td-mono', U.fmtDurationLong(cumulative)));
       if (hasSpawnData) {
@@ -240,9 +245,8 @@ WF.generalView = (function () {
       tbody.appendChild(tr);
     });
     tbl.appendChild(tbody);
-    const tblWrap = U.el('div', 'table-wrap');
-    tblWrap.appendChild(tbl);
-    section.appendChild(tblWrap);
+    tblBox.appendChild(tbl);
+    section.appendChild(tblBox);
     container.appendChild(section);
   }
 
@@ -278,26 +282,24 @@ WF.generalView = (function () {
     chartBox.innerHTML = '<div style="font-size:12px;color:var(--c-text2);margin-bottom:6px;letter-spacing:1px;">每轮时长概览</div>' + svg;
     section.appendChild(chartBox);
 
-    // 轮次明细表
-    const timeBase = rec.firstFrameT != null ? rec.firstFrameT : rec.startT;
+    // 拦截进程总览表
+    const tblBox = U.el('div', 'chart-box dis-tl-wrap');
+    tblBox.appendChild(U.el('div', 'dis-tl-title', '拦截任务进程总览'));
     const tbl = U.el('table', 'round-table');
-    tbl.innerHTML = '<thead><tr><th>轮次</th><th>开始（相对首帧）</th><th>结束（相对首帧）</th><th>本轮时长</th><th>累计时长</th></tr></thead>';
+    tbl.innerHTML = '<thead><tr><th>轮次</th><th>轮次耗时</th><th>累计耗时</th></tr></thead>';
     const tbody = U.el('tbody');
     let cumulative = 0;
     segs.forEach(sg => {
       cumulative += sg.duration || 0;
       const tr = U.el('tr');
       tr.appendChild(U.el('td', 'td-idx', `第 ${sg.round} 轮`));
-      tr.appendChild(U.el('td', 'td-mono', U.fmtDuration(sg.startT - timeBase)));
-      tr.appendChild(U.el('td', 'td-mono', sg.endT != null ? U.fmtDuration(sg.endT - timeBase) : '—'));
       tr.appendChild(U.el('td', 'td-mono', sg.duration != null ? U.fmtDuration(sg.duration) : '—'));
       tr.appendChild(U.el('td', 'td-mono', U.fmtDurationLong(cumulative)));
       tbody.appendChild(tr);
     });
     tbl.appendChild(tbody);
-    const tblWrap = U.el('div', 'table-wrap');
-    tblWrap.appendChild(tbl);
-    section.appendChild(tblWrap);
+    tblBox.appendChild(tbl);
+    section.appendChild(tblBox);
     container.appendChild(section);
   }
 
@@ -306,10 +308,16 @@ WF.generalView = (function () {
     const killSection = U.el('div', 'gen-section');
     killSection.appendChild(U.el('div', 'gen-section-title', '敌人生成概况'));
     const killRow = U.el('div', 'hero-row');
-    killRow.appendChild(_st('生成（近似）', String(rec.spawned), 'accent'));
+    if (rec.spawned > 0) {
+      killRow.appendChild(_st('生成（近似）', String(rec.spawned), 'accent'));
+    } else {
+      killRow.appendChild(_st('生成（近似）', '—（需主机日志）', ''));
+    }
     killSection.appendChild(killRow);
     killSection.appendChild(U.el('div', 'note',
-      'EE.log 不记录玩家击杀个别敌人的事件；仅防御/波次任务可通过"生成−剩余"推算击杀数。'));
+      rec.spawned > 0
+        ? 'EE.log 不记录玩家击杀个别敌人的事件；仅防御/波次任务可通过"生成−剩余"推算击杀数。'
+        : '生成数据需要主机日志（OnAgentCreated）；客户端日志无此信息。'));
     container.appendChild(killSection);
   }
 
