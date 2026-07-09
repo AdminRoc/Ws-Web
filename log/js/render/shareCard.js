@@ -94,23 +94,33 @@ WF.shareCard = (function () {
           min-width: 960px !important;
           max-width: 960px !important;
           background: #04050c !important;
-          padding: 0 !important;
+          padding: 28px 36px 36px !important;
           margin: 0 !important;
           overflow: visible !important;
           max-height: none !important;
           border: none !important;
+          box-sizing: border-box !important;
         }
         #detail-wrap { background: transparent !important; border: none !important; padding: 0 !important; }
         #detail-wrap > .panel-label { display: none !important; }
 
+        /* 统一卡片间距与边框 */
         .stat, .chart-box, .round-card, .phase-card,
         .arb-ess-box, .arb-eff-box, .arb-explain, .arb-scale-box,
         .gen-timing-box, .arb-dist.cy-panel, .record-card,
         .extra-box, .profile-info-box, .arb-score-badge,
         .squad-section {
           background: #0d1019 !important;
+          border: 1px solid rgba(95,208,232,0.12) !important;
+          border-radius: 12px !important;
           backdrop-filter: none !important;
           -webkit-backdrop-filter: none !important;
+        }
+        .chart-box, .arb-dist.cy-panel, .arb-ess-box, .arb-eff-box,
+        .arb-explain, .arb-scale-box, .gen-timing-box, .squad-section,
+        .extra-box, .profile-info-box, .record-card {
+          padding: 18px 20px !important;
+          margin: 0 0 20px !important;
         }
         .arb-dist.cy-panel {
           background: #080a14 !important;
@@ -123,7 +133,30 @@ WF.shareCard = (function () {
         }
         .squad-section {
           border-color: rgba(95,208,232,0.15) !important;
+          margin: 6px 0 20px !important;
         }
+        .hero-row {
+          display: flex !important;
+          gap: 14px !important;
+          margin: 0 0 20px !important;
+        }
+        .stat {
+          border-radius: 12px !important;
+          padding: 16px 20px 14px !important;
+          margin: 0 !important;
+          flex: 1 1 0 !important;
+        }
+        .section-title, .gen-section-title, .dis-section-title {
+          margin: 0 0 12px !important;
+          padding: 0 !important;
+          line-height: 1.3 !important;
+        }
+        .chart-box > .section-title:first-child,
+        .chart-box > .gen-section-title:first-child,
+        .chart-box > .dis-section-title:first-child { margin-top: 0 !important; }
+        .chart-box > *:last-child { margin-bottom: 0 !important; }
+        .dis-chart-zoom { margin: 10px 0 0 !important; }
+        .round-table { margin: 10px 0 0 !important; }
 
         .rainbow, .logo-main, .panel-label, .record-title,
         .tab-btn.active .tab-cn, .section-title, .gen-section-title,
@@ -264,29 +297,51 @@ WF.shareCard = (function () {
   /* ═══════════════════════════════════════════════════════════════
      Canvas 后处理：赛博朋克风格装饰
      ═══════════════════════════════════════════════════════════════ */
-  function decorateCanvas(srcCanvas) {
-    const PAD = 24;
-    const HEADER_H = 72;
-    const FOOTER_H = 56;
-    const w = srcCanvas.width;
-    const h = srcCanvas.height;
+  function decorateCanvas(srcCanvas, fontFace) {
+    const PAD = 40;
+    const HEADER_H = 96;
+    const FOOTER_H = 72;
+    const INNER_PAD = 18;
+    const CARD_RADIUS = 18;
+    // srcCanvas 已经是 html2canvas 输出的物理像素（width/height 已包含 scale）
+    const pxW = srcCanvas.width;
+    const pxH = srcCanvas.height;
+    const w = pxW;
+    const h = pxH;
 
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = w + PAD * 2;
     canvas.height = h + HEADER_H + FOOTER_H + PAD * 2;
 
+    const fontFamily = fontFace ? "'XSZT', 'Microsoft YaHei', monospace" : "'Microsoft YaHei', sans-serif";
+
     /* 背景 */
     ctx.fillStyle = '#04050c';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    /* 外边框 */
-    ctx.strokeStyle = 'rgba(95,208,232,0.12)';
+    /* 外层卡片（与截图等宽，圆角） */
+    ctx.fillStyle = '#080a14';
+    roundRect(ctx, PAD, PAD + HEADER_H, w, h + FOOTER_H, CARD_RADIUS);
+    ctx.fill();
+
+    /* 外层卡片微光边框 */
+    ctx.strokeStyle = 'rgba(95,208,232,0.16)';
     ctx.lineWidth = 1;
-    ctx.strokeRect(PAD - 0.5, HEADER_H + PAD - 0.5, w + 1, h + 1);
+    roundRect(ctx, PAD + 0.5, PAD + HEADER_H + 0.5, w - 1, h + FOOTER_H - 1, CARD_RADIUS);
+    ctx.stroke();
+
+    /* 截图底衬：让截图嵌在深色卡片内 */
+    ctx.fillStyle = '#04050c';
+    roundRect(ctx, PAD + INNER_PAD, PAD + HEADER_H + INNER_PAD, w - INNER_PAD * 2, h - INNER_PAD * 2, 14);
+    ctx.fill();
 
     /* 原始截图 */
-    ctx.drawImage(srcCanvas, PAD, HEADER_H + PAD);
+    ctx.save();
+    roundRect(ctx, PAD + INNER_PAD, PAD + HEADER_H + INNER_PAD, w - INNER_PAD * 2, h - INNER_PAD * 2, 14);
+    ctx.clip();
+    ctx.drawImage(srcCanvas, PAD + INNER_PAD, PAD + HEADER_H + INNER_PAD);
+    ctx.restore();
 
     /* ═══════ 顶部赛博朋克品牌栏 ═══════ */
     const headerY = PAD;
@@ -295,49 +350,72 @@ WF.shareCard = (function () {
 
     /* 品牌栏底色 */
     ctx.fillStyle = '#080a14';
-    ctx.fillRect(headerX, headerY, headerW, HEADER_H);
+    roundRect(ctx, headerX, headerY, headerW, HEADER_H, CARD_RADIUS);
+    ctx.fill();
 
     /* 品牌栏顶部发光细线 */
     const glowGrad = ctx.createLinearGradient(headerX, 0, headerX + headerW, 0);
     glowGrad.addColorStop(0, 'transparent');
-    glowGrad.addColorStop(0.15, 'rgba(95,208,232,0.35)');
-    glowGrad.addColorStop(0.5, 'rgba(95,208,232,0.7)');
-    glowGrad.addColorStop(0.85, 'rgba(95,208,232,0.35)');
+    glowGrad.addColorStop(0.08, 'rgba(95,208,232,0.35)');
+    glowGrad.addColorStop(0.5, 'rgba(95,208,232,0.9)');
+    glowGrad.addColorStop(0.92, 'rgba(95,208,232,0.35)');
     glowGrad.addColorStop(1, 'transparent');
     ctx.fillStyle = glowGrad;
-    ctx.fillRect(headerX, headerY, headerW, 2);
+    ctx.fillRect(headerX + 2, headerY + 2, headerW - 4, 2);
 
     /* 品牌栏底部细线 */
-    ctx.fillStyle = 'rgba(95,208,232,0.15)';
-    ctx.fillRect(headerX, headerY + HEADER_H - 1, headerW, 1);
+    ctx.fillStyle = 'rgba(95,208,232,0.16)';
+    ctx.fillRect(headerX + 28, headerY + HEADER_H - 2, headerW - 56, 1);
+
+    /* 左侧 Logo 区域 */
+    const logoX = headerX + 28;
+    const logoY = headerY + HEADER_H / 2;
+
+    /* Logo 六边形 */
+    const hx = logoX + 14;
+    const hy = headerY + 30;
+    const size = 14;
+    ctx.fillStyle = 'rgba(95,208,232,0.12)';
+    ctx.strokeStyle = 'rgba(95,208,232,0.5)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const angle = Math.PI / 3 * i - Math.PI / 6;
+      const x = hx + size * Math.cos(angle);
+      const y = hy + size * Math.sin(angle);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
 
     /* 网站名：SUPER EELOG */
-    const textStartX = headerX + 24;
-    ctx.fillStyle = '#c9d4e8';
-    ctx.font = 'bold 18px "Microsoft YaHei", sans-serif';
     ctx.textBaseline = 'middle';
-    ctx.fillText('SUPER', textStartX, headerY + HEADER_H / 2 - 6);
+    ctx.fillStyle = '#c9d4e8';
+    ctx.font = `500 22px ${fontFamily}`;
+    ctx.fillText('SUPER', logoX + 40, logoY - 7);
     ctx.fillStyle = '#5fd0e8';
-    ctx.fillText('EELOG', textStartX + 58, headerY + HEADER_H / 2 - 6);
+    ctx.font = `600 22px ${fontFamily}`;
+    ctx.fillText('EELOG', logoX + 104, logoY - 7);
 
     /* 副标题 */
-    ctx.fillStyle = 'rgba(107,118,144,0.6)';
-    ctx.font = '11px "Microsoft YaHei", sans-serif';
-    ctx.fillText('WARFRAME SPEED  ·  EE.log Analyzer', textStartX, headerY + HEADER_H / 2 + 12);
+    ctx.fillStyle = 'rgba(107,118,144,0.75)';
+    ctx.font = `12px ${fontFamily}`;
+    ctx.fillText('WARFRAME SPEED  ·  EE.LOG ANALYZER', logoX + 40, logoY + 16);
 
     /* 分隔竖线 */
     ctx.fillStyle = 'rgba(95,208,232,0.12)';
-    ctx.fillRect(textStartX + 276, headerY + 18, 1, HEADER_H - 36);
+    ctx.fillRect(headerX + 330, headerY + 24, 1, HEADER_H - 48);
 
     /* 右侧时间戳 */
     const ts = new Date().toLocaleString('zh-CN', {
       year: 'numeric', month: '2-digit', day: '2-digit',
       hour: '2-digit', minute: '2-digit'
     });
-    ctx.fillStyle = 'rgba(107,118,144,0.5)';
-    ctx.font = '11px monospace';
+    ctx.fillStyle = 'rgba(107,118,144,0.6)';
+    ctx.font = `13px ${fontFamily}`;
     ctx.textAlign = 'right';
-    ctx.fillText(ts, headerX + headerW - 20, headerY + HEADER_H / 2 + 1);
+    ctx.fillText(ts, headerX + headerW - 28, logoY + 1);
     ctx.textAlign = 'left';
 
     /* ═══════ 底部信息栏 ═══════ */
@@ -345,28 +423,80 @@ WF.shareCard = (function () {
     const footerW = w;
     const footerX = headerX;
 
-    /* 底色 */
+    /* 底色（与外层卡片连成一体，但保持视觉分区） */
     ctx.fillStyle = '#080a14';
-    ctx.fillRect(footerX, footerY, footerW, FOOTER_H);
+    roundRect(ctx, footerX, footerY, footerW, FOOTER_H, CARD_RADIUS);
+    ctx.fill();
 
-    /* 顶部细线 */
-    ctx.fillStyle = 'rgba(95,208,232,0.08)';
-    ctx.fillRect(footerX, footerY, footerW, 1);
+    /* 顶部分隔线 */
+    ctx.fillStyle = 'rgba(95,208,232,0.12)';
+    ctx.fillRect(footerX + 28, footerY + 1, footerW - 56, 1);
 
-    /* 底部居中：网站 + 组织 */
+    /* 底部左侧：站点 */
     ctx.fillStyle = '#5fd0e8';
-    ctx.font = '14px "Microsoft YaHei", sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('WFSpeed.run  ·  由CSC联盟建立并维护', canvas.width / 2, footerY + FOOTER_H / 2 + 5);
+    ctx.font = `600 14px ${fontFamily}`;
+    ctx.textBaseline = 'middle';
+    ctx.fillText('WFSpeed.run', footerX + 28, footerY + FOOTER_H / 2);
+
+    /* 分隔点 */
+    ctx.fillStyle = 'rgba(107,118,144,0.45)';
+    ctx.beginPath();
+    ctx.arc(footerX + 136, footerY + FOOTER_H / 2, 2.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    /* 底部中间：组织 */
+    ctx.fillStyle = 'rgba(201,212,232,0.75)';
+    ctx.font = `13px ${fontFamily}`;
+    ctx.fillText('由 CSC 联盟建立并维护', footerX + 152, footerY + FOOTER_H / 2);
+
+    /* 底部右侧：免责声明 */
+    ctx.fillStyle = 'rgba(107,118,144,0.55)';
+    ctx.font = `12px ${fontFamily}`;
+    ctx.textAlign = 'right';
+    ctx.fillText('本工具仅读取本地日志，完全离线运行', footerX + footerW - 28, footerY + FOOTER_H / 2);
     ctx.textAlign = 'left';
 
-    return canvas;
+    return { canvas, w: w + PAD * 2, h: h + HEADER_H + FOOTER_H + PAD * 2 };
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    const rr = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + rr, y);
+    ctx.lineTo(x + w - rr, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + rr);
+    ctx.lineTo(x + w, y + h - rr);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - rr, y + h);
+    ctx.lineTo(x + rr, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - rr);
+    ctx.lineTo(x, y + rr);
+    ctx.quadraticCurveTo(x, y, x + rr, y);
+    ctx.closePath();
   }
 
   function setBusy(state, text) {
     busy = state;
     btn.classList.toggle('busy', state);
     btn.querySelector('.share-card-txt').textContent = text || '一键分享';
+  }
+
+  /* 将生成的 PNG Blob 写入用户指定的 Downloads 目录 */
+  function saveToDownloads(blob, fileName) {
+    try {
+      if (typeof showSaveFilePicker === 'function') {
+        showSaveFilePicker({
+          suggestedName: fileName,
+          types: [{ description: 'PNG Image', accept: { 'image/png': ['.png'] } }]
+        }).then(handle => handle.createWritable().then(writable => {
+          writable.write(blob);
+          return writable.close();
+        })).catch(err => console.warn('saveToDownloads picker failed:', err));
+      } else {
+        console.warn('saveToDownloads: File System Access API not available; falling back to default download.');
+      }
+    } catch (e) {
+      console.warn('saveToDownloads error:', e);
+    }
   }
 
   function capture() {
@@ -401,14 +531,19 @@ WF.shareCard = (function () {
         hideEls.forEach(el => { el.style.visibility = ''; });
         window.scrollTo(0, savedScroll);
 
-        const finalCanvas = decorateCanvas(rawCanvas);
+        const { canvas: finalCanvas, w: finalW, h: finalH } = decorateCanvas(rawCanvas, font && font.dataUrl ? 'XSZT' : null);
 
         finalCanvas.toBlob((blob) => {
           if (!blob) { setBusy(false, '生成失败'); resetSoon(); return; }
           const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
           const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
-          a.href = url; a.download = 'EElog分析_' + stamp + '.png';
+          const fileName = 'EElog分析_' + stamp + '.png';
+
+          /* 同时保存到 Downloads 目录供用户/程序读取 */
+          saveToDownloads(blob, fileName);
+
+          const a = document.createElement('a');
+          a.href = url; a.download = fileName;
           document.body.appendChild(a); a.click(); a.remove();
           setTimeout(() => URL.revokeObjectURL(url), 4000);
           setBusy(false, '已保存 ✓'); resetSoon();
