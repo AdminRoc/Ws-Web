@@ -1603,34 +1603,32 @@ img { display: block; max-width: 100%; }
 
 
 /* lb-tip 提示样式
-   布局：grid 双列（图标列 auto + 文本列 1fr），align-items:center 使图标与文字垂直居中。
-   lb-tip-en 绝对定位叠在 lb-tip-cn 上方，不参与行高计算，避免隐藏英文撑高格子造成底部空白。
+   布局：grid 双列（图标列 auto + 文本列 1fr），两个 span 堆在同一格，opacity 切换。
    注意：JS 显示该框时必须设 display:'grid'（与此布局配套，勿再用 'flex'） */
 .lb-tip {
   display: grid;
   grid-template-columns: auto 1fr;
-  column-gap: .7rem;
+  column-gap: .6rem;
   align-items: center;
-  max-width: 860px;
-  margin: .8rem auto 1.4rem;
-  padding: 1rem 1.4rem;
+  margin: .8rem 0 1.4rem;
+  padding: .7rem 1.1rem;
   border-radius: var(--r-md);
   background: rgba(255,215,0,.05);
-  border: 1px solid rgba(255,215,0,.22);
+  border: 1px solid rgba(255,215,0,.2);
   font-family: var(--f-body);
-  font-size: .9rem;
-  color: rgba(235,190,80,.9);
+  font-size: .82rem;
+  color: rgba(255,215,0,.85);
   letter-spacing: .04em;
-  line-height: 1.65;
+  line-height: 1.5;
 }
 .lb-tip-icon {
   grid-row: 1;
   grid-column: 1;
-  font-size: 1rem;
+  font-size: .82rem;
   line-height: 1;
 }
 
-/* ── lb-tip-cn 和 lb-tip-en 双语切换：cn 正常流撑高格子，en 绝对定位叠在上方不影响高度 ── */
+/* ── lb-tip-cn 和 lb-tip-en 双语切换容器（同格堆叠，opacity 切换） ── */
 .lb-tip-cn,
 .lb-tip-en {
   grid-row: 1;
@@ -1638,27 +1636,17 @@ img { display: block; max-width: 100%; }
   overflow-wrap: break-word;
   word-break: break-word;
   white-space: normal;
-  line-height: 1.65;
+  transition: opacity .3s ease;
+  line-height: 1.5;
 }
 .lb-tip-cn {
   opacity: 1;
-  transition: opacity .3s ease;
-  position: relative;
-  text-align: left;
-  text-indent: 2em;
 }
 .lb-tip-en {
-  position: absolute;
-  inset: 0;
   opacity: 0;
   font-style: italic;
-  color: rgba(235,190,80,.75);
+  color: rgba(255,215,0,.75);
   pointer-events: none;
-  transition: opacity .3s ease;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  text-align: left;
-  text-indent: 2em;
 }
 
 /* ─ notice模块 hover时中英切换 ─ */
