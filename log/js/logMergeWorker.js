@@ -5,16 +5,16 @@
 self.window = self;
 
 importScripts(
-  'logReader.js',
-  'solNodes.js',
-  'arbNodeBaseline.js',
-  'squadMixin.js',
-  'chatMixin.js',
-  'parsers/eidolon.js',
-  'parsers/disruption.js',
-  'parsers/profitTaker.js',
-  'parsers/arbitration.js',
-  'parsers/general.js'
+  'logReader.js?v=20260710d',
+  'solNodes.js?v=20260707b',
+  'arbNodeBaseline.js?v=20260710b',
+  'squadMixin.js?v=20260707b',
+  'chatMixin.js?v=20260707b',
+  'parsers/eidolon.js?v=20260707b',
+  'parsers/disruption.js?v=20260707b',
+  'parsers/profitTaker.js?v=20260707b',
+  'parsers/arbitration.js?v=20260710a',
+  'parsers/general.js?v=20260710a'
 );
 
 self.onmessage = function (e) {

@@ -7,7 +7,7 @@
  * 线程堵死一段时间。直连合并 Worker 后，这份数据完全不经过主线程。 */
 self.window = self; // 兼容 logReader.js 里的 `window.WF = window.WF || {}`（Worker 无 window）
 
-importScripts('logReader.js');
+importScripts('logReader.js?v=20260710d');
 
 self.onmessage = function (e) {
   const { file, start, end, shardIndex, port } = e.data;
