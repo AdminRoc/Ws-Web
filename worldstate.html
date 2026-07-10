@@ -315,7 +315,18 @@
       color: var(--ws-text-dim);
       letter-spacing: .07em;
     }
-    .ws-cycle-timer::before { content: '⏱ '; font-size: 1em; opacity: .85; }
+    /* 矢量秒表图标：mask + currentColor，随文字金色自适应，跨平台一致、无 emoji 廉价感 */
+    .ws-cycle-timer::before {
+      content: '';
+      display: inline-block;
+      width: 1.05em; height: 1.05em;
+      margin-right: .42em;
+      vertical-align: -.16em;
+      background-color: currentColor;
+      opacity: .85;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='13.5' r='7'/%3E%3Cpath d='M12 13.5V10'/%3E%3Cpath d='M12 13.5l2.4 1.8'/%3E%3Cpath d='M9.6 3.4h4.8'/%3E%3Cpath d='M12 3.4v2.1'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='13.5' r='7'/%3E%3Cpath d='M12 13.5V10'/%3E%3Cpath d='M12 13.5l2.4 1.8'/%3E%3Cpath d='M9.6 3.4h4.8'/%3E%3Cpath d='M12 3.4v2.1'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
 
     /* ══ 虚空裂缝 ══ */
     .ws-fissure-tabs {
@@ -1387,7 +1398,17 @@
       font-size: .74rem;
       color: var(--ws-text-dim);
     }
-    .ws-darvo-timer::before { content: '⏱ '; font-size: .7em; opacity: .65; }
+    .ws-darvo-timer::before {
+      content: '';
+      display: inline-block;
+      width: 1.05em; height: 1.05em;
+      margin-right: .38em;
+      vertical-align: -.16em;
+      background-color: currentColor;
+      opacity: .65;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='13.5' r='7'/%3E%3Cpath d='M12 13.5V10'/%3E%3Cpath d='M12 13.5l2.4 1.8'/%3E%3Cpath d='M9.6 3.4h4.8'/%3E%3Cpath d='M12 3.4v2.1'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='13.5' r='7'/%3E%3Cpath d='M12 13.5V10'/%3E%3Cpath d='M12 13.5l2.4 1.8'/%3E%3Cpath d='M9.6 3.4h4.8'/%3E%3Cpath d='M12 3.4v2.1'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
 
     /* ══ 武器轮换（信条 / 终幕）══ */
     .ws-weap-hd {
