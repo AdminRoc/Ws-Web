@@ -126,7 +126,15 @@
       }
     }
 
-    const shardCount = Math.min(8, Math.max(1, (navigator.hardwareConcurrency || 1)));
+    // 超大文件（>4GB）即使多核也强制走单 Worker 流式路径：
+    // 8 分片并行时每个 shard Worker 积累全量匹配行再一次性发给 merge Worker，
+    // 10GB 级文件实测峰值内存超过渲染进程上限导致崩溃；单 Worker 流式路径
+    // 只保留当前 64MB 块，内存恒定约 200MB。KEYWORD_RE 优化后速度约 70-100s，
+    // 仍满足 <3min 目标。≤4GB 文件继续走并行（安全且更快）。
+    const PARALLEL_SIZE_LIMIT = 4 * 1024 * 1024 * 1024;
+    const shardCount = (file.size <= PARALLEL_SIZE_LIMIT)
+      ? Math.min(8, Math.max(1, (navigator.hardwareConcurrency || 1)))
+      : 1;
 
     if (file.size >= WF.logReader.STREAM_THRESHOLD && shardCount > 1) {
       // 超大文件 + 多核：按字节区间切成 shardCount 份并行扫描（真正的多核并行，
@@ -140,7 +148,7 @@
     } else if (file.size >= WF.logReader.STREAM_THRESHOLD) {
       // 超大文件但单核（或浏览器不支持 hardwareConcurrency）：退回单 Worker 流式扫描
       const baselineUrl = new URL('../data/arb-node-baseline.json', window.location.href).href;
-      const worker = new Worker('js/logWorker.js');
+      const worker = new Worker('js/logWorker.js?v=20260710e');
       worker.onmessage = (e) => {
         const msg = e.data;
         if (msg.type === 'progress') { onProgress(msg.pct); }
@@ -200,7 +208,7 @@
       const shardSizes = [];
       for (let i = 0; i < shardCount; i++) shardSizes.push(boundaries[i + 1] - boundaries[i]);
 
-      const mergeWorker = new Worker('js/logMergeWorker.js');
+      const mergeWorker = new Worker('js/logMergeWorker.js?v=20260710e');
       const shardWorkers = [];
       let failed = false;
 
@@ -235,7 +243,7 @@
       for (let i = 0; i < shardCount; i++) {
         const channel = new MessageChannel();
         ports.push(channel.port1);
-        const worker = new Worker('js/logShardWorker.js');
+        const worker = new Worker('js/logShardWorker.js?v=20260710e');
         shardWorkers.push(worker);
         worker.onerror = (err) => {
           if (failed) return;

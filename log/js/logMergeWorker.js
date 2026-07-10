@@ -80,7 +80,7 @@ self.onmessage = function (e) {
     port.onmessage = function (pe) {
       const msg = pe.data;
       if (msg.type === 'progress') {
-        shardProgress[msg.shardIndex] = msg.pct;
+        shardProgress[msg.shardIndex] = msg.pct / 100; // 存 0-1，weighted/totalSize × 90 = 0-90
         reportProgress();
       } else if (msg.type === 'error') {
         if (failed) return;
