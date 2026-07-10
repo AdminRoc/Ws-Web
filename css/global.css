@@ -1327,6 +1327,7 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 0 18px rgba(210,168,58,.4), 0 0 40px rgba(185,142,52,.2);
   left: -130px;
   opacity: 0;
+  will-change: transform;
   transition: opacity .5s ease;
 }
 .super-nav-panel.open .snav-scan-v { opacity: 1; }
@@ -1336,9 +1337,12 @@ img { display: block; max-width: 100%; }
 .snav-scan-v:nth-child(2) { animation: scanBeam 9s  linear  2.5s infinite; opacity: .7; }
 .snav-scan-v:nth-child(3) { animation: scanBeam 7.5s linear 4.8s infinite; opacity: .85; }
 
+/* GPU 合成：left 动画改用 transform（.super-nav-panel 为 fixed;left:0;right:0
+   即撑满视口，故 100% 精确等价 100vw；静态 left:-130px 保留作起始锚点，
+   translateX 在此基础上叠加位移，终值 = 目标绝对位置 - 起始位置）。 */
 @keyframes scanBeam {
-  0%   { left: -130px;  }
-  100% { left: calc(100% + 130px); }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(100vw + 260px)); }
 }
 
 /* ── 网格容器 ── */

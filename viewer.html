@@ -29,10 +29,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);
   background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px)}
 #vignette{position:fixed;inset:0;z-index:6;pointer-events:none;
   background:radial-gradient(ellipse 80% 80% at 50% 50%,transparent 35%,rgba(0,0,8,.75) 100%)}
-#beam{position:fixed;left:0;right:0;height:2px;z-index:7;pointer-events:none;
+#beam{position:fixed;left:0;right:0;top:0;height:2px;z-index:7;pointer-events:none;will-change:transform;
   background:linear-gradient(90deg,transparent,rgba(0,229,255,.25),rgba(0,229,255,.55),rgba(0,229,255,.25),transparent);
   box-shadow:0 0 22px rgba(0,229,255,.4);animation:beamDown 5s linear infinite}
-@keyframes beamDown{0%{top:-2px}100%{top:100%}}
+/* GPU 合成：top 动画改用 transform（#beam 为 fixed，包含块是视口，100vh 精确等价原 top:100%） */
+@keyframes beamDown{0%{transform:translateY(-2px)}100%{transform:translateY(100vh)}}
 
 /* ── SHELL：固定全屏，flex列 ── */
 #shell{

@@ -11,12 +11,14 @@
     #scl{position:fixed;inset:0;z-index:3;pointer-events:none;
       background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,
         rgba(255,60,60,.018) 3px,rgba(255,60,60,.018) 4px);}
-    .beam{position:fixed;left:0;right:0;height:1px;z-index:4;pointer-events:none;
+    .beam{position:fixed;left:0;right:0;top:0;height:1px;z-index:4;pointer-events:none;will-change:transform;
       background:linear-gradient(90deg,transparent,rgba(255,60,60,.2),rgba(255,60,60,.55),rgba(255,60,60,.2),transparent);
       box-shadow:0 0 18px rgba(255,60,60,.45),0 0 48px rgba(255,60,60,.15);}
     .beam:nth-child(1){animation:bm 6s linear infinite;}
     .beam:nth-child(2){animation:bm 9s linear 3s infinite;opacity:.5;}
-    @keyframes bm{0%{top:-2px;}100%{top:100vh;}}
+    /* GPU 合成：top 动画改用 transform（.beam 为 fixed 横向撑满视口，容器为 body，
+       100vh 精确等价原 top:100vh） */
+    @keyframes bm{0%{transform:translateY(-2px);}100%{transform:translateY(100vh);}}
 
     /* 四角装饰（红色） */
     .cs{position:fixed;width:70px;height:70px;z-index:9;pointer-events:none;}
