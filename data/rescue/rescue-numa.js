@@ -24,9 +24,9 @@
 var rescue_numaRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:24.683",
-    uploadTime: "2026-06-15",
-    videoUrls:  ["https://www.youtube.com/watch?v=b0zBPXF7Lro"],
+    clearTime:  "0:24.533",
+    uploadTime: "2026-07-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=FXuicFyMVtM"],
   },
   {
     playerId:   "L1ndell",

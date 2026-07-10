@@ -24,9 +24,21 @@
 var sabotage_kokabielRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:12.750",
-    uploadTime: "2025-11-28",
-    videoUrls:  ["https://www.youtube.com/watch?v=ifIJRtk3Eb4"],
+    clearTime:  "0:11.700",
+    uploadTime: "2026-07-09",
+    videoUrls:  ["https://www.youtube.com/watch?v=AxuvwYREJzE"],
+  },
+  {
+    playerId:   "L1ndell",
+    clearTime:  "0:14.000",
+    uploadTime: "2022-04-01",
+    videoUrls:  ["https://www.youtube.com/watch?v=oubEGIG7UaQ"],
+  },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:15.000",
+    uploadTime: "2021-04-24",
+    videoUrls:  ["https://www.youtube.com/watch?v=lYttIIE55U8"],
   },
 ];
 
