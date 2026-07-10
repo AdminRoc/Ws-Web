@@ -591,10 +591,10 @@ var disruptionOlympusSoloRecords = [
     videoUrls:     ["https://www.youtube.com/watch?v=Wq3Nv10YSME"]
   },
   {
-    clearTime:  "67:55.000",
+    clearTime:  "59:13.000",
     playerId:   "NamelessDeity",
-    uploadTime: "2024-11-04",
-    videoUrls:     ["https://www.youtube.com/watch?v=F6q3pDLAGg8"]
+    uploadTime: "2026-07-05",
+    videoUrls:     ["https://www.youtube.com/watch?v=2Sk6mRWy7U4"]
   },
 ];
 
