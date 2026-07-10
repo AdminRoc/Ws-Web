@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════════════════════════
-   fui-core.css —— Ws-Web 全站 FUI 地基（开机动画 + 双主题骨架）
+   fui-core.css —— Ws-Web 全站 FUI 地基（开机动画 + 双皮肤样式）
    所有页面引入，纯叠加，不触碰任何业务样式。
-   皮肤1（默认）：Orokin 暗金；皮肤2：html[data-fui-theme="cyber"] 赛博多霓虹
+   皮肤1（默认金）：Orokin 暗金；皮肤2（赛博）：html[data-fui-theme="cyber"] 赛博多霓虹。
+   无运行时切换：赛博皮由 eelog/search/player 在 <html> 上硬编码 data-fui-theme="cyber" 固定应用，其余页面走默认金。
    ═══════════════════════════════════════════════════════════ */
 
 :root {
