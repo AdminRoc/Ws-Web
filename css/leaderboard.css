@@ -617,34 +617,33 @@
 .lb-notice-box {
   max-width: 860px;
   margin: 1.6rem auto 0;
-  padding: 1.1rem 1.5rem 1.2rem;
-  border: 1px solid rgba(185,142,52,.22);
+  padding: 1.4rem 2rem 1.6rem;
+  border: 1px solid rgba(185,142,52,.28);
   border-radius: 4px;
-  background: rgba(185,142,52,.04);
+  background: rgba(185,142,52,.05);
 }
 .lb-notice-title {
   text-align: center;
   font-family: var(--f-sci);
-  font-size: .78rem;
+  font-size: 1rem;
   font-weight: 700;
-  letter-spacing: .14em;
+  letter-spacing: .16em;
   color: var(--c-gold-bright);
-  margin-bottom: .8rem;
+  margin-bottom: 1rem;
 }
 .lb-notice-body {
-  font-size: .75rem;
-  line-height: 1.75;
-  color: var(--c-text2);
+  font-size: .92rem;
+  line-height: 1.85;
+  color: rgba(200,218,240,.78);
 }
-.lb-notice-body p { margin: 0 0 .7rem; }
+.lb-notice-body p { margin: 0 0 .85rem; }
 .lb-notice-body p:last-child { margin-bottom: 0; }
 .lb-notice-body a {
   color: var(--c-gold-bright);
   text-decoration: underline;
-  text-underline-offset: 2px;
-  opacity: .85;
+  text-underline-offset: 3px;
 }
-.lb-notice-body a:hover { opacity: 1; }
+.lb-notice-body a:hover { opacity: .8; }
 
 /* ══════════════════════════════════════════════════════════
    榜单行入场动画
