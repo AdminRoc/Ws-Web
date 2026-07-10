@@ -76,28 +76,15 @@
     const t0       = performance.now();
     statusEl.innerHTML = `解析中… <b>${U.escapeHtml(file.name)}</b>（${sizeMB} MB）`;
 
-    const eidolon     = WF.EidolonParser.create();
-    const disruption  = WF.DisruptionParser.create();
-    const profitTaker = WF.ProfitTakerParser.create();
-    const arbitration = WF.ArbitrationParser.create();
-    const general     = WF.GeneralParser.create();
-    const parsers = [eidolon, disruption, profitTaker, arbitration, general];
-
     const onProgress = (pct) => {
       statusEl.innerHTML = `解析中… <b>${U.escapeHtml(file.name)}</b>（${sizeMB} MB）&nbsp;&nbsp;${pct}%`;
     };
 
-    function onDone(scan) {
+    function onDone(scan, results) {
       if (!scan) { statusEl.textContent = '文件读取失败'; return; }
       try {
         const clock = WF.logReader.makeClock(scan, file.lastModified);
-        state.results = {
-          general:     general.results(),
-          eidolon:     eidolon.results(),
-          disruption:  disruption.results(),
-          profitTaker: profitTaker.results(),
-          arbitration: arbitration.results(),
-        };
+        state.results = results;
         state.clock = clock;
 
         // 每次新上传都重置个人资料状态，避免旧数据/旧 loading 状态阻塞新流程
@@ -140,18 +127,48 @@
     }
 
     if (file.size >= WF.logReader.STREAM_THRESHOLD) {
-      // 超大文件（≥ 512 MB）：流式分块读取，每块 64 MB，预取 3 块并行 I/O，永不一次性加载全文
-      WF.logReader.scanStream(file, parsers, onProgress, onDone);
+      // 超大文件（≥ 512 MB）：整个扫描 + 解析挪进 Web Worker。
+      // 主线程为保持 UI 响应需要在每批行之间 setTimeout(0) 让步，浏览器对连续
+      // 嵌套的 setTimeout(0) 有最低 4ms 强制节流，行数越多这个开销越可观；
+      // Worker 没有渲染任务，可以不间断地跑完整个循环，同时主线程 UI 全程流畅。
+      const baselineUrl = new URL('../data/arb-node-baseline.json', window.location.href).href;
+      const worker = new Worker('js/logWorker.js');
+      worker.onmessage = (e) => {
+        const msg = e.data;
+        if (msg.type === 'progress') { onProgress(msg.pct); }
+        else if (msg.type === 'error') { onDone(null); worker.terminate(); }
+        else if (msg.type === 'done') { onDone(msg.scan, msg.results); worker.terminate(); }
+      };
+      worker.onerror = (err) => {
+        statusEl.textContent = `解析失败：${err.message}`;
+        console.error(err);
+        worker.terminate();
+      };
+      worker.postMessage({ file, baselineUrl });
     } else {
-      // 普通文件（< 512 MB）：FileReader 一次性读入，异步分块解析
+      // 普通文件（< 512 MB）：FileReader 一次性读入，异步分块解析（主线程）
+      const eidolon     = WF.EidolonParser.create();
+      const disruption  = WF.DisruptionParser.create();
+      const profitTaker = WF.ProfitTakerParser.create();
+      const arbitration = WF.ArbitrationParser.create();
+      const general     = WF.GeneralParser.create();
+      const parsers = [eidolon, disruption, profitTaker, arbitration, general];
+      const collectResults = () => ({
+        general:     general.results(),
+        eidolon:     eidolon.results(),
+        disruption:  disruption.results(),
+        profitTaker: profitTaker.results(),
+        arbitration: arbitration.results(),
+      });
+
       const reader = new FileReader();
       reader.onload = () => {
         const text = reader.result;
         try {
           if (file.size >= WF.logReader.LARGE_THRESHOLD) {
-            WF.logReader.scanAsync(text, parsers, onProgress, onDone);
+            WF.logReader.scanAsync(text, parsers, onProgress, (scan) => onDone(scan, collectResults()));
           } else {
-            onDone(WF.logReader.scan(text, parsers));
+            onDone(WF.logReader.scan(text, parsers), collectResults());
           }
         } catch (err) {
           statusEl.textContent = `解析失败：${err.message}`;

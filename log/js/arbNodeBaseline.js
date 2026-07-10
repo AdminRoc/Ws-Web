@@ -9,7 +9,7 @@ WF.ArbNodeBaseline = (function () {
   let ready = false;
 
   function load(url) {
-    fetch(url).then((r) => (r.ok ? r.json() : null)).then((json) => {
+    return fetch(url).then((r) => (r.ok ? r.json() : null)).then((json) => {
       data = json;
       ready = true;
     }).catch(() => { ready = true; });
