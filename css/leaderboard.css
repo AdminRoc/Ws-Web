@@ -639,11 +639,11 @@
 .lb-notice-body p { margin: 0 0 .85rem; }
 .lb-notice-body p:last-child { margin-bottom: 0; }
 .lb-notice-body a {
-  color: var(--c-gold-bright);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: inherit;
+  text-decoration: none;
+  transition: color .2s ease;
 }
-.lb-notice-body a:hover { opacity: .8; }
+.lb-notice-body a:hover { color: var(--c-gold-bright); }
 
 /* ══════════════════════════════════════════════════════════
    榜单行入场动画
