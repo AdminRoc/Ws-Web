@@ -27,6 +27,67 @@
   --g-hi:      255,215,100;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   跨页面视图过渡（Cross-Document View Transitions）
+   开机战术接入界面 #fui-splash 本身就是新页面首帧的天然终点——它同步
+   注入、先于首帧绘制，View Transition 捕获"新页面画面"那一刻捕获到的
+   本来就是这套暗金/赛博界面本身，不需要重新设计。这里只设计"旧页面
+   消失→新splash出现"这道缝合本身：金色（或赛博色，随目的地主题走
+   --g-primary 自适应）扫描线擦除旧页面，新页面从中心环形聚焦浮现，
+   呼应开机动画自身的扫描线与环形结构语言，而非默认的平淡交叉溶解。
+   不支持的浏览器整条 @view-transition 规则被忽略，自动降级为普通
+   跳转——纯渐进增强，不拦截任何链接、不改动任何现有导航/业务逻辑。
+   ═══════════════════════════════════════════════════════════ */
+@view-transition {
+  navigation: auto;
+}
+
+/* 旧页面：扫描线自上而下扫过，扫过处被"数字化擦除"（用 mask 渐变模拟
+   擦除，扫描线经过瞬间叠加短暂的亮度/色相脉冲，而非单纯 opacity 淡出） */
+::view-transition-old(root) {
+  animation: fuiVtOldWipe .6s cubic-bezier(.37,0,.22,1) both;
+}
+@keyframes fuiVtOldWipe {
+  0%   {
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 100%);
+            mask-image: linear-gradient(180deg, #000 0%, #000 100%);
+    filter: brightness(1) saturate(1);
+  }
+  38% {
+    filter: brightness(1.35) saturate(1.5) hue-rotate(6deg);
+  }
+  70% {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 34%, #000 46%, #000 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, transparent 34%, #000 46%, #000 100%);
+    filter: brightness(1.6) saturate(.6);
+  }
+  100% {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, transparent 100%);
+    filter: brightness(1.8) saturate(0);
+    opacity: 0;
+  }
+}
+
+/* 新页面（此刻画面即为 #fui-splash 自身）：从中心向外环形聚焦浮现，
+   呼应开机动画 hex-area 中心展开的意象，而非简单淡入 */
+::view-transition-new(root) {
+  animation: fuiVtNewReveal .6s .08s cubic-bezier(.22,.68,0,1.04) both;
+}
+@keyframes fuiVtNewReveal {
+  0% {
+    clip-path: circle(0% at 50% 50%);
+    filter: brightness(2.4) saturate(0);
+  }
+  55% {
+    filter: brightness(1.5) saturate(.7);
+  }
+  100% {
+    clip-path: circle(150% at 50% 50%);
+    filter: brightness(1) saturate(1);
+  }
+}
+
 /* 皮肤 2：赛博多霓虹（eelog / search / player） */
 html[data-fui-theme="cyber"] {
   --fui-accent:      #05d9e8;
