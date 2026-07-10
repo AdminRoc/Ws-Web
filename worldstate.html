@@ -4811,7 +4811,7 @@
         '</div>' : (activeCnB ? '<div class="ws-empty">商人背包暂无物品数据</div>' : '');
       el.innerHTML =
         '<div class="ws-baro-hd ' + hdClsCnB + '">' +
-          '<div class="ws-baro-status">' + (activeCnB ? '✦ 已抵达' : '⏳ 前往中') + '</div>' +
+          '<div class="ws-baro-status">' + (activeCnB ? '✦ 已抵达' : '✧ 前往中') + '</div>' +
           '<div class="ws-baro-loc">地点：' + (dCnB.node || '--') + '</div>' +
           '<div class="ws-baro-tw">' +
             '<span>' + (activeCnB ? '离开倒计时：' : '到达倒计时：') + '</span>' +
@@ -4827,7 +4827,7 @@
     var active      = d.active;
     var inv         = d.inventory || [];
     var hdCls       = active ? 'ws-baro-active' : 'ws-baro-away';
-    var status      = active ? '✦ 已抵达' : '⏳ 前往中';
+    var status      = active ? '✦ 已抵达' : '✧ 前往中';
     var timerLabel  = active ? '离开倒计时：' : '到达倒计时：';
     var timerTarget = active ? d.expiry : d.activation;
 
@@ -4908,7 +4908,7 @@
         '</div>' : (activeCnV ? '<div class="ws-empty">商人背包暂无物品数据</div>' : '');
       el.innerHTML =
         '<div class="ws-baro-hd ' + (activeCnV ? 'ws-baro-active' : 'ws-baro-away') + '">' +
-          '<div class="ws-baro-status">' + (activeCnV ? '✦ 已抵达' : '⏳ 前往中') + '</div>' +
+          '<div class="ws-baro-status">' + (activeCnV ? '✦ 已抵达' : '✧ 前往中') + '</div>' +
           (dCnV.node ? '<div class="ws-baro-loc">地点：' + dCnV.node + '</div>' : '') +
           '<div class="ws-baro-tw">' +
             '<span>' + (activeCnV ? '离开倒计时：' : '到达倒计时：') + '</span>' +
@@ -4927,7 +4927,7 @@
     var active      = !!(actMs && expMs && actMs <= now && now < expMs);
     var inv         = d.inventory || [];
     var hdCls       = active ? 'ws-baro-active' : 'ws-baro-away';
-    var status      = active ? '✦ 已抵达' : '⏳ 前往中';
+    var status      = active ? '✦ 已抵达' : '✧ 前往中';
     var timerLabel  = active ? '离开倒计时：' : '到达倒计时：';
     var timerTarget = active ? d.expiry : d.activation;
 
