@@ -160,7 +160,7 @@ WF.profileView = (function () {
     };
     box.appendChild(openBtn);
     var pasteErr = _el('div', 'pf-guide-err', '');
-    var pasteBtn = _el('button', 'pf-guide-btn pf-guide-btn-primary', '📋 粘贴并读取');
+    var pasteBtn = _el('button', 'pf-guide-btn pf-guide-btn-primary', '⎘ 粘贴并读取');
     pasteBtn.onclick = function () {
       pasteBtn.disabled = true; pasteBtn.textContent = '读取中…';
       navigator.clipboard.readText().then(function (text) {
@@ -170,16 +170,16 @@ WF.profileView = (function () {
           el.innerHTML = ''; _renderProfile(el, json, state.playerName, state.accountId, state);
         } catch (e) {
           pasteErr.textContent = '解析失败：请确保复制了完整页面内容再试。';
-          pasteBtn.disabled = false; pasteBtn.textContent = '📋 粘贴并读取';
+          pasteBtn.disabled = false; pasteBtn.textContent = '⎘ 粘贴并读取';
         }
       }).catch(function () {
         pasteErr.textContent = '无法访问剪贴板，请允许权限后重试，或改用文件上传。';
-        pasteBtn.disabled = false; pasteBtn.textContent = '📋 粘贴并读取';
+        pasteBtn.disabled = false; pasteBtn.textContent = '⎘ 粘贴并读取';
       });
     };
     box.appendChild(pasteBtn); box.appendChild(pasteErr);
     box.appendChild(_el('div', 'pf-guide-or', '— 或直接上传已保存的 JSON 文件 —'));
-    var fileLabel = _el('label', 'pf-guide-btn', '📁 上传 JSON 文件');
+    var fileLabel = _el('label', 'pf-guide-btn', '⇧ 上传 JSON 文件');
     var fileInput = document.createElement('input');
     fileInput.type = 'file'; fileInput.accept = '.json,application/json'; fileInput.hidden = true;
     fileInput.onchange = function () {
@@ -395,7 +395,7 @@ WF.profileView = (function () {
 
     /* 色板查询提示 */
     var paletteTip = _el('div', 'pf-palette-tip');
-    var tipIcon = _el('span', 'pf-palette-tip-icon', '🎨');
+    var tipIcon = _el('span', 'pf-palette-tip-icon', '◈');
     var tipBody = _el('span', 'pf-palette-tip-body');
     tipBody.innerHTML = '看到心仪的颜色代码？将 HEX 值粘贴至 ' +
       '<a class="pf-palette-tip-link" href="https://polychrome.seldszar.fr" target="_blank" rel="noopener">polychrome.seldszar.fr</a>' +

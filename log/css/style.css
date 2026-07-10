@@ -1124,11 +1124,16 @@ body.profile-active #detail-wrap {
   border-color: rgba(95, 208, 232, 0.4);
   color: var(--c-teal);
 }
+/* 矢量皇冠图标：mask + currentColor，随 .is-local 的青色主题色自适应，
+   替代固定色 emoji（emoji 无法被 color/发光效果调制，与主题脱节） */
 .squad-crown {
-  font-size: 12px;
-  line-height: 1;
-  opacity: 0.9;
+  display: inline-block;
+  width: 12px; height: 12px;
   flex-shrink: 0;
+  opacity: 0.9;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 18h18l-1.6-9-4.4 3.4L12 5l-3 7.4L4.6 9z'/%3E%3Crect x='3' y='19.5' width='18' height='2' rx='.5'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 18h18l-1.6-9-4.4 3.4L12 5l-3 7.4L4.6 9z'/%3E%3Crect x='3' y='19.5' width='18' height='2' rx='.5'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 /* ================= 个人信息 v2 (pf-*) ================= */

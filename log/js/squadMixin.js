@@ -101,7 +101,6 @@ WF.squadMixin = (function () {
       if (isMulti && isLocal && info.isHost) {
         var crown = document.createElement('span');
         crown.className = 'squad-crown';
-        crown.textContent = '👑';
         pill.appendChild(crown);
       }
 
