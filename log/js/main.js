@@ -126,11 +126,19 @@
       }
     }
 
-    if (file.size >= WF.logReader.STREAM_THRESHOLD) {
-      // 超大文件（≥ 512 MB）：整个扫描 + 解析挪进 Web Worker。
-      // 主线程为保持 UI 响应需要在每批行之间 setTimeout(0) 让步，浏览器对连续
-      // 嵌套的 setTimeout(0) 有最低 4ms 强制节流，行数越多这个开销越可观；
-      // Worker 没有渲染任务，可以不间断地跑完整个循环，同时主线程 UI 全程流畅。
+    const shardCount = Math.min(8, Math.max(1, (navigator.hardwareConcurrency || 1)));
+
+    if (file.size >= WF.logReader.STREAM_THRESHOLD && shardCount > 1) {
+      // 超大文件 + 多核：按字节区间切成 shardCount 份并行扫描（真正的多核并行，
+      // 而不只是把单线程逻辑挪进 Worker）。耗时大头「逐行判断是否命中关键字」
+      // 对每一行都是无状态的，可以安全地分片并行；有状态的解析器 feed() 只发生在
+      // 命中的少数行上，放到合并阶段单线程重放，性能影响可忽略。
+      // 正确性：合并阶段用与单 Worker 路径完全相同的会话重置规则拼接分片边界，
+      // 结果与单 Worker 路径逐字段比对完全一致（见 selftest 校验）。
+      const baselineUrl = new URL('../data/arb-node-baseline.json', window.location.href).href;
+      runParallelScan(file, shardCount, baselineUrl, onProgress, onDone, statusEl);
+    } else if (file.size >= WF.logReader.STREAM_THRESHOLD) {
+      // 超大文件但单核（或浏览器不支持 hardwareConcurrency）：退回单 Worker 流式扫描
       const baselineUrl = new URL('../data/arb-node-baseline.json', window.location.href).href;
       const worker = new Worker('js/logWorker.js');
       worker.onmessage = (e) => {
@@ -178,6 +186,74 @@
       reader.onerror = () => { statusEl.textContent = '文件读取失败'; };
       reader.readAsText(file);
     }
+  }
+
+  /* 多 Worker 并行分片扫描：
+   * 1. 按行边界把 file 切成 shardCount 份（findShardBoundaries，主线程做，探测窗口很小很快）
+   * 2. 每份丢给一个 logShardWorker.js 并行扫描，只收集匹配行，不喂解析器
+   * 3. 分片结果通过 MessageChannel 直接发给 logMergeWorker.js，不经过主线程中转——
+   *    命中行文本量可能有几十到几百 MB，若先回传主线程再转发，等于让主线程做两次
+   *    大数据量结构化克隆，会把主线程堵死一段时间（真实 10GB 文件上实测会卡住）。
+   *    主线程全程只收发很小的进度数字和最终结果，不摸这份大数据。 */
+  function runParallelScan(file, shardCount, baselineUrl, onProgress, onDone, statusEl) {
+    WF.logReader.findShardBoundaries(file, shardCount).then((boundaries) => {
+      const shardSizes = [];
+      for (let i = 0; i < shardCount; i++) shardSizes.push(boundaries[i + 1] - boundaries[i]);
+
+      const mergeWorker = new Worker('js/logMergeWorker.js');
+      const shardWorkers = [];
+      let failed = false;
+
+      function cleanup() {
+        shardWorkers.forEach((w) => w.terminate());
+        mergeWorker.terminate();
+      }
+
+      mergeWorker.onmessage = (e) => {
+        const msg = e.data;
+        if (msg.type === 'progress') {
+          onProgress(msg.pct);
+        } else if (msg.type === 'error') {
+          if (failed) return;
+          failed = true;
+          onDone(null);
+          cleanup();
+        } else if (msg.type === 'done') {
+          onDone(msg.scan, msg.results);
+          cleanup();
+        }
+      };
+      mergeWorker.onerror = (err) => {
+        if (failed) return;
+        failed = true;
+        statusEl.textContent = `解析失败：${err.message}`;
+        console.error(err);
+        cleanup();
+      };
+
+      const ports = [];
+      for (let i = 0; i < shardCount; i++) {
+        const channel = new MessageChannel();
+        ports.push(channel.port1);
+        const worker = new Worker('js/logShardWorker.js');
+        shardWorkers.push(worker);
+        worker.onerror = (err) => {
+          if (failed) return;
+          failed = true;
+          statusEl.textContent = `解析失败：${err.message}`;
+          console.error(err);
+          cleanup();
+        };
+        worker.postMessage(
+          { file, start: boundaries[i], end: boundaries[i + 1], shardIndex: i, port: channel.port2 },
+          [channel.port2]
+        );
+      }
+      mergeWorker.postMessage({ ports, baselineUrl, shardCount, shardSizes }, ports);
+    }).catch((err) => {
+      statusEl.textContent = `解析失败：${err.message}`;
+      console.error(err);
+    });
   }
 
   function updateTabBar() {
