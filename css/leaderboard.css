@@ -597,12 +597,12 @@
   background: rgba(185,142,52,.08) !important;
   -webkit-text-fill-color: var(--c-gold-bright) !important;
   background-clip: unset; -webkit-background-clip: unset;
-  transition: opacity .6s ease;
+  transition: none;
 }
-.lb-badge-en { opacity: 0; position: relative; pointer-events: none; }
-.lb-badge-cn { position: absolute; inset: 0; opacity: 1; }
-.lb-badge-wrap.show-en .lb-badge-en { opacity: 1; }
-.lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; }
+.lb-badge-en { opacity: 0; visibility: hidden; position: relative; pointer-events: none; }
+.lb-badge-cn { position: absolute; inset: 0; opacity: 1; visibility: visible; }
+.lb-badge-wrap.show-en .lb-badge-en { opacity: 1; visibility: visible; }
+.lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; visibility: hidden; }
 .lb-badge-wrap.macro-badge .lb-badge-en,
 .lb-badge-wrap.macro-badge .lb-badge-cn {
   color: rgba(210,158,55,.85) !important;
