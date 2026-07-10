@@ -370,6 +370,67 @@ WF.logReader = (function () {
     };
   }
 
+  /* 增量喂送器：供 logMergeWorker.js 在每个分片到达时立即调用，
+   * 不需要等所有分片到齐再统一处理，喂完即可释放该分片的 matches 数组。
+   * 与 mergeShardsAndFeed 共享完全相同的 sessionOffset 桥接逻辑。 */
+  function createShardFeeder(parsers) {
+    const onFeed = _feedAll(parsers);
+    var lineCount = 0;
+    var firstT = null;
+    var lastT = 0;
+    var loginInfo = null;
+    var wallClockAnchor = null;
+    var sessions = [];
+    var bridgeOffset = 0;
+    var prevLastT = 0;
+    var haveSeenTime = false;
+
+    return {
+      feedShard: function (shard) {
+        lineCount += shard.lineCount;
+        if (firstT === null && shard.firstT !== null) firstT = shard.firstT;
+        if (!loginInfo && shard.loginInfo) loginInfo = shard.loginInfo;
+
+        var shardHasTime = shard.firstT !== null;
+        if (haveSeenTime && shardHasTime && prevLastT > 60 && shard.firstT < prevLastT - 60) {
+          bridgeOffset += Math.ceil((prevLastT + 60) / 10000) * 10000;
+        }
+
+        var matches = shard.matches;
+        for (var i = 0; i < matches.length; i++) {
+          var t = matches[i][0];
+          var line = matches[i][1];
+          var globalSessionOffset = bridgeOffset + matches[i][2];
+
+          if (line.indexOf('Current time:') !== -1 && line.indexOf('Diag') !== -1) {
+            var wm = RE_WALLCLOCK.exec(line);
+            if (wm) {
+              var d = new Date(wm[1]);
+              if (!isNaN(d.getTime())) {
+                wallClockAnchor = { t: t, date: d, offset: globalSessionOffset };
+                sessions.push(wallClockAnchor);
+              }
+            }
+          }
+
+          onFeed(t, line, globalSessionOffset, wallClockAnchor);
+        }
+
+        if (shardHasTime) { prevLastT = shard.lastT; haveSeenTime = true; }
+        if (shard.lastT > lastT) lastT = shard.lastT;
+      },
+      finish: function () {
+        for (var i = 0; i < parsers.length; i++) {
+          if (parsers[i].finish) parsers[i].finish(lastT);
+        }
+        return {
+          lineCount: lineCount, firstT: firstT || 0, lastT: lastT,
+          wallClockAnchor: wallClockAnchor, sessions: sessions, loginInfo: loginInfo || null,
+        };
+      },
+    };
+  }
+
   /* 找到 shardCount 个按行边界对齐的字节区间 [start,end)，用于分片并行扫描。
    * 只在每个近似切点附近的小窗口里找最近的换行符（0x0A）——在 UTF-8 编码下 0x0A
    * 只可能是真正的换行符，不会是多字节字符的一部分，所以按原始字节找是安全的，
@@ -418,6 +479,6 @@ WF.logReader = (function () {
 
   return {
     scan, scanAsync, scanStream, makeClock, LARGE_THRESHOLD, STREAM_THRESHOLD,
-    scanShard, mergeShardsAndFeed, findShardBoundaries,
+    scanShard, mergeShardsAndFeed, findShardBoundaries, createShardFeeder,
   };
 })();
