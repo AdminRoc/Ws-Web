@@ -92,10 +92,14 @@ WF.profileView = (function () {
     box.appendChild(_el('div', 'pf-manual-title', '未能从本段日志自动识别账号 ID'));
     var descEl = _el('div', 'pf-manual-desc');
     descEl.innerHTML =
-      '账号 ID 只出现在客户端完整启动时的登录记录中；若本次 EE.log 是从任务中途开始记录（常见于长时间任务或日志轮转），会只留下玩家名而没有账号 ID。' +
-      (state.playerName ? '已识别玩家名「' + state.playerName + '」，' : '') +
-      '请在您的 EE.log 中搜索类似 <code style="font-family:monospace;color:var(--c-teal);background:rgba(95,208,232,0.08);padding:1px 5px;border-radius:3px">Login: ' + _esc(state.playerName || '玩家名') + ' (xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)</code> 的行，' +
-      '括号内的十六进制字符串就是账号 ID，复制粘贴到下方即可。';
+      (state.playerName ? '已从日志中识别玩家名「<b>' + _esc(state.playerName) + '</b>」，但账号 ID 未能一并提取。' : '本段日志中未能识别账号 ID。') +
+      '账号 ID 只出现在客户端完整冷启动的登录握手行；若日志从任务中途开始记录（长时间任务或日志轮转），则不含该字段。' +
+      '<br><br>' +
+      '<b>方法一（推荐）</b>：登录 <a href="https://www.warframe.com" target="_blank" rel="noopener" style="color:var(--c-teal)">warframe.com</a> 后，' +
+      '在同一浏览器访问 <a href="https://www.warframe.com/api/user-data" target="_blank" rel="noopener" style="color:var(--c-teal)">warframe.com/api/user-data</a>，' +
+      '在返回的 JSON 中找到 <code style="font-family:monospace;color:var(--c-teal);background:rgba(95,208,232,0.08);padding:1px 5px;border-radius:3px">"user_id"</code> 字段的值，即为您的账号 ID。' +
+      '<br><br>' +
+      '<b>方法二</b>：在您的 EE.log 中搜索类似 <code style="font-family:monospace;color:var(--c-teal);background:rgba(95,208,232,0.08);padding:1px 5px;border-radius:3px">Logged in ' + _esc(state.playerName || '玩家名') + ' (xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)</code> 的行，括号内的十六进制字符串即为账号 ID。';
     box.appendChild(descEl);
     var row = _el('div', 'pf-manual-idrow');
     var input = document.createElement('input');
@@ -133,10 +137,12 @@ WF.profileView = (function () {
       box.appendChild(idLine);
     }
     box.appendChild(_el('div', 'pf-manual-title', '获取 Warframe 个人资料'));
-    box.appendChild(_el('div', 'pf-manual-desc', '请按以下步骤操作：'));
+    var descEl2 = _el('div', 'pf-manual-desc');
+    descEl2.innerHTML = '由于浏览器安全限制，本工具无法直接读取本地文件或跨域请求 DE 的服务器，需要您手动获取资料数据后粘贴回来。以下步骤适用于 <b>PC 端</b>玩家：';
+    box.appendChild(descEl2);
     var stepList = _el('div', 'pf-manual-steps');
     [
-      { n:'1', text:'点击下方按钮，在新标签页打开您的个人资料数据页面。' },
+      { n:'1', text:'点击下方按钮，在新标签页打开您的个人资料 JSON 数据页面。' },
       { n:'2', text:'在新标签页按 Ctrl+A 全选，再按 Ctrl+C 复制全部内容。' },
       { n:'3', text:'返回此页面，点击"粘贴并读取"按钮。' },
     ].forEach(function (s) {
