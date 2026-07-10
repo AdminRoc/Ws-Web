@@ -1644,6 +1644,8 @@ img { display: block; max-width: 100%; }
   opacity: 1;
   transition: opacity .3s ease;
   position: relative;
+  text-align: left;
+  text-indent: 2em;
 }
 .lb-tip-en {
   position: absolute;
@@ -1655,6 +1657,8 @@ img { display: block; max-width: 100%; }
   transition: opacity .3s ease;
   overflow-wrap: break-word;
   word-break: break-word;
+  text-align: left;
+  text-indent: 2em;
 }
 
 /* ─ notice模块 hover时中英切换 ─ */
