@@ -72,97 +72,95 @@
 
   function loadFile(file) {
     const statusEl = $('dropzone-status');
-    const sizeMB = (file.size / 1048576).toFixed(1);
+    const sizeMB   = (file.size / 1048576).toFixed(1);
+    const t0       = performance.now();
     statusEl.innerHTML = `解析中… <b>${U.escapeHtml(file.name)}</b>（${sizeMB} MB）`;
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const text = reader.result;
-      const t0 = performance.now();
+    const eidolon     = WF.EidolonParser.create();
+    const disruption  = WF.DisruptionParser.create();
+    const profitTaker = WF.ProfitTakerParser.create();
+    const arbitration = WF.ArbitrationParser.create();
+    const general     = WF.GeneralParser.create();
+    const parsers = [eidolon, disruption, profitTaker, arbitration, general];
 
-      const eidolon     = WF.EidolonParser.create();
-      const disruption  = WF.DisruptionParser.create();
-      const profitTaker = WF.ProfitTakerParser.create();
-      const arbitration = WF.ArbitrationParser.create();
-      const general     = WF.GeneralParser.create();
-      const parsers = [eidolon, disruption, profitTaker, arbitration, general];
+    const onProgress = (pct) => {
+      statusEl.innerHTML = `解析中… <b>${U.escapeHtml(file.name)}</b>（${sizeMB} MB）&nbsp;&nbsp;${pct}%`;
+    };
 
-      function onDone(scan) {
-        try {
-          const clock = WF.logReader.makeClock(scan, file.lastModified);
-          state.results = {
-            general:     general.results(),
-            eidolon:     eidolon.results(),
-            disruption:  disruption.results(),
-            profitTaker: profitTaker.results(),
-            arbitration: arbitration.results(),
-          };
-          state.clock = clock;
-
-          // 每次新上传都重置个人资料状态，避免旧数据/旧 loading 状态阻塞新流程
-          state.profileState = { accountId: null, playerName: null, profileJson: null };
-
-          // 从 EE.log 提取账号 ID（标准格式："Logged in DisplayName (accountId)"）。
-          // 账号 ID 只在客户端完整冷启动的登录握手行才会带括号；日志若从中途片段
-          // 开始（常见于长任务/日志轮转裁切），可能只留下不带括号的 "Logged in Name"，
-          // 此时账号 ID 无法从本地日志推断——不臆造，转入下方手动补充流程。
-          const loginFull = text.match(/Logged in ([^(\r\n]+?)\s*\(([a-f0-9]{16,})\)/i);
-          const loginNameOnly = text.match(/Logged in ([^(\r\n]+?)\s*$/im);
-          const loginM = loginFull || loginNameOnly;
-          if (loginM) {
-            if (loginFull) state.profileState.accountId = loginFull[2].trim();
-            // 白名单：只保留名字合法字符，彻底移除 Warframe 日志中任何未知后缀
-            state.profileState.playerName = loginM[1]
-              .replace(/[^\w\-. #|À-ɏ一-鿿぀-ヿ가-힯]/g, '').trim();
-          }
-
-          const ms = (performance.now() - t0).toFixed(0);
-          const r = state.results;
-          statusEl.innerHTML =
-            `<b>${U.escapeHtml(file.name)}</b>（${sizeMB} MB，${scan.lineCount.toLocaleString()} 行，${ms} ms）` +
-            ` — 通用 <b>${r.general.length}</b> ｜ 夜灵 <b>${r.eidolon.length}</b> ｜ 中断 <b>${r.disruption.length}</b>` +
-            ` ｜ 大蜘蛛 <b>${r.profitTaker.length}</b> ｜ 仲裁 <b>${r.arbitration.length}</b>` +
-            (clock.approx && clock.available ? '<br><span class="muted">日志内无系统时间行，绝对时间按文件修改时间估算（前缀 ≈）</span>' : '');
-
-          document.body.classList.add('has-data');
-
-          if (state.activeTab === 'profile') {
-            _showProfileGuide();
-          } else {
-            const nonSpecial = TABS.filter((t) => !t.special);
-            const urlTabHasData = _urlTab && !TABS.find((t) => t.id === _urlTab)?.special
-              && state.results[_urlTab] && state.results[_urlTab].length;
-            const firstWithData = urlTabHasData
-              ? TABS.find((t) => t.id === _urlTab)
-              : (nonSpecial.find((t) => state.results[t.id].length) || nonSpecial[0]);
-            switchTab(firstWithData.id);
-          }
-        } catch (err) {
-          statusEl.textContent = `结果处理失败：${err.message}`;
-          console.error(err);
-        }
-      }
-
+    function onDone(scan) {
+      if (!scan) { statusEl.textContent = '文件读取失败'; return; }
       try {
-        if (file.size >= WF.logReader.LARGE_THRESHOLD) {
-          // 大文件：异步分块，UI 保持响应
-          WF.logReader.scanAsync(
-            text, parsers,
-            (pct) => { statusEl.innerHTML = `解析中… <b>${U.escapeHtml(file.name)}</b>（${sizeMB} MB）&nbsp;&nbsp;${pct}%`; },
-            onDone
-          );
+        const clock = WF.logReader.makeClock(scan, file.lastModified);
+        state.results = {
+          general:     general.results(),
+          eidolon:     eidolon.results(),
+          disruption:  disruption.results(),
+          profitTaker: profitTaker.results(),
+          arbitration: arbitration.results(),
+        };
+        state.clock = clock;
+
+        // 每次新上传都重置个人资料状态，避免旧数据/旧 loading 状态阻塞新流程
+        state.profileState = { accountId: null, playerName: null, profileJson: null };
+
+        // 登录信息由 logReader 在逐行扫描时提取（支持流式大文件路径）
+        // 账号 ID 只在客户端完整冷启动的登录握手行才会带括号；日志若从中途片段
+        // 开始（常见于长任务/日志轮转裁切），可能只留下不带括号的 "Logged in Name"，
+        // 此时账号 ID 无法从本地日志推断——不臆造，转入下方手动补充流程。
+        if (scan.loginInfo) {
+          state.profileState.playerName = scan.loginInfo.name;
+          if (scan.loginInfo.id) state.profileState.accountId = scan.loginInfo.id;
+        }
+
+        const ms = (performance.now() - t0).toFixed(0);
+        const r = state.results;
+        statusEl.innerHTML =
+          `<b>${U.escapeHtml(file.name)}</b>（${sizeMB} MB，${scan.lineCount.toLocaleString()} 行，${ms} ms）` +
+          ` — 通用 <b>${r.general.length}</b> ｜ 夜灵 <b>${r.eidolon.length}</b> ｜ 中断 <b>${r.disruption.length}</b>` +
+          ` ｜ 大蜘蛛 <b>${r.profitTaker.length}</b> ｜ 仲裁 <b>${r.arbitration.length}</b>` +
+          (clock.approx && clock.available ? '<br><span class="muted">日志内无系统时间行，绝对时间按文件修改时间估算（前缀 ≈）</span>' : '');
+
+        document.body.classList.add('has-data');
+
+        if (state.activeTab === 'profile') {
+          _showProfileGuide();
         } else {
-          // 小文件：同步扫描
-          const scan = WF.logReader.scan(text, parsers);
-          onDone(scan);
+          const nonSpecial = TABS.filter((t) => !t.special);
+          const urlTabHasData = _urlTab && !TABS.find((t) => t.id === _urlTab)?.special
+            && state.results[_urlTab] && state.results[_urlTab].length;
+          const firstWithData = urlTabHasData
+            ? TABS.find((t) => t.id === _urlTab)
+            : (nonSpecial.find((t) => state.results[t.id].length) || nonSpecial[0]);
+          switchTab(firstWithData.id);
         }
       } catch (err) {
-        statusEl.textContent = `解析失败：${err.message}`;
+        statusEl.textContent = `结果处理失败：${err.message}`;
         console.error(err);
       }
-    };
-    reader.onerror = () => { $('dropzone-status').textContent = '文件读取失败'; };
-    reader.readAsText(file);
+    }
+
+    if (file.size >= WF.logReader.STREAM_THRESHOLD) {
+      // 超大文件（≥ 512 MB）：流式分块读取，每块 64 MB，预取 3 块并行 I/O，永不一次性加载全文
+      WF.logReader.scanStream(file, parsers, onProgress, onDone);
+    } else {
+      // 普通文件（< 512 MB）：FileReader 一次性读入，异步分块解析
+      const reader = new FileReader();
+      reader.onload = () => {
+        const text = reader.result;
+        try {
+          if (file.size >= WF.logReader.LARGE_THRESHOLD) {
+            WF.logReader.scanAsync(text, parsers, onProgress, onDone);
+          } else {
+            onDone(WF.logReader.scan(text, parsers));
+          }
+        } catch (err) {
+          statusEl.textContent = `解析失败：${err.message}`;
+          console.error(err);
+        }
+      };
+      reader.onerror = () => { statusEl.textContent = '文件读取失败'; };
+      reader.readAsText(file);
+    }
   }
 
   function updateTabBar() {
