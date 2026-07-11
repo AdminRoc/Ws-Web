@@ -72,6 +72,6 @@
     "manualOverrideFromBatch": "B"
   },
   "source": "https://docs.google.com/spreadsheets/d/1hyWSyPqw1072vJR2eacYVcpBiL_cdL0E3MCs5Vb6s40",
-  "fetchedAt": "2026-07-11T01:07:59Z",
+  "fetchedAt": "2026-07-11T02:07:57Z",
   "manualNote": "coda 批次于 2026-07-10 由用户游戏内截图核实为批次 A（含元素与加成 %，武器顺序与加成列表逐条对应还原），社区表格/镜像源当时仍停留在过期的批次 B。manualOverrideFromBatch 记录了被覆盖的旧批次字母，脚本据此在社区表格真正更新前跳过自动覆盖，见 fetch_tenet_coda.py。"
 }
