@@ -32,17 +32,18 @@
   "coda": {
     "batch": "A",
     "weapons": [
-      { "name": "Dual Coda Torxica", "element": null, "bonusPct": null },
-      { "name": "Coda Motovore", "element": null, "bonusPct": null },
-      { "name": "Coda Sporothrix", "element": null, "bonusPct": null },
-      { "name": "Coda Catabolyst", "element": null, "bonusPct": null },
-      { "name": "Coda Hema", "element": null, "bonusPct": null },
-      { "name": "Coda Pox", "element": null, "bonusPct": null },
-      { "name": "Coda Mire", "element": null, "bonusPct": null }
+      { "name": "Coda Motovore", "element": "Cold", "bonusPct": 27.6 },
+      { "name": "Coda Sporothrix", "element": "Impact", "bonusPct": 32.5 },
+      { "name": "Dual Coda Torxica", "element": "Electricity", "bonusPct": 37.9 },
+      { "name": "Coda Catabolyst", "element": "Cold", "bonusPct": 26.1 },
+      { "name": "Coda Mire", "element": "Magnetic", "bonusPct": 39.7 },
+      { "name": "Coda Pox", "element": "Toxin", "bonusPct": 57.2 },
+      { "name": "Coda Hema", "element": "Toxin", "bonusPct": 25 }
     ],
-    "changedAt": 1783731102866
+    "changedAt": 1783731102866,
+    "manualOverrideFromBatch": "B"
   },
   "source": "https://docs.google.com/spreadsheets/d/1hyWSyPqw1072vJR2eacYVcpBiL_cdL0E3MCs5Vb6s40",
   "fetchedAt": "2026-07-11T00:07:58Z",
-  "manualNote": "coda 批次于 2026-07-10 由用户游戏内截图核实为批次 A(社区表格/镜像源当时仍停留在批次 B，元素与加成 % 未知，留空待社区实测补充)"
+  "manualNote": "coda 批次于 2026-07-10 由用户游戏内截图核实为批次 A（含元素与加成 %，武器顺序与加成列表逐条对应还原），社区表格/镜像源当时仍停留在过期的批次 B。manualOverrideFromBatch 记录了被覆盖的旧批次字母，脚本据此在社区表格真正更新前跳过自动覆盖，见 fetch_tenet_coda.py。"
 }
