@@ -2,72 +2,47 @@
   "tenet": {
     "weapons": [
       {
-        "name": "Tenet Ferrox",
+        "name": "Tenet Ferrox",
         "element": "Heat",
         "bonusPct": 56.0
       },
       {
-        "name": "Tenet Grigori",
+        "name": "Tenet Grigori",
         "element": "Heat",
         "bonusPct": 53.0
       },
       {
-        "name": "Tenet Livia",
+        "name": "Tenet Livia",
         "element": "Electricity",
         "bonusPct": 29.8
       },
       {
-        "name": "Tenet Exec",
+        "name": "Tenet Exec",
         "element": "Heat",
         "bonusPct": 35.0
       },
       {
-        "name": "Tenet Agendus",
+        "name": "Tenet Agendus",
         "element": "Electricity",
         "bonusPct": 25.2
       }
-    ]
+    ],
+    "changedAt": 1783731102866
   },
   "coda": {
-    "batch": "B",
+    "batch": "A",
     "weapons": [
-      {
-        "name": "Coda Bassocyst",
-        "element": "Electricity",
-        "bonusPct": 26.7
-      },
-      {
-        "name": "Coda Bubonico",
-        "element": "Electricity",
-        "bonusPct": 57.1
-      },
-      {
-        "name": "Coda Caustacyst",
-        "element": "Heat",
-        "bonusPct": 31.8
-      },
-      {
-        "name": "Coda Hirudo",
-        "element": "Impact",
-        "bonusPct": 43.0
-      },
-      {
-        "name": "Coda Pathocyst",
-        "element": "Impact",
-        "bonusPct": 37.6
-      },
-      {
-        "name": "Coda Synapse",
-        "element": "Toxin",
-        "bonusPct": 47.3
-      },
-      {
-        "name": "Coda Tysis",
-        "element": "Impact",
-        "bonusPct": 25.2
-      }
-    ]
+      { "name": "Dual Coda Torxica", "element": null, "bonusPct": null },
+      { "name": "Coda Motovore", "element": null, "bonusPct": null },
+      { "name": "Coda Sporothrix", "element": null, "bonusPct": null },
+      { "name": "Coda Catabolyst", "element": null, "bonusPct": null },
+      { "name": "Coda Hema", "element": null, "bonusPct": null },
+      { "name": "Coda Pox", "element": null, "bonusPct": null },
+      { "name": "Coda Mire", "element": null, "bonusPct": null }
+    ],
+    "changedAt": 1783731102866
   },
   "source": "https://docs.google.com/spreadsheets/d/1hyWSyPqw1072vJR2eacYVcpBiL_cdL0E3MCs5Vb6s40",
-  "fetchedAt": "2026-07-11T00:07:58Z"
+  "fetchedAt": "2026-07-11T00:07:58Z",
+  "manualNote": "coda 批次于 2026-07-10 由用户游戏内截图核实为批次 A(社区表格/镜像源当时仍停留在批次 B，元素与加成 % 未知，留空待社区实测补充)"
 }

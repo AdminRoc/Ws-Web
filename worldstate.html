@@ -5678,8 +5678,8 @@
     ]
   ];
 
-  /* 终幕武器 — 批次 A/B，7 件/批次。批次 A 数据经实测确认（元素 % 固定）。
-     批次 B 数据如已知可在此补充。 */
+  /* 终幕武器 — 批次 A/B，7 件/批次（14 件为已知全部终幕武器，每轮活跃其中一批）。
+     批次 A 数据经实测确认；批次 B 仅武器名单确认，元素 % 每轮随机、不做本地推算。 */
   var CODA_BATCHES = [
     {
       label: 'A',
@@ -5695,7 +5695,15 @@
     },
     {
       label: 'B',
-      weapons: [] /* 待补充实测数据 */
+      weapons: [
+        { name: 'Coda Bassocyst',  elem: '', pct: 0 },
+        { name: 'Coda Bubonico',   elem: '', pct: 0 },
+        { name: 'Coda Caustacyst', elem: '', pct: 0 },
+        { name: 'Coda Hirudo',     elem: '', pct: 0 },
+        { name: 'Coda Pathocyst',  elem: '', pct: 0 },
+        { name: 'Coda Synapse',    elem: '', pct: 0 },
+        { name: 'Coda Tysis',      elem: '', pct: 0 }
+      ]
     }
   ];
 
@@ -5716,15 +5724,56 @@
     'Tenet Plinx':          '信条·漫射者',
     'Tenet Spirex':         '信条·斯派克斯',
     'Tenet Tetra':          '信条·特拉',
-    /* 终幕 (Coda) */
+    /* 终幕 (Coda) — 批次 A */
     'Dual Coda Torxica':    '终幕·孢蚀双枪',
     'Coda Motovore':        '终幕·噬轮',
     'Coda Sporothrix':      '终幕·孢丝感染枪',
     'Coda Catabolyst':      '终幕·异化者',
     'Coda Hema':            '终幕·血肢',
     'Coda Pox':             '终幕·脓痘',
-    'Coda Mire':            '终幕·米尔'
+    'Coda Mire':            '终幕·米尔',
+    /* 终幕 (Coda) — 批次 B */
+    'Coda Bassocyst':       '终幕·低音爆囊',
+    'Coda Bubonico':        '终幕·横痃重炮',
+    'Coda Caustacyst':      '终幕·灼蚀变体镰',
+    'Coda Hirudo':          '终幕·蚂蟥',
+    'Coda Pathocyst':       '终幕·病囊飞刃',
+    'Coda Synapse':         '终幕·突触生化枪',
+    'Coda Tysis':           '终幕·啐沫者'
   };
+
+  /* 图标文件名 → 干净英文名映射：辅助数据源(_auxState.tenetCoda)的 name 字段
+     经上游中转后编码损坏(乱码)，但 icon URL 是纯英文不会损坏，改用 icon 反查真实
+     武器名，从根源避免把乱码文本渲染给用户。 */
+  var WEAP_ICON_TO_NAME = {
+    'TenetFerrox':          'Tenet Ferrox',
+    'CrpBriefcaseScythe':   'Tenet Grigori',
+    'CrpBriefcase2HKatana': 'Tenet Livia',
+    'CrpBigSlash':          'Tenet Exec',
+    'CrpHammerShield':      'Tenet Agendus',
+    '1999InfShotgunWeapon': 'Coda Bassocyst',
+    'CodaBubonicoCannon':   'Coda Bubonico',
+    'CodaCaustacyst':       'Coda Caustacyst',
+    'CodaHirudo':           'Coda Hirudo',
+    'CodaPathocyst':        'Coda Pathocyst',
+    'CodaSynapse':          'Coda Synapse',
+    'CodaTysis':            'Coda Tysis',
+    '1999InfSporePistolWeapon': 'Dual Coda Torxica',
+    'InfLichHammerWeapon':      'Coda Motovore',
+    'CodaSporothrix':           'Coda Sporothrix',
+    'CodaCatabolyst':           'Coda Catabolyst',
+    'CodaHema':                 'Coda Hema',
+    'CodaPox':                  'Coda Pox',
+    'CodaMire':                 'Coda Mire'
+  };
+  /* 从 icon URL 中解出干净的武器内部代号 → 映射到规范英文名，取不到时回退用原始 name */
+  function resolveWeapName(rawName, iconUrl) {
+    if (iconUrl) {
+      var m = /\/([A-Za-z0-9_]+)\.png/.exec(iconUrl);
+      if (m && WEAP_ICON_TO_NAME[m[1]]) return WEAP_ICON_TO_NAME[m[1]];
+    }
+    return rawName;
+  }
 
   /* 生成武器条目 HTML（中文名在上，英文名在下） */
   function weapItemHtml(name, elem, pct) {
@@ -5804,7 +5853,10 @@
        过时/错误，元素+加成完全对不上游戏内实际显示，故把它降级为更靠后的兜底。 */
     var auxTC = _auxState && _auxState.tenetCoda;
     var auxTenet = auxTC && auxTC.tenet;
-    if (Array.isArray(auxTenet) && auxTenet.length) {
+    /* 过期即视为失效：expiry 是上游标注的"本轮截止时刻"，一旦过了这个时间还没刷新到
+       下一轮，说明上游卡住了，宁可掉到下一级兜底也不展示确定过期的旧数据 */
+    var auxTenetFresh = Array.isArray(auxTenet) && auxTenet.length && (!auxTC.expiry || Date.now() < auxTC.expiry);
+    if (auxTenetFresh) {
       el.innerHTML =
         '<div class="ws-weap-hd">' +
           '<span class="ws-weap-batch">Ergo Glast 当前轮换</span>' +
@@ -5813,7 +5865,8 @@
         '</div>' +
         '<div class="ws-weap-grid">' +
           auxTenet.map(function (w) {
-            return weapItemHtml(w.name || '--', w.elementKey || '', w.bonus != null ? (+w.bonus).toFixed(1) + '%' : '');
+            var nm = resolveWeapName(w.name, w.icon);
+            return weapItemHtml(nm || '--', w.elementKey || '', w.bonus != null ? (+w.bonus).toFixed(1) + '%' : '');
           }).join('') +
         '</div>';
       if (auxTC.expiry) countdown(document.getElementById('wt-tenet'), auxTC.expiry - AUX_COUNTDOWN_LEAD_MS, true);
@@ -5822,9 +5875,15 @@
 
     /* 同源校准文件兜底（每小时从社区实测表格抓取，见 fetch_tenet_coda.py）。
        4 天周期的轮换时刻本身是固定可推算的，只有元素/加成%是随机的、靠这份
-       文件提供真实值；本地静态表 TENET_GROUPS 只在这份文件也拿不到时兜底。 */
-    var rotData = _tenetCodaRotation && _tenetCodaRotation.tenet && _tenetCodaRotation.tenet.weapons;
-    if (Array.isArray(rotData) && rotData.length) {
+       文件提供真实值；tenetChangedAt 是"内容真实变化"的时间戳(而非每次抓取都变的
+       fetchedAt)，若超过一轮+缓冲仍未变化，说明上游数据卡住了，同样视为过期跳过。
+       本地静态表 TENET_GROUPS 只在这份文件也拿不到/已过期时兜底。 */
+    var tenetRot   = _tenetCodaRotation && _tenetCodaRotation.tenet;
+    var rotData    = tenetRot && tenetRot.weapons;
+    var rotChanged = tenetRot && tenetRot.changedAt;
+    var rotFresh   = Array.isArray(rotData) && rotData.length &&
+      (!rotChanged || (Date.now() - rotChanged) < FOUR_DAYS_MS * 1.5);
+    if (rotFresh) {
       var rNow    = Date.now();
       var rIdx    = Math.floor((rNow - TENET_EPOCH) / FOUR_DAYS_MS);
       var rNextMs = TENET_EPOCH + (rIdx + 1) * FOUR_DAYS_MS;
@@ -5871,37 +5930,27 @@
     var el = document.getElementById('ws-coda');
     if (!el) return;
 
-    /* 同源镜像 _auxState.tenetCoda 优先，理由同 renderTenetWeapons() 顶部注释 */
-    var auxTC2 = _auxState && _auxState.tenetCoda;
-    var auxCoda = auxTC2 && auxTC2.coda;
-    if (Array.isArray(auxCoda) && auxCoda.length) {
-      el.innerHTML =
-        '<div class="ws-weap-hd">' +
-          '<span class="ws-weap-batch">' + (auxTC2.codaBatch ? '当前批次 ' + auxTC2.codaBatch : '当前批次') + '</span>' +
-          '<span class="ws-weap-cycle">每 4 天轮换</span>' +
-          '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-coda"></span></div>' +
-        '</div>' +
-        '<div class="ws-weap-grid">' +
-          auxCoda.map(function (w) {
-            return weapItemHtml(w.name || '--', w.elementKey || '', w.bonus != null ? (+w.bonus).toFixed(1) + '%' : '');
-          }).join('') +
-        '</div>';
-      if (auxTC2.expiry) countdown(document.getElementById('wt-coda'), auxTC2.expiry - AUX_COUNTDOWN_LEAD_MS, true);
-      return;
-    }
-
-    /* 同源校准文件兜底，理由同 renderTenetWeapons() 顶部注释 */
+    /* 终幕批次的优先级与信条相反：镜像源(_auxState.tenetCoda)和校准文件都只是
+       "定期抓取的第三方数据"，谁更准没有绝对定论，只能看谁最近一次被验证为准确。
+       2026-07-10 实测：镜像源与校准文件当时同时卡在过期的批次 B，靠游戏内截图
+       核实真实批次是 A 才手动订正了校准文件（见 data/tenet-coda-rotation.json 的
+       manualNote）。因此校准文件此刻是两者中更可信的一份，改为优先；changedAt
+       超过一轮+缓冲未更新则视为再次过期，回退到镜像源兜底。 */
     var rotCoda = _tenetCodaRotation && _tenetCodaRotation.coda;
-    if (rotCoda && Array.isArray(rotCoda.weapons) && rotCoda.weapons.length) {
+    var rotCodaFresh = rotCoda && Array.isArray(rotCoda.weapons) && rotCoda.weapons.length &&
+      (!rotCoda.changedAt || (Date.now() - rotCoda.changedAt) < FOUR_DAYS_MS * 1.5);
+    if (rotCodaFresh) {
       var rBatch  = rotCoda.batch || null;
       var rNext2  = rBatch ? String.fromCharCode(rBatch.charCodeAt(0) + 1) : null;
       var rNow2   = Date.now();
       var rIdx2   = Math.floor((rNow2 - CODA_EPOCH) / FOUR_DAYS_MS);
       var rNextMs2 = CODA_EPOCH + (rIdx2 + 1) * FOUR_DAYS_MS;
+      var rHasElem = rotCoda.weapons.some(function (w) { return w.bonusPct != null; });
       el.innerHTML =
         '<div class="ws-weap-hd">' +
           '<span class="ws-weap-batch">' + (rBatch ? '当前批次 ' + rBatch : '当前批次') + '</span>' +
-          '<span class="ws-weap-cycle">每 4 天轮换' + (rNext2 ? '，下次为批次 ' + rNext2 : '') + '</span>' +
+          '<span class="ws-weap-cycle">每 4 天轮换' + (rNext2 ? '，下次为批次 ' + rNext2 : '') +
+            (rHasElem ? '' : ' · 元素/加成 % 暂未同步，请以游戏内为准') + '</span>' +
           '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-coda"></span></div>' +
         '</div>' +
         '<div class="ws-weap-grid">' +
@@ -5910,6 +5959,27 @@
           }).join('') +
         '</div>';
       countdown(document.getElementById('wt-coda'), rNextMs2, true);
+      return;
+    }
+
+    /* 同源镜像 _auxState.tenetCoda 兜底；过期(expiry 已过)即视为失效，跳到本地兜底 */
+    var auxTC2 = _auxState && _auxState.tenetCoda;
+    var auxCoda = auxTC2 && auxTC2.coda;
+    var auxCodaFresh = Array.isArray(auxCoda) && auxCoda.length && (!auxTC2.expiry || Date.now() < auxTC2.expiry);
+    if (auxCodaFresh) {
+      el.innerHTML =
+        '<div class="ws-weap-hd">' +
+          '<span class="ws-weap-batch">' + (auxTC2.codaBatch ? '当前批次 ' + auxTC2.codaBatch : '当前批次') + '</span>' +
+          '<span class="ws-weap-cycle">每 4 天轮换</span>' +
+          '<div class="ws-weap-tw"><span>下次轮换：</span><span class="ws-weap-t" id="wt-coda"></span></div>' +
+        '</div>' +
+        '<div class="ws-weap-grid">' +
+          auxCoda.map(function (w) {
+            var nm = resolveWeapName(w.name, w.icon);
+            return weapItemHtml(nm || '--', w.elementKey || '', w.bonus != null ? (+w.bonus).toFixed(1) + '%' : '');
+          }).join('') +
+        '</div>';
+      if (auxTC2.expiry) countdown(document.getElementById('wt-coda'), auxTC2.expiry - AUX_COUNTDOWN_LEAD_MS, true);
       return;
     }
 
@@ -5930,9 +6000,12 @@
       (batch.weapons.length
         ? '<div class="ws-weap-grid">' +
             batch.weapons.map(function (w) {
-              return weapItemHtml(w.name, w.elem, w.pct.toFixed(1) + '%');
+              return weapItemHtml(w.name, w.elem, w.pct ? w.pct.toFixed(1) + '%' : '');
             }).join('') +
-          '</div>'
+          '</div>' +
+          (batch.weapons.some(function (w) { return !w.pct; })
+            ? '<div class="ws-empty" style="margin-top:.5rem;">本轮元素/加成 % 数据暂未同步，请以游戏内实际显示为准</div>'
+            : '')
         : '<div class="ws-empty">批次 ' + batch.label + ' 数据待补充</div>'
       );
     countdown(document.getElementById('wt-coda'), nextMs, true);
@@ -6450,7 +6523,9 @@
       { t: '警报',         href: '#ws-sec-alerts' },
       { t: '仲裁',         href: '#ws-sec-arb' },
       { t: '入侵',         href: '#ws-sec-inv' },
-      { t: '赏金任务',     href: '#ws-sec-bounties' }
+      { t: '赏金任务',     href: '#ws-sec-bounties' },
+      { t: '信条武器轮换', href: '#ws-sec-tenet' },
+      { t: '终幕武器轮换', href: '#ws-sec-coda' }
     ],
     daily: [
       { t: '突击',       href: '#ws-sec-sortie' },
@@ -6465,8 +6540,6 @@
       { t: '科研',         href: '#ws-sec-archimedea' },
       { t: '无尽回廊',     href: '#ws-sec-duviri' },
       { t: '沉沦之地',     href: '#ws-sec-descents' },
-      { t: '信条武器轮换', href: '#ws-sec-tenet' },
-      { t: '终幕武器轮换', href: '#ws-sec-coda' },
       { t: '氏族金库奖励', href: '#ws-sec-clanvault' }
     ],
     other: [
