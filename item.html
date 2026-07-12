@@ -405,15 +405,25 @@
     .it-auc-title { font-size: 1.1rem; color: var(--ws-gold-bright); font-weight: 600; }
     .it-auc-tabs { display: flex; gap: .5rem; }
     .it-auc-tab {
-      font-size: .8rem; padding: .3rem .85rem; border-radius: 6px; cursor: pointer;
-      border: 1px solid var(--ws-gold-line); color: var(--ws-text-dim); background: none;
+      position: relative; font-size: .84rem; font-weight: 600; padding: .4rem 1rem; border-radius: 6px; cursor: pointer;
+      border: 1px solid var(--ws-gold-line); color: rgba(230,210,168,.78); background: rgba(0,0,0,.2);
+      transition: color .2s ease, border-color .2s ease, background .2s ease, transform .15s ease;
     }
-    .it-auc-tab.active { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.1); }
+    .it-auc-tab:hover { color: var(--ws-text); border-color: rgba(201,164,50,.5); transform: translateY(-1px); }
+    .it-auc-tab.active {
+      color: #1a1206; border-color: var(--ws-gold-bright);
+      background: linear-gradient(135deg, var(--ws-gold-bright), var(--ws-gold));
+      box-shadow: 0 0 16px rgba(201,164,50,.3);
+    }
     .it-auc-filters {
-      display: flex; flex-wrap: wrap; gap: .6rem; padding: .9rem; margin-bottom: 1rem;
-      border: 1px solid var(--ws-sep); border-radius: 8px; background: rgba(0,0,0,.15);
+      display: flex; flex-wrap: wrap; gap: .9rem 1.1rem; padding: 1.1rem 1.2rem; margin-bottom: 1rem;
+      border: 1px solid var(--ws-gold-line); border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.22));
     }
-    .it-auc-filters label { font-size: .74rem; color: var(--ws-text-dim); display: flex; flex-direction: column; gap: .25rem; }
+    .it-auc-filters label {
+      font-size: .76rem; font-weight: 600; letter-spacing: .04em;
+      color: rgba(230,210,168,.68); display: flex; flex-direction: column; gap: .32rem;
+    }
     .it-auc-filters input[type="number"] {
       background: var(--ws-panel-bg); border: 1px solid var(--ws-sep); color: var(--ws-text);
       border-radius: 5px; padding: .3rem .5rem; font-size: .82rem; width: 70px;
@@ -511,29 +521,51 @@
     .it-auc-row {
       display: flex; align-items: center; gap: .5rem;
       border: 1px solid var(--ws-sep); border-radius: 8px;
-      transition: background .15s, border-color .15s;
+      background: rgba(0,0,0,.14);
+      transition: background .18s ease, border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+      opacity: 0; transform: translateY(8px);
+      animation: itAucRowIn .38s cubic-bezier(.22,.68,0,1.2) forwards;
     }
-    .it-auc-row:hover { background: rgba(201,164,50,.08); border-color: var(--ws-gold-line); }
+    @keyframes itAucRowIn { to { opacity: 1; transform: none; } }
+    .it-auc-row:nth-child(1)  { animation-delay: .01s; }
+    .it-auc-row:nth-child(2)  { animation-delay: .04s; }
+    .it-auc-row:nth-child(3)  { animation-delay: .07s; }
+    .it-auc-row:nth-child(4)  { animation-delay: .10s; }
+    .it-auc-row:nth-child(5)  { animation-delay: .13s; }
+    .it-auc-row:nth-child(6)  { animation-delay: .16s; }
+    .it-auc-row:nth-child(7)  { animation-delay: .19s; }
+    .it-auc-row:nth-child(8)  { animation-delay: .22s; }
+    .it-auc-row:nth-child(n+9) { animation-delay: .25s; }
+    .it-auc-row:hover {
+      background: rgba(201,164,50,.1); border-color: var(--ws-gold-line);
+      transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,.35);
+    }
+    @media (prefers-reduced-motion: reduce) { .it-auc-row { animation: none; opacity: 1; transform: none; } }
     .it-auc-row-link {
       display: flex; align-items: center; justify-content: space-between; gap: .8rem;
-      flex: 1; min-width: 0; padding: .6rem .8rem;
+      flex: 1; min-width: 0; padding: .65rem .85rem;
       text-decoration: none; color: inherit;
     }
     .it-auc-wtb {
       flex-shrink: 0; margin-right: .5rem;
-      padding: .25rem .6rem; font-size: .72rem; border-radius: 5px; cursor: pointer;
-      border: 1px solid var(--ws-sep); color: var(--ws-text-dim); background: none;
-      transition: color .15s, border-color .15s;
+      padding: .3rem .7rem; font-size: .74rem; font-weight: 600; border-radius: 5px; cursor: pointer;
+      border: 1px solid rgba(201,164,50,.3); color: rgba(230,210,168,.85); background: rgba(0,0,0,.2);
+      transition: color .15s, border-color .15s, background .15s;
       white-space: nowrap;
     }
-    .it-auc-wtb:hover { color: var(--ws-gold-bright); border-color: var(--ws-gold); }
-    .it-auc-wtb.is-copied { color: #6ee7a8; border-color: rgba(110,231,168,.5); }
-    .it-auc-chips { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .3rem; }
-    .it-auc-chip { font-size: .7rem; padding: .06rem .4rem; border-radius: 4px; border: 1px solid var(--ws-sep); color: var(--ws-text-dim); }
-    .it-auc-chip.pos { color: #6ee7a8; border-color: rgba(110,231,168,.35); }
-    .it-auc-chip.neg { color: #ff8a8a; border-color: rgba(255,138,138,.35); }
-    .it-auc-owner { display: flex; align-items: center; gap: .35rem; font-size: .8rem; color: var(--ws-text-dim); white-space: nowrap; }
-    .it-auc-price { font-family: 'Orbitron', sans-serif; color: var(--ws-gold-bright); font-weight: 700; font-size: 1rem; white-space: nowrap; }
+    .it-auc-wtb:hover { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.14); }
+    .it-auc-wtb.is-copied { color: #7cf0aa; border-color: rgba(124,240,170,.55); background: rgba(110,231,168,.1); }
+    .it-auc-chips { display: flex; flex-wrap: wrap; gap: .32rem; margin-top: .38rem; }
+    .it-auc-chip {
+      font-size: .72rem; font-weight: 500; padding: .12rem .48rem; border-radius: 4px;
+      border: 1px solid var(--ws-sep); background: rgba(255,255,255,.03); color: rgba(215,200,175,.85);
+    }
+    .it-auc-chip.pos { color: #7cf0aa; border-color: rgba(110,231,168,.4); background: rgba(110,231,168,.07); }
+    .it-auc-chip.neg { color: #ff9d9d; border-color: rgba(255,138,138,.4); background: rgba(255,138,138,.07); }
+    .it-auc-chip-pol { display: inline-flex; align-items: center; gap: .3rem; color: var(--ws-gold-bright); border-color: rgba(201,164,50,.4); background: rgba(201,164,50,.08); }
+    .it-auc-pol-icon { width: 12px; height: 12px; object-fit: contain; opacity: .95; vertical-align: -1px; }
+    .it-auc-owner { display: flex; align-items: center; gap: .38rem; font-size: .84rem; font-weight: 600; color: rgba(230,210,168,.82); white-space: nowrap; }
+    .it-auc-price { font-family: 'Orbitron', sans-serif; color: var(--ws-gold-bright); font-weight: 700; font-size: 1.08rem; white-space: nowrap; text-shadow: 0 0 12px rgba(201,164,50,.25); }
     .it-auc-side { display: flex; flex-direction: column; align-items: flex-end; gap: .3rem; }
 
     /* ── 快速导航（pill 样式，对齐世界状态 ws-dna-main 暗金风格） ── */
@@ -1682,7 +1714,9 @@
     { slug: 'radiation',   zh: '辐射' }
   ];
   var AUC_POLARITIES = [
-    { slug: 'madurai', zh: '马杜莱' }, { slug: 'vazarin', zh: '瓦扎里' }, { slug: 'naramon', zh: '纳拉蒙' }
+    { slug: 'madurai', zh: '马杜莱', icon: 'picture/Madurai.webp' },
+    { slug: 'vazarin', zh: '瓦扎林', icon: 'picture/Vazarin.webp' },
+    { slug: 'naramon', zh: '纳拉蒙', icon: 'picture/Naramon.webp' }
   ];
   var AUC_RETRY_MAX = 3;
   var AUC_WEAPON_KEYS = null; // buildSearch() 后填充，仅含可拍卖武器的 urlName（供 hub 联想兜底用）
@@ -1965,7 +1999,12 @@
         }).join('') +
         (item.re_rolls != null ? '<span class="it-auc-chip">循环 ' + esc(item.re_rolls) + '</span>' : '') +
         (item.mastery_level != null ? '<span class="it-auc-chip">MR ' + esc(item.mastery_level) + '</span>' : '') +
-        (item.polarity ? '<span class="it-auc-chip">' + esc((AUC_POLARITIES.filter(function(p){return p.slug===item.polarity;})[0]||{}).zh || item.polarity) + '</span>' : '');
+        (item.polarity ? (function () {
+          var pol = AUC_POLARITIES.filter(function (p) { return p.slug === item.polarity; })[0];
+          return '<span class="it-auc-chip it-auc-chip-pol">极性：' +
+            (pol ? '<img class="it-auc-pol-icon" src="' + esc(pol.icon) + '" alt="' + esc(pol.zh) + '" title="' + esc(pol.zh) + '">' : esc(item.polarity)) +
+            '</span>';
+        })() : '');
       } else {
         var elDef = AUC_ELEMENTS.filter(function (e) { return e.slug === item.element; })[0];
         chips = (elDef ? '<span class="it-auc-chip pos">' + elDef.zh + '</span>' : '') +
