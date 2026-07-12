@@ -411,98 +411,84 @@
     }
     .it-auc-tab:hover { color: var(--ws-text); border-color: rgba(201,164,50,.5); transform: translateY(-1px); }
     .it-auc-tab.active {
-      color: #2a1f0f; font-weight: 700; border-color: rgba(255,238,190,.55);
-      background: linear-gradient(160deg, #f2d791 0%, #dcb257 42%, #b3872f 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.45), inset 0 -2px 5px rgba(60,38,0,.35), 0 3px 12px rgba(0,0,0,.4), 0 0 14px rgba(201,164,50,.22);
-      text-shadow: 0 1px 0 rgba(255,255,255,.2);
+      color: #1a1206; border-color: var(--ws-gold-bright);
+      background: linear-gradient(135deg, var(--ws-gold-bright), var(--ws-gold));
+      box-shadow: 0 0 16px rgba(201,164,50,.3);
     }
-    /* 筛选表单：网格对齐，每列等宽、控件统一高度/字号——不再是参差不齐的 flex-wrap */
     .it-auc-filters {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(172px, 1fr)); gap: 1.35rem 1.5rem;
-      padding: 1.3rem 1.4rem; margin-bottom: 1.1rem;
-      border: 1px solid rgba(201,164,50,.3); border-radius: 11px;
-      background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(0,0,0,.24));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+      display: flex; flex-wrap: wrap; gap: .9rem 1.1rem; padding: 1.1rem 1.2rem; margin-bottom: 1rem;
+      border: 1px solid var(--ws-gold-line); border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.22));
     }
     .it-auc-filters label {
-      font-size: .82rem; font-weight: 700; letter-spacing: .05em;
-      color: rgba(232,213,172,.8); display: flex; flex-direction: column; gap: .46rem; min-width: 0;
+      font-size: .76rem; font-weight: 600; letter-spacing: .04em;
+      color: rgba(230,210,168,.68); display: flex; flex-direction: column; gap: .32rem;
     }
-    .it-auc-filters label > span { display: block; width: 100%; }
     .it-auc-filters input[type="number"] {
-      box-sizing: border-box; height: 42px; width: 100%;
-      background: var(--ws-panel-bg); border: 1px solid rgba(201,164,50,.25); color: var(--ws-text);
-      border-radius: 7px; padding: 0 .8rem; font-size: .92rem;
-      transition: border-color .15s, box-shadow .15s;
+      background: var(--ws-panel-bg); border: 1px solid var(--ws-sep); color: var(--ws-text);
+      border-radius: 5px; padding: .3rem .5rem; font-size: .82rem; width: 70px;
     }
-    .it-auc-filters input[type="number"]:focus { border-color: var(--ws-gold); box-shadow: 0 0 0 3px rgba(201,164,50,.12); outline: none; }
     /* 自定义下拉（替代原生 select） */
-    .it-csel { position: relative; display: block; width: 100%; }
+    .it-csel { position: relative; display: inline-block; }
     .it-csel-btn {
-      box-sizing: border-box; display: flex; align-items: center; gap: .5rem; cursor: pointer;
-      height: 42px; width: 100%;
-      background: var(--ws-panel-bg); border: 1px solid rgba(201,164,50,.25); border-radius: 7px;
-      padding: 0 .85rem; font-size: .92rem; font-weight: 500; color: var(--ws-text);
-      white-space: nowrap; user-select: none;
-      transition: border-color .15s, box-shadow .15s;
+      display: flex; align-items: center; gap: .4rem; cursor: pointer;
+      background: var(--ws-panel-bg); border: 1px solid var(--ws-sep); border-radius: 5px;
+      padding: .32rem .55rem .32rem .65rem; font-size: .82rem; color: var(--ws-text);
+      min-width: 90px; white-space: nowrap; user-select: none;
+      transition: border-color .15s;
     }
-    .it-csel-btn:hover, .it-csel.open .it-csel-btn { border-color: var(--ws-gold); color: var(--ws-gold-bright); box-shadow: 0 0 0 3px rgba(201,164,50,.1); }
-    .it-csel-cur { overflow: hidden; text-overflow: ellipsis; }
-    .it-csel-arrow { font-size: .65rem; color: var(--ws-text-dim); margin-left: auto; flex-shrink: 0; transition: transform .15s, color .15s; }
-    .it-csel.open .it-csel-arrow { transform: rotate(180deg); color: var(--ws-gold-bright); }
+    .it-csel-btn:hover, .it-csel.open .it-csel-btn { border-color: var(--ws-gold-line); color: var(--ws-gold-bright); }
+    .it-csel-arrow { font-size: .6rem; color: var(--ws-text-dim); margin-left: auto; transition: transform .15s; }
+    .it-csel.open .it-csel-arrow { transform: rotate(180deg); }
     .it-csel-list {
-      position: absolute; top: calc(100% + 5px); left: 0; z-index: 600;
-      min-width: 100%; max-height: 240px; overflow-y: auto;
-      background: rgba(16,11,5,.98); border: 1px solid var(--ws-gold-line); border-radius: 8px;
-      box-shadow: 0 8px 28px rgba(0,0,0,.65);
+      position: absolute; top: calc(100% + 4px); left: 0; z-index: 600;
+      background: rgba(14,10,5,.97); border: 1px solid var(--ws-gold-line); border-radius: 7px;
+      min-width: 100%; max-height: 220px; overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,.6);
       opacity: 0; pointer-events: none; transform: translateY(-6px);
       transition: opacity .16s ease, transform .16s ease;
     }
     .it-csel.open .it-csel-list { opacity: 1; pointer-events: auto; transform: none; }
     .it-csel-opt {
-      padding: .55rem .9rem; font-size: .88rem; color: var(--ws-text); cursor: pointer;
+      padding: .38rem .75rem; font-size: .82rem; color: var(--ws-text); cursor: pointer;
       white-space: nowrap; transition: background .1s, color .1s;
     }
-    .it-csel-opt:hover { background: rgba(201,164,50,.14); color: var(--ws-gold-bright); }
-    .it-csel-opt.sel { color: var(--ws-gold-bright); background: rgba(201,164,50,.1); font-weight: 600; }
-
-    /* 词条/武器自动补全输入框——与上方自定义下拉共用同一套尺寸规格，纵向对齐 */
-    .it-ac-field-wrap { position: relative; width: 100%; }
-    .it-ac-field-input {
-      box-sizing: border-box; height: 42px; width: 100%;
-      background: var(--ws-panel-bg); border: 1px solid rgba(201,164,50,.25); color: var(--ws-text);
-      border-radius: 7px; padding: 0 .85rem; font-size: .92rem; outline: none;
-      transition: border-color .15s, box-shadow .15s;
+    .it-csel-opt:hover { background: rgba(201,164,50,.12); color: var(--ws-gold-bright); }
+    .it-csel-opt.sel { color: var(--ws-gold-bright); background: rgba(201,164,50,.08); }
+    .it-auc-multichip { display: flex; flex-wrap: wrap; gap: .3rem; max-width: 320px; }
+    .it-auc-multichip span {
+      font-size: .72rem; padding: .12rem .5rem; border-radius: 999px; cursor: pointer;
+      border: 1px solid var(--ws-sep); color: var(--ws-text-dim); user-select: none;
     }
-    .it-ac-field-input:focus { border-color: var(--ws-gold); box-shadow: 0 0 0 3px rgba(201,164,50,.12); }
+    .it-auc-multichip span.on { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.12); }
+
+    /* 词条/武器自动补全输入框（与筛选表单同排） */
+    .it-ac-field-wrap { position: relative; }
+    .it-ac-field-input {
+      background: var(--ws-panel-bg); border: 1px solid var(--ws-sep); color: var(--ws-text);
+      border-radius: 5px; padding: .32rem .55rem; font-size: .82rem; width: 148px; outline: none;
+      transition: border-color .15s;
+    }
+    .it-ac-field-input:focus { border-color: var(--ws-gold-line); }
     .it-ac-field-input::placeholder { color: var(--ws-text-dim); }
     .it-ac-field-drop {
       display: none; position: fixed; z-index: 1100;
-      background: rgba(16,11,5,.98); border: 1px solid var(--ws-gold-line); border-radius: 8px;
-      max-height: 260px; overflow-y: auto; box-shadow: 0 8px 28px rgba(0,0,0,.65);
+      background: rgba(14,10,5,.97); border: 1px solid var(--ws-gold-line); border-radius: 7px;
+      max-height: 260px; overflow-y: auto; box-shadow: 0 4px 20px rgba(0,0,0,.6);
     }
     .it-ac-field-drop.show { display: block; }
-    .it-ac-field-item { padding: .55rem .9rem; font-size: .88rem; color: var(--ws-text); cursor: pointer; }
-    .it-ac-field-item:hover { background: rgba(201,164,50,.14); color: var(--ws-gold-bright); }
+    .it-ac-field-item { padding: .4rem .7rem; font-size: .8rem; color: var(--ws-text); cursor: pointer; }
+    .it-ac-field-item:hover { background: rgba(201,164,50,.12); color: var(--ws-gold-bright); }
     .it-ac-field-item.empty { color: var(--ws-text-dim); font-style: italic; }
     .it-auc-search-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
     .it-auc-search-go {
       position: relative; overflow: visible;
-      display: inline-flex; align-items: center; gap: .4rem; padding: .55rem 1.6rem; border-radius: 7px;
-      border: 1px solid rgba(255,238,190,.55); cursor: pointer; color: #2a1f0f; font-weight: 700; font-size: .88rem;
-      letter-spacing: .03em; text-shadow: 0 1px 0 rgba(255,255,255,.25);
-      background: linear-gradient(160deg, #f2d791 0%, #dcb257 42%, #b3872f 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -2px 5px rgba(60,38,0,.3), 0 3px 12px rgba(0,0,0,.4);
+      display: inline-flex; align-items: center; gap: .4rem; padding: .5rem 1.4rem; border-radius: 6px;
+      border: none; cursor: pointer; color: #1a1206; font-weight: 700; font-size: .86rem;
+      background: linear-gradient(135deg, var(--ws-gold-bright), var(--ws-gold));
       transition: filter .2s, transform .12s, box-shadow .2s;
     }
-    .it-auc-search-go::before {
-      content: ''; position: absolute; top: 0; bottom: 0; left: -60%; width: 35%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
-      transform: skewX(-18deg); transition: left .55s ease;
-      clip-path: inset(0 round 6px);
-    }
-    .it-auc-search-go:hover::before { left: 120%; }
-    .it-auc-search-go:hover { filter: brightness(1.08); box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -2px 5px rgba(60,38,0,.3), 0 4px 16px rgba(0,0,0,.45), 0 0 18px rgba(201,164,50,.35); }
+    .it-auc-search-go:hover { filter: brightness(1.12); box-shadow: 0 0 16px rgba(201,164,50,.4); }
     .it-auc-search-go:active { transform: scale(.96); }
     .it-auc-search-go:disabled { opacity: .5; pointer-events: none; }
     /* 激活(点击/回车)时的高级瞬时特效：一圈扩散光环 + 按钮本体的能量闪光 */
@@ -531,12 +517,11 @@
       transition: color .15s, border-color .15s, background .15s;
     }
     .it-auc-onlpri.active { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.1); }
-    /* 结果不做内部滚动——整页在浏览器里自然展开，便于长截图 */
-    .it-auc-list { display: flex; flex-direction: column; gap: .6rem; }
+    .it-auc-list { display: flex; flex-direction: column; gap: .55rem; max-height: 640px; overflow-y: auto; }
     .it-auc-row {
       display: flex; align-items: center; gap: .5rem;
-      border: 1px solid rgba(201,164,50,.22); border-radius: 8px;
-      background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(0,0,0,.2));
+      border: 1px solid var(--ws-sep); border-radius: 8px;
+      background: rgba(0,0,0,.14);
       transition: background .18s ease, border-color .18s ease, transform .18s ease, box-shadow .18s ease;
       opacity: 0; transform: translateY(8px);
       animation: itAucRowIn .38s cubic-bezier(.22,.68,0,1.2) forwards;
@@ -1775,15 +1760,13 @@
   }
 
   /* ══ 通用自动补全字段（武器 / 词条） ══
-     el: 挂载点(会插入 input+drop)；getArr: 返回候选数组的函数；onPick(item|null)；allowEmpty: 是否插入"不限"项
-     候选项支持 _label（合成选项，如"存在负面词条"，不经过 i18n 查询直接显示这段文字） */
+     el: 挂载点(会插入 input+drop)；getArr: 返回候选数组的函数；onPick(item|null)；allowEmpty: 是否插入"不限"项 */
   function _mkAcField(el, getArr, onPick, allowEmpty, placeholder) {
     el.innerHTML = '<div class="it-ac-field-wrap"><input class="it-ac-field-input" autocomplete="off" spellcheck="false" placeholder="' + esc(placeholder || '') + '"><div class="it-ac-field-drop"></div></div>';
     var input = el.querySelector('.it-ac-field-input');
     var drop  = el.querySelector('.it-ac-field-drop');
     document.body.appendChild(drop);
     input.dataset.slug = '';
-    function labelOf(it) { return it._label || _aucI18n(it); }
     function position() {
       var r = input.getBoundingClientRect();
       drop.style.top = (r.bottom + 3) + 'px'; drop.style.left = r.left + 'px'; drop.style.width = Math.max(r.width, 160) + 'px';
@@ -1792,7 +1775,7 @@
       var items = allowEmpty ? [{ slug: '', _empty: true }].concat(arr.slice(0, 50)) : arr.slice(0, 50);
       if (!items.length) { drop.classList.remove('show'); return; }
       drop.innerHTML = items.map(function (it) {
-        return '<div class="it-ac-field-item' + (it._empty ? ' empty' : '') + '" data-slug="' + esc(it.slug || '') + '">' + (it._empty ? '（不限）' : esc(labelOf(it))) + '</div>';
+        return '<div class="it-ac-field-item' + (it._empty ? ' empty' : '') + '" data-slug="' + esc(it.slug || '') + '">' + (it._empty ? '（不限）' : esc(_aucI18n(it))) + '</div>';
       }).join('');
       position(); drop.classList.add('show');
       drop.querySelectorAll('.it-ac-field-item').forEach(function (row) {
@@ -1812,7 +1795,6 @@
       var arr = getArr();
       if (!q) return arr;
       return arr.filter(function (it) {
-        if (it._label && it._label.toLowerCase().indexOf(q) !== -1) return true;
         var zh = (it.i18n && it.i18n['zh-hans'] && it.i18n['zh-hans'].name) || '';
         var en = (it.i18n && it.i18n.en && it.i18n.en.name) || '';
         return zh.toLowerCase().indexOf(q) !== -1 || en.toLowerCase().indexOf(q) !== -1 || (it.slug || '').toLowerCase().indexOf(q) !== -1;
@@ -1889,7 +1871,6 @@
       b.addEventListener('click', function () {
         _aucType = b.getAttribute('data-t');
         _aucFilterVals = {};
-        if (_aucSort === 'damage_desc' && _aucType === 'riven') _aucSort = 'price_asc'; // damage_desc 对裂罅Mod无意义
         document.getElementById('it-auc-list').innerHTML = '';
         document.getElementById('it-auc-hub-toolbar').style.display = 'none';
         _renderAucTabs(); _renderAucFilterForm();
@@ -1927,18 +1908,10 @@
     });
     if (_aucType === 'riven') {
       _aucLoadDict('riven/attributes').then(function () {
-        ['pos1', 'pos2', 'pos3'].forEach(function (k) {
+        ['pos1', 'pos2', 'pos3', 'neg'].forEach(function (k) {
           _mkAcField(document.getElementById('it-auc-f-' + k), function () { return _aucDictArr['riven/attributes'] || []; },
             function (item) { _aucFilterVals[k] = item ? item.slug : ''; }, true, '（不限）');
         });
-        /* 负词条实测确认 WM 官方支持两个合成值：negative_stats=none（无负面属性）/
-           negative_stats=has（存在负面属性，不论具体是哪个），与选具体词条并列 */
-        var NEG_SPECIAL = [
-          { slug: 'none', _label: '无负面属性' },
-          { slug: 'has',  _label: '存在负面属性' }
-        ];
-        _mkAcField(document.getElementById('it-auc-f-neg'), function () { return NEG_SPECIAL.concat(_aucDictArr['riven/attributes'] || []); },
-          function (item) { _aucFilterVals.neg = item ? item.slug : ''; }, true, '（不限）');
       });
     }
   }
@@ -1957,8 +1930,7 @@
     p.set('type', _aucType);
     if (_aucFilterVals.weapon) p.set('weapon_url_name', _aucFilterVals.weapon);
     if (_aucFilterVals.buyout) p.set('buyout_policy', _aucFilterVals.buyout);
-    /* damage_desc 是纯前端排序（WM sort_by 只认 price_asc/price_desc），传给服务端时兜底成 price_asc */
-    p.set('sort_by', (_aucSort === 'price_desc') ? 'price_desc' : 'price_asc');
+    p.set('sort_by', _aucSort || 'price_asc');
     if (_aucType === 'riven') {
       var pos = [_aucFilterVals.pos1, _aucFilterVals.pos2, _aucFilterVals.pos3].filter(Boolean);
       if (pos.length) p.set('positive_stats', pos.join(','));
@@ -1983,13 +1955,10 @@
 
   function _renderAucSortbar() {
     var bar = document.getElementById('it-auc-sortbar');
-    /* "数值降序"（伤害%降序）只对赤毒玄骸/帕尔沃斯的姐妹有意义——裂罅Mod没有单一
-       damage 数值。这是纯前端排序（WM sort_by 只支持价格），故不影响已拉回的结果集 */
     bar.innerHTML =
       '<span class="it-auc-ctrl-label">排序</span>' +
       '<button class="it-auc-sortbtn' + (_aucSort === 'price_asc'  ? ' active' : '') + '" data-s="price_asc">价格升序</button>' +
       '<button class="it-auc-sortbtn' + (_aucSort === 'price_desc' ? ' active' : '') + '" data-s="price_desc">价格降序</button>' +
-      (_aucType !== 'riven' ? '<button class="it-auc-sortbtn' + (_aucSort === 'damage_desc' ? ' active' : '') + '" data-s="damage_desc">数值降序</button>' : '') +
       '<button class="it-auc-onlpri' + (_aucOnlineFirst ? ' active' : '') + '" id="it-auc-onlpri-btn">在线优先</button>';
     bar.querySelectorAll('.it-auc-sortbtn').forEach(function (b) {
       b.addEventListener('click', function () { _aucSort = b.getAttribute('data-s'); _renderAucSortbar(); _renderAucResults(); });
@@ -2007,10 +1976,6 @@
     var countEl = document.getElementById('it-auc-count');
     var list = (_aucLastList || []).slice().sort(function (a, b) {
       if (_aucOnlineFirst) { var d = _aucOnlineRank(a) - _aucOnlineRank(b); if (d !== 0) return d; }
-      if (_aucSort === 'damage_desc') {
-        var da = (a.item && a.item.damage) || 0, db = (b.item && b.item.damage) || 0;
-        return db - da;
-      }
       return _aucSort === 'price_desc' ? _aucPrice(b) - _aucPrice(a) : _aucPrice(a) - _aucPrice(b);
     });
     countEl.textContent = '共 ' + list.length + ' 条';
