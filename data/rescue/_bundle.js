@@ -518,9 +518,9 @@ var rescue_nagaNotice_en = "";
 var rescue_numaRecords = [
   {
     playerId:   "Salat",
-    clearTime:  "0:24.533",
-    uploadTime: "2026-07-09",
-    videoUrls:  ["https://www.youtube.com/watch?v=FXuicFyMVtM"],
+    clearTime:  "0:23.483",
+    uploadTime: "2026-07-10",
+    videoUrls:  ["https://www.youtube.com/watch?v=s71H0Kg5QIg"],
   },
   {
     playerId:   "L1ndell",
