@@ -523,7 +523,7 @@
       animation: none; opacity: .5; background: none; border-color: var(--ws-sep); color: var(--ws-text-dim); font-weight: 600;
     }
     .it-riven-avg-badge.special { border-color: rgba(150,80,220,.5); background: rgba(150,80,220,.1); color: #c4a0f0; }
-    .it-riven-avg-n { font-size: .72rem; font-weight: 600; opacity: .65; }
+    .it-riven-avg-sep { opacity: .4; font-weight: 400; margin: 0 .1em; }
     .it-riven-avg-rare {
       display: inline-block; font-size: .6rem; font-weight: 800; letter-spacing: .07em;
       padding: .04rem .3rem; border-radius: 3px;
@@ -535,6 +535,32 @@
       50%      { box-shadow: 0 0 10px rgba(201,164,50,.35); }
     }
     @media (prefers-reduced-motion: reduce) { .it-riven-avg-badge { animation: none; } }
+
+    /* 普通物品均价横条：暗金底板 + 一道高帧率流光横扫（background-position 动画，
+       只吃合成层不触发布局/重绘，帧率稳），比裂罅徽章的呼吸光晕更内敛、更适合
+       放在订单卡片顶部这种常驻展示位。 */
+    .it-item-avg-badge {
+      position: relative; overflow: hidden;
+      margin-bottom: .7rem; padding: .55rem .9rem;
+      border-radius: 8px; border: 1px solid rgba(201,164,50,.32);
+      background: linear-gradient(120deg, rgba(28,22,10,.9) 0%, rgba(20,16,8,.95) 50%, rgba(28,22,10,.9) 100%);
+    }
+    .it-item-avg-badge::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(100deg, transparent 20%, rgba(226,192,96,.16) 45%, rgba(255,224,140,.32) 50%, rgba(226,192,96,.16) 55%, transparent 80%);
+      background-size: 220% 100%;
+      animation: itItemAvgSweep 3.4s linear infinite;
+    }
+    .it-item-avg-text { position: relative; z-index: 1; font-size: .85rem; color: var(--ws-text-dim); letter-spacing: .02em; }
+    .it-item-avg-num {
+      font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: .95rem;
+      color: var(--ws-gold-bright); text-shadow: 0 0 10px rgba(226,192,96,.4);
+    }
+    @keyframes itItemAvgSweep {
+      0%   { background-position: 140% 0; }
+      100% { background-position: -140% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { .it-item-avg-badge::before { animation: none; } }
     .it-auc-ctrl-label { font-size: .72rem; color: var(--ws-text-dim); margin-right: .15rem; }
     .it-auc-onlpri {
       font-size: .75rem; padding: .28rem .7rem; border-radius: 6px; cursor: pointer;
@@ -1526,7 +1552,8 @@
         '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(rec.slug) + '" target="_blank" rel="noopener">前往 Warframe.market 查看 ↗</a>';
     } else {
       var skelCol = '<div>' + '<div class="it-skel-row"></div><div class="it-skel-row"></div><div class="it-skel-row"></div><div class="it-skel-row"></div>' + '</div>';
-      body = '<div class="it-loading" id="it-ord-loading"><span class="it-spin"></span>正在获取实时交易信息…</div>' +
+      body = '<div class="it-item-avg-badge" id="it-item-avg-badge" style="display:none"></div>' +
+        '<div class="it-loading" id="it-ord-loading"><span class="it-spin"></span>正在获取实时交易信息…</div>' +
         '<div id="it-ord-body"><div class="it-ord-cols">' + skelCol + skelCol + '</div></div>' +
         '<a class="it-wm-link" href="https://warframe.market/zh-hans/items/' + esc(rec.slug) + '" target="_blank" rel="noopener">在 Warframe.market 打开 ↗</a>';
     }
@@ -1549,10 +1576,30 @@
   var ORD_GRP_MAX     = 50;       /* 满级/非满级 各自最多显示条数（合计 = ORD_DISPLAY_MAX） */
   var ORD_RETRY_MAX   = 3;        /* 自动重试拉取总次数（含首次） */
 
+  /* 普通物品均价（avg_prices_full.json，与裂罅Mod均价共用同一份自动化管线，
+     每天刷新三次）：只在有真实订单卡片时才展示，跟拍卖均价徽章走同一套视觉语言。 */
+  var _itemAvgCache = null;
+  function _loadItemAvgCache() {
+    if (_itemAvgCache) return Promise.resolve(_itemAvgCache);
+    return fetch('https://war-frame.com/data/avg_prices_full.json')
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .then(function (j) { _itemAvgCache = j || {}; return _itemAvgCache; })
+      .catch(function () { _itemAvgCache = {}; return _itemAvgCache; });
+  }
+  function _renderItemAvgBadge(slug) {
+    var el = document.getElementById('it-item-avg-badge');
+    if (!el) return;
+    var c = (_itemAvgCache || {})[slug];
+    if (!c || c.avg == null) { el.style.display = 'none'; return; }
+    el.style.display = '';
+    el.innerHTML = '<span class="it-item-avg-text">过去八小时的在售均价：<span class="it-item-avg-num">' + c.avg + ' 白金</span></span>';
+  }
+
   function loadOrders(rec) {
     if (!WM_PROXY_BASE) return;
     _curRec = rec;
     _fetchOrdersWithRetry(rec, 1);
+    if (rec.slug) _loadItemAvgCache().then(function () { if (_curRec === rec) _renderItemAvgBadge(rec.slug); });
   }
 
   function _fetchOrdersWithRetry(rec, attempt) {
@@ -1753,30 +1800,35 @@
   var _aucSort = 'price_asc';
   var _aucOnlineFirst = true;
 
-  /* 裂罅Mod一口价均价（按武器分组），数据源与 Private-WM 拍卖功能共用同一份
-     每日自动刷新三次的静态 JSON（单一数据源，避免两边算法/口径不一致）。 */
-  var _rivenAvgCache = null;
+  /* 裂罅Mod均价（按武器分组），数据源与 Private-WM 拍卖功能共用同一份
+     每日自动刷新三次的静态 JSON（单一数据源，避免两边算法/口径不一致）：
+     整体均价 riven_avg_prices.json / 基准均价 riven_base_avg_prices.json */
+  var _rivenAvgCache     = null;
+  var _rivenBaseAvgCache = null;
   function _loadRivenAvgCache() {
-    if (_rivenAvgCache) return Promise.resolve(_rivenAvgCache);
-    return fetch('https://war-frame.com/data/riven_avg_prices.json')
-      .then(function (r) { return r.ok ? r.json() : {}; })
-      .then(function (j) { _rivenAvgCache = j || {}; return _rivenAvgCache; })
-      .catch(function () { _rivenAvgCache = {}; return _rivenAvgCache; });
+    if (_rivenAvgCache && _rivenBaseAvgCache) return Promise.resolve();
+    return Promise.all([
+      fetch('https://war-frame.com/data/riven_avg_prices.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
+      fetch('https://war-frame.com/data/riven_base_avg_prices.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
+    ]).then(function (arr) { _rivenAvgCache = arr[0] || {}; _rivenBaseAvgCache = arr[1] || {}; });
   }
   function _renderRivenAvgBadge(weaponSlug) {
     var el = document.getElementById('it-auc-riven-avg');
     if (!el) return;
     if (_aucType !== 'riven' || !weaponSlug) { el.style.display = 'none'; return; }
-    var c = (_rivenAvgCache || {})[weaponSlug];
-    if (!c || c.avg == null) {
+    var overall = (_rivenAvgCache || {})[weaponSlug];
+    var base    = (_rivenBaseAvgCache || {})[weaponSlug];
+    if (!overall || overall.avg == null) {
       el.style.display = ''; el.className = 'it-riven-avg-badge nodata';
       el.textContent = '暂无该武器一口价均价数据';
       return;
     }
-    el.style.display = ''; el.className = 'it-riven-avg-badge ok' + (c.special ? ' special' : '');
-    el.innerHTML = (c.special ? '<span class="it-riven-avg-rare">稀缺</span>' : '')
-      + '一口价均 ' + c.avg + 'p'
-      + '<span class="it-riven-avg-n">（' + c.used + '/' + c.count + ' 条样本）</span>';
+    el.style.display = ''; el.className = 'it-riven-avg-badge ok' + (overall.special ? ' special' : '');
+    var baseTxt = (base && base.avg != null) ? (base.avg + ' 白金') : '暂无数据';
+    el.innerHTML = (overall.special ? '<span class="it-riven-avg-rare">稀缺</span>' : '')
+      + '整体均价 ' + overall.avg + ' 白金'
+      + '<span class="it-riven-avg-sep">//</span>'
+      + '基准均价 ' + baseTxt;
   }
 
   function _aucKey(rec) { return rec && (rec.auctionWeaponUrlName || rec.slug); }
