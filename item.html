@@ -410,11 +410,13 @@
       transition: color .2s ease, border-color .2s ease, background .2s ease, transform .15s ease;
     }
     .it-auc-tab:hover { color: var(--ws-text); border-color: rgba(201,164,50,.5); transform: translateY(-1px); }
+    /* 外观属性与页面主搜索框的放大镜按钮(.it-search-btn)保持一致：同一套渐变/文字色/交互反馈 */
     .it-auc-tab.active {
-      color: #1f160a; font-weight: 700; border-color: var(--ws-gold-bright);
-      background: var(--ws-gold-bright);
-      box-shadow: 0 0 0 1px rgba(226,192,96,.25), 0 2px 10px rgba(0,0,0,.35), 0 0 18px rgba(201,164,50,.25);
+      color: #1a1206; font-weight: 700; border-color: transparent;
+      background: linear-gradient(135deg, var(--ws-gold-bright), var(--ws-gold));
+      transition: filter .2s, color .2s ease, border-color .2s ease, background .2s ease, transform .15s ease;
     }
+    .it-auc-tab.active:hover { filter: brightness(1.12); color: #1a1206; }
     /* 筛选表单：网格对齐，每列等宽、控件统一高度/字号——不再是参差不齐的 flex-wrap */
     .it-auc-filters {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(172px, 1fr)); gap: 1.35rem 1.5rem;
@@ -485,34 +487,19 @@
     .it-ac-field-item:hover { background: rgba(201,164,50,.14); color: var(--ws-gold-bright); }
     .it-ac-field-item.empty { color: var(--ws-text-dim); font-style: italic; }
     .it-auc-search-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-    /* 扁平金色实底 + 极简描边，只留一层克制的外发光；扫光条用 overflow:hidden 严格裁在
-       按钮圆角轮廓内（此前 clip-path 加在扫光条自己身上、按钮又是 overflow:visible，
-       结果扫光的矩形边缘会露在圆角外面——这版直接让按钮本身裁切，物理上不可能再溢出）。 */
+    /* 外观属性与页面主搜索框的放大镜按钮(.it-search-btn)保持一致：同一套渐变/文字色/交互反馈，
+       不再另外发明新的质感处理 */
     .it-auc-search-go {
-      position: relative; overflow: hidden;
       display: inline-flex; align-items: center; gap: .4rem; padding: .55rem 1.6rem; border-radius: 7px;
-      border: 1px solid var(--ws-gold-bright); cursor: pointer; color: #1f160a; font-weight: 700; font-size: .88rem;
-      letter-spacing: .03em;
-      background: var(--ws-gold-bright);
-      box-shadow: 0 2px 10px rgba(0,0,0,.35);
-      transition: background .2s ease, box-shadow .2s ease, transform .12s ease;
+      border: none; cursor: pointer; color: #1a1206; font-weight: 700; font-size: .88rem; letter-spacing: .03em;
+      background: linear-gradient(135deg, var(--ws-gold-bright), var(--ws-gold));
+      transition: filter .2s, transform .12s;
     }
-    .it-auc-search-go::before {
-      content: ''; position: absolute; top: 0; bottom: 0; left: -60%; width: 35%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
-      transform: skewX(-18deg); transition: left .55s ease;
-    }
-    .it-auc-search-go:hover::before { left: 120%; }
-    .it-auc-search-go:hover { background: #eccf7c; box-shadow: 0 2px 10px rgba(0,0,0,.35), 0 0 18px rgba(201,164,50,.35); }
+    .it-auc-search-go:hover { filter: brightness(1.12); }
     .it-auc-search-go:active { transform: scale(.96); }
     .it-auc-search-go:disabled { opacity: .5; pointer-events: none; }
-    /* 激活(点击/回车)时的反馈：box-shadow 扩散淡出的光环——box-shadow 不受 overflow:hidden
-       裁切影响，天然不会有溢出/错位问题，比之前用会被裁掉的 ::after 边框环更可靠 */
-    .it-auc-search-go.is-firing { animation: itAucGoPulse .6s cubic-bezier(.16,.84,.44,1); }
-    @keyframes itAucGoPulse {
-      0%   { box-shadow: 0 2px 10px rgba(0,0,0,.35), 0 0 0 0 rgba(226,192,96,.55); }
-      100% { box-shadow: 0 2px 10px rgba(0,0,0,.35), 0 0 0 12px rgba(226,192,96,0); }
-    }
+    .it-auc-search-go.is-firing { animation: itAucGoPulse .5s ease; }
+    @keyframes itAucGoPulse { 0%, 100% { filter: brightness(1); } 30% { filter: brightness(1.3); } }
     @media (prefers-reduced-motion: reduce) { .it-auc-search-go.is-firing { animation: none; } }
     .it-auc-search-status { font-size: .8rem; color: var(--ws-text-dim); }
     .it-auc-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; margin-bottom: .8rem; }
