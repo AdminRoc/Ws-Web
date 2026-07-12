@@ -55,6 +55,12 @@ var disruptionKappaDuoRecords = [
     uploadTime: "2026-07-08",
     videoUrls:     ["https://www.bilibili.com/video/BV1mUMG6qE2P"]
   },
+  {
+    clearTime:  "36:42.000",
+    playerId:   "NamelessDeity / Gamer123169",
+    uploadTime: "2026-07-08",
+    videoUrls:     ["https://www.youtube.com/watch?v=c0KEpwW_Ngc"]
+  },
 
 /*
 
