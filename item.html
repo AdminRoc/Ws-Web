@@ -510,6 +510,31 @@
     }
     .it-auc-sortbtn.active, .it-auc-onlbtn.active { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.1); }
     .it-auc-count { font-size: .78rem; color: var(--ws-text-dim); }
+    /* 裂罅Mod一口价均价徽章：跟随金色主题呼吸光晕，放在工具条里要够醒目 */
+    .it-riven-avg-badge {
+      display: inline-flex; align-items: center; gap: .35em;
+      font-size: .8rem; font-weight: 700; padding: .18rem .65rem;
+      border-radius: 999px; margin-left: auto;
+      background: rgba(201,164,50,.1); border: 1px solid var(--ws-gold);
+      color: var(--ws-gold-bright); white-space: nowrap;
+      animation: itRivenAvgGlow 2.6s ease-in-out infinite;
+    }
+    .it-riven-avg-badge.nodata {
+      animation: none; opacity: .5; background: none; border-color: var(--ws-sep); color: var(--ws-text-dim); font-weight: 600;
+    }
+    .it-riven-avg-badge.special { border-color: rgba(150,80,220,.5); background: rgba(150,80,220,.1); color: #c4a0f0; }
+    .it-riven-avg-n { font-size: .72rem; font-weight: 600; opacity: .65; }
+    .it-riven-avg-rare {
+      display: inline-block; font-size: .6rem; font-weight: 800; letter-spacing: .07em;
+      padding: .04rem .3rem; border-radius: 3px;
+      background: rgba(150,80,220,.28); color: #c4a0f0; border: 1px solid rgba(150,80,220,.4);
+      text-transform: uppercase;
+    }
+    @keyframes itRivenAvgGlow {
+      0%, 100% { box-shadow: 0 0 0 rgba(201,164,50,0); }
+      50%      { box-shadow: 0 0 10px rgba(201,164,50,.35); }
+    }
+    @media (prefers-reduced-motion: reduce) { .it-riven-avg-badge { animation: none; } }
     .it-auc-ctrl-label { font-size: .72rem; color: var(--ws-text-dim); margin-right: .15rem; }
     .it-auc-onlpri {
       font-size: .75rem; padding: .28rem .7rem; border-radius: 6px; cursor: pointer;
@@ -1728,6 +1753,32 @@
   var _aucSort = 'price_asc';
   var _aucOnlineFirst = true;
 
+  /* 裂罅Mod一口价均价（按武器分组），数据源与 Private-WM 拍卖功能共用同一份
+     每日自动刷新三次的静态 JSON（单一数据源，避免两边算法/口径不一致）。 */
+  var _rivenAvgCache = null;
+  function _loadRivenAvgCache() {
+    if (_rivenAvgCache) return Promise.resolve(_rivenAvgCache);
+    return fetch('https://war-frame.com/data/riven_avg_prices.json')
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .then(function (j) { _rivenAvgCache = j || {}; return _rivenAvgCache; })
+      .catch(function () { _rivenAvgCache = {}; return _rivenAvgCache; });
+  }
+  function _renderRivenAvgBadge(weaponSlug) {
+    var el = document.getElementById('it-auc-riven-avg');
+    if (!el) return;
+    if (_aucType !== 'riven' || !weaponSlug) { el.style.display = 'none'; return; }
+    var c = (_rivenAvgCache || {})[weaponSlug];
+    if (!c || c.avg == null) {
+      el.style.display = ''; el.className = 'it-riven-avg-badge nodata';
+      el.textContent = '暂无该武器一口价均价数据';
+      return;
+    }
+    el.style.display = ''; el.className = 'it-riven-avg-badge ok' + (c.special ? ' special' : '');
+    el.innerHTML = (c.special ? '<span class="it-riven-avg-rare">稀缺</span>' : '')
+      + '一口价均 ' + c.avg + 'p'
+      + '<span class="it-riven-avg-n">（' + c.used + '/' + c.count + ' 条样本）</span>';
+  }
+
   function _aucKey(rec) { return rec && (rec.auctionWeaponUrlName || rec.slug); }
   function _aucI18n(entry) {
     var i = entry && entry.i18n;
@@ -1829,6 +1880,7 @@
         '<div class="it-auc-toolbar" id="it-auc-hub-toolbar" style="display:none;">' +
           '<div class="it-auc-sortbar" id="it-auc-sortbar"></div>' +
           '<span class="it-auc-count" id="it-auc-count"></span>' +
+          '<span class="it-riven-avg-badge" id="it-auc-riven-avg" style="display:none"></span>' +
         '</div>' +
         '<div class="it-auc-list" id="it-auc-list"></div>' +
       '</div>';
@@ -1961,6 +2013,11 @@
       document.getElementById('it-auc-hub-toolbar').style.display = '';
       _renderAucSortbar();
       _renderAucResults();
+      if (_aucType === 'riven') {
+        _loadRivenAvgCache().then(function () { _renderRivenAvgBadge(_aucFilterVals.weapon); });
+      } else {
+        _renderRivenAvgBadge(null);
+      }
       status.textContent = '';
     }).catch(function (e) {
       status.textContent = '搜索失败：' + (e.message || e);
