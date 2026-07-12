@@ -512,18 +512,23 @@
     .it-auc-count { font-size: .78rem; color: var(--ws-text-dim); }
     /* 裂罅Mod一口价均价徽章：跟随金色主题呼吸光晕，放在工具条里要够醒目 */
     .it-riven-avg-badge {
-      display: inline-flex; align-items: center; gap: .35em;
-      font-size: .8rem; font-weight: 700; padding: .18rem .65rem;
+      display: inline-grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      font-size: .8rem; font-weight: 700; padding: .18rem .8rem;
       border-radius: 999px; margin-left: auto;
       background: rgba(201,164,50,.1); border: 1px solid var(--ws-gold);
       color: var(--ws-gold-bright); white-space: nowrap;
       animation: itRivenAvgGlow 2.6s ease-in-out infinite;
     }
     .it-riven-avg-badge.nodata {
-      animation: none; opacity: .5; background: none; border-color: var(--ws-sep); color: var(--ws-text-dim); font-weight: 600;
+      display: inline-flex; animation: none; opacity: .5; background: none; border-color: var(--ws-sep); color: var(--ws-text-dim); font-weight: 600;
     }
     .it-riven-avg-badge.special { border-color: rgba(150,80,220,.5); background: rgba(150,80,220,.1); color: #c4a0f0; }
-    .it-riven-avg-sep { opacity: .4; font-weight: 400; margin: 0 .1em; }
+    .it-riven-avg-half.l { text-align: right; padding-right: .55em; }
+    .it-riven-avg-half.r { text-align: left;  padding-left: .55em; }
+    .it-riven-avg-sep {
+      width: 1px; align-self: stretch;
+      background: linear-gradient(180deg, transparent, rgba(201,164,50,.7), transparent);
+    }
     .it-riven-avg-rare {
       display: inline-block; font-size: .6rem; font-weight: 800; letter-spacing: .07em;
       padding: .04rem .3rem; border-radius: 3px;
@@ -1824,11 +1829,11 @@
       return;
     }
     el.style.display = ''; el.className = 'it-riven-avg-badge ok' + (overall.special ? ' special' : '');
-    var baseTxt = (base && base.avg != null) ? (base.avg + ' 白金') : '暂无数据';
-    el.innerHTML = (overall.special ? '<span class="it-riven-avg-rare">稀缺</span>' : '')
-      + '整体均价 ' + overall.avg + ' 白金'
-      + '<span class="it-riven-avg-sep">//</span>'
-      + '基准均价 ' + baseTxt;
+    var rightTxt = (base && base.avg != null) ? ('基准均价 ' + base.avg + ' 白金') : '暂无基准均价';
+    el.innerHTML =
+        '<span class="it-riven-avg-half l">' + (overall.special ? '<span class="it-riven-avg-rare">稀缺</span>' : '') + '整体均价 ' + overall.avg + ' 白金</span>'
+      + '<span class="it-riven-avg-sep"></span>'
+      + '<span class="it-riven-avg-half r">' + rightTxt + '</span>';
   }
 
   function _aucKey(rec) { return rec && (rec.auctionWeaponUrlName || rec.slug); }
