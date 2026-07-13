@@ -87,6 +87,9 @@
             <a href="disruption.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">单人</span><span class="text-en">Solo</span></span></a>
             <a href="disruption-duo.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">双人</span><span class="text-en">Duo</span></span></a>
             <a href="disruption-multi.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">多人</span><span class="text-en">Multi</span></span></a>
+            <a href="disruption-macro.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">单人 - 无限制</span><span class="text-en">Solo - Unlimited</span></span></a>
+            <a href="disruption-duo-macro.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">双人 - 无限制</span><span class="text-en">Duo - Unlimited</span></span></a>
+            <a href="disruption-multi-macro.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">多人 - 无限制</span><span class="text-en">Multi - Unlimited</span></span></a>
           </div>
         </div>
         <div class="nav-item has-dropdown">
@@ -213,6 +216,7 @@
       <h1 class="lb-title">
         中断竞速排行榜
         <span class="lb-badge-wrap" id="badge-wrap"><span class="lb-badge-en">Duo</span><span class="lb-badge-cn">双人</span></span>
+        <span class="lb-badge-wrap" id="badge-wrap-2"><span class="lb-badge-en">Restricted</span><span class="lb-badge-cn">有限制</span></span>
       </h1>
       <p class="lb-subtitle">Disruption Speedrun Leaderboards — Duo</p>
     </div>
@@ -320,11 +324,13 @@
     });
     loadMap('kappa');
 
-    var badgeWrap = document.getElementById('badge-wrap');
+    var badgeWrap  = document.getElementById('badge-wrap');
+    var badgeWrap2 = document.getElementById('badge-wrap-2');
     var showEn = false;
     setInterval(function() {
       showEn = !showEn;
       badgeWrap.classList.toggle('show-en', showEn);
+      if (badgeWrap2) badgeWrap2.classList.toggle('show-en', showEn);
     }, 3000);
   });
 </script>

@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="A Truly Fair and Comprehensive Warframe Speedrun Leaderboard.">
-  <title>叛逃任务竞速排行榜 — Warframe Speed</title>  <link rel="icon" type="image/png" href="picture/websitelogo.png">
+  <title>中断竞速排行榜（无限制）— Warframe Speed</title>  <link rel="icon" type="image/png" href="picture/websitelogo.png">
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/leaderboard.css">
   <style>
+    /* ── 按钮悬停文字渐变替换 ── */
     .hover-text-swap { position: relative; display: inline-block; }
     .hover-text-swap .text-cn { display: inline; transition: opacity 0.3s ease; }
     .hover-text-swap .text-en {
@@ -24,17 +25,39 @@
     .nav-dropdown-menu a:hover .hover-text-swap .text-en { opacity: 1; }
     .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-cn { opacity: 0; }
     .nav-rules-wrap:hover .nav-rules .hover-text-swap .text-en { opacity: 1; }
-    .lb-back:hover .hover-text-swap .text-cn { opacity: 0; }
-    .lb-back:hover .hover-text-swap .text-en { opacity: 1; }
     .nav-submit:hover .hover-text-swap .text-cn { opacity: 0; }
     .nav-submit:hover .hover-text-swap .text-en { opacity: 1; }
-    .shame-btn:hover .shame-cn { opacity: 0; transform: translateY(-5px); }
-    .shame-btn:hover .shame-en { opacity: 1; transform: translateY(0); }
-    .lb-badge-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; }
-    .lb-badge-en { opacity: 0; position: relative; pointer-events: none; transition: opacity .5s ease; }
-    .lb-badge-cn { position: absolute; inset: 0; opacity: 1; transition: opacity .5s ease; }
-    .lb-badge-wrap.show-en .lb-badge-en { opacity: 1; }
-    .lb-badge-wrap.show-en .lb-badge-cn { opacity: 0; }
+    .lb-back:hover .hover-text-swap .text-cn { opacity: 0; }
+    .lb-back:hover .hover-text-swap .text-en { opacity: 1; }
+
+    /* ── 地图Tab ── */
+    .map-tabs {
+      display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap;
+    }
+    .map-tab-btn {
+      display: inline-flex; align-items: center;
+      padding: .36rem 1rem;
+      font-family: var(--f-sci); font-size: .7rem; font-weight: 700;
+      letter-spacing: .12em; color: var(--c-text2);
+      border: 1px solid rgba(185,142,52,.15); border-radius: 2px;
+      background: rgba(185,142,52,.03); cursor: pointer;
+      transition: color .38s, border-color .38s, background .38s, box-shadow .38s, transform .38s;
+      user-select: none; white-space: nowrap; position: relative; overflow: hidden;
+    }
+    .map-tab-btn::before {
+      content: ''; position: absolute; inset: -10%; width: 35%;
+      background: linear-gradient(105deg, transparent 20%, rgba(185,142,52,.28) 50%, rgba(255,218,100,.06) 55%, transparent 80%);
+      transform: translateX(-150%) skewX(-15deg); transition: transform .5s ease; pointer-events: none;
+    }
+    .map-tab-btn:hover { color: var(--c-gold-bright); border-color: rgba(185,142,52,.38); background: rgba(185,142,52,.07); transform: translateY(-1px); }
+    .map-tab-btn:hover::before { transform: translateX(360%) skewX(-15deg); }
+    .map-tab-btn.active {
+      color: var(--c-gold-bright); border-color: var(--c-gold-bright);
+      background: rgba(185,142,52,.12); box-shadow: 0 0 8px rgba(185,142,52,.55), 0 0 20px rgba(185,142,52,.28);
+      animation: tabActivePulse 2.8s ease-in-out infinite;
+    }
+
+    /* 移动端菜单：桌面隐藏 */
     .nav-more-mobile { display: none; } /* mob-more-panel由global.css的max-height动画控制，无需此处设置 */
     @media screen and (max-width: 860px) {
       .nav-more-mobile { display: flex !important; }
@@ -45,9 +68,12 @@
   <script src="js/fui-core.js"></script>
 </head>
 <body>
+
 <canvas id="star-canvas"></canvas>
 <div class="nebula-bg"></div>
+
 <div class="page-wrap lb-page">
+
   <nav class="site-nav">
     <div class="nav-inner">
       <a class="nav-logo" href="https://wfspeed.run">
@@ -56,7 +82,12 @@
       </a>
       <div class="nav-links">
         <div class="nav-item has-dropdown">
-          <a href="disruption.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">中断竞速榜单</span><span class="text-en">Disruption</span></span></a>
+          <a href="disruption.html" target="_self" rel="noopener">
+            <span class="hover-text-swap">
+              <span class="text-cn">中断竞速榜单</span>
+              <span class="text-en">Disruption</span>
+            </span>
+          </a>
           <div class="nav-dropdown-menu">
             <a href="disruption.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">单人</span><span class="text-en">Solo</span></span></a>
             <a href="disruption-duo.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">双人</span><span class="text-en">Duo</span></span></a>
@@ -67,14 +98,24 @@
           </div>
         </div>
         <div class="nav-item has-dropdown">
-          <a href="eidolon.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">夜灵竞速榜单</span><span class="text-en">Eidolon</span></span></a>
+          <a href="eidolon.html" target="_self" rel="noopener">
+            <span class="hover-text-swap">
+              <span class="text-cn">夜灵竞速榜单</span>
+              <span class="text-en">Eidolon</span>
+            </span>
+          </a>
           <div class="nav-dropdown-menu">
             <a href="eidolon.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">有限制</span><span class="text-en">Restricted</span></span></a>
             <a href="eidolon-macro.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">无限制</span><span class="text-en">Non-restricted</span></span></a>
           </div>
         </div>
         <div class="nav-item has-dropdown">
-          <a href="profit-taker.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">蜘蛛竞速榜单</span><span class="text-en">Profit-Taker</span></span></a>
+          <a href="profit-taker.html" target="_self" rel="noopener">
+            <span class="hover-text-swap">
+              <span class="text-cn">蜘蛛竞速榜单</span>
+              <span class="text-en">Profit-Taker</span>
+            </span>
+          </a>
           <div class="nav-dropdown-menu">
             <a href="profit-taker.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">有限制</span><span class="text-en">Restricted</span></span></a>
             <a href="profit-taker-macro.html" target="_self" rel="noopener"><span class="hover-text-swap"><span class="text-cn">无限制</span><span class="text-en">Non-restricted</span></span></a>
@@ -98,6 +139,7 @@
             <a href="eelog.html" class="nav-feature-link"><span class="hover-text-swap"><span class="text-cn">日志解析</span><span class="text-en">EE.LOG</span></span></a>
           </div>
         </div>
+        <!-- 移动端：更多榜单 -->
         <button class="nav-more-mobile" id="nav-more-mobile" aria-label="更多榜单">更多榜单</button>
         <div class="mob-more-panel" id="mob-more-panel">
           <a href="capture.html" target="_self" rel="noopener">捕获</a>
@@ -117,23 +159,32 @@
           <a href="special-events.html" target="_self" rel="noopener">站内特殊活动</a>
         </div>
       </div>
-      <button class="nav-hamburger" aria-label="打开菜单"><span></span><span></span><span></span></button>
+      <button class="nav-hamburger" aria-label="打开菜单">
+        <span></span><span></span><span></span>
+      </button>
       <div class="nav-rules-wrap">
-        <a class="nav-rules" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FPmFYdf0gXoR8EBxIY6dcr3UKn0f&title=%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99%E6%80%BB%E8%A7%88&from=defection.html" target="_blank" rel="noopener">
-          <span class="hover-text-swap"><span class="text-cn">查看提交规则</span><span class="text-en">Rules</span></span>
+        <a class="nav-rules" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FPmFYdf0gXoR8EBxIY6dcr3UKn0f&title=%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99%E6%80%BB%E8%A7%88&from=disruption-macro.html" target="_blank" rel="noopener">
+          <span class="hover-text-swap">
+            <span class="text-cn">查看提交规则</span>
+            <span class="text-en">Rules</span>
+          </span>
         </a>
         <div class="nav-rules-dropdown">
-          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FT65jdhc61ohAOSxHopTcpOd8njc&title=%E4%B8%AD%E6%96%AD%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=defection.html" target="_blank" rel="noopener">中断竞速</a>
-          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FUxmXdbcHUoo0iCxQUXccUMTNncf&title=%E5%A4%9C%E7%81%B5%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=defection.html" target="_blank" rel="noopener">夜灵竞速</a>
-          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FJCBfdkdJpoAfkgxD37ic1VVcnkf&title=%E8%9C%98%E8%9B%9B%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=defection.html" target="_blank" rel="noopener">蜘蛛竞速</a>
-          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FAaMCdHX7Toa8hrxah1DcMQnJnNe&title=%E6%9B%B4%E5%A4%9A%E7%AB%9E%E9%80%9F%E9%A1%B9%E7%9B%AE&from=defection.html" target="_blank" rel="noopener">更多项目</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FT65jdhc61ohAOSxHopTcpOd8njc&title=%E4%B8%AD%E6%96%AD%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=disruption-macro.html" target="_blank" rel="noopener">中断竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FUxmXdbcHUoo0iCxQUXccUMTNncf&title=%E5%A4%9C%E7%81%B5%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=disruption-macro.html" target="_blank" rel="noopener">夜灵竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FJCBfdkdJpoAfkgxD37ic1VVcnkf&title=%E8%9C%98%E8%9B%9B%E7%AB%9E%E9%80%9F%E8%A7%84%E5%88%99&from=disruption-macro.html" target="_blank" rel="noopener">蜘蛛竞速</a>
+          <a href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fdocx%2FAaMCdHX7Toa8hrxah1DcMQnJnNe&title=%E6%9B%B4%E5%A4%9A%E7%AB%9E%E9%80%9F%E9%A1%B9%E7%9B%AE&from=disruption-macro.html" target="_blank" rel="noopener">更多项目</a>
         </div>
       </div>
-      <a class="nav-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=defection.html" target="_blank" rel="noopener">
-        <span class="hover-text-swap"><span class="text-cn">提交成绩</span><span class="text-en">Submit</span></span>
+      <a class="nav-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=disruption-macro.html" target="_blank" rel="noopener">
+        <span class="hover-text-swap">
+          <span class="text-cn">提交成绩</span>
+          <span class="text-en">Submit</span>
+        </span>
       </a>
     </div>
   </nav>
+
   <!-- ══ 超级导航面板 ══ -->
   <div class="super-nav-overlay" id="super-nav-overlay" style="display:none;opacity:0;transition:opacity .35s ease;"></div>
   <div class="super-nav-panel" id="super-nav-panel">
@@ -162,49 +213,85 @@
       </div>
     </div>
   </div>
+
   <main class="lb-main">
     <a href="index.html" class="lb-back" target="_self" rel="noopener">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
+      <span class="hover-text-swap">
+        <span class="text-cn">返回首页</span>
+        <span class="text-en">Home</span>
+      </span>
     </a>
+
     <div class="lb-header">
-      <h1 class="lb-title">叛逃任务竞速排行榜</h1>
-      <p class="lb-subtitle">Defection Speedrun Leaderboard</p>
+      <h1 class="lb-title">
+        中断竞速排行榜
+        <span class="lb-badge-wrap" id="badge-wrap"><span class="lb-badge-en">Solo</span><span class="lb-badge-cn">单人</span></span>
+        <span class="lb-badge-wrap" id="badge-wrap-2"><span class="lb-badge-en">Non-restricted</span><span class="lb-badge-cn">无限制</span></span>
+      </h1>
+      <p class="lb-subtitle">Disruption Speedrun Leaderboards — Solo [Unlimited]</p>
     </div>
     <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
       <span class="lb-tip-icon">⚠</span>
-      <span id="notice-cn" style="transition:opacity .3s ease;"></span>
+      <span class="lb-tip-cn" id="notice-cn" style="transition:opacity .3s ease;"></span>
       <span class="lb-tip-en" id="notice-en" style="opacity:0;transition:opacity .3s ease;font-style:italic;color:rgba(255,215,0,.75);"></span>
     </div>
+
+    <!-- 地图 Tab -->
     <div class="map-tabs" id="map-tabs">
-      <button class="map-tab-btn active" data-mapname="Memphis">Memphis</button>
-      <button class="map-tab-btn" data-mapname="Caracol">Caracol</button>
-      <button class="map-tab-btn" data-mapname="Yursa">Yursa</button>
+      <button class="map-tab-btn active" data-map="kappa">Kappa</button>
+      <button class="map-tab-btn" data-map="apollo">Apollo</button>
+      <button class="map-tab-btn" data-map="ur">UR</button>
+      <button class="map-tab-btn" data-map="armatus">Armatus</button>
+      <button class="map-tab-btn" data-map="tamu">Tamu</button>
+      <button class="map-tab-btn" data-map="olympus">Olympus</button>
     </div>
+
     <div class="lb-table-wrap">
       <table class="lb-table">
-        <thead><tr><th>排名</th><th>时间</th><th>玩家 ID</th><th>提交日期</th></tr></thead>
+        <thead>
+          <tr>
+            <th>排名</th>
+            <th>时间</th>
+            <th>玩家 ID</th>
+            <th>上传时间</th>
+          </tr>
+        </thead>
         <tbody id="lb-tbody"></tbody>
       </table>
       <div class="lb-stats" id="lb-stats"></div>
     </div>
-    <div class="report-wrap">
-      <a class="report-btn" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2Fshrcnju7pg9xiHVjyQcH4AUrVVc&title=%E4%B8%BE%E6%8A%A5%E8%BF%9D%E8%A7%84&from=defection.html" target="_blank" rel="noopener">
-        <span class="report-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 5.5H13L9.5 8.5L11 13L7 10L3 13L4.5 8.5L1 5.5H5.5L7 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/></svg></span>
-        <span class="hover-text-swap"><span class="text-cn">举报违规</span><span class="text-en">Report</span></span>
-      </a>
-      <a class="shame-btn" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fview%2Fshrcnij5zLwd9XPCCEoYVobYMHe&title=%E4%BD%9C%E5%BC%8A%E5%85%AC%E7%A4%BA&from=defection.html" target="_blank" rel="noopener">
-        <span class="shame-icon"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M7.5 4v3.5M7.5 10v.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-        <span class="shame-text-wrap"><span class="shame-cn">作弊公示</span><span class="shame-en">Ban List</span></span>
-      </a>
-        <a class="log-btn" href="eelog.html">
+  </main>
+
+  <!-- ══ 举报违规 + 作弊公示 ══ -->
+  <div class="report-wrap">
+    <a class="report-btn"
+       href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2Fshrcnju7pg9xiHVjyQcH4AUrVVc&title=%E4%B8%BE%E6%8A%A5%E8%BF%9D%E8%A7%84&from=disruption-macro.html" target="_blank" rel="noopener">
+      <span class="report-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 1L8.5 5.5H13L9.5 8.5L11 13L7 10L3 13L4.5 8.5L1 5.5H5.5L7 1Z"
+                stroke="currentColor" stroke-width="1.2"
+                stroke-linejoin="round" fill="none"/>
+        </svg>
+      </span>
+      <span class="hover-text-swap">
+        <span class="text-cn">举报违规</span>
+        <span class="text-en">Report</span>
+      </span>
+    </a>
+    <a class="shame-btn"
+       href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fview%2Fshrcnij5zLwd9XPCCEoYVobYMHe&title=%E4%BD%9C%E5%BC%8A%E5%85%AC%E7%A4%BA&from=disruption-macro.html" target="_blank" rel="noopener">
+      <span class="shame-icon"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M7.5 4v3.5M7.5 10v.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="shame-text-wrap"><span class="shame-cn">作弊公示</span><span class="shame-en">Ban List</span></span>
+    </a>
+      <a class="log-btn" href="eelog.html">
       <span class="log-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="9" rx="1.2" stroke="currentColor" stroke-width="1.2"/><path d="M4 5.5h6M4 7.5h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg></span>
       <span class="log-text-wrap"><span class="log-cn">日志解析</span><span class="log-en">EE.LOG</span></span>
     </a>
   </div>
-  </main>
+
 
   <div class="lb-notice-box">
     <div class="lb-notice-title">特别提醒</div>
@@ -214,62 +301,92 @@
       <p>至于为何我们不直接剔除'Speedrun.com'的数据内容呢？以<a href="https://search.bilibili.com/all?keyword=%E7%BE%8E%E5%9B%BD%E5%86%9B%E5%B7%A5%E9%92%A2%E6%9D%90%E7%9A%84%E5%8F%82%E6%95%B0%E9%80%A0%E5%81%87%E4%BA%8B%E4%BB%B6" target="_blank" rel="noopener">美国军工钢材的参数造假事件</a>为例：即便有时我们追赶的对手，始终在自欺欺人，但这段&ldquo;追赶&rdquo;的路途，也同样意义非凡。</p>
     </div>
   </div>
-  <footer class="site-footer home-footer">
+  <footer class="site-footer">
     <div class="beian-row"><a href="https://beian.miit.gov.cn/" target="_self" rel="noopener">沪ICP备2022033368号</a><img src="picture/gongan-beian.png" alt="公安备案" class="beian-icon"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=31015102000215" rel="noreferrer" target="_blank">沪公网安备31015102000215号</a></div>
     <p>Copyright &copy; 2026 CSC Alliance All Rights Reserved.</p>
     <p>特此声明：本站是纯公益性质，且首页的彩虹风格不代表支持性少数群体，望知悉</p>
     <p>特别鸣谢：<a href="https://space.bilibili.com/147628438" target="_blank" rel="noopener">@&thinsp;兔子</a>、<a href="https://space.bilibili.com/627291901" target="_blank" rel="noopener">@&thinsp;Eas1on</a>、<a href="https://space.bilibili.com/1807185535" target="_blank" rel="noopener">@&thinsp;纸折折鸾</a>、<a href="https://space.bilibili.com/204443734" target="_blank" rel="noopener">@&thinsp;七一</a>、<a href="https://space.bilibili.com/1797156588" target="_blank" rel="noopener">@&thinsp;MC83</a></p>
   </footer>
 </div>
+
+
+<!-- ══ 数据文件：5地图 × 单人/双人/多人 ══ -->
 <script src="js/main.js"></script>
-<script src="data/defection/_bundle.js"></script>
+<script src="data/disruption/_bundle.js"></script>
 <script>
-  var _mapData = {
-    "Memphis": function(){return defection_memphisRecords;},
-    "Caracol": function(){return defection_caracolRecords;},
-    "Yursa": function(){return defection_yursaRecords;},
+  // 地图 → 单人数据变量映射
+  var mapData = {
+    kappa:   function() { return disruptionKappaSoloMacroRecords;   },
+    apollo:  function() { return disruptionApolloSoloMacroRecords;  },
+    ur:      function() { return disruptionUrSoloMacroRecords;      },
+    armatus: function() { return disruptionArmatusSoloMacroRecords; },
+    tamu:    function() { return disruptionTamuSoloMacroRecords;    },
+    olympus: function() { return disruptionOlympusSoloMacroRecords; }
   };
-  var _curMap = 'Memphis';
-  function loadMap(m) {
-    renderTimeLeaderboard(_mapData[m]?_mapData[m]():[],'lb-tbody','clearTime');
-    _updatePageNotice(_mapData[m]);
-    document.querySelectorAll('.map-tab-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-mapname')===m);});
-    history.replaceState(null,'','#'+encodeURIComponent(m));
-  }
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.map-tab-btn').forEach(function(b){
-      b.addEventListener('click',function(){_curMap=b.getAttribute('data-mapname');loadMap(_curMap);});
+
+  function loadMap(map) {
+    var records = mapData[map] ? mapData[map]() : [];
+    renderTimeLeaderboard(records, 'lb-tbody', 'clearTime');
+    _updatePageNotice(mapData[map]);
+    document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.map === map);
     });
-    var _h=decodeURIComponent(location.hash.replace('#','').trim());
-    loadMap((_h&&_mapData[_h])?_h:'Memphis');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() { loadMap(btn.dataset.map); });
+    });
+    loadMap('kappa'); // 默认显示 Kappa
+
+    // Badge 交替动画（每 3 秒切换中/英文）
+    var badgeWrap  = document.getElementById('badge-wrap');
+    var badgeWrap2 = document.getElementById('badge-wrap-2');
+    var showEn = false;
+    setInterval(function() {
+      showEn = !showEn;
+      badgeWrap.classList.toggle('show-en', showEn);
+      if (badgeWrap2) badgeWrap2.classList.toggle('show-en', showEn);
+    }, 3000);
   });
 </script>
 <script>
+/* ── 移动端有下拉框的链接点两次再跳转 ── */
 (function() {
-  if (!('ontouchstart' in window)) return;
+  if (!('ontouchstart' in window)) return; // 仅移动端
+  var firstTap = null;
   document.querySelectorAll('.nav-item.has-dropdown > a').forEach(function(a) {
     a.addEventListener('click', function(e) {
       var item = a.closest('.nav-item');
       if (!item.classList.contains('mob-open')) {
         e.preventDefault();
+        // 第一次点：展开下拉
         document.querySelectorAll('.nav-item.has-dropdown').forEach(function(i) {
           if (i !== item) i.classList.remove('mob-open');
         });
         item.classList.add('mob-open');
       }
+      // 第二次点（mob-open已存在）：直接跳转（不阻止默认行为）
     });
   });
+  /* 移动端"更多榜单"展开子菜单 */
 /* mob-more-panel 交互由 main.js 的 initNav() 统一处理，此处不重复绑定 */
 })();
 </script>
 <script>
+/* ── 超级导航面板 ── */
 (function() {
   var panel   = document.getElementById('super-nav-panel');
   var overlay = document.getElementById('super-nav-overlay');
   var btn     = document.getElementById('nav-more-btn');
   if (!panel || !btn) return;
-  var isOpen = false; var langTimer = null;
+
+  var isOpen = false;
+  var langTimer = null;
+
+  /* ══ 面板内背景粒子 canvas ══ */
   var bgCanvas = null, bgCtx = null, bgAnim = null, bgParticles = [], bgSpriteNear = null, bgSpriteFar = null;
+
   function initPanelCanvas() {
     if (bgCanvas) return;
     bgCanvas = document.createElement('canvas');
@@ -277,58 +394,164 @@
     bgCanvas.className = 'snav-bg-canvas';
     panel.insertBefore(bgCanvas, panel.firstChild);
     bgCtx = bgCanvas.getContext('2d');
-    resizePanelCanvas(); spawnPanelParticles(); animatePanelCanvas();
+    resizePanelCanvas();
+    spawnPanelParticles();
+    animatePanelCanvas();
   }
+
   function resizePanelCanvas() {
     if (!bgCanvas) return;
-    bgCanvas.width = panel.offsetWidth || window.innerWidth;
+    bgCanvas.width  = panel.offsetWidth  || window.innerWidth;
     bgCanvas.height = panel.offsetHeight || 200;
   }
+
   function spawnPanelParticles(){bgParticles=[];var W=bgCanvas.width,H=bgCanvas.height;for(var i=0;i<90;i++){var depth=Math.random();bgParticles.push({x:Math.random()*W,y:Math.random()*H,r:.6+depth*2.2,vx:(Math.random()-.5)*(.18+depth*.3),vy:(Math.random()-.5)*(.12+depth*.22),depth:depth,a:Math.random(),da:.004+Math.random()*.008});}}
+
   function animatePanelCanvas(){if(!bgCtx)return;if(!bgSpriteNear){function mkBgSpr(core,mid,big){var SPR=big?40:22,s=document.createElement('canvas');s.width=s.height=SPR;var sc=s.getContext('2d');var g=sc.createRadialGradient(SPR/2,SPR/2,0,SPR/2,SPR/2,SPR/2);g.addColorStop(0,core);g.addColorStop(.4,mid);g.addColorStop(1,'rgba(255,200,60,0)');sc.fillStyle=g;sc.fillRect(0,0,SPR,SPR);return s;}bgSpriteNear=mkBgSpr('rgba(255,250,225,1)','rgba(255,210,80,.9)',false);bgSpriteFar=mkBgSpr('rgba(255,225,150,.85)','rgba(255,180,50,.55)',true);}bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);var W=bgCanvas.width,H=bgCanvas.height;bgParticles.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.a+=p.da;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;var alpha=(.15+.55*Math.abs(Math.sin(p.a)))*(.5+p.depth*.6);var spr=p.depth>.45?bgSpriteNear:bgSpriteFar;var s=p.r*(p.depth>.45?7:11);bgCtx.globalAlpha=alpha;bgCtx.drawImage(spr,p.x-s/2,p.y-s/2,s,s);});bgAnim=requestAnimationFrame(animatePanelCanvas);}
+
   function destroyPanelCanvas() {
-    if (bgAnim) { cancelAnimationFrame(bgAnim); bgAnim=null; }
-    if (bgCanvas) { bgCanvas.remove(); bgCanvas=null; bgCtx=null; } bgParticles=[];
+    if (bgAnim) { cancelAnimationFrame(bgAnim); bgAnim = null; }
+    if (bgCanvas) { bgCanvas.remove(); bgCanvas = null; bgCtx = null; }
+    bgParticles = [];
   }
-  function burst(){var rect=btn.getBoundingClientRect(),cx=rect.left+rect.width/2,cy=rect.bottom+2,c=document.createElement('canvas');c.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:9998;';c.width=window.innerWidth;c.height=window.innerHeight;document.body.appendChild(c);var ctx=c.getContext('2d');var SPR=28;function makeSprite(core,mid){var s=document.createElement('canvas');s.width=s.height=SPR;var sc=s.getContext('2d');var g=sc.createRadialGradient(SPR/2,SPR/2,0,SPR/2,SPR/2,SPR/2);g.addColorStop(0,core);g.addColorStop(.4,mid);g.addColorStop(1,'rgba(255,180,0,0)');sc.fillStyle=g;sc.fillRect(0,0,SPR,SPR);return s;}var sprites=[makeSprite('rgba(255,252,235,1)','rgba(255,214,90,.95)'),makeSprite('rgba(255,225,140,1)','rgba(255,180,40,.9)')];var pts=[];for(var i=0;i<56;i++){var a=(i/56)*Math.PI*2+(Math.random()-.5)*.5,spd=80+Math.random()*200;pts.push({x:cx,y:cy,vx:Math.cos(a)*spd,vy:Math.sin(a)*spd-60,r:1.6+Math.random()*3.2,spr:sprites[i%2],life:1,decay:.012+Math.random()*.015,trail:[]});}var last=performance.now();function frame(now){var dt=Math.min((now-last)/1000,.05);last=now;ctx.clearRect(0,0,c.width,c.height);var alive=false;pts.forEach(function(p){if(p.life<=0)return;p.trail.push({x:p.x,y:p.y});if(p.trail.length>5)p.trail.shift();p.vx*=.96;p.vy+=220*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=p.decay;alive=true;if(p.trail.length>1){ctx.save();ctx.globalAlpha=Math.max(0,p.life)*.3;ctx.strokeStyle='#ffd76a';ctx.lineWidth=p.r*.5;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(p.trail[0].x,p.trail[0].y);for(var t=1;t<p.trail.length;t++)ctx.lineTo(p.trail[t].x,p.trail[t].y);ctx.stroke();ctx.restore();}var s=p.r*6;ctx.globalAlpha=Math.max(0,p.life);ctx.drawImage(p.spr,p.x-s/2,p.y-s/2,s,s);});if(alive)requestAnimationFrame(frame);else c.remove();}requestAnimationFrame(frame);}
+
+  /* ══ 彩虹粒子爆发（开场烟花） ══ */
+  function burst() {
+    var rect = btn.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.bottom + 2;
+
+    var c = document.createElement('canvas');
+    c.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9998;';
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    document.body.appendChild(c);
+    var ctx = c.getContext('2d');
+
+    /* 预渲染发光金粒子贴图（只算一次渐变），逐帧用 drawImage 代替 arc+shadowBlur，
+       shadowBlur 是逐图形软件光栅化、按帧重算，粒子一多就是掉帧元凶 */
+    var SPR = 28;
+    function makeSprite(core, mid) {
+      var s = document.createElement('canvas');
+      s.width = s.height = SPR;
+      var sc = s.getContext('2d');
+      var g = sc.createRadialGradient(SPR/2, SPR/2, 0, SPR/2, SPR/2, SPR/2);
+      g.addColorStop(0, core); g.addColorStop(.4, mid); g.addColorStop(1, 'rgba(255,180,0,0)');
+      sc.fillStyle = g; sc.fillRect(0, 0, SPR, SPR);
+      return s;
+    }
+    var sprites = [
+      makeSprite('rgba(255,252,235,1)', 'rgba(255,214,90,.95)'),
+      makeSprite('rgba(255,225,140,1)', 'rgba(255,180,40,.9)')
+    ];
+
+    var pts = [];
+    for (var i = 0; i < 56; i++) {
+      var a = (i / 56) * Math.PI * 2 + (Math.random() - .5) * .5;
+      var spd = 80 + Math.random() * 200;
+      pts.push({
+        x: cx, y: cy,
+        vx: Math.cos(a) * spd,
+        vy: Math.sin(a) * spd - 60,
+        r: 1.6 + Math.random() * 3.2,
+        spr: sprites[i % 2],
+        life: 1,
+        decay: .012 + Math.random() * .015,
+        trail: []
+      });
+    }
+
+    var last = performance.now();
+    function frame(now) {
+      var dt = Math.min((now - last) / 1000, .05); last = now;
+      ctx.clearRect(0, 0, c.width, c.height);
+
+      var alive = false;
+      pts.forEach(function(p) {
+        if (p.life <= 0) return;
+        p.trail.push({x:p.x, y:p.y});
+        if (p.trail.length > 5) p.trail.shift();
+
+        p.vx *= .96; p.vy += 220 * dt;
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        p.life -= p.decay;
+        alive = true;
+
+        /* 拖尾：单条 stroke，不叠 shadowBlur，便宜 */
+        if (p.trail.length > 1) {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.life) * .3;
+          ctx.strokeStyle = '#ffd76a';
+          ctx.lineWidth = p.r * .5;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(p.trail[0].x, p.trail[0].y);
+          for (var t = 1; t < p.trail.length; t++) ctx.lineTo(p.trail[t].x, p.trail[t].y);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        /* 粒子本体：贴图 drawImage（GPU 位图拷贝）代替逐帧重算的阴影发光 */
+        var s = p.r * 6;
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.drawImage(p.spr, p.x - s / 2, p.y - s / 2, s, s);
+      });
+
+      if (alive) requestAnimationFrame(frame); else c.remove();
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* ══ 按钮彩虹涟漪 ══ */
   function ripple() {
-    var r=document.createElement('span');
-    r.style.cssText=['position:absolute','inset:0','border-radius:inherit','pointer-events:none',
+    var r = document.createElement('span');
+    r.style.cssText = [
+      'position:absolute','inset:0','border-radius:inherit','pointer-events:none',
       'background:conic-gradient(from 0deg,#ffd700,#ffb347,#fff4cc,#ffaa00,#ffd700)',
-      'opacity:.6','transform:scale(0)','transition:transform .6s ease,opacity .6s ease'].join(';');
-    btn.style.position='relative'; btn.style.overflow='hidden'; btn.appendChild(r);
-    requestAnimationFrame(function(){r.style.transform='scale(4)';r.style.opacity='0';});
-    setTimeout(function(){r.remove();},650);
+      'opacity:.6','transform:scale(0)',
+      'transition:transform .6s ease,opacity .6s ease'
+    ].join(';');
+    btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    btn.appendChild(r);
+    requestAnimationFrame(function() { r.style.transform='scale(4)'; r.style.opacity='0'; });
+    setTimeout(function() { r.remove(); }, 650);
   }
+
+  /* ══ 打开面板 ══ */
   function open() {
-    if(isOpen)return; isOpen=true; ripple(); burst();
-    btn.classList.add('open'); panel.classList.add('open');
-    overlay.style.display='block';
-    requestAnimationFrame(function(){overlay.style.opacity='1';});
-    if(!langTimer) langTimer=setInterval(function(){panel.classList.toggle('lang-en');},3000);
-    setTimeout(function(){initPanelCanvas();resizePanelCanvas();},80);
+    if (isOpen) return;
+    isOpen = true;
+    ripple(); burst();
+    btn.classList.add('open');
+    panel.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(function() { overlay.style.opacity = '1'; });
+    if (!langTimer) langTimer = setInterval(function() {
+      panel.classList.toggle('lang-en');
+    }, 3000);
+    setTimeout(function() { initPanelCanvas(); resizePanelCanvas(); }, 80);
   }
+
+  /* ══ 关闭面板 ══ */
   function close() {
-    if(!isOpen)return; isOpen=false;
-    btn.classList.remove('open'); panel.classList.remove('open');
-    overlay.style.opacity='0';
-    setTimeout(function(){if(!isOpen)overlay.style.display='none';},430);
-    clearInterval(langTimer); langTimer=null;
-    setTimeout(function(){panel.classList.remove('lang-en');},320);
-    setTimeout(destroyPanelCanvas,450);
+    if (!isOpen) return;
+    isOpen = false;
+    btn.classList.remove('open');
+    panel.classList.remove('open');
+    overlay.style.opacity = '0';
+    setTimeout(function() { if (!isOpen) overlay.style.display = 'none'; }, 430);
+    clearInterval(langTimer); langTimer = null;
+    setTimeout(function() { panel.classList.remove('lang-en'); }, 320);
+    setTimeout(destroyPanelCanvas, 450);
   }
-  btn.addEventListener('click',function(e){e.stopPropagation();isOpen?close():open();});
-  overlay.addEventListener('click',close);
-  document.addEventListener('click',function(e){if(isOpen&&!panel.contains(e.target)&&!btn.contains(e.target))close();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
-  window.addEventListener('resize',function(){if(isOpen)resizePanelCanvas();});
-})();
-</script>
-<script>
-(function() {
-  var tabs = document.querySelectorAll('.lb-tab-btn');
-  if (!tabs.length) return;
-  setInterval(function() { tabs.forEach(function(t){t.classList.toggle('lang-en');}); }, 3000);
+
+  btn.addEventListener('click', function(e) { e.stopPropagation(); isOpen ? close() : open(); });
+  overlay.addEventListener('click', close);
+  document.addEventListener('click', function(e) {
+    if (isOpen && !panel.contains(e.target) && !btn.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', function(e) { if (e.key==='Escape') close(); });
+  window.addEventListener('resize', function() { if (isOpen) resizePanelCanvas(); });
 })();
 </script>
 </body>

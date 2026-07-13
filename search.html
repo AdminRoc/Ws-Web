@@ -260,6 +260,12 @@ var IDX=[];
    ['Multi','多人','disruption-multi.html','中断竞速排行榜','Disruption Speedrun']].forEach(function(md){
     [['Apollo','Apollo'],['Armatus','Armatus'],['Kappa','Kappa'],['Olympus','Olympus'],['Tamu','Tamu'],['Ur','Ur']].forEach(function(m){
       add(md[2],md[3],md[4],md[1]+' · '+m[0],md[0]+' · '+m[1],'disruption'+m[0]+md[0]+'Records');});});
+  /* disruption 无限制变体（macro） */
+  [['Solo','单人','disruption-macro.html','中断竞速排行榜（无限制）','Disruption Speedrun Unrestricted'],
+   ['Duo','双人','disruption-duo-macro.html','中断竞速排行榜（无限制）','Disruption Speedrun Unrestricted'],
+   ['Multi','多人','disruption-multi-macro.html','中断竞速排行榜（无限制）','Disruption Speedrun Unrestricted']].forEach(function(md){
+    [['Apollo','Apollo'],['Armatus','Armatus'],['Kappa','Kappa'],['Olympus','Olympus'],['Tamu','Tamu'],['Ur','Ur']].forEach(function(m){
+      add(md[2],md[3],md[4],md[1]+' · '+m[0],md[0]+' · '+m[1],'disruption'+m[0]+md[0]+'MacroRecords');});});
   [['Solo','单人'],['Duo','双人'],['Trio','三人'],['Quad','四人']].forEach(function(m){
     add('eidolon.html','夜灵竞速排行榜（有限制）','Eidolon Speedrun Restricted',m[1],m[0],'eidolon'+m[0]+'Records');
     add('eidolon-macro.html','夜灵竞速排行榜（无限制）','Eidolon Speedrun Unrestricted',m[1],m[0],'eidolonMacro'+m[0]+'Records');});

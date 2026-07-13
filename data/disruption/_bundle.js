@@ -5,6 +5,39 @@
  *  对应的单个 <分类>-<节点>.js 源文件，push 后会自动重建本文件。
  * ════════════════════════════════════════════════════════════ */
 
+/* ===== data/disruption/disruption-apollo-duo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-apollo-duo-macro.js  —  中断竞速（Apollo·双人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionApolloDuoMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionApolloDuoMacroNotice_cn = "";
+var disruptionApolloDuoMacroNotice_en = "";
+;
+
 /* ===== data/disruption/disruption-apollo-duo.js ===== */
 /**
  * ════════════════════════════════════════════════════════════
@@ -44,6 +77,39 @@ var disruptionApolloDuoNotice_cn = "";
 var disruptionApolloDuoNotice_en = "";
 ;
 
+/* ===== data/disruption/disruption-apollo-multi-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-apollo-multi-macro.js  —  中断竞速（Apollo·多人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionApolloMultiMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionApolloMultiMacroNotice_cn = "";
+var disruptionApolloMultiMacroNotice_en = "";
+;
+
 /* ===== data/disruption/disruption-apollo-multi.js ===== */
 /**
  * ════════════════════════════════════════════════════════════
@@ -75,6 +141,39 @@ var disruptionApolloMultiRecords = [
  * ──────────────────────────────────────────────────────── */
 var disruptionApolloMultiNotice_cn = "";
 var disruptionApolloMultiNotice_en = "";
+;
+
+/* ===== data/disruption/disruption-apollo-solo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-apollo-solo-macro.js  —  中断竞速（Apollo·单人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionApolloSoloMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionApolloSoloMacroNotice_cn = "";
+var disruptionApolloSoloMacroNotice_en = "";
 ;
 
 /* ===== data/disruption/disruption-apollo-solo.js ===== */
@@ -116,6 +215,39 @@ var disruptionApolloSoloNotice_cn = "";
 var disruptionApolloSoloNotice_en = "";
 ;
 
+/* ===== data/disruption/disruption-armatus-duo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-armatus-duo-macro.js  —  中断竞速（Armatus·双人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionArmatusDuoMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionArmatusDuoMacroNotice_cn = "";
+var disruptionArmatusDuoMacroNotice_en = "";
+;
+
 /* ===== data/disruption/disruption-armatus-duo.js ===== */
 /**
  * ════════════════════════════════════════════════════════════
@@ -149,6 +281,39 @@ var disruptionArmatusDuoNotice_cn = "";
 var disruptionArmatusDuoNotice_en = "";
 ;
 
+/* ===== data/disruption/disruption-armatus-multi-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-armatus-multi-macro.js  —  中断竞速（Armatus·多人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionArmatusMultiMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionArmatusMultiMacroNotice_cn = "";
+var disruptionArmatusMultiMacroNotice_en = "";
+;
+
 /* ===== data/disruption/disruption-armatus-multi.js ===== */
 /**
  * ════════════════════════════════════════════════════════════
@@ -180,6 +345,39 @@ var disruptionArmatusMultiRecords = [
  * ──────────────────────────────────────────────────────── */
 var disruptionArmatusMultiNotice_cn = "";
 var disruptionArmatusMultiNotice_en = "";
+;
+
+/* ===== data/disruption/disruption-armatus-solo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-armatus-solo-macro.js  —  中断竞速（Armatus·单人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionArmatusSoloMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionArmatusSoloMacroNotice_cn = "";
+var disruptionArmatusSoloMacroNotice_en = "";
 ;
 
 /* ===== data/disruption/disruption-armatus-solo.js ===== */
@@ -219,6 +417,39 @@ var disruptionArmatusSoloRecords = [
  * ──────────────────────────────────────────────────────── */
 var disruptionArmatusSoloNotice_cn = "";
 var disruptionArmatusSoloNotice_en = "";
+;
+
+/* ===== data/disruption/disruption-kappa-duo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-kappa-duo-macro.js  —  中断竞速（Kappa·双人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionKappaDuoMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionKappaDuoMacroNotice_cn = "";
+var disruptionKappaDuoMacroNotice_en = "";
 ;
 
 /* ===== data/disruption/disruption-kappa-duo.js ===== */
@@ -305,6 +536,39 @@ var disruptionKappaDuoRecords = [
  * ──────────────────────────────────────────────────────── */
 var disruptionKappaDuoNotice_cn = "";
 var disruptionKappaDuoNotice_en = "";
+;
+
+/* ===== data/disruption/disruption-kappa-multi-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-kappa-multi-macro.js  —  中断竞速（Kappa·多人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionKappaMultiMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionKappaMultiMacroNotice_cn = "";
+var disruptionKappaMultiMacroNotice_en = "";
 ;
 
 /* ===== data/disruption/disruption-kappa-multi.js ===== */
@@ -399,6 +663,39 @@ var disruptionKappaMultiRecords = [
  * ──────────────────────────────────────────────────────── */
 var disruptionKappaMultiNotice_cn = "";
 var disruptionKappaMultiNotice_en = "";
+;
+
+/* ===== data/disruption/disruption-kappa-solo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-kappa-solo-macro.js  —  中断竞速（Kappa·单人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionKappaSoloMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionKappaSoloMacroNotice_cn = "";
+var disruptionKappaSoloMacroNotice_en = "";
 ;
 
 /* ===== data/disruption/disruption-kappa-solo.js ===== */
@@ -511,6 +808,39 @@ var disruptionKappaSoloNotice_cn = "";
 var disruptionKappaSoloNotice_en = "";
 ;
 
+/* ===== data/disruption/disruption-olympus-duo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-olympus-duo-macro.js  —  中断竞速（Olympus·双人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionOlympusDuoMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionOlympusDuoMacroNotice_cn = "";
+var disruptionOlympusDuoMacroNotice_en = "";
+;
+
 /* ===== data/disruption/disruption-olympus-duo.js ===== */
 /**
  * ════════════════════════════════════════════════════════════
@@ -543,6 +873,39 @@ var disruptionOlympusDuoNotice_cn = "";
 var disruptionOlympusDuoNotice_en = "";
 ;
 
+/* ===== data/disruption/disruption-olympus-multi-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-olympus-multi-macro.js  —  中断竞速（Olympus·多人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionOlympusMultiMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionOlympusMultiMacroNotice_cn = "";
+var disruptionOlympusMultiMacroNotice_en = "";
+;
+
 /* ===== data/disruption/disruption-olympus-multi.js ===== */
 /**
  * ════════════════════════════════════════════════════════════
@@ -573,6 +936,39 @@ var disruptionOlympusMultiRecords = [
  * ──────────────────────────────────────────────────────── */
 var disruptionOlympusMultiNotice_cn = "";
 var disruptionOlympusMultiNotice_en = "";
+;
+
+/* ===== data/disruption/disruption-olympus-solo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-olympus-solo-macro.js  —  中断竞速（Olympus·单人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionOlympusSoloMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionOlympusSoloMacroNotice_cn = "";
+var disruptionOlympusSoloMacroNotice_en = "";
 ;
 
 /* ===== data/disruption/disruption-olympus-solo.js ===== */
@@ -611,6 +1007,39 @@ var disruptionOlympusSoloRecords = [
  * ──────────────────────────────────────────────────────── */
 var disruptionOlympusSoloNotice_cn = "";
 var disruptionOlympusSoloNotice_en = "";
+;
+
+/* ===== data/disruption/disruption-tamu-duo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-tamu-duo-macro.js  —  中断竞速（Tamu·双人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionTamuDuoMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionTamuDuoMacroNotice_cn = "";
+var disruptionTamuDuoMacroNotice_en = "";
 ;
 
 /* ===== data/disruption/disruption-tamu-duo.js ===== */
@@ -652,6 +1081,39 @@ var disruptionTamuDuoNotice_cn = "";
 var disruptionTamuDuoNotice_en = "";
 ;
 
+/* ===== data/disruption/disruption-tamu-multi-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-tamu-multi-macro.js  —  中断竞速（Tamu·多人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionTamuMultiMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionTamuMultiMacroNotice_cn = "";
+var disruptionTamuMultiMacroNotice_en = "";
+;
+
 /* ===== data/disruption/disruption-tamu-multi.js ===== */
 /**
  * ════════════════════════════════════════════════════════════
@@ -683,6 +1145,39 @@ var disruptionTamuMultiRecords = [
  * ──────────────────────────────────────────────────────── */
 var disruptionTamuMultiNotice_cn = "";
 var disruptionTamuMultiNotice_en = "";
+;
+
+/* ===== data/disruption/disruption-tamu-solo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-tamu-solo-macro.js  —  中断竞速（Tamu·单人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionTamuSoloMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionTamuSoloMacroNotice_cn = "";
+var disruptionTamuSoloMacroNotice_en = "";
 ;
 
 /* ===== data/disruption/disruption-tamu-solo.js ===== */
@@ -722,6 +1217,39 @@ var disruptionTamuSoloRecords = [
  * ──────────────────────────────────────────────────────── */
 var disruptionTamuSoloNotice_cn = "";
 var disruptionTamuSoloNotice_en = "";
+;
+
+/* ===== data/disruption/disruption-ur-duo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-ur-duo-macro.js  —  中断竞速（Ur·双人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionUrDuoMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionUrDuoMacroNotice_cn = "";
+var disruptionUrDuoMacroNotice_en = "";
 ;
 
 /* ===== data/disruption/disruption-ur-duo.js ===== */
@@ -771,6 +1299,39 @@ var disruptionUrDuoNotice_cn = "";
 var disruptionUrDuoNotice_en = "";
 ;
 
+/* ===== data/disruption/disruption-ur-multi-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-ur-multi-macro.js  —  中断竞速（Ur·多人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionUrMultiMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionUrMultiMacroNotice_cn = "";
+var disruptionUrMultiMacroNotice_en = "";
+;
+
 /* ===== data/disruption/disruption-ur-multi.js ===== */
 /**
  * ════════════════════════════════════════════════════════════
@@ -802,6 +1363,39 @@ var disruptionUrMultiRecords = [
  * ──────────────────────────────────────────────────────── */
 var disruptionUrMultiNotice_cn = "";
 var disruptionUrMultiNotice_en = "";
+;
+
+/* ===== data/disruption/disruption-ur-solo-macro.js ===== */
+/**
+ * ════════════════════════════════════════════════════════════
+ *  data/disruption-ur-solo-macro.js  —  中断竞速（Ur·单人·无限制）数据文件
+ *
+ *  字段说明：
+ *    clearTime  —— 时间，格式 "MM:SS.mmm"  例："01:23.456"
+ *    playerId   —— 玩家 ID（多人/双人用 / 分隔）
+ *    uploadTime —— 上传日期，格式 "YYYY-MM-DD"
+ *    videoUrls  —— 视频链接数组；最多4个视角 ["url1","url2",...]
+ *
+ *  排名规则：脚本按 clearTime 从小到大自动排序
+ *  新增条目：在数组末尾复制模板并填写字段，保存后刷新页面生效
+ * ════════════════════════════════════════════════════════════
+ */
+var disruptionUrSoloMacroRecords = [
+  // ─── 在此处添加条目 ───
+  // {
+  //   clearTime:  "MM:SS.mmm",
+  //   playerId:   "玩家ID",
+  //   uploadTime: "YYYY-MM-DD",
+  //   videoUrls:     ["https://..."]
+  // },
+];
+
+/* ── 横幅提醒信息 ────────────────────────────────────────────
+ * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
+ * Notice_en : 鼠标停留时显示的英文提醒（可留空）
+ * ──────────────────────────────────────────────────────── */
+var disruptionUrSoloMacroNotice_cn = "";
+var disruptionUrSoloMacroNotice_en = "";
 ;
 
 /* ===== data/disruption/disruption-ur-solo.js ===== */

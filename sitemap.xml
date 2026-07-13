@@ -93,6 +93,21 @@
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://wfspeed.run/disruption?mode=non-restricted</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://wfspeed.run/disruption?mode=duo-non-restricted</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://wfspeed.run/disruption?mode=multi-non-restricted</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
 
   <!-- ========== 夜灵竞速 (Eidolon) ========== -->
   <url>
