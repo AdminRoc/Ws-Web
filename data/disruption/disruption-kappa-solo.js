@@ -14,7 +14,7 @@
  */
 var disruptionKappaSoloRecords = [
   {
-    clearTime:  "52:16.000",
+    clearTime:  "52:16.000 [09Bug]",
     playerId:   "NamelessDeity",
     uploadTime: "2026-07-12",
     videoUrls:     ["https://www.youtube.com/watch?v=HhBmXLhpf9c"]
