@@ -285,17 +285,18 @@ var disruptionKappaDuoRecords = [
     uploadTime: "2026-07-08",
     videoUrls:     ["https://www.youtube.com/watch?v=c0KEpwW_Ngc"]
   },
-
-/*
-
   {
-    clearTime:  "37:21.000[待审查]",
+    clearTime:  "35:48.000",
+    playerId:   "NamelessDeity / Biggy Smallz",
+    uploadTime: "2026-07-14",
+    videoUrls:     ["https://www.youtube.com/watch?v=sswOjk5cHTk"]
+  },
+  {
+    clearTime:  "37:21.000",
     playerId:   "Endryx_Ow / Gamer123169",
     uploadTime: "2026-07-04",
     videoUrls:     ["https://www.youtube.com/watch?v=Tg13HYpuNBg","https://www.youtube.com/watch?v=cWl9P4dsuD4"]
   },
-
-*/
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
