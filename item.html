@@ -1840,31 +1840,55 @@
   var _aucSort = 'price_asc';
   var _aucOnlineFirst = true;
 
-  /* 裂罅Mod均价（按武器分组），数据源与 Private-WM 拍卖功能共用同一份
-     每日自动刷新三次的静态 JSON（单一数据源，避免两边算法/口径不一致）：
-     整体均价 riven_avg_prices.json / 基准均价 riven_base_avg_prices.json */
-  var _rivenAvgCache     = null;
-  var _rivenBaseAvgCache = null;
-  function _loadRivenAvgCache() {
-    if (_rivenAvgCache && _rivenBaseAvgCache) return Promise.resolve();
-    return Promise.all([
-      fetch('https://war-frame.com/data/riven_avg_prices.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
-      fetch('https://war-frame.com/data/riven_base_avg_prices.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
-    ]).then(function (arr) { _rivenAvgCache = arr[0] || {}; _rivenBaseAvgCache = arr[1] || {}; });
+  /* 裂罅Mod均价 —— 不再依赖离线数据管线，改为对当次搜索结果里 ingame 状态的
+     一口价样本当场统计（结果集本身已按武器/词条筛选，天然贴合当前搜索场景）：
+     整体均价 —— 全部 ingame 一口价，按样本量分档裁剪极值后平均（口径与原算法一致）
+     基准均价 —— 0洗(re_rolls=0) + ingame 一口价，按价格升序取最低 30% 取平均
+                （防止极少数超高价 0洗裂罅污染基准价，用比例裁剪替代原来的"高于整体均价剔除"）*/
+  function _trimAvg(sortedPrices) {
+    var count = sortedPrices.length;
+    if (!count) return { avg: null, count: 0, used: 0, special: true };
+    var lo = 0, hi = 0;
+    if (count >= 20) { lo = 3; hi = 5; }
+    else if (count >= 5) { lo = 2; hi = 2; }
+    var trimmed = sortedPrices.slice(lo, hi ? count - hi : count);
+    var used = trimmed.length;
+    var avg = used ? Math.round(trimmed.reduce(function (s, p) { return s + p; }, 0) / used) : null;
+    return { avg: avg, count: count, used: used, special: count < 3 };
   }
-  function _renderRivenAvgBadge(weaponSlug) {
+  function _baseAvgTop30(sortedPrices) {
+    var count = sortedPrices.length;
+    if (!count) return { avg: null, count: 0, used: 0, special: true };
+    var n = Math.max(1, Math.round(count * 0.3));
+    var trimmed = sortedPrices.slice(0, n);
+    var used = trimmed.length;
+    var avg = Math.round(trimmed.reduce(function (s, p) { return s + p; }, 0) / used);
+    return { avg: avg, count: count, used: used, special: used < 3 };
+  }
+  function _rivenLiveStats(list) {
+    var ingameBuyouts = list
+      .filter(function (a) { return a.buyout_price != null && ((a.owner && a.owner.status) || '').toLowerCase() === 'ingame'; })
+      .map(function (a) { return a.buyout_price; })
+      .sort(function (a, b) { return a - b; });
+    var zeroReroll = list
+      .filter(function (a) { return a.buyout_price != null && ((a.owner && a.owner.status) || '').toLowerCase() === 'ingame' && (a.item && a.item.re_rolls) === 0; })
+      .map(function (a) { return a.buyout_price; })
+      .sort(function (a, b) { return a - b; });
+    return { overall: _trimAvg(ingameBuyouts), base: _baseAvgTop30(zeroReroll) };
+  }
+  function _renderRivenAvgBadge(list) {
     var el = document.getElementById('it-auc-riven-avg');
     if (!el) return;
-    if (_aucType !== 'riven' || !weaponSlug) { el.style.display = 'none'; return; }
-    var overall = (_rivenAvgCache || {})[weaponSlug];
-    var base    = (_rivenBaseAvgCache || {})[weaponSlug];
-    if (!overall || overall.avg == null) {
+    if (_aucType !== 'riven' || !list || !list.length) { el.style.display = 'none'; return; }
+    var stats = _rivenLiveStats(list);
+    var overall = stats.overall, base = stats.base;
+    if (overall.avg == null) {
       el.style.display = ''; el.className = 'it-riven-avg-badge nodata';
       el.textContent = '暂无该武器一口价均价数据';
       return;
     }
     el.style.display = ''; el.className = 'it-riven-avg-badge ok' + (overall.special ? ' special' : '');
-    var rightTxt = (base && base.avg != null) ? ('基准均价 ' + base.avg + ' 白金') : '暂无基准均价';
+    var rightTxt = (base.avg != null) ? ('基准均价 ' + base.avg + ' 白金') : '暂无基准均价';
     el.innerHTML =
         '<span class="it-riven-avg-half l">' + (overall.special ? '<span class="it-riven-avg-rare">稀缺</span>' : '') + '整体均价 ' + overall.avg + ' 白金</span>'
       + '<span class="it-riven-avg-sep"></span>'
@@ -2107,11 +2131,7 @@
       document.getElementById('it-auc-hub-toolbar').style.display = '';
       _renderAucSortbar();
       _renderAucResults();
-      if (_aucType === 'riven') {
-        _loadRivenAvgCache().then(function () { _renderRivenAvgBadge(_aucFilterVals.weapon); });
-      } else {
-        _renderRivenAvgBadge(null);
-      }
+      _renderRivenAvgBadge(_aucType === 'riven' ? _aucLastList : null);
       status.textContent = '';
     }).catch(function (e) {
       status.textContent = '搜索失败：' + (e.message || e);
