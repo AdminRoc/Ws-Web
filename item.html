@@ -502,31 +502,38 @@
     @keyframes itAucGoPulse { 0%, 100% { filter: brightness(1); } 30% { filter: brightness(1.3); } }
     @media (prefers-reduced-motion: reduce) { .it-auc-search-go.is-firing { animation: none; } }
     .it-auc-search-status { font-size: .8rem; color: var(--ws-text-dim); }
-    .it-auc-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; margin-bottom: .8rem; }
-    .it-auc-sortbar { display: flex; gap: .4rem; }
+    .it-auc-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem .9rem; margin-bottom: .8rem; }
+    /* 左侧组（排序标签+按钮+条数）用一个 flex 容器整体居中对齐，避免各自单独
+       stretch 到不同高度导致文字基线对不齐；右侧均价徽章单独一组，靠 margin-left:auto
+       跟左侧拉开，这样不管中间是否换行，两组各自内部的对齐始终稳定。 */
+    .it-auc-toolbar-left { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem; }
+    .it-auc-sortbar { display: flex; align-items: center; gap: .4rem; }
     .it-auc-sortbtn, .it-auc-onlbtn {
-      font-size: .76rem; padding: .25rem .7rem; border-radius: 999px; cursor: pointer;
+      display: inline-flex; align-items: center; line-height: 1;
+      font-size: .76rem; padding: .3rem .7rem; border-radius: 999px; cursor: pointer;
       border: 1px solid var(--ws-sep); color: var(--ws-text-dim); background: none;
     }
     .it-auc-sortbtn.active, .it-auc-onlbtn.active { color: var(--ws-gold-bright); border-color: var(--ws-gold); background: rgba(201,164,50,.1); }
-    .it-auc-count { font-size: .78rem; color: var(--ws-text-dim); }
+    .it-auc-count { display: inline-flex; align-items: center; font-size: .78rem; color: var(--ws-text-dim); line-height: 1; }
     /* 裂罅Mod一口价均价徽章：跟随金色主题呼吸光晕，放在工具条里要够醒目 */
     .it-riven-avg-badge {
-      display: inline-grid; grid-template-columns: 1fr auto 1fr; align-items: center;
-      font-size: .8rem; font-weight: 700; padding: .18rem .8rem;
+      /* 两栏用 flex:1 1 0 等宽拉伸，分割线才能精确落在正中，不受左右文字长度影响 */
+      display: inline-flex; align-items: stretch;
+      font-size: .8rem; font-weight: 700; padding: .3rem .9rem;
       border-radius: 999px; margin-left: auto;
       background: rgba(201,164,50,.1); border: 1px solid var(--ws-gold);
-      color: var(--ws-gold-bright); white-space: nowrap;
+      color: var(--ws-gold-bright); white-space: nowrap; line-height: 1.4;
       animation: itRivenAvgGlow 2.6s ease-in-out infinite;
     }
     .it-riven-avg-badge.nodata {
-      display: inline-flex; animation: none; opacity: .5; background: none; border-color: var(--ws-sep); color: var(--ws-text-dim); font-weight: 600;
+      display: inline-flex; align-items: center; animation: none; opacity: .5; background: none; border-color: var(--ws-sep); color: var(--ws-text-dim); font-weight: 600;
     }
     .it-riven-avg-badge.special { border-color: rgba(150,80,220,.5); background: rgba(150,80,220,.1); color: #c4a0f0; }
-    .it-riven-avg-half.l { text-align: right; padding-right: .55em; }
-    .it-riven-avg-half.r { text-align: left;  padding-left: .55em; }
+    .it-riven-avg-half { flex: 1 1 0; display: flex; align-items: center; }
+    .it-riven-avg-half.l { justify-content: flex-end;   text-align: right; padding-right: .6em; }
+    .it-riven-avg-half.r { justify-content: flex-start; text-align: left;  padding-left: .6em; }
     .it-riven-avg-sep {
-      width: 1px; align-self: stretch;
+      flex: 0 0 auto; width: 1px; align-self: stretch;
       background: linear-gradient(180deg, transparent, rgba(201,164,50,.7), transparent);
     }
     .it-riven-avg-rare {
@@ -546,10 +553,14 @@
        放在订单卡片顶部这种常驻展示位。 */
     .it-item-avg-badge {
       position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center; min-height: 1.6em;
       margin-bottom: .7rem; padding: .55rem .9rem;
       border-radius: 8px; border: 1px solid rgba(201,164,50,.32);
       background: linear-gradient(120deg, rgba(28,22,10,.9) 0%, rgba(20,16,8,.95) 50%, rgba(28,22,10,.9) 100%);
     }
+    /* 可分级物品（零级/满级两栏）：两栏 flex:1 1 0 等宽拉伸，分割线精确居中，
+       不管左右两边文字长度是否一样长 */
+    .it-item-avg-badge.split { align-items: stretch; }
     .it-item-avg-badge::before {
       content: ''; position: absolute; inset: 0; pointer-events: none;
       background: linear-gradient(100deg, transparent 20%, rgba(226,192,96,.16) 45%, rgba(255,224,140,.32) 50%, rgba(226,192,96,.16) 55%, transparent 80%);
@@ -557,6 +568,16 @@
       animation: itItemAvgSweep 3.4s linear infinite;
     }
     .it-item-avg-text { position: relative; z-index: 1; font-size: .85rem; color: var(--ws-text-dim); letter-spacing: .02em; }
+    .it-item-avg-half {
+      position: relative; z-index: 1; flex: 1 1 0; display: flex; align-items: center;
+      font-size: .85rem; color: var(--ws-text-dim); letter-spacing: .02em;
+    }
+    .it-item-avg-half.l { justify-content: flex-end;   text-align: right; padding-right: .7em; }
+    .it-item-avg-half.r { justify-content: flex-start; text-align: left;  padding-left: .7em; }
+    .it-item-avg-sep {
+      position: relative; z-index: 1; flex: 0 0 auto; width: 1px; align-self: stretch;
+      background: linear-gradient(180deg, transparent, rgba(226,192,96,.6), transparent);
+    }
     .it-item-avg-num {
       font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: .95rem;
       color: var(--ws-gold-bright); text-shadow: 0 0 10px rgba(226,192,96,.4);
@@ -566,8 +587,9 @@
       100% { background-position: -140% 0; }
     }
     @media (prefers-reduced-motion: reduce) { .it-item-avg-badge::before { animation: none; } }
-    .it-auc-ctrl-label { font-size: .72rem; color: var(--ws-text-dim); margin-right: .15rem; }
+    .it-auc-ctrl-label { display: inline-flex; align-items: center; line-height: 1; font-size: .72rem; color: var(--ws-text-dim); margin-right: .15rem; }
     .it-auc-onlpri {
+      display: inline-flex; align-items: center; line-height: 1;
       font-size: .75rem; padding: .28rem .7rem; border-radius: 6px; cursor: pointer;
       border: 1px solid var(--ws-sep); color: var(--ws-text-dim); background: none;
       transition: color .15s, border-color .15s, background .15s;
@@ -1597,7 +1619,20 @@
     var c = (_itemAvgCache || {})[slug];
     if (!c || c.avg == null) { el.style.display = 'none'; return; }
     el.style.display = '';
-    el.innerHTML = '<span class="it-item-avg-text">过去八小时的在售均价：<span class="it-item-avg-num">' + c.avg + ' 白金</span></span>';
+    /* 可分级物品（mod/arcane 等）avg_zero/avg_max 都存在时，混合等级的整体均价没有
+       参考意义，分两栏分别展示满级/零级；非可分级物品照旧显示单一均价。 */
+    if (c.avg_zero && c.avg_zero.avg != null || c.avg_max && c.avg_max.avg != null) {
+      var zeroTxt = (c.avg_zero && c.avg_zero.avg != null) ? (c.avg_zero.avg + ' 白金') : '暂无数据';
+      var maxTxt  = (c.avg_max  && c.avg_max.avg  != null) ? (c.avg_max.avg  + ' 白金') : '暂无数据';
+      el.className = 'it-item-avg-badge split';
+      el.innerHTML =
+          '<span class="it-item-avg-half l">零级均价 <span class="it-item-avg-num">' + zeroTxt + '</span></span>'
+        + '<span class="it-item-avg-sep"></span>'
+        + '<span class="it-item-avg-half r">满级均价 <span class="it-item-avg-num">' + maxTxt + '</span></span>';
+    } else {
+      el.className = 'it-item-avg-badge';
+      el.innerHTML = '<span class="it-item-avg-text">过去八小时的在售均价：<span class="it-item-avg-num">' + c.avg + ' 白金</span></span>';
+    }
   }
 
   function loadOrders(rec) {
@@ -1935,8 +1970,10 @@
           '<span class="it-auc-search-status" id="it-auc-hub-status"></span>' +
         '</div>' +
         '<div class="it-auc-toolbar" id="it-auc-hub-toolbar" style="display:none;">' +
-          '<div class="it-auc-sortbar" id="it-auc-sortbar"></div>' +
-          '<span class="it-auc-count" id="it-auc-count"></span>' +
+          '<div class="it-auc-toolbar-left">' +
+            '<div class="it-auc-sortbar" id="it-auc-sortbar"></div>' +
+            '<span class="it-auc-count" id="it-auc-count"></span>' +
+          '</div>' +
           '<span class="it-riven-avg-badge" id="it-auc-riven-avg" style="display:none"></span>' +
         '</div>' +
         '<div class="it-auc-list" id="it-auc-list"></div>' +
