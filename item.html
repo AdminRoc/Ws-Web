@@ -1849,8 +1849,10 @@
     var count = sortedPrices.length;
     if (!count) return { avg: null, count: 0, used: 0, special: true };
     var lo = 0, hi = 0;
+    // 样本数≥20：掐头去尾各裁3/5；10~19：各裁2；5~9：各裁1；<5：不裁剪，全部平均
     if (count >= 20) { lo = 3; hi = 5; }
-    else if (count >= 5) { lo = 2; hi = 2; }
+    else if (count >= 10) { lo = 2; hi = 2; }
+    else if (count >= 5) { lo = 1; hi = 1; }
     var trimmed = sortedPrices.slice(lo, hi ? count - hi : count);
     var used = trimmed.length;
     var avg = used ? Math.round(trimmed.reduce(function (s, p) { return s + p; }, 0) / used) : null;
