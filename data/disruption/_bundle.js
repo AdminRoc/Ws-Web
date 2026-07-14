@@ -730,7 +730,7 @@ var disruptionKappaSoloRecords = [
     clearTime:  "59:14.000",
     playerId:   "Endryx_Ow",
     uploadTime: "2026-04-23",
-    videoUrls:     ["https://youtu.be/21h4oSgmDtE?si=x5RjJxUlG4Ox-ZUp"]
+    videoUrls:     ["https://wfspeed.run/unavailable.html"]
   },
   {
     clearTime:  "59:15.000",
@@ -818,13 +818,13 @@ var disruptionKappaSoloNotice_en = "";
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusDuoMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "45:38.000",
+    playerId:   "NamelessDeity / Yamarashi",
+    playerId2:   "利用Vauban的增伤Bug",
+    uploadTime: "2026-04-20",
+    videoUrls:     ["https://www.youtube.com/watch?v=NYAiXoPQgHA"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -851,12 +851,7 @@ var disruptionOlympusDuoMacroNotice_en = "We have noticed an issue. Some speedru
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusDuoRecords = [
-  {
-    clearTime:  "45:38.000",
-    playerId:   "NamelessDeity / Yamarashi",
-    uploadTime: "2026-04-20",
-    videoUrls:     ["https://www.youtube.com/watch?v=NYAiXoPQgHA"]
-  },
+
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -948,13 +943,13 @@ var disruptionOlympusMultiNotice_en = "";
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusSoloMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "59:13.000",
+    playerId:   "NamelessDeity",
+    playerId2:   "利用Cyte-09的增伤Bug",
+    uploadTime: "2026-07-05",
+    videoUrls:     ["https://www.youtube.com/watch?v=2Sk6mRWy7U4"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -986,12 +981,6 @@ var disruptionOlympusSoloRecords = [
     playerId:   "FrostMainer",
     uploadTime: "2026-07-04",
     videoUrls:     ["https://www.youtube.com/watch?v=Wq3Nv10YSME"]
-  },
-  {
-    clearTime:  "59:13.000",
-    playerId:   "NamelessDeity",
-    uploadTime: "2026-07-05",
-    videoUrls:     ["https://www.youtube.com/watch?v=2Sk6mRWy7U4"]
   },
 ];
 
@@ -1229,13 +1218,13 @@ var disruptionTamuSoloNotice_en = "";
  * ════════════════════════════════════════════════════════════
  */
 var disruptionUrDuoMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "38:42.000",
+    playerId:   "NamelessDeity / Yamarashi",
+    playerId2:   "利用Vauban的增伤Bug",
+    uploadTime: "2026-04-12",
+    videoUrls:     ["https://www.youtube.com/watch?v=0YMKGrFRE7I"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -1262,12 +1251,6 @@ var disruptionUrDuoMacroNotice_en = "We have noticed an issue. Some speedrun bui
  * ════════════════════════════════════════════════════════════
  */
 var disruptionUrDuoRecords = [
-  {
-    clearTime:  "38:42.000",
-    playerId:   "NamelessDeity / Yamarashi",
-    uploadTime: "2026-04-12",
-    videoUrls:     ["https://www.youtube.com/watch?v=0YMKGrFRE7I"]
-  },
   {
     clearTime:  "49:20.000",
     playerId:   "Clarn / Simaris",
@@ -1408,14 +1391,6 @@ var disruptionUrSoloMacroNotice_en = "We have noticed an issue. Some speedrun bu
  * ════════════════════════════════════════════════════════════
  */
 var disruptionUrSoloRecords = [
-  // ─── 在此处添加单人条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
-
   {
     clearTime:  "57:01.000",
     playerId:   "NamelessDeity",
