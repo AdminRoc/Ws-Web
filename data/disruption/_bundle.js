@@ -34,8 +34,8 @@ var disruptionApolloDuoMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionApolloDuoMacroNotice_cn = "";
-var disruptionApolloDuoMacroNotice_en = "";
+var disruptionApolloDuoMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionApolloDuoMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-apollo-duo.js ===== */
@@ -106,8 +106,8 @@ var disruptionApolloMultiMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionApolloMultiMacroNotice_cn = "";
-var disruptionApolloMultiMacroNotice_en = "";
+var disruptionApolloMultiMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionApolloMultiMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-apollo-multi.js ===== */
@@ -172,8 +172,8 @@ var disruptionApolloSoloMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionApolloSoloMacroNotice_cn = "";
-var disruptionApolloSoloMacroNotice_en = "";
+var disruptionApolloSoloMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionApolloSoloMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-apollo-solo.js ===== */
@@ -244,8 +244,8 @@ var disruptionArmatusDuoMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionArmatusDuoMacroNotice_cn = "";
-var disruptionArmatusDuoMacroNotice_en = "";
+var disruptionArmatusDuoMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionArmatusDuoMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-armatus-duo.js ===== */
@@ -310,8 +310,8 @@ var disruptionArmatusMultiMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionArmatusMultiMacroNotice_cn = "";
-var disruptionArmatusMultiMacroNotice_en = "";
+var disruptionArmatusMultiMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionArmatusMultiMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-armatus-multi.js ===== */
@@ -376,8 +376,8 @@ var disruptionArmatusSoloMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionArmatusSoloMacroNotice_cn = "";
-var disruptionArmatusSoloMacroNotice_en = "";
+var disruptionArmatusSoloMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionArmatusSoloMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-armatus-solo.js ===== */
@@ -469,8 +469,8 @@ var disruptionKappaDuoMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionKappaDuoMacroNotice_cn = "";
-var disruptionKappaDuoMacroNotice_en = "";
+var disruptionKappaDuoMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionKappaDuoMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-kappa-duo.js ===== */
@@ -580,8 +580,8 @@ var disruptionKappaMultiMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionKappaMultiMacroNotice_cn = "";
-var disruptionKappaMultiMacroNotice_en = "";
+var disruptionKappaMultiMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionKappaMultiMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-kappa-multi.js ===== */
@@ -687,8 +687,8 @@ var disruptionKappaSoloMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionKappaSoloMacroNotice_cn = "";
-var disruptionKappaSoloMacroNotice_en = "";
+var disruptionKappaSoloMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionKappaSoloMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-kappa-solo.js ===== */
@@ -830,8 +830,8 @@ var disruptionOlympusDuoMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionOlympusDuoMacroNotice_cn = "";
-var disruptionOlympusDuoMacroNotice_en = "";
+var disruptionOlympusDuoMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionOlympusDuoMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-olympus-duo.js ===== */
@@ -895,8 +895,8 @@ var disruptionOlympusMultiMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionOlympusMultiMacroNotice_cn = "";
-var disruptionOlympusMultiMacroNotice_en = "";
+var disruptionOlympusMultiMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionOlympusMultiMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-olympus-multi.js ===== */
@@ -960,8 +960,8 @@ var disruptionOlympusSoloMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionOlympusSoloMacroNotice_cn = "";
-var disruptionOlympusSoloMacroNotice_en = "";
+var disruptionOlympusSoloMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionOlympusSoloMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-olympus-solo.js ===== */
@@ -1031,8 +1031,8 @@ var disruptionTamuDuoMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionTamuDuoMacroNotice_cn = "";
-var disruptionTamuDuoMacroNotice_en = "";
+var disruptionTamuDuoMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionTamuDuoMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-tamu-duo.js ===== */
@@ -1103,8 +1103,8 @@ var disruptionTamuMultiMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionTamuMultiMacroNotice_cn = "";
-var disruptionTamuMultiMacroNotice_en = "";
+var disruptionTamuMultiMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionTamuMultiMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-tamu-multi.js ===== */
@@ -1169,8 +1169,8 @@ var disruptionTamuSoloMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionTamuSoloMacroNotice_cn = "";
-var disruptionTamuSoloMacroNotice_en = "";
+var disruptionTamuSoloMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionTamuSoloMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-tamu-solo.js ===== */
@@ -1241,8 +1241,8 @@ var disruptionUrDuoMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionUrDuoMacroNotice_cn = "";
-var disruptionUrDuoMacroNotice_en = "";
+var disruptionUrDuoMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionUrDuoMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-ur-duo.js ===== */
@@ -1321,8 +1321,8 @@ var disruptionUrMultiMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionUrMultiMacroNotice_cn = "";
-var disruptionUrMultiMacroNotice_en = "";
+var disruptionUrMultiMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionUrMultiMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-ur-multi.js ===== */
@@ -1387,8 +1387,8 @@ var disruptionUrSoloMacroRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var disruptionUrSoloMacroNotice_cn = "";
-var disruptionUrSoloMacroNotice_en = "";
+var disruptionUrSoloMacroNotice_cn = "本站注意到，部分竞速的配置是以〔利用BUG〕为核心而建立的，不再利用BUG，或BUG被修复后，就完全不具备可行性了。所以，这种成绩与正常的成绩应当有所区分，否则对其他玩家将是极为不公平的。\n \n 在此基础上，本站同样认为，每一份辛苦取得的成绩，都值得被保留与展示，所以本站将这些〔利用了BUG 或 有其他超常收益行为〕的竞速成绩，单独进行了展示。\n \n 此举是为了所有人的竞技公平性，绝无任何贬低之意。本站深知，每一份成绩都意义重大，代表着大家长期以来的坚持与付出。";
+var disruptionUrSoloMacroNotice_en = "We have noticed an issue. Some speedrun builds rely completely on game bugs. These builds become useless if developers fix the bugs. They also fail if players stop using the bugs. Therefore, we must separate these runs from normal runs. This situation is highly unfair to other players otherwise.\n \n We also value your hard work. Every hard-earned record deserves preservation and display. Therefore, we have created a separate category. We will put runs that use bugs or unintended mechanics in this new section.\n \n We make this change to ensure fair competition for everyone. We do not mean to disrespect anyone. We know that every record is important. Every record represents your long-term dedication and effort.";
 ;
 
 /* ===== data/disruption/disruption-ur-solo.js ===== */
