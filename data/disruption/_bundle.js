@@ -435,13 +435,34 @@ var disruptionArmatusSoloNotice_en = "";
  * ════════════════════════════════════════════════════════════
  */
 var disruptionKappaDuoMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "35:48.000",
+    playerId:   "NamelessDeity / Biggy Smallz",
+    playerId2:   "利用Cyte-09的增伤Bug",
+    uploadTime: "2026-07-14",
+    videoUrls:     ["https://www.youtube.com/watch?v=sswOjk5cHTk"]
+  },
+  {
+    clearTime:  "37:21.000",
+    playerId:   "Endryx_Ow / Gamer123169",
+    playerId2:   "利用Vauban的增伤Bug",
+    uploadTime: "2026-07-04",
+    videoUrls:     ["https://www.youtube.com/watch?v=Tg13HYpuNBg","https://www.youtube.com/watch?v=cWl9P4dsuD4"]
+  },
+  {
+    clearTime:  "36:42.000",
+    playerId:   "NamelessDeity / Gamer123169",
+    playerId2:   "利用Cyte-09的增伤Bug",
+    uploadTime: "2026-07-08",
+    videoUrls:     ["https://www.youtube.com/watch?v=c0KEpwW_Ngc"]
+  },
+  {
+    clearTime:  "39:03.000 [违规]",
+    playerId:   "Endryx_Ow / Gamer123169",
+    playerId2:  "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab功能进行违规操作",
+    uploadTime: "2026-01-23",
+    videoUrls:     ["https://youtu.be/5S4gQwVw5aE?si=nCYw-Ta6n-gevNus"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -473,13 +494,7 @@ var disruptionKappaDuoRecords = [
     uploadTime: "2026-03-22",
     videoUrls:     ["https://youtu.be/MwQoMn1TJwo?si=YmumiCHTFKTpCS6V"]
   },
-  {
-    clearTime:  "39:03.000 [违规]",
-    playerId:   "Endryx_Ow / Gamer123169",
-    playerId2:   "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab作弊",
-    uploadTime: "2026-01-23",
-    videoUrls:     ["https://youtu.be/5S4gQwVw5aE?si=nCYw-Ta6n-gevNus"]
-  },
+
   {
     clearTime:  "39:46.000",
     playerId:   "Cantarella / Gaiseric",
@@ -510,24 +525,8 @@ var disruptionKappaDuoRecords = [
     uploadTime: "2026-07-08",
     videoUrls:     ["https://www.bilibili.com/video/BV1mUMG6qE2P"]
   },
-  {
-    clearTime:  "36:42.000",
-    playerId:   "NamelessDeity / Gamer123169",
-    uploadTime: "2026-07-08",
-    videoUrls:     ["https://www.youtube.com/watch?v=c0KEpwW_Ngc"]
-  },
-  {
-    clearTime:  "35:48.000",
-    playerId:   "NamelessDeity / Biggy Smallz",
-    uploadTime: "2026-07-14",
-    videoUrls:     ["https://www.youtube.com/watch?v=sswOjk5cHTk"]
-  },
-  {
-    clearTime:  "37:21.000",
-    playerId:   "Endryx_Ow / Gamer123169",
-    uploadTime: "2026-07-04",
-    videoUrls:     ["https://www.youtube.com/watch?v=Tg13HYpuNBg","https://www.youtube.com/watch?v=cWl9P4dsuD4"]
-  },
+
+
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -554,13 +553,27 @@ var disruptionKappaDuoNotice_en = "";
  * ════════════════════════════════════════════════════════════
  */
 var disruptionKappaMultiMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "38:06.000",
+    playerId:   "sealmp4 / Rouxka / Endryx_Ow / Gamer123169",
+    playerId2:  "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab功能进行违规操作",
+    uploadTime: "2025-03-16",
+    videoUrls:     ["https://youtu.be/oRxoJHWJ6v8?si=oUDggf0L8E44ISVz"]
+  },
+  {
+    clearTime:  "35:38.000 [违规]",
+    playerId:   "Endryx_Ow / sealmp4 / Gamer123169 / joanardo",
+    playerId2:  "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab功能进行违规操作",
+    uploadTime: "2026-01-17",
+    videoUrls:     ["https://youtu.be/21h4oSgmDtE?si=y-FrDCMSNiDWyPU7"]
+  },
+  {
+    clearTime:  "35:06.000",
+    playerId:   "NamelessDeity / yfoxyfan / -Yamarashi / Empress",
+    playerId2:   "利用Vauban的增伤Bug",
+    uploadTime: "2026-05-10",
+    videoUrls:     ["https://youtu.be/t3Mlmqae_Ow?si=_3-ChD4C-SxjwGv_"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -581,19 +594,6 @@ var disruptionKappaMultiMacroNotice_en = "";
  */
 var disruptionKappaMultiRecords = [
   {
-    clearTime:  "35:06.000",
-    playerId:   "NamelessDeity / yfoxyfan / -Yamarashi / Empress",
-    uploadTime: "2026-05-10",
-    videoUrls:     ["https://youtu.be/t3Mlmqae_Ow?si=_3-ChD4C-SxjwGv_"]
-  },
-  {
-    clearTime:  "35:38.000 [违规]",
-    playerId:   "Endryx_Ow / sealmp4 / Gamer123169 / joanardo",
-    playerId2:   "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab作弊",
-    uploadTime: "2026-01-17",
-    videoUrls:     ["https://youtu.be/21h4oSgmDtE?si=y-FrDCMSNiDWyPU7"]
-  },
-  {
     clearTime:  "37:11.000",
     playerId:   "Cantarella / ohmo / AnqiTuT / Gaiseric",
     uploadTime: "2026-02-10",
@@ -604,13 +604,6 @@ var disruptionKappaMultiRecords = [
     playerId:   "LastShao / Kuva_Prime / Takagi1218 / qlll123",
     uploadTime: "2025-07-21",
     videoUrls:     ["https://youtu.be/6Feq9lDbIcw?si=wSeMMY2srMK7i8Dq"]
-  },
-  {
-    clearTime:  "38:06.000 [违规]",
-    playerId:   "sealmp4 / Rouxka / Endryx_Ow / Gamer123169",
-    playerId2:   "无主机视角，且客机的敌人频繁瞬移，视为利用Tab作弊",
-    uploadTime: "2025-03-16",
-    videoUrls:     ["https://youtu.be/oRxoJHWJ6v8?si=oUDggf0L8E44ISVz"]
   },
   {
     clearTime:  "38:27.000",
@@ -681,13 +674,13 @@ var disruptionKappaMultiNotice_en = "";
  * ════════════════════════════════════════════════════════════
  */
 var disruptionKappaSoloMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "52:16.000",
+    playerId:   "NamelessDeity",
+    playerId2:   "利用Cyte-09的增伤Bug",
+    uploadTime: "2026-07-12",
+    videoUrls:     ["https://www.youtube.com/watch?v=HhBmXLhpf9c"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -715,10 +708,10 @@ var disruptionKappaSoloMacroNotice_en = "";
  */
 var disruptionKappaSoloRecords = [
   {
-    clearTime:  "52:16.000",
+    clearTime:  "53:43.000",
     playerId:   "NamelessDeity",
-    uploadTime: "2026-07-12",
-    videoUrls:     ["https://www.youtube.com/watch?v=HhBmXLhpf9c"]
+    uploadTime: "2025-11-24",
+    videoUrls:     ["https://youtu.be/1Bc6lQefhEY?si=iTlCdUIuOGaVT4US"]
   },
   {
     clearTime:  "55:30.000",
