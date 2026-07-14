@@ -7,12 +7,6 @@
  */
 var disruptionKappaDuoRecords = [
   {
-    clearTime:  "38:28.000",
-    playerId:   "NamelessDeity / Yamarashi",
-    uploadTime: "2026-04-19",
-    videoUrls:     ["https://youtu.be/sut_zO3QhKI?si=D2XffqXWx6QZ6SPb"]
-  },
-  {
     clearTime:  "38:39.000",
     playerId:   "LastShao / Kuva_Prime",
     uploadTime: "2026-03-22",
