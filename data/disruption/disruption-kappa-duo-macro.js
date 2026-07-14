@@ -35,7 +35,7 @@ var disruptionKappaDuoMacroRecords = [
     videoUrls:     ["https://www.youtube.com/watch?v=c0KEpwW_Ngc"]
   },
   {
-    clearTime:  "39:03.000 [违规]",
+    clearTime:  "39:03.000",
     playerId:   "Endryx_Ow / Gamer123169",
     playerId2:  "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab功能进行违规操作",
     uploadTime: "2026-01-23",
