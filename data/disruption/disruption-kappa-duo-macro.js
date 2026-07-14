@@ -16,7 +16,7 @@ var disruptionKappaDuoMacroRecords = [
   {
     clearTime:  "35:48.000",
     playerId:   "NamelessDeity / Biggy Smallz",
-    playerId2:   "利用Cyte-09的增伤Bug",
+    playerId2:   "无主机视角，且利用Vauban的增伤Bug",
     uploadTime: "2026-07-14",
     videoUrls:     ["https://www.youtube.com/watch?v=sswOjk5cHTk"]
   },
@@ -30,7 +30,7 @@ var disruptionKappaDuoMacroRecords = [
   {
     clearTime:  "36:42.000",
     playerId:   "NamelessDeity / Gamer123169",
-    playerId2:   "利用Cyte-09的增伤Bug",
+    playerId2:   "利用Cyte-09/Vauban的增伤Bug",
     uploadTime: "2026-07-08",
     videoUrls:     ["https://www.youtube.com/watch?v=c0KEpwW_Ngc"]
   },

@@ -30,7 +30,7 @@ var disruptionKappaMultiMacroRecords = [
   {
     clearTime:  "35:06.000",
     playerId:   "NamelessDeity / yfoxyfan / -Yamarashi / Empress",
-    playerId2:   "利用Vauban的增伤Bug",
+    playerId2:   "利用Cyte-09/Vauban的增伤Bug",
     uploadTime: "2026-05-10",
     videoUrls:     ["https://youtu.be/t3Mlmqae_Ow?si=_3-ChD4C-SxjwGv_"]
   },
