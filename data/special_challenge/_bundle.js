@@ -170,9 +170,15 @@ var netracellRecords = [
   },
   {
     playerId:   "Bbouddha",
-    clearTime:  "2:03.000",
-    uploadTime: "2026-07-09",
-    videoUrls:  ["https://www.youtube.com/watch?v=qh8Rgr3YhDE"],
+    clearTime:  "1:52.000",
+    uploadTime: "2026-07-13",
+    videoUrls:  ["https://www.youtube.com/watch?v=jf3mozopgHk"],
+  },
+  {
+    playerId:   "oTonJleHue",
+    clearTime:  "1:47.000",
+    uploadTime: "2026-07-15",
+    videoUrls:  ["https://www.youtube.com/watch?v=3UbRamMI6sg"],
   },
 ];
 
