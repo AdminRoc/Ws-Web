@@ -18,13 +18,7 @@ var disruptionKappaDuoRecords = [
     uploadTime: "2026-03-22",
     videoUrls:     ["https://youtu.be/MwQoMn1TJwo?si=YmumiCHTFKTpCS6V"]
   },
-  {
-    clearTime:  "39:03.000 [违规]",
-    playerId:   "Endryx_Ow / Gamer123169",
-    playerId2:   "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab作弊",
-    uploadTime: "2026-01-23",
-    videoUrls:     ["https://youtu.be/5S4gQwVw5aE?si=nCYw-Ta6n-gevNus"]
-  },
+
   {
     clearTime:  "39:46.000",
     playerId:   "Cantarella / Gaiseric",
@@ -55,24 +49,8 @@ var disruptionKappaDuoRecords = [
     uploadTime: "2026-07-08",
     videoUrls:     ["https://www.bilibili.com/video/BV1mUMG6qE2P"]
   },
-  {
-    clearTime:  "36:42.000",
-    playerId:   "NamelessDeity / Gamer123169",
-    uploadTime: "2026-07-08",
-    videoUrls:     ["https://www.youtube.com/watch?v=c0KEpwW_Ngc"]
-  },
-  {
-    clearTime:  "35:48.000",
-    playerId:   "NamelessDeity / Biggy Smallz",
-    uploadTime: "2026-07-14",
-    videoUrls:     ["https://www.youtube.com/watch?v=sswOjk5cHTk"]
-  },
-  {
-    clearTime:  "37:21.000",
-    playerId:   "Endryx_Ow / Gamer123169",
-    uploadTime: "2026-07-04",
-    videoUrls:     ["https://www.youtube.com/watch?v=Tg13HYpuNBg","https://www.youtube.com/watch?v=cWl9P4dsuD4"]
-  },
+
+
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

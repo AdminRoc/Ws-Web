@@ -13,13 +13,27 @@
  * ════════════════════════════════════════════════════════════
  */
 var disruptionKappaMultiMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "38:06.000",
+    playerId:   "sealmp4 / Rouxka / Endryx_Ow / Gamer123169",
+    playerId2:  "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab功能进行违规操作",
+    uploadTime: "2025-03-16",
+    videoUrls:     ["https://youtu.be/oRxoJHWJ6v8?si=oUDggf0L8E44ISVz"]
+  },
+  {
+    clearTime:  "35:38.000 [违规]",
+    playerId:   "Endryx_Ow / sealmp4 / Gamer123169 / joanardo",
+    playerId2:  "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab功能进行违规操作",
+    uploadTime: "2026-01-17",
+    videoUrls:     ["https://youtu.be/21h4oSgmDtE?si=y-FrDCMSNiDWyPU7"]
+  },
+  {
+    clearTime:  "35:06.000",
+    playerId:   "NamelessDeity / yfoxyfan / -Yamarashi / Empress",
+    playerId2:   "利用Vauban的增伤Bug",
+    uploadTime: "2026-05-10",
+    videoUrls:     ["https://youtu.be/t3Mlmqae_Ow?si=_3-ChD4C-SxjwGv_"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

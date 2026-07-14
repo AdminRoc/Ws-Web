@@ -13,13 +13,34 @@
  * ════════════════════════════════════════════════════════════
  */
 var disruptionKappaDuoMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "35:48.000",
+    playerId:   "NamelessDeity / Biggy Smallz",
+    playerId2:   "利用Cyte-09的增伤Bug",
+    uploadTime: "2026-07-14",
+    videoUrls:     ["https://www.youtube.com/watch?v=sswOjk5cHTk"]
+  },
+  {
+    clearTime:  "37:21.000",
+    playerId:   "Endryx_Ow / Gamer123169",
+    playerId2:   "利用Vauban的增伤Bug",
+    uploadTime: "2026-07-04",
+    videoUrls:     ["https://www.youtube.com/watch?v=Tg13HYpuNBg","https://www.youtube.com/watch?v=cWl9P4dsuD4"]
+  },
+  {
+    clearTime:  "36:42.000",
+    playerId:   "NamelessDeity / Gamer123169",
+    playerId2:   "利用Cyte-09的增伤Bug",
+    uploadTime: "2026-07-08",
+    videoUrls:     ["https://www.youtube.com/watch?v=c0KEpwW_Ngc"]
+  },
+  {
+    clearTime:  "39:03.000 [违规]",
+    playerId:   "Endryx_Ow / Gamer123169",
+    playerId2:  "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab功能进行违规操作",
+    uploadTime: "2026-01-23",
+    videoUrls:     ["https://youtu.be/5S4gQwVw5aE?si=nCYw-Ta6n-gevNus"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

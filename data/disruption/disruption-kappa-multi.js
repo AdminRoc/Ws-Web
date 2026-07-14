@@ -7,19 +7,6 @@
  */
 var disruptionKappaMultiRecords = [
   {
-    clearTime:  "35:06.000",
-    playerId:   "NamelessDeity / yfoxyfan / -Yamarashi / Empress",
-    uploadTime: "2026-05-10",
-    videoUrls:     ["https://youtu.be/t3Mlmqae_Ow?si=_3-ChD4C-SxjwGv_"]
-  },
-  {
-    clearTime:  "35:38.000 [违规]",
-    playerId:   "Endryx_Ow / sealmp4 / Gamer123169 / joanardo",
-    playerId2:   "无主机视角，且客机的敌人频繁瞬移，故视为利用Tab作弊",
-    uploadTime: "2026-01-17",
-    videoUrls:     ["https://youtu.be/21h4oSgmDtE?si=y-FrDCMSNiDWyPU7"]
-  },
-  {
     clearTime:  "37:11.000",
     playerId:   "Cantarella / ohmo / AnqiTuT / Gaiseric",
     uploadTime: "2026-02-10",
@@ -30,13 +17,6 @@ var disruptionKappaMultiRecords = [
     playerId:   "LastShao / Kuva_Prime / Takagi1218 / qlll123",
     uploadTime: "2025-07-21",
     videoUrls:     ["https://youtu.be/6Feq9lDbIcw?si=wSeMMY2srMK7i8Dq"]
-  },
-  {
-    clearTime:  "38:06.000 [违规]",
-    playerId:   "sealmp4 / Rouxka / Endryx_Ow / Gamer123169",
-    playerId2:   "无主机视角，且客机的敌人频繁瞬移，视为利用Tab作弊",
-    uploadTime: "2025-03-16",
-    videoUrls:     ["https://youtu.be/oRxoJHWJ6v8?si=oUDggf0L8E44ISVz"]
   },
   {
     clearTime:  "38:27.000",
