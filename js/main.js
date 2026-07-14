@@ -950,8 +950,8 @@ function _updatePageNotice(dataFn) {
     el.style.display = 'grid';   /* 与 global.css 的 .lb-tip grid 布局配套 */
     var cnEl = document.getElementById('notice-cn');
     var enEl = document.getElementById('notice-en');
-    if (cnEl) cnEl.textContent = cn;
-    if (enEl) enEl.textContent = en || '';
+    if (cnEl) cnEl.innerHTML = cn.replace(/\n/g, '<br>');
+    if (enEl) enEl.innerHTML = (en || '').replace(/\n/g, '<br>');
     autoFitNoticeCn(cnEl, enEl);
   } else {
     el.style.display = 'none';
