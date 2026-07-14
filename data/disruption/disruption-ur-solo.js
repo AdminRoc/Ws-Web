@@ -13,14 +13,6 @@
  * ════════════════════════════════════════════════════════════
  */
 var disruptionUrSoloRecords = [
-  // ─── 在此处添加单人条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
-
   {
     clearTime:  "57:01.000",
     playerId:   "NamelessDeity",

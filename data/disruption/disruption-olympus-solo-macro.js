@@ -13,13 +13,13 @@
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusSoloMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "59:13.000",
+    playerId:   "NamelessDeity",
+    playerId2:   "利用Cyte-09的增伤Bug",
+    uploadTime: "2026-07-05",
+    videoUrls:     ["https://www.youtube.com/watch?v=2Sk6mRWy7U4"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

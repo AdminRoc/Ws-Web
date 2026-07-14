@@ -13,13 +13,13 @@
  * ════════════════════════════════════════════════════════════
  */
 var disruptionOlympusDuoMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "45:38.000",
+    playerId:   "NamelessDeity / Yamarashi",
+    playerId2:   "利用Vauban的增伤Bug",
+    uploadTime: "2026-04-20",
+    videoUrls:     ["https://www.youtube.com/watch?v=NYAiXoPQgHA"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

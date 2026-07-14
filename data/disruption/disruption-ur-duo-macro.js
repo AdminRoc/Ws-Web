@@ -13,13 +13,13 @@
  * ════════════════════════════════════════════════════════════
  */
 var disruptionUrDuoMacroRecords = [
-  // ─── 在此处添加条目 ───
-  // {
-  //   clearTime:  "MM:SS.mmm",
-  //   playerId:   "玩家ID",
-  //   uploadTime: "YYYY-MM-DD",
-  //   videoUrls:     ["https://..."]
-  // },
+  {
+    clearTime:  "38:42.000",
+    playerId:   "NamelessDeity / Yamarashi",
+    playerId2:   "利用Vauban的增伤Bug",
+    uploadTime: "2026-04-12",
+    videoUrls:     ["https://www.youtube.com/watch?v=0YMKGrFRE7I"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

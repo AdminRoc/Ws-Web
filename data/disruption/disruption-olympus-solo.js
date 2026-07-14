@@ -19,12 +19,6 @@ var disruptionOlympusSoloRecords = [
     uploadTime: "2026-07-04",
     videoUrls:     ["https://www.youtube.com/watch?v=Wq3Nv10YSME"]
   },
-  {
-    clearTime:  "59:13.000",
-    playerId:   "NamelessDeity",
-    uploadTime: "2026-07-05",
-    videoUrls:     ["https://www.youtube.com/watch?v=2Sk6mRWy7U4"]
-  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

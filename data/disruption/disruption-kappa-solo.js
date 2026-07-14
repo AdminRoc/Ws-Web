@@ -35,7 +35,7 @@ var disruptionKappaSoloRecords = [
     clearTime:  "59:14.000",
     playerId:   "Endryx_Ow",
     uploadTime: "2026-04-23",
-    videoUrls:     ["https://youtu.be/21h4oSgmDtE?si=x5RjJxUlG4Ox-ZUp"]
+    videoUrls:     ["https://wfspeed.run/unavailable.html"]
   },
   {
     clearTime:  "59:15.000",
