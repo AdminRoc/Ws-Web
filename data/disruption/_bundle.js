@@ -463,6 +463,13 @@ var disruptionKappaDuoMacroRecords = [
     uploadTime: "2026-01-23",
     videoUrls:     ["https://youtu.be/5S4gQwVw5aE?si=nCYw-Ta6n-gevNus"]
   },
+  {
+    clearTime:  "38:28.000",
+    playerId:   "NamelessDeity / Yamarashi",
+    playerId2:   "利用Vauban的增伤Bug",
+    uploadTime: "2026-04-19",
+    videoUrls:     ["https://youtu.be/sut_zO3QhKI?si=D2XffqXWx6QZ6SPb"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
@@ -482,12 +489,6 @@ var disruptionKappaDuoMacroNotice_en = "We have noticed an issue. Some speedrun 
  * ════════════════════════════════════════════════════════════
  */
 var disruptionKappaDuoRecords = [
-  {
-    clearTime:  "38:28.000",
-    playerId:   "NamelessDeity / Yamarashi",
-    uploadTime: "2026-04-19",
-    videoUrls:     ["https://youtu.be/sut_zO3QhKI?si=D2XffqXWx6QZ6SPb"]
-  },
   {
     clearTime:  "38:39.000",
     playerId:   "LastShao / Kuva_Prime",
