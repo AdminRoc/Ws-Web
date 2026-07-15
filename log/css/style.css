@@ -810,8 +810,10 @@ body.profile-active #detail-wrap {
 
 /* Hero 区域 */
 .home-hero {
-  min-height: calc(100vh - var(--nav-h));
-  display: flex; align-items: stretch; justify-content: center;
+  height: calc(100vh - var(--nav-h));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative; overflow: hidden; text-align: center;
   padding: 0;
   background:
@@ -839,34 +841,37 @@ body.profile-active #detail-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-evenly;
   gap: 0;
-  padding: 28px;
+  padding: 2vh 28px 4vh;
   max-width: min(92vw, 760px);
   width: 100%;
+  min-height: 0;
+}
+.hero-content > * { flex-shrink: 0; }
+.hero-spacer {
+  display: none;
 }
 .hero-top-group {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
-.hero-spacer {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-}
+
 .hero-eyebrow {
   font-size: 12px; letter-spacing: 7px; color: var(--c-text2);
-  border: 1px solid rgba(95,208,232,0.22); border-radius: 20px; padding: 5px 22px;
-  background: rgba(95,208,232,0.04);
+  border: 1px solid rgba(95,208,232,0.35); border-radius: 20px; padding: 6px 24px;
+  background: rgba(95,208,232,0.06);
   animation: eyebrowPulse 4s ease-in-out infinite;
+  white-space: nowrap;
 }
 @keyframes eyebrowPulse {
   0%,100% { border-color: rgba(95,208,232,0.22); }
   50%      { border-color: rgba(95,208,232,0.48); box-shadow: 0 0 12px rgba(95,208,232,0.1); }
 }
 .hero-title {
-  font-size: min(9vw, 15vh);
+  font-size: min(12vw, 16vh);
   letter-spacing: 0.06em;
   line-height: 1.05;
   text-align: center;
@@ -887,8 +892,8 @@ body.profile-active #detail-wrap {
   100% { background-position: var(--rainbow-width) center; }
 }
 .hero-desc {
-  font-size: clamp(0.98rem, 1.6vw, 1.15rem); font-weight: 500;
-  letter-spacing: 1.5px; max-width: 480px; line-height: 1.75;
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem); font-weight: 500;
+  letter-spacing: 1.5px; max-width: 560px; line-height: 1.8;
   text-align: center;
   background: var(--rainbow);
   background-size: var(--rainbow-width) 100%;
@@ -973,7 +978,7 @@ body.profile-active #detail-wrap {
   transform: skewX(-15deg); pointer-events: none;
 }
 .hero-cta:hover { transform: translateY(-2px) scale(1.02); animation: none; box-shadow: 0 12px 48px rgba(65,255,142,0.32), 0 0 0 1px rgba(65,255,142,0.2); }
-.hero-cta:hover .cta-text { color: #fff; background: none; -webkit-background-clip: unset; background-clip: unset; animation: none; }
+.hero-cta:hover .cta-text { background: var(--rainbow); background-size: var(--rainbow-width) auto; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; animation: titleShift 8s linear infinite; }
 .hero-cta:hover::before { opacity: 1; }
 .hero-cta:hover::after { animation: ctaShimmer 0.65s ease forwards; }
 .hero-cta:active { transform: translateY(0) scale(0.98); }
@@ -992,10 +997,11 @@ body.profile-active #detail-wrap {
    ═══════════════════════════════════════════════════════════════════════════ */
 .hero-cta-hub {
   position: relative;
-  width: 640px; height: 280px;
-  min-width: 640px; min-height: 280px;
+  width: 760px; height: 220px;
+  min-width: 760px; min-height: 220px;
   display: flex; align-items: flex-start; justify-content: center;
   overflow: visible;
+  margin-top: 2rem;
 }
 
 /* 主按钮：与原始"开始分析"完全同材质 */
@@ -1004,30 +1010,35 @@ body.profile-active #detail-wrap {
   display: inline-flex; align-items: center; gap: 14px;
   padding: 18px 48px; border-radius: 3px;
   font-size: 18px; letter-spacing: 4px; font-family: var(--f-px);
-  color: #fff; cursor: pointer; border: 1px solid transparent;
-  background:
-    linear-gradient(rgba(7,10,20,0.92), rgba(7,10,20,0.92)) padding-box,
-    linear-gradient(90deg, rgba(65,255,142,0.55), rgba(69,200,255,0.55), rgba(168,107,255,0.55), rgba(65,255,142,0.55)) border-box;
-  transition:
-    transform 0.45s cubic-bezier(.22,.68,0,1.25),
-    box-shadow 0.35s ease;
-  animation: ctaPulse 3.5s ease-in-out infinite;
+  color: #fff; cursor: pointer;
+  background: linear-gradient(115deg,
+    rgba(255,60,110,.7) 0%, rgba(255,140,0,.62) 20%, rgba(255,215,0,.58) 35%,
+    rgba(0,255,220,.62) 55%, rgba(99,102,241,.68) 78%, rgba(217,70,239,.7) 100%);
+  border: 1px solid rgba(255,255,255,.28);
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  box-shadow:
+    0 0 10px rgba(255,100,150,.38),
+    0 0 22px rgba(99,102,241,.32),
+    0 0 38px rgba(0,255,220,.18);
+  animation: rbHueRotate 1.25s linear infinite;
+  transition: transform .4s cubic-bezier(.22,.68,0,1.2), box-shadow .4s ease;
 }
 .hero-cta-master .cta-text {
-  background: var(--rainbow); background-size: var(--rainbow-width) auto;
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: titleShift 10s linear infinite;
 }
-.hero-cta-master:hover { transform: translateY(-3px) scale(1.05); }
+.hero-cta-master:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow:
+    0 0 22px rgba(255,100,150,.8),
+    0 0 48px rgba(99,102,241,.7),
+    0 0 80px rgba(0,255,220,.45);
+  border-color: rgba(255,255,255,.7);
+}
 .hero-cta-hub.expanded .hero-cta-master {
-  transform: translateY(-28px) scale(1.02);
+  transform: translateY(-22px) scale(1.02);
   animation: ctaPulse 3.5s ease-in-out infinite;
 }
-.hero-cta-master:hover .cta-text,
-.hero-cta-hub.expanded .hero-cta-master .cta-text {
-  color: #fff; background: none; -webkit-background-clip: unset; background-clip: unset; animation: none;
-}
-
 /* 次级按钮：与主按钮同材质，直角矩形，自适应宽高 */
 .hero-cta-satellite {
   position: absolute; z-index: 25;
@@ -1055,12 +1066,19 @@ body.profile-active #detail-wrap {
   position: relative; z-index: 2;
   background: var(--rainbow); background-size: var(--rainbow-width) auto;
   -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-fill-color: transparent;
   animation: titleShift 10s linear infinite;
   pointer-events: none;
 }
 /* hover 时 label 变白，与主按钮 hover 一致 */
 .hero-cta-satellite:hover .sat-label {
-  color: #fff; background: none; -webkit-background-clip: unset; background-clip: unset; animation: none;
+  color: #fff;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: #fff;
+  animation: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
 
 /* 笑脸弧形最终位置（相对于 hub 顶部中央） */
@@ -1077,24 +1095,39 @@ body.profile-active #detail-wrap {
     0 0 32px rgba(168,107,255,0.22);
 }
 /* 弧形坐标 */
-.hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 260px), 40px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 130px), 100px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 130px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 130px), 100px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 260px), 40px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 260px), 45px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 130px), 105px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 140px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 130px), 105px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 260px), 45px, 0) scale(1); }
 
-.hero-cta-hub.expanded .sat-tl:hover  { transform: translate3d(calc(-50% - 268px), 32px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-tr:hover  { transform: translate3d(calc(-50% - 138px), 92px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-b:hover   { transform: translate3d(-50%, 138px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-bl2:hover { transform: translate3d(calc(-50% + 138px), 92px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-br2:hover { transform: translate3d(calc(-50% + 268px), 32px, 0) scale(1.06); }
+.hero-cta-hub.expanded .sat-tl:hover  { transform: translate3d(calc(-50% - 280px), 42px, 0) scale(1.06); }
+.hero-cta-hub.expanded .sat-tr:hover  { transform: translate3d(calc(-50% - 145px), 108px, 0) scale(1.06); }
+.hero-cta-hub.expanded .sat-b:hover   { transform: translate3d(-50%, 158px, 0) scale(1.06); }
+.hero-cta-hub.expanded .sat-bl2:hover { transform: translate3d(calc(-50% + 145px), 108px, 0) scale(1.06); }
+.hero-cta-hub.expanded .sat-br2:hover { transform: translate3d(calc(-50% + 280px), 42px, 0) scale(1.06); }
 .hero-cta-satellite:hover {
   z-index: 30;
   transition-delay: 0s;
   transition-duration: 0.22s;
+  background: linear-gradient(115deg,
+    rgba(255,60,110,.7) 0%, rgba(255,140,0,.62) 20%, rgba(255,215,0,.58) 35%,
+    rgba(0,255,220,.62) 55%, rgba(99,102,241,.68) 78%, rgba(217,70,239,.7) 100%);
+  border: 1px solid rgba(255,255,255,.28);
   box-shadow:
-    0 0 18px rgba(95,208,232,0.5),
-    0 0 42px rgba(168,107,255,0.32);
+    0 0 22px rgba(255,100,150,.8),
+    0 0 48px rgba(99,102,241,.7),
+    0 0 80px rgba(0,255,220,.45);
+  animation: rbHueRotate 1.25s linear infinite;
+}
+.hero-cta-hub.expanded .hero-cta-satellite:hover .sat-label {
+  color: #fff;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: #fff;
+  animation: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
 
 /* 点击反馈 */
@@ -1103,57 +1136,58 @@ body.profile-active #detail-wrap {
   opacity: 0.4 !important;
   transform: translate3d(var(--sat-tx,0), var(--sat-ty,0), 0) scale(0.9) !important;
 }
-.hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 260px); --sat-ty: 40px; }
-.hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 130px); --sat-ty: 100px; }
-.hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 130px; }
-.hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 130px); --sat-ty: 100px; }
-.hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 260px); --sat-ty: 40px; }
+.hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 260px); --sat-ty: 45px; }
+.hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 130px); --sat-ty: 105px; }
+.hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 140px; }
+.hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 130px); --sat-ty: 105px; }
+.hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 260px); --sat-ty: 45px; }
 
 
 /* 响应式 */
 @media (max-width: 580px), (max-height: 720px) {
-  .hero-cta-hub { width: 480px; height: 220px; min-width: 480px; min-height: 220px; }
-  .hero-cta-master, .hero-cta-satellite { font-size: 15px; letter-spacing: 3px; padding: 14px 22px; }
-  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 180px), 22px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 90px), 64px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 96px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 90px), 64px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 180px), 22px, 0) scale(1); }
-  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 180px); --sat-ty: 22px; }
-  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 90px); --sat-ty: 64px; }
-  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 96px; }
-  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 90px); --sat-ty: 64px; }
-  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 180px); --sat-ty: 22px; }
+  .hero-cta-hub { width: 520px; height: 190px; min-width: 520px; min-height: 190px; }
+  .hero-cta-master, .hero-cta-satellite { font-size: 14px; letter-spacing: 3px; padding: 13px 20px; }
+  .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-16px) scale(1.02); }
+  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 190px), 22px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 95px), 72px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 102px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 95px), 72px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 190px), 22px, 0) scale(1); }
+  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 190px); --sat-ty: 22px; }
+  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 95px); --sat-ty: 72px; }
+  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 102px; }
+  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 95px); --sat-ty: 72px; }
+  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 190px); --sat-ty: 22px; }
 }
 @media (max-width: 440px), (max-height: 600px) {
-  .hero-cta-hub { width: 420px; height: 200px; min-width: 420px; min-height: 200px; }
-  .hero-cta-master, .hero-cta-satellite { font-size: 13.5px; letter-spacing: 2px; padding: 12px 18px; }
-  .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-18px) scale(1.02); }
-  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 156px), 18px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 78px), 54px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 84px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 78px), 54px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 156px), 18px, 0) scale(1); }
-  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 156px); --sat-ty: 18px; }
-  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 78px); --sat-ty: 54px; }
-  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 84px; }
-  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 78px); --sat-ty: 54px; }
-  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 156px); --sat-ty: 18px; }
+  .hero-cta-hub { width: 440px; height: 170px; min-width: 440px; min-height: 170px; }
+  .hero-cta-master, .hero-cta-satellite { font-size: 12.5px; letter-spacing: 2px; padding: 11px 16px; }
+  .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-14px) scale(1.02); }
+  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 170px), 12px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 85px), 50px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 76px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 85px), 50px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 170px), 12px, 0) scale(1); }
+  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 170px); --sat-ty: 12px; }
+  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 85px); --sat-ty: 50px; }
+  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 76px; }
+  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 85px); --sat-ty: 50px; }
+  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 170px); --sat-ty: 12px; }
 }
 @media (min-width: 1400px) and (min-height: 800px) {
-  .hero-cta-hub { width: 700px; height: 300px; min-width: 700px; min-height: 300px; }
+  .hero-cta-hub { width: 840px; height: 280px; min-width: 840px; min-height: 280px; }
   .hero-cta-master, .hero-cta-satellite { font-size: 20px; letter-spacing: 4.5px; padding: 20px 34px; }
-  .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-32px) scale(1.02); }
-  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 280px), 32px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 140px), 94px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 144px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 140px), 94px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 280px), 32px, 0) scale(1); }
-  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 280px); --sat-ty: 32px; }
-  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 140px); --sat-ty: 94px; }
-  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 144px; }
-  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 140px); --sat-ty: 94px; }
-  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 280px); --sat-ty: 32px; }
+  .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-26px) scale(1.02); }
+  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 320px), 58px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 160px), 128px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 168px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 160px), 128px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 320px), 58px, 0) scale(1); }
+  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 320px); --sat-ty: 58px; }
+  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 160px); --sat-ty: 128px; }
+  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 168px; }
+  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 160px); --sat-ty: 128px; }
+  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 320px); --sat-ty: 58px; }
 }
 
 /* 功能模块区 */
@@ -2196,3 +2230,9 @@ body.profile-active #detail-wrap {
 }
 
 /* SVG 渐变定义由 JS 在渲染时注入到 svg 的 <defs> 中，避免每个 SVG 重复维护 */
+
+@keyframes rbHueRotate {
+  0%   { filter: hue-rotate(0deg)   brightness(.95); }
+  50%  { filter: hue-rotate(180deg) brightness(1.1);  }
+  100% { filter: hue-rotate(360deg) brightness(.95); }
+}
