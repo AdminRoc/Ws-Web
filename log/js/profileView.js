@@ -504,7 +504,7 @@ WF.profileView = (function () {
     /* 成就翻译说明 */
     var achNote = _el('div', 'pf-ach-note');
     achNote.innerHTML = '<span class="pf-ach-note-icon">ℹ</span>' +
-      '成就名称翻译来源：<a href="https://github.com/calamity-inc/warframe-public-export-plus" target="_blank" rel="noopener" class="pf-ach-note-link">warframe-public-export-plus</a> 官方导出数据。' +
+      '成就名称翻译来源：官方公开导出数据。' +
       '部分早期挑战（如武器精通、每周任务）未被收录于公开导出，将以英文原名或驼峰拆分形式显示，内容准确，仅名称不完整。';
     achPanel.appendChild(achNote);
 

@@ -1,5 +1,5 @@
 /* 夜灵详情视图：真实时间仪表 + 小轮卡片 + 额外捕获
- * 计时口径 = idalon.com "real time"：夜晚开始 → 水力使赋能掉落 */
+ * 计时口径 = 玩家社区通行的"实际耗时"标准：夜晚开始 → 水力使赋能掉落 */
 window.WF = window.WF || {};
 
 WF.eidolonView = (function () {
@@ -27,7 +27,7 @@ WF.eidolonView = (function () {
     WF.squadMixin.renderSquad(container, rec);
 
     container.appendChild(U.el('div', 'note',
-      '计时口径与 idalon.com “real time” 一致：起点 = 夜晚开始，终点 = 水力使赋能掉落在地（捕获判定后约 15 秒）。'));
+      '计时口径采用玩家社区通行的"实际耗时"标准：起点 = 夜晚开始，终点 = 水力使赋能掉落在地（捕获判定后约 15 秒）。'));
 
     if (!rec.full) {
       container.appendChild(U.el('div', 'note',

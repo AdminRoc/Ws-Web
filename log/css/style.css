@@ -1,4 +1,4 @@
-/* SUPER LOG — Warframe EE.log 分析器
+/* WTF EELOG — Warframe EE.log 分析器
  * 像素风 · 深空星野 · 彩虹晕染渐变（参考 WFSPEED.RUN 个人页配色）
  * 字体：xszt.ttf（像素中文字体） */
 @font-face {
@@ -85,48 +85,181 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
   width: 100%; margin: 0; height: 100%;
   display: flex; align-items: center; gap: 20px; padding: 0 32px;
 }
+/* 顶栏与下方内容的分界线：彩虹渐变流光。
+   用 repeating-linear-gradient（数学上天然无限循环，不需要首尾颜色对齐去凑）
+   + background-position 用固定 px 而非百分比动画——百分比动画的位移量是相对
+   "容器宽度 − 背景图宽度"算的，容器宽度一变这套换算就跟着变，很容易跟
+   background-size 对不上导致循环到头时颜色不连续、出现闪一下的"断层"。
+   固定 px 位移 + repeating- 语法，无论容器多宽，位移一个周期后画面永远和
+   起点像素级一致，彻底不会有周期性断层。 */
 .nav-glow {
-  position: absolute; bottom: -1px; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(95, 208, 232, 0.5), transparent);
+  position: absolute; bottom: -1px; left: 0; right: 0; height: 2px;
+  background: repeating-linear-gradient(90deg,
+    #41ff8e 0px, #3affd5 30px, #45c8ff 60px, #6f8bff 90px,
+    #a86bff 120px, #e05fff 150px, #ff5f9e 180px, #41ff8e 210px);
+  box-shadow: 0 0 10px rgba(95, 208, 232, 0.4);
+  animation: navGlowFlow 4.5s linear infinite;
 }
+@keyframes navGlowFlow { from { background-position-x: 0; } to { background-position-x: -210px; } }
 
 .nav-logo { display: flex; flex-direction: column; line-height: 1.1; user-select: none; width: max-content; }
+/* 顶栏 logo 文字：同样改用 repeating- + px 位移，跟 .nav-glow 呼应，
+   且保证不会在循环点出现颜色突变 */
 .logo-main {
   font-size: 26px; letter-spacing: 5px;
-  filter: drop-shadow(0 0 12px rgba(120, 160, 255, 0.35));
   white-space: nowrap;
+  background: repeating-linear-gradient(90deg,
+    #41ff8e 0px, #3affd5 30px, #45c8ff 60px, #6f8bff 90px,
+    #a86bff 120px, #e05fff 150px, #ff5f9e 180px, #41ff8e 210px);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 10px rgba(120, 160, 255, 0.4));
+  animation: logoMainFlow 4.5s linear infinite;
 }
+@keyframes logoMainFlow { from { background-position-x: 0; } to { background-position-x: -210px; } }
 .logo-sub {
   font-size: 11px; letter-spacing: 0.5px; color: var(--c-text2);
   width: 100%; text-align: justify; text-align-last: justify;
 }
 
-.nav-tabs { display: flex; gap: 4px; height: 100%; }
+/* 顶栏分页选项卡：原来只是紧贴 logo 左对齐堆一坨文字、连个可见的按钮实体
+   都没有。重做成真正有面板质感的斜切"控制台面板"：常驻可见的玻璃质感底板
+   + 描边发光 + 状态指示灯，悬停/选中/按下三态都有明确的位移与光效反馈。
+   动效全部只吃 transform / opacity / filter(drop-shadow) / background-position
+   这类合成层属性，不逐帧重算 shadowBlur，高帧率下依然流畅。 */
+.nav-tabs {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; justify-content: center; align-items: center;
+  gap: 8px; height: 100%; padding: 0 8px;
+}
 .tab-btn {
-  position: relative; background: none; border: none; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 1px; padding: 0 18px; height: 100%;
-  color: var(--c-text2); transition: color var(--ease-fast);
+  position: relative; border: none; cursor: pointer; isolation: isolate;
+  display: flex; flex-direction: row; align-items: center; justify-content: center;
+  gap: 8px; padding: 0 22px; height: 68%; flex: 0 1 auto;
+  color: var(--c-text2); overflow: visible; background: transparent;
   font-family: var(--f-px); white-space: nowrap;
+  transition: color var(--ease-fast), transform 0.16s cubic-bezier(.22,.68,0,1.4);
 }
-.tab-cn { font-size: 21px; letter-spacing: 2px; }
-.tab-en { font-size: 10px; letter-spacing: 2px; opacity: 0.7; }
+/* HUD 取景框式四角括标：不铺满底板，只在四角常驻描线，未激活时极暗，
+   像待机中的扫描仪，比"整块玻璃面板"更有电路/终端质感 */
+.tab-btn::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(95,208,232,.9), rgba(95,208,232,.9)) top left / 10px 1.5px no-repeat,
+    linear-gradient(rgba(95,208,232,.9), rgba(95,208,232,.9)) top left / 1.5px 10px no-repeat,
+    linear-gradient(90deg, rgba(95,208,232,.9), rgba(95,208,232,.9)) bottom right / 10px 1.5px no-repeat,
+    linear-gradient(rgba(95,208,232,.9), rgba(95,208,232,.9)) bottom right / 1.5px 10px no-repeat;
+  opacity: 0.35; transition: opacity var(--ease-fast);
+}
+/* 状态指示灯：常驻小圆点，未激活时暗淡不闪，激活后常亮呼吸——一眼就能
+   看出"这是可交互的控制台按钮"，而不是纯文字 */
+.tab-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(107, 118, 144, 0.5);
+  transition: background var(--ease-fast), box-shadow var(--ease-fast);
+}
+.tab-text { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.tab-cn { font-size: 21px; letter-spacing: 2px; line-height: 1; }
+.tab-en { font-size: 10px; letter-spacing: 2px; opacity: 0.7; line-height: 1; }
+
+/* 底部数据流条：常驻淡淡可见（不是完全收起），用条纹质感暗示"电路轨迹"，
+   悬停/选中时才真正点亮流动 */
 .tab-btn::after {
-  content: ''; position: absolute; left: 12px; right: 12px; bottom: 0; height: 3px;
-  background: var(--rainbow);
-  transform: scaleX(0); transform-origin: center; transition: transform var(--ease-med);
+  content: ''; position: absolute; left: 12px; right: 12px; bottom: 3px; height: 2px;
+  background: repeating-linear-gradient(90deg, rgba(95,208,232,.5) 0px, rgba(95,208,232,.5) 3px, transparent 3px, transparent 7px);
+  opacity: 0.3; transition: opacity var(--ease-fast);
 }
-.tab-btn:hover { color: var(--c-text); }
-.tab-btn.active { color: var(--c-white); }
-.tab-btn.active::after { transform: scaleX(1); }
+.tab-btn .tab-glow {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(95, 208, 232, 0.14) 0%, transparent 65%);
+  clip-path: polygon(11px 0, 100% 0, calc(100% - 11px) 100%, 0 100%);
+  transition: opacity var(--ease-fast);
+}
+
+/* ── 悬停：括标瞬时点亮 + 轻微故障抖动（skew 两次回正），再上浮，
+   比匀速过渡更有"终端唤醒"的机械感 ── */
+.tab-btn:hover {
+  color: var(--c-white);
+  transform: translateY(-3px);
+  animation: tabHoverGlitch 0.34s steps(1, end);
+}
+.tab-btn:hover::before { opacity: 1; filter: drop-shadow(0 0 5px rgba(95,208,232,.7)); }
+.tab-btn:hover::after { opacity: 0.85; animation: tabFlow 1.1s linear infinite; }
+.tab-btn:hover .tab-glow { opacity: 1; }
+.tab-btn:hover .tab-dot { background: var(--c-teal); box-shadow: 0 0 8px rgba(95, 208, 232, 0.9); }
+@keyframes tabHoverGlitch {
+  0%   { transform: translateY(0) skewX(0); }
+  20%  { transform: translateY(-1px) skewX(-3deg); }
+  40%  { transform: translateY(-2px) skewX(2deg); }
+  60%  { transform: translateY(-3px) skewX(-1deg); }
+  100% { transform: translateY(-3px) skewX(0); }
+}
+@keyframes tabFlow { from { background-position-x: 0; } to { background-position-x: -14px; } }
+
+/* ── 按下：真实的按压回弹反馈，区别于纯粹的 hover 位移 ── */
+.tab-btn:active { transform: translateY(-1px) scale(0.96); transition-duration: 0.08s; }
+
+/* ── 选中态：括标常亮呼吸 + 双层扫描线依次划过（分段特效，而非单一渐变），
+   营造"多阶段技术感" ── */
+.tab-btn.active {
+  color: var(--c-white);
+  animation: tabActivePulse 2.6s ease-in-out infinite;
+}
+.tab-btn.active::before { opacity: 1; filter: drop-shadow(0 0 6px rgba(95,208,232,.85)); }
+.tab-btn.active::after {
+  opacity: 1;
+  background: var(--rainbow);
+  background-size: 200% 100%;
+  animation: tabFlowRainbow 2.4s linear infinite;
+}
+.tab-btn.active .tab-glow { opacity: 1; }
+.tab-btn.active .tab-dot {
+  background: var(--c-white);
+  box-shadow: 0 0 10px rgba(95, 208, 232, 1);
+  animation: tabDotPulse 1.6s ease-in-out infinite;
+}
+@keyframes tabActivePulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(95,208,232,.6)); }
+  50%      { filter: drop-shadow(0 0 10px rgba(95,208,232,1)); }
+}
+@keyframes tabFlowRainbow { from { background-position-x: 0%; } to { background-position-x: -200%; } }
+@keyframes tabDotPulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.4); opacity: 0.7; }
+}
+/* 扫描线第一段：细高光快速划过整块按钮 */
+.tab-btn.active .tab-glow::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.22) 48%, rgba(255,255,255,.4) 50%, rgba(255,255,255,.22) 52%, transparent 70%);
+  background-size: 220% 100%;
+  animation: tabSweep 3.6s linear infinite;
+}
+/* 扫描线第二段：慢速、更宽、更淡的第二道光，与第一段错相位，
+   叠出"多阶段光效依次经过"的层次感，而不是单调的一条线 */
+.tab-btn.active .tab-glow::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 40%, rgba(95,208,232,.28) 50%, transparent 60%);
+  background-size: 260% 100%;
+  animation: tabSweep 5.2s linear infinite reverse;
+  animation-delay: 0.6s;
+}
+@keyframes tabSweep { 0% { background-position: 160% 0; } 100% { background-position: -60% 0; } }
+
 .tab-count {
-  position: absolute; top: 9px; right: 2px;
+  position: relative; z-index: 2;
   min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px;
   font-size: 12px; line-height: 19px; font-family: var(--f-px);
   background: rgba(95, 208, 232, 0.12); color: var(--c-teal);
   border: 1px solid rgba(95, 208, 232, 0.4);
 }
 .tab-count.zero { background: rgba(107, 118, 144, 0.1); color: var(--c-text2); border-color: rgba(107, 118, 144, 0.3); }
+@media (prefers-reduced-motion: reduce) {
+  .tab-btn.active { animation: none; }
+  .tab-btn.active::after { animation: none; }
+  .tab-btn.active .tab-dot { animation: none; }
+  .tab-btn.active .tab-glow::before, .tab-btn.active .tab-glow::after { animation: none; }
+  .tab-btn:hover { animation: none; }
+  .tab-btn:hover::after { animation: none; }
+}
 
 /* ================= 上传区 ================= */
 #dropzone {
@@ -469,6 +602,9 @@ body.profile-active #detail-wrap {
 
 /* 队内在场时长 tooltip 提示 */
 .arb-meta-hint.has-tip { cursor: help; border-bottom: 1px dashed rgba(150,160,190,0.4); display: inline-block; width: fit-content; }
+.stat.has-tip { cursor: help; }
+.arb-eff-name.has-tip { cursor: help; border-bottom: 1px dashed rgba(150,160,190,0.4); }
+.rd-foot.has-tip { cursor: help; }
 
 /* 查看详细：折叠表格 */
 .rd-wrap { margin: 4px 0 18px; }
@@ -490,6 +626,10 @@ body.profile-active #detail-wrap {
 .rd-td-label { color: var(--c-white); }
 .rd-td-num { color: var(--c-text2); font-family: var(--f-px); }
 .rd-row-incomplete td { color: rgba(255,182,72,0.75); font-style: italic; }
+.rd-foot {
+  padding: 8px 12px; font-size: 12px; line-height: 1.6; color: var(--c-text2);
+  border-top: 1px solid var(--c-border); background: rgba(255,255,255,0.02);
+}
 
 /* 评分徽章：0-120 数字 + 分数带 */
 .arb-score-tier { font-size: 15px; letter-spacing: 2px; color: var(--c-text2); margin-top: 4px; }
@@ -709,10 +849,14 @@ body.profile-active #detail-wrap {
   100% { background-position: 400% center; }
 }
 .hero-desc {
-  font-size: clamp(0.85rem, 1.4vw, 1rem); color: var(--c-text);
-  letter-spacing: 1.5px; max-width: 480px; line-height: 1.75;
-  margin-top: 20px;
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem); font-weight: 500;
+  letter-spacing: 1.5px; max-width: 520px; line-height: 1.85;
+  margin-top: 20px; text-align: center;
+  background: repeating-linear-gradient(90deg, #5fd0e8 0px, #41ff8e 60px, #a86bff 120px, #5fd0e8 180px);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: heroDescFlow 5s linear infinite;
 }
+@keyframes heroDescFlow { from { background-position-x: 0; } to { background-position-x: -180px; } }
 .hero-nav-grid {
   display: grid; grid-template-columns: repeat(2, 1fr);
   gap: 10px; width: min(300px, 82vw); margin-top: 22px;
@@ -1437,6 +1581,11 @@ body.profile-active #detail-wrap {
   border: 1px solid rgba(255,255,255,.08); border-radius: 6px;
   padding: 6px 12px; margin-bottom: 10px;
 }
+.gen-table-foot {
+  padding: 8px 12px; font-size: 12px; line-height: 1.6; color: var(--c-text2);
+  border-top: 1px solid var(--c-border); background: rgba(255,255,255,0.02);
+}
+.gen-table-foot.has-tip { cursor: help; }
 .pf-palette-tip {
   display: flex; align-items: flex-start; gap: 10px;
   margin-bottom: 18px; padding: 10px 14px;
@@ -1472,10 +1621,10 @@ body.profile-active #detail-wrap {
 
 /* ================= 鼠标拖尾 ================= */
 @keyframes wordFly {
-  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  14%  { opacity: 1; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.1); }
-  70%  { opacity: 1; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1); }
-  100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); }
+  0%   { opacity: 1; transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(1); }
+  14%  { opacity: 1; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rot, 0deg)) scale(1.1); }
+  70%  { opacity: 1; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rot, 0deg)) scale(1); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rot, 0deg)) scale(0); }
 }
 
 /* ================= 滚动条 ================= */

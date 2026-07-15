@@ -38,6 +38,7 @@ WF.ArbitrationParser = (function () {
     netPeerLine:      /Net \[Info\]: (\d+): Retransmit throttle/,
     clientCreated:    /Game \[Info\]: CreatePlayerForClient\. id=(\d+), user name=(.+)$/,
   };
+  const HUD_REDUX = 'HUD REDUX: Pushing background movie from Update';
   const ARB_NAME_MARK = '- 仲裁';
 
   // 期望生息常量（本项目按掉落规则实测标定）
@@ -121,12 +122,12 @@ WF.ArbitrationParser = (function () {
         期望生息速率（全 Buff，/时）÷ 节点基准 × 100，线性，可超过 100。
         节点基准优先取该节点基准数据（WF.ArbNodeBaseline），无数据时退回 600/时。
      ② 清图效率（权重 25%）：
-        100 − geq15Pct。geq15Pct = 场上同时受 AI 监控的活跃敌人数 ≥15 的时间占比。
+        100 − geq10Pct。geq10Pct = 场上同时受 AI 监控的活跃敌人数 ≥10（"高压"阈值）的时间占比。
         完全来自日志内采样，不依赖任何外部基准；清图越干净这项得分越高。
      ③ 综合效率（权重 20%）：
         双维度融合——清洁度（70%）+ 高压响应（30%）。
         清洁度：按活跃敌人分布区间评分，0-4=100、5-9=80、10-14=70、15-20=30、>20=0，
-        再按驻留时长加权平均。高压响应：扫描从≥15恢复到<15的高压事件，
+        再按驻留时长加权平均。高压响应：扫描从≥10恢复到<10的高压事件，
         平均恢复时间越短得分越高（100 − 平均秒数×2），从未高压=100。
         仅依赖日志数据。
      ──────────────────────────────────────────────────────────────
@@ -144,14 +145,14 @@ WF.ArbitrationParser = (function () {
     const base = baseline > 0 ? baseline : ESS_BASELINE;
     return Math.max(0, perHour / base * 100);
   }
-  // ② 清图效率（%）：由 clearEffDist 的 geq15Pct 取反；数据缺失时返回 null
-  function clearEfficiency(geq15Pct) {
-    if (geq15Pct == null || !isFinite(geq15Pct)) return null;
-    return Math.max(0, 100 - geq15Pct);
+  // ② 清图效率（%）：由 clearEffDist 的 geq10Pct 取反；数据缺失时返回 null
+  function clearEfficiency(geq10Pct) {
+    if (geq10Pct == null || !isFinite(geq10Pct)) return null;
+    return Math.max(0, 100 - geq10Pct);
   }
   // ③ 综合效率（%）：双维度融合
   //   清洁度（70%）：基于活跃敌人分布的分段评分，0-4=100, 5-9=80, 10-14=70, 15-20=30, >20=0
-  //   高压响应（30%）：扫描从 ≥15 恢复到 <15 的高压事件，平均恢复时间越短得分越高
+  //   高压响应（30%）：扫描从 ≥10 恢复到 <10 的高压事件，平均恢复时间越短得分越高
   function clearComprehensiveEfficiency(liveSamples, liveDistData) {
     if (!liveDistData || !liveDistData.rows || liveDistData.rows.length < 2) return null;
     // ── 清洁度 ──
@@ -177,10 +178,10 @@ WF.ArbitrationParser = (function () {
       let inHigh = false, highStart = null;
       for (let i = 0; i < liveSamples.length; i++) {
         const s = liveSamples[i];
-        if (!inHigh && s.live >= 15) {
+        if (!inHigh && s.live >= 10) {
           inHigh = true;
           highStart = s.t;
-        } else if (inHigh && s.live < 15) {
+        } else if (inHigh && s.live < 10) {
           inHigh = false;
           events.push(s.t - highStart);
         }
@@ -188,7 +189,7 @@ WF.ArbitrationParser = (function () {
       if (events.length > 0) {
         const avgRecovery = events.reduce((a, b) => a + b, 0) / events.length;
         recovery = Math.max(0, 100 - avgRecovery * 2);
-      } else if (liveSamples.some((s) => s.live >= 15)) {
+      } else if (liveSamples.some((s) => s.live >= 10)) {
         // 出现了高压但直到任务结束仍未恢复，直接 0 分
         recovery = 0;
       } else {
@@ -245,21 +246,21 @@ WF.ArbitrationParser = (function () {
     for (const s of samples) if (s.live > maxLive) maxLive = s.live;
     const nb = Math.max(1, Math.ceil((maxLive + 1) / 5));
     const bucket = new Array(nb).fill(0);
-    let total = 0, geq15 = 0;
+    let total = 0, geq10 = 0;
     for (let i = 0; i < samples.length - 1; i++) {
       const dwell = samples[i + 1].t - samples[i].t;
       if (dwell <= 0 || dwell > DWELL_CAP) continue;
       const live = samples[i].live;
       const bi = Math.min(Math.floor(live / 5), nb - 1);
       bucket[bi] += dwell; total += dwell;
-      if (live >= 15) geq15 += dwell;
+      if (live >= 10) geq10 += dwell;
     }
     if (total <= 0) return null;
     const rows = bucket.map((v, i) => ({
       lo: 5 * i, hi: i < nb - 1 ? 5 * i + 4 : null,
       seconds: v, pct: v / total * 100,
     }));
-    return { rows, maxLive, geq15Pct: geq15 / total * 100 };
+    return { rows, maxLive, geq10Pct: geq10 / total * 100 };
   }
 
   // ── 分布计算：无人机刷新连续度（同批次数量直方图）──
@@ -307,6 +308,7 @@ WF.ArbitrationParser = (function () {
     const sq   = WF.squadMixin.create();
     const chat = WF.chatMixin.create();
     let m = null;
+    let _sessionAnchor = null; // 当前会话 wall-clock 锚点（由 logReader 传入，见 feed 末两参）
 
     function newMission(t, name) {
       m = {
@@ -318,6 +320,8 @@ WF.ArbitrationParser = (function () {
         faction:   null,
         levelName: null,
         startedT:  null,
+        firstFrameT: null,   // HUD REDUX 首次渲染绝对时刻（"首帧"）
+        sessionAnchor: _sessionAnchor, // 用于把相对秒数换算成真实时钟时间
         type:      'unknown',
         droneTimes: [],      // 无人机生成绝对时刻（秒）
         maxSpawned: 0,       // 累计敌人生成数（Spawned 峰值）
@@ -386,6 +390,14 @@ WF.ArbitrationParser = (function () {
       const hostEnd = (m.rounds > 0 && m.lastRoundT != null) ? m.lastRoundT : fallbackEndT;
       const duration = hostEnd - m.startedT;
       const droneCount = m.droneTimes.length;
+      // 绝对时刻换算：sessionAnchor = {t, date}，把相对秒数差换成真实时钟时间
+      const anchor = m.sessionAnchor;
+      const toDate = (relT) => (anchor && relT != null)
+        ? new Date(anchor.date.getTime() + (relT - anchor.t) * 1000) : null;
+      const startDate      = toDate(m.startedT);
+      const endDate         = toDate(hostEnd);           // "系统结算时刻"
+      const firstFrameDate = toDate(m.firstFrameT);       // "首帧时刻"
+      const frameDuration  = (m.firstFrameT != null) ? (hostEnd - m.firstFrameT) : null; // 首帧→尾帧
       const valid = duration >= 60 && (viaEnding || droneCount > 0);
       if (valid) {
         const rounds     = m.rounds;
@@ -416,7 +428,7 @@ WF.ArbitrationParser = (function () {
         const perMinData   = perMinuteTrend(m.minuteBuckets, duration);
 
         const essEff   = essenceEfficiency(fullBuffPerHour, essBaseline);
-        const clearEff = clearEfficiency(liveDistData ? liveDistData.geq15Pct : null);
+        const clearEff = clearEfficiency(liveDistData ? liveDistData.geq10Pct : null);
         const clearCompEff = clearComprehensiveEfficiency(m.liveSamples, liveDistData);
         const score    = computeScore(essEff, clearEff, clearCompEff);
 
@@ -470,6 +482,11 @@ WF.ArbitrationParser = (function () {
           endT:            hostEnd,
           duration,
           lastClientDuration,
+          firstFrameT:     m.firstFrameT,
+          frameDuration,        // 首帧 → 系统结算（尾帧）时差
+          startDate,            // 任务开始的真实时钟时间
+          endDate,              // 系统结算时刻（真实时钟时间）
+          firstFrameDate,       // 首帧时刻（真实时钟时间）
           node:            resolved.node,
           planet:          resolved.planet,
           nodeId:          m.nodeId,
@@ -499,7 +516,7 @@ WF.ArbitrationParser = (function () {
           },
           eff: {
             essence: essEff,    // 生息效率 %（perHour / baseline × 100，线性，可>100）
-            clear:   clearEff,  // 清图效率 %（100 − geq15Pct；null = 采样不足）
+            clear:   clearEff,  // 清图效率 %（100 − geq10Pct；null = 采样不足）
             clearComp: clearCompEff, // 综合效率 %（活跃敌人分布加权平均；null = 采样不足）
           },
           essBaseline,                          // 本局评分实际采用的生息效率基准（/时）
@@ -514,7 +531,8 @@ WF.ArbitrationParser = (function () {
     }
 
     return {
-      feed(t, line) {
+      feed(t, line, sessionOffset, sessionAnchor) {
+        if (sessionAnchor !== undefined) _sessionAnchor = sessionAnchor;
         sq.feed(line);
         chat.feed(t, line);
 
@@ -528,6 +546,19 @@ WF.ArbitrationParser = (function () {
           if (v && m) { if (!m.nodeId) m.nodeId = v[1]; }
         }
         if (nm) {
+          /* 关键修复：无尽仲裁任务进行到一半时，游戏邀请（GameInviteReceived）等
+             与任务无关的事件会让客户端重新广播一次同样的 "Cached mission name"/
+             "Mission name" 行——节点/原始文本跟当前任务完全一致，不是真的换了任务。
+             之前这里逢"任务名行"必 finalize+newMission，会把一场连续 36+ 分钟的
+             仲裁从中间腰斩成两截：前半截被错误地当成"任务结束"提前结算（时长只有
+             真实结算时间的一部分），后半截又从 0 轮开始重新计数——玩家在客户端看到
+             的系统结算时间因此对不上，而且"全队在场时间"这类需要跨越整场任务的
+             统计也会因为被切段而算错/算不出。这里判断节点 ID（或原始文本兜底）
+             跟当前任务相同就直接忽略，不触发 finalize。 */
+          const dupNodeId = RE.nodeIdParen.exec(line);
+          const sameNode = m && m.startedT != null && dupNodeId && m.nodeId && dupNodeId[1] === m.nodeId;
+          const sameRaw  = m && m.startedT != null && m.rawName === nm;
+          if (sameNode || sameRaw) return;
           if (m && m.startedT != null) finalize(t, false);
           if (!m || m.startedT != null) newMission(t, nm);
           applyName(nm);
@@ -544,6 +575,13 @@ WF.ArbitrationParser = (function () {
             const tp = typeFromLevel(lp[2]);
             if (tp && m.type === 'unknown') m.type = tp;
           }
+        }
+
+        // 首帧：HUD REDUX 首次渲染（载入完成、UI 就绪的实际时刻），只记第一次。
+        // 实测这行经常出现在 SS_STARTED 前一两秒（加载完成先于状态机切换），
+        // 必须放在 startedT==null 的提前 return 之前检测，否则会被直接漏掉。
+        if (m.firstFrameT == null && line.indexOf(HUD_REDUX) !== -1) {
+          m.firstFrameT = t;
         }
 
         if (m.startedT == null) {

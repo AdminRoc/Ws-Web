@@ -36,11 +36,13 @@ WF.arbitrationView = (function () {
     };
   }
 
-  // 单条效率进度条
-  function effBar(container, label, pct, hint) {
+  // 单条效率进度条；title 可选——鼠标停留在指标名上时显示详细概念说明
+  function effBar(container, label, pct, hint, title) {
     const row = U.el('div', 'arb-eff-row');
     const top = U.el('div', 'arb-eff-top');
-    top.appendChild(U.el('span', 'arb-eff-name', label));
+    const nameEl = U.el('span', 'arb-eff-name', label);
+    if (title) { nameEl.title = title; nameEl.classList.add('has-tip'); }
+    top.appendChild(nameEl);
     top.appendChild(U.el('span', 'arb-eff-val', pct.toFixed(1) + '%'));
     row.appendChild(top);
     const track = U.el('div', 'arb-eff-track');
@@ -96,7 +98,7 @@ WF.arbitrationView = (function () {
     rec.essBaselineIsNode = true;
   }
 
-  function render(container, rec) {
+  function render(container, rec, clock) {
     container.innerHTML = '';
     maybeRecalcWithNodeBaseline(rec);
     const eff = rec.eff || { essence: 0, clear: 0, clearComp: 0, proficiency: 0 };
@@ -115,15 +117,60 @@ WF.arbitrationView = (function () {
     const titleParts = [rec.node, rec.planet, rec.missionTypeName, rec.factionZh].filter(Boolean);
     meta.appendChild(U.el('div', 'arb-meta-title', titleParts.join(' · ')));
 
-    const durRow = U.el('div', 'arb-meta-sub');
-    durRow.appendChild(document.createTextNode('主机时长 ' + fmtHMS(rec.duration) + `（${U.fmtDurationLong(rec.duration)}）`));
+    const durRow = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
+    durRow.appendChild(document.createTextNode('总时长 ' + fmtHMS(rec.duration) + `（${U.fmtDurationLong(rec.duration)}）`));
+    durRow.title = '从 SS_STARTED（本机正式进入任务、开始计时）到"系统结算时间"之间经过的时长，'
+      + '与下方核心指标网格里的"总时长"是同一个数值。它和"系统结算时间"描述的是同一个任务终点——'
+      + '前者用经过了多久（时长）表示，后者用当时的真实时钟时间（几点几分几秒）表示，两者不是相互独立的两套计时。';
     meta.appendChild(durRow);
+
+    /* 以下四行——系统结算时间 / 全队在场时间 / 首帧时间 / 尾帧时间——无论数据是否
+       缺失、是否与其它行数值相同，都固定展示（缺失时用"—"+原因说明），
+       避免用户误以为是"没读出来"而非"这局本来就没有这项数据/两者恰好相同"。 */
+    const _recDate = (t, recDate) => recDate || (clock && clock.available ? clock.toDate(t) : null);
+    const approx = clock ? clock.approx : true;
+
+    function _metaRow(label, text, hint) {
+      const row = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
+      row.appendChild(document.createTextNode(label + ' ' + text));
+      if (hint) row.title = hint;
+      meta.appendChild(row);
+      return row;
+    }
+
+    // 全队在场时间
     if (rec.lastClientDuration != null) {
-      const cliRow = U.el('div', 'arb-meta-sub arb-meta-hint');
-      cliRow.appendChild(document.createTextNode('最后客机时间 ' + fmtHMS(rec.lastClientDuration) + `（${U.fmtDurationLong(rec.lastClientDuration)}）`));
-      cliRow.title = '任务结束时间 − 最后一个外部玩家实体创建时刻。测量的是"全员到齐后一起玩的有效时长"，而非"第一个队友离开的时刻"。若全队均在任务开始前已加载完毕，则本行不显示。';
-      cliRow.classList.add('has-tip');
-      meta.appendChild(cliRow);
+      _metaRow('全队在场时间', fmtHMS(rec.lastClientDuration) + `（${U.fmtDurationLong(rec.lastClientDuration)}）`,
+        '系统结算时间 − 最后一个队友进入任务的时刻。测量的是"全员到齐后一起玩的有效时长"。');
+    } else {
+      _metaRow('全队在场时间', '— （全员已在任务开始前入场，无需等待）',
+        '所有队友进入任务的时刻都早于总时长的计时起点，说明开局前队伍已到齐，不存在"等待最后一人"的时长。');
+    }
+
+    // 首帧时间（HUD REDUX 首次渲染）
+    const ffDate = rec.firstFrameT != null ? _recDate(rec.firstFrameT, rec.firstFrameDate) : null;
+    _metaRow('首帧时间', ffDate ? U.fmtAbsTime(ffDate, approx) : '— （日志中未捕获到 HUD REDUX 信号）',
+      'HUD REDUX 首次渲染（载入完成、UI 就绪）的实际时刻');
+
+    // 尾帧时间（与"系统结算时间"取自同一个任务有效终点——无尽任务没有独立于
+    // 轮次结算之外的"尾帧"事件，故两行数值通常相同，仍分别列出以免误解为漏读）
+    const endDate = _recDate(rec.endT, rec.endDate);
+    _metaRow('尾帧时间', endDate ? U.fmtAbsTime(endDate, approx) : '— （无法换算绝对时刻）',
+      '任务有效终点（无尽任务=最后一次轮/波结算）对应的实际时钟时间');
+
+    // 系统结算时间
+    _metaRow('系统结算时间', endDate ? U.fmtAbsTime(endDate, approx) : '— （无法换算绝对时刻）',
+      '本解析器认定的任务终点（无尽任务=最后一次轮/波结算触发的时刻），与"尾帧时间"取自同一个终点，数值相同属正常现象。'
+      + '它不等价于"游戏内结算画面弹出的确切帧"——如果最后一轮结算后还经过一段时间才提取，'
+      + '真实的结算/提取画面会比这个时刻更晚一些，暂无法从日志中拿到更精确的信号。');
+
+    if (rec.frameDuration != null) {
+      const fdRow = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
+      fdRow.appendChild(document.createTextNode('首帧 → 系统结算 ' + fmtHMS(rec.frameDuration) + `（${U.fmtDurationLong(rec.frameDuration)}）`));
+      fdRow.title = '系统结算时间 − 首帧时间，最接近"进入任务画面→系统结算"的体感时长。'
+        + '首帧（HUD REDUX 首次渲染）通常发生在 SS_STARTED 之前一小段时间（先加载完成、状态机才切换），'
+        + '所以这段时长起点比"总时长"更早，数值往往会略长于总时长，属正常现象。';
+      meta.appendChild(fdRow);
     }
     const metaSubs = [
       rec.rounds > 0 ? `${rec.missionType === 'survival' ? '生存轮次' : '轮/波次'} ${rec.rounds}` : null,
@@ -142,18 +189,24 @@ WF.arbitrationView = (function () {
 
     /* ─── 核心指标网格 ─── */
     const grid = U.el('div', 'arb-metrics-grid');
+    const SPAWN_NOTE = 'EE.log 不会记录"某个敌人被谁击杀"这类具体事件，所以这里不展示确切击杀数。'
+      + '"敌人生成"是房主日志里每次 OnAgentCreated 事件携带的 Spawned 字段峰值——这是游戏引擎自己上报的累计生成数，'
+      + '理论上应与游戏内实际数值一致；但如果这份日志不是从任务最开始就在记录（比如日志文件被裁切、或从中途接入），'
+      + '开局阶段的生成会缺失一部分，导致这里显示的数字比实际偏低。无人机生成同理，逐行精确计数，一般更可靠。';
     const metrics = [
       { label: '无人机生成',      value: String(rec.droneCount),               cls: 'accent' },
-      { label: '敌人生成',        value: String(rec.maxSpawned),               cls: 'accent' },
+      { label: '敌人生成',        value: String(rec.maxSpawned),               cls: 'accent', title: SPAWN_NOTE },
       { label: '无人机 / 分钟',   value: rec.dronesPerMin.toFixed(2),          cls: 'accent' },
-      { label: '总时间',          value: fmtHMS(rec.duration),                 cls: 'big' },
+      { label: '总时长',          value: fmtHMS(rec.duration),                 cls: 'big',
+        title: '从 SS_STARTED 到系统结算时间的经过时长，与上方"总时长"行是同一个数值，这里仅作为核心指标之一再展示一次' },
       { label: rec.missionType === 'survival' ? '生存轮次' : '轮 / 波次', value: String(rec.rounds), cls: 'accent' },
       { label: '期望生息',        value: rec.essence.fullBuffTotal.toFixed(3), cls: 'accent' },
       { label: '期望生息 / 小时',  value: rec.essence.fullBuffPerHour.toFixed(1), cls: 'accent' },
       { label: '期望生息 / 分钟',  value: rec.essence.fullBuffPerMin.toFixed(2), cls: 'accent' },
     ];
-    metrics.forEach(({ label, value, cls }) => {
+    metrics.forEach(({ label, value, cls, title }) => {
       const cell = U.el('div', 'stat ' + cls);
+      if (title) { cell.title = title; cell.classList.add('has-tip'); }
       cell.appendChild(U.el('div', 'stat-value', value));
       cell.appendChild(U.el('div', 'stat-label', label));
       grid.appendChild(cell);
@@ -170,6 +223,8 @@ WF.arbitrationView = (function () {
       })), {
         countALabel: '无人机生成', countBLabel: '敌人生成',
         showSparsity: true, showEssence: true,
+        footnote: '"敌人生成"来自日志 Spawned 字段峰值，不是确切击杀数（EE.log 不记录具体击杀事件）；若日志非从任务开局记录，数字会偏低。',
+        footnoteTip: SPAWN_NOTE,
       });
     }
 
@@ -180,16 +235,23 @@ WF.arbitrationView = (function () {
     const baseHint = rec.essBaselineIsNode
       ? `经过数据分析后，得出生息效率评价：${rec.essBaseline.toFixed(1)}/时`
       : `相对默认基准 ${(rec.essBaseline || 600).toFixed(0)}/时 换算`;
+    const ACTIVE_ENEMY_DEF = '"活跃敌人"指日志里 MonitoredTicking 字段代表的、当前正被游戏 AI 持续追踪行为逻辑的敌人数量——'
+      + '不是玩家肉眼在场景里能看到的全部单位，也不完全等于游戏内 UI 顶部显示的确切怪物计数，是引擎内部的一个采样值，用来大致反映"场上压力"，仅供参考。';
     effBar(effGrid, '生息效率', eff.essence,
       `期望生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时 · ${baseHint}（权重 55%）`);
     effBar(effGrid, '清图效率', eff.clear != null ? eff.clear : 50,
       eff.clear != null
-        ? `场上≥15只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%，越低越好（权重 25%）`
-        : '采样数据不足，本维度以 50 分中性值计入（权重 25%）');
+        ? `场上≥10只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%，越低越好（权重 25%）`
+        : '采样数据不足，本维度以 50 分中性值计入（权重 25%）',
+      ACTIVE_ENEMY_DEF);
     effBar(effGrid, '综合效率', eff.clearComp != null ? eff.clearComp : 50,
       eff.clearComp != null
         ? `清洁度 × 70% + 操作稳定度 × 30% = ${eff.clearComp.toFixed(1)}%（权重 20%）`
-        : '数据不足，本维度以 50 分中性值计入（权重 20%）');
+        : '数据不足，本维度以 50 分中性值计入（权重 20%）',
+      '清洁度：把整场任务按"场上活跃敌人数量"分成几个区间（0-4/5-9/10-14/15-20/20以上），'
+      + '每个区间按驻留时长加权算出一个 0-100 的分数（敌人越少分数越高），场上越"干净"这项越高。'
+      + ACTIVE_ENEMY_DEF
+      + ' 操作稳定度：统计场上敌人从"高压"（≥10）恢复到正常水平所花的平均时间，恢复越快分数越高。');
     effBox.appendChild(effGrid);
     container.appendChild(effBox);
 
@@ -237,7 +299,7 @@ WF.arbitrationView = (function () {
       distBars(distWrap, {
         title: '清图效率',
         rows: ld.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
-        footer: `高压占比（≥15）：${ld.geq15Pct.toFixed(1)}%`,
+        footer: `高压占比（≥10）：${ld.geq10Pct.toFixed(1)}%`,
       });
     }
     container.appendChild(distWrap);
@@ -272,8 +334,8 @@ WF.arbitrationView = (function () {
     const defWrap = U.el('div', 'arb-explain-defs');
     [
       ['生息效率（55%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再除以基准数量，得到这里的百分比。此外，期望生息按掉落规则进行推算，排除运气影响。'],
-      ['清图效率（25%）', '依据房主日志中，每次敌人生成行的 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥15 的时间占比（geq15Pct），取 100 − geq15Pct 作为得分。清图越干净、场上高压时段越少，这项得分越高。完全来自日志内采样，不依赖任何外部基准。'],
-      ['综合效率（20%）', '由两个独立维度融合而成：① 清洁度（70%）——按活跃敌人分布区间评分，第1区间=100分、第2区间=80分、第3区间=70分、第4区间=30分、超过=0分，再按各区间的驻留时长加权平均；② 操作稳定度（30%）——扫描日志中所有从≥15只敌人回到<15只的恢复事件，计算平均恢复时间（秒），按 100 − 平均恢复时间×2 换算得分。操作稳定度的数值越高，说明队伍的稳定程度越高。'],
+      ['清图效率（25%）', '依据房主日志中，每次敌人生成行的 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥10（"高压"阈值）的时间占比（geq10Pct），取 100 − geq10Pct 作为得分。清图越干净、场上高压时段越少，这项得分越高。完全来自日志内采样，不依赖任何外部基准。'],
+      ['综合效率（20%）', '由两个独立维度融合而成：① 清洁度（70%）——按活跃敌人分布区间评分，第1区间=100分、第2区间=80分、第3区间=70分、第4区间=30分、超过=0分，再按各区间的驻留时长加权平均；② 操作稳定度（30%）——扫描日志中所有从≥10只敌人回到<10只的恢复事件，计算平均恢复时间（秒），按 100 − 平均恢复时间×2 换算得分。操作稳定度的数值越高，说明队伍的稳定程度越高。'],
     ].forEach(([k, v]) => {
       const d = U.el('div', 'arb-def-row');
       d.appendChild(U.el('span', 'arb-def-key', k));
