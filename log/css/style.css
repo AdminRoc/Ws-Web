@@ -85,30 +85,37 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
   width: 100%; margin: 0; height: 100%;
   display: flex; align-items: center; gap: 20px; padding: 0 32px;
 }
-/* 顶栏与下方内容的分界线：彩虹渐变流光，比原来的单色静态线更有赛博感，
-   只吃 background-position 合成层属性，高帧率不掉帧 */
+/* 顶栏与下方内容的分界线：彩虹渐变流光。
+   用 repeating-linear-gradient（数学上天然无限循环，不需要首尾颜色对齐去凑）
+   + background-position 用固定 px 而非百分比动画——百分比动画的位移量是相对
+   "容器宽度 − 背景图宽度"算的，容器宽度一变这套换算就跟着变，很容易跟
+   background-size 对不上导致循环到头时颜色不连续、出现闪一下的"断层"。
+   固定 px 位移 + repeating- 语法，无论容器多宽，位移一个周期后画面永远和
+   起点像素级一致，彻底不会有周期性断层。 */
 .nav-glow {
   position: absolute; bottom: -1px; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent 0%, #41ff8e 12%, #3affd5 24%, #45c8ff 36%, #6f8bff 48%, #a86bff 60%, #e05fff 72%, #ff5f9e 84%, transparent 100%);
-  background-size: 220% 100%;
+  background: repeating-linear-gradient(90deg,
+    #41ff8e 0px, #3affd5 30px, #45c8ff 60px, #6f8bff 90px,
+    #a86bff 120px, #e05fff 150px, #ff5f9e 180px, #41ff8e 210px);
   box-shadow: 0 0 10px rgba(95, 208, 232, 0.4);
-  animation: navGlowFlow 5s linear infinite;
+  animation: navGlowFlow 4.5s linear infinite;
 }
-@keyframes navGlowFlow { 0% { background-position: 0% 0; } 100% { background-position: -220% 0; } }
+@keyframes navGlowFlow { from { background-position-x: 0; } to { background-position-x: -210px; } }
 
 .nav-logo { display: flex; flex-direction: column; line-height: 1.1; user-select: none; width: max-content; }
-/* 顶栏 logo 文字：静态彩虹渐变（继承自 .rainbow 共享规则）之外，再叠加一层
-   会流动的高帧率光效，跟下方 .nav-glow 分界线呼应，同一套配色语言 */
+/* 顶栏 logo 文字：同样改用 repeating- + px 位移，跟 .nav-glow 呼应，
+   且保证不会在循环点出现颜色突变 */
 .logo-main {
   font-size: 26px; letter-spacing: 5px;
   white-space: nowrap;
-  background: linear-gradient(90deg, #41ff8e, #3affd5, #45c8ff, #6f8bff, #a86bff, #e05fff, #ff5f9e, #41ff8e);
-  background-size: 300% auto;
+  background: repeating-linear-gradient(90deg,
+    #41ff8e 0px, #3affd5 30px, #45c8ff 60px, #6f8bff 90px,
+    #a86bff 120px, #e05fff 150px, #ff5f9e 180px, #41ff8e 210px);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   filter: drop-shadow(0 0 10px rgba(120, 160, 255, 0.4));
-  animation: logoMainFlow 5s linear infinite;
+  animation: logoMainFlow 4.5s linear infinite;
 }
-@keyframes logoMainFlow { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
+@keyframes logoMainFlow { from { background-position-x: 0; } to { background-position-x: -210px; } }
 .logo-sub {
   font-size: 11px; letter-spacing: 0.5px; color: var(--c-text2);
   width: 100%; text-align: justify; text-align-last: justify;
@@ -125,17 +132,23 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
   gap: 8px; height: 100%; padding: 0 8px;
 }
 .tab-btn {
-  position: relative; border: none; cursor: pointer;
+  position: relative; border: none; cursor: pointer; isolation: isolate;
   display: flex; flex-direction: row; align-items: center; justify-content: center;
-  gap: 8px; padding: 0 20px; height: 68%; flex: 0 1 auto;
-  color: var(--c-text2); overflow: visible;
+  gap: 8px; padding: 0 22px; height: 68%; flex: 0 1 auto;
+  color: var(--c-text2); overflow: visible; background: transparent;
   font-family: var(--f-px); white-space: nowrap;
-  clip-path: polygon(11px 0, 100% 0, calc(100% - 11px) 100%, 0 100%);
-  background: linear-gradient(160deg, rgba(30, 38, 58, 0.6), rgba(10, 13, 24, 0.4));
-  box-shadow: inset 0 0 0 1px rgba(95, 208, 232, 0.16);
-  transition: color var(--ease-fast), background var(--ease-fast),
-              box-shadow var(--ease-fast), transform 0.16s cubic-bezier(.22,.68,0,1.4),
-              filter var(--ease-fast);
+  transition: color var(--ease-fast), transform 0.16s cubic-bezier(.22,.68,0,1.4);
+}
+/* HUD 取景框式四角括标：不铺满底板，只在四角常驻描线，未激活时极暗，
+   像待机中的扫描仪，比"整块玻璃面板"更有电路/终端质感 */
+.tab-btn::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(95,208,232,.9), rgba(95,208,232,.9)) top left / 10px 1.5px no-repeat,
+    linear-gradient(rgba(95,208,232,.9), rgba(95,208,232,.9)) top left / 1.5px 10px no-repeat,
+    linear-gradient(90deg, rgba(95,208,232,.9), rgba(95,208,232,.9)) bottom right / 10px 1.5px no-repeat,
+    linear-gradient(rgba(95,208,232,.9), rgba(95,208,232,.9)) bottom right / 1.5px 10px no-repeat;
+  opacity: 0.35; transition: opacity var(--ease-fast);
 }
 /* 状态指示灯：常驻小圆点，未激活时暗淡不闪，激活后常亮呼吸——一眼就能
    看出"这是可交互的控制台按钮"，而不是纯文字 */
@@ -148,44 +161,56 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
 .tab-cn { font-size: 21px; letter-spacing: 2px; line-height: 1; }
 .tab-en { font-size: 10px; letter-spacing: 2px; opacity: 0.7; line-height: 1; }
 
-/* 底部实体高光条：默认收起，悬停/选中时展开 */
+/* 底部数据流条：常驻淡淡可见（不是完全收起），用条纹质感暗示"电路轨迹"，
+   悬停/选中时才真正点亮流动 */
 .tab-btn::after {
-  content: ''; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 3px;
-  border-radius: 2px;
-  background: var(--rainbow);
-  transform: scaleX(0); transform-origin: center; transition: transform var(--ease-med);
+  content: ''; position: absolute; left: 12px; right: 12px; bottom: 3px; height: 2px;
+  background: repeating-linear-gradient(90deg, rgba(95,208,232,.5) 0px, rgba(95,208,232,.5) 3px, transparent 3px, transparent 7px);
+  opacity: 0.3; transition: opacity var(--ease-fast);
 }
 .tab-btn .tab-glow {
-  position: absolute; inset: 0; pointer-events: none; opacity: 0;
-  background: linear-gradient(180deg, rgba(95, 208, 232, 0.22) 0%, transparent 70%);
+  position: absolute; inset: 0; pointer-events: none; opacity: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(95, 208, 232, 0.14) 0%, transparent 65%);
+  clip-path: polygon(11px 0, 100% 0, calc(100% - 11px) 100%, 0 100%);
   transition: opacity var(--ease-fast);
 }
 
-/* ── 悬停：面板整体上浮 + 描边点亮 + 外发光（drop-shadow 会贴合斜切轮廓，
-   不会像 box-shadow 那样被 clip-path 直接切掉） ── */
+/* ── 悬停：括标瞬时点亮 + 轻微故障抖动（skew 两次回正），再上浮，
+   比匀速过渡更有"终端唤醒"的机械感 ── */
 .tab-btn:hover {
   color: var(--c-white);
-  background: linear-gradient(160deg, rgba(95, 208, 232, 0.16), rgba(20, 26, 40, 0.5));
-  box-shadow: inset 0 0 0 1px rgba(95, 208, 232, 0.45);
   transform: translateY(-3px);
-  filter: drop-shadow(0 4px 14px rgba(95, 208, 232, 0.28));
+  animation: tabHoverGlitch 0.34s steps(1, end);
 }
+.tab-btn:hover::before { opacity: 1; filter: drop-shadow(0 0 5px rgba(95,208,232,.7)); }
+.tab-btn:hover::after { opacity: 0.85; animation: tabFlow 1.1s linear infinite; }
 .tab-btn:hover .tab-glow { opacity: 1; }
 .tab-btn:hover .tab-dot { background: var(--c-teal); box-shadow: 0 0 8px rgba(95, 208, 232, 0.9); }
-.tab-btn:hover::after { transform: scaleX(0.55); }
+@keyframes tabHoverGlitch {
+  0%   { transform: translateY(0) skewX(0); }
+  20%  { transform: translateY(-1px) skewX(-3deg); }
+  40%  { transform: translateY(-2px) skewX(2deg); }
+  60%  { transform: translateY(-3px) skewX(-1deg); }
+  100% { transform: translateY(-3px) skewX(0); }
+}
+@keyframes tabFlow { from { background-position-x: 0; } to { background-position-x: -14px; } }
 
 /* ── 按下：真实的按压回弹反馈，区别于纯粹的 hover 位移 ── */
 .tab-btn:active { transform: translateY(-1px) scale(0.96); transition-duration: 0.08s; }
 
-/* ── 选中态：持续点亮，比 hover 更亮一档，叠加顶部扫光动画 ── */
+/* ── 选中态：括标常亮呼吸 + 双层扫描线依次划过（分段特效，而非单一渐变），
+   营造"多阶段技术感" ── */
 .tab-btn.active {
   color: var(--c-white);
-  background: linear-gradient(160deg, rgba(95, 208, 232, 0.22), rgba(20, 26, 40, 0.55));
-  box-shadow: inset 0 0 0 1px rgba(95, 208, 232, 0.65);
-  filter: drop-shadow(0 4px 16px rgba(95, 208, 232, 0.35));
   animation: tabActivePulse 2.6s ease-in-out infinite;
 }
-.tab-btn.active::after { transform: scaleX(1); }
+.tab-btn.active::before { opacity: 1; filter: drop-shadow(0 0 6px rgba(95,208,232,.85)); }
+.tab-btn.active::after {
+  opacity: 1;
+  background: var(--rainbow);
+  background-size: 200% 100%;
+  animation: tabFlowRainbow 2.4s linear infinite;
+}
 .tab-btn.active .tab-glow { opacity: 1; }
 .tab-btn.active .tab-dot {
   background: var(--c-white);
@@ -193,20 +218,29 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
   animation: tabDotPulse 1.6s ease-in-out infinite;
 }
 @keyframes tabActivePulse {
-  0%, 100% { box-shadow: inset 0 0 0 1px rgba(95, 208, 232, 0.65); }
-  50%      { box-shadow: inset 0 0 0 1px rgba(95, 208, 232, 0.95); }
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(95,208,232,.6)); }
+  50%      { filter: drop-shadow(0 0 10px rgba(95,208,232,1)); }
 }
+@keyframes tabFlowRainbow { from { background-position-x: 0%; } to { background-position-x: -200%; } }
 @keyframes tabDotPulse {
   0%, 100% { transform: scale(1);   opacity: 1; }
   50%      { transform: scale(1.4); opacity: 0.7; }
 }
-/* 扫光：仅 active tab 顶部划过一道细高光，background-position 动画，
-   只吃合成层，不影响帧率 */
-.tab-btn.active::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.18) 48%, rgba(255,255,255,.32) 50%, rgba(255,255,255,.18) 52%, transparent 70%);
+/* 扫描线第一段：细高光快速划过整块按钮 */
+.tab-btn.active .tab-glow::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.22) 48%, rgba(255,255,255,.4) 50%, rgba(255,255,255,.22) 52%, transparent 70%);
   background-size: 220% 100%;
   animation: tabSweep 3.6s linear infinite;
+}
+/* 扫描线第二段：慢速、更宽、更淡的第二道光，与第一段错相位，
+   叠出"多阶段光效依次经过"的层次感，而不是单调的一条线 */
+.tab-btn.active .tab-glow::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 40%, rgba(95,208,232,.28) 50%, transparent 60%);
+  background-size: 260% 100%;
+  animation: tabSweep 5.2s linear infinite reverse;
+  animation-delay: 0.6s;
 }
 @keyframes tabSweep { 0% { background-position: 160% 0; } 100% { background-position: -60% 0; } }
 
@@ -219,9 +253,12 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
 }
 .tab-count.zero { background: rgba(107, 118, 144, 0.1); color: var(--c-text2); border-color: rgba(107, 118, 144, 0.3); }
 @media (prefers-reduced-motion: reduce) {
-  .tab-btn.active::before { animation: none; }
   .tab-btn.active { animation: none; }
+  .tab-btn.active::after { animation: none; }
   .tab-btn.active .tab-dot { animation: none; }
+  .tab-btn.active .tab-glow::before, .tab-btn.active .tab-glow::after { animation: none; }
+  .tab-btn:hover { animation: none; }
+  .tab-btn:hover::after { animation: none; }
 }
 
 /* ================= 上传区 ================= */
@@ -815,12 +852,11 @@ body.profile-active #detail-wrap {
   font-size: clamp(1.05rem, 1.8vw, 1.3rem); font-weight: 500;
   letter-spacing: 1.5px; max-width: 520px; line-height: 1.85;
   margin-top: 20px; text-align: center;
-  background: linear-gradient(90deg, #5fd0e8, #41ff8e, #a86bff, #5fd0e8);
-  background-size: 300% auto;
+  background: repeating-linear-gradient(90deg, #5fd0e8 0px, #41ff8e 60px, #a86bff 120px, #5fd0e8 180px);
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: heroDescFlow 6s linear infinite;
+  animation: heroDescFlow 5s linear infinite;
 }
-@keyframes heroDescFlow { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
+@keyframes heroDescFlow { from { background-position-x: 0; } to { background-position-x: -180px; } }
 .hero-nav-grid {
   display: grid; grid-template-columns: repeat(2, 1fr);
   gap: 10px; width: min(300px, 82vw); margin-top: 22px;
@@ -1585,10 +1621,10 @@ body.profile-active #detail-wrap {
 
 /* ================= 鼠标拖尾 ================= */
 @keyframes wordFly {
-  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  14%  { opacity: 1; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.1); }
-  70%  { opacity: 1; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1); }
-  100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); }
+  0%   { opacity: 1; transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(1); }
+  14%  { opacity: 1; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rot, 0deg)) scale(1.1); }
+  70%  { opacity: 1; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rot, 0deg)) scale(1); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rot, 0deg)) scale(0); }
 }
 
 /* ================= 滚动条 ================= */
