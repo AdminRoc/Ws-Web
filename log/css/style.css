@@ -552,6 +552,7 @@ body.profile-active #detail-wrap {
 
 /* 队内在场时长 tooltip 提示 */
 .arb-meta-hint.has-tip { cursor: help; border-bottom: 1px dashed rgba(150,160,190,0.4); display: inline-block; width: fit-content; }
+.stat.has-tip { cursor: help; }
 
 /* 查看详细：折叠表格 */
 .rd-wrap { margin: 4px 0 18px; }

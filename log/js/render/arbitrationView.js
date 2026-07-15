@@ -115,8 +115,11 @@ WF.arbitrationView = (function () {
     const titleParts = [rec.node, rec.planet, rec.missionTypeName, rec.factionZh].filter(Boolean);
     meta.appendChild(U.el('div', 'arb-meta-title', titleParts.join(' · ')));
 
-    const durRow = U.el('div', 'arb-meta-sub');
-    durRow.appendChild(document.createTextNode('主机时长 ' + fmtHMS(rec.duration) + `（${U.fmtDurationLong(rec.duration)}）`));
+    const durRow = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
+    durRow.appendChild(document.createTextNode('总时长 ' + fmtHMS(rec.duration) + `（${U.fmtDurationLong(rec.duration)}）`));
+    durRow.title = '从 SS_STARTED（本机正式进入任务、开始计时）到"系统结算时间"之间经过的时长，'
+      + '与下方核心指标网格里的"总时长"是同一个数值。它和"系统结算时间"描述的是同一个任务终点——'
+      + '前者用经过了多久（时长）表示，后者用当时的真实时钟时间（几点几分几秒）表示，两者不是相互独立的两套计时。';
     meta.appendChild(durRow);
 
     /* 以下四行——系统结算时间 / 全队在场时间 / 首帧时间 / 尾帧时间——无论数据是否
@@ -136,10 +139,10 @@ WF.arbitrationView = (function () {
     // 全队在场时间
     if (rec.lastClientDuration != null) {
       _metaRow('全队在场时间', fmtHMS(rec.lastClientDuration) + `（${U.fmtDurationLong(rec.lastClientDuration)}）`,
-        '任务结束时间 − 最后一个外部玩家实体创建时刻。测量的是"全员到齐后一起玩的有效时长"。');
+        '系统结算时间 − 最后一个队友进入任务的时刻。测量的是"全员到齐后一起玩的有效时长"。');
     } else {
       _metaRow('全队在场时间', '— （全员已在任务开始前入场，无需等待）',
-        '所有外部玩家实体的创建时刻均早于 SS_STARTED，说明开局前队伍已到齐，不存在"等待最后一人"的时长。');
+        '所有队友进入任务的时刻都早于总时长的计时起点，说明开局前队伍已到齐，不存在"等待最后一人"的时长。');
     }
 
     // 首帧时间（HUD REDUX 首次渲染）
@@ -155,12 +158,16 @@ WF.arbitrationView = (function () {
 
     // 系统结算时间
     _metaRow('系统结算时间', endDate ? U.fmtAbsTime(endDate, approx) : '— （无法换算绝对时刻）',
-      '与游戏内结算界面显示的时刻一致；本解析器中与"尾帧时间"取自同一个任务终点，数值相同属正常现象');
+      '本解析器认定的任务终点（无尽任务=最后一次轮/波结算触发的时刻），与"尾帧时间"取自同一个终点，数值相同属正常现象。'
+      + '它不等价于"游戏内结算画面弹出的确切帧"——如果最后一轮结算后还经过一段时间才提取，'
+      + '真实的结算/提取画面会比这个时刻更晚一些，暂无法从日志中拿到更精确的信号。');
 
     if (rec.frameDuration != null) {
       const fdRow = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
       fdRow.appendChild(document.createTextNode('首帧 → 系统结算 ' + fmtHMS(rec.frameDuration) + `（${U.fmtDurationLong(rec.frameDuration)}）`));
-      fdRow.title = '系统结算时间 − 首帧时间，最接近"进入任务画面→系统结算"的体感时长';
+      fdRow.title = '系统结算时间 − 首帧时间，最接近"进入任务画面→系统结算"的体感时长。'
+        + '首帧（HUD REDUX 首次渲染）通常发生在 SS_STARTED 之前一小段时间（先加载完成、状态机才切换），'
+        + '所以这段时长起点比"总时长"更早，数值往往会略长于总时长，属正常现象。';
       meta.appendChild(fdRow);
     }
     const metaSubs = [
@@ -184,14 +191,16 @@ WF.arbitrationView = (function () {
       { label: '无人机生成',      value: String(rec.droneCount),               cls: 'accent' },
       { label: '敌人生成',        value: String(rec.maxSpawned),               cls: 'accent' },
       { label: '无人机 / 分钟',   value: rec.dronesPerMin.toFixed(2),          cls: 'accent' },
-      { label: '总时间',          value: fmtHMS(rec.duration),                 cls: 'big' },
+      { label: '总时长',          value: fmtHMS(rec.duration),                 cls: 'big',
+        title: '从 SS_STARTED 到系统结算时间的经过时长，与上方"总时长"行是同一个数值，这里仅作为核心指标之一再展示一次' },
       { label: rec.missionType === 'survival' ? '生存轮次' : '轮 / 波次', value: String(rec.rounds), cls: 'accent' },
       { label: '期望生息',        value: rec.essence.fullBuffTotal.toFixed(3), cls: 'accent' },
       { label: '期望生息 / 小时',  value: rec.essence.fullBuffPerHour.toFixed(1), cls: 'accent' },
       { label: '期望生息 / 分钟',  value: rec.essence.fullBuffPerMin.toFixed(2), cls: 'accent' },
     ];
-    metrics.forEach(({ label, value, cls }) => {
+    metrics.forEach(({ label, value, cls, title }) => {
       const cell = U.el('div', 'stat ' + cls);
+      if (title) { cell.title = title; cell.classList.add('has-tip'); }
       cell.appendChild(U.el('div', 'stat-value', value));
       cell.appendChild(U.el('div', 'stat-label', label));
       grid.appendChild(cell);
