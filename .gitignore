@@ -33,3 +33,4 @@ __pycache__/
 *.pyd
 log/仲裁.log
 log/巨大.log
+log/问题.log
