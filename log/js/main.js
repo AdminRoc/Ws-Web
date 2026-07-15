@@ -59,8 +59,12 @@
     TABS.forEach((tab) => {
       const btn = U.el('button', 'tab-btn');
       btn.dataset.tab = tab.id;
-      btn.appendChild(U.el('span', 'tab-cn', tab.label));
-      btn.appendChild(U.el('span', 'tab-en', tab.en));
+      btn.appendChild(U.el('span', 'tab-glow', ''));
+      btn.appendChild(U.el('span', 'tab-dot', ''));
+      const text = U.el('span', 'tab-text');
+      text.appendChild(U.el('span', 'tab-cn', tab.label));
+      text.appendChild(U.el('span', 'tab-en', tab.en));
+      btn.appendChild(text);
       const badge = U.el('span', 'tab-count', '');
       badge.style.display = 'none';
       btn.appendChild(badge);

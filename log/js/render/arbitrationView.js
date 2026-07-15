@@ -118,39 +118,49 @@ WF.arbitrationView = (function () {
     const durRow = U.el('div', 'arb-meta-sub');
     durRow.appendChild(document.createTextNode('主机时长 ' + fmtHMS(rec.duration) + `（${U.fmtDurationLong(rec.duration)}）`));
     meta.appendChild(durRow);
-    if (rec.lastClientDuration != null) {
-      const cliRow = U.el('div', 'arb-meta-sub arb-meta-hint');
-      cliRow.appendChild(document.createTextNode('全队在场时间 ' + fmtHMS(rec.lastClientDuration) + `（${U.fmtDurationLong(rec.lastClientDuration)}）`));
-      cliRow.title = '任务结束时间 − 最后一个外部玩家实体创建时刻。测量的是"全员到齐后一起玩的有效时长"，而非"第一个队友离开的时刻"。若全队均在任务开始前已加载完毕，则本行不显示。';
-      cliRow.classList.add('has-tip');
-      meta.appendChild(cliRow);
-    }
 
-    // ── 绝对时刻：首帧时刻 / 系统结算时刻（优先用记录自带的精确日期，回退到全局 clock）──
+    /* 以下四行——系统结算时间 / 全队在场时间 / 首帧时间 / 尾帧时间——无论数据是否
+       缺失、是否与其它行数值相同，都固定展示（缺失时用"—"+原因说明），
+       避免用户误以为是"没读出来"而非"这局本来就没有这项数据/两者恰好相同"。 */
     const _recDate = (t, recDate) => recDate || (clock && clock.available ? clock.toDate(t) : null);
     const approx = clock ? clock.approx : true;
-    if (rec.firstFrameT != null) {
-      const ffDate = _recDate(rec.firstFrameT, rec.firstFrameDate);
-      if (ffDate) {
-        const ffRow = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
-        ffRow.appendChild(document.createTextNode('首帧时刻 ' + U.fmtAbsTime(ffDate, approx)));
-        ffRow.title = 'HUD REDUX 首次渲染（载入完成、UI 就绪）的实际时刻';
-        meta.appendChild(ffRow);
-      }
+
+    function _metaRow(label, text, hint) {
+      const row = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
+      row.appendChild(document.createTextNode(label + ' ' + text));
+      if (hint) row.title = hint;
+      meta.appendChild(row);
+      return row;
     }
-    {
-      const endDate = _recDate(rec.endT, rec.endDate);
-      if (endDate) {
-        const endRow = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
-        endRow.appendChild(document.createTextNode('系统结算时刻 ' + U.fmtAbsTime(endDate, approx)));
-        endRow.title = '最后一次轮/波结算（无尽任务的有效终点）对应的实际时钟时间，与游戏内结算界面一致';
-        meta.appendChild(endRow);
-      }
+
+    // 全队在场时间
+    if (rec.lastClientDuration != null) {
+      _metaRow('全队在场时间', fmtHMS(rec.lastClientDuration) + `（${U.fmtDurationLong(rec.lastClientDuration)}）`,
+        '任务结束时间 − 最后一个外部玩家实体创建时刻。测量的是"全员到齐后一起玩的有效时长"。');
+    } else {
+      _metaRow('全队在场时间', '— （全员已在任务开始前入场，无需等待）',
+        '所有外部玩家实体的创建时刻均早于 SS_STARTED，说明开局前队伍已到齐，不存在"等待最后一人"的时长。');
     }
+
+    // 首帧时间（HUD REDUX 首次渲染）
+    const ffDate = rec.firstFrameT != null ? _recDate(rec.firstFrameT, rec.firstFrameDate) : null;
+    _metaRow('首帧时间', ffDate ? U.fmtAbsTime(ffDate, approx) : '— （日志中未捕获到 HUD REDUX 信号）',
+      'HUD REDUX 首次渲染（载入完成、UI 就绪）的实际时刻');
+
+    // 尾帧时间（与"系统结算时间"取自同一个任务有效终点——无尽任务没有独立于
+    // 轮次结算之外的"尾帧"事件，故两行数值通常相同，仍分别列出以免误解为漏读）
+    const endDate = _recDate(rec.endT, rec.endDate);
+    _metaRow('尾帧时间', endDate ? U.fmtAbsTime(endDate, approx) : '— （无法换算绝对时刻）',
+      '任务有效终点（无尽任务=最后一次轮/波结算）对应的实际时钟时间');
+
+    // 系统结算时间
+    _metaRow('系统结算时间', endDate ? U.fmtAbsTime(endDate, approx) : '— （无法换算绝对时刻）',
+      '与游戏内结算界面显示的时刻一致；本解析器中与"尾帧时间"取自同一个任务终点，数值相同属正常现象');
+
     if (rec.frameDuration != null) {
       const fdRow = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
       fdRow.appendChild(document.createTextNode('首帧 → 系统结算 ' + fmtHMS(rec.frameDuration) + `（${U.fmtDurationLong(rec.frameDuration)}）`));
-      fdRow.title = '系统结算时刻 − 首帧时刻，最接近"进入任务画面→系统结算"的体感时长';
+      fdRow.title = '系统结算时间 − 首帧时间，最接近"进入任务画面→系统结算"的体感时长';
       meta.appendChild(fdRow);
     }
     const metaSubs = [

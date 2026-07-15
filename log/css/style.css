@@ -1,4 +1,4 @@
-/* SUPER LOG — Warframe EE.log 分析器
+/* WTF EELOG — Warframe EE.log 分析器
  * 像素风 · 深空星野 · 彩虹晕染渐变（参考 WFSPEED.RUN 个人页配色）
  * 字体：xszt.ttf（像素中文字体） */
 @font-face {
@@ -101,32 +101,115 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
   width: 100%; text-align: justify; text-align-last: justify;
 }
 
-.nav-tabs { display: flex; gap: 4px; height: 100%; }
-.tab-btn {
-  position: relative; background: none; border: none; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 1px; padding: 0 18px; height: 100%;
-  color: var(--c-text2); transition: color var(--ease-fast);
-  font-family: var(--f-px); white-space: nowrap;
+/* 顶栏分页选项卡：原来只是紧贴 logo 左对齐堆一坨文字、连个可见的按钮实体
+   都没有。重做成真正有面板质感的斜切"控制台面板"：常驻可见的玻璃质感底板
+   + 描边发光 + 状态指示灯，悬停/选中/按下三态都有明确的位移与光效反馈。
+   动效全部只吃 transform / opacity / filter(drop-shadow) / background-position
+   这类合成层属性，不逐帧重算 shadowBlur，高帧率下依然流畅。 */
+.nav-tabs {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; justify-content: center; align-items: center;
+  gap: 8px; height: 100%; padding: 0 8px;
 }
-.tab-cn { font-size: 21px; letter-spacing: 2px; }
-.tab-en { font-size: 10px; letter-spacing: 2px; opacity: 0.7; }
+.tab-btn {
+  position: relative; border: none; cursor: pointer;
+  display: flex; flex-direction: row; align-items: center; justify-content: center;
+  gap: 8px; padding: 0 20px; height: 68%; flex: 0 1 auto;
+  color: var(--c-text2); overflow: visible;
+  font-family: var(--f-px); white-space: nowrap;
+  clip-path: polygon(11px 0, 100% 0, calc(100% - 11px) 100%, 0 100%);
+  background: linear-gradient(160deg, rgba(30, 38, 58, 0.6), rgba(10, 13, 24, 0.4));
+  box-shadow: inset 0 0 0 1px rgba(95, 208, 232, 0.16);
+  transition: color var(--ease-fast), background var(--ease-fast),
+              box-shadow var(--ease-fast), transform 0.16s cubic-bezier(.22,.68,0,1.4),
+              filter var(--ease-fast);
+}
+/* 状态指示灯：常驻小圆点，未激活时暗淡不闪，激活后常亮呼吸——一眼就能
+   看出"这是可交互的控制台按钮"，而不是纯文字 */
+.tab-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(107, 118, 144, 0.5);
+  transition: background var(--ease-fast), box-shadow var(--ease-fast);
+}
+.tab-text { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.tab-cn { font-size: 21px; letter-spacing: 2px; line-height: 1; }
+.tab-en { font-size: 10px; letter-spacing: 2px; opacity: 0.7; line-height: 1; }
+
+/* 底部实体高光条：默认收起，悬停/选中时展开 */
 .tab-btn::after {
-  content: ''; position: absolute; left: 12px; right: 12px; bottom: 0; height: 3px;
+  content: ''; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 3px;
+  border-radius: 2px;
   background: var(--rainbow);
   transform: scaleX(0); transform-origin: center; transition: transform var(--ease-med);
 }
-.tab-btn:hover { color: var(--c-text); }
-.tab-btn.active { color: var(--c-white); }
+.tab-btn .tab-glow {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: linear-gradient(180deg, rgba(95, 208, 232, 0.22) 0%, transparent 70%);
+  transition: opacity var(--ease-fast);
+}
+
+/* ── 悬停：面板整体上浮 + 描边点亮 + 外发光（drop-shadow 会贴合斜切轮廓，
+   不会像 box-shadow 那样被 clip-path 直接切掉） ── */
+.tab-btn:hover {
+  color: var(--c-white);
+  background: linear-gradient(160deg, rgba(95, 208, 232, 0.16), rgba(20, 26, 40, 0.5));
+  box-shadow: inset 0 0 0 1px rgba(95, 208, 232, 0.45);
+  transform: translateY(-3px);
+  filter: drop-shadow(0 4px 14px rgba(95, 208, 232, 0.28));
+}
+.tab-btn:hover .tab-glow { opacity: 1; }
+.tab-btn:hover .tab-dot { background: var(--c-teal); box-shadow: 0 0 8px rgba(95, 208, 232, 0.9); }
+.tab-btn:hover::after { transform: scaleX(0.55); }
+
+/* ── 按下：真实的按压回弹反馈，区别于纯粹的 hover 位移 ── */
+.tab-btn:active { transform: translateY(-1px) scale(0.96); transition-duration: 0.08s; }
+
+/* ── 选中态：持续点亮，比 hover 更亮一档，叠加顶部扫光动画 ── */
+.tab-btn.active {
+  color: var(--c-white);
+  background: linear-gradient(160deg, rgba(95, 208, 232, 0.22), rgba(20, 26, 40, 0.55));
+  box-shadow: inset 0 0 0 1px rgba(95, 208, 232, 0.65);
+  filter: drop-shadow(0 4px 16px rgba(95, 208, 232, 0.35));
+  animation: tabActivePulse 2.6s ease-in-out infinite;
+}
 .tab-btn.active::after { transform: scaleX(1); }
+.tab-btn.active .tab-glow { opacity: 1; }
+.tab-btn.active .tab-dot {
+  background: var(--c-white);
+  box-shadow: 0 0 10px rgba(95, 208, 232, 1);
+  animation: tabDotPulse 1.6s ease-in-out infinite;
+}
+@keyframes tabActivePulse {
+  0%, 100% { box-shadow: inset 0 0 0 1px rgba(95, 208, 232, 0.65); }
+  50%      { box-shadow: inset 0 0 0 1px rgba(95, 208, 232, 0.95); }
+}
+@keyframes tabDotPulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.4); opacity: 0.7; }
+}
+/* 扫光：仅 active tab 顶部划过一道细高光，background-position 动画，
+   只吃合成层，不影响帧率 */
+.tab-btn.active::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.18) 48%, rgba(255,255,255,.32) 50%, rgba(255,255,255,.18) 52%, transparent 70%);
+  background-size: 220% 100%;
+  animation: tabSweep 3.6s linear infinite;
+}
+@keyframes tabSweep { 0% { background-position: 160% 0; } 100% { background-position: -60% 0; } }
+
 .tab-count {
-  position: absolute; top: 9px; right: 2px;
+  position: relative; z-index: 2;
   min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px;
   font-size: 12px; line-height: 19px; font-family: var(--f-px);
   background: rgba(95, 208, 232, 0.12); color: var(--c-teal);
   border: 1px solid rgba(95, 208, 232, 0.4);
 }
 .tab-count.zero { background: rgba(107, 118, 144, 0.1); color: var(--c-text2); border-color: rgba(107, 118, 144, 0.3); }
+@media (prefers-reduced-motion: reduce) {
+  .tab-btn.active::before { animation: none; }
+  .tab-btn.active { animation: none; }
+  .tab-btn.active .tab-dot { animation: none; }
+}
 
 /* ================= 上传区 ================= */
 #dropzone {
