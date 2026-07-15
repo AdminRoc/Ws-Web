@@ -10,6 +10,9 @@
  *   - 节点/星球/派系/类型：任务名行 + 关卡资源路径（/Lotus/Levels/.../Proc/<派系>/<关卡名>）
  * 关键修复：无尽任务里 EndOfMatch.lua:Initialize 每轮都会触发，不能据此结束任务，
  *          否则会把一场 1 小时的仲裁误截成开局几分钟。
+ * 国际化修复：兼容中英文客户端（简体中文 "- 仲裁" / 英文 "- Arbitration"），
+ *          并以 _EliteAlert 节点 ID 后缀作为语言无关的最终兜底，确保任何语言客户端
+ *          的日志都能被正确识别为仲裁任务。
  */
 window.WF = window.WF || {};
 
@@ -19,7 +22,8 @@ WF.ArbitrationParser = (function () {
     cachedName:       /ThemedSquadOverlay\.lua: Cached mission name=(.+?)\s*$/,
     voteName:         /ThemedSquadOverlay\.lua: ShowMissionVote\s+(.+?)\s*$/,
     // 节点 (星球) - 仲裁 (SolNodeXXX) —— 尽量拆出节点名、星球名、节点 ID
-    nameParts:        /^(.+?)\s*\(([^()]+)\)\s*-\s*仲裁(?:\s*-[^()]*)?(?:\s*\(([A-Za-z0-9_]+?)(?:_EliteAlert)?\))?/,
+    // 国际化：同时兼容中文 "仲裁" 与英文 "Arbitration"（忽略大小写）
+    nameParts:        /^(.+?)\s*\(([^()]+)\)\s*-\s*(?:仲裁|Arbitration)(?:\s*-[^()]*)?(?:\s*\(([A-Za-z0-9_]+?)(?:_EliteAlert)?\))?/i,
     nodeIdParen:      /\(([A-Za-z0-9_/]+?)_EliteAlert\)/,
     // 关卡资源路径：/Lotus/Levels/.../Proc/<派系>/<关卡名> —— 关卡名含任务类型关键字
     levelPath:        /\/Lotus\/Levels\/(?:[A-Za-z]+\/)*Proc\/([A-Za-z]+)\/([A-Za-z0-9]+)/,
@@ -39,7 +43,10 @@ WF.ArbitrationParser = (function () {
     clientCreated:    /Game \[Info\]: CreatePlayerForClient\. id=(\d+), user name=(.+)$/,
   };
   const HUD_REDUX = 'HUD REDUX: Pushing background movie from Update';
-  const ARB_NAME_MARK = '- 仲裁';
+  // 国际化：同时匹配中文 "- 仲裁" 与英文 "- Arbitration"（忽略大小写）
+  const ARB_NAME_MARK = /-\s*(?:仲裁|Arbitration)\b/i;
+  // 语言无关的最终兜底：任何客户端日志中只要出现 _EliteAlert 节点 ID 后缀，即判定为仲裁
+  const ARB_ELITE_ALERT = /_EliteAlert\)/;
 
   // 期望生息常量（本项目按掉落规则实测标定）
   const BASE_DROP       = 0.06;                 // 每只磁盾无人机的基础期望
@@ -376,6 +383,7 @@ WF.ArbitrationParser = (function () {
         m.planet = mm[2].trim();
         if (mm[3]) m.nodeId = mm[3];
       } else if (!m.node) {
+        // 兼容旧 fallback：清理语言标记（中文或英文）
         m.node = clean.replace(ARB_NAME_MARK, '').replace(/-\s*$/, '').trim();
       }
     }
@@ -540,7 +548,11 @@ WF.ArbitrationParser = (function () {
         let nm = null;
         if (line.indexOf('ThemedSquadOverlay.lua') !== -1) {
           const r = RE.missionName.exec(line) || RE.cachedName.exec(line) || RE.voteName.exec(line);
-          if (r && r[1].indexOf(ARB_NAME_MARK) !== -1) nm = r[1].trim();
+          // 国际化三重保险：
+          // 1) 匹配中文 "- 仲裁" 或英文 "- Arbitration"（ARB_NAME_MARK 正则）
+          // 2) 匹配语言无关的 _EliteAlert 节点 ID 后缀（ARB_ELITE_ALERT 正则）
+          // 这样无论客户端语言如何，都能正确触发仲裁解析。
+          if (r && (ARB_NAME_MARK.test(r[1]) || ARB_ELITE_ALERT.test(r[1]))) nm = r[1].trim();
           // 括号形式的节点 ID 兜底
           const v = RE.nodeIdParen.exec(line);
           if (v && m) { if (!m.nodeId) m.nodeId = v[1]; }
