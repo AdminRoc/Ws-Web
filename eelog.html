@@ -237,24 +237,19 @@
           <span class="cta-arrow">→</span>
         </button>
         <a href="log/analyzer.html?tab=disruption" class="hero-cta-satellite sat-tl" data-label="中断" data-dir="tl">
-          <span class="sat-core"></span>
           <span class="sat-label">中断</span>
         </a>
         <a href="log/analyzer.html?tab=eidolon" class="hero-cta-satellite sat-tr" data-label="夜灵" data-dir="tr">
-          <span class="sat-core"></span>
           <span class="sat-label">夜灵</span>
         </a>
-        <a href="log/analyzer.html?tab=profitTaker" class="hero-cta-satellite sat-bl" data-label="蜘蛛" data-dir="bl">
-          <span class="sat-core"></span>
+        <a href="log/analyzer.html?tab=profile" class="hero-cta-satellite sat-b" data-label="个人资料" data-dir="b">
+          <span class="sat-label">个人资料</span>
+        </a>
+        <a href="log/analyzer.html?tab=profitTaker" class="hero-cta-satellite sat-bl2" data-label="蜘蛛" data-dir="bl2">
           <span class="sat-label">蜘蛛</span>
         </a>
-        <a href="log/analyzer.html?tab=arbitration" class="hero-cta-satellite sat-br" data-label="仲裁" data-dir="br">
-          <span class="sat-core"></span>
+        <a href="log/analyzer.html?tab=arbitration" class="hero-cta-satellite sat-br2" data-label="仲裁" data-dir="br2">
           <span class="sat-label">仲裁</span>
-        </a>
-        <a href="log/analyzer.html?tab=profile" class="hero-cta-satellite sat-b" data-label="个人资料" data-dir="b">
-          <span class="sat-core"></span>
-          <span class="sat-label">个人资料</span>
         </a>
       </div>
     </div>
@@ -278,18 +273,24 @@
       hub.classList.add('expanded');
     }
 
+    function collapse() {
+      if (!expanded || navigating) return;
+      expanded = false;
+      master.setAttribute('aria-expanded', 'false');
+      hub.classList.remove('expanded');
+    }
+
     master.addEventListener('mouseenter', expand);
     master.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      expand();
+      if (expanded) collapse(); else expand();
     });
 
-    // 点击空白处不收起：但点击 hub 内部非 satellite 区域也不影响
+    // 点击页面空白处收回
     document.addEventListener('click', function(e) {
       if (expanded && !hub.contains(e.target)) {
-        // 用户要求：点击空白处也不收回，直到点击次级按钮
-        // 所以这里什么都不做
+        collapse();
       }
     });
 
