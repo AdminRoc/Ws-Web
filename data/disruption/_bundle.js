@@ -792,6 +792,12 @@ var disruptionKappaSoloRecords = [
     uploadTime: "2026-06-12",
     videoUrls:     ["https://www.bilibili.com/video/BV1TsYmz7EzS"]
   },
+  {
+    clearTime:  "59:20.000",
+    playerId:   "Toxicccc.",
+    uploadTime: "2026-07-15",
+    videoUrls:     ["https://www.bilibili.com/video/BV1swNY6UE4r"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
