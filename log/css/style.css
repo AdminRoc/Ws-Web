@@ -873,7 +873,7 @@ body.profile-active #detail-wrap {
 .hero-desc {
   font-size: clamp(0.98rem, 1.6vw, 1.15rem); font-weight: 500;
   letter-spacing: 1.5px; max-width: 480px; line-height: 1.75;
-  margin-top: 10px; text-align: center;
+  margin-top: 14px; text-align: center;
   background: var(--rainbow);
   background-size: var(--rainbow-width) 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -966,23 +966,22 @@ body.profile-active #detail-wrap {
 .hero-cta:hover .cta-arrow { transform: translateX(10px); color: #fff; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   EELOG 主页超级 CTA —— "开始分析" 动态剥离展开系统 v2
-    redesign 要点：
-   • 每个 satellite 使用独立主题色 + 玻璃面板，不再用彩虹渐变当背景。
-   • 文字：白色粗体 + 深色描边，确保在霓虹背景上绝对清晰。
-   • 布局紧凑：spread 大幅缩小，确保在 100vh hero 内不溢出、不被裁切。
-   • 主按钮展开时整体向上位移 36px，给下方/两侧方块让出空间。
-   • 响应式变量控制 scale，高/低缩放下自适应。
+   EELOG 主页超级 CTA v3
+   核心要求：
+   • 主按钮保持原始"开始分析"炫彩材质不变。
+   • 展开后 5 个 satellite 使用与主按钮同质的彩虹炫彩材质。
+   • 主按钮展开时淡出/变暗，不遮挡 satellite。
+   • 5 个按钮位置严格对称：左上、右上、左下、右下、正下。
+   •  slogan 与上方间距已加一行。
    ═══════════════════════════════════════════════════════════════════════════ */
 .hero-cta-hub {
-  --sat-spread: 78px;    /* 水平/对角偏移 */
-  --sat-b-spread: 92px;  /* 下方偏移 */
-  --sat-size: 70px;      /* 方块边长 */
+  --sat-spread: 86px;
+  --sat-size: 78px;
   position: relative;
-  width: 280px; height: 280px;
-  min-width: 280px; min-height: 280px;
+  width: 300px; height: 300px;
+  min-width: 300px; min-height: 300px;
   display: flex; align-items: center; justify-content: center;
-  margin-top: 18px;
+  margin-top: 22px;
   overflow: visible;
 }
 .hero-cta-master {
@@ -995,9 +994,9 @@ body.profile-active #detail-wrap {
     linear-gradient(rgba(7,10,20,0.92), rgba(7,10,20,0.92)) padding-box,
     linear-gradient(90deg, rgba(65,255,142,0.55), rgba(69,200,255,0.55), rgba(168,107,255,0.55), rgba(65,255,142,0.55)) border-box;
   transition:
-    transform 0.55s cubic-bezier(.22,.68,0,1.25),
-    box-shadow 0.45s ease,
-    filter 0.45s ease;
+    transform 0.45s cubic-bezier(.22,.68,0,1.25),
+    opacity 0.35s ease,
+    box-shadow 0.35s ease;
   animation: ctaPulse 3.5s ease-in-out infinite;
 }
 .hero-cta-master .cta-text {
@@ -1007,12 +1006,9 @@ body.profile-active #detail-wrap {
 }
 .hero-cta-master:hover { transform: translateY(-3px) scale(1.05); }
 .hero-cta-hub.expanded .hero-cta-master {
-  transform: translateY(-36px) scale(0.9);
-  filter: brightness(0.7) saturate(0.8);
-  box-shadow:
-    0 0 14px rgba(95,208,232,0.15),
-    0 0 28px rgba(168,107,255,0.08),
-    inset 0 0 20px rgba(0,0,0,0.5);
+  transform: translateY(-10px) scale(0.88);
+  opacity: 0.22;
+  pointer-events: none;
   animation: none;
 }
 .hero-cta-master:hover .cta-text,
@@ -1020,85 +1016,87 @@ body.profile-active #detail-wrap {
   color: #fff; background: none; -webkit-background-clip: unset; background-clip: unset; animation: none;
 }
 
-/* 卫星按钮：初始叠在主按钮中心 */
 .hero-cta-satellite {
-  position: absolute; z-index: 15;
+  position: absolute; z-index: 25;
   left: 50%; top: 50%;
   width: var(--sat-size); height: var(--sat-size);
   margin: calc(var(--sat-size) * -0.5) 0 0 calc(var(--sat-size) * -0.5);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  border-radius: 12px; text-decoration: none;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; text-decoration: none;
   opacity: 0;
-  transform: translate3d(0, 0, 0) scale(0.2) rotateZ(var(--sat-rotate, 0deg));
+  transform: translate3d(0, 0, 0) scale(0.18) rotateZ(var(--sat-rotate, 0deg));
   pointer-events: none;
   transition:
-    opacity 0.32s cubic-bezier(.22,.68,0,1),
-    transform 0.75s cubic-bezier(.18,.82,.28,1.22);
+    opacity 0.35s cubic-bezier(.22,.68,0,1),
+    transform 0.8s cubic-bezier(.18,.84,.26,1.18);
   will-change: transform, opacity;
 }
-.hero-cta-satellite.sat-tl { --c-sat: #5fd0e8; --sat-rotate: -14deg; transition-delay: 0.04s; }
-.hero-cta-satellite.sat-tr { --c-sat: #a86bff; --sat-rotate:  12deg; transition-delay: 0.12s; }
-.hero-cta-satellite.sat-br { --c-sat: #41ff8e; --sat-rotate:  16deg; transition-delay: 0.20s; }
-.hero-cta-satellite.sat-bl { --c-sat: #ff7a5f; --sat-rotate: -12deg; transition-delay: 0.28s; }
-.hero-cta-satellite.sat-b  { --c-sat: #ff5f9e; --sat-rotate:   8deg; transition-delay: 0.36s; }
+.hero-cta-satellite.sat-tl { --sat-rotate: -18deg; transition-delay: 0.04s; }
+.hero-cta-satellite.sat-tr { --sat-rotate:  14deg; transition-delay: 0.12s; }
+.hero-cta-satellite.sat-br { --sat-rotate:  18deg; transition-delay: 0.20s; }
+.hero-cta-satellite.sat-bl { --sat-rotate: -14deg; transition-delay: 0.28s; }
+.hero-cta-satellite.sat-b  { --sat-rotate:   8deg; transition-delay: 0.36s; }
 
+/* satellite 材质与主按钮同质：黑底 + 彩虹边框 + 彩虹扫光 */
 .hero-cta-satellite .sat-core {
-  position: absolute; inset: 0; border-radius: 12px;
+  position: absolute; inset: 0; border-radius: 10px;
   background:
-    radial-gradient(circle at 30% 25%, rgba(255,255,255,0.22) 0%, transparent 45%),
-    radial-gradient(circle at 80% 80%, rgba(0,0,0,0.35) 0%, transparent 55%),
-    linear-gradient(135deg, var(--c-sat), rgba(255,255,255,0.12) 120%);
-  background-color: rgba(7,10,20,0.55);
-  border: 1px solid rgba(255,255,255,0.18);
+    linear-gradient(rgba(7,10,20,0.88), rgba(7,10,20,0.88)) padding-box,
+    var(--rainbow) border-box;
+  background-size: var(--rainbow-width) auto, var(--rainbow-width) auto;
+  border: 1.5px solid transparent;
   box-shadow:
-    0 0 0 1px var(--c-sat) inset,
-    0 0 12px var(--c-sat),
-    0 0 28px rgba(0,0,0,0.45);
-  transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.28s ease;
+    0 0 14px rgba(95,208,232,0.25),
+    0 0 32px rgba(168,107,255,0.18),
+    inset 0 0 18px rgba(0,0,0,0.45);
+  animation: titleShift 9s linear infinite;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
 }
 .hero-cta-satellite .sat-core::before {
-  content: ''; position: absolute; inset: -5px; border-radius: 15px;
-  background: var(--c-sat);
-  filter: blur(10px); opacity: 0.35;
+  content: ''; position: absolute; inset: -6px; border-radius: 14px;
+  background: var(--rainbow);
+  background-size: var(--rainbow-width) auto;
+  filter: blur(12px); opacity: 0.32;
   z-index: -1;
+  animation: titleShift 9s linear infinite;
 }
 .hero-cta-satellite .sat-core::after {
-  content: ''; position: absolute; inset: 0; border-radius: 12px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 40%, rgba(0,0,0,0.28) 100%);
+  content: ''; position: absolute; inset: 0; border-radius: 10px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.16) 0%, transparent 40%, rgba(0,0,0,0.32) 100%);
   pointer-events: none;
 }
 .hero-cta-satellite .sat-label {
   position: relative; z-index: 2;
-  font-size: 14px; font-weight: 700; letter-spacing: 2px; color: #fff;
+  font-size: 15px; font-weight: 700; letter-spacing: 2.5px; color: #fff;
   text-shadow:
     0 0 4px rgba(0,0,0,0.95),
-    0 0 10px rgba(0,0,0,0.8),
-    0 0 0 2px rgba(0,0,0,0.4);
+    0 0 10px rgba(0,0,0,0.85),
+    0 0 0 2px rgba(0,0,0,0.45);
   pointer-events: none;
   transition: transform 0.22s cubic-bezier(.22,.68,0,1.4);
 }
 
-/* 展开：紧凑扇形分布 */
+/* 展开位置：严格对称的十字+对角 */
 .hero-cta-hub.expanded .hero-cta-satellite { opacity: 1; pointer-events: auto; }
-.hero-cta-hub.expanded .sat-tl { transform: translate3d(calc(-1 * var(--sat-spread)), calc(-1 * var(--sat-spread) + 18px), 0) scale(1) rotateZ(0deg); }
-.hero-cta-hub.expanded .sat-tr { transform: translate3d(var(--sat-spread), calc(-1 * var(--sat-spread) + 18px), 0) scale(1) rotateZ(0deg); }
-.hero-cta-hub.expanded .sat-bl { transform: translate3d(calc(-1 * var(--sat-spread) - 8px), calc(var(--sat-spread) - 24px), 0) scale(1) rotateZ(0deg); }
-.hero-cta-hub.expanded .sat-br { transform: translate3d(calc(var(--sat-spread) + 8px), calc(var(--sat-spread) - 24px), 0) scale(1) rotateZ(0deg); }
-.hero-cta-hub.expanded .sat-b  { transform: translate3d(0, calc(var(--sat-b-spread) - 10px), 0) scale(1) rotateZ(0deg); }
+.hero-cta-hub.expanded .sat-tl { transform: translate3d(calc(-1 * var(--sat-spread)), calc(-1 * var(--sat-spread)), 0) scale(1) rotateZ(0deg); }
+.hero-cta-hub.expanded .sat-tr { transform: translate3d(var(--sat-spread), calc(-1 * var(--sat-spread)), 0) scale(1) rotateZ(0deg); }
+.hero-cta-hub.expanded .sat-bl { transform: translate3d(calc(-1 * var(--sat-spread)), var(--sat-spread), 0) scale(1) rotateZ(0deg); }
+.hero-cta-hub.expanded .sat-br { transform: translate3d(var(--sat-spread), var(--sat-spread), 0) scale(1) rotateZ(0deg); }
+.hero-cta-hub.expanded .sat-b  { transform: translate3d(0, calc(var(--sat-spread) + 12px), 0) scale(1) rotateZ(0deg); }
 
-/* hover */
-.hero-cta-satellite:hover { z-index: 25; transition-delay: 0s; transition-duration: 0.22s; }
-.hero-cta-satellite.sat-tl:hover { transform: translate3d(calc(-1 * var(--sat-spread) - 6px), calc(-1 * var(--sat-spread) + 12px), 0) scale(1.12) rotateZ(0deg) !important; }
-.hero-cta-satellite.sat-tr:hover { transform: translate3d(calc(var(--sat-spread) + 6px), calc(-1 * var(--sat-spread) + 12px), 0) scale(1.12) rotateZ(0deg) !important; }
-.hero-cta-satellite.sat-bl:hover { transform: translate3d(calc(-1 * var(--sat-spread) - 14px), calc(var(--sat-spread) - 30px), 0) scale(1.12) rotateZ(0deg) !important; }
-.hero-cta-satellite.sat-br:hover { transform: translate3d(calc(var(--sat-spread) + 14px), calc(var(--sat-spread) - 30px), 0) scale(1.12) rotateZ(0deg) !important; }
-.hero-cta-satellite.sat-b:hover  { transform: translate3d(0, calc(var(--sat-b-spread) - 16px), 0) scale(1.12) rotateZ(0deg) !important; }
+/* hover：再向外推一点 */
+.hero-cta-satellite:hover { z-index: 30; transition-delay: 0s; transition-duration: 0.22s; }
+.hero-cta-satellite.sat-tl:hover { transform: translate3d(calc(-1 * var(--sat-spread) - 8px), calc(-1 * var(--sat-spread) - 8px), 0) scale(1.12) rotateZ(0deg) !important; }
+.hero-cta-satellite.sat-tr:hover { transform: translate3d(calc(var(--sat-spread) + 8px), calc(-1 * var(--sat-spread) - 8px), 0) scale(1.12) rotateZ(0deg) !important; }
+.hero-cta-satellite.sat-bl:hover { transform: translate3d(calc(-1 * var(--sat-spread) - 8px), calc(var(--sat-spread) + 8px), 0) scale(1.12) rotateZ(0deg) !important; }
+.hero-cta-satellite.sat-br:hover { transform: translate3d(calc(var(--sat-spread) + 8px), calc(var(--sat-spread) + 8px), 0) scale(1.12) rotateZ(0deg) !important; }
+.hero-cta-satellite.sat-b:hover  { transform: translate3d(0, calc(var(--sat-spread) + 20px), 0) scale(1.12) rotateZ(0deg) !important; }
 .hero-cta-satellite:hover .sat-core {
-  filter: brightness(1.2);
+  filter: brightness(1.15);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.45) inset,
-    0 0 18px var(--c-sat),
-    0 0 38px var(--c-sat);
+    0 0 18px rgba(95,208,232,0.45),
+    0 0 40px rgba(168,107,255,0.28),
+    inset 0 0 18px rgba(0,0,0,0.45);
 }
 .hero-cta-satellite:hover .sat-label { transform: scale(1.08); }
 
@@ -1106,32 +1104,29 @@ body.profile-active #detail-wrap {
 .hero-cta-satellite.clicked {
   transition: transform 0.16s ease-out, opacity 0.16s ease-out !important;
   transform: translate3d(var(--sat-tx,0), var(--sat-ty,0), 0) scale(0.85) !important;
-  opacity: 0.5 !important;
+  opacity: 0.45 !important;
 }
-.hero-cta-satellite.sat-tl { --sat-tx: calc(-1 * var(--sat-spread)); --sat-ty: calc(-1 * var(--sat-spread) + 18px); }
-.hero-cta-satellite.sat-tr { --sat-tx: var(--sat-spread); --sat-ty: calc(-1 * var(--sat-spread) + 18px); }
-.hero-cta-satellite.sat-bl { --sat-tx: calc(-1 * var(--sat-spread) - 8px); --sat-ty: calc(var(--sat-spread) - 24px); }
-.hero-cta-satellite.sat-br { --sat-tx: calc(var(--sat-spread) + 8px); --sat-ty: calc(var(--sat-spread) - 24px); }
-.hero-cta-satellite.sat-b  { --sat-tx: 0; --sat-ty: calc(var(--sat-b-spread) - 10px); }
+.hero-cta-satellite.sat-tl { --sat-tx: calc(-1 * var(--sat-spread)); --sat-ty: calc(-1 * var(--sat-spread)); }
+.hero-cta-satellite.sat-tr { --sat-tx: var(--sat-spread); --sat-ty: calc(-1 * var(--sat-spread)); }
+.hero-cta-satellite.sat-bl { --sat-tx: calc(-1 * var(--sat-spread)); --sat-ty: var(--sat-spread); }
+.hero-cta-satellite.sat-br { --sat-tx: var(--sat-spread); --sat-ty: var(--sat-spread); }
+.hero-cta-satellite.sat-b  { --sat-tx: 0; --sat-ty: calc(var(--sat-spread) + 12px); }
 
 /* 响应式 */
-@media (max-width: 520px), (max-height: 700px) {
-  .hero-cta-hub { --sat-spread: 64px; --sat-b-spread: 78px; --sat-size: 60px; width: 240px; height: 240px; min-width: 240px; min-height: 240px; }
+@media (max-width: 520px), (max-height: 720px) {
+  .hero-cta-hub { --sat-spread: 70px; --sat-size: 66px; width: 260px; height: 260px; min-width: 260px; min-height: 260px; }
   .hero-cta-master { padding: 17px 44px; font-size: 17px; }
-  .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-28px) scale(0.9); }
-  .hero-cta-satellite .sat-label { font-size: 12px; letter-spacing: 1.5px; }
+  .hero-cta-satellite .sat-label { font-size: 13px; letter-spacing: 2px; }
 }
-@media (max-width: 380px), (max-height: 580px) {
-  .hero-cta-hub { --sat-spread: 54px; --sat-b-spread: 66px; --sat-size: 54px; width: 210px; height: 210px; min-width: 210px; min-height: 210px; }
+@media (max-width: 380px), (max-height: 600px) {
+  .hero-cta-hub { --sat-spread: 58px; --sat-size: 58px; width: 230px; height: 230px; min-width: 230px; min-height: 230px; }
   .hero-cta-master { padding: 15px 38px; font-size: 15px; letter-spacing: 3px; }
-  .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-24px) scale(0.88); }
-  .hero-cta-satellite .sat-label { font-size: 11px; }
+  .hero-cta-satellite .sat-label { font-size: 11.5px; }
 }
 @media (min-width: 1400px) and (min-height: 800px) {
-  .hero-cta-hub { --sat-spread: 96px; --sat-b-spread: 112px; --sat-size: 80px; width: 340px; height: 340px; min-width: 340px; min-height: 340px; }
+  .hero-cta-hub { --sat-spread: 108px; --sat-size: 86px; width: 360px; height: 360px; min-width: 360px; min-height: 360px; }
   .hero-cta-master { padding: 22px 64px; font-size: 21px; }
-  .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-42px) scale(0.9); }
-  .hero-cta-satellite .sat-label { font-size: 15px; }
+  .hero-cta-satellite .sat-label { font-size: 16px; }
 }
 
 /* 功能模块区 */
