@@ -1,4 +1,4 @@
-/* 夜灵 (Eidolon) 解析器 —— 计时口径对齐 idalon.com "real time"：
+/* 夜灵 (Eidolon) 解析器 —— 计时口径采用玩家社区通行的"实际耗时"标准：
  *   小轮起点 = 夜晚开始（每次进平原后 TeralystEncounter 脚本打出的 "It's nighttime!" 行；
  *              首轮提前进门等夜时，该行即真实夜晚开始瞬间）
  *   小轮终点 = 水力使捕获后赋能掉落在地上（SnapPickupToGround DefaultArcanePickup，
@@ -40,9 +40,9 @@ WF.EidolonParser = (function () {
     function newRound(t) {
       round = {
         loadDoneAt: t,
-        startAnchor: null,   // 进平原后首个 "It's nighttime!" = idalon 计时起点
+        startAnchor: null,   // 进平原后首个 "It's nighttime!" = 标准计时起点
         captures: [],
-        lootT: null,         // 水力使赋能掉落 = idalon 计时终点
+        lootT: null,         // 水力使赋能掉落 = 标准计时终点
         awaitLoot: false,
         killed: false,
         teralystSpawnedAt: null,
@@ -176,7 +176,7 @@ WF.EidolonParser = (function () {
           if (night && t - night.lastEventT > NIGHT_GAP) closeNight(night.lastEventT);
           if (!night) night = { startT: t, lastEventT: t, attempts: [], endingT: null };
           else night.lastEventT = t;
-          if (round && round.startAnchor == null) round.startAnchor = t; // idalon 计时起点
+          if (round && round.startAnchor == null) round.startAnchor = t; // 标准计时起点
           return;
         }
         if (line.indexOf(PAT.daytime) !== -1) {
