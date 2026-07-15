@@ -269,6 +269,7 @@
     var master = document.getElementById('heroCtaMaster');
     var satellites = [].slice.call(hub.querySelectorAll('.hero-cta-satellite'));
     var expanded = false;
+    var navigating = false;
 
     function expand() {
       if (expanded) return;
@@ -280,27 +281,45 @@
     master.addEventListener('mouseenter', expand);
     master.addEventListener('click', function(e) {
       e.preventDefault();
+      e.stopPropagation();
       expand();
+    });
+
+    // 点击空白处不收起：但点击 hub 内部非 satellite 区域也不影响
+    document.addEventListener('click', function(e) {
+      if (expanded && !hub.contains(e.target)) {
+        // 用户要求：点击空白处也不收回，直到点击次级按钮
+        // 所以这里什么都不做
+      }
     });
 
     satellites.forEach(function(sat) {
       sat.addEventListener('click', function(e) {
         e.preventDefault();
+        e.stopPropagation();
+        if (navigating) return;
+        navigating = true;
+
         var url = sat.getAttribute('href');
-        document.body.style.transition = 'filter .2s, opacity .2s';
-        document.body.style.filter = 'hue-rotate(90deg) saturate(5) brightness(2)';
-        document.body.style.opacity = '0.85';
-        setTimeout(function() {
-          document.body.style.filter = 'hue-rotate(200deg) contrast(4) invert(0.35)';
-          document.body.style.opacity = '0.45';
-        }, 180);
-        setTimeout(function() {
-          document.body.style.filter = 'hue-rotate(290deg) saturate(8) brightness(3)';
-          document.body.style.opacity = '0.2';
-        }, 360);
-        setTimeout(function() {
-          window.location.href = url;
-        }, 540);
+        sat.classList.add('clicked');
+
+        // 先让 clicked 状态渲染一帧，再启动全页 glitch 跳转
+        requestAnimationFrame(function() {
+          document.body.style.transition = 'filter .12s, opacity .12s';
+          document.body.style.filter = 'hue-rotate(90deg) saturate(5) brightness(2)';
+          document.body.style.opacity = '0.85';
+          setTimeout(function() {
+            document.body.style.filter = 'hue-rotate(200deg) contrast(4) invert(0.35)';
+            document.body.style.opacity = '0.45';
+          }, 140);
+          setTimeout(function() {
+            document.body.style.filter = 'hue-rotate(290deg) saturate(8) brightness(3)';
+            document.body.style.opacity = '0.2';
+          }, 320);
+          setTimeout(function() {
+            window.location.href = url;
+          }, 520);
+        });
       });
     });
   })();

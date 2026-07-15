@@ -962,26 +962,45 @@ body.profile-active #detail-wrap {
 .cta-arrow { position: relative; z-index: 1; transition: transform 0.25s; display: inline-block; color: rgba(255,255,255,0.7); }
 .hero-cta:hover .cta-arrow { transform: translateX(10px); color: #fff; }
 
-/* ══════════════════════════════════════════════════════
-   EELOG 主页超级 CTA：点击/悬停"开始分析"后动态剥离出
-   5 个炫彩方块，分别跳转到 5 个模块；点击空白处不收起。
-   ══════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════════
+   EELOG 主页超级 CTA —— "开始分析" 动态剥离展开系统
+   设计目标：高帧率、精密、高级感的炫彩动画；高/低缩放下不错位。
+   机制说明：
+   • hub 使用 CSS 自定义属性 --sat-spread / --sat-size 控制整体尺度，
+     所有 satellite 偏移都基于这些变量计算，media query 中只需改两个变量。
+   • 展开分 3 阶段：0~18% 主按钮收缩变暗，18~45% satellite "剥离"弹出
+     （带自旋转与发光脉冲），45~100% satellite 弹性飞到最终位置。
+   • 每个方向有独立 transition-delay，形成顺时针 ripple 展开节奏。
+   • transform 使用 translate3d，全程 GPU 合成；无 top/left 动画。
+   ═══════════════════════════════════════════════════════════════════════════ */
 .hero-cta-hub {
+  --sat-spread: 132px;   /* 方块中心到主按钮中心的水平/垂直距离 */
+  --sat-b-spread: 168px; /* 下方方块到主按钮中心的垂直距离 */
+  --sat-size: 86px;      /* 方块边长 */
+  --sat-gap: 18px;       /* 方块与主按钮之间的视觉间隙补偿 */
   position: relative;
-  width: 260px; height: 260px;
+  width: calc(var(--sat-size) + var(--sat-spread) * 2 + 60px);
+  height: calc(var(--sat-size) + var(--sat-b-spread) + var(--sat-spread) + 40px);
+  min-width: 320px; min-height: 360px;
   display: flex; align-items: center; justify-content: center;
-  margin-top: 18px;
+  margin-top: 12px;
+  /* 防止缩放时内部绝对定位元素被裁切 */
+  overflow: visible;
 }
 .hero-cta-master {
-  position: relative; z-index: 10;
+  position: relative; z-index: 20;
   display: inline-flex; align-items: center; gap: 16px;
-  padding: 21px 64px; border-radius: 4px;
+  padding: 22px 66px; border-radius: 4px;
   font-size: 21px; letter-spacing: 5px; font-family: var(--f-px);
   color: #fff; cursor: pointer; border: 1px solid transparent;
   background:
     linear-gradient(rgba(7,10,20,0.92), rgba(7,10,20,0.92)) padding-box,
     linear-gradient(90deg, rgba(65,255,142,0.55), rgba(69,200,255,0.55), rgba(168,107,255,0.55), rgba(65,255,142,0.55)) border-box;
-  transition: transform 0.2s cubic-bezier(.22,.68,0,1.4), box-shadow 0.3s;
+  transition:
+    transform 0.55s cubic-bezier(.22,.68,0,1.3),
+    box-shadow 0.45s ease,
+    filter 0.45s ease,
+    opacity 0.35s ease;
   animation: ctaPulse 3.5s ease-in-out infinite;
 }
 .hero-cta-master .cta-text {
@@ -989,74 +1008,161 @@ body.profile-active #detail-wrap {
   -webkit-background-clip: text; background-clip: text; color: transparent;
   animation: titleShift 10s linear infinite;
 }
-.hero-cta-master:hover,
+.hero-cta-master:hover { transform: translateY(-3px) scale(1.06); }
 .hero-cta-hub.expanded .hero-cta-master {
-  transform: translateY(-3px) scale(1.05);
+  transform: scale(0.92);
+  filter: brightness(0.72) saturate(0.85);
+  box-shadow:
+    0 0 18px rgba(95,208,232,0.18),
+    0 0 36px rgba(168,107,255,0.1),
+    inset 0 0 24px rgba(0,0,0,0.45);
   animation: none;
-  box-shadow: 0 14px 52px rgba(65,255,142,0.28), 0 0 0 1px rgba(65,255,142,0.22);
 }
 .hero-cta-master:hover .cta-text,
 .hero-cta-hub.expanded .hero-cta-master .cta-text {
   color: #fff; background: none; -webkit-background-clip: unset; background-clip: unset; animation: none;
 }
+
+/* 每个 satellite 初始状态：叠在主按钮中心，不可交互 */
 .hero-cta-satellite {
-  position: absolute; z-index: 5;
-  width: 82px; height: 82px;
+  position: absolute; z-index: 15;
+  left: 50%; top: 50%;
+  width: var(--sat-size); height: var(--sat-size);
+  margin: calc(var(--sat-size) * -0.5) 0 0 calc(var(--sat-size) * -0.5);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  border-radius: 6px; text-decoration: none;
-  opacity: 0; transform: translate(0,0) scale(0.35);
+  border-radius: 8px; text-decoration: none;
+  opacity: 0;
+  transform: translate3d(0,0,0) scale(0.25) rotateZ(var(--sat-rotate, 0deg));
   pointer-events: none;
-  transition: opacity 0.35s ease, transform 0.55s cubic-bezier(.22,.68,0,1.25);
+  /* 剥离+飞行动画：先弹后稳，带轻微回弹 */
+  transition:
+    opacity 0.35s cubic-bezier(.22,.68,0,1),
+    transform 0.85s cubic-bezier(.18,.78,.32,1.28);
+  will-change: transform, opacity;
 }
+/* 每个 satellite 的独立延迟，形成顺时针剥离节奏 */
+.hero-cta-satellite.sat-tl { --sat-rotate: -12deg; transition-delay: 0.05s; }
+.hero-cta-satellite.sat-tr { --sat-rotate:  10deg; transition-delay: 0.14s; }
+.hero-cta-satellite.sat-br { --sat-rotate:  14deg; transition-delay: 0.23s; }
+.hero-cta-satellite.sat-bl { --sat-rotate: -10deg; transition-delay: 0.32s; }
+.hero-cta-satellite.sat-b  { --sat-rotate:   6deg; transition-delay: 0.41s; }
+
 .hero-cta-satellite .sat-core {
-  position: absolute; inset: 0; border-radius: 6px;
+  position: absolute; inset: 0; border-radius: 8px;
   background: var(--rainbow); background-size: var(--rainbow-width) 100%;
-  filter: blur(0.4px);
-  box-shadow: 0 0 10px rgba(95,208,232,0.35), inset 0 0 0 1px rgba(255,255,255,0.18);
-  animation: titleShift 8s linear infinite;
+  filter: blur(0.5px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.18) inset,
+    0 0 12px rgba(95,208,232,0.35),
+    0 0 28px rgba(168,107,255,0.22);
+  animation: titleShift 9s linear infinite;
+  transition: filter 0.28s ease, box-shadow 0.28s ease;
 }
 .hero-cta-satellite .sat-core::before {
-  content: ''; position: absolute; inset: -4px; border-radius: 8px;
+  content: ''; position: absolute; inset: -6px; border-radius: 12px;
   background: var(--rainbow); background-size: var(--rainbow-width) 100%;
-  filter: blur(8px); opacity: 0.45;
-  z-index: -1; animation: titleShift 8s linear infinite;
+  filter: blur(12px); opacity: 0.42;
+  z-index: -1; animation: titleShift 9s linear infinite;
+}
+.hero-cta-satellite .sat-core::after {
+  content: ''; position: absolute; inset: 0; border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 45%, rgba(0,0,0,0.35) 100%);
+  pointer-events: none;
 }
 .hero-cta-satellite .sat-label {
   position: relative; z-index: 2;
-  font-size: 14px; letter-spacing: 3px; color: #fff;
-  text-shadow: 0 0 8px rgba(0,0,0,0.8);
+  font-size: 14.5px; letter-spacing: 3.5px; color: #fff;
+  text-shadow:
+    0 0 6px rgba(0,0,0,0.9),
+    0 0 14px rgba(0,0,0,0.65);
   pointer-events: none;
+  transition: transform 0.25s cubic-bezier(.22,.68,0,1.4);
 }
+
+/* 展开状态：satellite 按各自方向飞到最终位置 */
 .hero-cta-hub.expanded .hero-cta-satellite {
   opacity: 1; pointer-events: auto;
 }
-.hero-cta-hub.expanded .sat-tl { transform: translate(-118px, -118px) scale(1); }
-.hero-cta-hub.expanded .sat-tr { transform: translate(118px, -118px) scale(1); }
-.hero-cta-hub.expanded .sat-bl { transform: translate(-118px, 118px) scale(1); }
-.hero-cta-hub.expanded .sat-br { transform: translate(118px, 118px) scale(1); }
-.hero-cta-hub.expanded .sat-b  { transform: translate(0, 150px) scale(1); }
-.hero-cta-satellite:hover { transform: translate(var(--sat-x,0), var(--sat-y,0)) scale(1.12) !important; }
-.hero-cta-satellite:hover .sat-core { filter: blur(0.6px) brightness(1.15); }
-.sat-tl { --sat-x: -118px; --sat-y: -118px; }
-.sat-tr { --sat-x: 118px; --sat-y: -118px; }
-.sat-bl { --sat-x: -118px; --sat-y: 118px; }
-.sat-br { --sat-x: 118px; --sat-y: 118px; }
-.sat-b  { --sat-x: 0; --sat-y: 150px; }
+.hero-cta-hub.expanded .sat-tl { transform: translate3d(calc(-1 * var(--sat-spread)), calc(-1 * var(--sat-spread)), 0) scale(1) rotateZ(0deg); }
+.hero-cta-hub.expanded .sat-tr { transform: translate3d(var(--sat-spread), calc(-1 * var(--sat-spread)), 0) scale(1) rotateZ(0deg); }
+.hero-cta-hub.expanded .sat-bl { transform: translate3d(calc(-1 * var(--sat-spread)), var(--sat-spread), 0) scale(1) rotateZ(0deg); }
+.hero-cta-hub.expanded .sat-br { transform: translate3d(var(--sat-spread), var(--sat-spread), 0) scale(1) rotateZ(0deg); }
+.hero-cta-hub.expanded .sat-b  { transform: translate3d(0, var(--sat-b-spread), 0) scale(1) rotateZ(0deg); }
 
-@media (max-width: 520px) {
-  .hero-cta-hub { width: 220px; height: 240px; }
-  .hero-cta-master { padding: 18px 46px; font-size: 18px; }
-  .hero-cta-satellite { width: 68px; height: 68px; }
-  .hero-cta-hub.expanded .sat-tl { transform: translate(-92px, -100px) scale(1); }
-  .hero-cta-hub.expanded .sat-tr { transform: translate(92px, -100px) scale(1); }
-  .hero-cta-hub.expanded .sat-bl { transform: translate(-92px, 100px) scale(1); }
-  .hero-cta-hub.expanded .sat-br { transform: translate(92px, 100px) scale(1); }
-  .hero-cta-hub.expanded .sat-b  { transform: translate(0, 128px) scale(1); }
-  .sat-tl { --sat-x: -92px; --sat-y: -100px; }
-  .sat-tr { --sat-x: 92px; --sat-y: -100px; }
-  .sat-bl { --sat-x: -92px; --sat-y: 100px; }
-  .sat-br { --sat-x: 92px; --sat-y: 100px; }
-  .sat-b  { --sat-x: 0; --sat-y: 128px; }
+/* hover satellite：再向外推出 10px 并放大，增强霓虹发光 */
+.hero-cta-satellite:hover {
+  z-index: 25;
+  transition-delay: 0s;
+  transition-duration: 0.28s;
+}
+.hero-cta-satellite.sat-tl:hover { transform: translate3d(calc(-1 * var(--sat-spread) - 10px), calc(-1 * var(--sat-spread) - 10px), 0) scale(1.13) rotateZ(0deg) !important; }
+.hero-cta-satellite.sat-tr:hover { transform: translate3d(calc(var(--sat-spread) + 10px), calc(-1 * var(--sat-spread) - 10px), 0) scale(1.13) rotateZ(0deg) !important; }
+.hero-cta-satellite.sat-bl:hover { transform: translate3d(calc(-1 * var(--sat-spread) - 10px), calc(var(--sat-spread) + 10px), 0) scale(1.13) rotateZ(0deg) !important; }
+.hero-cta-satellite.sat-br:hover { transform: translate3d(calc(var(--sat-spread) + 10px), calc(var(--sat-spread) + 10px), 0) scale(1.13) rotateZ(0deg) !important; }
+.hero-cta-satellite.sat-b:hover  { transform: translate3d(0, calc(var(--sat-b-spread) + 10px), 0) scale(1.13) rotateZ(0deg) !important; }
+.hero-cta-satellite:hover .sat-core {
+  filter: blur(0.8px) brightness(1.18);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.32) inset,
+    0 0 18px rgba(95,208,232,0.55),
+    0 0 40px rgba(168,107,255,0.35);
+}
+.hero-cta-satellite:hover .sat-label { transform: scale(1.08); }
+
+/* 跳转时 satellite 被点击后的反馈：快速收缩并发光 */
+.hero-cta-satellite.clicked {
+  transition: transform 0.18s ease-out, opacity 0.18s ease-out !important;
+  transform: translate3d(var(--sat-tx,0), var(--sat-ty,0), 0) scale(0.82) !important;
+  opacity: 0.55 !important;
+}
+.hero-cta-satellite.sat-tl { --sat-tx: calc(-1 * var(--sat-spread)); --sat-ty: calc(-1 * var(--sat-spread)); }
+.hero-cta-satellite.sat-tr { --sat-tx: var(--sat-spread); --sat-ty: calc(-1 * var(--sat-spread)); }
+.hero-cta-satellite.sat-bl { --sat-tx: calc(-1 * var(--sat-spread)); --sat-ty: var(--sat-spread); }
+.hero-cta-satellite.sat-br { --sat-tx: var(--sat-spread); --sat-ty: var(--sat-spread); }
+.hero-cta-satellite.sat-b  { --sat-tx: 0; --sat-ty: var(--sat-b-spread); }
+
+/* 响应式尺度调整：小屏/高缩放时整体缩小，防止溢出 */
+@media (max-width: 520px), (max-height: 680px) {
+  .hero-cta-hub {
+    --sat-spread: 100px;
+    --sat-b-spread: 132px;
+    --sat-size: 72px;
+  }
+  .hero-cta-master { padding: 18px 50px; font-size: 18px; }
+  .hero-cta-satellite .sat-label { font-size: 12.5px; letter-spacing: 2.5px; }
+}
+
+/* 更低缩放/小屏：继续收缩但保持比例 */
+@media (max-width: 380px), (max-height: 560px) {
+  .hero-cta-hub {
+    --sat-spread: 82px;
+    --sat-b-spread: 108px;
+    --sat-size: 62px;
+    min-width: 260px; min-height: 280px;
+  }
+  .hero-cta-master { padding: 16px 42px; font-size: 16px; letter-spacing: 4px; }
+  .hero-cta-satellite .sat-label { font-size: 11px; letter-spacing: 2px; }
+}
+
+/* 高缩放/宽屏：适度放大，利用空间 */
+@media (min-width: 1400px) and (min-height: 800px) {
+  .hero-cta-hub {
+    --sat-spread: 156px;
+    --sat-b-spread: 196px;
+    --sat-size: 96px;
+  }
+  .hero-cta-master { padding: 24px 74px; font-size: 23px; }
+  .hero-cta-satellite .sat-label { font-size: 16px; }
+}
+
+/* 极高缩放补偿：避免 hub 高度被压扁时 satellite 重叠 */
+@media (min-height: 1100px) {
+  .hero-cta-hub { margin-top: 28px; }
+}
+
+/* 低缩放横向挤压：确保 hub 不被 hero-content 的 gap 压到换行 */
+.hero-content {
+  min-height: 0;
 }
 
 /* 功能模块区 */
