@@ -811,9 +811,9 @@ body.profile-active #detail-wrap {
 /* Hero 区域 */
 .home-hero {
   min-height: calc(100vh - var(--nav-h));
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: stretch; justify-content: center;
   position: relative; overflow: hidden; text-align: center;
-  padding: 50px 0 220px; /* 底部留足空间给弧形展开的 CTA */
+  padding: 0;
   background:
     radial-gradient(ellipse 900px 700px at 12% 78%, rgba(65,255,142,0.055) 0%, transparent 65%),
     radial-gradient(ellipse 900px 700px at 88% 22%, rgba(69,200,255,0.065) 0%, transparent 65%),
@@ -835,9 +835,25 @@ body.profile-active #detail-wrap {
 }
 .hero-content {
   position: relative; z-index: 1;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  padding: 28px 28px 80px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 28px;
   max-width: min(92vw, 760px);
+  width: 100%;
+}
+.hero-top-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.hero-spacer {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
 }
 .hero-eyebrow {
   font-size: 12px; letter-spacing: 7px; color: var(--c-text2);
@@ -873,7 +889,7 @@ body.profile-active #detail-wrap {
 .hero-desc {
   font-size: clamp(0.98rem, 1.6vw, 1.15rem); font-weight: 500;
   letter-spacing: 1.5px; max-width: 480px; line-height: 1.75;
-  margin-top: 28px; text-align: center;
+  text-align: center;
   background: var(--rainbow);
   background-size: var(--rainbow-width) 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -976,10 +992,9 @@ body.profile-active #detail-wrap {
    ═══════════════════════════════════════════════════════════════════════════ */
 .hero-cta-hub {
   position: relative;
-  width: 520px; height: 220px;
-  min-width: 520px; min-height: 220px;
+  width: 640px; height: 280px;
+  min-width: 640px; min-height: 280px;
   display: flex; align-items: flex-start; justify-content: center;
-  margin-top: 28px;
   overflow: visible;
 }
 
@@ -1005,7 +1020,7 @@ body.profile-active #detail-wrap {
 }
 .hero-cta-master:hover { transform: translateY(-3px) scale(1.05); }
 .hero-cta-hub.expanded .hero-cta-master {
-  transform: translateY(-22px) scale(1.02);
+  transform: translateY(-28px) scale(1.02);
   animation: ctaPulse 3.5s ease-in-out infinite;
 }
 .hero-cta-master:hover .cta-text,
@@ -1062,13 +1077,17 @@ body.profile-active #detail-wrap {
     0 0 32px rgba(168,107,255,0.22);
 }
 /* 弧形坐标 */
-.hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 200px), 26px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 100px), 78px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 96px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 100px), 78px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 200px), 26px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 260px), 40px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 130px), 100px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 130px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 130px), 100px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 260px), 40px, 0) scale(1); }
 
-/* hover 向外推 */
+.hero-cta-hub.expanded .sat-tl:hover  { transform: translate3d(calc(-50% - 268px), 32px, 0) scale(1.06); }
+.hero-cta-hub.expanded .sat-tr:hover  { transform: translate3d(calc(-50% - 138px), 92px, 0) scale(1.06); }
+.hero-cta-hub.expanded .sat-b:hover   { transform: translate3d(-50%, 138px, 0) scale(1.06); }
+.hero-cta-hub.expanded .sat-bl2:hover { transform: translate3d(calc(-50% + 138px), 92px, 0) scale(1.06); }
+.hero-cta-hub.expanded .sat-br2:hover { transform: translate3d(calc(-50% + 268px), 32px, 0) scale(1.06); }
 .hero-cta-satellite:hover {
   z-index: 30;
   transition-delay: 0s;
@@ -1077,11 +1096,6 @@ body.profile-active #detail-wrap {
     0 0 18px rgba(95,208,232,0.5),
     0 0 42px rgba(168,107,255,0.32);
 }
-.hero-cta-hub.expanded .sat-tl:hover  { transform: translate3d(calc(-50% - 208px), 18px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-tr:hover  { transform: translate3d(calc(-50% - 108px), 70px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-b:hover   { transform: translate3d(-50%, 104px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-bl2:hover { transform: translate3d(calc(-50% + 108px), 70px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-br2:hover { transform: translate3d(calc(-50% + 208px), 18px, 0) scale(1.06); }
 
 /* 点击反馈 */
 .hero-cta-satellite.clicked {
@@ -1089,56 +1103,57 @@ body.profile-active #detail-wrap {
   opacity: 0.4 !important;
   transform: translate3d(var(--sat-tx,0), var(--sat-ty,0), 0) scale(0.9) !important;
 }
-.hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 200px); --sat-ty: 26px; }
-.hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 100px); --sat-ty: 78px; }
-.hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 96px; }
-.hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 100px); --sat-ty: 78px; }
-.hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 200px); --sat-ty: 26px; }
+.hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 260px); --sat-ty: 40px; }
+.hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 130px); --sat-ty: 100px; }
+.hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 130px; }
+.hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 130px); --sat-ty: 100px; }
+.hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 260px); --sat-ty: 40px; }
+
 
 /* 响应式 */
 @media (max-width: 580px), (max-height: 720px) {
-  .hero-cta-hub { width: 420px; height: 190px; min-width: 420px; min-height: 190px; }
+  .hero-cta-hub { width: 480px; height: 220px; min-width: 480px; min-height: 220px; }
   .hero-cta-master, .hero-cta-satellite { font-size: 15px; letter-spacing: 3px; padding: 14px 22px; }
-  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 162px), 22px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 82px), 64px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 80px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 82px), 64px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 162px), 22px, 0) scale(1); }
-  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 162px); --sat-ty: 22px; }
-  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 82px); --sat-ty: 64px; }
-  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 80px; }
-  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 82px); --sat-ty: 64px; }
-  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 162px); --sat-ty: 22px; }
+  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 180px), 22px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 90px), 64px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 96px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 90px), 64px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 180px), 22px, 0) scale(1); }
+  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 180px); --sat-ty: 22px; }
+  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 90px); --sat-ty: 64px; }
+  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 96px; }
+  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 90px); --sat-ty: 64px; }
+  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 180px); --sat-ty: 22px; }
 }
 @media (max-width: 440px), (max-height: 600px) {
-  .hero-cta-hub { width: 360px; height: 170px; min-width: 360px; min-height: 170px; }
+  .hero-cta-hub { width: 420px; height: 200px; min-width: 420px; min-height: 200px; }
   .hero-cta-master, .hero-cta-satellite { font-size: 13.5px; letter-spacing: 2px; padding: 12px 18px; }
   .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-18px) scale(1.02); }
-  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 138px), 18px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 70px), 54px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 68px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 70px), 54px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 138px), 18px, 0) scale(1); }
-  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 138px); --sat-ty: 18px; }
-  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 70px); --sat-ty: 54px; }
-  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 68px; }
-  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 70px); --sat-ty: 54px; }
-  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 138px); --sat-ty: 18px; }
+  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 156px), 18px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 78px), 54px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 84px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 78px), 54px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 156px), 18px, 0) scale(1); }
+  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 156px); --sat-ty: 18px; }
+  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 78px); --sat-ty: 54px; }
+  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 84px; }
+  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 78px); --sat-ty: 54px; }
+  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 156px); --sat-ty: 18px; }
 }
 @media (min-width: 1400px) and (min-height: 800px) {
-  .hero-cta-hub { width: 620px; height: 260px; min-width: 620px; min-height: 260px; }
+  .hero-cta-hub { width: 700px; height: 300px; min-width: 700px; min-height: 300px; }
   .hero-cta-master, .hero-cta-satellite { font-size: 20px; letter-spacing: 4.5px; padding: 20px 34px; }
-  .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-26px) scale(1.02); }
-  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 240px), 32px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 120px), 94px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 116px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 120px), 94px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 240px), 32px, 0) scale(1); }
-  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 240px); --sat-ty: 32px; }
-  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 120px); --sat-ty: 94px; }
-  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 116px; }
-  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 120px); --sat-ty: 94px; }
-  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 240px); --sat-ty: 32px; }
+  .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-32px) scale(1.02); }
+  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 280px), 32px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 140px), 94px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 144px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 140px), 94px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 280px), 32px, 0) scale(1); }
+  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 280px); --sat-ty: 32px; }
+  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 140px); --sat-ty: 94px; }
+  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 144px; }
+  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 140px); --sat-ty: 94px; }
+  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 280px); --sat-ty: 32px; }
 }
 
 /* 功能模块区 */
