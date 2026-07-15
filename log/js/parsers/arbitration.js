@@ -38,6 +38,7 @@ WF.ArbitrationParser = (function () {
     netPeerLine:      /Net \[Info\]: (\d+): Retransmit throttle/,
     clientCreated:    /Game \[Info\]: CreatePlayerForClient\. id=(\d+), user name=(.+)$/,
   };
+  const HUD_REDUX = 'HUD REDUX: Pushing background movie from Update';
   const ARB_NAME_MARK = '- 仲裁';
 
   // 期望生息常量（本项目按掉落规则实测标定）
@@ -307,6 +308,7 @@ WF.ArbitrationParser = (function () {
     const sq   = WF.squadMixin.create();
     const chat = WF.chatMixin.create();
     let m = null;
+    let _sessionAnchor = null; // 当前会话 wall-clock 锚点（由 logReader 传入，见 feed 末两参）
 
     function newMission(t, name) {
       m = {
@@ -318,6 +320,8 @@ WF.ArbitrationParser = (function () {
         faction:   null,
         levelName: null,
         startedT:  null,
+        firstFrameT: null,   // HUD REDUX 首次渲染绝对时刻（"首帧"）
+        sessionAnchor: _sessionAnchor, // 用于把相对秒数换算成真实时钟时间
         type:      'unknown',
         droneTimes: [],      // 无人机生成绝对时刻（秒）
         maxSpawned: 0,       // 累计敌人生成数（Spawned 峰值）
@@ -386,6 +390,14 @@ WF.ArbitrationParser = (function () {
       const hostEnd = (m.rounds > 0 && m.lastRoundT != null) ? m.lastRoundT : fallbackEndT;
       const duration = hostEnd - m.startedT;
       const droneCount = m.droneTimes.length;
+      // 绝对时刻换算：sessionAnchor = {t, date}，把相对秒数差换成真实时钟时间
+      const anchor = m.sessionAnchor;
+      const toDate = (relT) => (anchor && relT != null)
+        ? new Date(anchor.date.getTime() + (relT - anchor.t) * 1000) : null;
+      const startDate      = toDate(m.startedT);
+      const endDate         = toDate(hostEnd);           // "系统结算时刻"
+      const firstFrameDate = toDate(m.firstFrameT);       // "首帧时刻"
+      const frameDuration  = (m.firstFrameT != null) ? (hostEnd - m.firstFrameT) : null; // 首帧→尾帧
       const valid = duration >= 60 && (viaEnding || droneCount > 0);
       if (valid) {
         const rounds     = m.rounds;
@@ -470,6 +482,11 @@ WF.ArbitrationParser = (function () {
           endT:            hostEnd,
           duration,
           lastClientDuration,
+          firstFrameT:     m.firstFrameT,
+          frameDuration,        // 首帧 → 系统结算（尾帧）时差
+          startDate,            // 任务开始的真实时钟时间
+          endDate,              // 系统结算时刻（真实时钟时间）
+          firstFrameDate,       // 首帧时刻（真实时钟时间）
           node:            resolved.node,
           planet:          resolved.planet,
           nodeId:          m.nodeId,
@@ -514,7 +531,8 @@ WF.ArbitrationParser = (function () {
     }
 
     return {
-      feed(t, line) {
+      feed(t, line, sessionOffset, sessionAnchor) {
+        if (sessionAnchor !== undefined) _sessionAnchor = sessionAnchor;
         sq.feed(line);
         chat.feed(t, line);
 
@@ -528,6 +546,19 @@ WF.ArbitrationParser = (function () {
           if (v && m) { if (!m.nodeId) m.nodeId = v[1]; }
         }
         if (nm) {
+          /* 关键修复：无尽仲裁任务进行到一半时，游戏邀请（GameInviteReceived）等
+             与任务无关的事件会让客户端重新广播一次同样的 "Cached mission name"/
+             "Mission name" 行——节点/原始文本跟当前任务完全一致，不是真的换了任务。
+             之前这里逢"任务名行"必 finalize+newMission，会把一场连续 36+ 分钟的
+             仲裁从中间腰斩成两截：前半截被错误地当成"任务结束"提前结算（时长只有
+             真实结算时间的一部分），后半截又从 0 轮开始重新计数——玩家在客户端看到
+             的系统结算时间因此对不上，而且"全队在场时间"这类需要跨越整场任务的
+             统计也会因为被切段而算错/算不出。这里判断节点 ID（或原始文本兜底）
+             跟当前任务相同就直接忽略，不触发 finalize。 */
+          const dupNodeId = RE.nodeIdParen.exec(line);
+          const sameNode = m && m.startedT != null && dupNodeId && m.nodeId && dupNodeId[1] === m.nodeId;
+          const sameRaw  = m && m.startedT != null && m.rawName === nm;
+          if (sameNode || sameRaw) return;
           if (m && m.startedT != null) finalize(t, false);
           if (!m || m.startedT != null) newMission(t, nm);
           applyName(nm);
@@ -544,6 +575,13 @@ WF.ArbitrationParser = (function () {
             const tp = typeFromLevel(lp[2]);
             if (tp && m.type === 'unknown') m.type = tp;
           }
+        }
+
+        // 首帧：HUD REDUX 首次渲染（载入完成、UI 就绪的实际时刻），只记第一次。
+        // 实测这行经常出现在 SS_STARTED 前一两秒（加载完成先于状态机切换），
+        // 必须放在 startedT==null 的提前 return 之前检测，否则会被直接漏掉。
+        if (m.firstFrameT == null && line.indexOf(HUD_REDUX) !== -1) {
+          m.firstFrameT = t;
         }
 
         if (m.startedT == null) {

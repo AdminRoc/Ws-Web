@@ -96,7 +96,7 @@ WF.arbitrationView = (function () {
     rec.essBaselineIsNode = true;
   }
 
-  function render(container, rec) {
+  function render(container, rec, clock) {
     container.innerHTML = '';
     maybeRecalcWithNodeBaseline(rec);
     const eff = rec.eff || { essence: 0, clear: 0, clearComp: 0, proficiency: 0 };
@@ -120,10 +120,38 @@ WF.arbitrationView = (function () {
     meta.appendChild(durRow);
     if (rec.lastClientDuration != null) {
       const cliRow = U.el('div', 'arb-meta-sub arb-meta-hint');
-      cliRow.appendChild(document.createTextNode('最后客机时间 ' + fmtHMS(rec.lastClientDuration) + `（${U.fmtDurationLong(rec.lastClientDuration)}）`));
+      cliRow.appendChild(document.createTextNode('全队在场时间 ' + fmtHMS(rec.lastClientDuration) + `（${U.fmtDurationLong(rec.lastClientDuration)}）`));
       cliRow.title = '任务结束时间 − 最后一个外部玩家实体创建时刻。测量的是"全员到齐后一起玩的有效时长"，而非"第一个队友离开的时刻"。若全队均在任务开始前已加载完毕，则本行不显示。';
       cliRow.classList.add('has-tip');
       meta.appendChild(cliRow);
+    }
+
+    // ── 绝对时刻：首帧时刻 / 系统结算时刻（优先用记录自带的精确日期，回退到全局 clock）──
+    const _recDate = (t, recDate) => recDate || (clock && clock.available ? clock.toDate(t) : null);
+    const approx = clock ? clock.approx : true;
+    if (rec.firstFrameT != null) {
+      const ffDate = _recDate(rec.firstFrameT, rec.firstFrameDate);
+      if (ffDate) {
+        const ffRow = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
+        ffRow.appendChild(document.createTextNode('首帧时刻 ' + U.fmtAbsTime(ffDate, approx)));
+        ffRow.title = 'HUD REDUX 首次渲染（载入完成、UI 就绪）的实际时刻';
+        meta.appendChild(ffRow);
+      }
+    }
+    {
+      const endDate = _recDate(rec.endT, rec.endDate);
+      if (endDate) {
+        const endRow = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
+        endRow.appendChild(document.createTextNode('系统结算时刻 ' + U.fmtAbsTime(endDate, approx)));
+        endRow.title = '最后一次轮/波结算（无尽任务的有效终点）对应的实际时钟时间，与游戏内结算界面一致';
+        meta.appendChild(endRow);
+      }
+    }
+    if (rec.frameDuration != null) {
+      const fdRow = U.el('div', 'arb-meta-sub arb-meta-hint has-tip');
+      fdRow.appendChild(document.createTextNode('首帧 → 系统结算 ' + fmtHMS(rec.frameDuration) + `（${U.fmtDurationLong(rec.frameDuration)}）`));
+      fdRow.title = '系统结算时刻 − 首帧时刻，最接近"进入任务画面→系统结算"的体感时长';
+      meta.appendChild(fdRow);
     }
     const metaSubs = [
       rec.rounds > 0 ? `${rec.missionType === 'survival' ? '生存轮次' : '轮/波次'} ${rec.rounds}` : null,
