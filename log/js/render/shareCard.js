@@ -462,12 +462,12 @@ WF.shareCard = (function () {
     ctx.fill();
     ctx.stroke();
 
-    /* 网站名：SUPER EELOG（先画灰色 SUPER，量宽度，再画青色 EELOG，永不错位） */
+    /* 网站名：WTF EELOG（先画灰色 WTF，量宽度，再画青色 EELOG，永不错位） */
     ctx.textBaseline = 'middle';
     ctx.font = `500 22px ${fontFamily}`;
     ctx.fillStyle = '#c9d4e8';
-    ctx.fillText('SUPER', logoX + 38, logoY - 7);
-    const superW = ctx.measureText('SUPER').width;
+    ctx.fillText('WTF', logoX + 38, logoY - 7);
+    const superW = ctx.measureText('WTF').width;
     ctx.font = `600 22px ${fontFamily}`;
     ctx.fillStyle = '#5fd0e8';
     ctx.fillText('EELOG', logoX + 38 + superW + 6, logoY - 7);

@@ -15,7 +15,7 @@ WF.roundDetail = (function () {
   /**
    * renderToggle(container, rows, opts)
    * rows: [{ label, durSec, countA, countB, sparsity, essence, incomplete }]
-   * opts: { countALabel, countBLabel, showEssence, showSparsity }
+   * opts: { countALabel, countBLabel, showEssence, showSparsity, footnote, footnoteTip }
    */
   function renderToggle(container, rows, opts) {
     if (!rows || !rows.length) return;
@@ -50,6 +50,11 @@ WF.roundDetail = (function () {
     });
     table.appendChild(tbody);
     box.appendChild(table);
+    if (opts.footnote) {
+      const foot = U.el('div', 'rd-foot' + (opts.footnoteTip ? ' has-tip' : ''), opts.footnote);
+      if (opts.footnoteTip) foot.title = opts.footnoteTip;
+      box.appendChild(foot);
+    }
 
     btn.addEventListener('click', () => {
       const open = box.style.display !== 'none';

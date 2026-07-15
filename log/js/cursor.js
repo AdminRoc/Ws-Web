@@ -3,6 +3,7 @@
     ['#41ff8e','#3affd5'], ['#45c8ff','#6f8bff'], ['#a86bff','#e05fff'],
     ['#ff5f9e','#ff7a5f'], ['#ffff60','#ffd060'], ['#ff80c0','#ff5f9e'],
   ];
+  var WORDS = ['FUCK', 'FUCK', 'FUCK', 'FUCK', 'FUCK', 'FUCK', 'FUCK', 'OHHHHH', 'OHHHHH', 'OHHHHH'];
   var lastX = 0, lastY = 0, lastTime = 0;
 
   function spawn(cx, cy) {
@@ -14,9 +15,13 @@
       var tx = Math.cos(angle) * dist;
       var ty = Math.sin(angle) * dist;
       var pair = PAIRS[Math.floor(Math.random() * PAIRS.length)];
-      var sz = 9 + Math.floor(Math.random() * 11);
+      // 字号用 rem 而非 px：rem 基于根字号，浏览器"文字大小"缩放与整页缩放都能正确放大粒子
+      var sz = (9 + Math.floor(Math.random() * 11)) / 16;
       var deg = Math.floor(Math.random() * 360);
-      el.textContent = 'FUCK';
+      // 随机朝向：整个文字块的旋转角度，与渐变角度分开控制
+      var rot = Math.floor(Math.random() * 360);
+      var word = WORDS[Math.floor(Math.random() * WORDS.length)];
+      el.textContent = word;
       var delay = i * 55;
       el.style.cssText = [
         'position:fixed',
@@ -25,7 +30,7 @@
         'pointer-events:none',
         'z-index:999999',
         'font-family:var(--f-px,monospace)',
-        'font-size:' + sz + 'px',
+        'font-size:' + sz + 'rem',
         'letter-spacing:2px',
         'font-weight:bold',
         'background:linear-gradient(' + deg + 'deg,' + pair[0] + ',' + pair[1] + ')',
@@ -33,9 +38,10 @@
         'background-clip:text',
         'color:transparent',
         'white-space:nowrap',
-        'transform:translate(-50%,-50%)',
+        'transform:translate(-50%,-50%) rotate(' + rot + 'deg)',
         '--tx:' + tx + 'px',
         '--ty:' + ty + 'px',
+        '--rot:' + rot + 'deg',
         'animation:wordFly 1.7s ease-out forwards',
         'animation-delay:' + delay + 'ms',
       ].join(';');

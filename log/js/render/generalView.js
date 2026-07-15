@@ -121,11 +121,15 @@ WF.generalView = (function () {
     const totalKills   = rec.waves.reduce((s, w) => s + (w.kills || 0), 0);
     const totalSpawned = rec.waves.reduce((s, w) => s + (w.actualSpawned || w.totalEnemies || w.spawned || 0), 0);
     const avgDur       = rec.waves.reduce((s, w) => s + (w.duration || 0), 0) / segTotal;
+    const KILL_SPAWN_NOTE = 'EE.log 不会记录"某个敌人被谁击杀"这类具体事件，这里的击杀数不是直接读出来的，'
+      + '而是用"该波次生成总数 − 波次结束时仍剩余未消灭的数量"反推出来的，只对防御/波次类任务有效。'
+      + '"生成"数取自房主日志里 WaveDefend 上报的该波次生成总数，理论上应与游戏内一致，但如果日志不是从任务最开始记录的，数字可能偏低。'
+      + '所以这两个数字都是尽量贴近真实情况的估算值，不等同于游戏结算界面里的确切数字。';
     const statRow = U.el('div', 'hero-row');
     statRow.appendChild(_st('总波次', String(segTotal), 'accent'));
     statRow.appendChild(_st('波均时长', U.fmtDuration(avgDur), ''));
     if (totalKills > 0 || totalSpawned > 0)
-      statRow.appendChild(_st('总击杀 / 生成', `${totalKills} / ${totalSpawned}`, ''));
+      statRow.appendChild(_st('总击杀 / 生成', `${totalKills} / ${totalSpawned}`, '', KILL_SPAWN_NOTE));
     section.appendChild(statRow);
 
     // 时长条形图
@@ -176,6 +180,10 @@ WF.generalView = (function () {
     });
     tbl.appendChild(tbody);
     tblBox.appendChild(tbl);
+    const waveFoot = U.el('div', 'gen-table-foot has-tip',
+      '击杀数由"生成总数 − 剩余未消灭数量"反推得出，生成数取自房主日志字段，均为估算值，非游戏内确切数字');
+    waveFoot.title = KILL_SPAWN_NOTE;
+    tblBox.appendChild(waveFoot);
     section.appendChild(tblBox);
     container.appendChild(section);
   }
@@ -191,13 +199,17 @@ WF.generalView = (function () {
     const totalSpawned = segs.reduce((s, sg) => s + (sg.spawned  || 0), 0);
     const avgDur       = totalDur / segs.length;
     const hasSpawnData = totalSpawned > 0;   // false on client logs (no OnAgentCreated)
+    const SURVIVAL_SPAWN_NOTE = '生存任务没有"剩余敌人数"这类可用于反推击杀数的信号，所以这里只统计"生成数"，不显示击杀数。'
+      + '生成数取自房主日志里 OnAgentCreated 事件的敌人生成记录，理论上应与游戏内一致，'
+      + '但如果日志不是从任务最开始记录的，或者部分敌人生成时未被日志捕捉到，数字会比实际偏低，'
+      + '标"近似"是提醒这不是绝对精确值。';
 
     const statRow = U.el('div', 'hero-row');
     statRow.appendChild(_st('奖励档数',   String(segs.length),          'accent'));
     statRow.appendChild(_st('档均时长',   U.fmtDuration(avgDur),        ''));
     statRow.appendChild(_st('生存总时长', U.fmtDurationLong(totalDur),  ''));
     if (hasSpawnData)
-      statRow.appendChild(_st('本局生成（近似）', String(totalSpawned), ''));
+      statRow.appendChild(_st('本局生成（近似）', String(totalSpawned), '', SURVIVAL_SPAWN_NOTE));
     section.appendChild(statRow);
 
     if (!hasSpawnData) {
@@ -247,6 +259,12 @@ WF.generalView = (function () {
     });
     tbl.appendChild(tbody);
     tblBox.appendChild(tbl);
+    if (hasSpawnData) {
+      const survFoot = U.el('div', 'gen-table-foot has-tip',
+        '生存任务无法反推击杀数（没有"剩余敌人数"信号），"生成"取自日志采样，为估算值');
+      survFoot.title = SURVIVAL_SPAWN_NOTE;
+      tblBox.appendChild(survFoot);
+    }
     section.appendChild(tblBox);
     container.appendChild(section);
   }
@@ -310,21 +328,23 @@ WF.generalView = (function () {
     killSection.appendChild(U.el('div', 'gen-section-title', '敌人生成概况'));
     const killRow = U.el('div', 'hero-row');
     if (rec.spawned > 0) {
-      killRow.appendChild(_st('生成（近似）', String(rec.spawned), 'accent'));
+      killRow.appendChild(_st('生成（近似）', String(rec.spawned), 'accent',
+        'EE.log 不会记录"某个敌人被谁击杀"这类具体事件，所以这里不展示确切击杀数，只统计生成数。'
+        + '生成数取自房主日志里 OnAgentCreated 事件，理论上应与游戏内一致，但如果日志不是从任务最开始记录的，'
+        + '或部分敌人生成时未被日志捕捉到，数字会比实际偏低，标"近似"是提醒这不是绝对精确值。'
+        + '仅防御/波次类任务能用"生成 − 剩余"这个思路间接推算出击杀数，其余任务类型没有这类信号，只能展示生成数。'));
     } else {
-      killRow.appendChild(_st('生成（近似）', '—（需主机日志）', ''));
+      killRow.appendChild(_st('生成（近似）', '—（需主机日志）', '',
+        '生成数据依赖房主日志里的 OnAgentCreated 事件；如果读取的是客户端（非房主）日志，没有这项信息，故无法显示。'));
     }
     killSection.appendChild(killRow);
-    killSection.appendChild(U.el('div', 'note',
-      rec.spawned > 0
-        ? 'EE.log 不记录玩家击杀个别敌人的事件；仅防御/波次任务可通过"生成−剩余"推算击杀数。'
-        : '生成数据需要主机日志（OnAgentCreated）；客户端日志无此信息。'));
     container.appendChild(killSection);
   }
 
   // ── 共用组件 ──────────────────────────────────────────────
-  function _st(label, value, cls) {
+  function _st(label, value, cls, title) {
     const d = U.el('div', 'stat ' + (cls || ''));
+    if (title) { d.title = title; d.classList.add('has-tip'); }
     d.appendChild(U.el('div', 'stat-value', value));
     d.appendChild(U.el('div', 'stat-label', label));
     return d;
