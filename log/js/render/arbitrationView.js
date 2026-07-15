@@ -232,9 +232,7 @@ WF.arbitrationView = (function () {
     const effBox = U.el('div', 'arb-eff-box');
     effBox.appendChild(U.el('div', 'section-title', '效率指标'));
     const effGrid = U.el('div', 'arb-eff-grid');
-    const baseHint = rec.essBaselineIsNode
-      ? `经过数据分析后，得出生息效率评价：${rec.essBaseline.toFixed(1)}/时`
-      : `相对默认基准 ${(rec.essBaseline || 600).toFixed(0)}/时 换算`;
+    const baseHint = `经过大数据分析后，得出生息效率评价`;
     const ACTIVE_ENEMY_DEF = '"活跃敌人"指日志里 MonitoredTicking 字段代表的、当前正被游戏 AI 持续追踪行为逻辑的敌人数量——'
       + '不是玩家肉眼在场景里能看到的全部单位，也不完全等于游戏内 UI 顶部显示的确切怪物计数，是引擎内部的一个采样值，用来大致反映"场上压力"，仅供参考。';
     effBar(effGrid, '生息效率', eff.essence,
