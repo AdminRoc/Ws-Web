@@ -122,12 +122,12 @@ WF.ArbitrationParser = (function () {
         期望生息速率（全 Buff，/时）÷ 节点基准 × 100，线性，可超过 100。
         节点基准优先取该节点基准数据（WF.ArbNodeBaseline），无数据时退回 600/时。
      ② 清图效率（权重 25%）：
-        100 − geq15Pct。geq15Pct = 场上同时受 AI 监控的活跃敌人数 ≥15 的时间占比。
+        100 − geq10Pct。geq10Pct = 场上同时受 AI 监控的活跃敌人数 ≥10（"高压"阈值）的时间占比。
         完全来自日志内采样，不依赖任何外部基准；清图越干净这项得分越高。
      ③ 综合效率（权重 20%）：
         双维度融合——清洁度（70%）+ 高压响应（30%）。
         清洁度：按活跃敌人分布区间评分，0-4=100、5-9=80、10-14=70、15-20=30、>20=0，
-        再按驻留时长加权平均。高压响应：扫描从≥15恢复到<15的高压事件，
+        再按驻留时长加权平均。高压响应：扫描从≥10恢复到<10的高压事件，
         平均恢复时间越短得分越高（100 − 平均秒数×2），从未高压=100。
         仅依赖日志数据。
      ──────────────────────────────────────────────────────────────
@@ -145,14 +145,14 @@ WF.ArbitrationParser = (function () {
     const base = baseline > 0 ? baseline : ESS_BASELINE;
     return Math.max(0, perHour / base * 100);
   }
-  // ② 清图效率（%）：由 clearEffDist 的 geq15Pct 取反；数据缺失时返回 null
-  function clearEfficiency(geq15Pct) {
-    if (geq15Pct == null || !isFinite(geq15Pct)) return null;
-    return Math.max(0, 100 - geq15Pct);
+  // ② 清图效率（%）：由 clearEffDist 的 geq10Pct 取反；数据缺失时返回 null
+  function clearEfficiency(geq10Pct) {
+    if (geq10Pct == null || !isFinite(geq10Pct)) return null;
+    return Math.max(0, 100 - geq10Pct);
   }
   // ③ 综合效率（%）：双维度融合
   //   清洁度（70%）：基于活跃敌人分布的分段评分，0-4=100, 5-9=80, 10-14=70, 15-20=30, >20=0
-  //   高压响应（30%）：扫描从 ≥15 恢复到 <15 的高压事件，平均恢复时间越短得分越高
+  //   高压响应（30%）：扫描从 ≥10 恢复到 <10 的高压事件，平均恢复时间越短得分越高
   function clearComprehensiveEfficiency(liveSamples, liveDistData) {
     if (!liveDistData || !liveDistData.rows || liveDistData.rows.length < 2) return null;
     // ── 清洁度 ──
@@ -178,10 +178,10 @@ WF.ArbitrationParser = (function () {
       let inHigh = false, highStart = null;
       for (let i = 0; i < liveSamples.length; i++) {
         const s = liveSamples[i];
-        if (!inHigh && s.live >= 15) {
+        if (!inHigh && s.live >= 10) {
           inHigh = true;
           highStart = s.t;
-        } else if (inHigh && s.live < 15) {
+        } else if (inHigh && s.live < 10) {
           inHigh = false;
           events.push(s.t - highStart);
         }
@@ -189,7 +189,7 @@ WF.ArbitrationParser = (function () {
       if (events.length > 0) {
         const avgRecovery = events.reduce((a, b) => a + b, 0) / events.length;
         recovery = Math.max(0, 100 - avgRecovery * 2);
-      } else if (liveSamples.some((s) => s.live >= 15)) {
+      } else if (liveSamples.some((s) => s.live >= 10)) {
         // 出现了高压但直到任务结束仍未恢复，直接 0 分
         recovery = 0;
       } else {
@@ -246,21 +246,21 @@ WF.ArbitrationParser = (function () {
     for (const s of samples) if (s.live > maxLive) maxLive = s.live;
     const nb = Math.max(1, Math.ceil((maxLive + 1) / 5));
     const bucket = new Array(nb).fill(0);
-    let total = 0, geq15 = 0;
+    let total = 0, geq10 = 0;
     for (let i = 0; i < samples.length - 1; i++) {
       const dwell = samples[i + 1].t - samples[i].t;
       if (dwell <= 0 || dwell > DWELL_CAP) continue;
       const live = samples[i].live;
       const bi = Math.min(Math.floor(live / 5), nb - 1);
       bucket[bi] += dwell; total += dwell;
-      if (live >= 15) geq15 += dwell;
+      if (live >= 10) geq10 += dwell;
     }
     if (total <= 0) return null;
     const rows = bucket.map((v, i) => ({
       lo: 5 * i, hi: i < nb - 1 ? 5 * i + 4 : null,
       seconds: v, pct: v / total * 100,
     }));
-    return { rows, maxLive, geq15Pct: geq15 / total * 100 };
+    return { rows, maxLive, geq10Pct: geq10 / total * 100 };
   }
 
   // ── 分布计算：无人机刷新连续度（同批次数量直方图）──
@@ -428,7 +428,7 @@ WF.ArbitrationParser = (function () {
         const perMinData   = perMinuteTrend(m.minuteBuckets, duration);
 
         const essEff   = essenceEfficiency(fullBuffPerHour, essBaseline);
-        const clearEff = clearEfficiency(liveDistData ? liveDistData.geq15Pct : null);
+        const clearEff = clearEfficiency(liveDistData ? liveDistData.geq10Pct : null);
         const clearCompEff = clearComprehensiveEfficiency(m.liveSamples, liveDistData);
         const score    = computeScore(essEff, clearEff, clearCompEff);
 
@@ -516,7 +516,7 @@ WF.ArbitrationParser = (function () {
           },
           eff: {
             essence: essEff,    // 生息效率 %（perHour / baseline × 100，线性，可>100）
-            clear:   clearEff,  // 清图效率 %（100 − geq15Pct；null = 采样不足）
+            clear:   clearEff,  // 清图效率 %（100 − geq10Pct；null = 采样不足）
             clearComp: clearCompEff, // 综合效率 %（活跃敌人分布加权平均；null = 采样不足）
           },
           essBaseline,                          // 本局评分实际采用的生息效率基准（/时）

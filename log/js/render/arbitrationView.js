@@ -36,11 +36,13 @@ WF.arbitrationView = (function () {
     };
   }
 
-  // 单条效率进度条
-  function effBar(container, label, pct, hint) {
+  // 单条效率进度条；title 可选——鼠标停留在指标名上时显示详细概念说明
+  function effBar(container, label, pct, hint, title) {
     const row = U.el('div', 'arb-eff-row');
     const top = U.el('div', 'arb-eff-top');
-    top.appendChild(U.el('span', 'arb-eff-name', label));
+    const nameEl = U.el('span', 'arb-eff-name', label);
+    if (title) { nameEl.title = title; nameEl.classList.add('has-tip'); }
+    top.appendChild(nameEl);
     top.appendChild(U.el('span', 'arb-eff-val', pct.toFixed(1) + '%'));
     row.appendChild(top);
     const track = U.el('div', 'arb-eff-track');
@@ -187,9 +189,13 @@ WF.arbitrationView = (function () {
 
     /* ─── 核心指标网格 ─── */
     const grid = U.el('div', 'arb-metrics-grid');
+    const SPAWN_NOTE = 'EE.log 不会记录"某个敌人被谁击杀"这类具体事件，所以这里不展示确切击杀数。'
+      + '"敌人生成"是房主日志里每次 OnAgentCreated 事件携带的 Spawned 字段峰值——这是游戏引擎自己上报的累计生成数，'
+      + '理论上应与游戏内实际数值一致；但如果这份日志不是从任务最开始就在记录（比如日志文件被裁切、或从中途接入），'
+      + '开局阶段的生成会缺失一部分，导致这里显示的数字比实际偏低。无人机生成同理，逐行精确计数，一般更可靠。';
     const metrics = [
       { label: '无人机生成',      value: String(rec.droneCount),               cls: 'accent' },
-      { label: '敌人生成',        value: String(rec.maxSpawned),               cls: 'accent' },
+      { label: '敌人生成',        value: String(rec.maxSpawned),               cls: 'accent', title: SPAWN_NOTE },
       { label: '无人机 / 分钟',   value: rec.dronesPerMin.toFixed(2),          cls: 'accent' },
       { label: '总时长',          value: fmtHMS(rec.duration),                 cls: 'big',
         title: '从 SS_STARTED 到系统结算时间的经过时长，与上方"总时长"行是同一个数值，这里仅作为核心指标之一再展示一次' },
@@ -217,6 +223,8 @@ WF.arbitrationView = (function () {
       })), {
         countALabel: '无人机生成', countBLabel: '敌人生成',
         showSparsity: true, showEssence: true,
+        footnote: '"敌人生成"来自日志 Spawned 字段峰值，不是确切击杀数（EE.log 不记录具体击杀事件）；若日志非从任务开局记录，数字会偏低。',
+        footnoteTip: SPAWN_NOTE,
       });
     }
 
@@ -227,16 +235,23 @@ WF.arbitrationView = (function () {
     const baseHint = rec.essBaselineIsNode
       ? `经过数据分析后，得出生息效率评价：${rec.essBaseline.toFixed(1)}/时`
       : `相对默认基准 ${(rec.essBaseline || 600).toFixed(0)}/时 换算`;
+    const ACTIVE_ENEMY_DEF = '"活跃敌人"指日志里 MonitoredTicking 字段代表的、当前正被游戏 AI 持续追踪行为逻辑的敌人数量——'
+      + '不是玩家肉眼在场景里能看到的全部单位，也不完全等于游戏内 UI 顶部显示的确切怪物计数，是引擎内部的一个采样值，用来大致反映"场上压力"，仅供参考。';
     effBar(effGrid, '生息效率', eff.essence,
       `期望生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时 · ${baseHint}（权重 55%）`);
     effBar(effGrid, '清图效率', eff.clear != null ? eff.clear : 50,
       eff.clear != null
-        ? `场上≥15只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%，越低越好（权重 25%）`
-        : '采样数据不足，本维度以 50 分中性值计入（权重 25%）');
+        ? `场上≥10只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%，越低越好（权重 25%）`
+        : '采样数据不足，本维度以 50 分中性值计入（权重 25%）',
+      ACTIVE_ENEMY_DEF);
     effBar(effGrid, '综合效率', eff.clearComp != null ? eff.clearComp : 50,
       eff.clearComp != null
         ? `清洁度 × 70% + 操作稳定度 × 30% = ${eff.clearComp.toFixed(1)}%（权重 20%）`
-        : '数据不足，本维度以 50 分中性值计入（权重 20%）');
+        : '数据不足，本维度以 50 分中性值计入（权重 20%）',
+      '清洁度：把整场任务按"场上活跃敌人数量"分成几个区间（0-4/5-9/10-14/15-20/20以上），'
+      + '每个区间按驻留时长加权算出一个 0-100 的分数（敌人越少分数越高），场上越"干净"这项越高。'
+      + ACTIVE_ENEMY_DEF
+      + ' 操作稳定度：统计场上敌人从"高压"（≥10）恢复到正常水平所花的平均时间，恢复越快分数越高。');
     effBox.appendChild(effGrid);
     container.appendChild(effBox);
 
@@ -284,7 +299,7 @@ WF.arbitrationView = (function () {
       distBars(distWrap, {
         title: '清图效率',
         rows: ld.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
-        footer: `高压占比（≥15）：${ld.geq15Pct.toFixed(1)}%`,
+        footer: `高压占比（≥10）：${ld.geq10Pct.toFixed(1)}%`,
       });
     }
     container.appendChild(distWrap);
@@ -319,8 +334,8 @@ WF.arbitrationView = (function () {
     const defWrap = U.el('div', 'arb-explain-defs');
     [
       ['生息效率（55%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再除以基准数量，得到这里的百分比。此外，期望生息按掉落规则进行推算，排除运气影响。'],
-      ['清图效率（25%）', '依据房主日志中，每次敌人生成行的 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥15 的时间占比（geq15Pct），取 100 − geq15Pct 作为得分。清图越干净、场上高压时段越少，这项得分越高。完全来自日志内采样，不依赖任何外部基准。'],
-      ['综合效率（20%）', '由两个独立维度融合而成：① 清洁度（70%）——按活跃敌人分布区间评分，第1区间=100分、第2区间=80分、第3区间=70分、第4区间=30分、超过=0分，再按各区间的驻留时长加权平均；② 操作稳定度（30%）——扫描日志中所有从≥15只敌人回到<15只的恢复事件，计算平均恢复时间（秒），按 100 − 平均恢复时间×2 换算得分。操作稳定度的数值越高，说明队伍的稳定程度越高。'],
+      ['清图效率（25%）', '依据房主日志中，每次敌人生成行的 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥10（"高压"阈值）的时间占比（geq10Pct），取 100 − geq10Pct 作为得分。清图越干净、场上高压时段越少，这项得分越高。完全来自日志内采样，不依赖任何外部基准。'],
+      ['综合效率（20%）', '由两个独立维度融合而成：① 清洁度（70%）——按活跃敌人分布区间评分，第1区间=100分、第2区间=80分、第3区间=70分、第4区间=30分、超过=0分，再按各区间的驻留时长加权平均；② 操作稳定度（30%）——扫描日志中所有从≥10只敌人回到<10只的恢复事件，计算平均恢复时间（秒），按 100 − 平均恢复时间×2 换算得分。操作稳定度的数值越高，说明队伍的稳定程度越高。'],
     ].forEach(([k, v]) => {
       const d = U.el('div', 'arb-def-row');
       d.appendChild(U.el('span', 'arb-def-key', k));

@@ -85,17 +85,30 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
   width: 100%; margin: 0; height: 100%;
   display: flex; align-items: center; gap: 20px; padding: 0 32px;
 }
+/* 顶栏与下方内容的分界线：彩虹渐变流光，比原来的单色静态线更有赛博感，
+   只吃 background-position 合成层属性，高帧率不掉帧 */
 .nav-glow {
-  position: absolute; bottom: -1px; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(95, 208, 232, 0.5), transparent);
+  position: absolute; bottom: -1px; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #41ff8e 12%, #3affd5 24%, #45c8ff 36%, #6f8bff 48%, #a86bff 60%, #e05fff 72%, #ff5f9e 84%, transparent 100%);
+  background-size: 220% 100%;
+  box-shadow: 0 0 10px rgba(95, 208, 232, 0.4);
+  animation: navGlowFlow 5s linear infinite;
 }
+@keyframes navGlowFlow { 0% { background-position: 0% 0; } 100% { background-position: -220% 0; } }
 
 .nav-logo { display: flex; flex-direction: column; line-height: 1.1; user-select: none; width: max-content; }
+/* 顶栏 logo 文字：静态彩虹渐变（继承自 .rainbow 共享规则）之外，再叠加一层
+   会流动的高帧率光效，跟下方 .nav-glow 分界线呼应，同一套配色语言 */
 .logo-main {
   font-size: 26px; letter-spacing: 5px;
-  filter: drop-shadow(0 0 12px rgba(120, 160, 255, 0.35));
   white-space: nowrap;
+  background: linear-gradient(90deg, #41ff8e, #3affd5, #45c8ff, #6f8bff, #a86bff, #e05fff, #ff5f9e, #41ff8e);
+  background-size: 300% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 10px rgba(120, 160, 255, 0.4));
+  animation: logoMainFlow 5s linear infinite;
 }
+@keyframes logoMainFlow { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
 .logo-sub {
   font-size: 11px; letter-spacing: 0.5px; color: var(--c-text2);
   width: 100%; text-align: justify; text-align-last: justify;
@@ -553,6 +566,8 @@ body.profile-active #detail-wrap {
 /* 队内在场时长 tooltip 提示 */
 .arb-meta-hint.has-tip { cursor: help; border-bottom: 1px dashed rgba(150,160,190,0.4); display: inline-block; width: fit-content; }
 .stat.has-tip { cursor: help; }
+.arb-eff-name.has-tip { cursor: help; border-bottom: 1px dashed rgba(150,160,190,0.4); }
+.rd-foot.has-tip { cursor: help; }
 
 /* 查看详细：折叠表格 */
 .rd-wrap { margin: 4px 0 18px; }
@@ -574,6 +589,10 @@ body.profile-active #detail-wrap {
 .rd-td-label { color: var(--c-white); }
 .rd-td-num { color: var(--c-text2); font-family: var(--f-px); }
 .rd-row-incomplete td { color: rgba(255,182,72,0.75); font-style: italic; }
+.rd-foot {
+  padding: 8px 12px; font-size: 12px; line-height: 1.6; color: var(--c-text2);
+  border-top: 1px solid var(--c-border); background: rgba(255,255,255,0.02);
+}
 
 /* 评分徽章：0-120 数字 + 分数带 */
 .arb-score-tier { font-size: 15px; letter-spacing: 2px; color: var(--c-text2); margin-top: 4px; }
@@ -793,10 +812,15 @@ body.profile-active #detail-wrap {
   100% { background-position: 400% center; }
 }
 .hero-desc {
-  font-size: clamp(0.85rem, 1.4vw, 1rem); color: var(--c-text);
-  letter-spacing: 1.5px; max-width: 480px; line-height: 1.75;
-  margin-top: 20px;
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem); font-weight: 500;
+  letter-spacing: 1.5px; max-width: 520px; line-height: 1.85;
+  margin-top: 20px; text-align: center;
+  background: linear-gradient(90deg, #5fd0e8, #41ff8e, #a86bff, #5fd0e8);
+  background-size: 300% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: heroDescFlow 6s linear infinite;
 }
+@keyframes heroDescFlow { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
 .hero-nav-grid {
   display: grid; grid-template-columns: repeat(2, 1fr);
   gap: 10px; width: min(300px, 82vw); margin-top: 22px;
@@ -1521,6 +1545,11 @@ body.profile-active #detail-wrap {
   border: 1px solid rgba(255,255,255,.08); border-radius: 6px;
   padding: 6px 12px; margin-bottom: 10px;
 }
+.gen-table-foot {
+  padding: 8px 12px; font-size: 12px; line-height: 1.6; color: var(--c-text2);
+  border-top: 1px solid var(--c-border); background: rgba(255,255,255,0.02);
+}
+.gen-table-foot.has-tip { cursor: help; }
 .pf-palette-tip {
   display: flex; align-items: flex-start; gap: 10px;
   margin-bottom: 18px; padding: 10px 14px;

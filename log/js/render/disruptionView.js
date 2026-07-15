@@ -156,8 +156,18 @@ WF.disruptionView = (function () {
     tblWrap.appendChild(tbl);
     tblSection.appendChild(tblWrap);
 
+    const ksFoot = U.el('div', 'gen-table-foot has-tip',
+      '击杀/生成均为房主日志的间接推算值，非游戏内确切数字（悬停查看详细逻辑）');
+    ksFoot.title = 'EE.log 不会记录"某个敌人被谁击杀"这类具体事件，这里的击杀数是这样推算出来的：'
+      + '每次读到新的敌人生成记录时，比较"上一次生成后场上活跃监控数"和"这一次生成前场上活跃监控数"——'
+      + '如果后者更少，说明这段时间里有敌人在没有新增生成的情况下减少了，差值就计为击杀。'
+      + '这不是逐个击杀事件的直接计数，只是活跃数量的净变化，宠物/召唤物/自己的无人机等已排除。'
+      + '"生成"数取自房主日志里敌人生成事件，理论上应与游戏内一致，但如果日志不是从任务最开始记录的，数字会偏低。'
+      + '两个数字都限于轮次战斗期间（ModeState=3→4），不含休整/传送阶段。';
+    tblSection.appendChild(ksFoot);
+
     container.appendChild(U.el('div', 'note',
-      '每轮信息依赖任务房主（Host）日志。击杀/生成均限于轮次战斗期间（ModeState=3→4）。折线图可点击全屏查看；悬停标记可见精确时间戳。'));
+      '折线图可点击全屏查看；悬停标记可见精确时间戳。'));
 
     WF.chatMixin.renderChatLog(container, rec);
   }
