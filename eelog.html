@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WTF EELOG — Warframe EE.log 分析器</title>
-  <link rel="stylesheet" href="log/css/style.css">
+  <link rel="stylesheet" href="log/css/style.css?v=20260715c">
   <link rel="icon" href="log/picture/WS-logo-2.png">
   <!-- 加载屏所需 Logo 立即预加载（preload = 当前页高优先级） -->
   <link rel="preload" href="picture/WS-logo-2.png" as="image">
@@ -231,20 +231,80 @@
       <div class="hero-eyebrow">WARFRAME ／ EE.LOG ANALYZER</div>
       <h1 class="hero-title">WTF&nbsp;EELOG</h1>
       <p class="hero-desc">所有任务类型的日志皆可解析<br>在毫厘之间，享受进步的快感</p>
-      <div class="hero-nav-grid">
-        <a href="log/analyzer.html?tab=disruption" class="htag htag-0">中断</a>
-        <a href="log/analyzer.html?tab=eidolon" class="htag htag-1">夜灵</a>
-        <a href="log/analyzer.html?tab=profitTaker" class="htag htag-2">蜘蛛</a>
-        <a href="log/analyzer.html?tab=arbitration" class="htag htag-3">仲裁</a>
+      <div class="hero-cta-hub" id="heroCtaHub">
+        <button class="hero-cta-master" id="heroCtaMaster" type="button" aria-haspopup="true" aria-expanded="false">
+          <span class="cta-text">开始分析</span>
+          <span class="cta-arrow">→</span>
+        </button>
+        <a href="log/analyzer.html?tab=disruption" class="hero-cta-satellite sat-tl" data-label="中断" data-dir="tl">
+          <span class="sat-core"></span>
+          <span class="sat-label">中断</span>
+        </a>
+        <a href="log/analyzer.html?tab=eidolon" class="hero-cta-satellite sat-tr" data-label="夜灵" data-dir="tr">
+          <span class="sat-core"></span>
+          <span class="sat-label">夜灵</span>
+        </a>
+        <a href="log/analyzer.html?tab=profitTaker" class="hero-cta-satellite sat-bl" data-label="蜘蛛" data-dir="bl">
+          <span class="sat-core"></span>
+          <span class="sat-label">蜘蛛</span>
+        </a>
+        <a href="log/analyzer.html?tab=arbitration" class="hero-cta-satellite sat-br" data-label="仲裁" data-dir="br">
+          <span class="sat-core"></span>
+          <span class="sat-label">仲裁</span>
+        </a>
+        <a href="log/analyzer.html?tab=profile" class="hero-cta-satellite sat-b" data-label="个人资料" data-dir="b">
+          <span class="sat-core"></span>
+          <span class="sat-label">个人资料</span>
+        </a>
       </div>
-      <a href="log/analyzer.html" class="hero-cta">
-        <span class="cta-text">开始分析</span>
-        <span class="cta-arrow">→</span>
-      </a>
     </div>
   </section>
 
   <script src="log/js/cursor.js?v=20260715a"></script>
+
+  <script>
+  (function() {
+    'use strict';
+    var hub = document.getElementById('heroCtaHub');
+    var master = document.getElementById('heroCtaMaster');
+    var satellites = [].slice.call(hub.querySelectorAll('.hero-cta-satellite'));
+    var expanded = false;
+
+    function expand() {
+      if (expanded) return;
+      expanded = true;
+      master.setAttribute('aria-expanded', 'true');
+      hub.classList.add('expanded');
+    }
+
+    master.addEventListener('mouseenter', expand);
+    master.addEventListener('click', function(e) {
+      e.preventDefault();
+      expand();
+    });
+
+    satellites.forEach(function(sat) {
+      sat.addEventListener('click', function(e) {
+        e.preventDefault();
+        var url = sat.getAttribute('href');
+        document.body.style.transition = 'filter .2s, opacity .2s';
+        document.body.style.filter = 'hue-rotate(90deg) saturate(5) brightness(2)';
+        document.body.style.opacity = '0.85';
+        setTimeout(function() {
+          document.body.style.filter = 'hue-rotate(200deg) contrast(4) invert(0.35)';
+          document.body.style.opacity = '0.45';
+        }, 180);
+        setTimeout(function() {
+          document.body.style.filter = 'hue-rotate(290deg) saturate(8) brightness(3)';
+          document.body.style.opacity = '0.2';
+        }, 360);
+        setTimeout(function() {
+          window.location.href = url;
+        }, 540);
+      });
+    });
+  })();
+  </script>
 
   <!-- ── 字体加载完成后关闭加载屏，触发页面渐显 ── -->
   <script>
