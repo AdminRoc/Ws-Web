@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WTF EELOG — Warframe EE.log 分析器</title>
-  <link rel="stylesheet" href="log/css/style.css?v=20260715h">
+  <link rel="stylesheet" href="log/css/style.css?v=20260715i">
   <link rel="icon" href="log/picture/WS-logo-2.png">
   <!-- 加载屏所需 Logo 立即预加载（preload = 当前页高优先级） -->
   <link rel="preload" href="picture/WS-logo-2.png" as="image">
@@ -188,6 +188,85 @@
       box-shadow: 0 0 10px rgba(95,208,232,.5), 0 0 22px rgba(95,208,232,.25);
     }
     .ws-back-btn .back-arrow { font-style: normal; opacity: .8; }
+
+    /* ══════════════════════════════════════════════════════
+       赛博极光背景效果（多方向随机扫过，3-6秒间隔）
+    ══════════════════════════════════════════════════════ */
+    .hero-aurora {
+      position: absolute;
+      inset: -50%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      background:
+        conic-gradient(from 0deg at 30% 50%,
+          transparent 0deg,
+          rgba(95,208,232,0.15) 60deg,
+          rgba(168,107,255,0.12) 120deg,
+          transparent 180deg,
+          rgba(217,70,239,0.1) 240deg,
+          rgba(69,200,255,0.13) 300deg,
+          transparent 360deg);
+      filter: blur(60px);
+      mix-blend-mode: screen;
+      animation: auroraSweep 4.5s ease-in-out infinite;
+    }
+
+    .hero-aurora:nth-child(2) {
+      animation-delay: 1.5s;
+      background:
+        conic-gradient(from 180deg at 70% 30%,
+          transparent 0deg,
+          rgba(168,107,255,0.12) 90deg,
+          rgba(255,95,192,0.1) 150deg,
+          transparent 210deg,
+          rgba(95,208,232,0.13) 270deg,
+          rgba(69,200,255,0.11) 330deg,
+          transparent 360deg);
+    }
+
+    .hero-aurora:nth-child(3) {
+      animation-delay: 3s;
+      background:
+        conic-gradient(from 90deg at 50% 70%,
+          transparent 0deg,
+          rgba(217,70,239,0.11) 45deg,
+          rgba(168,107,255,0.13) 135deg,
+          transparent 225deg,
+          rgba(255,140,0,0.08) 315deg,
+          transparent 360deg);
+    }
+
+    @keyframes auroraSweep {
+      0%, 100% {
+        opacity: 0;
+        transform: translateX(-30%) translateY(-20%) rotate(0deg) scale(0.8);
+      }
+      15% {
+        opacity: 1;
+        transform: translateX(-15%) translateY(-10%) rotate(5deg) scale(1.1);
+      }
+      50% {
+        opacity: 0.7;
+        transform: translateX(15%) translateY(10%) rotate(-3deg) scale(1.2);
+      }
+      85% {
+        opacity: 0.3;
+        transform: translateX(30%) translateY(20%) rotate(2deg) scale(0.9);
+      }
+    }
+
+    /* 当字体加载完成后启用极光效果 */
+    html.fonts-loaded .hero-aurora {
+      animation-play-state: running;
+    }
+
+    /* 减少动画时禁用极光效果 */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-aurora {
+        display: none;
+      }
+    }
   </style>
   <link rel="stylesheet" href="css/fui-core.css">
 </head>
@@ -227,6 +306,9 @@
 
   <section class="home-hero">
     <div class="hero-scan"></div>
+    <div class="hero-aurora"></div>
+    <div class="hero-aurora"></div>
+    <div class="hero-aurora"></div>
     <div class="hero-content">
       <div class="hero-top-group">
         <div class="hero-eyebrow">WARFRAME ／ EE.LOG ANALYZER</div>

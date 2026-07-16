@@ -748,6 +748,14 @@ body.profile-active #detail-wrap {
 
 /* ───────────────── 仲裁视图 v2.0 新增样式 ───────────────── */
 
+/* cy-panel 基础面板外观：给所有带 cy-panel class 的元素统一的深色玻璃态背景与边框，
+   避免每个新模块都要重复声明。已有更具体样式的模块（.arb-dist、.arb-chart-card）
+   会覆盖这些默认值。 */
+.cy-panel {
+  background: rgba(13, 16, 27, 0.75);
+  border: 1px solid var(--c-border);
+}
+
 /* 页面头部 */
 .arb-header { margin-bottom: 18px; }
 .arb-header-title {
@@ -801,6 +809,7 @@ body.profile-active #detail-wrap {
 }
 .arb-meta-cell {
   padding: 14px 16px; border-radius: var(--r-md);
+  background: rgba(13, 16, 27, 0.75); border: 1px solid var(--c-border);
   display: flex; flex-direction: column; gap: 6px;
   transition: border-color .2s, box-shadow .2s;
 }
@@ -896,6 +905,7 @@ body.profile-active #detail-wrap {
 }
 .arb-cross-cell {
   padding: 14px 16px; border-radius: var(--r-md);
+  background: rgba(13, 16, 27, 0.75); border: 1px solid var(--c-border);
   display: flex; flex-direction: column; gap: 8px;
   transition: border-color .2s, box-shadow .2s;
 }
@@ -1069,9 +1079,9 @@ body.profile-active #detail-wrap {
   line-height: 1.05;
   text-align: center;
   background: var(--rainbow);
-  background-size: var(--rainbow-width) auto;
+  background-size: 600px auto;
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: heroGlow 2.5s ease-in-out infinite, titleShift 3s linear infinite;
+  animation: heroGlow 2.5s ease-in-out infinite, titleShift 2s linear infinite;
   filter:
     drop-shadow(0 0 22px rgba(95, 208, 232, 0.7))
     drop-shadow(0 0 50px rgba(168, 107, 255, 0.55))
@@ -1086,16 +1096,16 @@ body.profile-active #detail-wrap {
 }
 @keyframes titleShift {
   0%   { background-position: 0% center; }
-  100% { background-position: var(--rainbow-width) center; }
+  100% { background-position: 600px center; }
 }
 .hero-desc {
   font-size: clamp(1.3rem, 2.6vw, 1.7rem); font-weight: 500;
   letter-spacing: 1.5px; max-width: 560px; line-height: 1.8;
   text-align: center;
   background: var(--rainbow);
-  background-size: var(--rainbow-width) 100%;
+  background-size: 800px 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: heroDescFlow 4s linear infinite;
+  animation: heroDescFlow 2.5s linear infinite;
   filter:
     drop-shadow(0 0 10px rgba(95, 208, 232, 0.75))
     drop-shadow(0 0 24px rgba(168, 107, 255, 0.68))
@@ -1103,7 +1113,7 @@ body.profile-active #detail-wrap {
     drop-shadow(0 0 78px rgba(69, 200, 255, 0.32))
     drop-shadow(0 0 120px rgba(217, 70, 239, 0.22));
 }
-@keyframes heroDescFlow { from { background-position-x: 0; } to { background-position-x: calc(-1 * var(--rainbow-width)); } }
+@keyframes heroDescFlow { from { background-position-x: 0; } to { background-position-x: calc(-1 * 800px); } }
 .hero-nav-grid {
   display: grid; grid-template-columns: repeat(2, 1fr);
   gap: 10px; width: min(300px, 82vw); margin-top: 22px;
@@ -1230,7 +1240,13 @@ body.profile-active #detail-wrap {
     rgba(0,255,220,.85) 55%, rgba(99,102,241,.9) 78%, rgba(217,70,239,.9) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   -webkit-text-fill-color: transparent;
-  animation: rbHueRotate 1s linear infinite;
+  animation: buttonTextShimmer 3s ease-in-out infinite;
+}
+
+@keyframes buttonTextShimmer {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
 .hero-cta-master:hover {
   transform: translateY(-3px) scale(1.05);
@@ -1246,7 +1262,7 @@ body.profile-active #detail-wrap {
   transition: transform .4s cubic-bezier(.22,.68,0,1.2);
 }
 .hero-cta-hub.expanded .hero-cta-master .cta-text {
-  animation: rbHueRotate 1s linear infinite;
+  animation: buttonTextShimmer 3s ease-in-out infinite;
 }
 /* 次级按钮：与主按钮同材质，直角矩形，自适应宽高 */
 .hero-cta-satellite {
@@ -2251,7 +2267,9 @@ body.profile-active #detail-wrap {
   .hero-cta-satellite,
   .hero-cta-satellite:hover,
   .hero-cta-satellite .sat-label,
-  .hero-cta-satellite:hover .sat-label {
+  .hero-cta-satellite:hover .sat-label,
+  .hero-cta-master .cta-text,
+  .hero-cta-hub.expanded .hero-cta-master .cta-text {
     animation: none;
   }
 }

@@ -234,11 +234,12 @@ WF.arbitrationView = (function () {
 
     /* ─── 5. 任务时间轴总览 ─── */
     const timelineSection = U.el('div', 'arb-section');
-    timelineSection.appendChild(U.el('div', 'section-title has-tip', '任务时间轴总览'));
-    timelineSection.querySelector('.section-title').title = TOOLTIPS.timeline;
+    const timelineTitle = U.el('div', 'section-title has-tip', '任务时间轴总览');
+    timelineTitle.title = TOOLTIPS.timeline;
+    timelineSection.appendChild(timelineTitle);
     const timelineBody = chartCard(timelineSection, '', null);
+    container.appendChild(timelineSection); // 先挂载，确保 echarts.init 时容器有宽度
     pushChart(C.timelineOverview(timelineBody, rec));
-    container.appendChild(timelineSection);
 
     /* ─── 6. 异常诊断区 ─── */
     if (rec.anomalies && rec.anomalies.length) {
@@ -286,6 +287,8 @@ WF.arbitrationView = (function () {
     const distSection = U.el('div', 'arb-section');
     distSection.appendChild(U.el('div', 'section-title', '分布图区'));
     const distWrap = U.el('div', 'arb-dist-wrap');
+    distSection.appendChild(distWrap);
+    container.appendChild(distSection); // 先挂载，确保后续 echarts.init 时容器有宽度
 
     // 8.1 无人机刷新间隔
     if (rec.dist && rec.dist.vacuum) {
@@ -372,9 +375,6 @@ WF.arbitrationView = (function () {
     // 8.8 高压恢复时间线
     const recoveryBody = chartCard(distWrap, '高压恢复时间线', '每次场上活跃敌人从≥10恢复到<10所花费的时间。颜色越绿越快，越红越慢。');
     pushChart(C.recoveryTimeline(recoveryBody, rec));
-
-    distSection.appendChild(distWrap);
-    container.appendChild(distSection);
 
     /* ─── 9. 交叉分析区 ─── */
     const crossSection = U.el('div', 'arb-section');
@@ -485,6 +485,8 @@ WF.arbitrationView = (function () {
     // 窗口大小变化时重绘图表
     currentResizeHandler = () => { for (const c of activeCharts) if (c && c.resize) c.resize(); };
     window.addEventListener('resize', currentResizeHandler);
+    // 兜底：下一帧再 resize 一次，确保所有图表容器完成布局后正确绘制
+    requestAnimationFrame(() => { for (const c of activeCharts) if (c && c.resize) c.resize(); });
   }
 
   return { render, summary };
