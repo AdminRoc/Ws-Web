@@ -974,10 +974,17 @@ WF.ArbitrationParser = (function () {
         // 权威节点库解析：节点名 / 星球 / 类型 / 派系（优先，回退到日志解析）
         const resolved = resolveNode(m.nodeId, m);
 
-        // 分节点生息效率基准
-        const nodeBase = (typeof WF !== 'undefined' && WF.ArbNodeBaseline)
-          ? WF.ArbNodeBaseline.lookup(m.nodeId) : null;
-        const essBaseline = nodeBase ? nodeBase.perHour : ESS_BASELINE;
+        // 分节点生息效率基准：优先查该节点的历史最高纪录；
+        // 若该节点尚无数据，退回该任务类型（missionType）的全局最高作为基准；
+        // 兜底使用 ESS_BASELINE（600/时）。
+        const hasBaseline = (typeof WF !== 'undefined' && WF.ArbNodeBaseline);
+        const nodeBase = hasBaseline ? WF.ArbNodeBaseline.lookup(m.nodeId) : null;
+        let essBaseline = nodeBase ? nodeBase.perHour : null;
+        if (essBaseline == null && resolved.typeName && hasBaseline) {
+          const fb = WF.ArbNodeBaseline.fallback(resolved.typeName);
+          if (fb) essBaseline = fb.perHour;
+        }
+        if (essBaseline == null) essBaseline = ESS_BASELINE;
 
         // 事件流后处理：回填 roundIndex、batchId、waveId
         let roundIdx = 0;
