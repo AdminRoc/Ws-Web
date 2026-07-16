@@ -1168,9 +1168,9 @@ WF.ArbitrationParser = (function () {
           // 国际化三重保险
           if (r && (ARB_NAME_MARK.test(r[1]) || ARB_ELITE_ALERT.test(r[1]))) nm = r[1].trim();
           // 括号形式的节点 ID 兜底——仅在首次 cachename / MissionName 阶段写入，
-          // 确保 nodeId 被后续的重复同名行误覆盖（如 vote 行可能含不同格式的 nodeId）
+          // 确保 nodeId 不被后续的重复同名行误覆盖（如 vote 行可能含不同格式的 nodeId）
           const v = RE.nodeIdParen.exec(line);
-          if (v && m && !m.nodeId) { m.nodeId = v[1]; m.nodeIdSource = 'parenInline'; }
+          if (v && m && !m.nodeId) m.nodeId = v[1];
         }
         if (nm) {
           // 关键修复：无尽仲裁任务进行到一半时，重复任务名行不触发 finalize
