@@ -144,7 +144,7 @@ WF.arbitrationView = (function () {
   }
 
   // 分节点基准数据是页面打开时异步加载的，体量很小、几乎总能在用户点开某条
-  // 记录之前就绪；但仍留一道保险——如果解析当时基准还没到位（用了默认 600
+  // 记录之前就绪；但仍留一道保险——如果解析当时基准还没到位（用了默认 1000
   // 兜底），这里发现现在已经有该节点的专属基准了，就用它重新算一遍评分再展示。
   function maybeRecalcWithNodeBaseline(rec) {
     if (rec.essBaselineIsNode) return;
