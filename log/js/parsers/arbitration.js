@@ -168,7 +168,7 @@ WF.ArbitrationParser = (function () {
      ══════════════════════════════════════════════════════════════
      ① 生息效率（权重 80%）：
         期望生息速率（全 Buff，/时）÷ 节点基准 × 100，线性，可超过 100。
-        节点基准优先取该节点基准数据（WF.ArbNodeBaseline），无数据时退回 600/时。
+        节点基准优先取该节点基准数据（WF.ArbNodeBaseline），无数据时退回 1000/时。
      ② 清图效率（权重 5%）：
         100 − geq12Pct。geq12Pct = 场上同时受 AI 监控的活跃敌人数 ≥12（"高压"阈值）的时间占比。
         完全来自日志内采样，不依赖任何外部基准；清图越干净这项得分越高。
@@ -187,7 +187,7 @@ WF.ArbitrationParser = (function () {
      ──────────────────────────────────────────────────────────────
      综合评分 = 0.80×生息效率 + 0.05×清图效率 + 0.05×综合效率 + 0.10×节奏稳定性，上限 120。
      ══════════════════════════════════════════════════════════════ */
-  const ESS_BASELINE = 600;   // 默认基准（该节点暂无分节点基准数据时兜底使用）
+  const ESS_BASELINE = 1000;   // 默认基准（该节点/该任务类型暂无数据时兜底使用）
   const W_ESS   = 0.80;       // 生息效率权重
   const W_CLEAR = 0.05;       // 清图效率权重（场上敌人压力）
   const W_CLEAR_COMP  = 0.05; // 综合效率权重（整体清图质量）
@@ -976,7 +976,7 @@ WF.ArbitrationParser = (function () {
 
         // 分节点生息效率基准：优先查该节点的历史最高纪录；
         // 若该节点尚无数据，退回该任务类型（missionType）的全局最高作为基准；
-        // 兜底使用 ESS_BASELINE（600/时）。
+        // 兜底使用 ESS_BASELINE（1000/时）。
         const hasBaseline = (typeof WF !== 'undefined' && WF.ArbNodeBaseline);
         const nodeBase = hasBaseline ? WF.ArbNodeBaseline.lookup(m.nodeId) : null;
         let essBaseline = nodeBase ? nodeBase.perHour : null;
