@@ -1146,7 +1146,7 @@ WF.ArbitrationParser = (function () {
             rhythm:  rhythmEff,
           },
           essBaseline,
-          essBaselineIsNode: !!nodeBase,
+          essBaselineIsNode: !!(nodeBase || (hasBaseline && resolved.typeName && WF.ArbNodeBaseline.fallback(resolved.typeName))),
           score,
           scoreTier: scoreTierName(score),
           squadInfo: sq.getSquadInfo(),
