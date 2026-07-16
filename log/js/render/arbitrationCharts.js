@@ -351,9 +351,9 @@ WF.arbitrationCharts = (function () {
     // 将恢复事件按顺序展示为横向条形
     const option = mergeOption({
       tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-      grid: { left: '3%', right: '6%', bottom: '8%', top: '8%', containLabel: true },
-      xAxis: { type: 'value', name: '恢复时间 (s)', max: (value) => Math.max(value.max, 30) },
-      yAxis: { type: 'category', data: events.map((_, i) => '事件 ' + (i + 1)), inverse: true },
+      grid: { left: '3%', right: '8%', bottom: '12%', top: '4%', containLabel: true },
+      xAxis: { type: 'value', name: '恢复时间(s)', nameLocation: 'end', nameGap: 8, max: (value) => Math.max(value.max, 30), axisLabel: { color: COLORS.text } },
+      yAxis: { type: 'category', data: events.map((_, i) => '事件 ' + (i + 1)), inverse: true, axisLabel: { color: COLORS.text } },
       series: [
         {
           type: 'bar',
