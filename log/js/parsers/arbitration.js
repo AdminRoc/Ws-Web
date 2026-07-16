@@ -1167,18 +1167,19 @@ WF.ArbitrationParser = (function () {
           const r = RE.missionName.exec(line) || RE.cachedName.exec(line) || RE.voteName.exec(line);
           // 国际化三重保险
           if (r && (ARB_NAME_MARK.test(r[1]) || ARB_ELITE_ALERT.test(r[1]))) nm = r[1].trim();
-          // 括号形式的节点 ID 兜底——仅在首次 cachename / MissionName 阶段写入，
-          // 确保 nodeId 不被后续的重复同名行误覆盖（如 vote 行可能含不同格式的 nodeId）
+          // 括号形式的节点 ID 兜底——仅在 m.nodeId 尚未设置时写入。
+          // 额外要求该行已被仲裁判定通过（line 包含仲裁关键词或 EliteAlert），
+          // 防止 noname 行（如 "Unique name:""）误触发 nodeId 提取。
           const v = RE.nodeIdParen.exec(line);
-          if (v && m && !m.nodeId) m.nodeId = v[1];
+          if (v && m && !m.nodeId && (ARB_NAME_MARK.test(line) || ARB_ELITE_ALERT.test(line))) m.nodeId = v[1];
         }
         if (nm) {
-          // 关键修复：无尽仲裁任务进行到一半时，重复任务名行不触发 finalize
+          // 同任务多条 ThemedSquadOverlay 行去重：比 nodeId 与规范化 name。
           const dupNodeId = RE.nodeIdParen.exec(line);
-          const sameNode = m && m.startedT != null && dupNodeId && m.nodeId && dupNodeId[1] === m.nodeId;
+          const sameNode = dupNodeId && m && m.nodeId && dupNodeId[1] === m.nodeId;
           // 有些任务行缺少 (SolNodeXXX) 后缀（如 Mission name: 行），与已识别任务
           // 在"节点 (星球) - 仲裁"层面是同一条——规范化去后缀再做 rawName 比较。
-          const sameRaw  = m && m.startedT != null && RE.normalizeName(m.rawName) === RE.normalizeName(nm);
+          const sameRaw  = m && RE.normalizeName(m.rawName) === RE.normalizeName(nm);
           if (sameNode || sameRaw) return;
           if (m && m.startedT != null) finalize(t, false);
           if (!m || m.startedT != null) newMission(t, nm);
