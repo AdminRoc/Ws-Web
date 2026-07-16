@@ -15,7 +15,7 @@ importScripts(
   'parsers/eidolon.js?v=20260707b',
   'parsers/disruption.js?v=20260707b',
   'parsers/profitTaker.js?v=20260707b',
-  'parsers/arbitration.js?v=20260715l',
+  'parsers/arbitration.js?v=20260716a',
   'parsers/general.js?v=20260710a'
 );
 
