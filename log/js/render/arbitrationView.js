@@ -181,22 +181,22 @@ WF.arbitrationView = (function () {
     badge.appendChild(U.el('div', 'arb-score-num', String(rec.score)));
     badge.appendChild(U.el('div', 'arb-score-sub', '/ 120'));
     badge.appendChild(U.el('div', 'arb-score-tier', rec.scoreTier || ''));
-    badge.title = `生息效率 ${eff.essence.toFixed(1)}% · 节奏稳定性 ${(eff.rhythm != null ? eff.rhythm : 50).toFixed(1)}%`;
+    badge.title = `生息效率 ${eff.essence.toFixed(1)}% · 清图效率 ${eff.clear != null ? eff.clear.toFixed(1) : 50}% · 综合效率 ${eff.clearComp != null ? eff.clearComp.toFixed(1) : 50}% · 节奏稳定性 ${(eff.rhythm != null ? eff.rhythm : 50).toFixed(1)}%`;
     scoreWrap.appendChild(badge);
 
     const effBox = U.el('div', 'arb-eff-box-score');
     effBar(effBox, '生息效率', eff.essence,
-      `期望生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时（权重 40%）`);
+      `期望生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时（权重 80%）`);
     const clearStr = eff.clear != null ? eff.clear.toFixed(1) + '%' : '—';
     effBar(effBox, '清图效率', eff.clear != null ? eff.clear : 50,
-      eff.clear != null ? `场上≥12只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%（权重 20%）` : '采样数据不足，本维度以 50 分中性值计入（权重 20%）',
+      eff.clear != null ? `场上≥12只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%（权重 5%）` : '采样数据不足，本维度以 50 分中性值计入（权重 5%）',
       TOOLTIPS.activeEnemy);
     const clearCompStr = eff.clearComp != null ? eff.clearComp.toFixed(1) + '%' : '—';
     effBar(effBox, '综合效率', eff.clearComp != null ? eff.clearComp : 50,
-      eff.clearComp != null ? `清洁度×70% + 高压响应×30% = ${eff.clearComp.toFixed(1)}%（权重 20%）` : '数据不足，本维度以 50 分中性值计入（权重 20%）',
+      eff.clearComp != null ? `清洁度×70% + 高压响应×30% = ${eff.clearComp.toFixed(1)}%（权重 5%）` : '数据不足，本维度以 50 分中性值计入（权重 5%）',
       '清洁度：按活跃敌人分布区间评分，0-4=100分、5-9=80分、10-14=70分、15-20=30分、>20=0分，再按驻留时长加权平均。' + TOOLTIPS.activeEnemy + ' 高压响应：统计从≥12只敌人恢复到<12只的平均时间。');
     effBar(effBox, '节奏稳定性', eff.rhythm != null ? eff.rhythm : 50,
-      eff.rhythm != null ? `${eff.rhythm.toFixed(1)}%（权重 20%）` : '数据不足，本维度以 50 分中性值计入（权重 20%）',
+      eff.rhythm != null ? `${eff.rhythm.toFixed(1)}%（权重 10%）` : '数据不足，本维度以 50 分中性值计入（权重 10%）',
       TOOLTIPS.rhythm);
     scoreWrap.appendChild(effBox);
     container.appendChild(scoreWrap);
@@ -437,10 +437,10 @@ WF.arbitrationView = (function () {
 
     const defWrap = U.el('div', 'arb-explain-defs');
     const defs = [
-      ['生息效率（40%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再除以节点基准数量，得到百分比。'],
-      ['清图效率（20%）', '依据房主日志中 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥12（"高压"阈值）的时间占比，取 100 减去该占比作为得分。', TOOLTIPS.activeEnemy],
-      ['综合效率（20%）', '由两个维度融合：① 清洁度（70%）——按活跃敌人分布区间评分；② 高压响应（30%）——统计从≥12只敌人恢复到<12只的平均时间。'],
-      ['节奏稳定性（20%）', TOOLTIPS.rhythm],
+      ['生息效率（80%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再除以节点基准数量，得到百分比。'],
+      ['清图效率（5%）', '依据房主日志中 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥12（"高压"阈值）的时间占比，取 100 减去该占比作为得分。', TOOLTIPS.activeEnemy],
+      ['综合效率（5%）', '由两个维度融合：① 清洁度（70%）——按活跃敌人分布区间评分；② 高压响应（30%）——统计从≥12只敌人恢复到<12只的平均时间。'],
+      ['节奏稳定性（10%）', TOOLTIPS.rhythm],
     ];
     defs.forEach(([k, v, tip]) => {
       const d = U.el('div', 'arb-def-row');
@@ -454,7 +454,7 @@ WF.arbitrationView = (function () {
     });
     explain.appendChild(defWrap);
 
-    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 0.40×生息效率 + 0.20×清图效率 + 0.20×综合效率 + 0.20×节奏稳定性，上限 120 分。清图效率、综合效率与节奏稳定性三项完全由日志推算，不依赖外部排行榜数据，确保节点基准数据缺失时评分仍具参考价值。'));
+    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 0.80×生息效率 + 0.05×清图效率 + 0.05×综合效率 + 0.10×节奏稳定性，上限 120 分。清图效率、综合效率与节奏稳定性三项完全由日志推算，不依赖外部排行榜数据，确保节点基准数据缺失时评分仍具参考价值。'));
     const scaleRows = [
       ['101 - 120', '巅峰', '综合效率与操作水平的提升空间已经不大，整体表现趋近完美'],
       ['80 - 100',  '优秀', '操作表现较为稳定、清图流畅、地图整体的清洁度高，属广义上的高效队伍'],
