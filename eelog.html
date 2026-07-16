@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WTF EELOG — Warframe EE.log 分析器</title>
-  <link rel="stylesheet" href="log/css/style.css?v=20260716b">
+  <link rel="stylesheet" href="log/css/style.css?v=20260716c">
   <link rel="icon" href="log/picture/WS-logo-2.png">
   <!-- 加载屏所需 Logo 立即预加载（preload = 当前页高优先级） -->
   <link rel="preload" href="picture/WS-logo-2.png" as="image">
@@ -181,17 +181,19 @@
     /* 青 · 左上，主氛围光 */
     .hero-aurora.a1 {
       width: 62vmax; height: 62vmax; top: -18%; left: -12%;
+      /* 性能：不用 blur() 滤镜（60vmax 模糊层逐帧重栅格化是卡顿主因），
+         渐变衰减拉得更柔来获得同等朦胧 —— 静态纹理平移，GPU 只走合成 */
       background: radial-gradient(closest-side,
-        rgba(95,208,232,.16), rgba(95,208,232,.05) 45%, transparent 72%);
-      filter: blur(48px);
+        rgba(95,208,232,.15) 0%, rgba(95,208,232,.08) 32%,
+        rgba(95,208,232,.035) 52%, transparent 74%);
       animation: glowOrbitA 21s linear infinite;
     }
     /* 紫→品红 · 右下，与青色交叠出层次 */
     .hero-aurora.a2 {
       width: 58vmax; height: 58vmax; bottom: -22%; right: -10%;
       background: radial-gradient(closest-side,
-        rgba(168,107,255,.15), rgba(217,70,239,.05) 45%, transparent 72%);
-      filter: blur(54px);
+        rgba(168,107,255,.14) 0%, rgba(217,70,239,.07) 32%,
+        rgba(168,107,255,.03) 52%, transparent 74%);
       animation: glowOrbitB 27s linear infinite;
       animation-delay: -9s;
     }
@@ -199,8 +201,8 @@
     .hero-aurora.a3 {
       width: 44vmax; height: 44vmax; top: 22%; left: 52%;
       background: radial-gradient(closest-side,
-        rgba(69,200,255,.13), rgba(65,255,142,.05) 45%, transparent 72%);
-      filter: blur(44px);
+        rgba(69,200,255,.12) 0%, rgba(65,255,142,.06) 34%,
+        rgba(69,200,255,.028) 54%, transparent 76%);
       animation: glowOrbitC 17s ease-in-out infinite;
       animation-delay: -5s;
     }
@@ -208,8 +210,8 @@
     .hero-aurora.a4 {
       width: 32vmax; height: 32vmax; top: -6%; right: 18%;
       background: radial-gradient(closest-side,
-        rgba(255,95,192,.12), rgba(255,154,61,.04) 45%, transparent 72%);
-      filter: blur(38px);
+        rgba(255,95,192,.11) 0%, rgba(255,154,61,.05) 34%,
+        rgba(255,95,192,.024) 54%, transparent 76%);
       animation: glowOrbitD 13s ease-in-out infinite;
       animation-delay: -3s;
     }

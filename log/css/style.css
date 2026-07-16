@@ -1091,18 +1091,13 @@ body.profile-active #detail-wrap {
   background: var(--rainbow);
   background-size: 600px auto;
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: heroGlow 2.5s ease-in-out infinite, titleShift 2s linear infinite;
+  /* 性能：辉光改静态（原 heroGlow 为 filter 动画，逐帧重绘大标题，是卡顿主因之一）。
+     彩虹流动仍由 titleShift 承担，视觉主角不变。 */
+  animation: titleShift 2s linear infinite;
   filter:
-    drop-shadow(0 0 22px rgba(95, 208, 232, 0.7))
-    drop-shadow(0 0 50px rgba(168, 107, 255, 0.55))
-    drop-shadow(0 0 90px rgba(217, 70, 239, 0.38));
-}
-@keyframes heroGlow {
-  0%   { filter: drop-shadow(0 0 22px rgba(95, 208, 232, 0.7)) drop-shadow(0 0 50px rgba(168, 107, 255, 0.55)) drop-shadow(0 0 90px rgba(217, 70, 239, 0.38)); }
-  25%  { filter: drop-shadow(0 0 28px rgba(69, 200, 255, 0.85)) drop-shadow(0 0 62px rgba(95, 208, 232, 0.65)) drop-shadow(0 0 108px rgba(168, 107, 255, 0.48)); }
-  50%  { filter: drop-shadow(0 0 34px rgba(168, 107, 255, 0.95)) drop-shadow(0 0 74px rgba(217, 70, 239, 0.72)) drop-shadow(0 0 128px rgba(95, 208, 232, 0.52)); }
-  75%  { filter: drop-shadow(0 0 28px rgba(255, 95, 192, 0.85)) drop-shadow(0 0 62px rgba(69, 200, 255, 0.65)) drop-shadow(0 0 108px rgba(168, 107, 255, 0.48)); }
-  100% { filter: drop-shadow(0 0 22px rgba(95, 208, 232, 0.7)) drop-shadow(0 0 50px rgba(168, 107, 255, 0.55)) drop-shadow(0 0 90px rgba(217, 70, 239, 0.38)); }
+    drop-shadow(0 0 26px rgba(69, 200, 255, 0.8))
+    drop-shadow(0 0 58px rgba(95, 208, 232, 0.6))
+    drop-shadow(0 0 104px rgba(168, 107, 255, 0.46));
 }
 @keyframes titleShift {
   0%   { background-position: 0% center; }
