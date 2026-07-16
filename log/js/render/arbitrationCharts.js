@@ -254,7 +254,7 @@ WF.arbitrationCharts = (function () {
     const categories = pm.map((r) => 'M' + r.minute);
     const option = mergeOption({
       tooltip: { trigger: 'axis' },
-      legend: { data: ['平均活跃敌人', '最大活跃敌人', '估算清图量'], top: 0 },
+      legend: { data: ['平均活跃敌人', '最大活跃敌人', '估算清图量', '高压线'], top: 0 },
       xAxis: { type: 'category', data: categories },
       yAxis: { type: 'value', name: '数量' },
       series: [
@@ -273,7 +273,8 @@ WF.arbitrationCharts = (function () {
           data: pm.map((r) => r.liveAvg.toFixed(1)),
           markLine: {
             silent: true,
-            data: [{ yAxis: 10, label: { formatter: '高压线', color: COLORS.red, fontSize: 10 }, lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 } }],
+            /* 标签交给图例展示，不在绘图区内贴字，避免遮挡柱线内容 */
+            data: [{ yAxis: 10, label: { show: false }, lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 } }],
           },
         },
         {
@@ -290,6 +291,15 @@ WF.arbitrationCharts = (function () {
           barWidth: '35%',
           itemStyle: { color: 'rgba(0,240,255,0.15)', borderColor: COLORS.cyan, borderWidth: 1 },
           data: pm.map((r) => r.cleared),
+        },
+        /* 空数据哑系列：仅用于在图例中展示"高压线"图示（红色虚线段），不在绘图区绘制任何内容 */
+        {
+          name: '高压线',
+          type: 'line',
+          data: [],
+          symbol: 'none',
+          silent: true,
+          lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 },
         },
       ],
     });
@@ -315,7 +325,8 @@ WF.arbitrationCharts = (function () {
           return `压力: ${p.value[0]} 只<br/>随后 15s 无人机: ${p.value[1]} 只`;
         },
       },
-      grid: { left: '8%', right: '8%', bottom: '12%', top: '12%' },
+      grid: { left: '8%', right: '8%', bottom: '12%', top: '14%' },
+      legend: { data: ['高压线'], top: 0, right: 12, textStyle: { fontSize: 11 } },
       xAxis: { type: 'value', name: '生成时活跃敌人', nameLocation: 'middle', nameGap: 22 },
       yAxis: { type: 'value', name: '随后 15s 无人机数', nameLocation: 'middle', nameGap: 28 },
       series: [
@@ -331,10 +342,18 @@ WF.arbitrationCharts = (function () {
           data,
           markLine: {
             silent: true,
-            data: [
-              { xAxis: 10, lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 }, label: { formatter: '高压线', color: COLORS.red, fontSize: 10 } },
-            ],
+            /* 标签交给图例展示，不在绘图区内贴字，避免遮挡散点 */
+            data: [{ xAxis: 10, lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 }, label: { show: false } }],
           },
+        },
+        /* 空数据哑系列：仅用于在图例中展示"高压线"图示（红色虚线段） */
+        {
+          name: '高压线',
+          type: 'line',
+          data: [],
+          symbol: 'none',
+          silent: true,
+          lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 },
         },
       ],
     });
@@ -352,7 +371,7 @@ WF.arbitrationCharts = (function () {
     const option = mergeOption({
       tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
       grid: { left: '3%', right: '8%', bottom: '12%', top: '4%', containLabel: true },
-      xAxis: { type: 'value', name: '恢复时间(s)', nameLocation: 'end', nameGap: 8, max: (value) => Math.max(value.max, 30), axisLabel: { color: COLORS.text } },
+      xAxis: { type: 'value', name: '恢复时间(s)', nameLocation: 'middle', nameGap: 30, max: (value) => Math.max(value.max, 30), axisLabel: { color: COLORS.text } },
       yAxis: { type: 'category', data: events.map((_, i) => '事件 ' + (i + 1)), inverse: true, axisLabel: { color: COLORS.text } },
       series: [
         {

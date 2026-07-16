@@ -1,4 +1,4 @@
-﻿/* 入口：文件上传、解析调度、Tab 路由
+/* 入口：文件上传、解析调度、Tab 路由
  * 大文件（≥ LARGE_THRESHOLD）走 scanAsync 分块扫描，UI 保持响应并显示进度 */
 (function () {
   const U = WF.utils;
@@ -60,7 +60,6 @@
       const btn = U.el('button', 'tab-btn');
       btn.dataset.tab = tab.id;
       btn.appendChild(U.el('span', 'tab-glow', ''));
-      btn.appendChild(U.el('span', 'tab-dot', ''));
       const text = U.el('span', 'tab-text');
       text.appendChild(U.el('span', 'tab-cn', tab.label));
       text.appendChild(U.el('span', 'tab-en', tab.en));

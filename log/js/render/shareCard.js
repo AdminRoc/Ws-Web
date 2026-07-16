@@ -597,14 +597,18 @@ WF.shareCard = (function () {
     var origDetailOverflow = detail.style.overflow;
     var origDetailMargin = detail.style.margin;
     var origDetailBoxSizing = detail.style.boxSizing;
+    var origDetailPadding = detail.style.padding;
 
-    var origWrapOverflow, origWrapMinW;
+    var origWrapOverflow, origWrapMinW, origWrapPadding;
     var detailWrap = document.getElementById('detail-wrap');
     if (detailWrap) {
       origWrapOverflow = detailWrap.style.overflow;
       origWrapMinW = detailWrap.style.minWidth;
+      origWrapPadding = detailWrap.style.padding;
       detailWrap.style.overflow = 'visible';
       detailWrap.style.minWidth = '0';
+      /* 与克隆文档保持一致：克隆中 #detail-wrap 的 padding 被强制为 0 */
+      detailWrap.style.padding = '0';
     }
 
     detail.style.width = '960px';
@@ -613,8 +617,45 @@ WF.shareCard = (function () {
     detail.style.overflow = 'visible';
     detail.style.margin = '0';
     detail.style.boxSizing = 'border-box';
+    /* 与克隆文档保持一致：克隆中 #detail 的 padding 被强制为 28px 36px 36px。
+       真实页面与克隆布局完全相同，ECharts resize 后的 canvas 位图宽度
+       才能与克隆容器精确匹配，避免右侧被裁掉。 */
+    detail.style.padding = '28px 36px 36px';
     /* 强制浏览器重新计算布局，确保 html2canvas 读取到新的宽高 */
     void detail.offsetWidth;
+
+    /* ═══ 关键：让 ECharts 图表按 960px 新布局重绘 ═══
+       仲裁分页的 6 张图（任务时间轴总览 / 无人机生成趋势 / 敌人生成速率 /
+       清图压力趋势 / 压力-产出关联 / 高压恢复时间线）是 canvas 位图，
+       容器变窄后图表不会自动缩放，会被卡片 overflow:hidden 裁掉右侧。
+       这里收集详情区内所有 ECharts 实例并按新容器尺寸 resize；
+       截图结束后恢复原页面宽度，再 resize 一次还原屏幕布局。 */
+    var chartInstances = [];
+    function resizeCharts() {
+      for (var ci = 0; ci < chartInstances.length; ci++) {
+        var inst = chartInstances[ci];
+        try {
+          var dom = inst.getDom && inst.getDom();
+          if (dom && dom.clientWidth > 0) {
+            inst.resize({ width: dom.clientWidth, height: dom.clientHeight });
+          } else {
+            inst.resize();
+          }
+        } catch (e) { /* 单个图表失败不影响其他图表 */ }
+      }
+    }
+    try {
+      if (typeof echarts !== 'undefined' && typeof echarts.getInstanceByDom === 'function') {
+        var chartDoms = detail.querySelectorAll('[_echarts_instance_]');
+        for (var cd = 0; cd < chartDoms.length; cd++) {
+          var inst0 = echarts.getInstanceByDom(chartDoms[cd]);
+          if (inst0) chartInstances.push(inst0);
+        }
+        resizeCharts();
+        /* 再强制一次重排，确保 resize 后的 canvas 位图尺寸已生效 */
+        void detail.offsetWidth;
+      }
+    } catch (e) { /* 无 ECharts 时静默跳过（其他分页为 SVG 图，不受影响） */ }
 
     function restorePage() {
       detail.style.width = origDetailWidth;
@@ -623,11 +664,15 @@ WF.shareCard = (function () {
       detail.style.overflow = origDetailOverflow;
       detail.style.margin = origDetailMargin;
       detail.style.boxSizing = origDetailBoxSizing;
+      detail.style.padding = origDetailPadding;
       if (detailWrap) {
         detailWrap.style.overflow = origWrapOverflow;
         detailWrap.style.minWidth = origWrapMinW;
+        detailWrap.style.padding = origWrapPadding;
       }
       hideEls.forEach(el => { el.style.visibility = ''; });
+      /* 页面宽度已还原，让 ECharts 图表按屏幕布局重新绘制 */
+      resizeCharts();
     }
 
     loadFontAsDataURL().then((font) => {
