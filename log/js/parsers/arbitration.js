@@ -1002,7 +1002,8 @@ WF.ArbitrationParser = (function () {
         // 高压恢复事件（过滤开局阶段：SS_STARTED 到第一次轮次结算前）
         // 注：清图效率阈值已改为 ≥12，但高压恢复仍沿用 ≥10 的原始高压定义
         const firstRoundT = m.roundBoundaries && m.roundBoundaries.length ? m.roundBoundaries[0].t : m.startedT;
-        const recoveryEvents = extractRecoveryEvents(m.liveSamples, firstRoundT);
+        const firstRoundRelT = firstRoundT != null ? firstRoundT - m.startedT : null;
+        const recoveryEvents = extractRecoveryEvents(m.liveSamples, firstRoundRelT);
 
         const essEff   = essenceEfficiency(fullBuffPerHour, essBaseline);
         const clearEff = clearEfficiency(liveDistData ? liveDistData.geq12Pct : null);
