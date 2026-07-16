@@ -9,8 +9,14 @@ WF.ArbNodeBaseline = (function () {
   let ready = false;
   let fallbackByType = null; // { <missionType>: { perHour, nodeName } }，节点级查不到时的兜底
 
+  let _pending = null; // 复用同一个 fetch Promise，避免多次调用重复发起网络请求
+
   function load(url) {
-    return fetch(url).then((r) => (r.ok ? r.json() : null)).then((json) => {
+    // 如果已有数据且 ready，直接返回已 resolved 的 Promise，不重复请求
+    if (ready && data) return Promise.resolve();
+    // 如果正在加载中（前一次 load 还没完成），返回同一个 Promise，不发起新请求
+    if (_pending) return _pending;
+    _pending = fetch(url).then((r) => (r.ok ? r.json() : null)).then((json) => {
       data = json;
       // 构建 missionType → 最高 perHour 索引（包含常规节点与 MISSION_FALLBACK 条目）
       if (json && json.nodes) {
@@ -24,7 +30,8 @@ WF.ArbNodeBaseline = (function () {
         fallbackByType = map;
       }
       ready = true;
-    }).catch(() => { ready = true; });
+    }).catch(() => { ready = true; }).finally(() => { _pending = null; });
+    return _pending;
   }
 
   function lookup(nodeId) {

@@ -195,7 +195,14 @@
         }
       };
       reader.onerror = () => { statusEl.textContent = '文件读取失败'; };
-      reader.readAsText(file);
+
+      // 与超大文件 Worker 路径对齐：确保仲裁分节点基准数据就绪后再开始解析。
+      // 页面初始化时 analyzer.html 已发起预热请求，此处 load() 若数据已就绪则
+      // 浏览器会命中 HTTP 缓存立即返回；仅当预热请求尚未完成或此前失败时才会
+      // 真正发起网络请求。load() 内部有 catch 兜底，失败时 data 保持 null、
+      // 解析器会退回默认 1000/时基准——不阻塞、不影响任何既有流程。
+      const baselineUrl = new URL('../data/arb-node-baseline.json', window.location.href).href;
+      WF.ArbNodeBaseline.load(baselineUrl).then(() => reader.readAsText(file));
     }
   }
 
