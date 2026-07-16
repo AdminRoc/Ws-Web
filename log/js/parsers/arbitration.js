@@ -37,6 +37,12 @@ WF.ArbitrationParser = (function () {
     nodeIdParen:      /\(([A-Za-z0-9_/]+?)_EliteAlert\)/,
     // 关卡资源路径：/Lotus/Levels/.../Proc/<派系>/<关卡名> —— 关卡名含任务类型关键字
     levelPath:        /\/Lotus\/Levels\/(?:[A-Za-z]+\/)*Proc\/([A-Za-z]+)\/([A-Za-z0-9]+)/,
+    // 规范化任务名：去掉末尾的 (SolNodeXXX) 或 (SolNodeXXX_EliteAlert) 和 -1 尾标，
+    // 用于跨行比对各解析阶段产出的任务名是否指向同一条记录。
+    normalizeName: function(s) {
+      if (!s) return '';
+      return s.replace(/\s*\([A-Za-z0-9_]+(?:_EliteAlert)?\)\s*$/, '').replace(/\s*-1\s*$/, '').trim();
+    },
     stateStarted:     /GameRulesImpl - changing state from SS_WAITING_FOR_PLAYERS to SS_STARTED/,
     stateEnding:      /GameRulesImpl - changing state from SS_STARTED to SS_ENDING/,
     droneCreated:     /OnAgentCreated \/Npc\/CorpusEliteShieldDroneAgent\d*\b/,
@@ -1161,15 +1167,18 @@ WF.ArbitrationParser = (function () {
           const r = RE.missionName.exec(line) || RE.cachedName.exec(line) || RE.voteName.exec(line);
           // 国际化三重保险
           if (r && (ARB_NAME_MARK.test(r[1]) || ARB_ELITE_ALERT.test(r[1]))) nm = r[1].trim();
-          // 括号形式的节点 ID 兜底
+          // 括号形式的节点 ID 兜底——仅在首次 cachename / MissionName 阶段写入，
+          // 确保 nodeId 被后续的重复同名行误覆盖（如 vote 行可能含不同格式的 nodeId）
           const v = RE.nodeIdParen.exec(line);
-          if (v && m) { if (!m.nodeId) m.nodeId = v[1]; }
+          if (v && m && !m.nodeId) { m.nodeId = v[1]; m.nodeIdSource = 'parenInline'; }
         }
         if (nm) {
           // 关键修复：无尽仲裁任务进行到一半时，重复任务名行不触发 finalize
           const dupNodeId = RE.nodeIdParen.exec(line);
           const sameNode = m && m.startedT != null && dupNodeId && m.nodeId && dupNodeId[1] === m.nodeId;
-          const sameRaw  = m && m.startedT != null && m.rawName === nm;
+          // 有些任务行缺少 (SolNodeXXX) 后缀（如 Mission name: 行），与已识别任务
+          // 在"节点 (星球) - 仲裁"层面是同一条——规范化去后缀再做 rawName 比较。
+          const sameRaw  = m && m.startedT != null && RE.normalizeName(m.rawName) === RE.normalizeName(nm);
           if (sameNode || sameRaw) return;
           if (m && m.startedT != null) finalize(t, false);
           if (!m || m.startedT != null) newMission(t, nm);
