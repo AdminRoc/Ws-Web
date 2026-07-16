@@ -1041,10 +1041,51 @@ body.profile-active #detail-wrap {
   -webkit-mask-image: radial-gradient(ellipse 90% 80% at center, black 15%, transparent 80%);
   mask-image: radial-gradient(ellipse 90% 80% at center, black 15%, transparent 80%);
 }
+/* 炫彩扫描光束：亮核 + 双侧彩色边缘（青→绿→白→金→品红），
+   内部亮丝竖向流动，光束带 7° 前倾；缓入→加速→缓出划过，
+   每趟之后留有呼吸停顿；两端完全离屏且透明度为 0，循环无缝 */
 .hero-scan {
-  position: absolute; top: 0; bottom: 0; width: 300px; pointer-events: none; z-index: 0;
-  background: linear-gradient(90deg, transparent, rgba(95,208,232,0.032), transparent);
-  animation: dzScan 11s linear infinite;
+  position: absolute; top: -12%; bottom: -12%; left: 0; width: 400px;
+  pointer-events: none; z-index: 0;
+  mix-blend-mode: screen;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(168,107,255,0.07) 14%,
+    rgba(95,208,232,0.13) 36%,
+    rgba(65,255,142,0.10) 45%,
+    rgba(240,253,255,0.22) 50%,
+    rgba(255,233,150,0.09) 56%,
+    rgba(255,95,192,0.11) 64%,
+    rgba(217,70,239,0.07) 86%,
+    transparent 100%);
+  filter: drop-shadow(0 0 24px rgba(95,208,232,.18));
+  opacity: 0;
+  transform: translateX(-60vw) skewX(-7deg);
+  animation: heroScanSweep 11s cubic-bezier(.46,.04,.54,.96) infinite;
+  will-change: transform, opacity;
+}
+/* 光束内部：细密亮丝持续向下流动，让光有纹理而不是一片平涂 */
+.hero-scan::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(180deg,
+    transparent 0px, rgba(255,255,255,.06) 2px, transparent 6px);
+  background-size: 100% 240px;
+  animation: heroScanFlow 1.6s linear infinite;
+}
+@keyframes heroScanFlow { from { background-position-y: 0; } to { background-position-y: 240px; } }
+/* 亮核心线：上下两端羽化 */
+.hero-scan::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; margin-left: -1.5px;
+  background: linear-gradient(180deg,
+    transparent 0%, rgba(235,252,255,.55) 22%, rgba(235,252,255,.55) 78%, transparent 100%);
+  filter: blur(1.5px);
+}
+@keyframes heroScanSweep {
+  0%   { transform: translateX(-60vw) skewX(-7deg); opacity: 0; }
+  9%   { opacity: 1; }
+  58%  { transform: translateX(118vw) skewX(-7deg); opacity: 1; }
+  62%  { opacity: 0; }
+  100% { transform: translateX(118vw) skewX(-7deg); opacity: 0; }
 }
 .hero-content {
   position: relative; z-index: 1;
