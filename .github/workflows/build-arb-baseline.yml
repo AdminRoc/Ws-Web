@@ -15,7 +15,7 @@ name: 构建仲裁分节点效率基准数据
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 6 * * *'   # 每天 06:15 UTC，与其它批处理任务错峰
+    - cron: '15 0,8,16 * * *'   # 每天 00:15 / 08:15 / 16:15 UTC（=北京时间 8:15 / 16:15 / 00:15），三次拉取最新基准
 
 concurrency:
   group: ws-web-batch-lock   # 与其它低频批处理任务共用一把锁，避免同时写 data/ 冲突
