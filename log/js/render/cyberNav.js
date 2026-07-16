@@ -6,9 +6,10 @@ window.WF = window.WF || {};
 
 WF.cyberNav = (function () {
   // 详情区内代表"模块标题"的选择器（涵盖各任务类型的分节标题）
+  // 仲裁页面的 ECharts 图表卡片标题 .arb-chart-title 也加入，使右下角导航能映射到每个子模块。
   // 大蜘蛛 Profit-Taker 页面只用 .squad-title 和 .pt-bar-label（全程时间轴），
   // .pt-sec-title 等小节标题不加入，避免导航冗余。
-  const HEADING_SEL = '.arb-meta-title, .squad-title, .section-title, .arb-dist-title, .gen-section-title, .dis-tl-title, .pt-bar-label, .gen-timing-title';
+  const HEADING_SEL = '.arb-meta-title, .squad-title, .section-title, .arb-dist-title, .arb-chart-title, .gen-section-title, .dis-tl-title, .pt-bar-label, .gen-timing-title';
   const HEADER_OFFSET = 84; // 顶部固定导航栏高度补偿
 
   let root, listEl, detail, observer, rebuildTimer;
@@ -58,6 +59,9 @@ WF.cyberNav = (function () {
   }
 
   function labelOf(el) {
+    // 若显式指定了导航标签，优先使用
+    const navLabel = el.dataset.navLabel;
+    if (navLabel) return navLabel;
     // 取标题文本首段（去掉英文副标题/计数括注），保持简短
     let t = (el.textContent || '').trim();
     t = t.replace(/（.*?）|\(.*?\)/g, '').replace(/\s+/g, ' ').trim();

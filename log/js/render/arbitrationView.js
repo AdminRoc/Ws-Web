@@ -95,10 +95,13 @@ WF.arbitrationView = (function () {
   }
 
   // 通用横向分布条组（赛博风）
+  // opts.navLabel 给右下角导航提供显示文本。
   function distBars(container, opts) {
     const box = U.el('div', 'arb-dist cy-panel');
     const hd = U.el('div', 'arb-dist-hd');
-    hd.appendChild(U.el('span', 'arb-dist-title', opts.title));
+    const titleEl = U.el('span', 'arb-dist-title', opts.title);
+    if (opts.navLabel) titleEl.dataset.navLabel = opts.navLabel;
+    hd.appendChild(titleEl);
     if (opts.headRight) hd.appendChild(U.el('span', 'arb-dist-max', opts.headRight));
     box.appendChild(hd);
     const maxPct = Math.max(1, ...opts.rows.map((r) => r.pct));
@@ -119,10 +122,15 @@ WF.arbitrationView = (function () {
   }
 
   // ECharts 卡片容器
-  function chartCard(container, title, tip) {
+  // opts.id 给卡片设置锚点 id；opts.navLabel 给右下角导航提供显示文本。
+  function chartCard(container, title, tip, opts) {
+    opts = opts || {};
     const box = U.el('div', 'arb-chart-card cy-panel');
+    if (opts.id) box.id = opts.id;
     const hd = U.el('div', 'arb-chart-hd');
-    hd.appendChild(U.el('span', 'arb-chart-title', title));
+    const titleEl = U.el('span', 'arb-chart-title', title);
+    if (opts.navLabel) titleEl.dataset.navLabel = opts.navLabel;
+    hd.appendChild(titleEl);
     if (tip) {
       const icon = U.el('span', 'arb-chart-tip has-tip', '?');
       icon.title = tip;
@@ -338,11 +346,11 @@ WF.arbitrationView = (function () {
     pushChart(C.droneTrendChart(droneTrendBody, rec));
 
     // 8.4 敌人生成速率
-    const spawnBody = chartCard(distWrap, '敌人生成速率（每分钟）', '实线 = Spawned 峰值差分，半透明柱 = 真实生成事件数。差距大说明日志可能被裁切。');
+    const spawnBody = chartCard(distWrap, '敌人生成速率（每分钟）', '实线 = Spawned 峰值差分，半透明柱 = 真实生成事件数。差距大说明日志可能被裁切。', { id: 'arb-chart-spawn-rate', navLabel: '敌人生成速率' });
     pushChart(C.spawnRateChart(spawnBody, rec));
 
     // 8.5 清图压力趋势
-    const pressureBody = chartCard(distWrap, '清图压力趋势（每分钟）', '青色面积 = 平均活跃敌人，洋红虚线 = 最大活跃敌人，青色柱 = 估算清图量。');
+    const pressureBody = chartCard(distWrap, '清图压力趋势（每分钟）', '青色面积 = 平均活跃敌人，洋红虚线 = 最大活跃敌人，青色柱 = 估算清图量。', { id: 'arb-chart-pressure-trend', navLabel: '清图压力趋势' });
     pushChart(C.pressureTrendChart(pressureBody, rec));
 
     // 8.6 清图效率分布
@@ -350,17 +358,18 @@ WF.arbitrationView = (function () {
       const ld = rec.dist.liveDist;
       distBars(distWrap, {
         title: '清图效率',
+        navLabel: '清图效率',
         rows: ld.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
         footer: `高压占比（≥12）：${ld.geq12Pct.toFixed(1)}%`,
       });
     }
 
     // 8.7 压力-产出散点图
-    const scatterBody = chartCard(distWrap, '压力-产出关联', TOOLTIPS.pressureScatter);
+    const scatterBody = chartCard(distWrap, '压力-产出关联', TOOLTIPS.pressureScatter, { id: 'arb-chart-pressure-scatter', navLabel: '压力-产出关联' });
     pushChart(C.pressureDroneScatter(scatterBody, rec));
 
     // 8.8 高压恢复时间线
-    const recoveryBody = chartCard(distWrap, '高压恢复时间线', '每次场上活跃敌人从≥12恢复到<12所花费的时间。颜色越绿越快，越红越慢。');
+    const recoveryBody = chartCard(distWrap, '高压恢复时间线', '每次场上活跃敌人从≥12恢复到<12所花费的时间。颜色越绿越快，越红越慢。', { id: 'arb-chart-recovery-timeline', navLabel: '高压恢复时间线' });
     pushChart(C.recoveryTimeline(recoveryBody, rec));
     recoveryBody.classList.add('recovery-timeline');
 
