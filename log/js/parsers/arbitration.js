@@ -598,11 +598,11 @@ WF.ArbitrationParser = (function () {
     for (let i = 0; i < roundBoundaries.length; i++) {
       const b = roundBoundaries[i];
       const prev = i === 0 ? { t: startedT, droneCum: 0, spawnedCum: 0, eventCum: 0 } : roundBoundaries[i - 1];
-      const segEvents = eventStream.filter((e) => e.t > prev.t && e.t <= b.t);
-      const droneEvents = segEvents.filter((e) => e.type === 'drone');
-      const enemyEvents = segEvents.filter((e) => e.type !== 'drone');
+      const segEvents = eventStream.filter((e) => e[0] > prev.t && e[0] <= b.t);
+      const droneEvents = segEvents.filter((e) => e[2] === 'drone');
+      const enemyEvents = segEvents.filter((e) => e[2] !== 'drone');
       const gaps = [];
-      for (let j = 1; j < droneEvents.length; j++) gaps.push(droneEvents[j].t - droneEvents[j - 1].t);
+      for (let j = 1; j < droneEvents.length; j++) gaps.push(droneEvents[j][0] - droneEvents[j - 1][0]);
 
       const duration = b.t - prev.t;
       const segLiveSamples = liveSamples.filter((s) => s.t + startedT > prev.t && s.t + startedT <= b.t);
@@ -639,22 +639,14 @@ WF.ArbitrationParser = (function () {
     let lastWave = null;
     let lastSpawn = 0;
     for (const e of eventStream) {
-      // 显式 wave 字段
-      let m;
-      if ((m = RE.waveExplicit.exec(e.agentPath || '')) || (m = RE.waveTotalSpawned.exec(e.agentPath || '')) || (m = RE.waveCurrent.exec(e.agentPath || ''))) {
-        const w = parseInt(m[1], 10);
-        if (lastWave == null || w !== lastWave) {
-          waves.push({ t: e.t, wave: w, explicit: true });
-          lastWave = w;
-        }
-        continue;
-      }
+      // 显式 wave 字段（agentPath 中不包含 wave 信息，此分支在旧逻辑中已失效；
+      // 保留结构避免破坏调用方，实际 wave 推断由下方 Spawned 峰值回落完成）
       // Spawned 峰值回落推断
-      if (e.spawned != null && e.spawned < lastSpawn && lastSpawn > 0) {
-        waves.push({ t: e.t, wave: (lastWave || 0) + 1, explicit: false });
+      if (e[3] != null && e[3] < lastSpawn && lastSpawn > 0) {
+        waves.push({ t: e[0], wave: (lastWave || 0) + 1, explicit: false });
         lastWave = (lastWave || 0) + 1;
       }
-      if (e.spawned != null) lastSpawn = e.spawned;
+      if (e[3] != null) lastSpawn = e[3];
     }
     return waves;
   }
@@ -882,18 +874,20 @@ WF.ArbitrationParser = (function () {
       const agentPath = ap ? ap[1] : null;
       const type = classifyAgent(agentPath, typeHint);
 
-      const event = {
-        t,
-        relT: t - m.startedT,
-        type,
-        agentPath,
-        spawned: sp ? parseInt(sp[1], 10) : null,
-        live: mt ? parseInt(mt[1], 10) : null,
-        roundIndex: null,
-        batchId: null,
-        waveId: null,
-      };
-      m.eventStream.push(event);
+      const event = [
+        t,                    // 0
+        t - m.startedT,       // 1 relT
+        type,                 // 2
+        sp ? parseInt(sp[1], 10) : null,  // 3 spawned
+        mt ? parseInt(mt[1], 10) : null,  // 4 live
+        null,                 // 5 roundIndex
+        null,                 // 6 batchId
+        null,                 // 7 waveId
+      ];
+      // 同伴单位不写入事件流（不贡献任何分析数据，且会虚增 enemyEvents 计数）
+      if (type !== 'companion') {
+        m.eventStream.push(event);
+      }
 
       if (type !== 'drone' && type !== 'companion') {
         m.enemyEventCount++;
@@ -976,17 +970,17 @@ WF.ArbitrationParser = (function () {
         // 事件流后处理：回填 roundIndex、batchId、waveId
         let roundIdx = 0;
         for (const e of m.eventStream) {
-          while (roundIdx < m.roundBoundaries.length && e.t > m.roundBoundaries[roundIdx].t) roundIdx++;
-          e.roundIndex = roundIdx;
+          while (roundIdx < m.roundBoundaries.length && e[0] > m.roundBoundaries[roundIdx].t) roundIdx++;
+          e[5] = roundIdx;
         }
         const droneBatches = clusterDroneBatches(m.droneTimes, DRONE_BATCH_GAP);
         let batchId = 0, eventIdx = 0;
         for (let i = 0; i < droneBatches.length; i++) {
           const batch = droneBatches[i];
           for (const t of batch) {
-            while (eventIdx < m.eventStream.length && m.eventStream[eventIdx].t < t) eventIdx++;
-            if (eventIdx < m.eventStream.length && m.eventStream[eventIdx].t === t && m.eventStream[eventIdx].type === 'drone') {
-              m.eventStream[eventIdx].batchId = i;
+            while (eventIdx < m.eventStream.length && m.eventStream[eventIdx][0] < t) eventIdx++;
+            if (eventIdx < m.eventStream.length && m.eventStream[eventIdx][0] === t && m.eventStream[eventIdx][2] === 'drone') {
+              m.eventStream[eventIdx][6] = i;
             }
           }
         }
@@ -1023,12 +1017,12 @@ WF.ArbitrationParser = (function () {
         const droneAtPressure = { low: 0, mid: 0, high: 0, total: 0 };
         const dronePressurePoints = [];
         for (const e of m.eventStream) {
-          if (e.type !== 'drone' || e.live == null) continue;
+          if (e[2] !== 'drone' || e[4] == null) continue;
           droneAtPressure.total++;
-          if (e.live < 5) droneAtPressure.low++;
-          else if (e.live < 10) droneAtPressure.mid++;
+          if (e[4] < 5) droneAtPressure.low++;
+          else if (e[4] < 10) droneAtPressure.mid++;
           else droneAtPressure.high++;
-          dronePressurePoints.push({ live: e.live, relT: e.relT });
+          dronePressurePoints.push({ live: e[4], relT: e[1] });
         }
         const droneAtPressurePct = droneAtPressure.total > 0 ? {
           low: droneAtPressure.low / droneAtPressure.total * 100,
