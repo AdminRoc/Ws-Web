@@ -1003,8 +1003,8 @@ body.profile-active #detail-wrap {
   color: #fff;
   background:
     linear-gradient(rgba(7,10,20,0.94), rgba(7,10,20,0.94)) padding-box,
-    linear-gradient(135deg, #ffb648 0%, #ff7a5f 50%, #ff5f9e 100%) border-box;
-  box-shadow: 0 0 24px rgba(255,182,72,0.32), 0 4px 18px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,182,72,0.12);
+    var(--rainbow) border-box;
+  box-shadow: 0 0 24px rgba(95,208,232,0.28), 0 0 24px rgba(168,107,255,0.22), 0 4px 18px rgba(0,0,0,0.5), 0 0 0 1px rgba(95,208,232,0.1);
 }
 @keyframes navShimmer { to { left: 125%; } }
 
@@ -1021,7 +1021,7 @@ body.profile-active #detail-wrap {
 
 /* Hero 区域 */
 .home-hero {
-  height: calc(100vh - var(--nav-h));
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1052,9 +1052,11 @@ body.profile-active #detail-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  gap: 0;
-  padding: 2vh 28px 4vh;
+  /* 顶栏已移除：内容组整体居中并略向下沉，标语/按钮随之间距展开，
+     避免全部挤在上半区 */
+  justify-content: center;
+  gap: clamp(30px, 5.5vh, 64px);
+  padding: 8vh 28px 5vh;
   max-width: min(92vw, 760px);
   width: 100%;
   min-height: 0;
@@ -1082,7 +1084,7 @@ body.profile-active #detail-wrap {
   50%      { border-color: rgba(95,208,232,0.48); box-shadow: 0 0 12px rgba(95,208,232,0.1); }
 }
 .hero-title {
-  font-size: min(12vw, 16vh);
+  font-size: min(15vw, 20vh);
   letter-spacing: 0.06em;
   line-height: 1.05;
   text-align: center;
@@ -1204,13 +1206,11 @@ body.profile-active #detail-wrap {
 .hero-cta:hover .cta-arrow { transform: translateX(10px); color: #fff; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   EELOG 主页超级 CTA v4 —— 笑脸弧形展开
-   布局：激活后主按钮保持炫彩并上移；5 个次级按钮在主按钮下方呈开口
-         向上的弧形（笑脸）展开：
-         中断      夜灵      个人资料      蜘蛛      仲裁
-          ↘        ↘          ↓          ↙        ↙
-   交互：点击/悬停"开始分析"展开；点击页面空白处渐变收回。
-   外观：所有按钮均为直角矩形，黑底 + 彩虹渐变边框 + 彩虹泛光。
+   EELOG 主页超级 CTA v5 —— 笑脸弧形展开 · 切角霓虹材质
+   布局/运动逻辑与 v4 完全一致：激活后主按钮上移；5 个次级按钮在主按钮
+         下方呈开口向上的弧形（笑脸）展开。
+   外观：按钮形状保持直角矩形不变，材质换成与分析器顶栏同源的霓虹流光
+         描边（锥形渐变 360° 旋转，首尾同色无缝循环）+ 深色内层。
    ═══════════════════════════════════════════════════════════════════════════ */
 .hero-cta-hub {
   position: relative;
@@ -1221,66 +1221,53 @@ body.profile-active #detail-wrap {
   margin-top: 2rem;
 }
 
-/* 主按钮：与原始"开始分析"完全同材质 */
+/* 主按钮：深色内层 + 整圈彩虹流光描边 */
 .hero-cta-master {
   position: relative; z-index: 20;
   display: inline-flex; align-items: center; gap: 14px;
   padding: 18px 48px; border-radius: 3px;
   font-size: 18px; letter-spacing: 4px; font-family: var(--f-px);
   color: #fff; cursor: pointer;
-  background: linear-gradient(115deg,
-    rgba(255,60,110,.7) 0%, rgba(255,140,0,.62) 20%, rgba(255,215,0,.58) 35%,
-    rgba(0,255,220,.62) 55%, rgba(99,102,241,.68) 78%, rgba(217,70,239,.7) 100%);
-  border: 1px solid rgba(255,255,255,.28);
-  color: #fff;
+  background: transparent; border: none;
   -webkit-text-fill-color: #fff;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
-  box-shadow:
-    0 0 10px rgba(255,100,150,.38),
-    0 0 22px rgba(99,102,241,.32),
-    0 0 38px rgba(0,255,220,.18);
-  animation: rbHueRotate 1s linear infinite;
-  transition: transform .4s cubic-bezier(.22,.68,0,1.2), box-shadow .4s ease;
+  filter: drop-shadow(0 0 10px rgba(95,208,232,.28));
+  transition: transform .4s cubic-bezier(.22,.68,0,1.2), filter .35s ease;
 }
-.hero-cta-master .cta-text {
-  background: linear-gradient(115deg,
-    rgba(255,60,110,.9) 0%, rgba(255,140,0,.85) 20%, rgba(255,215,0,.82) 35%,
-    rgba(0,255,220,.85) 55%, rgba(99,102,241,.9) 78%, rgba(217,70,239,.9) 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  -webkit-text-fill-color: transparent;
-  animation: buttonTextShimmer 3s ease-in-out infinite;
+/* 霓虹描边层：与分析器顶栏按钮同一条首尾同色的彩虹锥形渐变 */
+.hero-cta-master::before {
+  content: ''; position: absolute; inset: 0; border-radius: 3px; z-index: 0;
+  background: conic-gradient(from var(--tab-ang),
+    #5fd0e8 0deg, #45c8ff 60deg, #a86bff 140deg,
+    #ff5fd5 210deg, #ff9a4f 280deg, #5fd0e8 360deg);
+  animation: tabBorderSpin 2.8s linear infinite;
+}
+/* 深色内层：遮住渐变中心，只留 1.5px 流光边 */
+.hero-cta-master::after {
+  content: ''; position: absolute; inset: 1.5px; border-radius: 2px; z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(95,208,232,.09) 0%, transparent 55%),
+    rgba(7,10,19,.94);
 }
 .hero-cta-master .cta-text,
-.hero-cta-master:hover .cta-text,
-.hero-cta-hub.expanded .hero-cta-master .cta-text,
-.hero-cta-hub.expanded .hero-cta-master:hover .cta-text {
-  background: none;
-  -webkit-background-clip: initial; background-clip: initial;
+.hero-cta-master .cta-arrow { position: relative; z-index: 2; }
+.hero-cta-master .cta-text {
   color: #fff;
   -webkit-text-fill-color: #fff;
-  animation: none;
-}
-
-@keyframes buttonTextShimmer {
-  0% { background-position: 0% center; }
-  50% { background-position: 100% center; }
-  100% { background-position: 0% center; }
+  text-shadow: 0 0 12px rgba(95,208,232,.45);
 }
 .hero-cta-master:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow:
-    0 0 22px rgba(255,100,150,.8),
-    0 0 48px rgba(99,102,241,.7),
-    0 0 80px rgba(0,255,220,.45);
-  border-color: rgba(255,255,255,.7);
+  filter: drop-shadow(0 0 18px rgba(95,208,232,.55)) drop-shadow(0 0 42px rgba(168,107,255,.35));
 }
 .hero-cta-hub.expanded .hero-cta-master {
   transform: translateY(-22px) scale(1.02);
-  animation: rbHueRotate 1s linear infinite, ctaPulse 3.5s ease-in-out infinite;
+  animation: masterPulse 2.6s ease-in-out infinite;
   transition: transform .4s cubic-bezier(.22,.68,0,1.2);
 }
-.hero-cta-hub.expanded .hero-cta-master .cta-text {
-  animation: buttonTextShimmer 3s ease-in-out infinite;
+@keyframes masterPulse {
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(95,208,232,.35)); }
+  50%      { filter: drop-shadow(0 0 22px rgba(95,208,232,.6)) drop-shadow(0 0 48px rgba(168,107,255,.3)); }
 }
 /* 次级按钮：与主按钮同材质，直角矩形，自适应宽高 */
 .hero-cta-satellite {
@@ -1289,21 +1276,29 @@ body.profile-active #detail-wrap {
   padding: 16px 26px; border-radius: 3px;
   font-size: 18px; letter-spacing: 4px; font-family: var(--f-px);
   color: #fff; text-decoration: none; white-space: nowrap;
-  border: 1px solid transparent;
-  background:
-    linear-gradient(rgba(7,10,20,0.92), rgba(7,10,20,0.92)) padding-box,
-    linear-gradient(90deg, rgba(65,255,142,0.55), rgba(69,200,255,0.55), rgba(168,107,255,0.55), rgba(65,255,142,0.55)) border-box;
-  box-shadow:
-    0 0 10px rgba(95,208,232,0.22),
-    0 0 24px rgba(168,107,255,0.14);
+  background: transparent; border: none;
   opacity: 0;
   transform: translate3d(-50%, 0, 0) scale(0.5);
   pointer-events: none;
   transition:
     opacity 0.35s cubic-bezier(.22,.68,0,1),
     transform 0.75s cubic-bezier(.18,.84,.26,1.18),
-    box-shadow 0.35s ease;
+    filter 0.3s ease;
   will-change: transform, opacity;
+}
+/* 待机描边：一段青→品红的扫掠弧循环流转（与分析器顶栏待机态一致） */
+.hero-cta-satellite::before {
+  content: ''; position: absolute; inset: 0; border-radius: 3px; z-index: 0;
+  background: conic-gradient(from var(--tab-ang),
+    transparent 0deg, transparent 250deg,
+    rgba(95,208,232,.9) 300deg, rgba(255,61,240,.9) 335deg, transparent 360deg);
+  animation: tabBorderSpin 3.6s linear infinite;
+  transition: opacity .25s ease;
+}
+.hero-cta-satellite::after {
+  content: ''; position: absolute; inset: 1.5px; border-radius: 2px; z-index: 1;
+  background: rgba(7,10,19,.94);
+  transition: opacity .22s ease;
 }
 .hero-cta-satellite .sat-label {
   position: relative; z-index: 2;
@@ -1333,9 +1328,7 @@ body.profile-active #detail-wrap {
 
 .hero-cta-hub.expanded .hero-cta-satellite {
   opacity: 1; pointer-events: auto;
-  box-shadow:
-    0 0 14px rgba(95,208,232,0.35),
-    0 0 32px rgba(168,107,255,0.22);
+  filter: drop-shadow(0 0 10px rgba(95,208,232,.28));
 }
 /* 弧形坐标 */
 .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 260px), 45px, 0) scale(1); }
@@ -1353,16 +1346,16 @@ body.profile-active #detail-wrap {
   z-index: 30;
   transition-delay: 0s;
   transition-duration: 0.22s;
-  background: linear-gradient(115deg,
-    rgba(255,60,110,.7) 0%, rgba(255,140,0,.62) 20%, rgba(255,215,0,.58) 35%,
-    rgba(0,255,220,.62) 55%, rgba(99,102,241,.68) 78%, rgba(217,70,239,.7) 100%);
-  border: 1px solid rgba(255,255,255,.28);
-  box-shadow:
-    0 0 22px rgba(255,100,150,.8),
-    0 0 48px rgba(99,102,241,.7),
-    0 0 80px rgba(0,255,220,.45);
-  animation: rbHueRotate 1.25s linear infinite;
+  filter: drop-shadow(0 0 16px rgba(168,107,255,.55)) drop-shadow(0 0 34px rgba(95,208,232,.35));
 }
+/* hover：待机弧光切换为整圈彩虹描边，深色内层渐隐，彩虹"灌注"点亮整块按钮 */
+.hero-cta-satellite:hover::before {
+  background: conic-gradient(from var(--tab-ang),
+    #5fd0e8 0deg, #45c8ff 60deg, #a86bff 140deg,
+    #ff5fd5 210deg, #ff9a4f 280deg, #5fd0e8 360deg);
+  animation: tabBorderSpin 2.2s linear infinite;
+}
+.hero-cta-satellite:hover::after { opacity: 0; }
 .hero-cta-hub.expanded .hero-cta-satellite:hover .sat-label {
   color: #fff;
   background: none;
