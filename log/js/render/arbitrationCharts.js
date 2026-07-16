@@ -131,7 +131,8 @@ WF.arbitrationCharts = (function () {
           return html;
         },
       },
-      grid: { left: '3%', right: '4%', bottom: '16%', top: '10%', containLabel: true },
+      legend: { top: 0, right: 10, data: ['平均活跃敌人', '最大活跃敌人', '无人机'], textStyle: { fontSize: 11 } },
+      grid: { left: '3%', right: '4%', bottom: '16%', top: '18%', containLabel: true },
       xAxis: { type: 'category', data: categories, boundaryGap: false },
       yAxis: [
         { type: 'value', name: '活跃敌人', position: 'left', axisLabel: { color: COLORS.cyan } },
@@ -169,9 +170,9 @@ WF.arbitrationCharts = (function () {
           name: '无人机',
           type: 'scatter',
           yAxisIndex: 1,
-          symbolSize: function (val) { return val > 0 ? 6 + val * 1.5 : 0; },
-          itemStyle: { color: COLORS.green, shadowBlur: 8, shadowColor: COLORS.green },
-          data: pm.map((r) => ({ value: r.drones, symbolSize: r.drones > 0 ? 8 + r.drones * 1.2 : 0 })),
+          symbolSize: function (val) { return val > 0 ? Math.min(12, 6 + val * 0.35) : 0; },
+          itemStyle: { color: COLORS.green, shadowBlur: 6, shadowColor: COLORS.green },
+          data: pm.map((r) => r.drones),
         },
       ],
     });

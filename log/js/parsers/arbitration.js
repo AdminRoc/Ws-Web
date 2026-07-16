@@ -201,7 +201,25 @@ WF.ArbitrationParser = (function () {
   // ③ 综合效率（%）：双维度融合
   //   清洁度（70%）：基于活跃敌人分布的分段评分，0-4=100, 5-9=80, 10-14=70, 15-20=30, >20=0
   //   高压响应（30%）：扫描从 ≥10 恢复到 <10 的高压事件，平均恢复时间越短得分越高
-  function clearComprehensiveEfficiency(liveSamples, liveDistData) {
+  function extractRecoveryEvents(liveSamples, firstRoundT) {
+    const events = [];
+    if (!liveSamples || liveSamples.length < 2) return events;
+    let inHigh = false, highStart = null;
+    const cut = firstRoundT != null ? firstRoundT : -Infinity;
+    for (let i = 0; i < liveSamples.length; i++) {
+      const s = liveSamples[i];
+      if (!inHigh && s.live >= 10) {
+        inHigh = true;
+        highStart = s.t;
+      } else if (inHigh && s.live < 10) {
+        inHigh = false;
+        if (highStart >= cut) events.push(s.t - highStart);
+      }
+    }
+    return events;
+  }
+
+  function clearComprehensiveEfficiency(liveSamples, liveDistData, recoveryEvents) {
     if (!liveDistData || !liveDistData.rows || liveDistData.rows.length < 2) return null;
     // ── 清洁度 ──
     let cleanTotal = 0, cleanWeighted = 0;
@@ -221,42 +239,52 @@ WF.ArbitrationParser = (function () {
 
     // ── 高压响应 ──
     let recovery = 50; // 中性兜底
-    if (liveSamples && liveSamples.length >= 2) {
-      const events = [];
-      let inHigh = false, highStart = null;
-      for (let i = 0; i < liveSamples.length; i++) {
-        const s = liveSamples[i];
-        if (!inHigh && s.live >= 10) {
-          inHigh = true;
-          highStart = s.t;
-        } else if (inHigh && s.live < 10) {
-          inHigh = false;
-          events.push(s.t - highStart);
-        }
-      }
-      if (events.length > 0) {
-        const avgRecovery = events.reduce((a, b) => a + b, 0) / events.length;
-        recovery = Math.max(0, 100 - avgRecovery * 2);
-      } else if (liveSamples.some((s) => s.live >= 10)) {
+    if (recoveryEvents && recoveryEvents.length) {
+      const avgRecovery = recoveryEvents.reduce((a, b) => a + b, 0) / recoveryEvents.length;
+      recovery = Math.max(0, 100 - avgRecovery * 2);
+    } else if (recoveryEvents && recoveryEvents.length === 0) {
+      if (liveSamples && liveSamples.some((s) => s.live >= 10)) {
         // 出现了高压但直到任务结束仍未恢复，直接 0 分
         recovery = 0;
       } else {
         // 从未出现高压，完美
         recovery = 100;
       }
+    } else if (liveSamples && liveSamples.length >= 2) {
+      // 兼容旧调用：未传入 recoveryEvents 时兜底计算（不过滤开局）
+      const events = extractRecoveryEvents(liveSamples);
+      if (events.length > 0) {
+        const avgRecovery = events.reduce((a, b) => a + b, 0) / events.length;
+        recovery = Math.max(0, 100 - avgRecovery * 2);
+      } else if (liveSamples.some((s) => s.live >= 10)) {
+        recovery = 0;
+      } else {
+        recovery = 100;
+      }
     }
     return Math.round(cleanliness * 0.7 + recovery * 0.3);
   }
   // ④ 节奏稳定性（%）
-  function rhythmStability(roundStats, interBatchData, liveSamples) {
+  function rhythmStability(roundStats, interBatchData, liveSamples, recoveryEvents) {
     // 需要至少一些数据
     const hasRounds = roundStats && roundStats.length >= 2;
     const hasBatches = interBatchData && interBatchData.rows && interBatchData.totalBatches >= 2;
     const hasLive = liveSamples && liveSamples.length >= 2;
     if (!hasRounds && !hasBatches && !hasLive) return null;
 
-    let densityScore = 50, batchGapScore = 50, recoveryScore = 50;
+    const NEUTRAL = 70; // 数据不足或样本过少时的中性回归值
+    let densityScore = NEUTRAL, batchGapScore = NEUTRAL, recoveryScore = NEUTRAL;
     let weightsUsed = 0;
+
+    // CV 软阈值映射（分段缓降，避免线性惩罚把正常波动压到过低）
+    function cvScore(cv, tiers) {
+      // tiers: [[lo, hi, base, slope], ...] 按 cv 范围升序，最后一项 hi 为 Infinity
+      for (let i = 0; i < tiers.length; i++) {
+        const [lo, hi, base, slope] = tiers[i];
+        if (cv <= hi) return Math.max(0, base - (cv - lo) * slope);
+      }
+      return 0;
+    }
 
     // 无人机密度稳定性（40%）
     if (hasRounds) {
@@ -265,8 +293,17 @@ WF.ArbitrationParser = (function () {
         const mean = densities.reduce((a, b) => a + b, 0) / densities.length;
         const variance = densities.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / densities.length;
         const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
-        // CV 0 -> 100, CV >= 0.8 -> 0
-        densityScore = Math.max(0, 100 - cv * 125);
+        densityScore = cvScore(cv, [
+          [0, 0.25, 100, 0],
+          [0.25, 0.45, 100, 100],
+          [0.45, 0.75, 80, 66.7],
+          [0.75, Infinity, 60, 40],
+        ]);
+        weightsUsed += 0.40;
+      }
+      // 轮次极少时向中性值回归，但不完全等于中性值：保留一点原始信息
+      if (densities.length === 1) {
+        densityScore = (densityScore + NEUTRAL) / 2;
         weightsUsed += 0.40;
       }
     }
@@ -286,43 +323,45 @@ WF.ArbitrationParser = (function () {
         const mean = gaps.reduce((a, b) => a + b, 0) / gaps.length;
         const variance = gaps.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / gaps.length;
         const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
-        batchGapScore = Math.max(0, 100 - cv * 100);
+        batchGapScore = cvScore(cv, [
+          [0, 0.30, 100, 0],
+          [0.30, 0.50, 100, 100],
+          [0.50, 0.80, 80, 66.7],
+          [0.80, Infinity, 60, 40],
+        ]);
+        weightsUsed += 0.35;
+      }
+      if (gaps.length === 1) {
+        batchGapScore = (batchGapScore + NEUTRAL) / 2;
         weightsUsed += 0.35;
       }
     }
 
-    // 高压恢复稳定性（25%）
-    if (hasLive) {
-      const events = [];
-      let inHigh = false, highStart = null;
-      for (let i = 0; i < liveSamples.length; i++) {
-        const s = liveSamples[i];
-        if (!inHigh && s.live >= 10) {
-          inHigh = true;
-          highStart = s.t;
-        } else if (inHigh && s.live < 10) {
-          inHigh = false;
-          events.push(s.t - highStart);
-        }
-      }
-      if (events.length >= 1) {
-        const avg = events.reduce((a, b) => a + b, 0) / events.length;
-        const variance = events.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / events.length;
-        const cv = avg > 0 ? Math.sqrt(variance) / avg : 0;
-        // 平均恢复时间越短、越稳定分数越高
-        recoveryScore = Math.max(0, Math.min(100, 100 - avg * 2 - cv * 30));
-        weightsUsed += 0.25;
-      } else if (liveSamples.some((s) => s.live >= 10)) {
+    // 高压恢复稳定性（25%）：使用已过滤开局段的 recoveryEvents
+    if (recoveryEvents && recoveryEvents.length) {
+      const avg = recoveryEvents.reduce((a, b) => a + b, 0) / recoveryEvents.length;
+      const variance = recoveryEvents.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / recoveryEvents.length;
+      const cv = avg > 0 ? Math.sqrt(variance) / avg : 0;
+      let avgScore;
+      if (avg <= 5) avgScore = 100;
+      else if (avg <= 12) avgScore = 100 - (avg - 5) * 3;
+      else if (avg <= 25) avgScore = 79 - (avg - 12) * 3;
+      else avgScore = Math.max(0, 40 - (avg - 25) * 1);
+      const cvPenalty = Math.min(15, cv * 15);
+      recoveryScore = Math.max(0, avgScore - cvPenalty);
+      weightsUsed += 0.25;
+    } else if (recoveryEvents && recoveryEvents.length === 0) {
+      // 明确无恢复事件：要么从未高压，要么高压未恢复
+      if (liveSamples && liveSamples.some((s) => s.live >= 10)) {
         recoveryScore = 0;
-        weightsUsed += 0.25;
       } else {
         recoveryScore = 100;
-        weightsUsed += 0.25;
       }
+      weightsUsed += 0.25;
     }
 
     if (weightsUsed <= 0) return null;
-    // 按实际有权重的子项加权，缺失项由 50 中性值补齐
+    // 缺失子项用 NEUTRAL 补齐，已激活子项按原权重加权
     const raw = (densityScore * 0.40 + batchGapScore * 0.35 + recoveryScore * 0.25) /
                 (0.40 + 0.35 + 0.25);
     return Math.round(raw);
@@ -671,20 +710,45 @@ WF.ArbitrationParser = (function () {
   }
 
   // ── 异常诊断 ──
-  function detectAnomalies(perMinData, roundStats, interBatchData) {
+  function detectAnomalies(perMinData, roundStats, interBatchData, firstRoundT, startedT) {
     const anomalies = [];
     if (!perMinData || !perMinData.rows) return anomalies;
 
-    // 规则 1：某分钟敌人生成正常但无无人机
-    for (const r of perMinData.rows) {
-      if (r.spawnEvents > 0 && r.drones === 0) {
-        anomalies.push({
-          type: 'no-drone',
-          minute: r.minute,
-          text: `第 ${r.minute} 分钟敌人生成正常但无无人机生成，可能存在漏拾取或刷新异常`,
-          severity: 'warning',
-        });
+    // 开局分钟索引，避免开局阶段的正常无无人机/低活跃被误报
+    const firstRoundIdx = (firstRoundT != null && startedT != null)
+      ? Math.max(0, Math.ceil((firstRoundT - startedT) / 60))
+      : 0;
+
+    // 规则 1：连续 2 分钟敌人生成正常但无无人机（排除开局阶段）
+    let noDroneStart = null;
+    for (let i = 0; i < perMinData.rows.length; i++) {
+      const r = perMinData.rows[i];
+      const qualifies = r.minute - 1 >= firstRoundIdx && r.spawnEvents > 0 && r.drones === 0;
+      if (qualifies) {
+        if (noDroneStart == null) noDroneStart = r.minute;
+      } else {
+        if (noDroneStart != null && r.minute - noDroneStart >= 2) {
+          anomalies.push({
+            type: 'no-drone',
+            minute: noDroneStart,
+            duration: r.minute - noDroneStart,
+            text: `第 ${noDroneStart}-${r.minute - 1} 分钟敌人生成正常但连续无无人机生成，可能存在漏拾取或刷新异常`,
+            severity: 'warning',
+          });
+        }
+        noDroneStart = null;
       }
+    }
+    // 循环结束时若仍有未闭合的连续段
+    if (noDroneStart != null && perMinData.rows.length - noDroneStart + 1 >= 2) {
+      const last = perMinData.rows[perMinData.rows.length - 1].minute;
+      anomalies.push({
+        type: 'no-drone',
+        minute: noDroneStart,
+        duration: last - noDroneStart + 1,
+        text: `第 ${noDroneStart}-${last} 分钟敌人生成正常但连续无无人机生成，可能存在漏拾取或刷新异常`,
+        severity: 'warning',
+      });
     }
 
     // 规则 2：连续 2 分钟以上高压占比 > 60%
@@ -706,16 +770,29 @@ WF.ArbitrationParser = (function () {
       }
     }
 
-    // 规则 3：单批次间隔 > 20s
+    // 规则 3：单批次间隔 ≥30s，或连续出现 ≥20s
     if (interBatchData && interBatchData.rows) {
+      let prevWarningLo = null;
       for (const row of interBatchData.rows) {
-        if (row.lo >= 20 && row.seconds > 0) {
+        if (row.lo >= 30 && row.seconds > 0) {
           anomalies.push({
             type: 'batch-gap',
             gapLo: row.lo,
             text: `存在无人机批次间隔 ≥${row.lo}s 的情况，总时长 ${row.seconds.toFixed(1)}s，可能存在刷怪卡顿`,
             severity: 'warning',
           });
+        } else if (row.lo >= 20 && row.seconds > 0) {
+          if (prevWarningLo != null) {
+            anomalies.push({
+              type: 'batch-gap',
+              gapLo: row.lo,
+              text: `存在连续无人机批次间隔 ≥20s 的情况，总时长 ${row.seconds.toFixed(1)}s，可能存在刷怪卡顿`,
+              severity: 'warning',
+            });
+            prevWarningLo = null;
+          } else {
+            prevWarningLo = row.lo;
+          }
         }
       }
     }
@@ -928,25 +1005,18 @@ WF.ArbitrationParser = (function () {
         const interBatchData = interBatchGapDist(relTimes);
         const pressureCorr = pressureDroneCorrelation(m.liveSamples, relTimes);
 
-        // 高压恢复事件
-        const recoveryEvents = [];
-        if (m.liveSamples && m.liveSamples.length >= 2) {
-          let inHigh = false, highStart = null;
-          for (let i = 0; i < m.liveSamples.length; i++) {
-            const s = m.liveSamples[i];
-            if (!inHigh && s.live >= 10) { inHigh = true; highStart = s.t; }
-            else if (inHigh && s.live < 10) { inHigh = false; recoveryEvents.push(s.t - highStart); }
-          }
-        }
+        // 高压恢复事件（过滤开局阶段：SS_STARTED 到第一次轮次结算前）
+        const firstRoundT = m.roundBoundaries && m.roundBoundaries.length ? m.roundBoundaries[0].t : m.startedT;
+        const recoveryEvents = extractRecoveryEvents(m.liveSamples, firstRoundT);
 
         const essEff   = essenceEfficiency(fullBuffPerHour, essBaseline);
         const clearEff = clearEfficiency(liveDistData ? liveDistData.geq10Pct : null);
-        const clearCompEff = clearComprehensiveEfficiency(m.liveSamples, liveDistData);
-        const rhythmEff = rhythmStability(roundStats, interBatchData, m.liveSamples);
+        const clearCompEff = clearComprehensiveEfficiency(m.liveSamples, liveDistData, recoveryEvents);
+        const rhythmEff = rhythmStability(roundStats, interBatchData, m.liveSamples, recoveryEvents);
         const score    = computeScore(essEff, clearEff, clearCompEff, rhythmEff);
 
         const cei = clearEfficiencyIndex(clearEff, recoveryEvents, m.maxSpawned, perMinData ? perMinData.totalCleared : null);
-        const anomalies = detectAnomalies(perMinData, roundStats, interBatchData);
+        const anomalies = detectAnomalies(perMinData, roundStats, interBatchData, firstRoundT, m.startedT);
 
         // 无人机生成时的场上压力分布 + 散点数据
         const droneAtPressure = { low: 0, mid: 0, high: 0, total: 0 };

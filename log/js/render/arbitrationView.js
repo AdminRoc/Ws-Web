@@ -46,10 +46,10 @@ WF.arbitrationView = (function () {
   // ── 通用 tooltip 说明文案 ──
   const TOOLTIPS = {
     rhythm: '节奏稳定性衡量本局任务中敌人与无人机刷新节奏的平稳程度，由三个子指标加权合成：\n' +
-            '1. 无人机密度稳定性（40%）：各轮次无人机密度（只/分钟）的波动越小得分越高。\n' +
-            '2. 无人机批次间隔稳定性（35%）：相邻无人机批次之间的时间间隔越稳定得分越高。\n' +
-            '3. 高压恢复稳定性（25%）：场上活跃敌人从 ≥10 的高压状态恢复到 <10 所需时间越短、越稳定得分越高。\n' +
-            '100 表示节奏非常稳定；数据不足时以 50 分中性值计入。',
+            '1. 无人机密度稳定性（40%）：各轮次无人机密度（只/分钟）的波动越小得分越高。已允许正常的战术波动。\n' +
+            '2. 无人机批次间隔稳定性（35%）：相邻无人机批次之间的时间间隔越稳定得分越高。开局阶段不计入。\n' +
+            '3. 高压恢复稳定性（25%）：场上活跃敌人从 ≥10 的高压状态恢复到 <10 所需时间越短、越稳定得分越高。开局阶段不计入。\n' +
+            '100 表示节奏非常稳定；数据不足时以 70 分中性值计入。',
     spawnNote: 'EE.log 不会记录"某个敌人被谁击杀"这类具体事件，所以这里不展示确切击杀数。' +
                '"敌人生成"是房主日志里每次 OnAgentCreated 事件携带的 Spawned 字段峰值——这是游戏引擎自己上报的累计生成数。' +
                '"生成事件数"则是真实 OnAgentCreated 行数。两者差距大说明日志可能被裁切或采样稀疏。',
@@ -196,15 +196,15 @@ WF.arbitrationView = (function () {
     /* ─── 3. 时间元信息区 ─── */
     const metaGrid = U.el('div', 'arb-meta-grid');
     const metaItems = [
-      { label: '总时长', value: fmtHMS(rec.duration), tip: '从 SS_STARTED 到系统结算时间的经过时长。' },
+      { label: '总时长', value: fmtHMS(rec.duration), tip: '从 SS_STARTED 到系统结算时间的经过时长。', cls: 'big' },
       { label: '全队在场时间', value: rec.lastClientDuration != null ? fmtHMS(rec.lastClientDuration) : '—', tip: rec.lastClientDuration != null ? '系统结算时间 − 最后一个队友进入任务的时刻。' : '所有队友进入任务的时刻都早于计时起点，开局前队伍已到齐。' },
       { label: '首帧时间', value: rec.firstFrameDate ? U.fmtAbsTime(rec.firstFrameDate, clock ? clock.approx : true) : '—', tip: 'HUD REDUX 首次渲染（载入完成、UI 就绪）的实际时刻。' },
       { label: '系统结算时间', value: rec.endDate ? U.fmtAbsTime(rec.endDate, clock ? clock.approx : true) : '—', tip: '无尽任务 = 最后一次轮/波结算触发的时刻。' },
     ];
-    metaItems.forEach(({ label, value, tip }) => {
+    metaItems.forEach(({ label, value, tip, cls }) => {
       const cell = U.el('div', 'arb-meta-cell cy-panel');
       cell.appendChild(U.el('div', 'arb-meta-label', label));
-      const val = U.el('div', 'arb-meta-value', value);
+      const val = U.el('div', 'arb-meta-value' + (cls ? ' ' + cls : ''), value);
       if (tip) { val.classList.add('has-tip'); val.title = tip; }
       cell.appendChild(val);
       metaGrid.appendChild(cell);
@@ -238,6 +238,7 @@ WF.arbitrationView = (function () {
     timelineTitle.title = TOOLTIPS.timeline;
     timelineSection.appendChild(timelineTitle);
     const timelineBody = chartCard(timelineSection, '', null);
+    timelineBody.classList.add('timeline-overview');
     container.appendChild(timelineSection); // 先挂载，确保 echarts.init 时容器有宽度
     pushChart(C.timelineOverview(timelineBody, rec));
 
@@ -300,7 +301,7 @@ WF.arbitrationView = (function () {
       });
     }
 
-    // 8.2 无人机批次分析（左：批次大小，右：批次间间隔）
+    // 8.2 无人机批次分析（上：批次大小，下：批次间间隔，各占全宽）
     if (rec.dist && rec.dist.consecutive && rec.dist.interBatch) {
       const con = rec.dist.consecutive;
       const inter = rec.dist.interBatch;
@@ -310,9 +311,10 @@ WF.arbitrationView = (function () {
       batchHd.appendChild(U.el('span', 'arb-dist-max', `共 ${con.totalBatches} 批次`));
       batchWrap.appendChild(batchHd);
       const batchBody = U.el('div', 'arb-batch-body');
+
       // 批次大小
-      const sizeBox = U.el('div', 'arb-batch-col');
-      sizeBox.appendChild(U.el('div', 'arb-batch-subtitle', '批次大小'));
+      const sizeSection = U.el('div', 'arb-batch-section');
+      sizeSection.appendChild(U.el('div', 'arb-batch-subtitle', '批次大小'));
       const maxSizePct = Math.max(1, ...con.rows.map((r) => r.pct));
       con.rows.forEach((r) => {
         const row = U.el('div', 'arb-bar-row small');
@@ -323,12 +325,13 @@ WF.arbitrationView = (function () {
         track.appendChild(fill);
         row.appendChild(track);
         row.appendChild(U.el('span', 'arb-bar-pct', r.pct.toFixed(1) + '%'));
-        sizeBox.appendChild(row);
+        sizeSection.appendChild(row);
       });
-      batchBody.appendChild(sizeBox);
+      batchBody.appendChild(sizeSection);
+
       // 批次间间隔
-      const gapBox = U.el('div', 'arb-batch-col');
-      gapBox.appendChild(tipLabel('批次间间隔', TOOLTIPS.batchGap, 'div'));
+      const gapSection = U.el('div', 'arb-batch-section');
+      gapSection.appendChild(tipLabel('批次间间隔', TOOLTIPS.batchGap, 'div'));
       const maxGapPct = Math.max(1, ...inter.rows.map((r) => r.pct));
       inter.rows.forEach((r) => {
         const row = U.el('div', 'arb-bar-row small');
@@ -339,9 +342,10 @@ WF.arbitrationView = (function () {
         track.appendChild(fill);
         row.appendChild(track);
         row.appendChild(U.el('span', 'arb-bar-pct', r.pct.toFixed(1) + '%'));
-        gapBox.appendChild(row);
+        gapSection.appendChild(row);
       });
-      batchBody.appendChild(gapBox);
+      batchBody.appendChild(gapSection);
+
       batchWrap.appendChild(batchBody);
       distWrap.appendChild(batchWrap);
     }
