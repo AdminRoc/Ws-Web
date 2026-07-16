@@ -48,7 +48,7 @@ WF.arbitrationView = (function () {
     rhythm: '节奏稳定性衡量本局任务中敌人与无人机刷新节奏的平稳程度，由三个子指标加权合成：\n' +
             '1. 无人机密度稳定性（40%）：各轮次无人机密度（只/分钟）的波动越小得分越高。已允许正常的战术波动。\n' +
             '2. 无人机批次间隔稳定性（35%）：相邻无人机批次之间的时间间隔越稳定得分越高。开局阶段不计入。\n' +
-            '3. 高压恢复稳定性（25%）：场上活跃敌人从 ≥10 的高压状态恢复到 <10 所需时间越短、越稳定得分越高。开局阶段不计入。\n' +
+            '3. 高压恢复稳定性（25%）：场上活跃敌人从 ≥12 的高压状态恢复到 <12 所需时间越短、越稳定得分越高。开局阶段不计入。\n' +
             '100 表示节奏非常稳定；数据不足时以 70 分中性值计入。',
     spawnNote: 'EE.log 不会记录"某个敌人被谁击杀"这类具体事件，所以这里不展示确切击杀数。' +
                '"敌人生成"是房主日志里每次 OnAgentCreated 事件携带的 Spawned 字段峰值——这是游戏引擎自己上报的累计生成数。' +
@@ -181,12 +181,12 @@ WF.arbitrationView = (function () {
       `期望生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时（权重 40%）`);
     const clearStr = eff.clear != null ? eff.clear.toFixed(1) + '%' : '—';
     effBar(effBox, '清图效率', eff.clear != null ? eff.clear : 50,
-      eff.clear != null ? `场上≥10只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%（权重 20%）` : '采样数据不足，本维度以 50 分中性值计入（权重 20%）',
+      eff.clear != null ? `场上≥12只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%（权重 20%）` : '采样数据不足，本维度以 50 分中性值计入（权重 20%）',
       TOOLTIPS.activeEnemy);
     const clearCompStr = eff.clearComp != null ? eff.clearComp.toFixed(1) + '%' : '—';
     effBar(effBox, '综合效率', eff.clearComp != null ? eff.clearComp : 50,
       eff.clearComp != null ? `清洁度×70% + 高压响应×30% = ${eff.clearComp.toFixed(1)}%（权重 20%）` : '数据不足，本维度以 50 分中性值计入（权重 20%）',
-      '清洁度：按活跃敌人分布区间评分，0-4=100分、5-9=80分、10-14=70分、15-20=30分、>20=0分，再按驻留时长加权平均。' + TOOLTIPS.activeEnemy + ' 高压响应：统计从≥10只敌人恢复到<10只的平均时间。');
+      '清洁度：按活跃敌人分布区间评分，0-4=100分、5-9=80分、10-14=70分、15-20=30分、>20=0分，再按驻留时长加权平均。' + TOOLTIPS.activeEnemy + ' 高压响应：统计从≥12只敌人恢复到<12只的平均时间。');
     effBar(effBox, '节奏稳定性', eff.rhythm != null ? eff.rhythm : 50,
       eff.rhythm != null ? `${eff.rhythm.toFixed(1)}%（权重 20%）` : '数据不足，本维度以 50 分中性值计入（权重 20%）',
       TOOLTIPS.rhythm);
@@ -218,10 +218,10 @@ WF.arbitrationView = (function () {
       { label: '敌人生成',        value: String(rec.maxSpawned),               cls: 'accent', title: TOOLTIPS.spawnNote },
       { label: '生成事件数',      value: String(rec.enemyEventCount || 0),     cls: 'accent', title: TOOLTIPS.spawnNote },
       { label: '无人机 / 分钟',   value: rec.dronesPerMin.toFixed(2),          cls: 'accent' },
-      { label: '总时长',          value: fmtHMS(rec.duration),                 cls: 'big', title: '从 SS_STARTED 到系统结算时间的经过时长。' },
       { label: rec.missionType === 'survival' ? '生存轮次' : '轮 / 波次', value: String(rec.rounds), cls: 'accent' },
       { label: '期望生息',        value: rec.essence.fullBuffTotal.toFixed(3), cls: 'accent' },
-      { label: '期望生息 / 小时',  value: rec.essence.fullBuffPerHour.toFixed(1), cls: 'accent' },
+      { label: '期望生息 / 小时', value: rec.essence.fullBuffPerHour.toFixed(1), cls: 'accent' },
+      { label: '期望生息 / 分钟', value: rec.essence.fullBuffPerMin.toFixed(2), cls: 'accent' },
     ];
     metrics.forEach(({ label, value, cls, title }) => {
       const cell = U.el('div', 'stat ' + cls);
@@ -242,24 +242,7 @@ WF.arbitrationView = (function () {
     container.appendChild(timelineSection); // 先挂载，确保 echarts.init 时容器有宽度
     pushChart(C.timelineOverview(timelineBody, rec));
 
-    /* ─── 6. 异常诊断区 ─── */
-    if (rec.anomalies && rec.anomalies.length) {
-      const anomalySection = U.el('div', 'arb-section');
-      anomalySection.appendChild(U.el('div', 'section-title', '异常诊断'));
-      const anomalyList = U.el('div', 'arb-anomaly-list');
-      for (const a of rec.anomalies) {
-        const row = U.el('div', 'arb-anomaly-row ' + (a.severity === 'danger' ? 'danger' : 'warning'));
-        const icon = U.el('span', 'arb-anomaly-icon', a.severity === 'danger' ? '!' : '⚠');
-        const text = U.el('span', 'arb-anomaly-text', a.text);
-        row.appendChild(icon);
-        row.appendChild(text);
-        anomalyList.appendChild(row);
-      }
-      anomalySection.appendChild(anomalyList);
-      container.appendChild(anomalySection);
-    }
-
-    /* ─── 7. 每轮明细（可展开）─── */
+    /* ─── 6. 每轮明细（可展开）─── */
     if (rec.roundDetail && rec.roundDetail.length && WF.roundDetail) {
       WF.roundDetail.renderToggle(container, rec.roundDetail.map((r) => ({
         label: r.label, durSec: r.durSec,
@@ -297,7 +280,7 @@ WF.arbitrationView = (function () {
       distBars(distWrap, {
         title: '无人机刷新间隔',
         rows: vac.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
-        footer: `>2s 占比：${vac.over2Pct.toFixed(1)}% · 最大间隔：${vac.maxGap.toFixed(1)}s`,
+        footer: `>3s 占比：${vac.over3Pct.toFixed(1)}% · 最大间隔：${vac.maxGap.toFixed(1)}s`,
       });
     }
 
@@ -368,7 +351,7 @@ WF.arbitrationView = (function () {
       distBars(distWrap, {
         title: '清图效率',
         rows: ld.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
-        footer: `高压占比（≥10）：${ld.geq10Pct.toFixed(1)}%`,
+        footer: `高压占比（≥12）：${ld.geq12Pct.toFixed(1)}%`,
       });
     }
 
@@ -377,8 +360,9 @@ WF.arbitrationView = (function () {
     pushChart(C.pressureDroneScatter(scatterBody, rec));
 
     // 8.8 高压恢复时间线
-    const recoveryBody = chartCard(distWrap, '高压恢复时间线', '每次场上活跃敌人从≥10恢复到<10所花费的时间。颜色越绿越快，越红越慢。');
+    const recoveryBody = chartCard(distWrap, '高压恢复时间线', '每次场上活跃敌人从≥12恢复到<12所花费的时间。颜色越绿越快，越红越慢。');
     pushChart(C.recoveryTimeline(recoveryBody, rec));
+    recoveryBody.classList.add('recovery-timeline');
 
     /* ─── 9. 交叉分析区 ─── */
     const crossSection = U.el('div', 'arb-section');
@@ -393,7 +377,7 @@ WF.arbitrationView = (function () {
       {
         label: '平均高压恢复时间',
         value: rec.cross && rec.cross.recoveryAvg != null ? (rec.cross.recoveryAvg === 0 ? '从未高压' : rec.cross.recoveryAvg.toFixed(1) + 's') : '—',
-        tip: '场上活跃敌人从≥10恢复到<10的平均时间。',
+        tip: '场上活跃敌人从≥12恢复到<12的平均时间。',
       },
       {
         label: '清图效率指数 CEI',
@@ -445,8 +429,8 @@ WF.arbitrationView = (function () {
     const defWrap = U.el('div', 'arb-explain-defs');
     const defs = [
       ['生息效率（40%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再除以节点基准数量，得到百分比。'],
-      ['清图效率（20%）', '依据房主日志中 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥10（"高压"阈值）的时间占比，取 100 减去该占比作为得分。', TOOLTIPS.activeEnemy],
-      ['综合效率（20%）', '由两个维度融合：① 清洁度（70%）——按活跃敌人分布区间评分；② 高压响应（30%）——统计从≥10只敌人恢复到<10只的平均时间。'],
+      ['清图效率（20%）', '依据房主日志中 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥12（"高压"阈值）的时间占比，取 100 减去该占比作为得分。', TOOLTIPS.activeEnemy],
+      ['综合效率（20%）', '由两个维度融合：① 清洁度（70%）——按活跃敌人分布区间评分；② 高压响应（30%）——统计从≥12只敌人恢复到<12只的平均时间。'],
       ['节奏稳定性（20%）', TOOLTIPS.rhythm],
     ];
     defs.forEach(([k, v, tip]) => {

@@ -164,7 +164,7 @@ WF.ArbitrationParser = (function () {
         期望生息速率（全 Buff，/时）÷ 节点基准 × 100，线性，可超过 100。
         节点基准优先取该节点基准数据（WF.ArbNodeBaseline），无数据时退回 600/时。
      ② 清图效率（权重 20%）：
-        100 − geq10Pct。geq10Pct = 场上同时受 AI 监控的活跃敌人数 ≥10（"高压"阈值）的时间占比。
+        100 − geq12Pct。geq12Pct = 场上同时受 AI 监控的活跃敌人数 ≥12（"高压"阈值）的时间占比。
         完全来自日志内采样，不依赖任何外部基准；清图越干净这项得分越高。
      ③ 综合效率（权重 20%）：
         双维度融合——清洁度（70%）+ 高压响应（30%）。
@@ -193,10 +193,10 @@ WF.ArbitrationParser = (function () {
     const base = baseline > 0 ? baseline : ESS_BASELINE;
     return Math.max(0, perHour / base * 100);
   }
-  // ② 清图效率（%）：由 clearEffDist 的 geq10Pct 取反；数据缺失时返回 null
-  function clearEfficiency(geq10Pct) {
-    if (geq10Pct == null || !isFinite(geq10Pct)) return null;
-    return Math.max(0, 100 - geq10Pct);
+  // ② 清图效率（%）：由 clearEffDist 的 geq12Pct 取反；数据缺失时返回 null
+  function clearEfficiency(geq12Pct) {
+    if (geq12Pct == null || !isFinite(geq12Pct)) return null;
+    return Math.max(0, 100 - geq12Pct);
   }
   // ③ 综合效率（%）：双维度融合
   //   清洁度（70%）：基于活跃敌人分布的分段评分，0-4=100, 5-9=80, 10-14=70, 15-20=30, >20=0
@@ -427,14 +427,14 @@ WF.ArbitrationParser = (function () {
     const edges = VACUUM_BUCKETS;
     const n = edges.length + 1;
     const bucket = new Array(n).fill(0);
-    let total = 0, over2 = 0, maxGap = 0;
+    let total = 0, over3 = 0, maxGap = 0;
     for (let i = 0; i < times.length - 1; i++) {
       const g = times[i + 1] - times[i];
       if (g <= 0) continue;
       let bi = edges.findIndex((e) => g <= e);
       if (bi < 0) bi = n - 1;
       bucket[bi] += g; total += g;
-      if (g > 2) over2 += g;
+      if (g > 3) over3 += g;
       if (g > maxGap) maxGap = g;
     }
     if (total <= 0) return null;
@@ -443,7 +443,7 @@ WF.ArbitrationParser = (function () {
       hi: i < edges.length ? edges[i] : null,
       seconds: v, pct: v / total * 100,
     }));
-    return { rows, over2Pct: over2 / total * 100, maxGap };
+    return { rows, over3Pct: over3 / total * 100, maxGap };
   }
 
   // ── 分布计算：清图效率（受监控活跃敌人数采样，按驻留时长加权，5 宽分桶）──
@@ -453,21 +453,21 @@ WF.ArbitrationParser = (function () {
     for (const s of samples) if (s.live > maxLive) maxLive = s.live;
     const nb = Math.max(1, Math.ceil((maxLive + 1) / 5));
     const bucket = new Array(nb).fill(0);
-    let total = 0, geq10 = 0;
+    let total = 0, geq12 = 0;
     for (let i = 0; i < samples.length - 1; i++) {
       const dwell = samples[i + 1].t - samples[i].t;
       if (dwell <= 0 || dwell > DWELL_CAP) continue;
       const live = samples[i].live;
       const bi = Math.min(Math.floor(live / 5), nb - 1);
       bucket[bi] += dwell; total += dwell;
-      if (live >= 10) geq10 += dwell;
+      if (live >= 12) geq12 += dwell;
     }
     if (total <= 0) return null;
     const rows = bucket.map((v, i) => ({
       lo: 5 * i, hi: i < nb - 1 ? 5 * i + 4 : null,
       seconds: v, pct: v / total * 100,
     }));
-    return { rows, maxLive, geq10Pct: geq10 / total * 100 };
+    return { rows, maxLive, geq12Pct: geq12 / total * 100 };
   }
 
   // ── 分布计算：无人机刷新连续度（同批次数量直方图）──
@@ -607,10 +607,10 @@ WF.ArbitrationParser = (function () {
       const duration = b.t - prev.t;
       const segLiveSamples = liveSamples.filter((s) => s.t + startedT > prev.t && s.t + startedT <= b.t);
       const liveValues = segLiveSamples.map((s) => s.live).filter((v) => v != null && isFinite(v));
-      let geq10Duration = 0;
+      let geq12Duration = 0;
       for (let j = 0; j < segLiveSamples.length - 1; j++) {
         const dwell = segLiveSamples[j + 1].t - segLiveSamples[j].t;
-        if (segLiveSamples[j].live >= 10 && dwell > 0 && dwell <= DWELL_CAP) geq10Duration += dwell;
+        if (segLiveSamples[j].live >= 12 && dwell > 0 && dwell <= DWELL_CAP) geq12Duration += dwell;
       }
 
       stats.push({
@@ -627,7 +627,7 @@ WF.ArbitrationParser = (function () {
         droneDensity: duration > 0 ? droneEvents.length / (duration / 60) : 0,
         liveAvg: liveValues.length ? avg(liveValues) : null,
         liveMax: liveValues.length ? Math.max(...liveValues) : null,
-        highPressurePct: duration > 0 ? geq10Duration / duration * 100 : 0,
+        highPressurePct: duration > 0 ? geq12Duration / duration * 100 : 0,
       });
     }
     return stats;
@@ -1006,11 +1006,12 @@ WF.ArbitrationParser = (function () {
         const pressureCorr = pressureDroneCorrelation(m.liveSamples, relTimes);
 
         // 高压恢复事件（过滤开局阶段：SS_STARTED 到第一次轮次结算前）
+        // 注：清图效率阈值已改为 ≥12，但高压恢复仍沿用 ≥10 的原始高压定义
         const firstRoundT = m.roundBoundaries && m.roundBoundaries.length ? m.roundBoundaries[0].t : m.startedT;
         const recoveryEvents = extractRecoveryEvents(m.liveSamples, firstRoundT);
 
         const essEff   = essenceEfficiency(fullBuffPerHour, essBaseline);
-        const clearEff = clearEfficiency(liveDistData ? liveDistData.geq10Pct : null);
+        const clearEff = clearEfficiency(liveDistData ? liveDistData.geq12Pct : null);
         const clearCompEff = clearComprehensiveEfficiency(m.liveSamples, liveDistData, recoveryEvents);
         const rhythmEff = rhythmStability(roundStats, interBatchData, m.liveSamples, recoveryEvents);
         const score    = computeScore(essEff, clearEff, clearCompEff, rhythmEff);

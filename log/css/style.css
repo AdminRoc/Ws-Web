@@ -809,7 +809,7 @@ body.profile-active #detail-wrap {
 }
 .arb-meta-cell {
   position: relative;
-  padding: 15px 20px 12px; border-radius: var(--r-md);
+  padding: 16px 22px 12px; border-radius: var(--r-md);
   background: rgba(13, 16, 27, 0.8); border: 1px solid var(--c-border);
   display: flex; flex-direction: column; gap: 6px;
   transition: border-color .2s, box-shadow .2s;
@@ -819,9 +819,9 @@ body.profile-active #detail-wrap {
   box-shadow: 0 0 18px rgba(95,208,232,0.12);
 }
 .arb-meta-label { font-size: 13px; color: var(--c-text2); letter-spacing: 2px; white-space: nowrap; }
-.arb-meta-value { font-size: 20px; color: var(--c-white); font-family: var(--f-px); letter-spacing: 1px; white-space: nowrap; }
+.arb-meta-value { font-size: 24px; color: var(--c-white); font-family: var(--f-px); letter-spacing: 1px; white-space: nowrap; }
 .arb-meta-value.big {
-  font-size: 22px; color: var(--c-gold);
+  font-size: 28px; color: var(--c-gold);
   text-shadow: 0 0 18px rgba(255, 182, 72, 0.35);
 }
 
@@ -859,7 +859,8 @@ body.profile-active #detail-wrap {
   cursor: help;
 }
 .arb-chart-body { width: 100%; height: 260px; }
-.arb-chart-body.timeline-overview { height: 300px; }
+.arb-chart-body.timeline-overview { height: 320px; }
+.arb-chart-body.recovery-timeline { height: 360px; }
 
 /* 异常诊断 */
 .arb-anomaly-list {
@@ -946,8 +947,8 @@ body.profile-active #detail-wrap {
 /* 响应式 */
 @media (max-width: 900px) {
   .arb-meta-grid { grid-template-columns: repeat(2, 1fr); }
-  .arb-meta-value { font-size: 18px; }
-  .arb-meta-value.big { font-size: 20px; }
+  .arb-meta-value { font-size: 20px; }
+  .arb-meta-value.big { font-size: 24px; }
   .arb-cross-grid { grid-template-columns: 1fr; }
   .arb-batch-body { grid-template-columns: 1fr; }
 }

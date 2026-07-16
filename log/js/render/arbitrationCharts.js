@@ -131,8 +131,8 @@ WF.arbitrationCharts = (function () {
           return html;
         },
       },
-      legend: { top: 0, right: 10, data: ['平均活跃敌人', '最大活跃敌人', '无人机'], textStyle: { fontSize: 11 } },
-      grid: { left: '3%', right: '4%', bottom: '16%', top: '18%', containLabel: true },
+      legend: { top: 4, right: 12, itemGap: 20, data: ['平均活跃敌人', '最大活跃敌人', '无人机'], textStyle: { fontSize: 12, color: COLORS.text }, icon: 'roundRect' },
+      grid: { left: '3%', right: '4%', bottom: '16%', top: '22%', containLabel: true },
       xAxis: { type: 'category', data: categories, boundaryGap: false },
       yAxis: [
         { type: 'value', name: '活跃敌人', position: 'left', axisLabel: { color: COLORS.cyan } },
@@ -357,7 +357,7 @@ WF.arbitrationCharts = (function () {
       series: [
         {
           type: 'bar',
-          barWidth: '50%',
+          barWidth: '60%',
           itemStyle: {
             color: function (p) {
               const v = p.value;
@@ -369,6 +369,7 @@ WF.arbitrationCharts = (function () {
             shadowBlur: 8,
             shadowColor: 'rgba(255,0,170,0.4)',
           },
+          emphasis: { itemStyle: { shadowBlur: 16, shadowColor: 'rgba(255,255,255,0.5)' } },
           data: events,
         },
       ],
