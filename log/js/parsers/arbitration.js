@@ -1,7 +1,8 @@
-/* 仲裁 (Arbitration) 解析器
+/* 仲裁 (Arbitration) 解析器 v2.0
  * 全部识别逻辑均由本项目对客户端 EE.log 的字段实测归纳得出：
  *   - 磁盾无人机：OnAgentCreated /Npc/CorpusEliteShieldDroneAgent（每行一只，Spawned/MonitoredTicking 字段随行给出）
  *   - 敌人生成数：OnAgentCreated 行的 "Spawned N" 取全程最大值（累计生成计数）
+ *   - 敌人生成事件数：OnAgentCreated 行本身的数量（与 Spawned 峰值双轨记录）
  *   - 场上活跃敌人数：OnAgentCreated 行的 "MonitoredTicking N" 字段（当前受 AI 监控的活跃敌人数），按驻留时长加权分布
  *   - 轮/波边界：DefenseReward::TransitionOut（防御/拦截/镜像防御的每轮结算一次）；
  *                生存则用 SurvivalMission 奖励层
@@ -13,6 +14,15 @@
  * 国际化修复：兼容中英文客户端（简体中文 "- 仲裁" / 英文 "- Arbitration"），
  *          并以 _EliteAlert 节点 ID 后缀作为语言无关的最终兜底，确保任何语言客户端
  *          的日志都能被正确识别为仲裁任务。
+ *
+ * v2.0 升级：
+ *   - 引入 eventStream 原始事件流，所有下游分析基于同一数据源。
+ *   - 无人机批次聚类：区分同批次内间隔与批次间间隔。
+ *   - 多时间尺度分析：全局 / 轮次 / 分钟 / wave（尽力探测）。
+ *   - 敌人双轨统计：Spawned 峰值差分 + 真实生成事件数。
+ *   - 交叉分析：压力-产出相关、清图效率指数 CEI、高压恢复。
+ *   - 节奏稳定性：参与综合评分，衡量刷新节奏平稳程度。
+ *   - 异常诊断：自动标出可能的刷怪卡顿、漏无人机、清图压力过高时段。
  */
 window.WF = window.WF || {};
 
@@ -33,9 +43,15 @@ WF.ArbitrationParser = (function () {
     // OnAgentCreated ... Spawned M ... MonitoredTicking K
     agentSpawned:         /OnAgentCreated\b.*?\bSpawned\s+(\d+)\b/,
     agentMonitoredTick:   /\bMonitoredTicking\s+(\d+)\b/,
+    // 尝试提取 agent 路径（尽力而为，不同敌人格式可能不一致）
+    agentPath:        /OnAgentCreated\s+(\/[^\s]+)/,
     defenseReward:    /DefenseReward\.lua: DefenseReward::TransitionOut\b/,
     survivalTier:     /SurvivalMission\.lua: Survival: Gave reward tier (\d+) at ([\d.]+)/,
     interceptionRound:/InterceptionNewRound|InterNewRoundLotusTransmission/,
+    // Wave 相关字段探测（尽力而为）
+    waveExplicit:     /wave\s*(\d+)/i,
+    waveTotalSpawned: /total spawned in current wave\s*(\d+)/i,
+    waveCurrent:      /current wave\s*(\d+)/i,
     // 每个远端队伍连接独立的网络诊断行，形如 "Net [Info]: 2: Retransmit throttle: ..."
     // 连接编号是每名非本机队员各自的通信通道；某一路长时间不再出现即视为该成员早于
     // 主机停止稳定在场（例如提前挂机/切出游戏，房主自己继续 farm 到本轮结算）。
@@ -93,6 +109,25 @@ WF.ArbitrationParser = (function () {
     return map;
   })();
 
+  // ── Agent 分类规则（尽力而为）──
+  // Pet / Sentinel / MoaCompanion 等同伴单位不计入敌人生成事件，避免虚高。
+  const AGENT_CLASSIFIERS = [
+    [/CorpusEliteShieldDroneAgent/i, 'drone'],
+    [/Pet|Companion|Sentinel|MoaCompanion|Catbrow|Vulpaphyla|Hound/i, 'companion'],
+    [/Elite/i, 'elite'],
+    [/Boss|Golem|Lephantis/i, 'boss'],
+    [/Drone|Osprey|Moa\b|Roller/i, 'machine'],
+    [/Lancer|Crewman|Butcher|Runner/i, 'grunt'],
+  ];
+  function classifyAgent(path, typeHint) {
+    if (typeHint === 'drone') return 'drone';
+    if (!path) return 'enemy';
+    for (const [re, type] of AGENT_CLASSIFIERS) {
+      if (re.test(path)) return type;
+    }
+    return 'enemy';
+  }
+
   /* 节点解析：优先查权威节点库 WF.SOL_NODES（由 solNodes.js 提供，格式：
    *   "Cinxia, 谷神星 (拦截 - Grineer)"），回退到日志内解析出的节点名/星球/派系/类型。 */
   function resolveNode(nodeId, m) {
@@ -123,28 +158,34 @@ WF.ArbitrationParser = (function () {
   }
 
   /* ══════════════════════════════════════════════════════════════
-     评分体系（0-120 分，三维加权，数据全部来自日志，不依赖单一外部基准）
+     评分体系（0-120 分，四维加权，数据全部来自日志，不依赖单一外部基准）
      ══════════════════════════════════════════════════════════════
-     ① 生息效率（权重 50%）：
+     ① 生息效率（权重 40%）：
         期望生息速率（全 Buff，/时）÷ 节点基准 × 100，线性，可超过 100。
         节点基准优先取该节点基准数据（WF.ArbNodeBaseline），无数据时退回 600/时。
      ② 清图效率（权重 20%）：
         100 − geq10Pct。geq10Pct = 场上同时受 AI 监控的活跃敌人数 ≥10（"高压"阈值）的时间占比。
         完全来自日志内采样，不依赖任何外部基准；清图越干净这项得分越高。
-     ③ 综合效率（权重 30%）：
+     ③ 综合效率（权重 20%）：
         双维度融合——清洁度（70%）+ 高压响应（30%）。
         清洁度：按活跃敌人分布区间评分，0-4=100、5-9=80、10-14=70、15-20=30、>20=0，
         再按驻留时长加权平均。高压响应：扫描从≥10恢复到<10的高压事件，
         平均恢复时间越短得分越高（100 − 平均秒数×2），从未高压=100。
         仅依赖日志数据。
+     ④ 节奏稳定性（权重 20%）：
+        衡量敌人与无人机刷新节奏的平稳程度。
+        无人机密度稳定性（40%）：各轮次无人机密度（只/分钟）的波动越小得分越高。
+        无人机批次间隔稳定性（35%）：相邻无人机批次之间的时间间隔越稳定得分越高。
+        高压恢复稳定性（25%）：场上活跃敌人从 ≥10 的高压状态恢复到 <10 所需时间越短、越稳定得分越高。
+        数据不足时该项以 50 分中性值计入。
      ──────────────────────────────────────────────────────────────
-     综合评分 = 0.50×生息效率 + 0.20×清图效率 + 0.30×综合效率，上限 120。
-     若某项数据缺失（无采样 / 任务极短），该项退回 50 分（中性占位，不影响其他两项）。
+     综合评分 = 0.40×生息效率 + 0.20×清图效率 + 0.20×综合效率 + 0.20×节奏稳定性，上限 120。
      ══════════════════════════════════════════════════════════════ */
   const ESS_BASELINE = 600;   // 默认基准（该节点暂无分节点基准数据时兜底使用）
-  const W_ESS   = 0.50;       // 生息效率权重（主轴）
+  const W_ESS   = 0.40;       // 生息效率权重
   const W_CLEAR = 0.20;       // 清图效率权重（场上敌人压力）
-  const W_CLEAR_COMP  = 0.30;       // 综合效率权重（整体清图质量）
+  const W_CLEAR_COMP  = 0.20; // 综合效率权重（整体清图质量）
+  const W_RHYTHM = 0.20;      // 节奏稳定性权重
 
   function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
   // ① 生息效率（%）：perHour ÷ baseline × 100，线性，允许超过 100
@@ -206,19 +247,139 @@ WF.ArbitrationParser = (function () {
     }
     return Math.round(cleanliness * 0.7 + recovery * 0.3);
   }
-  // 三维加权综合评分（某项为 null 时用 50 中性兜底）
-  function computeScore(essEff, clearEff, clearCompEff) {
+  // ④ 节奏稳定性（%）
+  function rhythmStability(roundStats, interBatchData, liveSamples) {
+    // 需要至少一些数据
+    const hasRounds = roundStats && roundStats.length >= 2;
+    const hasBatches = interBatchData && interBatchData.rows && interBatchData.totalBatches >= 2;
+    const hasLive = liveSamples && liveSamples.length >= 2;
+    if (!hasRounds && !hasBatches && !hasLive) return null;
+
+    let densityScore = 50, batchGapScore = 50, recoveryScore = 50;
+    let weightsUsed = 0;
+
+    // 无人机密度稳定性（40%）
+    if (hasRounds) {
+      const densities = roundStats.map((r) => r.droneDensity).filter((v) => v != null && isFinite(v) && v >= 0);
+      if (densities.length >= 2) {
+        const mean = densities.reduce((a, b) => a + b, 0) / densities.length;
+        const variance = densities.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / densities.length;
+        const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
+        // CV 0 -> 100, CV >= 0.8 -> 0
+        densityScore = Math.max(0, 100 - cv * 125);
+        weightsUsed += 0.40;
+      }
+    }
+
+    // 无人机批次间隔稳定性（35%）
+    if (hasBatches) {
+      const gaps = [];
+      for (let i = 0; i < interBatchData.rows.length; i++) {
+        const row = interBatchData.rows[i];
+        if (row.seconds <= 0) continue;
+        const lo = row.lo;
+        const hi = row.hi != null ? row.hi : lo + 5;
+        const mid = (lo + hi) / 2;
+        gaps.push(mid);
+      }
+      if (gaps.length >= 2) {
+        const mean = gaps.reduce((a, b) => a + b, 0) / gaps.length;
+        const variance = gaps.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / gaps.length;
+        const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
+        batchGapScore = Math.max(0, 100 - cv * 100);
+        weightsUsed += 0.35;
+      }
+    }
+
+    // 高压恢复稳定性（25%）
+    if (hasLive) {
+      const events = [];
+      let inHigh = false, highStart = null;
+      for (let i = 0; i < liveSamples.length; i++) {
+        const s = liveSamples[i];
+        if (!inHigh && s.live >= 10) {
+          inHigh = true;
+          highStart = s.t;
+        } else if (inHigh && s.live < 10) {
+          inHigh = false;
+          events.push(s.t - highStart);
+        }
+      }
+      if (events.length >= 1) {
+        const avg = events.reduce((a, b) => a + b, 0) / events.length;
+        const variance = events.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / events.length;
+        const cv = avg > 0 ? Math.sqrt(variance) / avg : 0;
+        // 平均恢复时间越短、越稳定分数越高
+        recoveryScore = Math.max(0, Math.min(100, 100 - avg * 2 - cv * 30));
+        weightsUsed += 0.25;
+      } else if (liveSamples.some((s) => s.live >= 10)) {
+        recoveryScore = 0;
+        weightsUsed += 0.25;
+      } else {
+        recoveryScore = 100;
+        weightsUsed += 0.25;
+      }
+    }
+
+    if (weightsUsed <= 0) return null;
+    // 按实际有权重的子项加权，缺失项由 50 中性值补齐
+    const raw = (densityScore * 0.40 + batchGapScore * 0.35 + recoveryScore * 0.25) /
+                (0.40 + 0.35 + 0.25);
+    return Math.round(raw);
+  }
+
+  // 四维加权综合评分（某项为 null 时用 50 中性兜底）
+  function computeScore(essEff, clearEff, clearCompEff, rhythmEff) {
     const e = essEff  != null ? essEff  : 50;
     const c = clearEff != null ? clearEff : 50;
     const k = clearCompEff != null ? clearCompEff : 50;
-    return Math.round(clamp(W_ESS * e + W_CLEAR * c + W_CLEAR_COMP * k, 0, 120));
+    const r = rhythmEff != null ? rhythmEff : 50;
+    return Math.round(clamp(W_ESS * e + W_CLEAR * c + W_CLEAR_COMP * k + W_RHYTHM * r, 0, 120));
   }
   function scoreTierName(s) {
     if (s >= 101) return '巅峰';
     if (s >= 80)  return '优秀';
     if (s >= 70)  return '良好';
     if (s >= 60)  return '及格';
-    return '待提升';
+    return '初学';
+  }
+
+  // ── 工具函数 ──
+  function avg(arr) {
+    if (!arr || !arr.length) return null;
+    return arr.reduce((a, b) => a + b, 0) / arr.length;
+  }
+  function median(arr) {
+    if (!arr || !arr.length) return null;
+    const s = arr.slice().sort((a, b) => a - b);
+    const m = Math.floor(s.length / 2);
+    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+  }
+  function stdDev(arr, mean) {
+    if (!arr || arr.length < 2) return null;
+    const m = mean != null ? mean : avg(arr);
+    return Math.sqrt(arr.reduce((a, b) => a + Math.pow(b - m, 2), 0) / arr.length);
+  }
+  function coefficientOfVariation(arr) {
+    const m = avg(arr);
+    if (!m) return null;
+    const s = stdDev(arr, m);
+    return s != null ? s / m : null;
+  }
+  function pearson(x, y) {
+    if (!x || !y || x.length !== y.length || x.length < 3) return null;
+    const n = x.length;
+    const mx = avg(x), my = avg(y);
+    let num = 0, dx2 = 0, dy2 = 0;
+    for (let i = 0; i < n; i++) {
+      const dx = x[i] - mx;
+      const dy = y[i] - my;
+      num += dx * dy;
+      dx2 += dx * dx;
+      dy2 += dy * dy;
+    }
+    if (dx2 === 0 || dy2 === 0) return 0;
+    return num / Math.sqrt(dx2 * dy2);
   }
 
   // ── 分布计算：无人机生成间隔（相邻生成时间差，按时长加权分桶）──
@@ -273,18 +434,88 @@ WF.ArbitrationParser = (function () {
   // ── 分布计算：无人机刷新连续度（同批次数量直方图）──
   function consecutiveDist(times) {
     if (!times.length) return null;
-    const sizes = [1];
-    for (let i = 1; i < times.length; i++) {
-      if (times[i] - times[i - 1] > DRONE_BATCH_GAP) sizes.push(1);
-      else sizes[sizes.length - 1]++;
-    }
+    const batches = clusterDroneBatches(times, DRONE_BATCH_GAP);
+    const sizes = batches.map((b) => b.length);
     let maxSize = 1;
     for (const s of sizes) if (s > maxSize) maxSize = s;
     const hist = new Array(maxSize).fill(0);
     for (const s of sizes) if (s >= 1 && s <= maxSize) hist[s - 1]++;
     const totalBatches = sizes.length;
     const rows = hist.map((c, i) => ({ size: i + 1, count: c, pct: totalBatches > 0 ? c / totalBatches * 100 : 0 }));
-    return { rows, totalBatches };
+    return { rows, totalBatches, avgBatchSize: avg(sizes) };
+  }
+
+  // ── 无人机批次聚类 ──
+  function clusterDroneBatches(times, gapThreshold) {
+    if (!times || !times.length) return [];
+    const batches = [];
+    let current = [times[0]];
+    for (let i = 1; i < times.length; i++) {
+      if (times[i] - times[i - 1] <= gapThreshold) {
+        current.push(times[i]);
+      } else {
+        batches.push(current);
+        current = [times[i]];
+      }
+    }
+    if (current.length) batches.push(current);
+    return batches;
+  }
+
+  // ── 分布计算：同批次内间隔 ──
+  function intraBatchGapDist(times) {
+    const batches = clusterDroneBatches(times, DRONE_BATCH_GAP);
+    const gaps = [];
+    for (const b of batches) {
+      for (let i = 1; i < b.length; i++) gaps.push(b[i] - b[i - 1]);
+    }
+    if (!gaps.length) return null;
+    return bucketGaps(gaps);
+  }
+
+  // ── 分布计算：批次之间间隔 ──
+  function interBatchGapDist(times) {
+    const batches = clusterDroneBatches(times, DRONE_BATCH_GAP);
+    if (batches.length < 2) return null;
+    const firstTimes = batches.map((b) => b[0]);
+    const gaps = [];
+    for (let i = 1; i < firstTimes.length; i++) gaps.push(firstTimes[i] - firstTimes[i - 1]);
+    const dist = bucketGaps(gaps);
+    if (!dist) return null;
+    const over5s = gaps.filter((g) => g > 5).reduce((a, b) => a + b, 0);
+    const over10s = gaps.filter((g) => g > 10).reduce((a, b) => a + b, 0);
+    const total = gaps.reduce((a, b) => a + b, 0);
+    return {
+      ...dist,
+      avgGap: avg(gaps),
+      medianGap: median(gaps),
+      maxGap: Math.max(...gaps),
+      over5sPct: total > 0 ? over5s / total * 100 : 0,
+      over10sPct: total > 0 ? over10s / total * 100 : 0,
+      totalBatches: batches.length,
+    };
+  }
+
+  // 对间隔数组做分桶（复用 vacuumDist 的分桶逻辑）
+  function bucketGaps(gaps) {
+    if (!gaps || gaps.length < 1) return null;
+    const edges = VACUUM_BUCKETS;
+    const n = edges.length + 1;
+    const bucket = new Array(n).fill(0);
+    let total = 0;
+    for (const g of gaps) {
+      if (g <= 0) continue;
+      let bi = edges.findIndex((e) => g <= e);
+      if (bi < 0) bi = n - 1;
+      bucket[bi] += g; total += g;
+    }
+    if (total <= 0) return null;
+    const rows = bucket.map((v, i) => ({
+      lo: i === 0 ? 0 : edges[i - 1],
+      hi: i < edges.length ? edges[i] : null,
+      seconds: v, pct: v / total * 100,
+    }));
+    return { rows, maxGap: Math.max(...gaps) };
   }
 
   // ── 分布计算：按分钟切片的无人机生成 / 敌人生成 / 清图量趋势 ──
@@ -296,18 +527,218 @@ WF.ArbitrationParser = (function () {
     const rows = [];
     let prevLive = 0;
     for (let i = 0; i < totalMin; i++) {
-      const b = buckets[i] || { drones: 0, spawn: 0, liveEnd: null };
+      const b = buckets[i] || { drones: 0, spawn: 0, spawnEvents: 0, liveEnd: null, liveSum: 0, liveSamples: 0 };
       const liveEnd = b.liveEnd != null ? b.liveEnd : prevLive;
+      const liveMax = b.liveMax != null ? b.liveMax : liveEnd;
+      const liveAvg = b.liveSamples > 0 ? b.liveSum / b.liveSamples : liveEnd;
       const cleared = Math.max(0, b.spawn - (liveEnd - prevLive));
-      rows.push({ minute: i + 1, drones: b.drones, spawn: b.spawn, cleared });
+      rows.push({
+        minute: i + 1,
+        drones: b.drones,
+        spawn: b.spawn,
+        spawnEvents: b.spawnEvents || 0,
+        liveAvg: liveAvg,
+        liveMax: liveMax,
+        cleared,
+      });
       prevLive = liveEnd;
     }
     let totalCleared = 0;
     for (const r of rows) totalCleared += r.cleared;
     const maxDrones = Math.max(1, ...rows.map((r) => r.drones));
     const maxSpawn  = Math.max(1, ...rows.map((r) => r.spawn));
+    const maxSpawnEvents = Math.max(1, ...rows.map((r) => r.spawnEvents));
     const maxCleared = Math.max(1, ...rows.map((r) => r.cleared));
-    return { rows, maxDrones, maxSpawn, maxCleared, totalCleared };
+    return { rows, maxDrones, maxSpawn, maxSpawnEvents, maxCleared, totalCleared };
+  }
+
+  // ── 轮次级统计 ──
+  function perRoundStats(roundBoundaries, eventStream, startedT, liveSamples) {
+    if (!roundBoundaries || !roundBoundaries.length || !eventStream || !eventStream.length) return [];
+    const stats = [];
+    for (let i = 0; i < roundBoundaries.length; i++) {
+      const b = roundBoundaries[i];
+      const prev = i === 0 ? { t: startedT, droneCum: 0, spawnedCum: 0, eventCum: 0 } : roundBoundaries[i - 1];
+      const segEvents = eventStream.filter((e) => e.t > prev.t && e.t <= b.t);
+      const droneEvents = segEvents.filter((e) => e.type === 'drone');
+      const enemyEvents = segEvents.filter((e) => e.type !== 'drone');
+      const gaps = [];
+      for (let j = 1; j < droneEvents.length; j++) gaps.push(droneEvents[j].t - droneEvents[j - 1].t);
+
+      const duration = b.t - prev.t;
+      const segLiveSamples = liveSamples.filter((s) => s.t + startedT > prev.t && s.t + startedT <= b.t);
+      const liveValues = segLiveSamples.map((s) => s.live).filter((v) => v != null && isFinite(v));
+      let geq10Duration = 0;
+      for (let j = 0; j < segLiveSamples.length - 1; j++) {
+        const dwell = segLiveSamples[j + 1].t - segLiveSamples[j].t;
+        if (segLiveSamples[j].live >= 10 && dwell > 0 && dwell <= DWELL_CAP) geq10Duration += dwell;
+      }
+
+      stats.push({
+        round: i + 1,
+        label: b.label,
+        duration,
+        drones: droneEvents.length,
+        enemiesSpawned: b.spawnedCum - prev.spawnedCum,
+        enemyEvents: enemyEvents.length,
+        eventCum: b.eventCum != null ? b.eventCum : prev.eventCum + enemyEvents.length,
+        droneGapAvg: avg(gaps),
+        droneGapMedian: median(gaps),
+        droneGapMax: gaps.length ? Math.max(...gaps) : null,
+        droneDensity: duration > 0 ? droneEvents.length / (duration / 60) : 0,
+        liveAvg: liveValues.length ? avg(liveValues) : null,
+        liveMax: liveValues.length ? Math.max(...liveValues) : null,
+        highPressurePct: duration > 0 ? geq10Duration / duration * 100 : 0,
+      });
+    }
+    return stats;
+  }
+
+  // ── Wave 边界推断 ──
+  function inferWaveBoundaries(eventStream) {
+    const waves = [];
+    let lastWave = null;
+    let lastSpawn = 0;
+    for (const e of eventStream) {
+      // 显式 wave 字段
+      let m;
+      if ((m = RE.waveExplicit.exec(e.agentPath || '')) || (m = RE.waveTotalSpawned.exec(e.agentPath || '')) || (m = RE.waveCurrent.exec(e.agentPath || ''))) {
+        const w = parseInt(m[1], 10);
+        if (lastWave == null || w !== lastWave) {
+          waves.push({ t: e.t, wave: w, explicit: true });
+          lastWave = w;
+        }
+        continue;
+      }
+      // Spawned 峰值回落推断
+      if (e.spawned != null && e.spawned < lastSpawn && lastSpawn > 0) {
+        waves.push({ t: e.t, wave: (lastWave || 0) + 1, explicit: false });
+        lastWave = (lastWave || 0) + 1;
+      }
+      if (e.spawned != null) lastSpawn = e.spawned;
+    }
+    return waves;
+  }
+
+  // ── 压力-产出滞后相关分析 ──
+  function pressureDroneCorrelation(liveSamples, droneTimes, maxLagSec = 60, stepSec = 5) {
+    if (!liveSamples || liveSamples.length < 5 || !droneTimes || droneTimes.length < 5) return null;
+    const maxT = liveSamples[liveSamples.length - 1].t;
+    if (maxT <= 0) return null;
+    const size = Math.ceil(maxT) + 1;
+    const liveBySec = new Array(size).fill(0);
+    for (let i = 0; i < liveSamples.length - 1; i++) {
+      const t0 = Math.floor(liveSamples[i].t);
+      const t1 = Math.floor(liveSamples[i + 1].t);
+      const live = liveSamples[i].live;
+      for (let t = t0; t <= t1 && t < size; t++) liveBySec[t] = live;
+    }
+    const droneBySec = new Array(size).fill(0);
+    for (const t of droneTimes) {
+      const idx = Math.floor(t);
+      if (idx >= 0 && idx < size) droneBySec[idx]++;
+    }
+    const results = [];
+    for (let lag = 0; lag <= maxLagSec; lag += stepSec) {
+      const x = [], y = [];
+      for (let i = 0; i + lag < size; i++) {
+        x.push(liveBySec[i]);
+        y.push(droneBySec[i + lag]);
+      }
+      results.push({ lagSec: lag, correlation: pearson(x, y) });
+    }
+    const best = results.reduce((a, b) => (Math.abs(b.correlation || 0) > Math.abs(a.correlation || 0) ? b : a), { correlation: 0 });
+    return { results, best };
+  }
+
+  // ── 清图效率指数 CEI ──
+  function clearEfficiencyIndex(clearEff, recoveryEvents, spawnTotal, clearedTotal) {
+    const clearScore = clearEff != null ? clearEff : 50;
+    let recoveryScore = 50;
+    if (recoveryEvents && recoveryEvents.length) {
+      const avgRecovery = recoveryEvents.reduce((a, b) => a + b, 0) / recoveryEvents.length;
+      recoveryScore = Math.max(0, 100 - avgRecovery * 2);
+    } else if (recoveryEvents && recoveryEvents.length === 0) {
+      recoveryScore = 100;
+    }
+    let spawnClearRatio = 50;
+    if (spawnTotal > 0 && clearedTotal != null) {
+      const ratio = clearedTotal / spawnTotal;
+      // 理想情况下 cleared 接近 spawn，ratio -> 1 得 100
+      spawnClearRatio = Math.min(100, ratio * 100);
+    }
+    return Math.round(clearScore * 0.4 + recoveryScore * 0.3 + spawnClearRatio * 0.3);
+  }
+
+  // ── 异常诊断 ──
+  function detectAnomalies(perMinData, roundStats, interBatchData) {
+    const anomalies = [];
+    if (!perMinData || !perMinData.rows) return anomalies;
+
+    // 规则 1：某分钟敌人生成正常但无无人机
+    for (const r of perMinData.rows) {
+      if (r.spawnEvents > 0 && r.drones === 0) {
+        anomalies.push({
+          type: 'no-drone',
+          minute: r.minute,
+          text: `第 ${r.minute} 分钟敌人生成正常但无无人机生成，可能存在漏拾取或刷新异常`,
+          severity: 'warning',
+        });
+      }
+    }
+
+    // 规则 2：连续 2 分钟以上高压占比 > 60%
+    let highPressureStart = null;
+    for (const r of perMinData.rows) {
+      if (r.liveAvg >= 10) {
+        if (highPressureStart == null) highPressureStart = r.minute;
+      } else {
+        if (highPressureStart != null && r.minute - highPressureStart >= 2) {
+          anomalies.push({
+            type: 'high-pressure',
+            minute: highPressureStart,
+            duration: r.minute - highPressureStart,
+            text: `第 ${highPressureStart}-${r.minute - 1} 分钟场上持续高压，清图压力过大`,
+            severity: 'danger',
+          });
+        }
+        highPressureStart = null;
+      }
+    }
+
+    // 规则 3：单批次间隔 > 20s
+    if (interBatchData && interBatchData.rows) {
+      for (const row of interBatchData.rows) {
+        if (row.lo >= 20 && row.seconds > 0) {
+          anomalies.push({
+            type: 'batch-gap',
+            gapLo: row.lo,
+            text: `存在无人机批次间隔 ≥${row.lo}s 的情况，总时长 ${row.seconds.toFixed(1)}s，可能存在刷怪卡顿`,
+            severity: 'warning',
+          });
+        }
+      }
+    }
+
+    // 规则 4：某轮无人机密度比相邻轮低 50% 以上
+    if (roundStats && roundStats.length >= 3) {
+      for (let i = 1; i < roundStats.length - 1; i++) {
+        const prev = roundStats[i - 1].droneDensity;
+        const cur = roundStats[i].droneDensity;
+        const next = roundStats[i + 1].droneDensity;
+        const neighborAvg = (prev + next) / 2;
+        if (neighborAvg > 0 && cur < neighborAvg * 0.5 && cur > 0) {
+          anomalies.push({
+            type: 'low-density-round',
+            round: roundStats[i].round,
+            text: `第 ${roundStats[i].round} 轮无人机密度明显低于相邻轮次，可能存在挂机或走位问题`,
+            severity: 'warning',
+          });
+        }
+      }
+    }
+
+    return anomalies;
   }
 
   function create() {
@@ -330,16 +761,20 @@ WF.ArbitrationParser = (function () {
         firstFrameT: null,   // HUD REDUX 首次渲染绝对时刻（"首帧"）
         sessionAnchor: _sessionAnchor, // 用于把相对秒数换算成真实时钟时间
         type:      'unknown',
-        droneTimes: [],      // 无人机生成绝对时刻（秒）
+        eventStream: [],     // v2.0：原始事件流
+        droneTimes: [],      // 无人机生成绝对时刻（秒），保留兼容
         maxSpawned: 0,       // 累计敌人生成数（Spawned 峰值）
+        enemyEventCount: 0,  // v2.0：真实生成事件累计
         liveSamples: [],      // {t(相对), live}
         rounds:     0,       // 已结算轮/波数
         lastRoundT: null,    // 最后一次轮次结算的绝对时刻（无尽任务有效终点）
-        roundBoundaries: [], // {label, t(绝对), droneCum, spawnedCum} 每轮结算时的快照
+        roundBoundaries: [], // {label, t(绝对), droneCum, spawnedCum, eventCum} 每轮结算时的快照
         netLastSeen: {},     // 连接编号 -> 最后一次网络诊断行的绝对时刻（保留，仅不再用于客机时长）
         lastClientJoinTime: null, // 最晚的外部玩家实体创建时刻（绝对值）
-        minuteBuckets: [],   // 按分钟切片：[{drones, spawn}]，用于生成 / 敌人速率趋势
+        minuteBuckets: [],   // 按分钟切片：[{drones, spawn, spawnEvents, liveSum, liveMax, liveSamples, liveEnd}]，用于生成 / 敌人速率趋势
         endT:       null,
+        explicitWaves: [],   // v2.0：显式 wave 边界
+        inferredWaves: [],   // v2.0：推断 wave 边界
       };
     }
 
@@ -347,7 +782,7 @@ WF.ArbitrationParser = (function () {
     function bumpMinute(t, field, delta) {
       const idx = Math.floor((t - m.startedT) / 60);
       if (idx < 0) return;
-      if (!m.minuteBuckets[idx]) m.minuteBuckets[idx] = { drones: 0, spawn: 0, liveEnd: null };
+      if (!m.minuteBuckets[idx]) m.minuteBuckets[idx] = { drones: 0, spawn: 0, spawnEvents: 0, liveSum: 0, liveMax: 0, liveSamples: 0, liveEnd: null };
       m.minuteBuckets[idx][field] += delta;
     }
     // 记录某个时间点所在分钟切片"末尾时刻"的活跃监控数快照（同一分钟内反复覆盖，
@@ -355,23 +790,50 @@ WF.ArbitrationParser = (function () {
     function setMinuteLive(t, live) {
       const idx = Math.floor((t - m.startedT) / 60);
       if (idx < 0) return;
-      if (!m.minuteBuckets[idx]) m.minuteBuckets[idx] = { drones: 0, spawn: 0, liveEnd: null };
+      if (!m.minuteBuckets[idx]) m.minuteBuckets[idx] = { drones: 0, spawn: 0, spawnEvents: 0, liveSum: 0, liveMax: 0, liveSamples: 0, liveEnd: null };
       m.minuteBuckets[idx].liveEnd = live;
+      m.minuteBuckets[idx].liveSum += live;
+      m.minuteBuckets[idx].liveMax = Math.max(m.minuteBuckets[idx].liveMax, live);
+      m.minuteBuckets[idx].liveSamples++;
     }
 
-    // 从 OnAgentCreated 行采样：累计生成峰值 + 场上活跃敌人数
-    function sampleAgentLine(line, t) {
+    // v2.0：从 OnAgentCreated 行采样，写入事件流，并更新累计/分钟统计
+    function sampleAgentLine(line, t, typeHint) {
       const sp = RE.agentSpawned.exec(line);
+      const mt = RE.agentMonitoredTick.exec(line);
+      const ap = RE.agentPath.exec(line);
+      const agentPath = ap ? ap[1] : null;
+      const type = classifyAgent(agentPath, typeHint);
+
+      const event = {
+        t,
+        relT: t - m.startedT,
+        type,
+        agentPath,
+        spawned: sp ? parseInt(sp[1], 10) : null,
+        live: mt ? parseInt(mt[1], 10) : null,
+        roundIndex: null,
+        batchId: null,
+        waveId: null,
+      };
+      m.eventStream.push(event);
+
+      if (type !== 'drone' && type !== 'companion') {
+        m.enemyEventCount++;
+        bumpMinute(t, 'spawnEvents', 1);
+      }
+
       if (sp) {
         const v = parseInt(sp[1], 10);
         if (v > m.maxSpawned) { bumpMinute(t, 'spawn', v - m.maxSpawned); m.maxSpawned = v; }
       }
-      const mt = RE.agentMonitoredTick.exec(line);
-      if (mt) {
+      if (mt && type !== 'companion') {
         const live = parseInt(mt[1], 10);
         m.liveSamples.push({ t: t - m.startedT, live });
         setMinuteLive(t, live);
       }
+
+      return event;
     }
 
     function applyName(raw) {
@@ -389,7 +851,13 @@ WF.ArbitrationParser = (function () {
     }
 
     function recordRoundBoundary(label, t) {
-      m.roundBoundaries.push({ label, t, droneCum: m.droneTimes.length, spawnedCum: m.maxSpawned });
+      m.roundBoundaries.push({
+        label,
+        t,
+        droneCum: m.droneTimes.length,
+        spawnedCum: m.maxSpawned,
+        eventCum: m.enemyEventCount,
+      });
     }
 
     function finalize(fallbackEndT, viaEnding) {
@@ -423,25 +891,79 @@ WF.ArbitrationParser = (function () {
         // 权威节点库解析：节点名 / 星球 / 类型 / 派系（优先，回退到日志解析）
         const resolved = resolveNode(m.nodeId, m);
 
-        // 分节点生息效率基准：若已加载到该节点的基准生息速率（见
-        // WF.ArbNodeBaseline，数据来源见 build_arb_baseline.py），用它替代
-        // 默认的 600/时，不同节点天然产出节奏不同、按节点比较更公平；
-        // 查不到时退回默认基准。
+        // 分节点生息效率基准
         const nodeBase = (typeof WF !== 'undefined' && WF.ArbNodeBaseline)
           ? WF.ArbNodeBaseline.lookup(m.nodeId) : null;
         const essBaseline = nodeBase ? nodeBase.perHour : ESS_BASELINE;
 
-        // 提前计算分布数据，以便从中抽取清图/综合效率评分维度
+        // 事件流后处理：回填 roundIndex、batchId、waveId
+        let roundIdx = 0;
+        for (const e of m.eventStream) {
+          while (roundIdx < m.roundBoundaries.length && e.t > m.roundBoundaries[roundIdx].t) roundIdx++;
+          e.roundIndex = roundIdx;
+        }
+        const droneBatches = clusterDroneBatches(m.droneTimes, DRONE_BATCH_GAP);
+        let batchId = 0, eventIdx = 0;
+        for (let i = 0; i < droneBatches.length; i++) {
+          const batch = droneBatches[i];
+          for (const t of batch) {
+            while (eventIdx < m.eventStream.length && m.eventStream[eventIdx].t < t) eventIdx++;
+            if (eventIdx < m.eventStream.length && m.eventStream[eventIdx].t === t && m.eventStream[eventIdx].type === 'drone') {
+              m.eventStream[eventIdx].batchId = i;
+            }
+          }
+        }
+        // wave 探测
+        const inferredWaves = inferWaveBoundaries(m.eventStream);
+        m.inferredWaves = inferredWaves;
+
+        // 分布数据
+        const relTimes = m.droneTimes.map((x) => x - m.startedT);
         const liveDistData  = clearEffDist(m.liveSamples);
         const perMinData   = perMinuteTrend(m.minuteBuckets, duration);
+        const roundStats = perRoundStats(m.roundBoundaries, m.eventStream, m.startedT, m.liveSamples);
+        const vacuumData = vacuumDist(relTimes);
+        const consecutiveData = consecutiveDist(m.droneTimes);
+        const intraBatchData = intraBatchGapDist(relTimes);
+        const interBatchData = interBatchGapDist(relTimes);
+        const pressureCorr = pressureDroneCorrelation(m.liveSamples, relTimes);
+
+        // 高压恢复事件
+        const recoveryEvents = [];
+        if (m.liveSamples && m.liveSamples.length >= 2) {
+          let inHigh = false, highStart = null;
+          for (let i = 0; i < m.liveSamples.length; i++) {
+            const s = m.liveSamples[i];
+            if (!inHigh && s.live >= 10) { inHigh = true; highStart = s.t; }
+            else if (inHigh && s.live < 10) { inHigh = false; recoveryEvents.push(s.t - highStart); }
+          }
+        }
 
         const essEff   = essenceEfficiency(fullBuffPerHour, essBaseline);
         const clearEff = clearEfficiency(liveDistData ? liveDistData.geq10Pct : null);
         const clearCompEff = clearComprehensiveEfficiency(m.liveSamples, liveDistData);
-        const score    = computeScore(essEff, clearEff, clearCompEff);
+        const rhythmEff = rhythmStability(roundStats, interBatchData, m.liveSamples);
+        const score    = computeScore(essEff, clearEff, clearCompEff, rhythmEff);
 
-        // 无人机相对时刻（供分布/表格）
-        const relTimes = m.droneTimes.map((x) => x - m.startedT);
+        const cei = clearEfficiencyIndex(clearEff, recoveryEvents, m.maxSpawned, perMinData ? perMinData.totalCleared : null);
+        const anomalies = detectAnomalies(perMinData, roundStats, interBatchData);
+
+        // 无人机生成时的场上压力分布 + 散点数据
+        const droneAtPressure = { low: 0, mid: 0, high: 0, total: 0 };
+        const dronePressurePoints = [];
+        for (const e of m.eventStream) {
+          if (e.type !== 'drone' || e.live == null) continue;
+          droneAtPressure.total++;
+          if (e.live < 5) droneAtPressure.low++;
+          else if (e.live < 10) droneAtPressure.mid++;
+          else droneAtPressure.high++;
+          dronePressurePoints.push({ live: e.live, relT: e.relT });
+        }
+        const droneAtPressurePct = droneAtPressure.total > 0 ? {
+          low: droneAtPressure.low / droneAtPressure.total * 100,
+          mid: droneAtPressure.mid / droneAtPressure.total * 100,
+          high: droneAtPressure.high / droneAtPressure.total * 100,
+        } : null;
 
         // 生息细分（对齐"无人机项 + 轮次奖励期望"口径）
         const droneFullBuff  = fromDrones * FULL_BUFF_MUL;   // 无人机期望生息（满 Buff）
@@ -449,36 +971,41 @@ WF.ArbitrationParser = (function () {
         const roundExtra     = rounds * 0.3;                 // 轮次额外期望（10%×3）
 
         // 最后客机时间：任务结束时间 − 最后一个外部玩家实体创建时刻。
-        // 测量的是"全员到齐后一起玩的有效时长"。
         const lastClientDuration = (m.lastClientJoinTime != null && m.lastClientJoinTime > m.startedT)
           ? (hostEnd - m.lastClientJoinTime) : null;
 
-        // 每轮明细：按 roundBoundaries 做相邻差分，得到每轮新增无人机/敌人生成与对应期望生息
+        // 每轮明细：按 roundBoundaries 做相邻差分
         const roundDetail = [];
-        let prevT = 0, prevDrone = 0, prevSpawn = 0;
+        let prevT = 0, prevDrone = 0, prevSpawn = 0, prevEvent = 0;
         m.roundBoundaries.forEach((b, i) => {
           const relT = b.t - m.startedT;
           const segDrone = b.droneCum - prevDrone;
           const segSpawn = b.spawnedCum - prevSpawn;
+          const segEvent = (b.eventCum != null ? b.eventCum : 0) - prevEvent;
           const segEssence = segDrone * BASE_DROP * FULL_BUFF_MUL + EXTRA_PER_ROUND;
           roundDetail.push({
             index: i + 1, label: b.label,
             durSec: relT - prevT, atSec: relT,
-            drones: segDrone, spawned: segSpawn,
-            sparsity: segDrone > 0 ? segSpawn / segDrone : null,
+            drones: segDrone, spawned: segSpawn, spawnEvents: segEvent,
+            liveAvg: roundStats[i] ? roundStats[i].liveAvg : null,
+            liveMax: roundStats[i] ? roundStats[i].liveMax : null,
+            droneGapAvg: roundStats[i] ? roundStats[i].droneGapAvg : null,
+            droneGapMax: roundStats[i] ? roundStats[i].droneGapMax : null,
+            highPressurePct: roundStats[i] ? roundStats[i].highPressurePct : null,
             essence: segEssence,
           });
-          prevT = relT; prevDrone = b.droneCum; prevSpawn = b.spawnedCum;
+          prevT = relT; prevDrone = b.droneCum; prevSpawn = b.spawnedCum; prevEvent = b.eventCum || 0;
         });
-        // 末段（未结算的尾巴，仍计入无人机产出但没有轮次保底）
+        // 末段（未结算的尾巴）
         const tailDrone = droneCount - prevDrone;
         const tailSpawn = m.maxSpawned - prevSpawn;
+        const tailEvent = m.enemyEventCount - prevEvent;
         if (tailDrone > 0 || tailSpawn > 0) {
           roundDetail.push({
             index: roundDetail.length + 1, label: '未结算尾段',
             durSec: duration - prevT, atSec: duration,
-            drones: tailDrone, spawned: tailSpawn,
-            sparsity: tailDrone > 0 ? tailSpawn / tailDrone : null,
+            drones: tailDrone, spawned: tailSpawn, spawnEvents: tailEvent,
+            liveAvg: null, liveMax: null, droneGapAvg: null, droneGapMax: null, highPressurePct: null,
             essence: tailDrone * BASE_DROP * FULL_BUFF_MUL,
             incomplete: true,
           });
@@ -491,24 +1018,26 @@ WF.ArbitrationParser = (function () {
           duration,
           lastClientDuration,
           firstFrameT:     m.firstFrameT,
-          frameDuration,        // 首帧 → 系统结算（尾帧）时差
-          startDate,            // 任务开始的真实时钟时间
-          endDate,              // 系统结算时刻（真实时钟时间）
-          firstFrameDate,       // 首帧时刻（真实时钟时间）
+          frameDuration,
+          startDate,
+          endDate,
+          firstFrameDate,
           node:            resolved.node,
           planet:          resolved.planet,
           nodeId:          m.nodeId,
           faction:         resolved.faction,
           factionZh:       resolved.faction,
-          name:            resolved.node,               // 兼容旧字段
+          name:            resolved.node,
           missionType:     resolved.typeKey,
           missionTypeName: resolved.typeName,
           droneCount,
           drones:          relTimes,
           maxSpawned:      m.maxSpawned,
+          enemyEventCount: m.enemyEventCount,
           sparsity,
           rounds,
           roundDetail,
+          roundStats,
           dronesPerMin,
           complete:        viaEnding || m.lastRoundT != null,
           essence: {
@@ -517,18 +1046,34 @@ WF.ArbitrationParser = (function () {
             droneFullBuff, roundGuarantee, roundExtra, buffMul: FULL_BUFF_MUL,
           },
           dist: {
-            vacuum:      vacuumDist(relTimes),
-            liveDist:  liveDistData,
-            consecutive: consecutiveDist(m.droneTimes),
+            vacuum:      vacuumData,
+            liveDist:    liveDistData,
+            consecutive: consecutiveData,
+            intraBatch:  intraBatchData,
+            interBatch:  interBatchData,
             perMinute:   perMinData,
           },
-          eff: {
-            essence: essEff,    // 生息效率 %（perHour / baseline × 100，线性，可>100）
-            clear:   clearEff,  // 清图效率 %（100 − geq10Pct；null = 采样不足）
-            clearComp: clearCompEff, // 综合效率 %（活跃敌人分布加权平均；null = 采样不足）
+          cross: {
+            pressureCorrelation: pressureCorr,
+            clearEfficiencyIndex: cei,
+            droneAtPressurePct,
+            dronePressurePoints,
+            recoveryEvents,
+            recoveryAvg: recoveryEvents.length ? avg(recoveryEvents) : (m.liveSamples.some(s => s.live >= 10) ? null : 0),
           },
-          essBaseline,                          // 本局评分实际采用的生息效率基准（/时）
-          essBaselineIsNode: !!nodeBase,         // 是否命中了节点专属基准（否则为默认基准兜底）
+          anomalies,
+          waves: {
+            inferred: inferredWaves,
+            count: inferredWaves.length,
+          },
+          eff: {
+            essence: essEff,
+            clear:   clearEff,
+            clearComp: clearCompEff,
+            rhythm:  rhythmEff,
+          },
+          essBaseline,
+          essBaselineIsNode: !!nodeBase,
           score,
           scoreTier: scoreTierName(score),
           squadInfo: sq.getSquadInfo(),
@@ -548,25 +1093,14 @@ WF.ArbitrationParser = (function () {
         let nm = null;
         if (line.indexOf('ThemedSquadOverlay.lua') !== -1) {
           const r = RE.missionName.exec(line) || RE.cachedName.exec(line) || RE.voteName.exec(line);
-          // 国际化三重保险：
-          // 1) 匹配中文 "- 仲裁" 或英文 "- Arbitration"（ARB_NAME_MARK 正则）
-          // 2) 匹配语言无关的 _EliteAlert 节点 ID 后缀（ARB_ELITE_ALERT 正则）
-          // 这样无论客户端语言如何，都能正确触发仲裁解析。
+          // 国际化三重保险
           if (r && (ARB_NAME_MARK.test(r[1]) || ARB_ELITE_ALERT.test(r[1]))) nm = r[1].trim();
           // 括号形式的节点 ID 兜底
           const v = RE.nodeIdParen.exec(line);
           if (v && m) { if (!m.nodeId) m.nodeId = v[1]; }
         }
         if (nm) {
-          /* 关键修复：无尽仲裁任务进行到一半时，游戏邀请（GameInviteReceived）等
-             与任务无关的事件会让客户端重新广播一次同样的 "Cached mission name"/
-             "Mission name" 行——节点/原始文本跟当前任务完全一致，不是真的换了任务。
-             之前这里逢"任务名行"必 finalize+newMission，会把一场连续 36+ 分钟的
-             仲裁从中间腰斩成两截：前半截被错误地当成"任务结束"提前结算（时长只有
-             真实结算时间的一部分），后半截又从 0 轮开始重新计数——玩家在客户端看到
-             的系统结算时间因此对不上，而且"全队在场时间"这类需要跨越整场任务的
-             统计也会因为被切段而算错/算不出。这里判断节点 ID（或原始文本兜底）
-             跟当前任务相同就直接忽略，不触发 finalize。 */
+          // 关键修复：无尽仲裁任务进行到一半时，重复任务名行不触发 finalize
           const dupNodeId = RE.nodeIdParen.exec(line);
           const sameNode = m && m.startedT != null && dupNodeId && m.nodeId && dupNodeId[1] === m.nodeId;
           const sameRaw  = m && m.startedT != null && m.rawName === nm;
@@ -589,9 +1123,7 @@ WF.ArbitrationParser = (function () {
           }
         }
 
-        // 首帧：HUD REDUX 首次渲染（载入完成、UI 就绪的实际时刻），只记第一次。
-        // 实测这行经常出现在 SS_STARTED 前一两秒（加载完成先于状态机切换），
-        // 必须放在 startedT==null 的提前 return 之前检测，否则会被直接漏掉。
+        // 首帧：HUD REDUX 首次渲染
         if (m.firstFrameT == null && line.indexOf(HUD_REDUX) !== -1) {
           m.firstFrameT = t;
         }
@@ -607,12 +1139,12 @@ WF.ArbitrationParser = (function () {
         if (RE.droneCreated.test(line)) {
           m.droneTimes.push(t);
           bumpMinute(t, 'drones', 1);
-          sampleAgentLine(line, t);
+          sampleAgentLine(line, t, 'drone');
           return;
         }
-        // 其它单位生成：活跃敌人数采样 + Spawned 峰值
+        // 其它单位生成：活跃敌人数采样 + Spawned 峰值 + 事件流
         if (line.indexOf('OnAgentCreated') !== -1) {
-          sampleAgentLine(line, t);
+          sampleAgentLine(line, t, null);
           return;
         }
         // 队员网络连接诊断
@@ -626,7 +1158,7 @@ WF.ArbitrationParser = (function () {
           }
           return;
         }
-        // 外部玩家实体创建事件（id>0 = 非主机）—— 记录最晚时刻
+        // 外部玩家实体创建事件（id>0 = 非主机）
         if (line.indexOf('CreatePlayerForClient') !== -1) {
           const cc = RE.clientCreated.exec(line);
           if (cc) {
@@ -668,7 +1200,6 @@ WF.ArbitrationParser = (function () {
           m.endT = t;
           finalize(t, true);
         }
-        // 注意：不再用 EndOfMatch.lua:Initialize 结束任务（无尽任务每轮都会触发）
       },
 
       finish(lastT) {
@@ -679,5 +1210,14 @@ WF.ArbitrationParser = (function () {
     };
   }
 
-  return { create, computeScore, scoreTierName, essenceEfficiency, clearEfficiency, clearComprehensiveEfficiency };
+  return {
+    create,
+    computeScore,
+    scoreTierName,
+    essenceEfficiency,
+    clearEfficiency,
+    clearComprehensiveEfficiency,
+    rhythmStability,
+    clusterDroneBatches,
+  };
 })();

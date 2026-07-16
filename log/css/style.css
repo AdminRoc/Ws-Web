@@ -746,6 +746,199 @@ body.profile-active #detail-wrap {
 .arb-scale-tier { width: 56px; flex-shrink: 0; color: var(--c-gold); letter-spacing: 1px; }
 .arb-scale-desc { color: var(--c-text2); letter-spacing: 1px; }
 
+/* ───────────────── 仲裁视图 v2.0 新增样式 ───────────────── */
+
+/* 页面头部 */
+.arb-header { margin-bottom: 18px; }
+.arb-header-title {
+  font-size: 22px; letter-spacing: 2px; color: var(--c-white);
+  text-shadow: 0 0 10px rgba(95,208,232,0.35);
+}
+.arb-header-sub {
+  margin-top: 6px; font-size: 13px; color: var(--c-teal); letter-spacing: 1px;
+}
+.arb-header-line {
+  margin-top: 12px; height: 1px;
+  background: linear-gradient(90deg, rgba(95,208,232,0.7), rgba(255,0,170,0.35), transparent);
+  box-shadow: 0 0 8px rgba(95,208,232,0.3);
+}
+
+/* 综合评分区 */
+.arb-score-wrap {
+  display: flex; align-items: flex-start; gap: 24px; margin-bottom: 18px; flex-wrap: wrap;
+}
+.arb-score-badge {
+  min-width: 120px; height: 120px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: var(--r-lg); border: 2px solid var(--c-border);
+  background: rgba(13, 16, 27, 0.85); gap: 2px;
+  transition: box-shadow var(--ease-med);
+}
+.arb-score-badge:hover {
+  box-shadow: 0 0 28px rgba(95,208,232,0.18);
+}
+/* 呼吸辉光动画 */
+@keyframes breatheGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(95,208,232,0.12); }
+  50% { box-shadow: 0 0 32px rgba(95,208,232,0.22); }
+}
+.grade-a .arb-score-badge {
+  animation: breatheGlow 3s ease-in-out infinite;
+}
+.grade-s .arb-score-badge {
+  animation: breatheGlow 2.4s ease-in-out infinite;
+  border-color: rgba(65, 255, 142, 0.55);
+}
+.arb-eff-box-score {
+  flex: 1; min-width: 260px;
+  background: rgba(13, 16, 27, 0.75); border: 1px solid var(--c-border);
+  border-radius: var(--r-md); padding: 16px 20px;
+}
+
+/* 时间元信息网格 */
+.arb-meta-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px;
+}
+.arb-meta-cell {
+  padding: 14px 16px; border-radius: var(--r-md);
+  display: flex; flex-direction: column; gap: 6px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.arb-meta-cell:hover {
+  border-color: rgba(95,208,232,0.45);
+  box-shadow: 0 0 16px rgba(95,208,232,0.1);
+}
+.arb-meta-label { font-size: 12px; color: var(--c-text2); letter-spacing: 1px; }
+.arb-meta-value { font-size: 15px; color: var(--c-white); font-family: var(--f-px); letter-spacing: .5px; }
+
+/* 章节标题 */
+.arb-section { margin-bottom: 18px; }
+.arb-section > .section-title {
+  font-size: 16px; letter-spacing: 2px; color: var(--c-white);
+  margin-bottom: 12px; text-shadow: 0 0 8px rgba(95,208,232,0.3);
+}
+
+/* ECharts 图表卡片 */
+.arb-chart-card {
+  position: relative; background: rgba(8, 10, 20, 0.82);
+  border: 1px solid rgba(95,208,232,0.28); border-radius: var(--r-md); padding: 12px 14px;
+  box-shadow: 0 0 0 1px rgba(255,61,240,0.05) inset, 0 0 18px rgba(33,180,255,0.06);
+  overflow: hidden;
+}
+.arb-chart-card::before {
+  content: ''; position: absolute; top: 0; left: -30%; width: 30%; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(95,208,232,0.9), transparent);
+  animation: cyScan 3.6s linear infinite;
+}
+.arb-chart-hd {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+}
+.arb-chart-title {
+  font-size: 14px; letter-spacing: 1px; color: var(--c-white); text-transform: uppercase;
+  text-shadow: 0 0 6px rgba(95,208,232,0.35);
+}
+.arb-chart-tip {
+  width: 16px; height: 16px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--c-teal);
+  border: 1px solid rgba(95,208,232,0.4);
+  cursor: help;
+}
+.arb-chart-body { width: 100%; height: 260px; }
+
+/* 异常诊断 */
+.arb-anomaly-list {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.arb-anomaly-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: var(--r-md);
+  background: rgba(13, 16, 27, 0.75); border: 1px solid var(--c-border);
+  font-size: 13px; letter-spacing: .5px;
+}
+.arb-anomaly-row.warning {
+  border-left: 3px solid var(--c-gold);
+  background: linear-gradient(90deg, rgba(255,182,72,0.08), rgba(13,16,27,0.75));
+}
+.arb-anomaly-row.danger {
+  border-left: 3px solid var(--c-red);
+  background: linear-gradient(90deg, rgba(255,80,80,0.08), rgba(13,16,27,0.75));
+}
+@keyframes anomalyPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .6; }
+}
+.arb-anomaly-icon {
+  font-size: 15px; animation: anomalyPulse 1.8s ease-in-out infinite;
+}
+.arb-anomaly-row.warning .arb-anomaly-icon { color: var(--c-gold); text-shadow: 0 0 8px rgba(255,182,72,0.5); }
+.arb-anomaly-row.danger .arb-anomaly-icon { color: var(--c-red); text-shadow: 0 0 8px rgba(255,80,80,0.5); }
+.arb-anomaly-text { color: var(--c-text); }
+
+/* 批次分析分栏 */
+.arb-batch-split { padding: 14px 16px; }
+.arb-batch-body { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.arb-batch-col { display: flex; flex-direction: column; gap: 6px; }
+.arb-batch-subtitle {
+  font-size: 13px; color: var(--c-teal); letter-spacing: 1px; margin-bottom: 4px;
+}
+.arb-bar-row.small { margin: 3px 0; }
+.arb-bar-row.small .arb-bar-label { width: 56px; font-size: 11px; }
+.arb-bar-row.small .arb-bar-pct { width: 42px; font-size: 11px; }
+.arb-bar-fill.cy-fill.magenta {
+  background: linear-gradient(90deg, #ff5fc0, #ff00aa, #a86bff);
+  box-shadow: 0 0 8px rgba(255,0,170,0.5);
+}
+
+/* 交叉分析 */
+.arb-cross-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+.arb-cross-cell {
+  padding: 14px 16px; border-radius: var(--r-md);
+  display: flex; flex-direction: column; gap: 8px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.arb-cross-cell:hover {
+  border-color: rgba(255,0,170,0.35);
+  box-shadow: 0 0 14px rgba(255,0,170,0.08);
+}
+.arb-cross-cell .has-tip { cursor: help; border-bottom: 1px dashed rgba(150,160,190,0.4); width: fit-content; }
+.arb-cross-value { font-size: 17px; color: var(--c-white); font-family: var(--f-px); letter-spacing: .5px; }
+
+/* 进度条填充动画 */
+@keyframes fillBar {
+  from { width: 0; }
+}
+.arb-eff-fill {
+  animation: fillBar 1s ease-out forwards;
+}
+
+/* 评分说明节奏稳定性高亮 */
+.arb-def-key.has-tip {
+  cursor: help; border-bottom: 1px dashed rgba(95,208,232,0.5);
+}
+
+/* 通用 tooltip 光标 */
+.has-tip[title] { cursor: help; }
+
+/* 响应式 */
+@media (max-width: 900px) {
+  .arb-meta-grid { grid-template-columns: repeat(2, 1fr); }
+  .arb-cross-grid { grid-template-columns: 1fr; }
+  .arb-batch-body { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .arb-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .arb-score-wrap { flex-direction: column; align-items: stretch; }
+  .arb-score-badge { align-self: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .arb-chart-card::before, .grade-a .arb-score-badge, .grade-s .arb-score-badge, .arb-anomaly-icon, .arb-eff-fill {
+    animation: none;
+  }
+}
+
 /* ================= 主页（index.html） ================= */
 .page-home body, body.page-home { /* 主页无需 padding-top 覆盖 */}
 
@@ -878,14 +1071,18 @@ body.profile-active #detail-wrap {
   background: var(--rainbow);
   background-size: var(--rainbow-width) auto;
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: heroGlow 3s linear infinite, titleShift 12s linear infinite;
+  animation: heroGlow 2.5s ease-in-out infinite, titleShift 3s linear infinite;
+  filter:
+    drop-shadow(0 0 22px rgba(95, 208, 232, 0.7))
+    drop-shadow(0 0 50px rgba(168, 107, 255, 0.55))
+    drop-shadow(0 0 90px rgba(217, 70, 239, 0.38));
 }
 @keyframes heroGlow {
-  0%   { filter: drop-shadow(0 0 24px rgba(65,255,142,0.55)) drop-shadow(0 0 60px rgba(65,255,142,0.18)); }
-  25%  { filter: drop-shadow(0 0 28px rgba(69,200,255,0.60)) drop-shadow(0 0 70px rgba(69,200,255,0.2)); }
-  50%  { filter: drop-shadow(0 0 30px rgba(168,107,255,0.65)) drop-shadow(0 0 80px rgba(168,107,255,0.22)); }
-  75%  { filter: drop-shadow(0 0 26px rgba(255,122,95,0.58)) drop-shadow(0 0 65px rgba(255,122,95,0.18)); }
-  100% { filter: drop-shadow(0 0 24px rgba(65,255,142,0.55)) drop-shadow(0 0 60px rgba(65,255,142,0.18)); }
+  0%   { filter: drop-shadow(0 0 22px rgba(95, 208, 232, 0.7)) drop-shadow(0 0 50px rgba(168, 107, 255, 0.55)) drop-shadow(0 0 90px rgba(217, 70, 239, 0.38)); }
+  25%  { filter: drop-shadow(0 0 28px rgba(69, 200, 255, 0.85)) drop-shadow(0 0 62px rgba(95, 208, 232, 0.65)) drop-shadow(0 0 108px rgba(168, 107, 255, 0.48)); }
+  50%  { filter: drop-shadow(0 0 34px rgba(168, 107, 255, 0.95)) drop-shadow(0 0 74px rgba(217, 70, 239, 0.72)) drop-shadow(0 0 128px rgba(95, 208, 232, 0.52)); }
+  75%  { filter: drop-shadow(0 0 28px rgba(255, 95, 192, 0.85)) drop-shadow(0 0 62px rgba(69, 200, 255, 0.65)) drop-shadow(0 0 108px rgba(168, 107, 255, 0.48)); }
+  100% { filter: drop-shadow(0 0 22px rgba(95, 208, 232, 0.7)) drop-shadow(0 0 50px rgba(168, 107, 255, 0.55)) drop-shadow(0 0 90px rgba(217, 70, 239, 0.38)); }
 }
 @keyframes titleShift {
   0%   { background-position: 0% center; }
@@ -898,11 +1095,13 @@ body.profile-active #detail-wrap {
   background: var(--rainbow);
   background-size: var(--rainbow-width) 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: heroDescFlow 10s linear infinite;
+  animation: heroDescFlow 4s linear infinite;
   filter:
-    drop-shadow(0 0 6px rgba(95, 208, 232, 0.28))
-    drop-shadow(0 0 14px rgba(168, 107, 255, 0.22))
-    drop-shadow(0 0 28px rgba(168, 107, 255, 0.12));
+    drop-shadow(0 0 10px rgba(95, 208, 232, 0.75))
+    drop-shadow(0 0 24px rgba(168, 107, 255, 0.68))
+    drop-shadow(0 0 46px rgba(168, 107, 255, 0.48))
+    drop-shadow(0 0 78px rgba(69, 200, 255, 0.32))
+    drop-shadow(0 0 120px rgba(217, 70, 239, 0.22));
 }
 @keyframes heroDescFlow { from { background-position-x: 0; } to { background-position-x: calc(-1 * var(--rainbow-width)); } }
 .hero-nav-grid {
@@ -1022,10 +1221,16 @@ body.profile-active #detail-wrap {
     0 0 10px rgba(255,100,150,.38),
     0 0 22px rgba(99,102,241,.32),
     0 0 38px rgba(0,255,220,.18);
-  animation: rbHueRotate 1.25s linear infinite;
+  animation: rbHueRotate 1s linear infinite;
   transition: transform .4s cubic-bezier(.22,.68,0,1.2), box-shadow .4s ease;
 }
 .hero-cta-master .cta-text {
+  background: linear-gradient(115deg,
+    rgba(255,60,110,.9) 0%, rgba(255,140,0,.85) 20%, rgba(255,215,0,.82) 35%,
+    rgba(0,255,220,.85) 55%, rgba(99,102,241,.9) 78%, rgba(217,70,239,.9) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: rbHueRotate 1s linear infinite;
 }
 .hero-cta-master:hover {
   transform: translateY(-3px) scale(1.05);
@@ -1037,7 +1242,11 @@ body.profile-active #detail-wrap {
 }
 .hero-cta-hub.expanded .hero-cta-master {
   transform: translateY(-22px) scale(1.02);
-  animation: ctaPulse 3.5s ease-in-out infinite;
+  animation: rbHueRotate 1s linear infinite, ctaPulse 3.5s ease-in-out infinite;
+  transition: transform .4s cubic-bezier(.22,.68,0,1.2);
+}
+.hero-cta-hub.expanded .hero-cta-master .cta-text {
+  animation: rbHueRotate 1s linear infinite;
 }
 /* 次级按钮：与主按钮同材质，直角矩形，自适应宽高 */
 .hero-cta-satellite {
@@ -2027,6 +2236,24 @@ body.profile-active #detail-wrap {
 @media (prefers-reduced-motion: reduce) {
   .cyber-nav-ring { animation: none; }
   .cyber-nav-btn:hover, .cyber-nav.open .cyber-nav-btn { transform: scale(1.05); }
+
+  .hero-title,
+  .hero-desc,
+  .hero-cta,
+  .hero-cta::before,
+  .hero-cta .cta-text,
+  .hero-cta:hover,
+  .hero-cta:hover .cta-text,
+  .hero-cta-master,
+  .hero-cta-master:hover,
+  .hero-cta-hub.expanded .hero-cta-master,
+  .hero-cta-hub.expanded .hero-cta-master:hover,
+  .hero-cta-satellite,
+  .hero-cta-satellite:hover,
+  .hero-cta-satellite .sat-label,
+  .hero-cta-satellite:hover .sat-label {
+    animation: none;
+  }
 }
 
 /* ========================================================================
@@ -2232,7 +2459,7 @@ body.profile-active #detail-wrap {
 /* SVG 渐变定义由 JS 在渲染时注入到 svg 的 <defs> 中，避免每个 SVG 重复维护 */
 
 @keyframes rbHueRotate {
-  0%   { filter: hue-rotate(0deg)   brightness(.95); }
-  50%  { filter: hue-rotate(180deg) brightness(1.1);  }
-  100% { filter: hue-rotate(360deg) brightness(.95); }
+  0%   { filter: hue-rotate(0deg)   brightness(.95) saturate(1.25); }
+  50%  { filter: hue-rotate(180deg) brightness(1.2) saturate(1.4); }
+  100% { filter: hue-rotate(360deg) brightness(.95) saturate(1.25); }
 }

@@ -1,5 +1,7 @@
 /* 通用的"查看详细"折叠表格——按轮/波逐条列出每段的用时、产出计数与敌人生成数。
- * 仲裁与通用两个子模块共用同一套交互与视觉：默认折叠，点击"查看详细"展开表格。 */
+ * 仲裁与通用两个子模块共用同一套交互与视觉：默认折叠，点击"查看详细"展开表格。
+ * v2.0 升级：支持 extraColumns 参数，允许调用方追加任意数量的列。
+ */
 window.WF = window.WF || {};
 
 WF.roundDetail = (function () {
@@ -14,8 +16,10 @@ WF.roundDetail = (function () {
 
   /**
    * renderToggle(container, rows, opts)
-   * rows: [{ label, durSec, countA, countB, sparsity, essence, incomplete }]
-   * opts: { countALabel, countBLabel, showEssence, showSparsity, footnote, footnoteTip }
+   * rows: [{ label, durSec, countA, countB, sparsity, essence, incomplete, ...任意字段 }]
+   * opts: { countALabel, countBLabel, showEssence, showSparsity,
+   *         extraColumns: [{ key, label, fmt }],  // v2.0 新增
+   *         footnote, footnoteTip }
    */
   function renderToggle(container, rows, opts) {
     if (!rows || !rows.length) return;
@@ -30,6 +34,7 @@ WF.roundDetail = (function () {
     const cols = ['轮次 / 波次', '用时', opts.countALabel || '数量'];
     if (opts.countBLabel) cols.push(opts.countBLabel);
     if (opts.showSparsity) cols.push('负荷比');
+    if (opts.extraColumns) opts.extraColumns.forEach((c) => cols.push(c.label));
     if (opts.showEssence) cols.push('期望生息');
     const thead = U.el('thead');
     const trh = U.el('tr');
@@ -45,6 +50,13 @@ WF.roundDetail = (function () {
       tr.appendChild(U.el('td', 'rd-td-num', String(r.countA != null ? r.countA : '—')));
       if (opts.countBLabel) tr.appendChild(U.el('td', 'rd-td-num', String(r.countB != null ? r.countB : '—')));
       if (opts.showSparsity) tr.appendChild(U.el('td', 'rd-td-num', r.sparsity != null ? r.sparsity.toFixed(2) : '—'));
+      if (opts.extraColumns) {
+        opts.extraColumns.forEach((c) => {
+          const raw = r[c.key];
+          const val = c.fmt ? c.fmt(raw) : (raw != null ? String(raw) : '—');
+          tr.appendChild(U.el('td', 'rd-td-num', val));
+        });
+      }
       if (opts.showEssence) tr.appendChild(U.el('td', 'rd-td-num', r.essence != null ? r.essence.toFixed(2) : '—'));
       tbody.appendChild(tr);
     });
