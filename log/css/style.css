@@ -1280,25 +1280,30 @@ body.profile-active #detail-wrap {
   opacity: 0;
   transform: translate3d(-50%, 0, 0) scale(0.5);
   pointer-events: none;
+  /* 辉光常驻（非过渡触发），过渡只跑 transform/opacity ——
+     filter 过渡会强制逐帧重绘，是展开掉帧的主因 */
+  filter: drop-shadow(0 0 10px rgba(95,208,232,.22));
   transition:
     opacity 0.35s cubic-bezier(.22,.68,0,1),
     transform 0.75s cubic-bezier(.18,.84,.26,1.18),
     filter 0.3s ease;
   will-change: transform, opacity;
 }
-/* 待机描边：一段青→品红的扫掠弧循环流转（与分析器顶栏待机态一致） */
+/* 彩虹描边层常驻：待机时低透明度 = 幽暗彩虹描边；
+   hover 只调透明度点亮，不做背景切换（背景不可过渡，硬切会"闪"） */
 .hero-cta-satellite::before {
   content: ''; position: absolute; inset: 0; border-radius: 3px; z-index: 0;
   background: conic-gradient(from var(--tab-ang),
-    transparent 0deg, transparent 250deg,
-    rgba(95,208,232,.9) 300deg, rgba(255,61,240,.9) 335deg, transparent 360deg);
+    #5fd0e8 0deg, #45c8ff 60deg, #a86bff 140deg,
+    #ff5fd5 210deg, #ff9a4f 280deg, #5fd0e8 360deg);
   animation: tabBorderSpin 3.6s linear infinite;
-  transition: opacity .25s ease;
+  opacity: .45;
+  transition: opacity .35s ease;
 }
 .hero-cta-satellite::after {
   content: ''; position: absolute; inset: 1.5px; border-radius: 2px; z-index: 1;
   background: rgba(7,10,19,.94);
-  transition: opacity .22s ease;
+  transition: opacity .35s ease;
 }
 .hero-cta-satellite .sat-label {
   position: relative; z-index: 2;
@@ -1328,33 +1333,30 @@ body.profile-active #detail-wrap {
 
 .hero-cta-hub.expanded .hero-cta-satellite {
   opacity: 1; pointer-events: auto;
-  filter: drop-shadow(0 0 10px rgba(95,208,232,.28));
 }
-/* 弧形坐标 */
-.hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 260px), 45px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 130px), 105px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 140px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 130px), 105px, 0) scale(1); }
-.hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 260px), 45px, 0) scale(1); }
+/* 弧形坐标（v5.1：整体加宽加深，相邻按钮留出呼吸间隙；
+   底部按钮与屏幕底线保持安全距离） */
+.hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 310px), 50px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 155px), 115px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 155px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 155px), 115px, 0) scale(1); }
+.hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 310px), 50px, 0) scale(1); }
 
-.hero-cta-hub.expanded .sat-tl:hover  { transform: translate3d(calc(-50% - 280px), 42px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-tr:hover  { transform: translate3d(calc(-50% - 145px), 108px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-b:hover   { transform: translate3d(-50%, 158px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-bl2:hover { transform: translate3d(calc(-50% + 145px), 108px, 0) scale(1.06); }
-.hero-cta-hub.expanded .sat-br2:hover { transform: translate3d(calc(-50% + 280px), 42px, 0) scale(1.06); }
+/* 悬停不再移位：原地柔和放大，避免"瞬间位移"的突兀感 */
+.hero-cta-hub.expanded .sat-tl:hover  { transform: translate3d(calc(-50% - 310px), 50px, 0) scale(1.07); }
+.hero-cta-hub.expanded .sat-tr:hover  { transform: translate3d(calc(-50% - 155px), 115px, 0) scale(1.07); }
+.hero-cta-hub.expanded .sat-b:hover   { transform: translate3d(-50%, 155px, 0) scale(1.07); }
+.hero-cta-hub.expanded .sat-bl2:hover { transform: translate3d(calc(-50% + 155px), 115px, 0) scale(1.07); }
+.hero-cta-hub.expanded .sat-br2:hover { transform: translate3d(calc(-50% + 310px), 50px, 0) scale(1.07); }
 .hero-cta-satellite:hover {
   z-index: 30;
   transition-delay: 0s;
-  transition-duration: 0.22s;
-  filter: drop-shadow(0 0 16px rgba(168,107,255,.55)) drop-shadow(0 0 34px rgba(95,208,232,.35));
+  transition-duration: 0.35s;
+  filter: drop-shadow(0 0 16px rgba(168,107,255,.5)) drop-shadow(0 0 34px rgba(95,208,232,.3));
 }
-/* hover：待机弧光切换为整圈彩虹描边，深色内层渐隐，彩虹"灌注"点亮整块按钮 */
-.hero-cta-satellite:hover::before {
-  background: conic-gradient(from var(--tab-ang),
-    #5fd0e8 0deg, #45c8ff 60deg, #a86bff 140deg,
-    #ff5fd5 210deg, #ff9a4f 280deg, #5fd0e8 360deg);
-  animation: tabBorderSpin 2.2s linear infinite;
-}
+/* hover：彩虹层透明度渐入 + 深色盖板渐隐，彩虹"灌注"式点亮，
+   全程 opacity 过渡，无硬切 */
+.hero-cta-satellite:hover::before { opacity: 1; }
 .hero-cta-satellite:hover::after { opacity: 0; }
 .hero-cta-hub.expanded .hero-cta-satellite:hover .sat-label {
   color: #fff;
@@ -1372,58 +1374,73 @@ body.profile-active #detail-wrap {
   opacity: 0.4 !important;
   transform: translate3d(var(--sat-tx,0), var(--sat-ty,0), 0) scale(0.9) !important;
 }
-.hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 260px); --sat-ty: 45px; }
-.hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 130px); --sat-ty: 105px; }
-.hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 140px; }
-.hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 130px); --sat-ty: 105px; }
-.hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 260px); --sat-ty: 45px; }
+.hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 310px); --sat-ty: 50px; }
+.hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 155px); --sat-ty: 115px; }
+.hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 155px; }
+.hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 155px); --sat-ty: 115px; }
+.hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 310px); --sat-ty: 50px; }
 
 
 /* 响应式 */
-@media (max-width: 580px), (max-height: 720px) {
+@media (max-width: 820px), (max-height: 720px) {
   .hero-cta-hub { width: 520px; height: 190px; min-width: 520px; min-height: 190px; }
   .hero-cta-master, .hero-cta-satellite { font-size: 14px; letter-spacing: 3px; padding: 13px 20px; }
   .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-16px) scale(1.02); }
-  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 190px), 22px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 95px), 72px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 102px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 95px), 72px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 190px), 22px, 0) scale(1); }
-  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 190px); --sat-ty: 22px; }
-  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 95px); --sat-ty: 72px; }
-  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 102px; }
-  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 95px); --sat-ty: 72px; }
-  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 190px); --sat-ty: 22px; }
+  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 220px), 28px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 110px), 78px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 108px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 110px), 78px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 220px), 28px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tl:hover  { transform: translate3d(calc(-50% - 220px), 28px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-tr:hover  { transform: translate3d(calc(-50% - 110px), 78px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-b:hover   { transform: translate3d(-50%, 108px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-bl2:hover { transform: translate3d(calc(-50% + 110px), 78px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-br2:hover { transform: translate3d(calc(-50% + 220px), 28px, 0) scale(1.07); }
+  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 220px); --sat-ty: 28px; }
+  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 110px); --sat-ty: 78px; }
+  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 108px; }
+  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 110px); --sat-ty: 78px; }
+  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 220px); --sat-ty: 28px; }
 }
-@media (max-width: 440px), (max-height: 600px) {
+@media (max-width: 560px), (max-height: 600px) {
   .hero-cta-hub { width: 440px; height: 170px; min-width: 440px; min-height: 170px; }
   .hero-cta-master, .hero-cta-satellite { font-size: 12.5px; letter-spacing: 2px; padding: 11px 16px; }
   .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-14px) scale(1.02); }
-  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 170px), 12px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 85px), 50px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 76px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 85px), 50px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 170px), 12px, 0) scale(1); }
-  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 170px); --sat-ty: 12px; }
-  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 85px); --sat-ty: 50px; }
-  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 76px; }
-  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 85px); --sat-ty: 50px; }
-  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 170px); --sat-ty: 12px; }
+  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 160px), 16px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 80px), 54px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 82px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 80px), 54px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 160px), 16px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tl:hover  { transform: translate3d(calc(-50% - 160px), 16px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-tr:hover  { transform: translate3d(calc(-50% - 80px), 54px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-b:hover   { transform: translate3d(-50%, 82px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-bl2:hover { transform: translate3d(calc(-50% + 80px), 54px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-br2:hover { transform: translate3d(calc(-50% + 160px), 16px, 0) scale(1.07); }
+  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 160px); --sat-ty: 16px; }
+  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 80px); --sat-ty: 54px; }
+  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 82px; }
+  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 80px); --sat-ty: 54px; }
+  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 160px); --sat-ty: 16px; }
 }
 @media (min-width: 1400px) and (min-height: 800px) {
   .hero-cta-hub { width: 840px; height: 280px; min-width: 840px; min-height: 280px; }
   .hero-cta-master, .hero-cta-satellite { font-size: 20px; letter-spacing: 4.5px; padding: 20px 34px; }
   .hero-cta-hub.expanded .hero-cta-master { transform: translateY(-26px) scale(1.02); }
-  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 320px), 58px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 160px), 128px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 168px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 160px), 128px, 0) scale(1); }
-  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 320px), 58px, 0) scale(1); }
-  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 320px); --sat-ty: 58px; }
-  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 160px); --sat-ty: 128px; }
-  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 168px; }
-  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 160px); --sat-ty: 128px; }
-  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 320px); --sat-ty: 58px; }
+  .hero-cta-hub.expanded .sat-tl  { transform: translate3d(calc(-50% - 370px), 64px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tr  { transform: translate3d(calc(-50% - 185px), 140px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-b   { transform: translate3d(-50%, 184px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-bl2 { transform: translate3d(calc(-50% + 185px), 140px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-br2 { transform: translate3d(calc(-50% + 370px), 64px, 0) scale(1); }
+  .hero-cta-hub.expanded .sat-tl:hover  { transform: translate3d(calc(-50% - 370px), 64px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-tr:hover  { transform: translate3d(calc(-50% - 185px), 140px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-b:hover   { transform: translate3d(-50%, 184px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-bl2:hover { transform: translate3d(calc(-50% + 185px), 140px, 0) scale(1.07); }
+  .hero-cta-hub.expanded .sat-br2:hover { transform: translate3d(calc(-50% + 370px), 64px, 0) scale(1.07); }
+  .hero-cta-satellite.sat-tl  { --sat-tx: calc(-50% - 370px); --sat-ty: 64px; }
+  .hero-cta-satellite.sat-tr  { --sat-tx: calc(-50% - 185px); --sat-ty: 140px; }
+  .hero-cta-satellite.sat-b   { --sat-tx: -50%; --sat-ty: 184px; }
+  .hero-cta-satellite.sat-bl2 { --sat-tx: calc(-50% + 185px); --sat-ty: 140px; }
+  .hero-cta-satellite.sat-br2 { --sat-tx: calc(-50% + 370px); --sat-ty: 64px; }
 }
 
 /* 功能模块区 */
