@@ -925,6 +925,12 @@ WF.ArbitrationParser = (function () {
         // 兼容旧 fallback：清理语言标记（中文或英文）
         m.node = clean.replace(ARB_NAME_MARK, '').replace(/-\s*$/, '').trim();
       }
+      // nodeId 兜底：nameParts 未提取到 nodeId 但行尾有 EliteAlert 后缀时，
+      // 从末尾括号中取出（镜像防御 vote 行："镜像防御 - 派系 - 等级 (XX-XX) (SolNode450_EliteAlert)"）
+      if (!m.nodeId && ARB_ELITE_ALERT.test(clean)) {
+        const fallbackV = RE.nodeIdParen.exec(clean);
+        if (fallbackV) m.nodeId = fallbackV[1];
+      }
     }
 
     function recordRoundBoundary(label, t) {
