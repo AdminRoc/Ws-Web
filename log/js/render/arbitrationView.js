@@ -45,11 +45,6 @@ WF.arbitrationView = (function () {
 
   // ── 通用 tooltip 说明文案 ──
   const TOOLTIPS = {
-    rhythm: '节奏稳定性衡量本局任务中敌人与无人机刷新节奏的平稳程度，由三个子指标加权合成：\n' +
-            '1. 无人机密度稳定性（40%）：各轮次无人机密度（只/分钟）的波动越小得分越高。已允许正常的战术波动。\n' +
-            '2. 无人机批次间隔稳定性（35%）：相邻无人机批次之间的时间间隔越稳定得分越高。开局阶段不计入。\n' +
-            '3. 高压恢复稳定性（25%）：场上活跃敌人从 ≥12 的高压状态恢复到 <12 所需时间越短、越稳定得分越高。开局阶段不计入。\n' +
-            '100 表示节奏非常稳定；数据不足时以 70 分中性值计入。',
     spawnNote: 'EE.log 不会记录"某个敌人被谁击杀"这类具体事件，所以这里不展示确切击杀数。' +
                '"敌人生成"是房主日志里每次 OnAgentCreated 事件携带的 Spawned 字段峰值——这是游戏引擎自己上报的累计生成数。' +
                '"生成事件数"则是真实 OnAgentCreated 行数。两者差距大说明日志可能被裁切或采样稀疏。',
@@ -59,6 +54,27 @@ WF.arbitrationView = (function () {
     batchGap: '批次之间间隔：把连续 0.3 秒内生成的无人机视为同一批次，计算各批次首只无人机之间的时间间隔。间隔越稳定，说明刷新循环越规律。',
     pressureScatter: '每个点代表一次无人机生成事件：X 轴是生成时刻场上的活跃敌人数，Y 轴是接下来 15 秒内出现的无人机数量。用于观察"高压时是否更容易/更不容易刷无人机"。',
   };
+
+  /* 分模式压力阈值展示：镜像防御/拦截的高压线、恢复线、清洁度分档按模式画像
+   * 校准（记录里已携带本局实际使用的 pressure），文案随阈值走，图算一致。 */
+  function pressureOf(rec) {
+    return (rec && rec.pressure) || { high: 12, recovery: 10, bands: [4, 9, 14, 20] };
+  }
+  function calibratedNote(rec) {
+    const p = pressureOf(rec);
+    return (p.high !== 12 || p.recovery !== 10) ? '（阈值已按本模式地图特性校准）' : '';
+  }
+  function bandText(b) {
+    return `0-${b[0]}=100分、${b[0] + 1}-${b[1]}=80分、${b[1] + 1}-${b[2]}=70分、${b[2] + 1}-${b[3]}=30分、>${b[3]}=0分`;
+  }
+  function rhythmTip(rec) {
+    const th = pressureOf(rec).recovery;
+    return '节奏稳定性衡量本局任务中敌人与无人机刷新节奏的平稳程度，由三个子指标加权合成：\n' +
+           '1. 无人机密度稳定性（40%）：各轮次无人机密度（只/分钟）的波动越小得分越高。已允许正常的战术波动。\n' +
+           '2. 无人机批次间隔稳定性（35%）：相邻无人机批次之间的时间间隔越稳定得分越高。开局阶段不计入。\n' +
+           `3. 高压恢复稳定性（25%）：场上活跃敌人从 ≥${th} 的高压状态恢复到 <${th} 所需时间越短、越稳定得分越高。开局阶段不计入。\n` +
+           '100 表示节奏非常稳定；数据不足时以 70 分中性值计入。';
+  }
 
   function summary(rec) {
     const head = ['仲裁', rec.missionTypeName].filter(Boolean).join(' ');
@@ -186,19 +202,20 @@ WF.arbitrationView = (function () {
     scoreWrap.appendChild(badge);
 
     const effBox = U.el('div', 'arb-eff-box-score');
+    const P = pressureOf(rec);
     effBar(effBox, '生息效率', eff.essence,
       `期望生息速率 ${rec.essence.fullBuffPerHour.toFixed(1)}/时（权重 80%）`);
     const clearStr = eff.clear != null ? eff.clear.toFixed(1) + '%' : '—';
     effBar(effBox, '清图效率', eff.clear != null ? eff.clear : 50,
-      eff.clear != null ? `场上≥12只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%（权重 5%）` : '采样数据不足，本维度以 50 分中性值计入（权重 5%）',
-      TOOLTIPS.activeEnemy);
+      eff.clear != null ? `场上≥${P.high}只敌人的时间占比 ${(100 - eff.clear).toFixed(1)}%（权重 5%）` : '采样数据不足，本维度以 50 分中性值计入（权重 5%）',
+      TOOLTIPS.activeEnemy + calibratedNote(rec));
     const clearCompStr = eff.clearComp != null ? eff.clearComp.toFixed(1) + '%' : '—';
     effBar(effBox, '综合效率', eff.clearComp != null ? eff.clearComp : 50,
       eff.clearComp != null ? `清洁度×70% + 高压响应×30% = ${eff.clearComp.toFixed(1)}%（权重 5%）` : '数据不足，本维度以 50 分中性值计入（权重 5%）',
-      '清洁度：按活跃敌人分布区间评分，0-4=100分、5-9=80分、10-14=70分、15-20=30分、>20=0分，再按驻留时长加权平均。' + TOOLTIPS.activeEnemy + ' 高压响应：统计从≥12只敌人恢复到<12只的平均时间。');
+      `清洁度：按活跃敌人分布区间评分，${bandText(P.bands)}，再按驻留时长加权平均。` + TOOLTIPS.activeEnemy + ` 高压响应：统计从≥${P.recovery}只敌人恢复到<${P.recovery}只的平均时间。` + calibratedNote(rec));
     effBar(effBox, '节奏稳定性', eff.rhythm != null ? eff.rhythm : 50,
       eff.rhythm != null ? `${eff.rhythm.toFixed(1)}%（权重 10%）` : '数据不足，本维度以 50 分中性值计入（权重 10%）',
-      TOOLTIPS.rhythm);
+      rhythmTip(rec) + calibratedNote(rec));
     scoreWrap.appendChild(effBox);
     container.appendChild(scoreWrap);
 
@@ -361,7 +378,7 @@ WF.arbitrationView = (function () {
         title: '清图效率',
         navLabel: '清图效率',
         rows: ld.rows.map((r) => ({ label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, right: r.seconds.toFixed(1) + 's' })),
-        footer: `高压占比（≥12）：${ld.geq12Pct.toFixed(1)}%`,
+        footer: `高压占比（≥${pressureOf(rec).high}）：${ld.geqHighPct.toFixed(1)}%`,
       });
     }
 
@@ -370,7 +387,8 @@ WF.arbitrationView = (function () {
     pushChart(C.pressureDroneScatter(scatterBody, rec));
 
     // 8.8 高压恢复时间线
-    const recoveryBody = chartCard(distWrap, '高压恢复时间线', '每次场上活跃敌人从≥12恢复到<12所花费的时间。颜色越绿越快，越红越慢。', { id: 'arb-chart-recovery-timeline', navLabel: '高压恢复时间线' });
+    const recTh = pressureOf(rec).recovery;
+    const recoveryBody = chartCard(distWrap, '高压恢复时间线', `每次场上活跃敌人从≥${recTh}恢复到<${recTh}所花费的时间。颜色越绿越快，越红越慢。`, { id: 'arb-chart-recovery-timeline', navLabel: '高压恢复时间线' });
     pushChart(C.recoveryTimeline(recoveryBody, rec));
     recoveryBody.classList.add('recovery-timeline');
 
@@ -445,14 +463,14 @@ WF.arbitrationView = (function () {
     const defWrap = U.el('div', 'arb-explain-defs');
     const defs = [
       ['生息效率（80%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再根据大数据分析得出的基准换算成百分比。'],
-      ['清图效率（5%）', '依据房主日志中 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥12（"高压"阈值）的时间占比，取 100 减去该占比作为得分。', TOOLTIPS.activeEnemy],
-      ['综合效率（5%）', '由两个维度融合：① 清洁度（70%）——按活跃敌人分布区间评分；② 高压响应（30%）——统计从≥12只敌人恢复到<12只的平均时间。'],
-      ['节奏稳定性（10%）', TOOLTIPS.rhythm],
+      ['清图效率（5%）', `依据房主日志中 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥${P.high}（"高压"阈值）的时间占比，取 100 减去该占比作为得分。`, TOOLTIPS.activeEnemy],
+      ['综合效率（5%）', `由两个维度融合：① 清洁度（70%）——按活跃敌人分布区间评分（${bandText(P.bands)}）；② 高压响应（30%）——统计从≥${P.recovery}只敌人恢复到<${P.recovery}只的平均时间。`],
+      ['节奏稳定性（10%）', rhythmTip(rec)],
     ];
     defs.forEach(([k, v, tip]) => {
       const d = U.el('div', 'arb-def-row');
       const key = U.el('span', 'arb-def-key', k);
-      if (k.includes('节奏稳定性')) { key.classList.add('has-tip'); key.title = TOOLTIPS.rhythm; }
+      if (k.includes('节奏稳定性')) { key.classList.add('has-tip'); key.title = rhythmTip(rec); }
       d.appendChild(key);
       const val = U.el('span', 'arb-def-val', v);
       if (tip) { val.classList.add('has-tip'); val.title = tip; }
@@ -461,7 +479,7 @@ WF.arbitrationView = (function () {
     });
     explain.appendChild(defWrap);
 
-    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 0.80×生息效率 + 0.05×清图效率 + 0.05×综合效率 + 0.10×节奏稳定性，上限 120 分。清图效率、综合效率与节奏稳定性三项完全由日志推算，确保在基准数据缺失时评分仍具参考价值。'));
+    explain.appendChild(U.el('div', 'arb-explain-sub', `综合评分 ＝ 0.80×生息效率 + 0.05×清图效率 + 0.05×综合效率 + 0.10×节奏稳定性，上限 120 分。清图效率、综合效率与节奏稳定性三项完全由日志推算，确保在基准数据缺失时评分仍具参考价值。${calibratedNote(rec) ? '本模式的压力判定阈值已按地图特性校准。' : ''}`));
     const scaleRows = [
       ['101 - 120', '巅峰', '综合效率与操作水平的提升空间已经不大，整体表现趋近完美'],
       ['80 - 100',  '优秀', '操作表现较为稳定、清图流畅、地图整体的清洁度高，属广义上的高效队伍'],

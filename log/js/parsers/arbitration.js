@@ -164,19 +164,22 @@ WF.ArbitrationParser = (function () {
         期望生息速率（全 Buff，/时）÷ 节点基准 × 100，线性，可超过 100。
         节点基准优先取该节点基准数据（WF.ArbNodeBaseline），无数据时退回 1000/时。
      ② 清图效率（权重 5%）：
-        100 − geq12Pct。geq12Pct = 场上同时受 AI 监控的活跃敌人数 ≥12（"高压"阈值）的时间占比。
+        100 − geqHighPct。geqHighPct = 场上同时受 AI 监控的活跃敌人数 ≥高压线 的时间占比。
+        高压线按模式校准（默认 12；镜像防御 28 / 拦截 16，见 PRESSURE_BY_MODE）——
+        这些模式天然常驻更多敌人，通用阈值会把模式结构性压力误判为清图不力。
         完全来自日志内采样，不依赖任何外部基准；清图越干净这项得分越高。
      ③ 综合效率（权重 5%）：
         双维度融合——清洁度（70%）+ 高压响应（30%）。
-        清洁度：按活跃敌人分布区间评分，0-4=100、5-9=80、10-14=70、15-20=30、>20=0，
-        再按驻留时长加权平均。高压响应：扫描从≥10恢复到<10的高压事件，
+        清洁度：按活跃敌人分布区间评分，默认 0-4=100、5-9=80、10-14=70、15-20=30、>20=0
+        （镜像防御/拦截分档按画像右移），再按驻留时长加权平均。
+        高压响应：扫描从 ≥恢复线 恢复到 <恢复线 的高压事件（默认 10，镜像防御 20 / 拦截 13），
         平均恢复时间越短得分越高（100 − 平均秒数×2），从未高压=100。
         仅依赖日志数据。
      ④ 节奏稳定性（权重 10%）：
         衡量敌人与无人机刷新节奏的平稳程度。
         无人机密度稳定性（40%）：各轮次无人机密度（只/分钟）的波动越小得分越高。
         无人机批次间隔稳定性（35%）：相邻无人机批次之间的时间间隔越稳定得分越高。
-        高压恢复稳定性（25%）：场上活跃敌人从 ≥10 的高压状态恢复到 <10 所需时间越短、越稳定得分越高。
+        高压恢复稳定性（25%）：场上活跃敌人从 ≥恢复线 的高压状态恢复到 <恢复线 所需时间越短、越稳定得分越高。
         数据不足时该项以 50 分中性值计入。
      ──────────────────────────────────────────────────────────────
      综合评分 = 0.80×生息效率 + 0.05×清图效率 + 0.05×综合效率 + 0.10×节奏稳定性，上限 120。
@@ -187,31 +190,46 @@ WF.ArbitrationParser = (function () {
   const W_CLEAR_COMP  = 0.05; // 综合效率权重（整体清图质量）
   const W_RHYTHM = 0.10;      // 节奏稳定性权重
 
+  /* 分模式压力画像：镜像防御 / 拦截的地图与模式机制使场上天然常驻更多敌人、
+   * 击杀周期更长，若套用通用阈值会把"模式结构性压力"误判为"玩家清图不力"。
+   * 因此压力相关阈值（高压线 / 恢复线 / 清洁度分档）按任务类型校准——
+   * 以各模式顶尖对局的驻留分布为锚（优秀对局的压力维度应落在优秀档），
+   * 未列出的模式一律使用默认档，评分行为与历史版本完全一致。
+   *   high:     清图效率的高压线（≥high 的时间占比越大得分越低）
+   *   recovery: 高压恢复判定的起算线（≥recovery 进入高压、<recovery 记为恢复）
+   *   bands:    清洁度分档上限，对应 100/80/70/30/0 五档 */
+  const PRESSURE_DEFAULT = { high: 12, recovery: 10, bands: [4, 9, 14, 20] };
+  const PRESSURE_BY_MODE = {
+    '镜像防御': { high: 28, recovery: 20, bands: [17, 23, 30, 36] },
+    '拦截':     { high: 16, recovery: 13, bands: [9, 14, 20, 26] },
+  };
+
   function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
   // ① 生息效率（%）：perHour ÷ baseline × 100，线性，允许超过 100
   function essenceEfficiency(perHour, baseline) {
     const base = baseline > 0 ? baseline : ESS_BASELINE;
     return Math.max(0, perHour / base * 100);
   }
-  // ② 清图效率（%）：由 clearEffDist 的 geq12Pct 取反；数据缺失时返回 null
-  function clearEfficiency(geq12Pct) {
-    if (geq12Pct == null || !isFinite(geq12Pct)) return null;
-    return Math.max(0, 100 - geq12Pct);
+  // ② 清图效率（%）：由 clearEffDist 的 geqHighPct 取反；数据缺失时返回 null
+  function clearEfficiency(geqHighPct) {
+    if (geqHighPct == null || !isFinite(geqHighPct)) return null;
+    return Math.max(0, 100 - geqHighPct);
   }
   // ③ 综合效率（%）：双维度融合
   //   清洁度（70%）：基于活跃敌人分布的分段评分，0-4=100, 5-9=80, 10-14=70, 15-20=30, >20=0
   //   高压响应（30%）：扫描从 ≥10 恢复到 <10 的高压事件，平均恢复时间越短得分越高
-  function extractRecoveryEvents(liveSamples, firstRoundT) {
+  function extractRecoveryEvents(liveSamples, firstRoundT, recoveryTh) {
+    const th = recoveryTh != null ? recoveryTh : 10;
     const events = [];
     if (!liveSamples || liveSamples.length < 2) return events;
     let inHigh = false, highStart = null;
     const cut = firstRoundT != null ? firstRoundT : -Infinity;
     for (let i = 0; i < liveSamples.length; i++) {
       const s = liveSamples[i];
-      if (!inHigh && s.live >= 10) {
+      if (!inHigh && s.live >= th) {
         inHigh = true;
         highStart = s.t;
-      } else if (inHigh && s.live < 10) {
+      } else if (inHigh && s.live < th) {
         inHigh = false;
         if (highStart >= cut) events.push(s.t - highStart);
       }
@@ -219,19 +237,21 @@ WF.ArbitrationParser = (function () {
     return events;
   }
 
-  function clearComprehensiveEfficiency(liveSamples, liveDistData, recoveryEvents) {
+  function clearComprehensiveEfficiency(liveSamples, liveDistData, recoveryEvents, pressure) {
     if (!liveDistData || !liveDistData.rows || liveDistData.rows.length < 2) return null;
+    const p = pressure || PRESSURE_DEFAULT;
+    const b = p.bands, recTh = p.recovery;
     // ── 清洁度 ──
     let cleanTotal = 0, cleanWeighted = 0;
     for (const r of liveDistData.rows) {
       if (r.seconds <= 0) continue;
       const mid = r.lo + (r.hi != null ? (r.hi - r.lo) / 2 : 2);
       let score;
-      if (mid <= 4)       score = 100;  // 0-4: 完美
-      else if (mid <= 9)  score = 80;   // 5-9: 良好
-      else if (mid <= 14) score = 70;   // 10-14: 正常波动
-      else if (mid <= 20) score = 30;   // 15-20: 偏高
-      else                score = 0;    // >20: 严重堆积
+      if (mid <= b[0])      score = 100; // ≤b0: 完美
+      else if (mid <= b[1]) score = 80;  // ≤b1: 良好
+      else if (mid <= b[2]) score = 70;  // ≤b2: 正常波动
+      else if (mid <= b[3]) score = 30;  // ≤b3: 偏高
+      else                  score = 0;   // >b3: 严重堆积
       cleanWeighted += score * r.seconds;
       cleanTotal += r.seconds;
     }
@@ -243,7 +263,7 @@ WF.ArbitrationParser = (function () {
       const avgRecovery = recoveryEvents.reduce((a, b) => a + b, 0) / recoveryEvents.length;
       recovery = Math.max(0, 100 - avgRecovery * 2);
     } else if (recoveryEvents && recoveryEvents.length === 0) {
-      if (liveSamples && liveSamples.some((s) => s.live >= 10)) {
+      if (liveSamples && liveSamples.some((s) => s.live >= recTh)) {
         // 出现了高压但直到任务结束仍未恢复，直接 0 分
         recovery = 0;
       } else {
@@ -252,11 +272,11 @@ WF.ArbitrationParser = (function () {
       }
     } else if (liveSamples && liveSamples.length >= 2) {
       // 兼容旧调用：未传入 recoveryEvents 时兜底计算（不过滤开局）
-      const events = extractRecoveryEvents(liveSamples);
+      const events = extractRecoveryEvents(liveSamples, null, recTh);
       if (events.length > 0) {
         const avgRecovery = events.reduce((a, b) => a + b, 0) / events.length;
         recovery = Math.max(0, 100 - avgRecovery * 2);
-      } else if (liveSamples.some((s) => s.live >= 10)) {
+      } else if (liveSamples.some((s) => s.live >= recTh)) {
         recovery = 0;
       } else {
         recovery = 100;
@@ -265,7 +285,8 @@ WF.ArbitrationParser = (function () {
     return Math.round(cleanliness * 0.7 + recovery * 0.3);
   }
   // ④ 节奏稳定性（%）
-  function rhythmStability(roundStats, interBatchData, liveSamples, recoveryEvents) {
+  function rhythmStability(roundStats, interBatchData, liveSamples, recoveryEvents, recoveryTh) {
+    const recTh = recoveryTh != null ? recoveryTh : 10;
     // 需要至少一些数据
     const hasRounds = roundStats && roundStats.length >= 2;
     const hasBatches = interBatchData && interBatchData.rows && interBatchData.totalBatches >= 2;
@@ -352,7 +373,7 @@ WF.ArbitrationParser = (function () {
       weightsUsed += 0.25;
     } else if (recoveryEvents && recoveryEvents.length === 0) {
       // 明确无恢复事件：要么从未高压，要么高压未恢复
-      if (liveSamples && liveSamples.some((s) => s.live >= 10)) {
+      if (liveSamples && liveSamples.some((s) => s.live >= recTh)) {
         recoveryScore = 0;
       } else {
         recoveryScore = 100;
@@ -447,27 +468,29 @@ WF.ArbitrationParser = (function () {
   }
 
   // ── 分布计算：清图效率（受监控活跃敌人数采样，按驻留时长加权，5 宽分桶）──
-  function clearEffDist(samples) {
+  // highTh：分模式高压线（默认 12）；geqHighPct 为 ≥highTh 的驻留时间占比
+  function clearEffDist(samples, highTh) {
+    const th = highTh != null ? highTh : 12;
     if (samples.length < 2) return null;
     let maxLive = 1;
     for (const s of samples) if (s.live > maxLive) maxLive = s.live;
     const nb = Math.max(1, Math.ceil((maxLive + 1) / 5));
     const bucket = new Array(nb).fill(0);
-    let total = 0, geq12 = 0;
+    let total = 0, geqHigh = 0;
     for (let i = 0; i < samples.length - 1; i++) {
       const dwell = samples[i + 1].t - samples[i].t;
       if (dwell <= 0 || dwell > DWELL_CAP) continue;
       const live = samples[i].live;
       const bi = Math.min(Math.floor(live / 5), nb - 1);
       bucket[bi] += dwell; total += dwell;
-      if (live >= 12) geq12 += dwell;
+      if (live >= th) geqHigh += dwell;
     }
     if (total <= 0) return null;
     const rows = bucket.map((v, i) => ({
       lo: 5 * i, hi: i < nb - 1 ? 5 * i + 4 : null,
       seconds: v, pct: v / total * 100,
     }));
-    return { rows, maxLive, geq12Pct: geq12 / total * 100 };
+    return { rows, maxLive, geqHighPct: geqHigh / total * 100 };
   }
 
   // ── 分布计算：无人机刷新连续度（同批次数量直方图）──
@@ -592,7 +615,8 @@ WF.ArbitrationParser = (function () {
   }
 
   // ── 轮次级统计 ──
-  function perRoundStats(roundBoundaries, eventStream, startedT, liveSamples) {
+  function perRoundStats(roundBoundaries, eventStream, startedT, liveSamples, highTh) {
+    const th = highTh != null ? highTh : 12;
     if (!roundBoundaries || !roundBoundaries.length || !eventStream || !eventStream.length) return [];
     const stats = [];
     for (let i = 0; i < roundBoundaries.length; i++) {
@@ -607,10 +631,10 @@ WF.ArbitrationParser = (function () {
       const duration = b.t - prev.t;
       const segLiveSamples = liveSamples.filter((s) => s.t + startedT > prev.t && s.t + startedT <= b.t);
       const liveValues = segLiveSamples.map((s) => s.live).filter((v) => v != null && isFinite(v));
-      let geq12Duration = 0;
+      let geqHighDuration = 0;
       for (let j = 0; j < segLiveSamples.length - 1; j++) {
         const dwell = segLiveSamples[j + 1].t - segLiveSamples[j].t;
-        if (segLiveSamples[j].live >= 12 && dwell > 0 && dwell <= DWELL_CAP) geq12Duration += dwell;
+        if (segLiveSamples[j].live >= th && dwell > 0 && dwell <= DWELL_CAP) geqHighDuration += dwell;
       }
 
       stats.push({
@@ -627,7 +651,7 @@ WF.ArbitrationParser = (function () {
         droneDensity: duration > 0 ? droneEvents.length / (duration / 60) : 0,
         liveAvg: liveValues.length ? avg(liveValues) : null,
         liveMax: liveValues.length ? Math.max(...liveValues) : null,
-        highPressurePct: duration > 0 ? geq12Duration / duration * 100 : 0,
+        highPressurePct: duration > 0 ? geqHighDuration / duration * 100 : 0,
       });
     }
     return stats;
@@ -702,7 +726,10 @@ WF.ArbitrationParser = (function () {
   }
 
   // ── 异常诊断 ──
-  function detectAnomalies(perMinData, roundStats, interBatchData, firstRoundT, startedT) {
+  // pressureTh：分模式"持续高压"判定线（默认 10，镜像防御/拦截按画像上调，
+  // 避免结构性常驻高敌量被误报为异常）
+  function detectAnomalies(perMinData, roundStats, interBatchData, firstRoundT, startedT, pressureTh) {
+    const pTh = pressureTh != null ? pressureTh : 10;
     const anomalies = [];
     if (!perMinData || !perMinData.rows) return anomalies;
 
@@ -746,7 +773,7 @@ WF.ArbitrationParser = (function () {
     // 规则 2：连续 2 分钟以上高压占比 > 60%
     let highPressureStart = null;
     for (const r of perMinData.rows) {
-      if (r.liveAvg >= 10) {
+      if (r.liveAvg >= pTh) {
         if (highPressureStart == null) highPressureStart = r.minute;
       } else {
         if (highPressureStart != null && r.minute - highPressureStart >= 2) {
@@ -962,6 +989,11 @@ WF.ArbitrationParser = (function () {
         // 权威节点库解析：节点名 / 星球 / 类型 / 派系（优先，回退到日志解析）
         const resolved = resolveNode(m.nodeId, m);
 
+        // 分模式压力画像：镜像防御/拦截使用各自校准后的高压线、恢复线与清洁度
+        // 分档；其他模式走默认档（与历史行为完全一致）。同一画像贯穿清图效率、
+        // 综合效率、节奏稳定性、每轮高压占比与"持续高压"异常判定，图算一致。
+        const pressure = PRESSURE_BY_MODE[resolved.typeName] || PRESSURE_DEFAULT;
+
         // 分节点生息效率基准：优先查该节点的历史最高纪录；
         // 若该节点尚无数据，退回该任务类型（missionType）的全局最高作为基准；
         // 兜底使用 ESS_BASELINE（1000/时）。essBaselineSrc 记录实际命中的来源，
@@ -999,29 +1031,29 @@ WF.ArbitrationParser = (function () {
 
         // 分布数据
         const relTimes = m.droneTimes.map((x) => x - m.startedT);
-        const liveDistData  = clearEffDist(m.liveSamples);
+        const liveDistData  = clearEffDist(m.liveSamples, pressure.high);
         const perMinData   = perMinuteTrend(m.minuteBuckets, duration);
-        const roundStats = perRoundStats(m.roundBoundaries, m.eventStream, m.startedT, m.liveSamples);
+        const roundStats = perRoundStats(m.roundBoundaries, m.eventStream, m.startedT, m.liveSamples, pressure.high);
         const vacuumData = vacuumDist(relTimes);
         const consecutiveData = consecutiveDist(m.droneTimes);
         const intraBatchData = intraBatchGapDist(relTimes);
         const interBatchData = interBatchGapDist(relTimes);
         const pressureCorr = pressureDroneCorrelation(m.liveSamples, relTimes);
 
-        // 高压恢复事件（过滤开局阶段：SS_STARTED 到第一次轮次结算前）
-        // 注：清图效率阈值已改为 ≥12，但高压恢复仍沿用 ≥10 的原始高压定义
+        // 高压恢复事件（过滤开局阶段：SS_STARTED 到第一次轮次结算前）；
+        // 起算线按模式画像（默认 10，镜像防御/拦截上调）
         const firstRoundT = m.roundBoundaries && m.roundBoundaries.length ? m.roundBoundaries[0].t : m.startedT;
         const firstRoundRelT = firstRoundT != null ? firstRoundT - m.startedT : null;
-        const recoveryEvents = extractRecoveryEvents(m.liveSamples, firstRoundRelT);
+        const recoveryEvents = extractRecoveryEvents(m.liveSamples, firstRoundRelT, pressure.recovery);
 
         const essEff   = essenceEfficiency(fullBuffPerHour, essBaseline);
-        const clearEff = clearEfficiency(liveDistData ? liveDistData.geq12Pct : null);
-        const clearCompEff = clearComprehensiveEfficiency(m.liveSamples, liveDistData, recoveryEvents);
-        const rhythmEff = rhythmStability(roundStats, interBatchData, m.liveSamples, recoveryEvents);
+        const clearEff = clearEfficiency(liveDistData ? liveDistData.geqHighPct : null);
+        const clearCompEff = clearComprehensiveEfficiency(m.liveSamples, liveDistData, recoveryEvents, pressure);
+        const rhythmEff = rhythmStability(roundStats, interBatchData, m.liveSamples, recoveryEvents, pressure.recovery);
         const score    = computeScore(essEff, clearEff, clearCompEff, rhythmEff);
 
         const cei = clearEfficiencyIndex(clearEff, recoveryEvents, m.maxSpawned, perMinData ? perMinData.totalCleared : null);
-        const anomalies = detectAnomalies(perMinData, roundStats, interBatchData, firstRoundT, m.startedT);
+        const anomalies = detectAnomalies(perMinData, roundStats, interBatchData, firstRoundT, m.startedT, pressure.recovery);
 
         // 无人机生成时的场上压力分布 + 散点数据
         const droneAtPressure = { low: 0, mid: 0, high: 0, total: 0 };
@@ -1134,7 +1166,7 @@ WF.ArbitrationParser = (function () {
             droneAtPressurePct,
             dronePressurePoints,
             recoveryEvents,
-            recoveryAvg: recoveryEvents.length ? avg(recoveryEvents) : (m.liveSamples.some(s => s.live >= 10) ? null : 0),
+            recoveryAvg: recoveryEvents.length ? avg(recoveryEvents) : (m.liveSamples.some(s => s.live >= pressure.recovery) ? null : 0),
           },
           anomalies,
           waves: {
@@ -1147,6 +1179,8 @@ WF.ArbitrationParser = (function () {
             clearComp: clearCompEff,
             rhythm:  rhythmEff,
           },
+          // 本局使用的压力画像（视图/图表据此展示"高压线 ≥N"，保证图算一致）
+          pressure: { high: pressure.high, recovery: pressure.recovery, bands: pressure.bands.slice() },
           essBaseline,
           essBaselineSrc,
           essBaselineIsNode: essBaselineSrc === 'node' || essBaselineSrc === 'type',

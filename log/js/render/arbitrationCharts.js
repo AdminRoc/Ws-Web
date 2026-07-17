@@ -273,8 +273,9 @@ WF.arbitrationCharts = (function () {
           data: pm.map((r) => r.liveAvg.toFixed(1)),
           markLine: {
             silent: true,
+            /* 高压线随分模式画像（rec.pressure.high）；无画像的旧记录保持 10 */
             /* 标签交给图例展示，不在绘图区内贴字，避免遮挡柱线内容 */
-            data: [{ yAxis: 10, label: { show: false }, lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 } }],
+            data: [{ yAxis: (rec.pressure && rec.pressure.high) || 10, label: { show: false }, lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 } }],
           },
         },
         {
@@ -342,8 +343,9 @@ WF.arbitrationCharts = (function () {
           data,
           markLine: {
             silent: true,
+            /* 高压线随分模式画像（rec.pressure.high）；无画像的旧记录保持 10 */
             /* 标签交给图例展示，不在绘图区内贴字，避免遮挡散点 */
-            data: [{ xAxis: 10, lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 }, label: { show: false } }],
+            data: [{ xAxis: (rec.pressure && rec.pressure.high) || 10, lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 }, label: { show: false } }],
           },
         },
         /* 空数据哑系列：仅用于在图例中展示"高压线"图示（红色虚线段） */
