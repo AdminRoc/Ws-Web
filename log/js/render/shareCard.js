@@ -245,6 +245,26 @@ WF.shareCard = (function () {
           display: block !important;
         }
 
+        /* 中断·场上敌量曲线 / 逐轮导管时间轴：分享图中完整显示（取消横向滚动，等比缩放） */
+        .dis-live-scroll, .dis-tl2-scroll {
+          overflow: visible !important;
+          width: 100% !important;
+        }
+        .dis-live-scroll svg, .dis-tl2-body svg {
+          width: 100% !important;
+          height: auto !important;
+          max-width: 100% !important;
+          display: block !important;
+        }
+        .dis-tl2-inner { display: block !important; width: 100% !important; min-width: 0 !important; }
+        .dis-tl2-head { position: static !important; }
+        .dis-tl2-tip { display: none !important; }
+        /* 时间轴段落条渐变在克隆文档中改为实色，确保 html2canvas 正常渲染 */
+        .dis-tl2-seg-key { fill: rgba(91,200,255,0.32) !important; }
+        .dis-tl2-seg-ok { fill: #35d97c !important; }
+        .dis-tl2-seg-fail { fill: #e0525e !important; }
+        .dis-tl2-seg-unk { fill: rgba(138,143,158,0.32) !important; }
+
         /* 强制所有 SVG 文本在分享图中使用 XSZT 字体 */
         svg text, svg tspan { font-family: 'XSZT', 'Microsoft YaHei', monospace !important; }
 

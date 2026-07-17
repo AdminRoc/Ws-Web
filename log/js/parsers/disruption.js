@@ -9,6 +9,7 @@ WF.DisruptionParser = (function () {
     ssStarted:     'SS_WAITING_FOR_PLAYERS to SS_STARTED',
     modeState:     'SentientArtifactMission.lua: ModeState =',
     randomized:    'SentientArtifactMission.lua: Disruption: Randomized ',
+    artifactStatus: 'SentientArtifactMission.lua: Disruption: Artifact ',
     conduitStart:  'SentientArtifactMission.lua: Disruption: Starting defense for artifact',
     conduitDone:   'SentientArtifactMission.lua: Disruption: Completed defense for artifact',
     conduitFail:   'SentientArtifactMission.lua: Disruption: Failed defense for artifact',
@@ -73,6 +74,9 @@ WF.DisruptionParser = (function () {
     const records = [];
     let mission = null;
     let roundStartT = null;
+    let _sessionOffset = 0;    // 多会话绝对排序偏移（由 logReader 传入，见 feed 末两参）
+    let _sessionAnchor = null; // 当前会话 wall-clock 锚点（由 logReader 传入，见 feed 末两参）
+    let pendingRoll = 0;       // 前置 Roll 图计数：载入中断任务但未进入第3轮（轮次<3）就退出的次数
     const sq   = WF.squadMixin.create();
     const chat = WF.chatMixin.create();
 
@@ -83,7 +87,8 @@ WF.DisruptionParser = (function () {
       if (!mission || !mission.isDisruption) return;
       // 关闭还未结算的尾轮
       if (mission.roundOpen) closeRoundAt(endT);
-      if (mission.rounds.length < MIN_ROUNDS) return;
+      // 轮次<3 的中断任务不生成记录，计为一次前置 Roll 图
+      if (mission.rounds.length < 3) { pendingRoll++; return; }
       const start  = mission.startT || mission.loadT;
       const dur    = endT - start;
       if (dur <= 0) return;
@@ -95,19 +100,29 @@ WF.DisruptionParser = (function () {
       const effScore  = Math.min(70, (rndPerMin / 1.8) * 70);
       const ps = Math.round(effScore + condRate * 30);
       const pg = ps >= 90 ? 'S' : ps >= 75 ? 'A' : ps >= 55 ? 'B' : ps >= 35 ? 'C' : 'D';
+      // 绝对时刻换算：sessionAnchor = {t, date}，把相对秒数差换成真实时钟时间；
+      // endAbsT 用于跨会话绝对排序（格式与仲裁记录一致）
+      const anchor = mission.sessionAnchor;
+      const offset = mission.sessionOffset || 0;
       records.push({
         type: 'disruption',
         startT: start, endT,
+        endAbsT:  endT + offset,
+        startDate: anchor ? new Date(anchor.date.getTime() + (start - anchor.t) * 1000) : null,
+        endDate:   anchor ? new Date(anchor.date.getTime() + (endT - anchor.t) * 1000) : null,
         totalDuration: dur,
         name: mission.name, score: mission.score,
         rounds: mission.rounds, roundCount: n,
         roundsPerMin: rndPerMin, conduitRate: condRate,
         successConduits: successConds, totalConduits: totalConds,
         perfScore: ps, perfGrade: pg,
+        preRollCount: pendingRoll,
+        liveSamples: mission.liveSamples,
         killEvents: mission.killEvents,
         squadInfo: sq.getSquadInfo(),
         chatLog:   chat.getChatLog(mission.loadT, start, endT),
       });
+      pendingRoll = 0;
     }
 
     function newMission(t) {
@@ -123,6 +138,10 @@ WF.DisruptionParser = (function () {
         currentRoundKills: 0,
         currentRoundSpawned: 0,
         killEvents: [],
+        liveSamples: [],      // {t(日志内绝对秒，与 rounds[].startT 同一时钟), live(生成后的场上敌数)}，轮内与轮间间隔都采
+        tiles: {},            // 导管编号 → tile 数字（Artifact status 行给出，整局有效）
+        sessionOffset: _sessionOffset, // 用于多会话绝对排序
+        sessionAnchor: _sessionAnchor, // 用于把相对秒数换算成真实时钟时间
         areaEffects: {},      // area 1-4 → {kind:'buff'|'debuff', id:N} for current round
         intervalEndedT: null, // Interval timer ended timestamp (precise round start for rounds > 1)
         _prevLiveAfter: null, // Live count after previous enemy agent was created (for kill delta)
@@ -148,6 +167,7 @@ WF.DisruptionParser = (function () {
         doneRelT:   c.doneRelT,
         effectKind: c.effectKind,
         effectId:   c.effectId,
+        tile:       mission.tiles[c.artNum] != null ? mission.tiles[c.artNum] : null,
       }));
       mission.rounds.push({
         index:           idx,
@@ -170,7 +190,9 @@ WF.DisruptionParser = (function () {
     }
 
     return {
-      feed(t, line) {
+      feed(t, line, sessionOffset, sessionAnchor) {
+        if (sessionOffset !== undefined) _sessionOffset = sessionOffset;
+        if (sessionAnchor !== undefined) _sessionAnchor = sessionAnchor;
         sq.feed(line);
         chat.feed(t, line);
         if (line.indexOf(PAT.connected) !== -1) {
@@ -218,6 +240,12 @@ WF.DisruptionParser = (function () {
         }
         if (line.indexOf(PAT.intervalEnded) !== -1) {
           mission.intervalEndedT = t;
+          return;
+        }
+        if (line.indexOf(PAT.artifactStatus) !== -1) {
+          mission.isDisruption = true;
+          const am = /Artifact (\d+) status=\d+, timer=\d+, auraId=\d+, tile=(\d+)/.exec(line);
+          if (am) mission.tiles[parseInt(am[1], 10)] = parseInt(am[2], 10);
           return;
         }
         if (line.indexOf(PAT.randomized) !== -1) {
@@ -268,7 +296,9 @@ WF.DisruptionParser = (function () {
         // Live=X means X agents alive BEFORE this new agent is created.
         // When Live drops between consecutive enemy spawns, enemies died in between.
         // SentinelAgent0 (Live=0 or very low) is a sentinel setup/reset — rebase the counter.
-        if (mission.roundOpen &&
+        // 场上敌量采样：只要中断任务存在（isDisruption）就采，不要求 roundOpen，轮间间隔也采；
+        // 击杀/生成计数仍仅在 roundOpen 内进行（与原有逻辑一致）。
+        if (mission.isDisruption &&
             line.indexOf(PAT.agentCreated) !== -1 &&
             line.indexOf('/Npc/') !== -1) {
           // Parse Live value from "Live N"
@@ -281,7 +311,8 @@ WF.DisruptionParser = (function () {
 
           if (isSentinel) {
             // Sentinel resets the baseline without contributing kills or spawns
-            mission._prevLiveAfter = liveBefore + 1;
+            // （Sentinel 行不参与场上敌量采样）
+            if (mission.roundOpen) mission._prevLiveAfter = liveBefore + 1;
             return;
           }
 
@@ -291,6 +322,11 @@ WF.DisruptionParser = (function () {
             if (line.indexOf(AGENT_SKIP[k]) !== -1) { skip = true; break; }
           }
           if (skip) return;
+
+          // 场上敌量采样：live 取生成后的场上数（liveBefore+1，与 _prevLiveAfter 同口径）
+          mission.liveSamples.push({ t, live: liveBefore + 1 });
+
+          if (!mission.roundOpen) return;
 
           // Compute kills from Live drop since last tracked agent
           if (mission._prevLiveAfter !== null) {
@@ -315,6 +351,8 @@ WF.DisruptionParser = (function () {
           return;
         }
         if (line.indexOf(PAT.abort) !== -1 || line.indexOf(PAT.failed) !== -1) {
+          // 中止/失败：轮次<3 的中断任务计为一次前置 Roll 图；>=3 轮的中止保持现状直接丢弃
+          if (mission.isDisruption && mission.rounds.length < 3) pendingRoll++;
           reset();
         }
       },

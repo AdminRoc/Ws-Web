@@ -1608,7 +1608,7 @@ body.profile-active #detail-wrap {
   background: rgba(95,208,232,0.06); box-shadow: 0 0 12px rgba(95,208,232,0.1);
   text-shadow: 0 0 8px rgba(95,208,232,0.75), 0 0 18px rgba(95,208,232,0.35);
 }
-/* ================= 中断·传导体时间轴（HTML div 版，无 SVG 拉伸问题） ================= */
+/* ================= 中断·时间轴/图表通用骨架 ================= */
 .dis-tl-wrap { margin-top: 18px; }
 .dis-tl-title {
   font-size: 14px; letter-spacing: 3px; color: var(--c-teal);
@@ -1616,15 +1616,6 @@ body.profile-active #detail-wrap {
   border-bottom: 1px solid rgba(95,208,232,0.15);
 }
 .dis-tl-sub { font-size: 11px; color: var(--c-text2); letter-spacing: 0.5px; line-height: 1.6; margin-bottom: 10px; }
-.dis-tl-rows { padding: 2px 0; }
-.dis-tl-row { display: flex; align-items: center; height: 14px; margin-bottom: 5px; }
-.dis-tl-rownum { width: 44px; flex-shrink: 0; font-size: 9px; color: var(--c-text2);
-  text-align: right; padding-right: 6px; font-family: var(--f-px); }
-.dis-tl-track { flex: 1; position: relative; height: 8px;
-  background: rgba(255,255,255,0.055); border-radius: 2px; }
-.dis-tl-dot { position: absolute; width: 8px; height: 8px; border-radius: 50%;
-  top: 0; transform: translateX(-50%); cursor: default; }
-.dis-tl-legend { font-size: 12px; color: var(--c-text); margin-top: 8px; letter-spacing: 1px; }
 
 /* ================= 击杀折线图 全屏弹窗 ================= */
 .dis-chart-overlay {
@@ -2459,25 +2450,6 @@ body.profile-active #detail-wrap {
   filter: drop-shadow(0 0 5px rgba(255,107,117,0.55));
 }
 
-/* 导管情况图增强 */
-.dis-tl-track {
-  background:
-    linear-gradient(90deg, rgba(95,208,232,0.08) 1px, transparent 1px),
-    rgba(255,255,255,0.05);
-  background-size: 25% 100%, 100% 100%;
-  border: 1px solid rgba(95,208,232,0.12);
-  box-shadow: inset 0 0 10px rgba(33,230,255,0.04);
-}
-.dis-tl-dot {
-  width: 9px; height: 9px;
-  box-shadow: 0 0 6px currentColor;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.dis-tl-dot:hover {
-  transform: translateX(-50%) scale(1.35);
-  box-shadow: 0 0 12px currentColor;
-}
-
 /* 击杀走势折线图容器增强 */
 .dis-chart-zoom {
   border: 1px solid rgba(95,208,232,0.12);
@@ -2565,3 +2537,69 @@ body.profile-active #detail-wrap {
   50%  { filter: hue-rotate(180deg) brightness(1.2) saturate(1.4); }
   100% { filter: hue-rotate(360deg) brightness(.95) saturate(1.25); }
 }
+
+/* ========================================================================
+   中断·速通复盘扩展：场上敌量曲线 / 逐轮导管时间轴
+   ======================================================================== */
+
+/* 场上敌量曲线：横向滚动容器（放大后滚动查看） */
+.dis-live-scroll {
+  overflow-x: auto;
+  padding-bottom: 6px;
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(95,208,232,0.12);
+  border-radius: var(--r-sm);
+  background: rgba(4,5,12,0.35);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.dis-live-scroll:hover {
+  border-color: rgba(95,208,232,0.35);
+  box-shadow: 0 0 18px rgba(33,230,255,0.08);
+}
+
+/* 进程总览表：可点击跳转逐轮导管时间轴的行（hover 高亮提示可点） */
+.round-table tr.dis-row-link { cursor: pointer; }
+.round-table tr.dis-row-link:hover td { background: rgba(95,208,232,0.14); }
+
+/* 逐轮导管时间轴：整体横向滚动容器（Ctrl+滚轮放大后滚动） */
+.dis-tl2-scroll {
+  overflow-x: auto;
+  padding-bottom: 6px;
+  position: relative;
+  z-index: 1;
+}
+.dis-tl2-inner { display: block; width: max-content; min-width: 100%; }
+
+/* 每轮一个区块；轮与轮之间：2px 渐变分隔带 + 大间距 + 交替底色 */
+.dis-tl2-round { padding: 12px 10px 14px; border-radius: var(--r-sm); scroll-margin-top: calc(var(--nav-h) + 10px); }
+.dis-tl2-round.alt { background: rgba(255,255,255,0.015); }
+.dis-tl2-sep {
+  height: 2px; margin: 14px 2px; border-radius: 1px;
+  background: linear-gradient(90deg, transparent, rgba(95,208,232,0.5), rgba(65,255,142,0.3), rgba(95,208,232,0.5), transparent);
+  box-shadow: 0 0 8px rgba(95,208,232,0.18);
+}
+
+/* 轮头（横向滚动时吸左，点击折叠/展开该轮泳道） */
+.dis-tl2-head {
+  position: sticky; left: 0;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+  font-size: 13px; user-select: none;
+  padding: 3px 6px; border-radius: var(--r-sm);
+  transition: background 0.15s ease;
+}
+.dis-tl2-head.has-lanes { cursor: pointer; }
+.dis-tl2-head.has-lanes:hover { background: rgba(95,208,232,0.07); }
+.dis-tl2-arrow { color: var(--c-teal); width: 12px; flex-shrink: 0; }
+.dis-tl2-rno { color: var(--c-teal); letter-spacing: 2px; }
+.dis-tl2-dur { color: var(--c-gold); font-size: 15px; text-shadow: 0 0 10px rgba(255,182,72,0.25); }
+.dis-tl2-cds { display: inline-flex; align-items: center; }
+.dis-tl2-bad { color: #ffd700; font-size: 12px; letter-spacing: 1px; text-shadow: 0 0 8px rgba(255,215,0,0.3); }
+.dis-tl2-bad-dot { margin-right: 4px; }
+
+/* 泳道区（默认展开，折叠时隐藏） */
+.dis-tl2-body { margin-top: 8px; }
+.dis-tl2-round.collapsed .dis-tl2-body { display: none; }
+
+/* 泳道自建浮层 tooltip（复用 chart-bar-tooltip 定位模式，支持多行） */
+.dis-tl2-tip { white-space: pre-line; z-index: 9500; }

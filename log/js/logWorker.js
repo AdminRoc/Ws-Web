@@ -17,7 +17,7 @@ importScripts(
   'squadMixin.js?v=20260707b',
   'chatMixin.js?v=20260707b',
   'parsers/eidolon.js?v=20260707b',
-  'parsers/disruption.js?v=20260707b',
+  'parsers/disruption.js?v=20260718a',
   'parsers/profitTaker.js?v=20260707b',
   'parsers/arbitration.js?v=20260717c',
   'parsers/general.js?v=20260710a'
