@@ -413,9 +413,10 @@ WF.arbitrationView = (function () {
     const essBox = U.el('div', 'arb-ess-box');
     essBox.appendChild(U.el('div', 'section-title', '生息计算'));
     const e = rec.essence;
-    // 基准来源明示：default（默认 1000/时）意味着基准数据未加载成功，红色警示，
-    // 避免静默退回默认基准导致评分失真而无人察觉（历史教训）。
-    const BASELINE_SRC_LABEL = { node: '节点历史纪录', type: '同任务类型最高纪录', default: '默认基准 · 基准数据未加载' };
+    // 基准来源仅作状态提示：不展示任何具体基准数值与出处（项目原则——页面不得
+    // 暴露外部数据参考情况），仅区分"大数据分析基准已生效"与"未加载、按默认标准"，
+    // 后者红色警示，避免静默退回默认基准导致评分失真而无人察觉（历史教训）。
+    const BASELINE_SRC_LABEL = { node: '根据大数据分析得出', type: '根据大数据分析得出', default: '大数据分析暂未加载 · 暂按默认标准评分' };
     const baselineSrc = rec.essBaselineSrc || (rec.essBaselineIsNode ? 'node' : 'default');
     const essRows = [
       ['无人机生成（总）', `${rec.droneCount}`],
@@ -426,7 +427,7 @@ WF.arbitrationView = (function () {
       ['期望生息（合计）', `${e.fullBuffTotal.toFixed(3)}`],
       ['期望生息 / 小时',  `${e.fullBuffPerHour.toFixed(1)}`],
       ['期望生息 / 分钟',  `${e.fullBuffPerMin.toFixed(2)}`],
-      ['评分基准',         `${((rec.essBaseline != null ? rec.essBaseline : 1000)).toFixed(1)}/时（${BASELINE_SRC_LABEL[baselineSrc] || BASELINE_SRC_LABEL.default}）`, baselineSrc === 'default'],
+      ['生息效率评分',     BASELINE_SRC_LABEL[baselineSrc] || BASELINE_SRC_LABEL.default, baselineSrc === 'default'],
     ];
     const essTable = U.el('div', 'arb-ess-grid');
     essRows.forEach(([k, v, warn]) => {
@@ -443,7 +444,7 @@ WF.arbitrationView = (function () {
 
     const defWrap = U.el('div', 'arb-explain-defs');
     const defs = [
-      ['生息效率（80%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再除以节点基准数量，得到百分比。'],
+      ['生息效率（80%）', '把期望生息 ÷ 任务时长换算成期望生息速率（每小时全 Buff 产出），再根据大数据分析得出的基准换算成百分比。'],
       ['清图效率（5%）', '依据房主日志中 MonitoredTicking 字段采样，统计全场中场上同时受监控的活跃敌人数 ≥12（"高压"阈值）的时间占比，取 100 减去该占比作为得分。', TOOLTIPS.activeEnemy],
       ['综合效率（5%）', '由两个维度融合：① 清洁度（70%）——按活跃敌人分布区间评分；② 高压响应（30%）——统计从≥12只敌人恢复到<12只的平均时间。'],
       ['节奏稳定性（10%）', TOOLTIPS.rhythm],
@@ -460,7 +461,7 @@ WF.arbitrationView = (function () {
     });
     explain.appendChild(defWrap);
 
-    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 0.80×生息效率 + 0.05×清图效率 + 0.05×综合效率 + 0.10×节奏稳定性，上限 120 分。清图效率、综合效率与节奏稳定性三项完全由日志推算，不依赖外部排行榜数据，确保节点基准数据缺失时评分仍具参考价值。'));
+    explain.appendChild(U.el('div', 'arb-explain-sub', '综合评分 ＝ 0.80×生息效率 + 0.05×清图效率 + 0.05×综合效率 + 0.10×节奏稳定性，上限 120 分。清图效率、综合效率与节奏稳定性三项完全由日志推算，确保在基准数据缺失时评分仍具参考价值。'));
     const scaleRows = [
       ['101 - 120', '巅峰', '综合效率与操作水平的提升空间已经不大，整体表现趋近完美'],
       ['80 - 100',  '优秀', '操作表现较为稳定、清图流畅、地图整体的清洁度高，属广义上的高效队伍'],
