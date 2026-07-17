@@ -99,16 +99,17 @@
        "个人信息"页渲染前会 await WF.i18n.ready，保证字典就位、绝不回退英文（见 main.js）。 -->
   <script src="../js/wf-i18n.js?v=20260707b"></script>
   <script>WF.i18n.load('../data/i18n/wf-i18n.json');</script>
-  <!-- 仲裁分节点生息效率基准：页面一打开就预热请求（体量很小，几乎总能在用户
-       真正点开某条仲裁记录之前就绪），不影响任何既有加载流程。 -->
-  <script src="js/arbNodeBaseline.js?v=20260710b"></script>
+  <!-- 仲裁分节点生息效率基准：内嵌 JS 种子（<script src> 同步加载，file:// 下也可用）
+       先于模块加载就位；随后的预热 fetch 仅作升级通道，拿到更新的 JSON 才覆盖。 -->
+  <script src="../data/arb-node-baseline.js"></script>
+  <script src="js/arbNodeBaseline.js?v=20260717b"></script>
   <script>WF.ArbNodeBaseline.load('../data/arb-node-baseline.json');</script>
   <script src="js/squadMixin.js?v=20260707b"></script>
   <script src="js/chatMixin.js?v=20260707b"></script>
   <script src="js/parsers/eidolon.js?v=20260715a"></script>
   <script src="js/parsers/disruption.js?v=20260707b"></script>
   <script src="js/parsers/profitTaker.js?v=20260707b"></script>
-  <script src="js/parsers/arbitration.js?v=20260716a"></script>
+  <script src="js/parsers/arbitration.js?v=20260717b"></script>
   <script src="js/parsers/general.js?v=20260707b"></script>
   <script src="js/lib/echarts.min.js?v=5.4.3"></script>
   <script src="js/render/roundDetail.js?v=20260715b"></script>
@@ -117,10 +118,10 @@
   <script src="js/render/eidolonView.js?v=20260715a"></script>
   <script src="js/render/disruptionView.js?v=20260715a"></script>
   <script src="js/render/profitTakerView.js?v=20260707b"></script>
-  <script src="js/render/arbitrationView.js?v=20260715k"></script>
+  <script src="js/render/arbitrationView.js?v=20260717b"></script>
   <script src="js/render/generalView.js?v=20260715a"></script>
   <script src="js/profileView.js?v=20260715a"></script>
-  <script src="js/main.js?v=20260717a"></script>
+  <script src="js/main.js?v=20260717b"></script>
   <script src="js/lib/html2canvas.min.js"></script>
   <script src="js/render/cyberNav.js?v=20260707b"></script>
   <script src="js/render/shareCard.js?v=20260715a"></script>

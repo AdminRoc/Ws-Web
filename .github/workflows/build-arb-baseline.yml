@@ -2,13 +2,15 @@ name: 构建仲裁分节点效率基准数据
 
 # 为 EE.log 分析页(log/analyzer.html)的仲裁子模块生成"分节点生息效率基准"：
 #   data/arb-node-baseline.json —— 每个节点(SolNodeXXX) 的历史最高生息速率/时，
-#                                   用于替代单一固定基准(600/时)，让评分对不同
-#                                   节点的天然产出节奏更公平。
+#                                   用于替代单一固定基准(1000/时)，让评分对不同
+#                                   节点的天然产出节奏更公平；fetch 升级通道使用。
+#   data/arb-node-baseline.js   —— 同一份数据的内嵌种子形态(window.WF.ARB_NODE_BASELINE_DATA)，
+#                                   供 <script src>/importScripts 同步加载，file:// 下可用。
 # 数据只包含 {nodeId, nodeName, missionType, perHour}，不采集/不落盘任何玩家名、
 # 队伍名单、账号 ID 等个人信息——源站排行榜虽然公开可读，但那些字段与我们的
 # 用途(校准一个统计基准)无关。
 # 抓取脚本在私库 AdminRoc/Ws-Web-core；运行前 checkout 私库覆盖进工作树，
-# 只把产物(1 个 json)提交回公库，私库脚本绝不提交回公库。
+# 只把产物(1 个 json + 1 个同源 .js 内嵌种子)提交回公库，私库脚本绝不提交回公库。
 # 每次运行都完整重新生成整份 nodes 表（不是增量合并），避免源站记录被刷新后
 # 我们这边残留旧基准。
 
@@ -51,7 +53,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/arb-node-baseline.json
+          git add data/arb-node-baseline.json data/arb-node-baseline.js
           git diff --staged --quiet && { echo "无实质变动,跳过提交"; echo "pushed=false" >> "$GITHUB_OUTPUT"; exit 0; }
           git commit -m "2026-07-08"
           for i in 1 2 3 4 5; do
@@ -74,4 +76,5 @@ jobs:
         run: |
           pip install --quiet tencentcloud-sdk-python
           python3 .github/scripts/purge_tencent_cdn.py \
-            "https://wfspeed.run/data/arb-node-baseline.json"
+            "https://wfspeed.run/data/arb-node-baseline.json" \
+            "https://wfspeed.run/data/arb-node-baseline.js"

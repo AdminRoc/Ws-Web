@@ -5,16 +5,20 @@
  * 不等全部分片到齐再统一处理，峰值内存从"全部分片同时驻留"降为"至多 1~2 个分片"。 */
 self.window = self;
 
+// 仲裁基准内嵌种子（与页面 <script src> 一致）：先就位，后续 fetch 仅作升级通道；
+// 文件缺失（部署不同步）时静默跳过，退回 fetch 通道，不影响 Worker 启动。
+try { importScripts('../../data/arb-node-baseline.js'); } catch (e) { /* 种子缺失无碍 */ }
+
 importScripts(
   'logReader.js?v=20260710e',
   'solNodes.js?v=20260707b',
-  'arbNodeBaseline.js?v=20260710b',
+  'arbNodeBaseline.js?v=20260717b',
   'squadMixin.js?v=20260707b',
   'chatMixin.js?v=20260707b',
   'parsers/eidolon.js?v=20260707b',
   'parsers/disruption.js?v=20260707b',
   'parsers/profitTaker.js?v=20260707b',
-  'parsers/arbitration.js?v=20260716a',
+  'parsers/arbitration.js?v=20260717b',
   'parsers/general.js?v=20260710a'
 );
 

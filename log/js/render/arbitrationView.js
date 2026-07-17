@@ -158,6 +158,7 @@ WF.arbitrationView = (function () {
     rec.score = score;
     rec.scoreTier = P.scoreTierName(score);
     rec.essBaseline = nb.perHour;
+    rec.essBaselineSrc = 'node';
     rec.essBaselineIsNode = true;
   }
 
@@ -412,6 +413,10 @@ WF.arbitrationView = (function () {
     const essBox = U.el('div', 'arb-ess-box');
     essBox.appendChild(U.el('div', 'section-title', '生息计算'));
     const e = rec.essence;
+    // 基准来源明示：default（默认 1000/时）意味着基准数据未加载成功，红色警示，
+    // 避免静默退回默认基准导致评分失真而无人察觉（历史教训）。
+    const BASELINE_SRC_LABEL = { node: '节点历史纪录', type: '同任务类型最高纪录', default: '默认基准 · 基准数据未加载' };
+    const baselineSrc = rec.essBaselineSrc || (rec.essBaselineIsNode ? 'node' : 'default');
     const essRows = [
       ['无人机生成（总）', `${rec.droneCount}`],
       ['无人机基础期望',   `${rec.droneCount} × 6% = ${e.fromDrones.toFixed(2)}`],
@@ -421,11 +426,12 @@ WF.arbitrationView = (function () {
       ['期望生息（合计）', `${e.fullBuffTotal.toFixed(3)}`],
       ['期望生息 / 小时',  `${e.fullBuffPerHour.toFixed(1)}`],
       ['期望生息 / 分钟',  `${e.fullBuffPerMin.toFixed(2)}`],
+      ['评分基准',         `${((rec.essBaseline != null ? rec.essBaseline : 1000)).toFixed(1)}/时（${BASELINE_SRC_LABEL[baselineSrc] || BASELINE_SRC_LABEL.default}）`, baselineSrc === 'default'],
     ];
     const essTable = U.el('div', 'arb-ess-grid');
-    essRows.forEach(([k, v]) => {
+    essRows.forEach(([k, v, warn]) => {
       essTable.appendChild(U.el('span', 'arb-ess-key', k));
-      essTable.appendChild(U.el('span', 'arb-ess-val', v));
+      essTable.appendChild(U.el('span', 'arb-ess-val' + (warn ? ' warn' : ''), v));
     });
     essBox.appendChild(essTable);
     essBox.appendChild(U.el('div', 'arb-ess-buffnote', '掉落倍率组成：蓝盒 ×2 · 富足 ×1.18 · 黄盒 ×2 · 祝福 ×1.25'));

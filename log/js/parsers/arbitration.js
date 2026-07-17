@@ -964,15 +964,17 @@ WF.ArbitrationParser = (function () {
 
         // 分节点生息效率基准：优先查该节点的历史最高纪录；
         // 若该节点尚无数据，退回该任务类型（missionType）的全局最高作为基准；
-        // 兜底使用 ESS_BASELINE（1000/时）。
+        // 兜底使用 ESS_BASELINE（1000/时）。essBaselineSrc 记录实际命中的来源，
+        // 供界面明示（默认基准意味着基准数据未加载成功，评分仅供参考）。
         const hasBaseline = (typeof WF !== 'undefined' && WF.ArbNodeBaseline);
         const nodeBase = hasBaseline ? WF.ArbNodeBaseline.lookup(m.nodeId) : null;
         let essBaseline = nodeBase ? nodeBase.perHour : null;
+        let essBaselineSrc = nodeBase ? 'node' : null;
         if (essBaseline == null && resolved.typeName && hasBaseline) {
           const fb = WF.ArbNodeBaseline.fallback(resolved.typeName);
-          if (fb) essBaseline = fb.perHour;
+          if (fb) { essBaseline = fb.perHour; essBaselineSrc = 'type'; }
         }
-        if (essBaseline == null) essBaseline = ESS_BASELINE;
+        if (essBaseline == null) { essBaseline = ESS_BASELINE; essBaselineSrc = 'default'; }
 
         // 事件流后处理：回填 roundIndex、batchId、waveId
         let roundIdx = 0;
@@ -1146,7 +1148,8 @@ WF.ArbitrationParser = (function () {
             rhythm:  rhythmEff,
           },
           essBaseline,
-          essBaselineIsNode: !!(nodeBase || (hasBaseline && resolved.typeName && WF.ArbNodeBaseline.fallback(resolved.typeName))),
+          essBaselineSrc,
+          essBaselineIsNode: essBaselineSrc === 'node' || essBaselineSrc === 'type',
           score,
           scoreTier: scoreTierName(score),
           squadInfo: sq.getSquadInfo(),

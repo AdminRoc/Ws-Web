@@ -629,6 +629,7 @@ body.profile-active #detail-wrap {
 }
 .arb-ess-key  { color: var(--c-text2); letter-spacing: 1px; font-size: 14px; white-space: nowrap; text-align: right; }
 .arb-ess-val  { color: var(--c-white); font-size: 14px; font-family: var(--f-px); white-space: nowrap; }
+.arb-ess-val.warn { color: var(--c-red); text-shadow: 0 0 6px rgba(255,95,107,0.35); }
 .arb-ess-buffnote { margin-top: 12px; font-size: 12px; color: var(--c-text2); letter-spacing: .5px; }
 
 /* 队内在场时长 tooltip 提示 */
