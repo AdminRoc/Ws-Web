@@ -160,9 +160,8 @@ WF.disruptionView = (function () {
       tbody.appendChild(tr);
     });
 
-    // ── 撤离时间汇总行：rec.endT − 最后一轮 endT（导管全部完成 → 撤离），仅 >0.5s 时显示 ──
-    const lastRound = rec.rounds[rec.rounds.length - 1];
-    const extractDur = (lastRound && rec.endT != null) ? rec.endT - lastRound.endT : 0;
+    // ── 撤离时间汇总行：rec.endT − 最后一次 ModeState=4（导管全部完成 → 撤离），仅 >0.5s 时显示 ──
+    const extractDur = (rec.lastModeState4T != null && rec.endT != null) ? rec.endT - rec.lastModeState4T : 0;
     if (extractDur > 0.5) {
       const tr = U.el('tr', 'dis-row-link dis-extract-row');
       // 点击行平滑滚动到「逐轮导管时间轴」末尾的撤离时间区块（与轮次行跳转行为一致）
@@ -323,10 +322,9 @@ WF.disruptionView = (function () {
       inner.appendChild(block);
     });
 
-    // ── 撤离时间独立区块：最后一轮导管全部完成 → 撤离成功，独立迷你时间轴（自己的比例尺，紫/品红系；仅 >0.5s 渲染） ──
+    // ── 撤离时间独立区块：最后一次 ModeState=4（导管全部完成）→ 撤离成功，独立迷你时间轴（自己的比例尺，紫/品红系；仅 >0.5s 渲染） ──
     let extractHost = null, extractDurV = 0;
-    const tlLastRound = rec.rounds[rec.rounds.length - 1];
-    const tlExtractDur = (tlLastRound && rec.endT != null) ? rec.endT - tlLastRound.endT : 0;
+    const tlExtractDur = (rec.lastModeState4T != null && rec.endT != null) ? rec.endT - rec.lastModeState4T : 0;
     if (tlExtractDur > 0.5) {
       inner.appendChild(U.el('div', 'dis-tl2-sep')); // 与轮间一致的霓虹分隔带
       const block = U.el('div', 'dis-tl2-round dis-extract-block');

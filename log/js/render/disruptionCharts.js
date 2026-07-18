@@ -237,7 +237,7 @@ WF.disruptionCharts = (function () {
         },
       },
       legend: { data: ['场上敌数'] },
-      grid: { left: '3%', right: '4%', bottom: '17%', top: '14%', containLabel: true },
+      grid: { left: '3%', right: '4%', bottom: '10%', top: '14%', containLabel: true },
       xAxis: { type: 'value', min: 0, max: Math.ceil(dur), axisLabel: { color: COLORS.muted, fontSize: 11, formatter: _mmss } },
       yAxis: { type: 'value', name: '场上敌数', min: 0, minInterval: 1 },
       dataZoom: _zoomPair(),

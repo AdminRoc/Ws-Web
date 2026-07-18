@@ -87,8 +87,13 @@ WF.DisruptionParser = (function () {
     // 提取存档逻辑为独立函数，供 eom 和 finish() 复用
     function saveMission(endT) {
       if (!mission || !mission.isDisruption) return;
-      // 关闭还未结算的尾轮
-      if (mission.roundOpen) closeRoundAt(endT);
+      // 关闭还未结算的尾轮：
+      // lastModeState4T 仅当属于最后一轮（>= 最后一轮.startT）时才有效——
+      // 否则意味着最后一轮从未到达 ModeState=4（例如中途撤离），回退到 endT。
+      const lr = mission.rounds.length > 0 ? mission.rounds[mission.rounds.length - 1] : null;
+      const roundEndT = (mission.lastModeState4T != null && lr && mission.lastModeState4T >= lr.startT)
+        ? mission.lastModeState4T : endT;
+      if (mission.roundOpen) closeRoundAt(roundEndT);
       // 轮次<3 的中断任务不生成记录，计为一次前置 Roll 图
       if (mission.rounds.length < 3) { pendingRoll++; return; }
       const start  = mission.startT || mission.loadT;
@@ -143,6 +148,7 @@ WF.DisruptionParser = (function () {
         liveSamples: mission.liveSamples,
         killEvents: mission.killEvents,
         stalkerEvents: mission.stalkerEvents,
+        lastModeState4T: roundEndT !== endT ? mission.lastModeState4T : null, // 仅当属于最后一轮时有效；否则 null（撤离时间=0）
         squadInfo: sq.getSquadInfo(),
         chatLog:   chat.getChatLog(mission.loadT, start, endT),
       });
@@ -169,6 +175,7 @@ WF.DisruptionParser = (function () {
         sessionAnchor: _sessionAnchor, // 用于把相对秒数换算成真实时钟时间
         areaEffects: {},      // area 1-4 → {kind:'buff'|'debuff', id:N} for current round
         intervalEndedT: null, // Interval timer ended timestamp (precise round start for rounds > 1)
+        lastModeState4T: null, // 最后一次 ModeState=4 的时刻（用于计算撤离时间）
         _prevLiveAfter: null, // Live count after previous enemy agent was created (for kill delta)
       };
       roundStartT = null;
@@ -261,6 +268,7 @@ WF.DisruptionParser = (function () {
           } else if (state === 4) {
             // 孤儿 ModeState=4 守卫：日志从中途接入（错过 state=3）时不压入零导管幻影轮
             if (mission.roundOpen) closeRoundAt(t);
+            mission.lastModeState4T = t;  // 记录最后 ModeState=4 时刻，用于计算撤离时间
           }
           return;
         }

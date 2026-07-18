@@ -189,6 +189,14 @@ WF.generalView = (function () {
     // 窗口尺寸变化时重绘全部 ECharts（仿中断分页）
     currentResizeHandler = () => { for (const c of activeCharts) if (c && c.resize) c.resize(); };
     window.addEventListener('resize', currentResizeHandler);
+
+    // 初次渲染后重置所有 ECharts 尺寸：
+    // _mountChart 在 section 未挂载 DOM 时调用 echarts.init，容器宽度为 0；
+    // section 随后才被 appendChild 到 container（已在 DOM 树中），此时容器获得真实宽度，
+    // 需要主动 resize 让 ECharts 按正确尺寸重绘。
+    requestAnimationFrame(() => {
+      for (const c of activeCharts) if (c && c.resize) c.resize();
+    });
   }
 
   // ── 防御 / 镜像防御 波次表 ─────────────────────────────────
@@ -256,7 +264,7 @@ WF.generalView = (function () {
     // 波次进程总览表
     const tblBox = U.el('div', 'chart-box dis-tl-wrap');
     tblBox.appendChild(U.el('div', 'dis-tl-title', '防御任务进程总览'));
-    const tbl = U.el('table', 'round-table');
+    const tbl = U.el('table', 'round-table gen-round-table');
     const totalEnemiesCol = rec.waves.some(w => w.totalEnemies) ? '<th>波次敌人上限</th>' : '';
     const nCols = 4 + (totalEnemiesCol ? 1 : 0);
     tbl.innerHTML = `<thead><tr><th>波次</th><th>波次耗时</th><th>累计耗时</th><th>击杀 / 生成</th>${totalEnemiesCol}</tr></thead>`;
@@ -267,10 +275,12 @@ WF.generalView = (function () {
     if (openingDur > 0.5) tbody.appendChild(_boundaryRow('opening', openingDur, '击杀首个敌人', nCols));
 
     let cumulative = 0;
-    rec.waves.forEach(w => {
+    rec.waves.forEach((w, index) => {
       cumulative += w.duration || 0;
-      const tr = U.el('tr', w.incomplete ? 'gen-incomplete-row' : '');
-      tr.appendChild(U.el('td', 'td-idx', String(w.index) + (w.incomplete ? '（未打完）' : '')));
+      const isLast = (index === rec.waves.length - 1);
+      const trClass = isLast ? 'gen-last-row' : (w.incomplete ? 'gen-incomplete-row' : '');
+      const tr = U.el('tr', trClass);
+      tr.appendChild(U.el('td', 'td-idx', String(w.index) + (w.incomplete && !isLast ? '（未打完）' : '')));
       tr.appendChild(U.el('td', 'td-mono', w.duration != null ? U.fmtDuration(w.duration) : '—'));
       tr.appendChild(U.el('td', 'td-mono', U.fmtDurationLong(cumulative)));
       const sp = w.actualSpawned || w.totalEnemies || w.spawned || 0;
@@ -369,7 +379,7 @@ WF.generalView = (function () {
     // 生存进程总览表
     const tblBox = U.el('div', 'chart-box dis-tl-wrap');
     tblBox.appendChild(U.el('div', 'dis-tl-title', '生存任务进程总览'));
-    const tbl = U.el('table', 'round-table');
+    const tbl = U.el('table', 'round-table gen-round-table');
     const killTh  = hasSegKills  ? '<th>击杀</th>' : '';
     const spawnTh = hasSpawnData ? '<th>生成（近似）</th>' : '';
     const nCols = 3 + (hasSegKills ? 1 : 0) + (hasSpawnData ? 1 : 0);
@@ -381,10 +391,12 @@ WF.generalView = (function () {
     if (openingDur > 0.5) tbody.appendChild(_boundaryRow('opening', openingDur, '击杀首个敌人', nCols));
 
     let cumulative = 0;
-    segs.forEach(sg => {
+    segs.forEach((sg, index) => {
       cumulative += sg.duration || 0;
-      const tr = U.el('tr', sg.incomplete ? 'gen-incomplete-row' : '');
-      tr.appendChild(U.el('td', 'td-idx',  `第 ${sg.tier} 档` + (sg.incomplete ? '（未打完）' : '')));
+      const isLast = (index === segs.length - 1);
+      const trClass = isLast ? 'gen-last-row' : (sg.incomplete ? 'gen-incomplete-row' : '');
+      const tr = U.el('tr', trClass);
+      tr.appendChild(U.el('td', 'td-idx',  `第 ${sg.tier} 档` + (sg.incomplete && !isLast ? '（未打完）' : '')));
       tr.appendChild(U.el('td', 'td-mono', sg.duration != null ? U.fmtDuration(sg.duration) : '—'));
       tr.appendChild(U.el('td', 'td-mono', U.fmtDurationLong(cumulative)));
       if (hasSegKills) {
@@ -469,7 +481,7 @@ WF.generalView = (function () {
     // 拦截进程总览表
     const tblBox = U.el('div', 'chart-box dis-tl-wrap');
     tblBox.appendChild(U.el('div', 'dis-tl-title', '拦截任务进程总览'));
-    const tbl = U.el('table', 'round-table');
+    const tbl = U.el('table', 'round-table gen-round-table');
     const killTh = hasSegKills ? '<th>击杀</th>' : '';
     const nCols = 3 + (hasSegKills ? 1 : 0);
     tbl.innerHTML = `<thead><tr><th>轮次</th><th>轮次耗时</th><th>累计耗时</th>${killTh}</tr></thead>`;
@@ -480,10 +492,12 @@ WF.generalView = (function () {
     if (openingDur > 0.5) tbody.appendChild(_boundaryRow('opening', openingDur, '击杀首个敌人', nCols));
 
     let cumulative = 0;
-    segs.forEach(sg => {
+    segs.forEach((sg, index) => {
       cumulative += sg.duration || 0;
-      const tr = U.el('tr', sg.incomplete ? 'gen-incomplete-row' : '');
-      tr.appendChild(U.el('td', 'td-idx', `第 ${sg.round} 轮` + (sg.incomplete ? '（未打完）' : '')));
+      const isLast = (index === segs.length - 1);
+      const trClass = isLast ? 'gen-last-row' : (sg.incomplete ? 'gen-incomplete-row' : '');
+      const tr = U.el('tr', trClass);
+      tr.appendChild(U.el('td', 'td-idx', `第 ${sg.round} 轮` + (sg.incomplete && !isLast ? '（未打完）' : '')));
       tr.appendChild(U.el('td', 'td-mono', sg.duration != null ? U.fmtDuration(sg.duration) : '—'));
       tr.appendChild(U.el('td', 'td-mono', U.fmtDurationLong(cumulative)));
       if (hasSegKills) {

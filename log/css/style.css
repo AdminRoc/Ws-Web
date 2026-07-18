@@ -2671,3 +2671,27 @@ body.profile-active #detail-wrap {
 
 /* 通用进程总览表·未打完段（incomplete）行弱化：透明度降低 + 斜体 */
 .dis-tl-wrap .round-table tbody tr.gen-incomplete-row td { opacity: 0.55; font-style: italic; }
+
+/* 通用进程总览表·最后一行样式：不暗化，保持正常显示 */
+.dis-tl-wrap .gen-round-table tbody tr.gen-last-row td {
+  opacity: 1;
+  font-style: normal;
+}
+
+/* 通用进程总览表·开局行样式调整：确保不与其他元素重叠 */
+.dis-tl-wrap .gen-round-table tbody tr.dis-opening-row td {
+  /* 保持原有紫色样式，但确保不与其他元素重叠 */
+  position: relative;
+  z-index: 1;
+}
+
+/* 通用进程总览表·表格容器调整 */
+.dis-tl-wrap .gen-round-table {
+  /* 无需额外 margin，保持自然布局 */
+}
+
+/* 通用进程总览表·表头样式调整：移除 sticky（overflow:hidden 会破坏 sticky 定位导致重叠） */
+.dis-tl-wrap .gen-round-table th {
+  position: static;
+  z-index: auto;
+}
