@@ -161,6 +161,18 @@ var sabotage_cervantesRecords = [
     uploadTime: "2021-04-24",
     videoUrls:  ["https://www.youtube.com/watch?v=dVye1XEkt-U"],
   },
+  {
+    playerId:   "realfoxirl",
+    clearTime:  "1:35.000",
+    uploadTime: "2026-07-15",
+    videoUrls:  ["https://www.youtube.com/watch?v=5SDOkM3VYBk"],
+  },
+  {
+    playerId:   "Titoxx",
+    clearTime:  "1:37.000",
+    uploadTime: "2024-02-29",
+    videoUrls:  ["https://www.youtube.com/watch?v=i6jS_aQELeU"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
