@@ -10,6 +10,11 @@
  * 纯 transform/opacity 错峰动画（60fps）、整体时长 > 1s、上下左右视口 clamp。
  * 展开即"锁定态"：主导航不再因鼠标离开而收起；点击任一 R 按钮平滑滚动到对应
  * 轮次并整体收回；点击页面空白需两次才收回（第一次仅边框闪烁/抖动提示）。
+ * 锁定自 openSub 被调用的瞬间生效（含错峰动画进行期间），此后只有
+ * 两次空白点击 / 点击 R 按钮 / Esc 三条收回路径；鼠标移动类事件一律不收回。
+ * 图表 hover 自愈：ECharts tooltip、SVG 高亮等瞬态 DOM 噪声会命中 #detail 的
+ * MutationObserver，rebuild 以"标题元素身份+标签+轮次锚点"指纹判变，内容零
+ * 变化时整体跳过重建——噪声不再撤掉悬停意图，也不再瞬时收回已锁定的二级面板。
  * 样式全部在 css/cyber-nav-expand.css，不动 style.css。 */
 window.WF = window.WF || {};
 
@@ -26,7 +31,7 @@ WF.cyberNav = (function () {
   const ROUND_NO_SEL = '.dis-tl2-rno';          // 轮次号文本来源（如 "R12"）
   const SUB_BTN_W = 46, SUB_BTN_H = 30;         // 单个 R 按钮尺寸（px）
   const SUB_GAP = 8, SUB_PAD = 12;              // 网格间距 / 面板内边距
-  const SUB_MAX_ROWS = 11, SUB_MIN_ROWS = 4;    // 每列行数钳制 → 超出自动向左加列
+  const SUB_MAX_ROWS = 11, SUB_MIN_ROWS = 2;    // 每列行数钳制 → 超出自动向左加列
   const SUB_TOP_MARGIN = 90;                    // 面板顶部不得越过的视口边界（避开固定导航栏）
   const SUB_BOTTOM_MARGIN = 20, SUB_SIDE_GAP = 12, SUB_MIN_LEFT = 12;
   const SUB_OPEN_INTENT = 150;   // 悬停意图延迟（ms）：扫过列表不误触发锁定
@@ -138,25 +143,44 @@ WF.cyberNav = (function () {
     requestAnimationFrame(step);
   }
 
+  // 重建内容指纹：标题元素身份 + 渲染标签 + 各二级项轮次锚点 id/标签。
+  // 图表 hover（ECharts tooltip 的 append/innerHTML 更新、SVG 高亮插删节点）会
+  // 命中 #detail 的 MutationObserver，但不会改变指纹 → 整体跳过重建：噪声不再
+  // 撤掉悬停意图定时器，也不再瞬时收回已锁定的二级面板（原 bug 根因）。
+  // 指纹含元素身份：整棵重渲染（即便文本完全相同）也会正确触发真实重建；
+  // 点击回调闭包引用的元素身份与渲染标签都在指纹内，跳过重建绝不会用到过期引用。
+  let lastHeads = null; // 上次重建时的标题元素引用数组（身份比较）
+  let lastSig = '';     // 上次重建时的文本指纹
+
   function rebuild() {
     if (!detail) return;
+    const heads = Array.from(detail.querySelectorAll(HEADING_SEL))
+      .filter((el) => el.offsetParent !== null && (el.textContent || '').trim());
+    const roundsList = heads.map(collectRounds);
+    const sig = heads.map(function (el, i) {
+      return labelOf(el) + '|' + roundsList[i].map(function (r) { return r.id + ':' + r.label; }).join(',');
+    }).join(';;');
+    const sameHeads = !!lastHeads && lastHeads.length === heads.length
+      && heads.every(function (el, i) { return el === lastHeads[i]; });
+    if (sameHeads && sig === lastSig) return; // 瞬态噪声：导航相关内容零变化
+    lastHeads = heads;
+    lastSig = sig;
+
     clearTimeout(subIntentTimer);
     // 列表即将重建：二级面板引用的锚点几何全部作废，瞬时收回（不播动画）
     if (subOpen) collapseSub(true);
-    const heads = Array.from(detail.querySelectorAll(HEADING_SEL))
-      .filter((el) => el.offsetParent !== null && (el.textContent || '').trim());
     if (!heads.length) { root.classList.remove('show'); return; }
     root.classList.add('show');
     listEl.innerHTML = '';
     // 顶部锚
     addItem('▲ 顶部', () => smoothScrollTo(0));
-    heads.forEach((el) => {
+    heads.forEach((el, i) => {
       const gotoHeading = () => {
         const y = el.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
         smoothScrollTo(y);
       };
       // 通用探测：目标区块内存在轮次锚点 → 该项升级为带二级展开的导航项
-      const rounds = collectRounds(el);
+      const rounds = roundsList[i];
       if (rounds.length) addSubItem(labelOf(el), gotoHeading, rounds);
       else addItem(labelOf(el), gotoHeading);
     });
@@ -303,11 +327,23 @@ WF.cyberNav = (function () {
   }
 
   // ── 二级面板：展开（悬停激活 → 锁定态） ──────────────────
+  // 锁定自本函数被调用的瞬间生效，覆盖整个错峰展开动画期：
+  // 此后只有三条收回路径——两次空白点击（第一次仅警告）/ 点击 R 按钮选中 / Esc；
+  // 任何鼠标移动类事件（mouseleave/mouseout/mouseover/pointerleave 等）一律不得
+  // 收回或暂停展开（scheduleMainClose 在 subOpen=true 时整体短路）。
   function openSub(itemEl, rounds) {
     if (!rounds.length || !itemEl.isConnected) return;
     if (subOpen && subItemEl === itemEl) return;
-    collapseSub(true); // 防御：清掉可能残留的旧面板
-    clearTimeout(closeTimer);
+    collapseSub(true); // 防御：清掉可能残留的旧面板（会短暂解锁，随即重新锁定）
+
+    // ── 从此刻起进入完整锁定态（含展开动画进行期间）──
+    subOpen = true;
+    subItemEl = itemEl;
+    subBlankArmed = false;
+    // 清理一切可能在锁定期内误伤的过期定时器：
+    clearTimeout(closeTimer);      // 进入锁定前已排期的主导航 260ms 收起
+    clearTimeout(subIntentTimer);  // 已完成使命的悬停意图计时（防锁死后旧定时器再触发）
+    clearTimeout(subRemoveTimer);  // 旧面板移除计时（其回调内的补收起判定以 !subOpen 为闸）
     root.classList.add('open'); // 锁定期间主导航保持展开
 
     const lay = computeSubLayout(rounds.length);
@@ -323,9 +359,6 @@ WF.cyberNav = (function () {
     buildSubButtons(rounds, lay, anchor);
 
     document.body.appendChild(subPanel);
-    subOpen = true;
-    subItemEl = itemEl;
-    subBlankArmed = false;
     itemEl.classList.add('sub-active');
     // 双 rAF：确保初始 transform/opacity 先应用，再加 open 触发从锚点的爆发过渡
     requestAnimationFrame(function () {

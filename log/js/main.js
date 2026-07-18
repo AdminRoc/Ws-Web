@@ -151,7 +151,7 @@
     } else if (file.size >= WF.logReader.STREAM_THRESHOLD) {
       // 超大文件但单核（或浏览器不支持 hardwareConcurrency）：退回单 Worker 流式扫描
       const baselineUrl = new URL('../data/arb-node-baseline.json', window.location.href).href;
-      const worker = new Worker('js/logWorker.js?v=20260718b');
+      const worker = new Worker('js/logWorker.js?v=20260718c');
       worker.onmessage = (e) => {
         const msg = e.data;
         if (msg.type === 'progress') { onProgress(msg.pct); }
@@ -218,7 +218,7 @@
       const shardSizes = [];
       for (let i = 0; i < shardCount; i++) shardSizes.push(boundaries[i + 1] - boundaries[i]);
 
-      const mergeWorker = new Worker('js/logMergeWorker.js?v=20260718b');
+      const mergeWorker = new Worker('js/logMergeWorker.js?v=20260718c');
       const shardWorkers = [];
       let failed = false;
 

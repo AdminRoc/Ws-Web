@@ -102,6 +102,26 @@ WF.DisruptionParser = (function () {
       const effScore  = Math.min(70, (rndPerMin / 1.8) * 70);
       const ps = Math.round(effScore + condRate * 30);
       const pg = ps >= 90 ? 'S' : ps >= 75 ? 'A' : ps >= 55 ? 'B' : ps >= 35 ? 'C' : 'D';
+      // 第1轮重定基：剥离开局时长（进场→首次击杀的准备段）。
+      // killEvents 只在 roundOpen 期间记录，首个元素即全场第一次击杀。
+      // 首杀落在 R1 区间内时，把 R1 起点平移到首杀时刻，导管 relT 同步减去 shift；
+      // r1.duration / r1.cumulative 保持自任务开始起算，不动；killEvents 数组本身不动。
+      let openingEndT = null;
+      if (mission.killEvents.length > 0) {
+        const fk = mission.killEvents[0];
+        const r1 = mission.rounds[0];
+        if (fk > r1.startT && fk < r1.endT) {
+          const shift = fk - r1.startT;
+          r1.startT = fk;
+          r1.combatDuration = r1.endT - fk;
+          r1.conduits.forEach(c => {
+            // 结果 <0 时 clamp 为 0：极端日志兜底（导管记录在首杀之前的开局段内），正常日志不会触发
+            if (c.insertRelT !== null) c.insertRelT = Math.max(0, c.insertRelT - shift);
+            if (c.doneRelT  !== null) c.doneRelT  = Math.max(0, c.doneRelT  - shift);
+          });
+          openingEndT = fk;
+        }
+      }
       // 绝对时刻换算：sessionAnchor = {t, date}，把相对秒数差换成真实时钟时间；
       // endAbsT 用于跨会话绝对排序（格式与仲裁记录一致）
       const anchor = mission.sessionAnchor;
@@ -115,6 +135,7 @@ WF.DisruptionParser = (function () {
         totalDuration: dur,
         name: mission.name, score: mission.score,
         rounds: mission.rounds, roundCount: n,
+        openingEndT, // 第1轮开局段终点（首杀时刻）；不满足条件时 null。开局时长 = openingEndT − startT
         roundsPerMin: rndPerMin, conduitRate: condRate,
         successConduits: successConds, totalConduits: totalConds,
         perfScore: ps, perfGrade: pg,
@@ -238,7 +259,8 @@ WF.DisruptionParser = (function () {
             }
             mission.intervalEndedT = null;
           } else if (state === 4) {
-            closeRoundAt(t);
+            // 孤儿 ModeState=4 守卫：日志从中途接入（错过 state=3）时不压入零导管幻影轮
+            if (mission.roundOpen) closeRoundAt(t);
           }
           return;
         }

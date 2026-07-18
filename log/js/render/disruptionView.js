@@ -53,6 +53,12 @@ WF.disruptionView = (function () {
     hero.appendChild(_st('任务总时长', U.fmtDurationLong(rec.totalDuration), 'big'));
     hero.appendChild(_st('完成轮次',   String(rec.roundCount), 'accent'));
     hero.appendChild(_st('平均每轮时长', U.fmtDuration(avgRound), ''));
+    // 平均净时长：rounds 的 combatDuration 之和 / roundCount
+    //（解析器重定基后即为净口径：不含轮间间隔/撤离/开局，无需对 R1 特殊处理）
+    const avgNet = rec.rounds.reduce((s, r) => s + (r.combatDuration || 0), 0) / rec.roundCount;
+    const netStat = _st('平均净时长', U.fmtDuration(avgNet), 'has-tip');
+    netStat.title = '不含轮间间隔、撤离时间与开局时长';
+    hero.appendChild(netStat);
     if (rec.totalConduits > 0) {
       const rate = (rec.conduitRate * 100).toFixed(1) + '%';
       hero.appendChild(_st('导管成功率', rate, ''));
@@ -97,6 +103,25 @@ WF.disruptionView = (function () {
     tbl.innerHTML = '<thead><tr><th>轮次</th><th>本轮耗时</th><th>累计耗时</th><th>导管</th><th>击杀 / 生成</th></tr></thead>';
 
     const tbody = U.el('tbody');
+
+    // ── 开局时长行：rec.openingEndT − rec.startT（任务开始 → 击杀首个敌人），仅 >0.5s 时显示；
+    //    位于 tbody 最上方（R1 行之前），与撤离行同族、色相偏青紫（镜像撤离行，位置相反） ──
+    const openingDur = (rec.openingEndT != null) ? rec.openingEndT - rec.startT : 0;
+    if (openingDur > 0.5) {
+      const tr = U.el('tr', 'dis-row-link dis-extract-row dis-opening-row');
+      // 点击行平滑滚动到「逐轮导管时间轴」最前的开局区块（与轮次行/撤离行跳转行为一致）
+      tr.addEventListener('click', () => {
+        const target = document.getElementById('dis-tl-opening');
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      tr.appendChild(U.el('td', 'td-idx', '开局'));
+      tr.appendChild(U.el('td', 'td-mono', U.fmtDuration(openingDur)));
+      tr.appendChild(U.el('td', 'td-mono', '—'));
+      tr.appendChild(U.el('td', 'td-conduits', '击杀首个敌人'));
+      tr.appendChild(U.el('td', 'td-mono', '—'));
+      tbody.appendChild(tr);
+    }
+
     rec.rounds.forEach(r => {
       const tr = U.el('tr', 'dis-row-link');
       // 点击行平滑滚动到「逐轮导管时间轴」中对应轮次的区块
@@ -179,7 +204,8 @@ WF.disruptionView = (function () {
   }
 
   /* ════════════════════════════════════════════════════════════
-     逐轮导管时间轴：每轮一个区块，泳道按 insertRelT 升序排列，
+     逐轮导管时间轴：每轮一个区块，泳道先按 Tile 分组（null 排最后，
+     视为独立组）、同 Tile 内按 insertRelT 升序排列，
      冰蓝 = 寻钥段，青绿/红 = 守管段，黄框 = 危险 Buff 导管；
      Ctrl+滚轮横向缩放（重渲染 SVG），点击轮头折叠/展开。
 
@@ -195,7 +221,7 @@ WF.disruptionView = (function () {
     const section = U.el('div', 'chart-box dis-tl-wrap');
     section.appendChild(U.el('div', 'dis-tl-title', '逐轮导管时间轴'));
     section.appendChild(U.el('div', 'dis-tl-sub',
-      '每轮一个区块，四条泳道按插入先后排列，共用同一秒级时间轴；冰蓝为寻钥段、青绿/红为守管段，黄框为危险 Buff 导管；泳道按 Tile 分组，以小分割线隔开。悬停查看精确数据，Ctrl+滚轮缩放，点击轮头折叠。红色竖带为 Stalker 入侵时段。'));
+      '每轮一个区块，四条泳道按 Tile 两两分组、组内按插入先后排列，共用同一秒级时间轴；冰蓝为寻钥段、青绿/红为守管段，黄框为危险 Buff 导管；组间以小分割线隔开。悬停查看精确数据，Ctrl+滚轮缩放，点击轮头折叠。红色竖带为 Stalker 入侵时段。'));
 
     // 泳道自建浮层 tooltip（复用 chart-bar-tooltip 定位模式，支持多行）
     const tip = U.el('div', 'chart-bar-tooltip dis-tl2-tip');
@@ -208,6 +234,29 @@ WF.disruptionView = (function () {
 
     const bodies = []; // { r, host }：有导管数据的轮次泳道区
     const heads = [];  // 全部轮头：sticky 吸左 + JS 同步可视宽度，保证缩放/横滚时完整可见
+
+    // ── 开局时长独立区块：任务开始 → 击杀首个敌人，独立迷你时间轴（自己的比例尺，青/紫系；仅 >0.5s 渲染）。
+    //    位于第 1 轮区块之前：它本就是第一个区块故无前置分隔带；与 R1 之间也不加轮间霓虹分隔带，
+    //    以与撤离区块相同的独立区块样式与轮次区块区分（镜像撤离区块，位置相反）。
+    //    id 不含 "round"，cyberNav 的 [id^="dis-tl-round-"] 探测不会匹配它，导航不受影响。 ──
+    let openingHost = null;
+    const tlOpeningDur = (rec.openingEndT != null) ? rec.openingEndT - rec.startT : 0;
+    if (tlOpeningDur > 0.5) {
+      const block = U.el('div', 'dis-tl2-round dis-opening-block');
+      block.id = 'dis-tl-opening';
+      // 区块头：「开局时长」+ 时长，不可折叠（无箭头、无点击）
+      const head = U.el('div', 'dis-tl2-head dis-opening-head');
+      head.appendChild(U.el('span', 'dis-opening-label', '开局时长'));
+      head.appendChild(U.el('span', 'dis-opening-dur', U.fmtDuration(tlOpeningDur)));
+      block.appendChild(head);
+      heads.push(head); // 与轮头同一套 sticky 吸左 + 宽度同步
+      const body = U.el('div', 'dis-tl2-body');
+      const host = U.el('div', 'dis-tl2-svg');
+      body.appendChild(host);
+      block.appendChild(body);
+      inner.appendChild(block);
+      openingHost = host;
+    }
 
     rec.rounds.forEach((r, i) => {
       // 轮与轮之间的霓虹分隔带（明显强于泳道间小分割线）
@@ -317,6 +366,11 @@ WF.disruptionView = (function () {
 
     // 按当前缩放宽度重渲染全部轮次 SVG（参照全屏图的 rebuild 模式）
     function rebuildAll() {
+      if (openingHost) {
+        const { svgStr, td } = _buildOpeningSvgStr(tlOpeningDur, zoomW);
+        openingHost.innerHTML = svgStr;
+        _addRoundTlInteractivity(openingHost.querySelector('svg'), td, tip);
+      }
       bodies.forEach(({ r, host }) => {
         const { svgStr, td } = _buildRoundTlSvgStr(r, zoomW, rec.stalkerEvents);
         host.innerHTML = svgStr;
@@ -357,9 +411,14 @@ WF.disruptionView = (function () {
     return section;
   }
 
-  // 泳道排序：insertRelT 升序（缺失者排后，按 doneRelT / 导管号兜底）
+  // 泳道排序：先按 tile 升序分组（tile 为 null 的排最后，视为独立组），同 tile 内按 insertRelT 升序
+  //（缺失者排后，按 doneRelT / 导管号兜底）。轮头 ✓✗ 徽章与泳道共用本函数，顺序天然一致；
+  // 进程总览表的导管徽章不走本函数，保持插入顺序不动。
   function _sortConduits(conduits) {
     return [...conduits].sort((a, b) => {
+      const at = a.tile != null ? a.tile : Infinity;
+      const bt = b.tile != null ? b.tile : Infinity;
+      if (at !== bt) return at - bt;
       const ai = a.insertRelT != null ? a.insertRelT : Infinity;
       const bi = b.insertRelT != null ? b.insertRelT : Infinity;
       if (ai !== bi) return ai - bi;
@@ -498,8 +557,12 @@ WF.disruptionView = (function () {
       const relE = Math.max(0, Math.min(dur, (ev.endT != null ? ev.endT : r.endT) - r.startT));
       if (relE - relS <= 0) return;
       const x0 = tx(relS), x1 = tx(relE);
-      const tipTxt = U.escapeHtml('Stalker 入侵：第 ' + relS.toFixed(1) + 's – '
-        + (ev.endT != null ? '第 ' + relE.toFixed(1) + 's' : '持续至本轮结束'));
+      // tooltip 用任务相对真实时间（≈游戏内时间戳，与累计耗时同用 fmtDurationLong）；
+      // 任务开始 = r.endT − r.cumulative（每轮可算，无需新参数）；绘制范围仍按本轮区间 clamp，不变
+      const missionStart = r.endT - r.cumulative;
+      const tipTxt = U.escapeHtml('Stalker 入侵：' + U.fmtDurationLong(ev.startT - missionStart) + ' – '
+        + U.fmtDurationLong((ev.endT != null ? ev.endT : r.endT) - missionStart)
+        + (ev.endT == null ? '（持续至任务结束）' : ''));
       s += `<g class="dis-tl2-stalker" data-tip="${tipTxt}">`;
       s += `<rect class="dis-tl2-stalker-band" x="${x0.toFixed(1)}" y="${MT}" width="${Math.max(0.5, x1 - x0).toFixed(1)}" height="${lanesH}"`
         + ` fill="rgba(255,45,72,0.13)" stroke="rgba(255,59,78,0.55)" stroke-width="1"/>`;
@@ -514,24 +577,25 @@ WF.disruptionView = (function () {
     return { svgStr: s, td };
   }
 
-  // 撤离时间迷你 SVG：独立比例尺 0 → 撤离时长（严禁与最后一轮共用时间轴），紫/品红霓虹
-  function _buildExtractSvgStr(durSec, W) {
+  // 独立迷你段时间轴 SVG（开局/撤离共用模式）：独立比例尺 0 → durSec，严禁与相邻轮次共用时间轴。
+  // theme: { gradId, stops[3], stroke, label, labelColor, tip, laneCls, fillCls }
+  function _buildMiniSegSvgStr(durSec, W, theme) {
     const ML = 160, MR = 30, MT = 22;   // 与轮次 SVG 同一套留白，视觉对齐
     const dur = Math.max(durSec || 0, 0.2);
     const plotW = Math.max(W - ML - MR, 10);
     const laneH = 26;
     const axisY = MT + laneH;
     const H     = axisY + 30;
-    // 撤离时长通常很短：刻度步长自适应（>60s 切 10s，>25s 切 5s，>8s 切 2s，否则 1s）
+    // 时长通常很短：刻度步长自适应（>60s 切 10s，>25s 切 5s，>8s 切 2s，否则 1s）
     const tickStep = dur > 60 ? 10 : dur > 25 ? 5 : dur > 8 ? 2 : 1;
     const tx = t => ML + Math.min(plotW, Math.max(0, (t / dur) * plotW));
 
     let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="display:block;font-family:inherit">`;
     s += `<defs>
-      <linearGradient id="dis-extract-grad" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#7b2fbf" stop-opacity="0.90"/>
-        <stop offset="55%" stop-color="#b14aed" stop-opacity="0.95"/>
-        <stop offset="100%" stop-color="#ff3fd8" stop-opacity="0.98"/>
+      <linearGradient id="${theme.gradId}" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="${theme.stops[0]}" stop-opacity="0.90"/>
+        <stop offset="55%" stop-color="${theme.stops[1]}" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="${theme.stops[2]}" stop-opacity="0.98"/>
       </linearGradient>
     </defs>`;
 
@@ -545,17 +609,41 @@ WF.disruptionView = (function () {
     }
     s += `<line x1="${ML}" y1="${axisY}" x2="${(ML + plotW).toFixed(1)}" y2="${axisY}" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>`;
 
-    // 撤离段：0 → 撤离时长 紫→品红渐变条；悬停 tooltip 说明口径
-    const tipTxt = U.escapeHtml('最后一轮导管全部完成 → 撤离成功');
-    s += `<g class="dis-tl2-lane dis-extract-bar" data-tip="${tipTxt}">`;
-    s += `<rect x="${ML}" y="${MT}" width="${plotW}" height="${laneH}" rx="3" fill="rgba(255,255,255,0.03)" stroke="rgba(177,74,237,0.30)" stroke-width="1"/>`;
-    s += `<rect class="dis-extract-fill" x="${ML}" y="${MT + 3}" width="${plotW}" height="${laneH - 6}" rx="2" fill="url(#dis-extract-grad)"/>`;
-    s += `<text x="${ML - 8}" y="${MT + 17}" fill="#f0a6ff" font-size="13" text-anchor="end">撤离</text>`;
+    // 段条：0 → 时长 渐变条；悬停 tooltip 说明口径
+    const tipTxt = U.escapeHtml(theme.tip);
+    s += `<g class="dis-tl2-lane ${theme.laneCls}" data-tip="${tipTxt}">`;
+    s += `<rect x="${ML}" y="${MT}" width="${plotW}" height="${laneH}" rx="3" fill="rgba(255,255,255,0.03)" stroke="${theme.stroke}" stroke-width="1"/>`;
+    s += `<rect class="${theme.fillCls}" x="${ML}" y="${MT + 3}" width="${plotW}" height="${laneH - 6}" rx="2" fill="url(#${theme.gradId})"/>`;
+    s += `<text x="${ML - 8}" y="${MT + 17}" fill="${theme.labelColor}" font-size="13" text-anchor="end">${theme.label}</text>`;
     s += `</g>`;
 
     s += `</svg>`;
     const td = { ML, MT, plotW, lanesH: laneH, axisY, dur, W };
     return { svgStr: s, td };
+  }
+
+  // 撤离时间迷你 SVG：独立比例尺 0 → 撤离时长（严禁与最后一轮共用时间轴），紫/品红霓虹
+  function _buildExtractSvgStr(durSec, W) {
+    return _buildMiniSegSvgStr(durSec, W, {
+      gradId: 'dis-extract-grad',
+      stops: ['#7b2fbf', '#b14aed', '#ff3fd8'],
+      stroke: 'rgba(177,74,237,0.30)',
+      label: '撤离', labelColor: '#f0a6ff',
+      tip: '最后一轮导管全部完成 → 撤离成功',
+      laneCls: 'dis-extract-bar', fillCls: 'dis-extract-fill',
+    });
+  }
+
+  // 开局时长迷你 SVG：独立比例尺 0 → 开局时长（严禁与第 1 轮共用时间轴），青/紫霓虹（与撤离品红同族可区分）
+  function _buildOpeningSvgStr(durSec, W) {
+    return _buildMiniSegSvgStr(durSec, W, {
+      gradId: 'dis-opening-grad',
+      stops: ['#1d4fd7', '#4f5bea', '#8b5cf6'],
+      stroke: 'rgba(99,102,241,0.35)',
+      label: '开局', labelColor: '#a6b8ff',
+      tip: '任务开始 → 击杀第一个敌人',
+      laneCls: 'dis-opening-bar', fillCls: 'dis-opening-fill',
+    });
   }
 
   // 单轮泳道交互：贯穿全部泳道的竖直十字线（发光） + 「第 X.Xs」标注 + 泳道自建浮层
