@@ -1616,7 +1616,6 @@ body.profile-active #detail-wrap {
 
 /* 中断·ECharts 全宽图容器（高度规则仿 .arb-chart-body） */
 .dis-chart-body { width: 100%; height: 280px; position: relative; z-index: 1; }
-.dis-chart-body.dis-kill-body { height: 320px; }
 .dis-chart-body.dis-live-body { height: 600px; }
 .dis-chart-body.dis-open-body { height: 280px; }
 .dis-chart-body.dis-ifull-body { height: 280px; }

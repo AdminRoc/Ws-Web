@@ -164,67 +164,7 @@ WF.disruptionCharts = (function () {
     return chart;
   }
 
-  // ── 2. 击杀数量走势图（全局阶梯累计折线：逐击杀事件精准时间戳，tooltip 带所属轮次） ──
-  function killTrendChart(container, rec) {
-    if (!isAvailable() || !rec) return null;
-
-    const start = rec.startT;
-    const dur   = rec.totalDuration;
-    if (!(dur > 0)) return null;
-    const killTimes = (rec.killEvents || [])
-      .map((t) => t - start)
-      .filter((t) => t >= 0 && t <= dur)
-      .sort((a, b) => a - b);
-    if (!killTimes.length) return null;
-
-    // 阶梯累计数据（每个击杀事件一个精准点，全程累计）
-    const data = [[0, 0]];
-    for (let i = 0; i < killTimes.length; i++) data.push([+killTimes[i].toFixed(2), i + 1]);
-    data.push([+dur.toFixed(2), killTimes.length]);
-
-    const rounds = rec.rounds || [];
-    const option = mergeOption({
-      tooltip: {
-        formatter: function (params) {
-          const p = Array.isArray(params) ? params[0] : params;
-          if (!p || !p.value) return '';
-          // 所属轮次判定：该时刻（换算回日志绝对秒）落在某轮 rounds[].startT/endT 区间内 → 第 N 轮；
-          // 落在两轮之间（或首轮开始前）→ 轮间间隔
-          const absT = start + p.value[0];
-          let rd = null;
-          for (let i = 0; i < rounds.length; i++) {
-            if (absT >= rounds[i].startT && absT <= rounds[i].endT) { rd = rounds[i].index; break; }
-          }
-          return `<div style="font-weight:bold;margin-bottom:4px;">${_mmss(p.value[0])}</div>`
-            + `<div>${p.marker || ''} 累计击杀 ${p.value[1]}</div>`
-            + `<div>${rd != null ? '第 ' + rd + ' 轮' : '轮间间隔'}</div>`;
-        },
-      },
-      grid: { left: '3%', right: '4%', bottom: '17%', top: '12%', containLabel: true },
-      xAxis: { type: 'value', min: 0, max: Math.ceil(dur), axisLabel: { color: COLORS.muted, fontSize: 11, formatter: _mmss } },
-      yAxis: { type: 'value', name: '累计击杀', minInterval: 1 },
-      dataZoom: _zoomPair(),
-      series: [{
-        name: '累计击杀',
-        type: 'line',
-        step: 'end',
-        showSymbol: false,
-        lineStyle: { width: 2, color: COLORS.green, shadowBlur: 8, shadowColor: 'rgba(0,255,136,0.45)' },
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: 'rgba(0,255,136,0.30)' },
-            { offset: 1, color: 'rgba(0,255,136,0.02)' },
-          ]),
-        },
-        data,
-      }],
-    });
-    const chart = echarts.init(container);
-    chart.setOption(option);
-    return chart;
-  }
-
-  // ── 3. 场上敌量曲线（markArea=每轮前 10 秒窗口，markLine=每轮起点） ──
+  // ── 2. 场上敌量曲线（markArea=每轮前 10 秒窗口，markLine=每轮起点） ──
   const LIVE_WINDOW = 10; // 每轮开始后的高亮窗口（秒）
 
   function liveCountChart(container, rec) {
@@ -339,7 +279,7 @@ WF.disruptionCharts = (function () {
     return chart;
   }
 
-  // ── 4. 每轮前 10 秒击杀数（青色渐变柱 + 辉光 + 柱顶数值） ──
+  // ── 3. 每轮前 10 秒击杀数（青色渐变柱 + 辉光 + 柱顶数值） ──
   // 插满耗时：从本轮开始，到所有导管都被插入钥匙（最后一根导管被插入）的时长。
   // 只取 max(insertRelT)，与完成时刻无关；任一导管缺 insertRelT（或本轮无导管）则为 null。
   function _insertFullTime(r) {
@@ -407,7 +347,7 @@ WF.disruptionCharts = (function () {
     return chart;
   }
 
-  // ── 5. 插满耗时·折线图（与「每轮前10秒击杀数」严格同轮次类目轴/同 grid/同 dataZoom，逐轮对齐） ──
+  // ── 4. 插满耗时·折线图（与「每轮前10秒击杀数」严格同轮次类目轴/同 grid/同 dataZoom，逐轮对齐） ──
   function insertFullChart(container, rec) {
     if (!isAvailable() || !rec || !rec.rounds || !rec.rounds.length) return null;
     const data = rec.rounds.map((r) => {
@@ -457,7 +397,6 @@ WF.disruptionCharts = (function () {
     baseOption,
     mergeOption,
     roundDurationChart,
-    killTrendChart,
     liveCountChart,
     openingKillsChart,
     insertFullChart,

@@ -73,10 +73,6 @@ WF.disruptionView = (function () {
       '青蓝色为本轮导管全部守住，红色为存在失守的情况',
       'dis-dur-body', (body) => WF.disruptionCharts.roundDurationChart(body, rec));
 
-    // ── 击杀数量走势图（ECharts 全局阶梯累计折线） ────────────
-    _mountChart(container, '击杀数量走势图', null,
-      'dis-kill-body', (body) => WF.disruptionCharts.killTrendChart(body, rec));
-
     // ── 场上敌量曲线（liveSamples 缺失/空则跳过本区块，保持原语义） ──
     _mountChart(container, '场上敌量曲线',
       '场上同时存在的敌人数，取自房主日志生成采样；高亮段为每轮开始后的前 10 秒',
