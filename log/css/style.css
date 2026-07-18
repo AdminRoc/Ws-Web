@@ -473,9 +473,6 @@ body.profile-active #detail-wrap {
 /* height is NOT set here — each SVG sets its own height attribute so it renders
    at the viewBox's natural pixel height and doesn't scale up with container width */
 .round-chart, .arb-chart { width: 100%; display: block; }
-.bar-ok { fill: var(--c-teal-dim); }
-.bar-ok:hover { fill: var(--c-teal); }
-.bar-fail { fill: #a8424c; }
 .bar-label { fill: var(--c-text2); font-size: 9px; font-family: var(--f-px); }
 
 /* 条形图悬浮 tooltip */
@@ -1617,25 +1614,11 @@ body.profile-active #detail-wrap {
 }
 .dis-tl-sub { font-size: 11px; color: var(--c-text2); letter-spacing: 0.5px; line-height: 1.6; margin-bottom: 10px; }
 
-/* ================= 击杀折线图 全屏弹窗 ================= */
-.dis-chart-overlay {
-  position: fixed; inset: 0; z-index: 9000;
-  background: rgba(4,5,12,0.94);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  cursor: zoom-out;
-}
-.dis-chart-modal {
-  max-width: calc(100vw - 40px); max-height: calc(100vh - 60px);
-  overflow: auto; border: 1px solid var(--c-border-hi);
-  border-radius: var(--r-lg); padding: 14px;
-  background: var(--c-bg2); cursor: default;
-}
-.dis-chart-hint {
-  margin-top: 10px; font-size: 12px; color: var(--c-text2); letter-spacing: 1px;
-}
-.dis-chart-zoom { cursor: zoom-in; }
-.dis-chart-zoom:hover { outline: 1px solid var(--c-border-hi); border-radius: var(--r-sm); }
+/* 中断·ECharts 全宽图容器（高度规则仿 .arb-chart-body） */
+.dis-chart-body { width: 100%; height: 280px; position: relative; z-index: 1; }
+.dis-chart-body.dis-kill-body { height: 320px; }
+.dis-chart-body.dis-live-body { height: 300px; }
+.dis-chart-body.dis-open-body { height: 280px; }
 
 /* ================= 通用任务视图 ================= */
 .gen-timing-box {
@@ -2384,7 +2367,6 @@ body.profile-active #detail-wrap {
    ======================================================================== */
 
 /* 图表容器：霓虹边框 + 扫描线 + 网格背景 */
-.cyber-chart-box,
 .chart-box.dis-tl-wrap {
   position: relative;
   background: linear-gradient(160deg, rgba(13,16,27,0.88), rgba(8,10,20,0.92));
@@ -2395,7 +2377,6 @@ body.profile-active #detail-wrap {
     0 0 28px rgba(33,230,255,0.05);
   overflow: hidden;
 }
-.cyber-chart-box::before,
 .chart-box.dis-tl-wrap::before {
   content: '';
   position: absolute;
@@ -2408,7 +2389,6 @@ body.profile-active #detail-wrap {
   0% { left: -40%; }
   100% { left: 100%; }
 }
-.cyber-chart-box::after,
 .chart-box.dis-tl-wrap::after {
   content: '';
   position: absolute;
@@ -2422,97 +2402,12 @@ body.profile-active #detail-wrap {
 }
 
 /* 标题霓虹 */
-.cyber-chart-box .dis-tl-title,
 .chart-box.dis-tl-wrap .dis-tl-title {
   position: relative;
   z-index: 1;
   color: #dffbff;
   text-shadow: 0 0 10px rgba(95,208,232,0.55), 0 0 22px rgba(95,208,232,0.22);
   border-bottom-color: rgba(95,208,232,0.28);
-}
-
-/* 每轮耗时条形图增强 */
-.round-chart rect {
-  transition: fill 0.18s ease, filter 0.18s ease;
-}
-.round-chart .bar-ok {
-  fill: url(#cyber-bar-ok);
-  filter: drop-shadow(0 0 3px rgba(58,208,232,0.22));
-}
-.round-chart .bar-fail {
-  fill: url(#cyber-bar-fail);
-  filter: drop-shadow(0 0 3px rgba(255,107,117,0.28));
-}
-.round-chart rect:hover {
-  filter: drop-shadow(0 0 5px rgba(58,208,232,0.45));
-}
-.round-chart .bar-fail:hover {
-  filter: drop-shadow(0 0 5px rgba(255,107,117,0.55));
-}
-
-/* 击杀走势折线图容器增强 */
-.dis-chart-zoom {
-  border: 1px solid rgba(95,208,232,0.12);
-  border-radius: var(--r-sm);
-  background: rgba(4,5,12,0.35);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.dis-chart-zoom:hover {
-  border-color: rgba(95,208,232,0.35);
-  box-shadow: 0 0 18px rgba(33,230,255,0.08);
-}
-
-/* 全屏弹窗增强 */
-.dis-chart-modal {
-  border: 1px solid rgba(95,208,232,0.45);
-  box-shadow:
-    0 0 0 1px rgba(33,230,255,0.08) inset,
-    0 0 40px rgba(33,230,255,0.15);
-}
-
-/* 每轮前10秒击杀数柱状图 */
-.opening-kills-chart {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  display: block;
-}
-.opening-kills-chart .cyber-grid-line {
-  stroke: rgba(95,208,232,0.12);
-  stroke-width: 1;
-  stroke-dasharray: 3 3;
-}
-.cyber-bar-group {
-  animation: cyberBarEnter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-@keyframes cyberBarEnter {
-  from { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
-  to { opacity: 1; transform: scaleY(1); transform-origin: bottom; }
-}
-.cyber-bar {
-  fill: url(#cyber-bar-gradient);
-  filter: drop-shadow(0 0 5px rgba(95,208,232,0.45));
-  transition: fill 0.18s ease, filter 0.18s ease;
-}
-.cyber-bar-group:hover .cyber-bar {
-  fill: url(#cyber-bar-hover);
-  filter: drop-shadow(0 0 10px rgba(95,208,232,0.8));
-}
-.cyber-axis-text,
-.cyber-axis-title,
-.cyber-bar-value {
-  fill: var(--c-text2);
-  font-family: var(--f-px);
-  font-size: 10px;
-  letter-spacing: 0.5px;
-}
-.cyber-bar-value {
-  fill: #dffbff;
-  text-shadow: 0 0 6px rgba(95,208,232,0.5);
-}
-.cyber-axis-title {
-  font-size: 11px;
-  fill: var(--c-teal);
 }
 
 /* 表格行霓虹悬停 */
@@ -2525,9 +2420,7 @@ body.profile-active #detail-wrap {
 
 /* 减少动效偏好 */
 @media (prefers-reduced-motion: reduce) {
-  .cyber-chart-box::before,
   .chart-box.dis-tl-wrap::before { animation: none; display: none; }
-  .cyber-bar-group { animation: none; }
 }
 
 /* SVG 渐变定义由 JS 在渲染时注入到 svg 的 <defs> 中，避免每个 SVG 重复维护 */
@@ -2539,30 +2432,14 @@ body.profile-active #detail-wrap {
 }
 
 /* ========================================================================
-   中断·速通复盘扩展：场上敌量曲线 / 逐轮导管时间轴
+   中断·速通复盘扩展：逐轮导管时间轴（全宽）
    ======================================================================== */
-
-/* 场上敌量曲线：横向滚动容器（放大后滚动查看） */
-.dis-live-scroll {
-  overflow-x: auto;
-  padding-bottom: 6px;
-  position: relative;
-  z-index: 1;
-  border: 1px solid rgba(95,208,232,0.12);
-  border-radius: var(--r-sm);
-  background: rgba(4,5,12,0.35);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.dis-live-scroll:hover {
-  border-color: rgba(95,208,232,0.35);
-  box-shadow: 0 0 18px rgba(33,230,255,0.08);
-}
 
 /* 进程总览表：可点击跳转逐轮导管时间轴的行（hover 高亮提示可点） */
 .round-table tr.dis-row-link { cursor: pointer; }
 .round-table tr.dis-row-link:hover td { background: rgba(95,208,232,0.14); }
 
-/* 逐轮导管时间轴：整体横向滚动容器（Ctrl+滚轮放大后滚动） */
+/* 逐轮导管时间轴：整体横向滚动容器（Ctrl+滚轮放大后滚动；1× 时 SVG 填满容器） */
 .dis-tl2-scroll {
   overflow-x: auto;
   padding-bottom: 6px;
@@ -2571,35 +2448,48 @@ body.profile-active #detail-wrap {
 }
 .dis-tl2-inner { display: block; width: max-content; min-width: 100%; }
 
-/* 每轮一个区块；轮与轮之间：2px 渐变分隔带 + 大间距 + 交替底色 */
-.dis-tl2-round { padding: 12px 10px 14px; border-radius: var(--r-sm); scroll-margin-top: calc(var(--nav-h) + 10px); }
-.dis-tl2-round.alt { background: rgba(255,255,255,0.015); }
+/* 每轮一个区块；轮与轮之间：2px 渐变分隔带 + 大间距 + 交替底色 + 细描边 */
+.dis-tl2-round {
+  padding: 12px 12px 14px; border-radius: var(--r-sm);
+  border: 1px solid rgba(95,208,232,0.05);
+  scroll-margin-top: calc(var(--nav-h) + 10px);
+}
+.dis-tl2-round.alt { background: rgba(95,208,232,0.028); border-color: rgba(95,208,232,0.08); }
 .dis-tl2-sep {
   height: 2px; margin: 14px 2px; border-radius: 1px;
-  background: linear-gradient(90deg, transparent, rgba(95,208,232,0.5), rgba(65,255,142,0.3), rgba(95,208,232,0.5), transparent);
-  box-shadow: 0 0 8px rgba(95,208,232,0.18);
+  background: linear-gradient(90deg, transparent, rgba(95,208,232,0.55), rgba(65,255,142,0.35), rgba(95,208,232,0.55), transparent);
+  box-shadow: 0 0 10px rgba(95,208,232,0.22);
 }
 
-/* 轮头（横向滚动时吸左，点击折叠/展开该轮泳道） */
+/* 轮头（横向滚动时吸左，点击折叠/展开该轮泳道；✓✗ 与危险 Buff 名右置对齐） */
 .dis-tl2-head {
   position: sticky; left: 0;
-  display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px 14px;
   font-size: 13px; user-select: none;
-  padding: 3px 6px; border-radius: var(--r-sm);
-  transition: background 0.15s ease;
+  padding: 4px 8px; border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 .dis-tl2-head.has-lanes { cursor: pointer; }
-.dis-tl2-head.has-lanes:hover { background: rgba(95,208,232,0.07); }
+.dis-tl2-head.has-lanes:hover { background: rgba(95,208,232,0.07); border-color: rgba(95,208,232,0.14); }
 .dis-tl2-arrow { color: var(--c-teal); width: 12px; flex-shrink: 0; }
-.dis-tl2-rno { color: var(--c-teal); letter-spacing: 2px; }
-.dis-tl2-dur { color: var(--c-gold); font-size: 15px; text-shadow: 0 0 10px rgba(255,182,72,0.25); }
-.dis-tl2-cds { display: inline-flex; align-items: center; }
+.dis-tl2-rno {
+  color: var(--c-teal); letter-spacing: 1.5px; font-family: var(--f-px); font-size: 13px;
+  text-shadow: 0 0 8px rgba(95,208,232,0.4);
+}
+.dis-tl2-dur { color: var(--c-gold); font-size: 15px; font-family: var(--f-px); text-shadow: 0 0 10px rgba(255,182,72,0.25); }
+.dis-tl2-cds { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; }
 .dis-tl2-bad { color: #ffd700; font-size: 12px; letter-spacing: 1px; text-shadow: 0 0 8px rgba(255,215,0,0.3); }
 .dis-tl2-bad-dot { margin-right: 4px; }
 
 /* 泳道区（默认展开，折叠时隐藏） */
 .dis-tl2-body { margin-top: 8px; }
 .dis-tl2-round.collapsed .dis-tl2-body { display: none; }
+
+/* 寻钥段 / 守管段霓虹辉光 */
+.dis-tl2-seg-key  { filter: drop-shadow(0 0 4px rgba(91,200,255,0.30)); }
+.dis-tl2-seg-ok   { filter: drop-shadow(0 0 5px rgba(65,255,142,0.35)); }
+.dis-tl2-seg-fail { filter: drop-shadow(0 0 5px rgba(255,95,107,0.40)); }
 
 /* 泳道自建浮层 tooltip（复用 chart-bar-tooltip 定位模式，支持多行） */
 .dis-tl2-tip { white-space: pre-line; z-index: 9500; }

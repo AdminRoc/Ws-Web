@@ -67,7 +67,6 @@ WF.shareCard = (function () {
         }
         #detail, #detail *, #detail *::before, #detail *::after,
         #detail svg text, #detail svg tspan, #detail svg,
-        .opening-kills-chart text, .dis-chart-zoom text,
         .round-chart text { font-family: 'XSZT', 'Microsoft YaHei', monospace !important; }
         /* SVG 内文本最小字体大小保底（XSZT 字体在过小尺寸下难以识别，12px起） */
         #detail svg text, #detail svg tspan, #detail text { font-size: inherit !important; }
@@ -164,7 +163,6 @@ WF.shareCard = (function () {
         .chart-box > .gen-section-title:first-child,
         .chart-box > .dis-section-title:first-child { margin-top: 0 !important; }
         .chart-box > *:last-child { margin-bottom: 0 !important; }
-        .dis-chart-zoom { margin: 10px 0 0 !important; }
         .round-table { margin: 10px 0 0 !important; }
 
         .rainbow, .logo-main, .panel-label, .record-title,
@@ -203,54 +201,19 @@ WF.shareCard = (function () {
         .rd-table th { background: #0a0d16 !important; }
         .round-table tr:hover td, .rd-table tr:hover td { background: transparent !important; }
 
-        /* 确保 SVG 条形图填充色可见（html2canvas 有时无法解析 CSS 变量和 url(#gradient) 引用） */
-        .bar-ok { fill: #3a8ba0 !important; }
-        .bar-ok:hover { fill: #5fd0e8 !important; }
-        .bar-fail { fill: #ff6b75 !important; }
-        .bar-fail:hover { fill: #ff8e96 !important; }
-
-        /* 每轮前10秒击杀数柱状图：覆盖 url(#cyber-bar-gradient) 为实色，确保克隆文档中有效 */
-        .cyber-bar { fill: #1a7a9a !important; filter: none !important; }
-        .cyber-bar-group:hover .cyber-bar { fill: #2a9aca !important; }
-        .cyber-grid-line { stroke: rgba(95,208,232,0.18) !important; stroke-width: 1; stroke-dasharray: 3 3; }
-        .cyber-axis-text { fill: #6b7690 !important; font-family: 'XSZT', 'Microsoft YaHei', monospace !important; font-size: 10px !important; }
-        .cyber-axis-title { fill: #5fd0e8 !important; font-family: 'XSZT', 'Microsoft YaHei', monospace !important; font-size: 11px !important; }
-        .cyber-bar-value { fill: #dffbff !important; font-family: 'XSZT', 'Microsoft YaHei', monospace !important; font-size: 10px !important; }
-        /* 柱状图容器在克隆中关闭动画和伪元素 */
-        .cyber-chart-box::before, .cyber-chart-box::after, .chart-box.dis-tl-wrap::before, .chart-box.dis-tl-wrap::after { display: none !important; }
-        .cyber-bar-group { animation: none !important; }
+        /* 图表卡片在克隆中关闭扫描线动画和网格伪元素 */
+        .chart-box.dis-tl-wrap::before, .chart-box.dis-tl-wrap::after { display: none !important; }
 
         svg { overflow: visible !important; }
         .round-chart { max-width: 100% !important; height: auto !important; }
         .dis-tl-wrap .round-chart { width: auto !important; min-width: 0 !important; display: block !important; }
 
-        /* 每轮前10秒击杀数 SVG —— 固定 760px 宽度并等比缩放 */
-        .opening-kills-chart {
-          width: 760px !important;
-          max-width: 100% !important;
-          height: auto !important;
-          display: block !important;
-          font-family: 'XSZT', 'Microsoft YaHei', monospace !important;
-        }
-
-        /* 击杀走势图在分享图中完整显示（取消横向滚动，等比缩放） */
-        .dis-chart-zoom {
+        /* 中断·逐轮导管时间轴：分享图中完整显示（取消横向滚动，等比缩放） */
+        .dis-tl2-scroll {
           overflow: visible !important;
           width: 100% !important;
         }
-        .dis-chart-zoom svg {
-          width: 100% !important;
-          height: auto !important;
-          max-width: 100% !important;
-          display: block !important;
-        }
-
-        /* 中断·场上敌量曲线 / 逐轮导管时间轴：分享图中完整显示（取消横向滚动，等比缩放） */
-        .dis-live-scroll, .dis-tl2-scroll {
-          overflow: visible !important;
-          width: 100% !important;
-        }
-        .dis-live-scroll svg, .dis-tl2-body svg {
+        .dis-tl2-body svg {
           width: 100% !important;
           height: auto !important;
           max-width: 100% !important;
