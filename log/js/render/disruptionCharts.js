@@ -164,13 +164,9 @@ WF.disruptionCharts = (function () {
     return chart;
   }
 
-  // ── 2. 击杀走势（阶梯累计折线 + 导管事件 markPoint 时间轴） ──
-  // helpers: { effectName(c), isBad(c) } 由视图层注入，复用同一份中文名映射与危险判定
-  function killTrendChart(container, rec, helpers) {
+  // ── 2. 击杀数量走势图（全局阶梯累计折线：逐击杀事件精准时间戳，tooltip 带所属轮次） ──
+  function killTrendChart(container, rec) {
     if (!isAvailable() || !rec) return null;
-    helpers = helpers || {};
-    const effName = helpers.effectName || function () { return '—'; };
-    const isBad   = helpers.isBad      || function () { return false; };
 
     const start = rec.startT;
     const dur   = rec.totalDuration;
@@ -181,66 +177,27 @@ WF.disruptionCharts = (function () {
       .sort((a, b) => a - b);
     if (!killTimes.length) return null;
 
-    // 二分查找：t 时刻的累计击杀数
-    function killAt(relT) {
-      let lo = 0, hi = killTimes.length;
-      while (lo < hi) { const m = (lo + hi) >> 1; if (killTimes[m] <= relT) lo = m + 1; else hi = m; }
-      return lo;
-    }
-
-    // 阶梯累计数据
+    // 阶梯累计数据（每个击杀事件一个精准点，全程累计）
     const data = [[0, 0]];
     for (let i = 0; i < killTimes.length; i++) data.push([+killTimes[i].toFixed(2), i + 1]);
     data.push([+dur.toFixed(2), killTimes.length]);
 
-    // 导管事件 markPoint：插入=青色三角，完成=圆点（成功绿 / 失败红 / 危险 Buff 黄）
-    const marks = [];
-    rec.rounds.forEach((r) => {
-      (r.conduits || []).forEach((c) => {
-        const buff = c.effectKind ? effName(c) : null;
-        const head = `R${r.index}${c.artNum != null ? ' 导管' + c.artNum : ''}`;
-        if (c.insertT != null) {
-          const relT = c.insertT - start;
-          if (relT >= 0 && relT <= dur) {
-            marks.push({
-              coord: [+relT.toFixed(2), killAt(relT)],
-              symbol: 'triangle', symbolSize: 12,
-              itemStyle: { color: COLORS.cyan, shadowBlur: 8, shadowColor: COLORS.cyan, opacity: 0.9 },
-              tip: `<div style="font-weight:bold;margin-bottom:4px;">${head}</div>`
-                + (buff ? `<div>Buff：${buff}</div>` : '')
-                + `<div>插入 +${U.fmtDuration(relT)}</div>`,
-            });
-          }
-        }
-        if (c.doneT != null) {
-          const relT = c.doneT - start;
-          if (relT >= 0 && relT <= dur) {
-            const col = isBad(c) ? '#ffd700'
-              : c.success === false ? COLORS.red
-              : c.success === true ? COLORS.green : '#8a8f9e';
-            const lbl = c.success === true ? '守卫成功' : c.success === false ? '守卫失败' : '结果未知';
-            marks.push({
-              coord: [+relT.toFixed(2), killAt(relT)],
-              symbol: 'circle', symbolSize: 9,
-              itemStyle: { color: col, shadowBlur: 8, shadowColor: col, opacity: 0.88 },
-              tip: `<div style="font-weight:bold;margin-bottom:4px;">${head}</div>`
-                + (buff ? `<div>Buff：${buff}</div>` : '')
-                + `<div>${lbl} +${U.fmtDuration(relT)}</div>`,
-            });
-          }
-        }
-      });
-    });
-
+    const rounds = rec.rounds || [];
     const option = mergeOption({
       tooltip: {
         formatter: function (params) {
-          // markPoint 悬停时 params 为单个对象；折线轴触发时为数组
-          if (!Array.isArray(params)) return (params.data && params.data.tip) || '';
-          const p = params[0];
+          const p = Array.isArray(params) ? params[0] : params;
           if (!p || !p.value) return '';
+          // 所属轮次判定：该时刻（换算回日志绝对秒）落在某轮 rounds[].startT/endT 区间内 → 第 N 轮；
+          // 落在两轮之间（或首轮开始前）→ 轮间间隔
+          const absT = start + p.value[0];
+          let rd = null;
+          for (let i = 0; i < rounds.length; i++) {
+            if (absT >= rounds[i].startT && absT <= rounds[i].endT) { rd = rounds[i].index; break; }
+          }
           return `<div style="font-weight:bold;margin-bottom:4px;">${_mmss(p.value[0])}</div>`
-            + `<div>${p.marker || ''} 累计击杀 ${p.value[1]}</div>`;
+            + `<div>${p.marker || ''} 累计击杀 ${p.value[1]}</div>`
+            + `<div>${rd != null ? '第 ' + rd + ' 轮' : '轮间间隔'}</div>`;
         },
       },
       grid: { left: '3%', right: '4%', bottom: '17%', top: '12%', containLabel: true },
@@ -260,7 +217,6 @@ WF.disruptionCharts = (function () {
           ]),
         },
         data,
-        markPoint: { data: marks, label: { show: false }, emphasis: { scale: 1.4 } },
       }],
     });
     const chart = echarts.init(container);
@@ -284,17 +240,40 @@ WF.disruptionCharts = (function () {
 
     const data = samples.map((p) => [+Math.max(0, p.relT).toFixed(2), p.live]);
 
-    // 每轮开始后的前 10 秒：亮绿半透明竖带
+    // 每轮开始后的前 10 秒：红色竖带（与红色线段协调）
     const areas = [];
     rec.rounds.forEach((r) => {
       const w0 = Math.max(0, r.startT - start);
       const w1 = Math.min(dur, r.startT - start + LIVE_WINDOW);
       if (w1 > w0) {
         areas.push([
-          { xAxis: +w0.toFixed(2), itemStyle: { color: 'rgba(0,255,136,0.08)' } },
+          { xAxis: +w0.toFixed(2), itemStyle: { color: 'rgba(255,51,51,0.10)' } },
           { xAxis: +w1.toFixed(2) },
         ]);
       }
+    });
+
+    // 每轮前 10 秒窗口内的折线线段：独立红色覆盖系列（窗与窗之间以空点断开；
+    // 窗口起点值向前取最近采样做阶梯 carry-forward，窗尾延伸到最后一次取值）
+    const RED = '#ff3333';
+    const redData = [];
+    rec.rounds.forEach((r) => {
+      const w0 = Math.max(0, r.startT - start);
+      const w1 = Math.min(dur, r.startT - start + LIVE_WINDOW);
+      if (w1 <= w0) return;
+      let v0 = null;
+      for (let i = 0; i < samples.length; i++) {
+        if (samples[i].relT <= w0) v0 = samples[i].live;
+        else break;
+      }
+      if (v0 == null) return; // 窗口开始前尚无采样，无法定位线段
+      const pts = [[+w0.toFixed(2), v0]];
+      for (let i = 0; i < samples.length; i++) {
+        const p = samples[i];
+        if (p.relT > w0 && p.relT <= w1) pts.push([+p.relT.toFixed(2), p.live]);
+      }
+      pts.push([+w1.toFixed(2), pts[pts.length - 1][1]]);
+      redData.push(...pts, [null, null]);
     });
 
     // 每轮起点细分隔线；每 5 轮标 R#
@@ -311,11 +290,13 @@ WF.disruptionCharts = (function () {
     const option = mergeOption({
       tooltip: {
         formatter: function (params) {
-          const p = Array.isArray(params) ? params[0] : params;
+          const arr = Array.isArray(params) ? params : [params];
+          const p = arr.find((q) => q && q.seriesName === '场上敌数') || arr[0];
           if (!p || !p.value) return '';
           return `${_mmss(p.value[0])}  场上敌数 ${p.value[1]}`;
         },
       },
+      legend: { data: ['场上敌数'] },
       grid: { left: '3%', right: '4%', bottom: '17%', top: '14%', containLabel: true },
       xAxis: { type: 'value', min: 0, max: Math.ceil(dur), axisLabel: { color: COLORS.muted, fontSize: 11, formatter: _mmss } },
       yAxis: { type: 'value', name: '场上敌数', min: 0, minInterval: 1 },
@@ -335,6 +316,22 @@ WF.disruptionCharts = (function () {
         data,
         markArea: { silent: true, data: areas, animation: false },
         markLine: { silent: true, symbol: 'none', data: lines, animation: false },
+      }, {
+        // 每轮前 10 秒红色线段覆盖层（与上图同轴同步缩放，空点断开各窗口）
+        name: '前10秒',
+        type: 'line',
+        step: 'end',
+        showSymbol: false,
+        silent: true,
+        z: 3,
+        lineStyle: { width: 2.5, color: RED, shadowBlur: 12, shadowColor: 'rgba(255,51,51,0.65)' },
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: 'rgba(255,51,51,0.26)' },
+            { offset: 1, color: 'rgba(255,51,51,0.02)' },
+          ]),
+        },
+        data: redData,
       }],
     });
     const chart = echarts.init(container);
@@ -343,6 +340,20 @@ WF.disruptionCharts = (function () {
   }
 
   // ── 4. 每轮前 10 秒击杀数（青色渐变柱 + 辉光 + 柱顶数值） ──
+  // 插满耗时：从本轮开始，到所有导管都被插入钥匙（最后一根导管被插入）的时长。
+  // 只取 max(insertRelT)，与完成时刻无关；任一导管缺 insertRelT（或本轮无导管）则为 null。
+  function _insertFullTime(r) {
+    const cs = (r && r.conduits) || [];
+    if (!cs.length) return null;
+    let mx = -1;
+    for (let i = 0; i < cs.length; i++) {
+      const v = cs[i].insertRelT;
+      if (v == null) return null;
+      if (v > mx) mx = v;
+    }
+    return mx;
+  }
+
   function openingKillsChart(container, rec) {
     if (!isAvailable() || !rec || !rec.rounds || !rec.rounds.length) return null;
     const WINDOW = 10;
@@ -353,7 +364,7 @@ WF.disruptionCharts = (function () {
       for (let i = 0; i < kills.length; i++) {
         if (kills[i] >= r.startT && kills[i] < end) count++;
       }
-      return { value: count, round: r.index };
+      return { value: count, round: r.index, insertFull: _insertFullTime(r) };
     });
     const option = mergeOption({
       tooltip: {
@@ -361,7 +372,8 @@ WF.disruptionCharts = (function () {
         formatter: function (p) {
           const d = p.data || {};
           return `<div style="font-weight:bold;margin-bottom:4px;">第 ${d.round} 轮</div>`
-            + `<div>前 10 秒击杀：${d.value}</div>`;
+            + `<div>前 10 秒击杀：${d.value}</div>`
+            + `<div>插满耗时：${d.insertFull != null ? d.insertFull.toFixed(1) + 's' : '—'}</div>`;
         },
       },
       grid: { left: '3%', right: '4%', bottom: data.length > 30 ? '17%' : '10%', top: '14%', containLabel: true },
@@ -395,6 +407,46 @@ WF.disruptionCharts = (function () {
     return chart;
   }
 
+  // ── 5. 插满耗时·折线图（与「每轮前10秒击杀数」严格同轮次类目轴/同 grid/同 dataZoom，逐轮对齐） ──
+  function insertFullChart(container, rec) {
+    if (!isAvailable() || !rec || !rec.rounds || !rec.rounds.length) return null;
+    const data = rec.rounds.map((r) => {
+      const v = _insertFullTime(r);
+      return { value: v != null ? +v.toFixed(2) : null, round: r.index };
+    });
+    const option = mergeOption({
+      tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+          const p = Array.isArray(params) ? params[0] : params;
+          const d = (p && p.data) || {};
+          const v = d.value;
+          const rd = d.round != null ? d.round : (p && p.name);
+          return `<div style="font-weight:bold;margin-bottom:4px;">第 ${rd} 轮</div>`
+            + `<div>插满耗时：${v != null ? Number(v).toFixed(1) + 's' : '—'}</div>`;
+        },
+      },
+      grid: { left: '3%', right: '4%', bottom: data.length > 30 ? '17%' : '10%', top: '14%', containLabel: true },
+      xAxis: { type: 'category', data: data.map((d) => String(d.round)) },
+      yAxis: { type: 'value', name: '秒', min: 0 },
+      dataZoom: data.length > 30 ? _zoomPair() : [{ type: 'inside', start: 0, end: 100 }],
+      series: [{
+        name: '插满耗时',
+        type: 'line',
+        connectNulls: false, // 缺 insertRelT 的轮次折线断开
+        symbol: 'circle',
+        symbolSize: 8,
+        lineStyle: { width: 2.5, color: COLORS.amber, shadowBlur: 10, shadowColor: 'rgba(255,170,0,0.50)' },
+        itemStyle: { color: COLORS.amber, borderColor: '#fff2cc', borderWidth: 1, shadowBlur: 8, shadowColor: 'rgba(255,170,0,0.60)' },
+        emphasis: { scale: 1.5, itemStyle: { shadowBlur: 14, shadowColor: 'rgba(255,170,0,0.85)' } },
+        data,
+      }],
+    });
+    const chart = echarts.init(container);
+    chart.setOption(option);
+    return chart;
+  }
+
   // ── 通用 dispose 辅助 ──
   function dispose(chart) {
     if (chart && typeof chart.dispose === 'function') chart.dispose();
@@ -408,6 +460,7 @@ WF.disruptionCharts = (function () {
     killTrendChart,
     liveCountChart,
     openingKillsChart,
+    insertFullChart,
     dispose,
     COLORS,
   };

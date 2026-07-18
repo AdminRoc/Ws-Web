@@ -220,7 +220,7 @@ WF.shareCard = (function () {
           display: block !important;
         }
         .dis-tl2-inner { display: block !important; width: 100% !important; min-width: 0 !important; }
-        .dis-tl2-head { position: static !important; }
+        .dis-tl2-head { position: static !important; width: 100% !important; }
         .dis-tl2-tip { display: none !important; }
         /* 时间轴段落条渐变在克隆文档中改为实色，确保 html2canvas 正常渲染 */
         .dis-tl2-seg-key { fill: rgba(91,200,255,0.32) !important; }

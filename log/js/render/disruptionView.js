@@ -70,12 +70,12 @@ WF.disruptionView = (function () {
 
     // ── 每轮耗时概览（ECharts 全宽柱状图） ────────────────────
     _mountChart(container, '每轮耗时概览',
-      '每条横条对应一轮，长度 = 本轮耗时；青蓝色为本轮导管全部守住，红色为存在失守',
+      '青蓝色为本轮导管全部守住，红色为存在失守的情况',
       'dis-dur-body', (body) => WF.disruptionCharts.roundDurationChart(body, rec));
 
-    // ── 击杀走势（ECharts 阶梯累计折线 + 导管事件 markPoint） ──
-    _mountChart(container, '击杀走势 · 全程累计折线 + 导管事件时间轴', null,
-      'dis-kill-body', (body) => WF.disruptionCharts.killTrendChart(body, rec, { effectName: _effectName, isBad: _isBadDebuff }));
+    // ── 击杀数量走势图（ECharts 全局阶梯累计折线） ────────────
+    _mountChart(container, '击杀数量走势图', null,
+      'dis-kill-body', (body) => WF.disruptionCharts.killTrendChart(body, rec));
 
     // ── 场上敌量曲线（liveSamples 缺失/空则跳过本区块，保持原语义） ──
     _mountChart(container, '场上敌量曲线',
@@ -86,6 +86,10 @@ WF.disruptionView = (function () {
     _mountChart(container, '每轮前10秒击杀数',
       '每轮战斗开始10秒内的击杀总数；数值高意味着起手清场速度快',
       'dis-open-body', (body) => WF.disruptionCharts.openingKillsChart(body, rec));
+
+    // ── 插满耗时·折线图（紧邻每轮前10秒击杀数下方，同轴逐轮对齐） ──
+    _mountChart(container, '插满耗时·折线图', null,
+      'dis-ifull-body', (body) => WF.disruptionCharts.insertFullChart(body, rec));
 
     // ── 轮次详情表格 ─────────────────────────────────────────
     const tblSection = U.el('div', 'chart-box dis-tl-wrap');
@@ -189,6 +193,7 @@ WF.disruptionView = (function () {
     section.appendChild(scroll);
 
     const bodies = []; // { r, host }：有导管数据的轮次泳道区
+    const heads = [];  // 全部轮头：sticky 吸左 + JS 同步可视宽度，保证缩放/横滚时完整可见
 
     rec.rounds.forEach((r, i) => {
       // 轮与轮之间的霓虹分隔带（明显强于泳道间小分割线）
@@ -236,6 +241,7 @@ WF.disruptionView = (function () {
         }
       }
       block.appendChild(head);
+      heads.push(head);
 
       // ── 泳道区（整段无导管数据的轮跳过，只画轮头） ──
       if (hasData) {
@@ -261,6 +267,17 @@ WF.disruptionView = (function () {
     let baseW = measureBase() || TL2_BASE_W;
     let zoomW = baseW;
 
+    // 轮头宽度跟随滚动容器可视宽度：轮头整体 sticky 吸左且宽度 = clientWidth - 轮区块横向留白，
+    // 无论 Ctrl+滚轮放到多宽、横向滚动到任何位置（含最右端），R序号/耗时/✓✗/Buff名都完整停留在可视区内
+    function syncHeads(w) {
+      w = w || scroll.clientWidth || 0;
+      if (!w) return;
+      // 轮区块 padding+border 会吃掉 sticky 行程末端的可视宽度，扣除后才能保证滚到最右端时轮头不被裁切
+      const chrome = Math.max(0, (scroll.scrollWidth || 0) - zoomW);
+      const px = Math.max(240, w - chrome) + 'px';
+      for (let i = 0; i < heads.length; i++) heads[i].style.width = px;
+    }
+
     // 按当前缩放宽度重渲染全部轮次 SVG（参照全屏图的 rebuild 模式）
     function rebuildAll() {
       bodies.forEach(({ r, host }) => {
@@ -268,6 +285,7 @@ WF.disruptionView = (function () {
         host.innerHTML = svgStr;
         _addRoundTlInteractivity(host.querySelector('svg'), td, tip);
       });
+      syncHeads();
     }
     rebuildAll();
 
@@ -275,7 +293,9 @@ WF.disruptionView = (function () {
     if (typeof ResizeObserver !== 'undefined') {
       const ro = new ResizeObserver(() => {
         const w = scroll.clientWidth || inner.clientWidth || 0;
-        if (!w || Math.abs(w - baseW) < 2) return;
+        if (!w) return;
+        syncHeads(w); // 宽度未变时轮头宽度也要保持同步（初始挂载/临界变化）
+        if (Math.abs(w - baseW) < 2) return;
         const factor = zoomW / baseW;
         baseW = w;
         zoomW = Math.max(baseW, Math.min(TL2_MAX_W, Math.round(baseW * factor)));
@@ -327,13 +347,13 @@ WF.disruptionView = (function () {
   function _buildRoundTlSvgStr(r, W) {
     const conduits = _sortConduits(r.conduits || []);
     const n = conduits.length;
-    const laneH = 22, laneGap = 9;
-    const ML = 150, MR = 14, MT = 18;
+    const laneH = 30, laneGap = 10;          // 泳道高/间距（显微镜式大字号分析）
+    const ML = 160, MR = 30, MT = 22;        // 左标签区/右边距（防刻度文字裁切）/顶部留白
     const dur = Math.max(r.combatDuration || 0, 1);
     const plotW = W - ML - MR;
     const lanesH = n * laneH + (n - 1) * laneGap;
     const axisY  = MT + lanesH;
-    const H      = axisY + 26;
+    const H      = axisY + 30;
     // 刻度标签避免过密：轮 >60s 自动切 10s 步长
     const tickStep = dur > 60 ? 10 : 5;
     const tx = t => ML + Math.min(plotW, Math.max(0, (t / dur) * plotW));
@@ -366,7 +386,7 @@ WF.disruptionView = (function () {
       const tt = Math.min(t, dur);
       const x  = tx(tt).toFixed(1);
       s += `<line x1="${x}" y1="${MT}" x2="${x}" y2="${axisY}" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>`;
-      s += `<text x="${x}" y="${axisY + 15}" fill="var(--c-text2)" font-size="10" text-anchor="middle">${Math.round(tt)}s</text>`;
+      s += `<text x="${x}" y="${axisY + 19}" fill="var(--c-text2)" font-size="12.5" text-anchor="middle">${Math.round(tt)}s</text>`;
       if (tt >= dur) break;
     }
     s += `<line x1="${ML}" y1="${axisY}" x2="${(ML + plotW).toFixed(1)}" y2="${axisY}" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>`;
@@ -392,10 +412,10 @@ WF.disruptionView = (function () {
       // 泳道左标签：导管N + Buff 中文名（危险 Buff 黄字）
       const artLbl = '导管' + (c.artNum != null ? c.artNum : '?');
       const effLbl = U.escapeHtml(c.effectKind ? _effectName(c) : '—');
-      s += `<text x="${ML - 8}" y="${y + 9}" fill="#c9d4e8" font-size="10" text-anchor="end">${artLbl}</text>`;
-      s += `<text x="${ML - 8}" y="${y + 19}" fill="${bad ? '#ffd700' : 'var(--c-text2)'}" font-size="8.5" text-anchor="end"${bad ? ' style="text-shadow:0 0 6px rgba(255,215,0,0.4)"' : ''}>${effLbl}</text>`;
+      s += `<text x="${ML - 8}" y="${y + 13}" fill="#c9d4e8" font-size="13" text-anchor="end">${artLbl}</text>`;
+      s += `<text x="${ML - 8}" y="${y + 26}" fill="${bad ? '#ffd700' : 'var(--c-text2)'}" font-size="13" text-anchor="end"${bad ? ' style="text-shadow:0 0 6px rgba(255,215,0,0.4)"' : ''}>${effLbl}</text>`;
 
-      const barY = y + 3, barH = laneH - 6;
+      const barY = y + 4, barH = laneH - 8;
       if (c.insertRelT != null) {
         const xi = tx(c.insertRelT);
         // 寻钥段：[0 → insertRelT] 冰蓝半透明渐变条（霓虹辉光由 CSS 类承载）
@@ -410,8 +430,8 @@ WF.disruptionView = (function () {
           const fill = c.doneRelT == null ? 'url(#dis-tl2-unk)' : (c.success === false ? 'url(#dis-tl2-fail)' : 'url(#dis-tl2-ok)');
           s += `<rect class="${cls}" x="${xi.toFixed(1)}" y="${barY}" width="${(xd - xi).toFixed(1)}" height="${barH}" rx="2" fill="${fill}"/>`;
         }
-        // 段界处 ▼ 插入标记（带发光）
-        s += `<polygon points="${xi.toFixed(1)},${(barY + 1).toFixed(1)} ${(xi - 4.5).toFixed(1)},${(barY - 5).toFixed(1)} ${(xi + 4.5).toFixed(1)},${(barY - 5).toFixed(1)}" fill="#5bc8ff" opacity="0.9" style="filter:drop-shadow(0 0 3px rgba(91,200,255,0.7))"/>`;
+        // 段界处 ▼ 插入标记（带发光，同比放大）
+        s += `<polygon points="${xi.toFixed(1)},${(barY + 1.5).toFixed(1)} ${(xi - 6.5).toFixed(1)},${(barY - 7).toFixed(1)} ${(xi + 6.5).toFixed(1)},${(barY - 7).toFixed(1)}" fill="#5bc8ff" opacity="0.9" style="filter:drop-shadow(0 0 3px rgba(91,200,255,0.7))"/>`;
       } else if (c.doneRelT != null) {
         // 缺 insertRelT：该泳道只从 doneRelT 画灰色未知段
         const xd = tx(c.doneRelT);
@@ -450,7 +470,7 @@ WF.disruptionView = (function () {
 
     const txt = document.createElementNS(ns, 'text');
     txt.setAttribute('fill', 'rgba(255,255,255,0.92)');
-    txt.setAttribute('font-size', '10');
+    txt.setAttribute('font-size', '12');
     txt.setAttribute('font-family', 'monospace');
     txt.setAttribute('y', String(td.MT - 7));
     txt.style.paintOrder = 'stroke';
