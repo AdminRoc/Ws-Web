@@ -21,7 +21,7 @@ WF.logReader = (function () {
     'EidolonLandscape', "It's nighttime!", 'Teralyst Captured', 'Teralyst Killed',
     'Eidolon spawning SUCCESS', 'streaming to layer', 'LEVEL LOADER DONE', 'DefaultArcanePickup',
     // 中断 Disruption
-    'SentientArtifactMission.lua',
+    'SentientArtifactMission.lua', 'persistent enemy',
     // 大蜘蛛 Profit-Taker
     'HeistProfitTakerBountyFour', 'EIDOLONMP', 'Orb Fight - Starting',
     'SwitchShieldVulnerability', 'DBntyFourInterPrTk', 'DBntyFourSatelReal',

@@ -126,7 +126,7 @@ WF.disruptionCharts = (function () {
     const data = rounds.map((r) => {
       const ok = r.conduits.length === 0 || r.conduits.every((c) => c.success);
       return {
-        value: +r.duration.toFixed(1),
+        value: +r.combatDuration.toFixed(1),
         round: r.index,
         held: r.conduits.filter((c) => c.success === true).length,
         total: r.conduits.length,

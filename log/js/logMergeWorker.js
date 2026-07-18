@@ -10,13 +10,13 @@ self.window = self;
 try { importScripts('../../data/arb-node-baseline.js'); } catch (e) { /* 种子缺失无碍 */ }
 
 importScripts(
-  'logReader.js?v=20260710e',
+  'logReader.js?v=20260718a',
   'solNodes.js?v=20260707b',
   'arbNodeBaseline.js?v=20260717b',
   'squadMixin.js?v=20260707b',
   'chatMixin.js?v=20260707b',
   'parsers/eidolon.js?v=20260707b',
-  'parsers/disruption.js?v=20260718a',
+  'parsers/disruption.js?v=20260718b',
   'parsers/profitTaker.js?v=20260707b',
   'parsers/arbitration.js?v=20260717c',
   'parsers/general.js?v=20260710a'

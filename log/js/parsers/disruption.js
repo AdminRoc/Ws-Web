@@ -19,6 +19,8 @@ WF.DisruptionParser = (function () {
     abort:         'TopMenu.lua: Abort',
     failed:        'EndOfMatch.lua: Mission Failed',
     agentCreated:  'OnAgentCreated',
+    stalkerSpawn:  'LotusGameRules.lua: spawned persistent enemy!',
+    stalkerKill:   'LotusGameRules.lua: persistent enemy was killed!',
   };
 
   // Conduit effect ID → Chinese display name（按维基表格顺序，ID 映射待游戏内验证）
@@ -119,6 +121,7 @@ WF.DisruptionParser = (function () {
         preRollCount: pendingRoll,
         liveSamples: mission.liveSamples,
         killEvents: mission.killEvents,
+        stalkerEvents: mission.stalkerEvents,
         squadInfo: sq.getSquadInfo(),
         chatLog:   chat.getChatLog(mission.loadT, start, endT),
       });
@@ -138,6 +141,7 @@ WF.DisruptionParser = (function () {
         currentRoundKills: 0,
         currentRoundSpawned: 0,
         killEvents: [],
+        stalkerEvents: [],  // Stalker 入侵事件 {startT, endT|null}，与 rounds[].startT 同一时钟
         liveSamples: [],      // {t(日志内绝对秒，与 rounds[].startT 同一时钟), live(生成后的场上敌数)}，轮内与轮间间隔都采
         tiles: {},            // 导管编号 → tile 数字（Artifact status 行给出，整局有效）
         sessionOffset: _sessionOffset, // 用于多会话绝对排序
@@ -343,6 +347,18 @@ WF.DisruptionParser = (function () {
         if (line.indexOf(PAT.totalScore) !== -1) {
           const m = /Total score is\s*(\d+)/.exec(line);
           if (m) mission.score = parseInt(m[1], 10);
+          return;
+        }
+        // Stalker 入侵事件采集：开始以 spawned persistent enemy! 为准（'Spawning Stalker' 是提前约 12 秒的预警行，不用）
+        if (line.indexOf(PAT.stalkerSpawn) !== -1) {
+          mission.stalkerEvents.push({ startT: t, endT: null });
+          return;
+        }
+        if (line.indexOf(PAT.stalkerKill) !== -1) {
+          // 配对最近一个未结束的事件；无未配对事件则忽略
+          for (let si = mission.stalkerEvents.length - 1; si >= 0; si--) {
+            if (mission.stalkerEvents[si].endT === null) { mission.stalkerEvents[si].endT = t; break; }
+          }
           return;
         }
         if (line.indexOf(PAT.eom) !== -1) {

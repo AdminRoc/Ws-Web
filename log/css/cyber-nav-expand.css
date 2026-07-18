@@ -1,0 +1,118 @@
+/* ========================================================================
+   赛博导航 · 二级展开（逐轮导管时间轴 R1…RN 扇形分叉面板）
+   独立样式文件，不改动 style.css。
+   作用域全部限定在 .cyber-sub-* 与 .cyber-nav-item--sub / .sub-active，
+   没有二级能力的页面零影响。动画只用 transform / opacity，保证 60fps。
+   ======================================================================== */
+
+/* 二级面板：挂 body 下 fixed 定位，几何（left/top/width/height）由 JS 计算并 clamp。
+   z-index 899：主导航根(.cyber-nav)为 900，主面板天然盖在二级面板之上。 */
+.cyber-sub-panel {
+  position: fixed; z-index: 899;
+  --cy-cyan: #21e6ff; --cy-mag: #ff3df0; --cy-vio: #8a5bff;
+  border-radius: 14px;
+  background: linear-gradient(200deg, rgba(16,8,36,.88), rgba(5,18,32,.88));
+  border: 1px solid rgba(33,230,255,.32);
+  box-shadow: 0 0 30px rgba(138,91,255,.30), inset 0 0 26px rgba(33,230,255,.07);
+  backdrop-filter: blur(10px);
+  opacity: 0; transform: translateX(26px) scale(.92); transform-origin: right center;
+  pointer-events: none; /* 未展开（含收回动画期间）不参与命中测试 */
+  transition: opacity .34s ease, transform .44s cubic-bezier(.34,1.56,.64,1);
+}
+.cyber-sub-panel.open { opacity: 1; transform: none; pointer-events: auto; }
+
+/* R 按钮：网格坐标（left/top）由 JS 精确计算 → 任何 N 都不重叠。
+   初始态 = 沿 --sx/--sy 缩回锚点 + scale(.22) + 扇形扭转 --sr，opacity 0；
+   .open 后过渡到 identity。--sd 为逐按钮错峰延迟（展开列波+涟漪）。 */
+.cyber-sub-btn {
+  position: absolute; width: 46px; height: 30px; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; cursor: pointer;
+  border: 1px solid rgba(33,230,255,.38);
+  background: linear-gradient(135deg, rgba(33,230,255,.10), rgba(255,61,240,.08));
+  color: #cff3ff;
+  font-family: var(--f-px, 'Microsoft YaHei', monospace);
+  font-size: 12px; letter-spacing: 1px;
+  text-shadow: 0 0 7px rgba(33,230,255,.55);
+  box-shadow: 0 0 9px rgba(33,230,255,.14), inset 0 0 8px rgba(33,230,255,.06);
+  opacity: 0;
+  transform: translate(var(--sx, 30px), var(--sy, 0)) scale(.22) rotate(var(--sr, 0deg));
+  transition:
+    transform .68s cubic-bezier(.22,1.38,.36,1) var(--sd, 0ms),
+    opacity .46s ease var(--sd, 0ms),
+    border-color .16s ease, box-shadow .16s ease,
+    background .16s ease, color .16s ease;
+  will-change: transform, opacity;
+}
+.cyber-sub-panel.open .cyber-sub-btn {
+  opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg);
+}
+
+/* 悬停高亮只改颜色系属性（各自 .16s 无延迟），不碰 transform——
+   避免错峰延迟(--sd)让 hover 反馈也延迟。 */
+.cyber-sub-panel.open .cyber-sub-btn:hover {
+  border-color: var(--cy-mag);
+  color: #fff;
+  background: linear-gradient(135deg, rgba(255,61,240,.22), rgba(33,230,255,.18));
+  box-shadow: 0 0 14px rgba(255,61,240,.45), inset 0 0 10px rgba(255,61,240,.12);
+  text-shadow: 0 0 9px var(--cy-mag);
+}
+.cyber-sub-btn:focus-visible {
+  outline: 1.5px solid var(--cy-cyan); outline-offset: 2px;
+}
+
+/* 空白点击第一段：边框闪烁 + 横向抖动 + 辉光警告（纯 transform/阴影关键帧） */
+.cyber-sub-panel.warn { animation: cyberSubWarn .72s ease; }
+@keyframes cyberSubWarn {
+  0%   { border-color: rgba(33,230,255,.32);
+         box-shadow: 0 0 30px rgba(138,91,255,.30), inset 0 0 26px rgba(33,230,255,.07);
+         transform: none; }
+  18%  { border-color: rgba(255,61,240,.95);
+         box-shadow: 0 0 36px rgba(255,61,240,.55), inset 0 0 30px rgba(255,61,240,.16);
+         transform: translateX(-4px); }
+  36%  { transform: translateX(3px); }
+  54%  { border-color: rgba(33,230,255,.9); transform: translateX(-2px); }
+  72%  { transform: translateX(1px); }
+  100% { border-color: rgba(33,230,255,.32);
+         box-shadow: 0 0 30px rgba(138,91,255,.30), inset 0 0 26px rgba(33,230,255,.07);
+         transform: none; }
+}
+
+/* 主导航中具备二级能力的条目：右侧 ◂ 提示符（变量 --cy-mag 继承自 .cyber-nav 根） */
+.cyber-nav-item--sub .cyber-nav-subcue {
+  margin-left: auto; flex-shrink: 0;
+  color: rgba(33,230,255,.55); font-size: 11px; line-height: 1;
+  transition: color .2s ease, transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.cyber-nav-item--sub:hover .cyber-nav-subcue {
+  color: var(--cy-mag); transform: translateX(-3px);
+}
+/* 二级锁定期间触发项常驻高亮 + 提示符脉动 */
+.cyber-nav-item.sub-active {
+  color: #fff;
+  background: linear-gradient(90deg, rgba(33,230,255,.18), rgba(255,61,240,.16));
+  border-color: rgba(255,61,240,.55);
+  box-shadow: 0 0 14px rgba(255,61,240,.30);
+}
+.cyber-nav-item.sub-active .cyber-nav-subcue {
+  color: var(--cy-mag);
+  animation: cyberSubCuePulse 1.1s ease-in-out infinite;
+}
+@keyframes cyberSubCuePulse {
+  0%, 100% { transform: translateX(0); opacity: .7; }
+  50%      { transform: translateX(-4px); opacity: 1; }
+}
+
+/* 减少动态偏好：保留错峰淡入语义，去掉位移/缩放/扭转与抖动 */
+@media (prefers-reduced-motion: reduce) {
+  .cyber-sub-panel { transition: opacity .2s ease; transform: none; }
+  .cyber-sub-btn {
+    transform: none;
+    transition: opacity .2s ease var(--sd, 0ms),
+      border-color .16s ease, box-shadow .16s ease,
+      background .16s ease, color .16s ease;
+  }
+  .cyber-sub-panel.open .cyber-sub-btn { transform: none; }
+  .cyber-sub-panel.warn { animation: none; border-color: rgba(255,61,240,.9); }
+  .cyber-nav-item.sub-active .cyber-nav-subcue { animation: none; }
+}

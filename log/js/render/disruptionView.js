@@ -90,7 +90,7 @@ WF.disruptionView = (function () {
     // ── 轮次详情表格 ─────────────────────────────────────────
     const tblSection = U.el('div', 'chart-box dis-tl-wrap');
     tblSection.appendChild(U.el('div', 'dis-tl-title', '中断任务进程总览'));
-    tblSection.appendChild(U.el('div', 'dis-tl-sub', '逐轮明细：本轮/累计耗时、导管守护结果与击杀/生成数'));
+    tblSection.appendChild(U.el('div', 'dis-tl-sub', '逐轮明细：本轮耗时为实际战斗时长（不含轮间等待），累计耗时自任务开始起算'));
     container.appendChild(tblSection);
 
     const tbl = U.el('table', 'round-table');
@@ -105,7 +105,7 @@ WF.disruptionView = (function () {
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
       tr.appendChild(U.el('td', 'td-idx', String(r.index)));
-      tr.appendChild(U.el('td', 'td-mono', U.fmtDuration(r.duration)));
+      tr.appendChild(U.el('td', 'td-mono', U.fmtDuration(r.combatDuration)));
       tr.appendChild(U.el('td', 'td-mono', U.fmtDurationLong(r.cumulative)));
 
       const cd = U.el('td', 'td-conduits');
@@ -134,6 +134,24 @@ WF.disruptionView = (function () {
 
       tbody.appendChild(tr);
     });
+
+    // ── 撤离时间汇总行：rec.endT − 最后一轮 endT（导管全部完成 → 撤离），仅 >0.5s 时显示 ──
+    const lastRound = rec.rounds[rec.rounds.length - 1];
+    const extractDur = (lastRound && rec.endT != null) ? rec.endT - lastRound.endT : 0;
+    if (extractDur > 0.5) {
+      const tr = U.el('tr', 'dis-row-link dis-extract-row');
+      // 点击行平滑滚动到「逐轮导管时间轴」末尾的撤离时间区块（与轮次行跳转行为一致）
+      tr.addEventListener('click', () => {
+        const target = document.getElementById('dis-tl-extract');
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      tr.appendChild(U.el('td', 'td-idx', '撤离'));
+      tr.appendChild(U.el('td', 'td-mono', U.fmtDuration(extractDur)));
+      tr.appendChild(U.el('td', 'td-mono', '—'));
+      tr.appendChild(U.el('td', 'td-conduits', '撤离成功'));
+      tr.appendChild(U.el('td', 'td-mono', '—'));
+      tbody.appendChild(tr);
+    }
     tbl.appendChild(tbody);
 
     const tblWrap = U.el('div', 'table-wrap');
@@ -177,7 +195,7 @@ WF.disruptionView = (function () {
     const section = U.el('div', 'chart-box dis-tl-wrap');
     section.appendChild(U.el('div', 'dis-tl-title', '逐轮导管时间轴'));
     section.appendChild(U.el('div', 'dis-tl-sub',
-      '每轮一个区块，四条泳道按插入先后排列，共用同一秒级时间轴；冰蓝为寻钥段、青绿/红为守管段，黄框为危险 Buff 导管；泳道按 Tile 分组，以小分割线隔开。悬停查看精确数据，Ctrl+滚轮缩放，点击轮头折叠。'));
+      '每轮一个区块，四条泳道按插入先后排列，共用同一秒级时间轴；冰蓝为寻钥段、青绿/红为守管段，黄框为危险 Buff 导管；泳道按 Tile 分组，以小分割线隔开。悬停查看精确数据，Ctrl+滚轮缩放，点击轮头折叠。红色竖带为 Stalker 入侵时段。'));
 
     // 泳道自建浮层 tooltip（复用 chart-bar-tooltip 定位模式，支持多行）
     const tip = U.el('div', 'chart-bar-tooltip dis-tl2-tip');
@@ -206,7 +224,7 @@ WF.disruptionView = (function () {
       if (!hasData) arrow.style.visibility = 'hidden';
       head.appendChild(arrow);
       head.appendChild(U.el('span', 'dis-tl2-rno', 'R' + r.index));
-      head.appendChild(U.el('span', 'dis-tl2-dur', U.fmtDuration(r.duration)));
+      head.appendChild(U.el('span', 'dis-tl2-dur', U.fmtDuration(r.combatDuration)));
 
       if (hasData) {
         const sorted = _sortConduits(conduits);
@@ -256,6 +274,29 @@ WF.disruptionView = (function () {
       inner.appendChild(block);
     });
 
+    // ── 撤离时间独立区块：最后一轮导管全部完成 → 撤离成功，独立迷你时间轴（自己的比例尺，紫/品红系；仅 >0.5s 渲染） ──
+    let extractHost = null, extractDurV = 0;
+    const tlLastRound = rec.rounds[rec.rounds.length - 1];
+    const tlExtractDur = (tlLastRound && rec.endT != null) ? rec.endT - tlLastRound.endT : 0;
+    if (tlExtractDur > 0.5) {
+      inner.appendChild(U.el('div', 'dis-tl2-sep')); // 与轮间一致的霓虹分隔带
+      const block = U.el('div', 'dis-tl2-round dis-extract-block');
+      block.id = 'dis-tl-extract';
+      // 区块头：「撤离时间」+ 时长，不可折叠（无箭头、无点击）
+      const head = U.el('div', 'dis-tl2-head dis-extract-head');
+      head.appendChild(U.el('span', 'dis-extract-label', '撤离时间'));
+      head.appendChild(U.el('span', 'dis-extract-dur', U.fmtDuration(tlExtractDur)));
+      block.appendChild(head);
+      heads.push(head); // 与轮头同一套 sticky 吸左 + 宽度同步
+      const body = U.el('div', 'dis-tl2-body');
+      const host = U.el('div', 'dis-tl2-svg');
+      body.appendChild(host);
+      block.appendChild(body);
+      inner.appendChild(block);
+      extractHost = host;
+      extractDurV = tlExtractDur;
+    }
+
     // 1× 基准宽度 = 容器实测宽度（inner 未撑开时其 clientWidth 即容器可视宽度）
     function measureBase() {
       return inner.clientWidth || scroll.clientWidth || 0;
@@ -277,10 +318,15 @@ WF.disruptionView = (function () {
     // 按当前缩放宽度重渲染全部轮次 SVG（参照全屏图的 rebuild 模式）
     function rebuildAll() {
       bodies.forEach(({ r, host }) => {
-        const { svgStr, td } = _buildRoundTlSvgStr(r, zoomW);
+        const { svgStr, td } = _buildRoundTlSvgStr(r, zoomW, rec.stalkerEvents);
         host.innerHTML = svgStr;
         _addRoundTlInteractivity(host.querySelector('svg'), td, tip);
       });
+      if (extractHost) {
+        const { svgStr, td } = _buildExtractSvgStr(extractDurV, zoomW);
+        extractHost.innerHTML = svgStr;
+        _addRoundTlInteractivity(extractHost.querySelector('svg'), td, tip);
+      }
       syncHeads();
     }
     rebuildAll();
@@ -340,7 +386,8 @@ WF.disruptionView = (function () {
   }
 
   // 单轮泳道 SVG（W 可变，供 Ctrl+滚轮缩放 / 容器尺寸变化重渲染）
-  function _buildRoundTlSvgStr(r, W) {
+  // stalkerEvents：[{startT, endT|null}]（绝对秒，与 r.startT/endT 同时钟；可缺省）
+  function _buildRoundTlSvgStr(r, W, stalkerEvents) {
     const conduits = _sortConduits(r.conduits || []);
     const n = conduits.length;
     const laneH = 30, laneGap = 10;          // 泳道高/间距（显微镜式大字号分析）
@@ -440,8 +487,74 @@ WF.disruptionView = (function () {
       s += '</g>';
     });
 
+    // ── Stalker 入侵竖带：对与本轮 [startT, endT] 有交集的事件，换算本轮相对秒并 clamp 到 [0, dur]；
+    //    红色半透明竖带贯穿全部泳道，end 缺失则画到本轮末；事件 startT 落在本轮内时起点顶部加红色 ▼ ──
+    const stalkers = Array.isArray(stalkerEvents) ? stalkerEvents : [];
+    stalkers.forEach(ev => {
+      if (!ev || ev.startT == null) return;
+      const evEndAbs = ev.endT != null ? ev.endT : Infinity; // end 缺失：视为持续中，交集判定按无限延伸
+      if (ev.startT > r.endT || evEndAbs < r.startT) return; // 与本轮区间无交集
+      const relS = Math.max(0, Math.min(dur, ev.startT - r.startT));
+      const relE = Math.max(0, Math.min(dur, (ev.endT != null ? ev.endT : r.endT) - r.startT));
+      if (relE - relS <= 0) return;
+      const x0 = tx(relS), x1 = tx(relE);
+      const tipTxt = U.escapeHtml('Stalker 入侵：第 ' + relS.toFixed(1) + 's – '
+        + (ev.endT != null ? '第 ' + relE.toFixed(1) + 's' : '持续至本轮结束'));
+      s += `<g class="dis-tl2-stalker" data-tip="${tipTxt}">`;
+      s += `<rect class="dis-tl2-stalker-band" x="${x0.toFixed(1)}" y="${MT}" width="${Math.max(0.5, x1 - x0).toFixed(1)}" height="${lanesH}"`
+        + ` fill="rgba(255,45,72,0.13)" stroke="rgba(255,59,78,0.55)" stroke-width="1"/>`;
+      if (ev.startT >= r.startT && ev.startT <= r.endT) {
+        s += `<polygon class="dis-tl2-stalker-arrow" points="${x0.toFixed(1)},${(MT + 1.5).toFixed(1)} ${(x0 - 6.5).toFixed(1)},${(MT - 7).toFixed(1)} ${(x0 + 6.5).toFixed(1)},${(MT - 7).toFixed(1)}" fill="#ff3b4e" opacity="0.95"/>`;
+      }
+      s += `</g>`;
+    });
+
     s += `</svg>`;
     const td = { ML, MT, plotW, lanesH, axisY, dur, W };
+    return { svgStr: s, td };
+  }
+
+  // 撤离时间迷你 SVG：独立比例尺 0 → 撤离时长（严禁与最后一轮共用时间轴），紫/品红霓虹
+  function _buildExtractSvgStr(durSec, W) {
+    const ML = 160, MR = 30, MT = 22;   // 与轮次 SVG 同一套留白，视觉对齐
+    const dur = Math.max(durSec || 0, 0.2);
+    const plotW = Math.max(W - ML - MR, 10);
+    const laneH = 26;
+    const axisY = MT + laneH;
+    const H     = axisY + 30;
+    // 撤离时长通常很短：刻度步长自适应（>60s 切 10s，>25s 切 5s，>8s 切 2s，否则 1s）
+    const tickStep = dur > 60 ? 10 : dur > 25 ? 5 : dur > 8 ? 2 : 1;
+    const tx = t => ML + Math.min(plotW, Math.max(0, (t / dur) * plotW));
+
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="display:block;font-family:inherit">`;
+    s += `<defs>
+      <linearGradient id="dis-extract-grad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#7b2fbf" stop-opacity="0.90"/>
+        <stop offset="55%" stop-color="#b14aed" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#ff3fd8" stop-opacity="0.98"/>
+      </linearGradient>
+    </defs>`;
+
+    // X 轴竖网格线与秒级刻度（同轮次 SVG 样式）
+    for (let t = 0; t <= dur + 0.001; t += tickStep) {
+      const tt = Math.min(t, dur);
+      const x  = tx(tt).toFixed(1);
+      s += `<line x1="${x}" y1="${MT}" x2="${x}" y2="${axisY}" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>`;
+      s += `<text x="${x}" y="${axisY + 19}" fill="var(--c-text2)" font-size="12.5" text-anchor="middle">${Math.round(tt)}s</text>`;
+      if (tt >= dur) break;
+    }
+    s += `<line x1="${ML}" y1="${axisY}" x2="${(ML + plotW).toFixed(1)}" y2="${axisY}" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>`;
+
+    // 撤离段：0 → 撤离时长 紫→品红渐变条；悬停 tooltip 说明口径
+    const tipTxt = U.escapeHtml('最后一轮导管全部完成 → 撤离成功');
+    s += `<g class="dis-tl2-lane dis-extract-bar" data-tip="${tipTxt}">`;
+    s += `<rect x="${ML}" y="${MT}" width="${plotW}" height="${laneH}" rx="3" fill="rgba(255,255,255,0.03)" stroke="rgba(177,74,237,0.30)" stroke-width="1"/>`;
+    s += `<rect class="dis-extract-fill" x="${ML}" y="${MT + 3}" width="${plotW}" height="${laneH - 6}" rx="2" fill="url(#dis-extract-grad)"/>`;
+    s += `<text x="${ML - 8}" y="${MT + 17}" fill="#f0a6ff" font-size="13" text-anchor="end">撤离</text>`;
+    s += `</g>`;
+
+    s += `</svg>`;
+    const td = { ML, MT, plotW, lanesH: laneH, axisY, dur, W };
     return { svgStr: s, td };
   }
 
@@ -495,9 +608,9 @@ WF.disruptionView = (function () {
     });
     svgEl.addEventListener('mouseleave', () => { g.style.display = 'none'; });
 
-    // ── 泳道自建浮层（多行 tooltip，首行固定「Tile：N」） ──
+    // ── 泳道自建浮层（多行 tooltip，首行固定「Tile：N」；Stalker 竖带同挂此浮层） ──
     if (tipEl) {
-      svgEl.querySelectorAll('.dis-tl2-lane').forEach(lane => {
+      svgEl.querySelectorAll('.dis-tl2-lane, .dis-tl2-stalker').forEach(lane => {
         lane.addEventListener('mouseenter', () => {
           tipEl.textContent = lane.getAttribute('data-tip') || '';
           tipEl.classList.add('visible');
