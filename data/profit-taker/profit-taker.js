@@ -230,12 +230,6 @@ var profitTakerRecords = [
     videoUrls:     ["https://youtu.be/uC5_iVJEuLY?si=vNakeUpy95_PCLGT"]
   },
   {
-    clearTime:  "01:37.017",
-    playerId:   "RestInPizza",
-    uploadTime: "2024-10-27",
-    videoUrls:     ["https://youtu.be/C4iWJvehdUc?si=EY1r9-ZoO1sPO69K"]
-  },
-  {
     clearTime:  "01:39.133",
     playerId:   "CoochieCrusader",
     uploadTime: "2025-11-30",
@@ -276,6 +270,12 @@ var profitTakerRecords = [
     playerId:   "noemamp3",
     uploadTime: "2026-06-22",
     videoUrls:     ["https://www.youtube.com/watch?v=X-yePpSYhOk"]
+  },
+  {
+    clearTime:  "01:07.700",
+    playerId:   "RestInPizza",
+    uploadTime: "2026-07-14",
+    videoUrls:     ["https://www.youtube.com/watch?v=MO59YtS5Z54"]
   },
 ];
 
