@@ -437,7 +437,7 @@ var disruptionArmatusSoloNotice_en = "";
 var disruptionKappaDuoMacroRecords = [
   {
     clearTime:  "35:48.000",
-    playerId:   "NamelessDeity / Biggy Smallz",
+    playerId:   "NamelessDeity / Gamer123169",
     playerId2:   "无主机视角，且利用Vauban的增伤Bug",
     uploadTime: "2026-07-14",
     videoUrls:     ["https://www.youtube.com/watch?v=sswOjk5cHTk"]
