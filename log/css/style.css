@@ -2425,42 +2425,69 @@ body.profile-active #detail-wrap {
   border-radius: 10px;
   background: rgba(8,11,20,0.55);
   box-shadow: 0 0 20px rgba(0,240,255,0.08), inset 0 0 30px rgba(0,240,255,0.03);
+  /* 呼吸区：表头上方、末行下方、左右两侧均不再粘边框 */
+  padding: 10px 12px;
 }
-/* separate + 0 间距：圆角与 sticky 表头兼得（collapse 下单元格圆角不生效） */
-.dis-tl-wrap .round-table { border-collapse: separate; border-spacing: 0; }
+/* separate + 纵向行距：每行独立成悬浮卡片，行间露出缝隙（collapse 下单元格圆角不生效） */
+.dis-tl-wrap .round-table { border-collapse: separate; border-spacing: 0 5px; }
+/* 表头：独立霓虹横条，与首行卡片之间由 border-spacing 留出缝隙 */
 .dis-tl-wrap .round-table th {
-  background: rgba(9,13,24,0.97);
-  border-bottom: 1px solid rgba(95,208,232,0.38);
+  background: rgba(9,13,24,0.98);
+  border-bottom: 1px solid rgba(0,240,255,0.42);
+  box-shadow: 0 3px 12px -4px rgba(0,240,255,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
   padding: 12px 18px;
-  text-shadow: 0 0 8px rgba(95,208,232,0.55);
+  letter-spacing: 3.5px;
+  text-shadow: 0 0 8px rgba(95,208,232,0.65), 0 0 18px rgba(95,208,232,0.25);
 }
-.dis-tl-wrap .round-table th:first-child { border-top-left-radius: 9px; }
-.dis-tl-wrap .round-table th:last-child  { border-top-right-radius: 9px; }
+/* 表头横条四角圆角，与下方行卡片风格统一（不再贴合 wrapper 边框，9px 贴边圆角废弃） */
+.dis-tl-wrap .round-table th:first-child { border-top-left-radius: 7px; border-bottom-left-radius: 7px; }
+.dis-tl-wrap .round-table th:last-child  { border-top-right-radius: 7px; border-bottom-right-radius: 7px; }
+/* 行卡片：统一淡底色 + 细描边（替代斑马纹，卡片感更整体） */
 .dis-tl-wrap .round-table td {
   padding: 10px 18px;
-  border-top: none;
-  border-bottom: 1px solid rgba(255,255,255,0.045);
+  background: rgba(95,208,232,0.040);
+  border-top: 1px solid rgba(95,208,232,0.10);
+  border-bottom: 1px solid rgba(95,208,232,0.10);
   font-variant-numeric: tabular-nums;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.dis-tl-wrap .round-table tbody tr:last-child td { border-bottom: none; }
-.dis-tl-wrap .round-table tbody tr:last-child td:first-child { border-bottom-left-radius: 9px; }
-.dis-tl-wrap .round-table tbody tr:last-child td:last-child  { border-bottom-right-radius: 9px; }
-/* 斑马纹 */
-.dis-tl-wrap .round-table tbody tr:nth-child(even) td { background: rgba(95,208,232,0.035); }
-/* 行 hover 霓虹描边（inset 阴影模拟四边描边，覆盖斑马纹） */
+.dis-tl-wrap .round-table tbody td:first-child {
+  border-left: 1px solid rgba(95,208,232,0.10);
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+.dis-tl-wrap .round-table tbody td:last-child {
+  border-right: 1px solid rgba(95,208,232,0.10);
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+/* 行 hover：卡片底色提亮 + 真实描边霓虹化 + 内外辉光，保留 .dis-row-link 点击体系 */
 .dis-tl-wrap .round-table tbody tr:hover td,
 .dis-tl-wrap .round-table tbody tr.dis-row-link:hover td {
   background: rgba(95,208,232,0.10);
-  box-shadow: inset 0 1px 0 rgba(0,240,255,0.30), inset 0 -1px 0 rgba(0,240,255,0.30);
+  border-top-color: rgba(0,240,255,0.38);
+  border-bottom-color: rgba(0,240,255,0.38);
+  box-shadow: inset 0 0 14px rgba(0,240,255,0.07), 0 0 12px rgba(0,240,255,0.10);
 }
 .dis-tl-wrap .round-table tbody tr:hover td:first-child,
 .dis-tl-wrap .round-table tbody tr.dis-row-link:hover td:first-child {
-  box-shadow: inset 1px 0 0 rgba(0,240,255,0.30), inset 0 1px 0 rgba(0,240,255,0.30), inset 0 -1px 0 rgba(0,240,255,0.30);
+  border-left-color: rgba(0,240,255,0.38);
 }
 .dis-tl-wrap .round-table tbody tr:hover td:last-child,
 .dis-tl-wrap .round-table tbody tr.dis-row-link:hover td:last-child {
-  box-shadow: inset -1px 0 0 rgba(0,240,255,0.30), inset 0 1px 0 rgba(0,240,255,0.30), inset 0 -1px 0 rgba(0,240,255,0.30);
+  border-right-color: rgba(0,240,255,0.38);
 }
+/* 列对齐：轮次/导管居中，时间类与击杀数字列右对齐（tabular-nums 下右对齐最干净） */
+.dis-tl-wrap .round-table th:nth-child(1),
+.dis-tl-wrap .round-table td:nth-child(1) { text-align: center; }
+.dis-tl-wrap .round-table th:nth-child(4),
+.dis-tl-wrap .round-table td:nth-child(4) { text-align: center; }
+.dis-tl-wrap .round-table th:nth-child(2),
+.dis-tl-wrap .round-table td:nth-child(2),
+.dis-tl-wrap .round-table th:nth-child(3),
+.dis-tl-wrap .round-table td:nth-child(3),
+.dis-tl-wrap .round-table th:nth-child(5),
+.dis-tl-wrap .round-table td:nth-child(5) { text-align: right; }
 /* 等宽数字对齐 */
 .dis-tl-wrap .round-table .td-mono { font-family: var(--f-px, monospace); letter-spacing: 0.5px; }
 /* 导管 ✓✗ 徽章质感（沿用 .cd 颜色体系，危险黄 outline 由 JS 内联保留） */
