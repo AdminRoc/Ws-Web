@@ -2662,3 +2662,12 @@ body.profile-active #detail-wrap {
 }
 /* 开局段渐变条霓虹辉光 */
 .dis-opening-fill { filter: drop-shadow(0 0 6px rgba(139,92,246,0.45)); }
+
+/* ================= 通用任务视图·ECharts 图表（gen- 前缀，底座复用 .dis-chart-body） ================= */
+/* 段耗时柱状图容器：与中断柱图同高（.dis-chart-body 默认即 280px，此处显式声明通用分页规格） */
+.dis-chart-body.gen-dur-body { height: 280px; }
+/* 场上敌量曲线容器：沿用中断 .dis-live-body 的 600px 规格 */
+.dis-chart-body.gen-live-body { height: 600px; }
+
+/* 通用进程总览表·未打完段（incomplete）行弱化：透明度降低 + 斜体 */
+.dis-tl-wrap .round-table tbody tr.gen-incomplete-row td { opacity: 0.55; font-style: italic; }

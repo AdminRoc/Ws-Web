@@ -20,7 +20,7 @@ importScripts(
   'parsers/disruption.js?v=20260718c',
   'parsers/profitTaker.js?v=20260707b',
   'parsers/arbitration.js?v=20260717c',
-  'parsers/general.js?v=20260710a'
+  'parsers/general.js?v=20260718a'
 );
 
 self.onmessage = function (e) {

@@ -79,6 +79,9 @@ WF.GeneralParser = (function () {
     // Kill / spawn
     killed:          'was killed by',
     agentCreated:    'OnAgentCreated',
+    // Stalker 入侵（persistent enemy）
+    stalkerSpawn:    'LotusGameRules.lua: spawned persistent enemy!',
+    stalkerKill:     'LotusGameRules.lua: persistent enemy was killed!',
     // Chat
     ircPrivmsg:      'IRC out: PRIVMSG ',
   };
@@ -169,6 +172,11 @@ WF.GeneralParser = (function () {
         survivalSegSpawned: 0,        // enemy spawn count for the segment currently in progress
         interSegs:        [],         // [{round, startT, endT, duration}] for interception
         interSegStart:    null,       // start of current interception segment
+        // ── 敌量采样 / 击杀推算 / Stalker 事件 ──
+        liveSamples:      [],         // {t, live} 场上敌量采样（生成后口径），mission 存在即采
+        killEvents:       [],         // Live 差值推算的击杀时刻序列（SS_STARTED 后才计）
+        _prevLiveAfter:   null,       // 上一敌人 agent 生成后的 Live 基准（null = 未建立）
+        stalkerEvents:    [],         // {startT, endT|null} Stalker 入侵事件
         // ── Kill / spawn totals ──
         kills:   0,
         spawned: 0,
@@ -210,6 +218,20 @@ WF.GeneralParser = (function () {
       m.interSegStart = endT;
     }
 
+    // 段级击杀数：killEvents 为递增时刻序列，统计落在 [seg.startT, seg.endT] 内的个数。
+    // waves 已有自己的 kills 推算（生成−剩余），不在此处理。
+    function assignSegKills(segs) {
+      const evs = m.killEvents;
+      for (let i = 0; i < segs.length; i++) {
+        const seg = segs[i];
+        let c = 0;
+        for (let j = 0; j < evs.length; j++) {
+          if (evs[j] >= seg.startT && evs[j] <= seg.endT) c++;
+        }
+        seg.kills = c;
+      }
+    }
+
     function resolveDisplay() {
       if (m.locationDisplay) return m.locationDisplay;
       if (m.locationNode && nodeNameMap[m.locationNode]) return nodeNameMap[m.locationNode];
@@ -222,8 +244,27 @@ WF.GeneralParser = (function () {
       const start = m.startT || m.loadT;
       const end   = m.endT || t;
       if (end - start < MIN_DURATION) { reset(); return; }
+      // 未结算尾段标记：finalize(EOM) 时仍进行中的波次不是被正常结算信号（下一波开始）
+      // 关闭的，打上 incomplete 标记；正常关闭的段无此字段，保持向后兼容。
+      // 拦截尾段由 closeCurrentInterSeg 补上属正常收尾（EOM 常比最终 TransitionOut 早几十毫秒，
+      // 见上方注释），不误判为 incomplete；survivalSegs 无尾段结算逻辑，不涉及。
+      // 波已清完（enemiesLeft===0）但下一波信号随 EOM 缺席的尾波同样属正常打完，不误标。
+      if (m.currentWave && (m.currentWave.enemiesLeft == null || m.currentWave.enemiesLeft > 0)) m.currentWave.incomplete = true;
       closeCurrentWave(end);
       closeCurrentInterSeg(end);
+      assignSegKills(m.survivalSegs);
+      assignSegKills(m.interSegs);
+      // waves 的旧 kills 推算（生成−剩余）在镜像防御等场景恒为 0（无 total spawned 行）：
+      // 此类波次用 killEvents 估算回填；已有有效推算值的波次保持原值不动。
+      m.waves.forEach(w => {
+        if (!w.kills) {
+          let c = 0;
+          for (let j = 0; j < m.killEvents.length; j++) {
+            if (m.killEvents[j] >= w.startT && m.killEvents[j] <= w.endT) c++;
+          }
+          w.kills = c;
+        }
+      });
       const anchor = m.sessionAnchor;
       const offset = m.sessionOffset || 0;
       records.push({
@@ -251,6 +292,12 @@ WF.GeneralParser = (function () {
         waves:           m.waves,
         survivalSegs:    m.survivalSegs,
         interSegs:       m.interSegs,
+        // 敌量采样 / 击杀推算 / Stalker 事件
+        liveSamples:     m.liveSamples,
+        killEvents:      m.killEvents,
+        stalkerEvents:   m.stalkerEvents,
+        // 首个击杀时刻（视图算开局时长 = openingEndT − startT）；无击杀推算时为 null
+        openingEndT:     m.killEvents[0] != null ? m.killEvents[0] : null,
         // Totals
         kills:           m.kills,
         spawned:         m.spawned,
@@ -519,6 +566,39 @@ WF.GeneralParser = (function () {
             m.spawned++;
             if (m.currentWave) m.currentWave.spawned++;
             else if (m.endlessType === 'survival') m.survivalSegSpawned++;
+          }
+          // ── 场上敌量采样 + Live 差值击杀推算（纯增量，口径参照中断解析器）──
+          // Live=N 表示该 agent 生成前场上已有 N 个；相邻两次生成间 Live 下降 = 期间有敌人死亡
+          const liveM = /\bLive\s+(\d+)/.exec(line);
+          if (liveM) {
+            const liveBefore = parseInt(liveM[1], 10);
+            if (line.indexOf('SentinelAgent') !== -1) {
+              // SentinelAgent 行只重置基准，不采样、不计击杀
+              m._prevLiveAfter = liveBefore + 1;
+            } else if (!skip) {
+              // 只要 mission 存在就采样（不限 started）；击杀推算等 SS_STARTED 后才开始，避免加载期噪音
+              m.liveSamples.push({ t, live: liveBefore + 1 });
+              if (m.startT != null) {
+                if (m._prevLiveAfter !== null) {
+                  const kills = Math.max(0, m._prevLiveAfter - liveBefore);
+                  for (let ki = 0; ki < kills; ki++) m.killEvents.push(t);
+                }
+                m._prevLiveAfter = liveBefore + 1;
+              }
+            }
+          }
+          return;
+        }
+
+        // ── Stalker 入侵事件采集：开始以 spawned persistent enemy! 为准 ──
+        if (line.indexOf(PAT.stalkerSpawn) !== -1) {
+          m.stalkerEvents.push({ startT: t, endT: null });
+          return;
+        }
+        if (line.indexOf(PAT.stalkerKill) !== -1) {
+          // 配对最近一个未结束的事件；无未配对事件则忽略
+          for (let si = m.stalkerEvents.length - 1; si >= 0; si--) {
+            if (m.stalkerEvents[si].endT === null) { m.stalkerEvents[si].endT = t; break; }
           }
           return;
         }
