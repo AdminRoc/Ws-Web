@@ -34,42 +34,42 @@
     "weapons": [
       {
         "name": "Coda Catabolyst",
-        "element": "Cold",
-        "bonusPct": 26.1
+        "element": "Electricity",
+        "bonusPct": 56.7
       },
       {
         "name": "Coda Hema",
-        "element": "Toxin",
-        "bonusPct": 25.0
+        "element": "Electricity",
+        "bonusPct": 52.1
       },
       {
         "name": "Coda Mire",
-        "element": "Magnetic",
-        "bonusPct": 39.7
+        "element": "Radiation",
+        "bonusPct": 43.1
       },
       {
         "name": "Coda Motovore",
-        "element": "Cold",
-        "bonusPct": 27.6
+        "element": "Impact",
+        "bonusPct": 41.8
       },
       {
         "name": "Coda Pox",
-        "element": "Toxin",
-        "bonusPct": 57.2
+        "element": "Cold",
+        "bonusPct": 35.9
       },
       {
         "name": "Coda Sporothrix",
-        "element": "Impact",
-        "bonusPct": 32.5
+        "element": "Cold",
+        "bonusPct": 25.6
       },
       {
         "name": "Dual Coda Torxica",
-        "element": "Electricity",
-        "bonusPct": 37.9
+        "element": "Heat",
+        "bonusPct": 25.1
       }
     ],
-    "changedAt": 1784423295019
+    "changedAt": 1784437655003
   },
   "source": "https://docs.google.com/spreadsheets/d/1hyWSyPqw1072vJR2eacYVcpBiL_cdL0E3MCs5Vb6s40",
-  "fetchedAt": "2026-07-19T04:07:34Z"
+  "fetchedAt": "2026-07-19T05:07:35Z"
 }
