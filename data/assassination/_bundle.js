@@ -1498,6 +1498,12 @@ var assassination_steel_the_fragmented_oneRecords = [
     uploadTime: "2026-06-02",
     videoUrls:  ["https://www.youtube.com/watch?v=OT-i9CWMaeo"],
   },
+  {
+    playerId:   "noemamp3 / Insomnia_fs / ManInTheWall / MadMuesli",
+    clearTime:  "5:57.000",
+    uploadTime: "2026-07-16",
+    videoUrls:  ["https://www.youtube.com/watch?v=ZVwSSBW21Vw"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
