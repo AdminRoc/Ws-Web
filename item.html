@@ -1117,17 +1117,60 @@
 
 <script>
 /* ══════════════════════════════════════════════
-   物品检索：融合 ①游戏掉落来源(官方掉落表反查) ②Warframe.market 实时交易信息
-   ③中文维基搜索链接 ④英文维基搜索链接。
-   数据：data/wm-items.json(物品库) + data/drops-index.json(掉落反查)，
-   实时交易信息经本站自有域的 WM 代理(WM_PROXY_BASE)读取(WM API 无 CORS，必须代理)。
-   ══════════════════════════════════════════════ */
+物品检索：融合 ①游戏掉落来源(官方掉落表反查) ②Warframe.market 实时交易信息
+    ③中文维基搜索链接 ④英文维基搜索链接。
+    数据：data/wm-items.json(物品库) + data/drops-index.json(掉落反查)，
+    实时交易信息经本站自有域的 WM 代理(WM_PROXY_BASE)读取(WM API 无 CORS，必须代理)。
+    ══════════════════════════════════════════════ */
 (function () {
   'use strict';
 
   /* 部署 WM 代理 Worker 后，把它的公开地址填到这里(形如 https://wmproxy.<本站域>)。
      留空时仍可用掉落来源 + 维基链接，只是实时交易信息一栏会提示"未配置代理"。 */
   var WM_PROXY_BASE = 'https://wm.wfspeed.run';
+
+  /* 拍卖字典专用代理：wmapi.wfspeed.run（EdgeOne 边缘函数，透传 Language: zh-hans，返回完整 i18n） */
+  var WM_AUCTION_PROXY = 'https://wmapi.wfspeed.run';
+
+  /* 赤毒玄骸武器中文名兜底（21种） —— 与 Private-WM worker.js 同步 */
+  var LICH_WEAPON_ZH = {
+    'kuva_drakgoon':    '赤毒·龙骑兵',
+    'kuva_brakk':       '赤毒·布拉克',
+    'kuva_bramma':      '赤毒·布拉玛',
+    'kuva_chakkhurr':   '赤毒·邪眼',
+    'kuva_karak':       '赤毒·卡拉克',
+    'kuva_twin_stubbas':'赤毒·双子史度巴',
+    'kuva_nukor':       '赤毒·努寇微波枪',
+    'kuva_tonkor':      '赤毒·征服榴炮',
+    'kuva_kraken':      '赤毒·北海巨妖',
+    'kuva_hind':        '赤毒·雌鹿',
+    'kuva_ayanga':      '赤毒·怒雷',
+    'kuva_seer':        '赤毒·预言者',
+    'kuva_shildeg':     '赤毒·希尔德',
+    'kuva_quartakk':    '赤毒·夸塔克',
+    'kuva_kohm':        '赤毒·寇恩热能枪',
+    'kuva_ogris':       '赤毒·食人女魔',
+    'kuva_zarr':        '赤毒·沙皇',
+    'kuva_grattler':    '赤毒·葛拉特勒',
+    'kuva_hek':         '赤毒·海克',
+    'kuva_sobek':       '赤毒·鳄神',
+    'kuva_ghoulsaw':    '赤毒·尸鬼电锯'
+  };
+
+  /* 帕尔沃斯的姐妹武器中文名兜底（11种） */
+  var SISTER_WEAPON_ZH = {
+    'tenet_tetra':         '信条·特拉',
+    'tenet_diplos':        '信条·纵横双枪',
+    'tenet_arca_plasmor':  '信条·弧电离子枪',
+    'tenet_envoy':         '信条·典客',
+    'tenet_detron':        '信条·德特昂',
+    'tenet_flux_rifle':    '信条·通量步枪',
+    'tenet_cycron':        '信条·循环离子枪',
+    'tenet_spirex':        '信条·斯派克斯',
+    'tenet_plinx':         '信条·漫射者',
+    'tenet_glaxion':       '信条·冷冻光束步枪',
+    'tenet_quanta':        '信条·量子切割器'
+  };
 
   var WIKI_ZH = 'https://warframe.huijiwiki.com/index.php?search=';
   var WIKI_EN = 'https://wiki.warframe.com/?search=';
@@ -1811,15 +1854,17 @@
   /* ══════════════════════════════════════════════
      拍卖信息（裂罅Mod / 玄骸武器 / 姐妹武器）—— 仅查询，无需登录。
      WM 的 Auction API（v1/auctions/search）与 Orders API、字典(v2/riven/weapons 等)
-     是完全独立的公开接口，经 wm.wfspeed.run 反代直接透传（已实测确认返回 zh-hans i18n，
-     无需像旧版那样自建中文兜底表）。查询参数与筛选项逐项对照 WM 官方页面实测校准：
+     是完全独立的公开接口。
+     - 搜索：走 wmapi.wfspeed.run (EdgeOne 边缘函数)，无需登录，公开访问
+     - 字典（v2/*）：走 wmapi.wfspeed.run，显式透传 Language: zh-hans 以获取完整 i18n
+       * 赤毒/姐妹武器：WM 代理偶尔未透传 Language 头导致缺 zh-hans，本地兜底表 LICH_WEAPON_ZH / SISTER_WEAPON_ZH 同步自 Private-WM
+     查询参数与筛选项逐项对照 WM 官方页面实测校准：
        type=riven|lich|sister（必填）
-       weapon_url_name（riven 必填，lich/sister 选填）
+       weapon_url_name（riven/lich/sister 三者均必填，实测 400 requirements_not_met）
        positive_stats（≤3，逗号分隔）/ negative_stats（riven 专属）
        polarity=madurai|vazarin|naramon（riven 专属）
        element / having_ephemera=true|false（lich/sister 专属）
-       buyout_policy=direct|auction（留空=全部；'with_bids'/'all' 会被官方 API 直接 400，
-       这是实测确认的，不是猜的）
+       buyout_policy=direct|auction（留空=全部；'with_bids'/'all' 会被官方 API 直接 400）
        sort_by=price_asc|price_desc
      ══════════════════════════════════════════════ */
   var AUC_TYPE_LABEL = { riven: '裂罅Mod', lich: '赤毒玄骸', sister: '帕尔沃斯的姐妹' };
@@ -1906,14 +1951,15 @@
     if (!i) return (entry && entry.slug) || '';
     return (i['zh-hans'] && i['zh-hans'].name) || (i.en && i.en.name) || entry.slug;
   }
-  function _fetchJsonRetry(url, attempt, maxAttempt) {
-    return fetch(url).then(function (r) {
+  function _fetchJsonRetry(url, attempt, maxAttempt, headers) {
+    var opts = { headers: headers || {} };
+    return fetch(url, opts).then(function (r) {
       if (!r.ok) { var err = new Error('http ' + r.status); err.status = r.status; err.retryable = r.status >= 500; throw err; }
       return r.json();
     }).catch(function (e) {
       if (attempt < maxAttempt && e.retryable !== false) {
         return new Promise(function (resolve) { setTimeout(resolve, 700 * attempt); })
-          .then(function () { return _fetchJsonRetry(url, attempt + 1, maxAttempt); });
+          .then(function () { return _fetchJsonRetry(url, attempt + 1, maxAttempt, headers); });
       }
       throw e;
     });
@@ -1922,11 +1968,22 @@
   /* ── v2 字典加载（武器/词条，含 zh-hans），按 type 缓存 ── */
   function _aucLoadDict(name) {
     if (_aucDicts[name]) return Promise.resolve(_aucDicts[name]);
-    var url = WM_PROXY_BASE.replace(/\/$/, '') + '/v2/' + name;
-    return _fetchJsonRetry(url, 1, AUC_RETRY_MAX).then(function (j) {
+    var url = WM_AUCTION_PROXY.replace(/\/$/, '') + '/v2/' + name;
+    return _fetchJsonRetry(url, 1, AUC_RETRY_MAX, { 'Language': 'zh-hans' }).then(function (j) {
       var arr = (j && Array.isArray(j.data)) ? j.data : [];
       var map = {};
       arr.forEach(function (it) { map[it.slug] = it; });
+      // 注入中文兜底（赤毒/姐妹武器：WM 代理未透传 Language 头时缺 zh-hans）
+      var zhMap = name === 'lich/weapons' ? LICH_WEAPON_ZH
+                  : name === 'sister/weapons' ? SISTER_WEAPON_ZH
+                  : null;
+      if (zhMap) {
+        arr.forEach(function (it) {
+          if (it.i18n && !it.i18n['zh-hans'] && zhMap[it.slug]) {
+            it.i18n['zh-hans'] = { name: zhMap[it.slug] };
+          }
+        });
+      }
       _aucDicts[name] = map; _aucDictArr[name] = arr;
       return map;
     }).catch(function () { _aucDicts[name] = {}; _aucDictArr[name] = []; return {}; });
@@ -2129,7 +2186,7 @@
       if (_aucFilterVals.element) p.set('element', _aucFilterVals.element);
       if (_aucFilterVals.ephemera) p.set('having_ephemera', _aucFilterVals.ephemera);
     }
-    var url = WM_PROXY_BASE.replace(/\/$/, '') + '/v1/auctions/search?' + p.toString();
+    var url = WM_AUCTION_PROXY.replace(/\/$/, '') + '/v1/auctions/search?' + p.toString();
     _fetchJsonRetry(url, 1, AUC_RETRY_MAX).then(function (j) {
       var list = (j && j.payload && Array.isArray(j.payload.auctions)) ? j.payload.auctions : [];
       _aucLastList = list.filter(function (a) { return !a.closed && a.visible !== false; });
