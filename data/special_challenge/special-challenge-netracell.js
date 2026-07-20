@@ -24,9 +24,9 @@
 var netracellRecords = [
   {
     playerId:   "NamelessDeity",
-    clearTime:  "1:38.000",
-    uploadTime: "2026-04-30",
-    videoUrls:  ["https://www.youtube.com/watch?v=rHZ2ZpYGJFE"],
+    clearTime:  "1:30.000",
+    uploadTime: "2026-07-19",
+    videoUrls:  ["https://www.youtube.com/watch?v=eGpQ_6EZ5QQ"],
   },
   {
     playerId:   "sakvayumika",

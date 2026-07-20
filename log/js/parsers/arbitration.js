@@ -52,6 +52,8 @@ WF.ArbitrationParser = (function () {
     waveExplicit:     /wave\s*(\d+)/i,
     waveTotalSpawned: /total spawned in current wave\s*(\d+)/i,
     waveCurrent:      /current wave\s*(\d+)/i,
+    // Defense 模式波次预算行（仅 WaveDefend.lua 输出）
+    waveBudgetLine:   /Starting wave (\d+), spawning a total of (\d+) tier-(\d+) enemies \((\d+) simultaneous, (\d+)% chance of eximus\)/,
     // 每个远端队伍连接独立的网络诊断行，形如 "Net [Info]: 2: Retransmit throttle: ..."
     // 连接编号是每名非本机队员各自的通信通道；某一路长时间不再出现即视为该成员早于
     // 主机停止稳定在场（例如提前挂机/切出游戏，房主自己继续 farm 到本轮结算）。
@@ -871,6 +873,7 @@ WF.ArbitrationParser = (function () {
         endT:       null,
         explicitWaves: [],   // v2.0：显式 wave 边界
         inferredWaves: [],   // v2.0：推断 wave 边界
+        waveBudgets: [],     // Defense 模式波次预算 [{wave, budget, tier, simultaneous, eximusPct, t}]
       };
     }
 
@@ -1077,6 +1080,42 @@ WF.ArbitrationParser = (function () {
         const roundGuarantee = rounds * 1;                   // 轮次保底
         const roundExtra     = rounds * 0.3;                 // 轮次额外期望（10%×3）
 
+        // Defense 模式：计算每波实际生成数（基于 eventStream 的 Spawned 峰值差分）
+        let waveActuals = [];
+        if (m.waveBudgets.length > 0 && m.eventStream.length > 0) {
+          const budgets = m.waveBudgets;
+          for (let wi = 0; wi < budgets.length; wi++) {
+            const wStart = budgets[wi].t;
+            const wEnd = (wi + 1 < budgets.length) ? budgets[wi + 1].t : hostEnd;
+            let maxSpawned = 0;
+            for (const e of m.eventStream) {
+              if (e[0] >= wStart && e[0] < wEnd && e[3] != null && e[2] !== 'drone') {
+                if (e[3] > maxSpawned) maxSpawned = e[3];
+              }
+            }
+            // 找上一波的 Spawned 峰值作为基线
+            let prevMax = 0;
+            if (wi > 0) {
+              const pStart = budgets[wi - 1].t;
+              const pEnd = wStart;
+              for (const e of m.eventStream) {
+                if (e[0] >= pStart && e[0] < pEnd && e[3] != null && e[2] !== 'drone') {
+                  if (e[3] > prevMax) prevMax = e[3];
+                }
+              }
+            }
+            waveActuals.push({
+              wave: budgets[wi].wave,
+              actual: Math.max(0, maxSpawned - prevMax),
+              budget: budgets[wi].budget,
+              tier: budgets[wi].tier,
+              eximusPct: budgets[wi].eximusPct,
+              startT: wStart,
+              endT: wEnd,
+            });
+          }
+        }
+
         // 最后客机时间：任务结束时间 − 最后一个外部玩家实体创建时刻。
         const lastClientDuration = (m.lastClientJoinTime != null && m.lastClientJoinTime > m.startedT)
           ? (hostEnd - m.lastClientJoinTime) : null;
@@ -1173,6 +1212,8 @@ WF.ArbitrationParser = (function () {
             inferred: inferredWaves,
             count: inferredWaves.length,
           },
+          waveBudgets: m.waveBudgets, // Defense 模式波次预算（其他模式为空数组）
+          waveActuals: waveActuals,   // Defense 模式每波实际生成数
           eff: {
             essence: essEff,
             clear:   clearEff,
@@ -1251,6 +1292,21 @@ WF.ArbitrationParser = (function () {
           bumpMinute(t, 'drones', 1);
           sampleAgentLine(line, t, 'drone');
           return;
+        }
+        // Defense 模式波次预算行（仅 WaveDefend.lua 输出）
+        {
+          const wb = RE.waveBudgetLine.exec(line);
+          if (wb) {
+            m.waveBudgets.push({
+              wave: parseInt(wb[1], 10),
+              budget: parseInt(wb[2], 10),
+              tier: parseInt(wb[3], 10),
+              simultaneous: parseInt(wb[4], 10),
+              eximusPct: parseInt(wb[5], 10),
+              t: t,
+            });
+            return;
+          }
         }
         // 其它单位生成：活跃敌人数采样 + Spawned 峰值 + 事件流
         if (line.indexOf('OnAgentCreated') !== -1) {

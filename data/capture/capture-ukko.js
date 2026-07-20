@@ -47,6 +47,30 @@ var capture_ukkoRecords = [
     uploadTime: "2026-05-05",
     videoUrls:  ["https://www.youtube.com/watch?v=bUbV3RATLC8"],
   },
+  {
+    playerId:   "Mortar",
+    clearTime:  "0:15.767",
+    uploadTime: "2021-02-13",
+    videoUrls:  ["https://www.youtube.com/watch?v=jXu4nBnW6z4"],
+  },
+  {
+    playerId:   "_Gabriel",
+    clearTime:  "0:16.033",
+    uploadTime: "2023-01-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=zfzFpLGgB8s"],
+  },
+  {
+    playerId:   "_Gabriel",
+    clearTime:  "0:16.033",
+    uploadTime: "2023-01-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=zfzFpLGgB8s"],
+  },
+  {
+    playerId:   "Mebius",
+    clearTime:  "0:16.267",
+    uploadTime: "2023-10-03",
+    videoUrls:  ["https://www.youtube.com/watch?v=UryxrJdpKAg"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

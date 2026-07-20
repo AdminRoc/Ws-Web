@@ -20,6 +20,13 @@ var disruptionKappaSoloMacroRecords = [
     uploadTime: "2026-07-12",
     videoUrls:     ["https://www.youtube.com/watch?v=HhBmXLhpf9c"]
   },
+  {
+    clearTime:  "50:37.000",
+    playerId:   "NamelessDeity",
+    playerId2:   "利用Cyte-09的增伤Bug",
+    uploadTime: "2026-07-16",
+    videoUrls:     ["https://www.youtube.com/watch?v=J-nUHOjtbDo"]
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────

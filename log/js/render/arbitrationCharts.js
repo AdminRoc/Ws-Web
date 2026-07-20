@@ -400,6 +400,155 @@ WF.arbitrationCharts = (function () {
     return chart;
   }
 
+  /* ── 7. 刷怪数量期望表（仅 Defense 模式）
+        双柱并排（预算 vs 实际）+ 达成率折线 + Tier 分界线。
+        数据来源：rec.waveBudgets（预算）+ rec.waveActuals（实际生成数）。 ── */
+  function waveBudgetChart(container, rec) {
+    if (!isAvailable() || !rec || !rec.waveBudgets || !rec.waveBudgets.length) return null;
+    const budgets = rec.waveBudgets;
+    const actuals = rec.waveActuals || [];
+    const categories = budgets.map((w) => 'W' + w.wave);
+
+    // 构建 actual 查找表
+    const actualMap = {};
+    for (const a of actuals) actualMap[a.wave] = a.actual;
+
+    // 达成率
+    const rates = budgets.map((w) => {
+      const act = actualMap[w.wave] != null ? actualMap[w.wave] : 0;
+      return w.budget > 0 ? +(act / w.budget * 100).toFixed(1) : 0;
+    });
+
+    // Tier 分界 markLine
+    const tierLines = [];
+    let lastTier = -1;
+    for (let i = 0; i < budgets.length; i++) {
+      if (budgets[i].tier > lastTier) {
+        if (lastTier >= 0) {
+          tierLines.push({
+            xAxis: categories[i],
+            label: {
+              formatter: 'T' + lastTier + '→T' + budgets[i].tier,
+              color: COLORS.muted, fontSize: 10, position: 'insideEndTop',
+            },
+            lineStyle: { color: COLORS.red, type: 'dashed', width: 1 },
+          });
+        }
+        lastTier = budgets[i].tier;
+      }
+    }
+
+    // 颜色渐变
+    const budgetGrad = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: 'rgba(0,240,255,0.85)' },
+      { offset: 1, color: 'rgba(0,140,200,0.25)' },
+    ]);
+    const actualGrad = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: 'rgba(255,170,0,0.85)' },
+      { offset: 1, color: 'rgba(200,120,0,0.25)' },
+    ]);
+
+    const option = mergeOption({
+      tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+          const idx = params[0].dataIndex;
+          const w = budgets[idx];
+          const act = actualMap[w.wave] != null ? actualMap[w.wave] : 0;
+          const rate = rates[idx];
+          const gap = w.budget - act;
+          let html = `<div style="font-weight:bold;margin-bottom:4px;">W${w.wave}（tier-${w.tier}）</div>`;
+          html += `<div>${params[0].marker} 预算: ${w.budget}</div>`;
+          html += `<div>${params[1].marker} 实际: ${act}</div>`;
+          html += `<div>${params[2].marker} 达成率: ${rate}%</div>`;
+          html += `<div style="color:${COLORS.muted}">Eximus: ${w.eximusPct}% ｜ 同屏: ${w.simultaneous}</div>`;
+          if (gap > 0) html += `<div style="color:${COLORS.red}">缺口: ${gap}只</div>`;
+          return html;
+        },
+      },
+      legend: {
+        top: 0, right: 12, itemGap: 20,
+        data: ['预算', '实际', '达成率'],
+        textStyle: { fontSize: 12, color: COLORS.text },
+      },
+      grid: { left: '3%', right: '6%', bottom: '12%', top: '18%', containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: categories,
+        axisLabel: { color: COLORS.muted, fontSize: 10, interval: Math.max(0, Math.floor(categories.length / 20)) },
+      },
+      yAxis: [
+        {
+          type: 'value', name: '敌人数量', position: 'left',
+          axisLabel: { color: COLORS.cyan },
+          splitLine: { lineStyle: { color: COLORS.grid } },
+        },
+        {
+          type: 'value', name: '达成率', position: 'right', min: 0, max: 120,
+          axisLabel: { color: COLORS.green, formatter: '{value}%' },
+          splitLine: { show: false },
+        },
+      ],
+      dataZoom: [
+        { type: 'inside', start: 0, end: 100 },
+        {
+          type: 'slider', start: 0, end: 100, height: 18, bottom: 2,
+          borderColor: COLORS.axis, fillerColor: 'rgba(0,240,255,0.15)',
+          handleStyle: { color: COLORS.cyan },
+        },
+      ],
+      series: [
+        {
+          name: '预算',
+          type: 'bar',
+          barMaxWidth: 20,
+          itemStyle: { color: budgetGrad, borderRadius: [2, 2, 0, 0] },
+          data: budgets.map((w) => w.budget),
+          markLine: { symbol: 'none', data: tierLines, animation: false },
+        },
+        {
+          name: '实际',
+          type: 'bar',
+          barMaxWidth: 20,
+          itemStyle: {
+            color: actualGrad, borderRadius: [2, 2, 0, 0],
+          },
+          data: budgets.map((w) => actualMap[w.wave] != null ? actualMap[w.wave] : 0),
+        },
+        {
+          name: '达成率',
+          type: 'line',
+          yAxisIndex: 1,
+          smooth: true,
+          showSymbol: budgets.length <= 30,
+          symbolSize: 6,
+          lineStyle: { width: 2, color: COLORS.green },
+          itemStyle: { color: COLORS.green },
+          data: rates,
+          markLine: {
+            symbol: 'none',
+            data: [
+              {
+                yAxis: 100,
+                label: { formatter: '100%', color: 'rgba(255,255,255,0.4)', fontSize: 10, position: 'insideEndTop' },
+                lineStyle: { color: 'rgba(255,255,255,0.2)', type: 'dashed', width: 1 },
+              },
+              {
+                yAxis: 95,
+                label: { formatter: '95%', color: 'rgba(255,100,100,0.4)', fontSize: 10, position: 'insideEndTop' },
+                lineStyle: { color: 'rgba(255,100,100,0.15)', type: 'dotted', width: 1 },
+              },
+            ],
+            animation: false,
+          },
+        },
+      ],
+    });
+    const chart = echarts.init(container);
+    chart.setOption(option);
+    return chart;
+  }
+
   // ── 通用 dispose 辅助 ──
   function dispose(chart) {
     if (chart && typeof chart.dispose === 'function') chart.dispose();
@@ -414,6 +563,7 @@ WF.arbitrationCharts = (function () {
     pressureTrendChart,
     pressureDroneScatter,
     recoveryTimeline,
+    waveBudgetChart,
     dispose,
     COLORS,
   };

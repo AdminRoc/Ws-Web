@@ -53,6 +53,10 @@ WF.arbitrationView = (function () {
     timeline: '时间轴总览：青色面积 = 每分钟平均活跃敌人，绿色散点 = 每分钟无人机生成数量，红色虚线 = 轮次/波次结算。可拖动下方滑块缩放查看细节。',
     batchGap: '批次之间间隔：把连续 0.3 秒内生成的无人机视为同一批次，计算各批次首只无人机之间的时间间隔。间隔越稳定，说明刷新循环越规律。',
     pressureScatter: '每个点代表一次无人机生成事件：X 轴是生成时刻场上的活跃敌人数，Y 轴是接下来 15 秒内出现的无人机数量。用于观察"高压时是否更容易/更不容易刷无人机"。',
+    waveBudget: '刷怪数量期望表：仅防御模式（WaveDefend）可用。' +
+                '双柱并排 = 每波理论预算（青色）vs 实际生成数（琥珀色），绿色折线 = 达成率。' +
+                '预算来自日志中 "Starting wave N, spawning a total of M" 行，实际来自 eventStream 的 Spawned 峰值差分。' +
+                'Tier 分界线标注敌人等级档位升级点。达成率低于 95% 说明放置失败率偏高。',
   };
 
   /* 分模式压力阈值展示：镜像防御/拦截的高压线、恢复线、清洁度分档按模式画像
@@ -370,6 +374,12 @@ WF.arbitrationView = (function () {
     // 8.5 清图压力趋势
     const pressureBody = chartCard(distWrap, '清图压力趋势（每分钟）', '青色面积 = 平均活跃敌人，洋红虚线 = 最大活跃敌人，青色柱 = 估算清图量。', { id: 'arb-chart-pressure-trend', navLabel: '清图压力趋势' });
     pushChart(C.pressureTrendChart(pressureBody, rec));
+
+    // 8.5.1 刷怪数量期望表（仅 Defense 模式：waveBudgets 有数据时显示）
+    if (rec.waveBudgets && rec.waveBudgets.length > 0) {
+      const budgetBody = chartCard(distWrap, '刷怪数量期望表', TOOLTIPS.waveBudget, { id: 'arb-wave-budget', navLabel: '刷怪数量' });
+      pushChart(C.waveBudgetChart(budgetBody, rec));
+    }
 
     // 8.6 清图效率分布
     if (rec.dist && rec.dist.liveDist) {
