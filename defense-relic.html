@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -176,7 +176,7 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">防御裂缝60轮竞速排行榜</h1>
+      <h1 class="lb-title" aria-label="防御裂缝60轮竞速排行榜">防御裂缝60轮竞速排行榜</h1>
       <p class="lb-subtitle">Defense Relic 60 Rounds Speedrun Leaderboard</p>
     </div>
         <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
@@ -189,35 +189,35 @@
       <button class="lb-tab-btn active" data-cat="普通"><span class="hover-text-swap"><span class="text-cn">普通</span><span class="text-en">Normal</span></span></button>
       <button class="lb-tab-btn" data-cat="钢铁"><span class="hover-text-swap"><span class="text-cn">钢铁</span><span class="text-en">Steel</span></span></button>
     </div>
-    <div class="map-tabs" id="map-tabs">
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
       <button class="map-tab-btn  active" data-mapname="Lith">Lith</button>
-      <button class="map-tab-btn" data-mapname="Coba">Coba</button>
-      <button class="map-tab-btn" data-mapname="Tessera">Tessera</button>
-      <button class="map-tab-btn" data-mapname="Romula">Romula</button>
-      <button class="map-tab-btn" data-mapname="Lares">Lares</button>
-      <button class="map-tab-btn" data-mapname="Spear">Spear</button>
-      <button class="map-tab-btn" data-mapname="Kadesh">Kadesh</button>
-      <button class="map-tab-btn" data-mapname="Gulliver">Gulliver</button>
-      <button class="map-tab-btn" data-mapname="Taranis">Taranis</button>
-      <button class="map-tab-btn" data-mapname="Casta">Casta</button>
-      <button class="map-tab-btn" data-mapname="Seimeni">Seimeni</button>
-      <button class="map-tab-btn" data-mapname="Io">Io</button>
-      <button class="map-tab-btn" data-mapname="Sinai">Sinai</button>
-      <button class="map-tab-btn" data-mapname="Hyf">Hyf</button>
-      <button class="map-tab-btn" data-mapname="Paimon">Paimon</button>
-      <button class="map-tab-btn" data-mapname="Larzac">Larzac</button>
-      <button class="map-tab-btn" data-mapname="Helene">Helene</button>
-      <button class="map-tab-btn" data-mapname="Stephano">Stephano</button>
-      <button class="map-tab-btn" data-mapname="Stöfler">Stöfler</button>
-      <button class="map-tab-btn" data-mapname="Proteus">Proteus</button>
-      <button class="map-tab-btn" data-mapname="Nabuk">Nabuk</button>
-      <button class="map-tab-btn" data-mapname="Belenus">Belenus</button>
-      <button class="map-tab-btn" data-mapname="Hydron">Hydron</button>
-      <button class="map-tab-btn" data-mapname="Kala-azar">Kala-azar</button>
-      <button class="map-tab-btn" data-mapname="Outer">Outer</button>
-      <button class="map-tab-btn" data-mapname="Akkad">Akkad</button>
-      <button class="map-tab-btn" data-mapname="Sechura">Sechura</button>
-      <button class="map-tab-btn" data-mapname="Sangeru">Sangeru</button>
+      <button class="map-tab-btn" data-mapname="Coba" role="tab" aria-selected="false" aria-controls="lb-tbody">Coba</button>
+      <button class="map-tab-btn" data-mapname="Tessera" role="tab" aria-selected="false" aria-controls="lb-tbody">Tessera</button>
+      <button class="map-tab-btn" data-mapname="Romula" role="tab" aria-selected="false" aria-controls="lb-tbody">Romula</button>
+      <button class="map-tab-btn" data-mapname="Lares" role="tab" aria-selected="false" aria-controls="lb-tbody">Lares</button>
+      <button class="map-tab-btn" data-mapname="Spear" role="tab" aria-selected="false" aria-controls="lb-tbody">Spear</button>
+      <button class="map-tab-btn" data-mapname="Kadesh" role="tab" aria-selected="false" aria-controls="lb-tbody">Kadesh</button>
+      <button class="map-tab-btn" data-mapname="Gulliver" role="tab" aria-selected="false" aria-controls="lb-tbody">Gulliver</button>
+      <button class="map-tab-btn" data-mapname="Taranis" role="tab" aria-selected="false" aria-controls="lb-tbody">Taranis</button>
+      <button class="map-tab-btn" data-mapname="Casta" role="tab" aria-selected="false" aria-controls="lb-tbody">Casta</button>
+      <button class="map-tab-btn" data-mapname="Seimeni" role="tab" aria-selected="false" aria-controls="lb-tbody">Seimeni</button>
+      <button class="map-tab-btn" data-mapname="Io" role="tab" aria-selected="false" aria-controls="lb-tbody">Io</button>
+      <button class="map-tab-btn" data-mapname="Sinai" role="tab" aria-selected="false" aria-controls="lb-tbody">Sinai</button>
+      <button class="map-tab-btn" data-mapname="Hyf" role="tab" aria-selected="false" aria-controls="lb-tbody">Hyf</button>
+      <button class="map-tab-btn" data-mapname="Paimon" role="tab" aria-selected="false" aria-controls="lb-tbody">Paimon</button>
+      <button class="map-tab-btn" data-mapname="Larzac" role="tab" aria-selected="false" aria-controls="lb-tbody">Larzac</button>
+      <button class="map-tab-btn" data-mapname="Helene" role="tab" aria-selected="false" aria-controls="lb-tbody">Helene</button>
+      <button class="map-tab-btn" data-mapname="Stephano" role="tab" aria-selected="false" aria-controls="lb-tbody">Stephano</button>
+      <button class="map-tab-btn" data-mapname="Stöfler" role="tab" aria-selected="false" aria-controls="lb-tbody">Stöfler</button>
+      <button class="map-tab-btn" data-mapname="Proteus" role="tab" aria-selected="false" aria-controls="lb-tbody">Proteus</button>
+      <button class="map-tab-btn" data-mapname="Nabuk" role="tab" aria-selected="false" aria-controls="lb-tbody">Nabuk</button>
+      <button class="map-tab-btn" data-mapname="Belenus" role="tab" aria-selected="false" aria-controls="lb-tbody">Belenus</button>
+      <button class="map-tab-btn" data-mapname="Hydron" role="tab" aria-selected="false" aria-controls="lb-tbody">Hydron</button>
+      <button class="map-tab-btn" data-mapname="Kala-azar" role="tab" aria-selected="false" aria-controls="lb-tbody">Kala-azar</button>
+      <button class="map-tab-btn" data-mapname="Outer" role="tab" aria-selected="false" aria-controls="lb-tbody">Outer</button>
+      <button class="map-tab-btn" data-mapname="Akkad" role="tab" aria-selected="false" aria-controls="lb-tbody">Akkad</button>
+      <button class="map-tab-btn" data-mapname="Sechura" role="tab" aria-selected="false" aria-controls="lb-tbody">Sechura</button>
+      <button class="map-tab-btn" data-mapname="Sangeru" role="tab" aria-selected="false" aria-controls="lb-tbody">Sangeru</button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">

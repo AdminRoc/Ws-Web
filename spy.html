@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -175,7 +175,7 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">间谍竞速排行榜</h1>
+      <h1 class="lb-title" aria-label="间谍竞速排行榜">间谍竞速排行榜</h1>
       <p class="lb-subtitle">Spy Speedrun Leaderboard</p>
     </div>
     <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
@@ -188,21 +188,21 @@
       <button class="lb-tab-btn  active" data-cat="允许破解器"><span class="hover-text-swap"><span class="text-cn">允许破解器</span><span class="text-en">Allow Cipher</span></span></button>
       <button class="lb-tab-btn" data-cat="禁用破解器"><span class="hover-text-swap"><span class="text-cn">禁用破解器</span><span class="text-en">No Cipher</span></span></button>
     </div>
-    <div class="map-tabs" id="map-tabs">
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
       <button class="map-tab-btn  active" data-mapname="Cambria">Cambria</button>
-      <button class="map-tab-btn" data-mapname="Unda">Unda</button>
-      <button class="map-tab-btn" data-mapname="Suisei">Suisei</button>
-      <button class="map-tab-btn" data-mapname="Arval">Arval</button>
-      <button class="map-tab-btn" data-mapname="Shklovsky">Shklovsky</button>
-      <button class="map-tab-btn" data-mapname="Bode">Bode</button>
-      <button class="map-tab-btn" data-mapname="Amalthea">Amalthea</button>
-      <button class="map-tab-btn" data-mapname="Valac">Valac</button>
-      <button class="map-tab-btn" data-mapname="Dione">Dione</button>
-      <button class="map-tab-btn" data-mapname="Rosalind">Rosalind</button>
-      <button class="map-tab-btn" data-mapname="Nereid">Nereid</button>
-      <button class="map-tab-btn" data-mapname="Oceanum">Oceanum</button>
-      <button class="map-tab-btn" data-mapname="Kelpie">Kelpie</button>
-      <button class="map-tab-btn" data-mapname="PAGO">PAGO</button>
+      <button class="map-tab-btn" data-mapname="Unda" role="tab" aria-selected="false" aria-controls="lb-tbody">Unda</button>
+      <button class="map-tab-btn" data-mapname="Suisei" role="tab" aria-selected="false" aria-controls="lb-tbody">Suisei</button>
+      <button class="map-tab-btn" data-mapname="Arval" role="tab" aria-selected="false" aria-controls="lb-tbody">Arval</button>
+      <button class="map-tab-btn" data-mapname="Shklovsky" role="tab" aria-selected="false" aria-controls="lb-tbody">Shklovsky</button>
+      <button class="map-tab-btn" data-mapname="Bode" role="tab" aria-selected="false" aria-controls="lb-tbody">Bode</button>
+      <button class="map-tab-btn" data-mapname="Amalthea" role="tab" aria-selected="false" aria-controls="lb-tbody">Amalthea</button>
+      <button class="map-tab-btn" data-mapname="Valac" role="tab" aria-selected="false" aria-controls="lb-tbody">Valac</button>
+      <button class="map-tab-btn" data-mapname="Dione" role="tab" aria-selected="false" aria-controls="lb-tbody">Dione</button>
+      <button class="map-tab-btn" data-mapname="Rosalind" role="tab" aria-selected="false" aria-controls="lb-tbody">Rosalind</button>
+      <button class="map-tab-btn" data-mapname="Nereid" role="tab" aria-selected="false" aria-controls="lb-tbody">Nereid</button>
+      <button class="map-tab-btn" data-mapname="Oceanum" role="tab" aria-selected="false" aria-controls="lb-tbody">Oceanum</button>
+      <button class="map-tab-btn" data-mapname="Kelpie" role="tab" aria-selected="false" aria-controls="lb-tbody">Kelpie</button>
+      <button class="map-tab-btn" data-mapname="PAGO" role="tab" aria-selected="false" aria-controls="lb-tbody">PAGO</button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">

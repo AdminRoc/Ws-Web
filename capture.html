@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -175,7 +175,7 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">捕获竞速排行榜</h1>
+      <h1 class="lb-title" aria-label="捕获竞速排行榜">捕获竞速排行榜</h1>
       <p class="lb-subtitle">Capture Speedrun Leaderboard</p>
     </div>
     <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
@@ -184,25 +184,25 @@
       <span class="lb-tip-cn" id="notice-cn" style="transition:opacity .3s ease;"></span>
       <span class="lb-tip-en" id="notice-en" style="opacity:0;transition:opacity .3s ease;font-style:italic;color:rgba(255,215,0,.75);"></span>
     </div>
-    <div class="map-tabs" id="map-tabs">
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
       <button class="map-tab-btn  active" data-map="capture-mantle">Mantle</button>
-      <button class="map-tab-btn" data-map="capture-venera">Venera</button>
-      <button class="map-tab-btn" data-map="capture-elion">Elion</button>
-      <button class="map-tab-btn" data-map="capture-ara">Ara</button>
-      <button class="map-tab-btn" data-map="capture-hepit">Hepit</button>
-      <button class="map-tab-btn" data-map="capture-skyresh">Skyresh</button>
-      <button class="map-tab-btn" data-map="capture-horend">Horend</button>
-      <button class="map-tab-btn" data-map="capture-lex">Lex</button>
-      <button class="map-tab-btn" data-map="capture-ananke">Ananke</button>
-      <button class="map-tab-btn" data-map="capture-abaddon">Abaddon</button>
-      <button class="map-tab-btn" data-map="capture-cassini">Cassini</button>
-      <button class="map-tab-btn" data-map="capture-ariel">Ariel</button>
-      <button class="map-tab-btn" data-map="capture-copernicus">Copernicus</button>
-      <button class="map-tab-btn" data-map="capture-galatea">Galatea</button>
-      <button class="map-tab-btn" data-map="capture-hydra">Hydra</button>
-      <button class="map-tab-btn" data-map="capture-ukko">Ukko</button>
-      <button class="map-tab-btn" data-map="capture-isos">Isos</button>
-      <button class="map-tab-btn" data-map="capture-kobinn-west">Köbinn West</button>
+      <button class="map-tab-btn" data-map="capture-venera" role="tab" aria-selected="false" aria-controls="lb-tbody">Venera</button>
+      <button class="map-tab-btn" data-map="capture-elion" role="tab" aria-selected="false" aria-controls="lb-tbody">Elion</button>
+      <button class="map-tab-btn" data-map="capture-ara" role="tab" aria-selected="false" aria-controls="lb-tbody">Ara</button>
+      <button class="map-tab-btn" data-map="capture-hepit" role="tab" aria-selected="false" aria-controls="lb-tbody">Hepit</button>
+      <button class="map-tab-btn" data-map="capture-skyresh" role="tab" aria-selected="false" aria-controls="lb-tbody">Skyresh</button>
+      <button class="map-tab-btn" data-map="capture-horend" role="tab" aria-selected="false" aria-controls="lb-tbody">Horend</button>
+      <button class="map-tab-btn" data-map="capture-lex" role="tab" aria-selected="false" aria-controls="lb-tbody">Lex</button>
+      <button class="map-tab-btn" data-map="capture-ananke" role="tab" aria-selected="false" aria-controls="lb-tbody">Ananke</button>
+      <button class="map-tab-btn" data-map="capture-abaddon" role="tab" aria-selected="false" aria-controls="lb-tbody">Abaddon</button>
+      <button class="map-tab-btn" data-map="capture-cassini" role="tab" aria-selected="false" aria-controls="lb-tbody">Cassini</button>
+      <button class="map-tab-btn" data-map="capture-ariel" role="tab" aria-selected="false" aria-controls="lb-tbody">Ariel</button>
+      <button class="map-tab-btn" data-map="capture-copernicus" role="tab" aria-selected="false" aria-controls="lb-tbody">Copernicus</button>
+      <button class="map-tab-btn" data-map="capture-galatea" role="tab" aria-selected="false" aria-controls="lb-tbody">Galatea</button>
+      <button class="map-tab-btn" data-map="capture-hydra" role="tab" aria-selected="false" aria-controls="lb-tbody">Hydra</button>
+      <button class="map-tab-btn" data-map="capture-ukko" role="tab" aria-selected="false" aria-controls="lb-tbody">Ukko</button>
+      <button class="map-tab-btn" data-map="capture-isos" role="tab" aria-selected="false" aria-controls="lb-tbody">Isos</button>
+      <button class="map-tab-btn" data-map="capture-kobinn-west" role="tab" aria-selected="false" aria-controls="lb-tbody">Köbinn West</button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">

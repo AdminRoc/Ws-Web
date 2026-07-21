@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -147,7 +147,7 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">仲裁任务竞速排行榜</h1>
+      <h1 class="lb-title" aria-label="仲裁任务竞速排行榜">仲裁任务竞速排行榜</h1>
       <p class="lb-subtitle" id="lb-subtitle">Arbitration Speedrun Leaderboard</p>
     </div>
     <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
@@ -164,19 +164,19 @@
         <span class="hover-text-swap"><span class="text-cn">标准轮次竞速</span><span class="text-en">Confirmed Rounds Racing</span></span>
       </button>
     </div>
-    <div class="map-tabs" id="map-tabs">
-      <button class="map-tab-btn active" data-mapname="Alchemy"><span class="tab-text"><span class="tab-cn">元素转换</span><span class="tab-en">Alchemy</span></span></button>
-      <button class="map-tab-btn" data-mapname="Defection"><span class="tab-text"><span class="tab-cn">叛逃</span><span class="tab-en">Defection</span></span></button>
-      <button class="map-tab-btn" data-mapname="Defense"><span class="tab-text"><span class="tab-cn">防御</span><span class="tab-en">Defense</span></span></button>
-      <button class="map-tab-btn" data-mapname="Disruption"><span class="tab-text"><span class="tab-cn">中断</span><span class="tab-en">Disruption</span></span></button>
-      <button class="map-tab-btn" data-mapname="Excavation"><span class="tab-text"><span class="tab-cn">挖掘</span><span class="tab-en">Excavation</span></span></button>
-      <button class="map-tab-btn" data-mapname="Salvage"><span class="tab-text"><span class="tab-cn">资源回收</span><span class="tab-en">Salvage</span></span></button>
-      <button class="map-tab-btn" data-mapname="Interception"><span class="tab-text"><span class="tab-cn">拦截</span><span class="tab-en">Interception</span></span></button>
-      <button class="map-tab-btn" data-mapname="Mirror Defense"><span class="tab-text"><span class="tab-cn">镜像防御</span><span class="tab-en">Mirror Defense</span></span></button>
-      <button class="map-tab-btn" data-mapname="Survival"><span class="tab-text"><span class="tab-cn">生存</span><span class="tab-en">Survival</span></span></button>
-      <button class="map-tab-btn" data-mapname="Void Cascade"><span class="tab-text"><span class="tab-cn">虚空覆涌</span><span class="tab-en">Void Cascade</span></span></button>
-      <button class="map-tab-btn" data-mapname="Void Flood"><span class="tab-text"><span class="tab-cn">虚空洪流</span><span class="tab-en">Void Flood</span></span></button>
-      <button class="map-tab-btn" data-mapname="Void Armageddon"><span class="tab-text"><span class="tab-cn">虚空决战</span><span class="tab-en">Void Armageddon</span></span></button>
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
+      <button class="map-tab-btn active" data-mapname="Alchemy" role="tab" aria-selected="true" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">元素转换</span><span class="tab-en">Alchemy</span></span></button>
+      <button class="map-tab-btn" data-mapname="Defection" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">叛逃</span><span class="tab-en">Defection</span></span></button>
+      <button class="map-tab-btn" data-mapname="Defense" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">防御</span><span class="tab-en">Defense</span></span></button>
+      <button class="map-tab-btn" data-mapname="Disruption" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">中断</span><span class="tab-en">Disruption</span></span></button>
+      <button class="map-tab-btn" data-mapname="Excavation" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">挖掘</span><span class="tab-en">Excavation</span></span></button>
+      <button class="map-tab-btn" data-mapname="Salvage" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">资源回收</span><span class="tab-en">Salvage</span></span></button>
+      <button class="map-tab-btn" data-mapname="Interception" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">拦截</span><span class="tab-en">Interception</span></span></button>
+      <button class="map-tab-btn" data-mapname="Mirror Defense" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">镜像防御</span><span class="tab-en">Mirror Defense</span></span></button>
+      <button class="map-tab-btn" data-mapname="Survival" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">生存</span><span class="tab-en">Survival</span></span></button>
+      <button class="map-tab-btn" data-mapname="Void Cascade" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">虚空覆涌</span><span class="tab-en">Void Cascade</span></span></button>
+      <button class="map-tab-btn" data-mapname="Void Flood" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">虚空洪流</span><span class="tab-en">Void Flood</span></span></button>
+      <button class="map-tab-btn" data-mapname="Void Armageddon" role="tab" aria-selected="false" aria-controls="lb-tbody"><span class="tab-text"><span class="tab-cn">虚空决战</span><span class="tab-en">Void Armageddon</span></span></button>
     </div>
     <div class="lb-tip reveal" id="arb-notice" style="display:none;cursor:default;">
       <span class="lb-tip-icon">⚠</span>

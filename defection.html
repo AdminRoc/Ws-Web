@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -170,7 +170,7 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">叛逃任务竞速排行榜</h1>
+      <h1 class="lb-title" aria-label="叛逃任务竞速排行榜">叛逃任务竞速排行榜</h1>
       <p class="lb-subtitle">Defection Speedrun Leaderboard</p>
     </div>
     <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
@@ -179,10 +179,10 @@
       <span id="notice-cn" style="transition:opacity .3s ease;"></span>
       <span class="lb-tip-en" id="notice-en" style="opacity:0;transition:opacity .3s ease;font-style:italic;color:rgba(255,215,0,.75);"></span>
     </div>
-    <div class="map-tabs" id="map-tabs">
-      <button class="map-tab-btn active" data-mapname="Memphis">Memphis</button>
-      <button class="map-tab-btn" data-mapname="Caracol">Caracol</button>
-      <button class="map-tab-btn" data-mapname="Yursa">Yursa</button>
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
+      <button class="map-tab-btn active" data-mapname="Memphis" role="tab" aria-selected="true" aria-controls="lb-tbody">Memphis</button>
+      <button class="map-tab-btn" data-mapname="Caracol" role="tab" aria-selected="false" aria-controls="lb-tbody">Caracol</button>
+      <button class="map-tab-btn" data-mapname="Yursa" role="tab" aria-selected="false" aria-controls="lb-tbody">Yursa</button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">

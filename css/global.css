@@ -117,6 +117,15 @@
   --c-rust:         rgba(120,72,28,0.55);
   --c-bg-warm:      #09080c;
 
+  /* 榜单页面专用变量 */
+  --c-lb-card:        rgba(12,8,2,.82);
+  --c-lb-border:      rgba(185,142,52,.18);
+  --c-lb-border-light: rgba(185,142,52,.06);
+  --c-lb-hover:       rgba(185,142,52,.12);
+  --c-lb-hover-glow:  rgba(185,142,52,.08);
+  --c-lb-header-bg:   linear-gradient(90deg, rgba(185,142,52,.10) 0%, rgba(140,95,20,.06) 100%);
+  --c-lb-header-border: rgba(185,142,52,.22);
+
   /* 圆角 */
   --r-sm: 4px;
   --r-md: 8px;

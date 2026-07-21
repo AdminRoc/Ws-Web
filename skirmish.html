@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -169,7 +169,7 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">面纱前哨战竞速排行榜</h1>
+      <h1 class="lb-title" aria-label="面纱前哨战竞速排行榜">面纱前哨战竞速排行榜</h1>
       <p class="lb-subtitle">Skirmish Speedrun Leaderboard</p>
     </div>
     <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
@@ -182,11 +182,11 @@
       <button class="lb-tab-btn active" data-cat="普通"><span class="hover-text-swap"><span class="text-cn">普通</span><span class="text-en">Normal</span></span></button>
       <button class="lb-tab-btn" data-cat="钢铁"><span class="hover-text-swap"><span class="text-cn">钢铁</span><span class="text-en">Steel</span></span></button>
     </div>
-    <div class="map-tabs" id="map-tabs">
-      <button class="map-tab-btn active" data-mapname="Nsu Grid">Nsu Grid</button>
-      <button class="map-tab-btn" data-mapname="Flexa">Flexa</button>
-      <button class="map-tab-btn" data-mapname="R-9 Cloud">R-9 Cloud</button>
-      <button class="map-tab-btn" data-mapname="H-2 Cloud">H-2 Cloud</button>
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
+      <button class="map-tab-btn active" data-mapname="Nsu Grid" role="tab" aria-selected="true" aria-controls="lb-tbody">Nsu Grid</button>
+      <button class="map-tab-btn" data-mapname="Flexa" role="tab" aria-selected="false" aria-controls="lb-tbody">Flexa</button>
+      <button class="map-tab-btn" data-mapname="R-9 Cloud" role="tab" aria-selected="false" aria-controls="lb-tbody">R-9 Cloud</button>
+      <button class="map-tab-btn" data-mapname="H-2 Cloud" role="tab" aria-selected="false" aria-controls="lb-tbody">H-2 Cloud</button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">

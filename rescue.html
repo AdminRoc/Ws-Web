@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -175,7 +175,7 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">救援竞速排行榜</h1>
+      <h1 class="lb-title" aria-label="救援竞速排行榜">救援竞速排行榜</h1>
       <p class="lb-subtitle">Rescue Speedrun Leaderboard</p>
     </div>
     <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
@@ -184,24 +184,24 @@
       <span class="lb-tip-cn" id="notice-cn" style="transition:opacity .3s ease;"></span>
       <span class="lb-tip-en" id="notice-en" style="opacity:0;transition:opacity .3s ease;font-style:italic;color:rgba(255,215,0,.75);"></span>
     </div>
-    <div class="map-tabs" id="map-tabs">
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
       <button class="map-tab-btn  active" data-map="rescue-pacific">Pacific</button>
-      <button class="map-tab-btn" data-map="rescue-linea">Linea</button>
-      <button class="map-tab-btn" data-map="rescue-caloris">Caloris</button>
-      <button class="map-tab-btn" data-map="rescue-martialis">Martialis</button>
-      <button class="map-tab-btn" data-map="rescue-nuovo">Nuovo</button>
-      <button class="map-tab-btn" data-map="rescue-monolith">Monolith</button>
-      <button class="map-tab-btn" data-map="rescue-metis">Metis</button>
-      <button class="map-tab-btn" data-map="rescue-orias">Orias</button>
-      <button class="map-tab-btn" data-map="rescue-anthe">Anthe</button>
-      <button class="map-tab-btn" data-map="rescue-numa">Numa</button>
-      <button class="map-tab-btn" data-map="rescue-caliban">Caliban</button>
-      <button class="map-tab-btn" data-map="rescue-zeipel">Zeipel</button>
-      <button class="map-tab-btn" data-map="rescue-triton">Triton</button>
-      <button class="map-tab-btn" data-map="rescue-naga">Naga</button>
-      <button class="map-tab-btn" data-map="rescue-garus">Garus</button>
-      <button class="map-tab-btn" data-map="rescue-brugia">Brugia</button>
-      <button class="map-tab-btn" data-map="rescue-regna">Regna</button>
+      <button class="map-tab-btn" data-map="rescue-linea" role="tab" aria-selected="false" aria-controls="lb-tbody">Linea</button>
+      <button class="map-tab-btn" data-map="rescue-caloris" role="tab" aria-selected="false" aria-controls="lb-tbody">Caloris</button>
+      <button class="map-tab-btn" data-map="rescue-martialis" role="tab" aria-selected="false" aria-controls="lb-tbody">Martialis</button>
+      <button class="map-tab-btn" data-map="rescue-nuovo" role="tab" aria-selected="false" aria-controls="lb-tbody">Nuovo</button>
+      <button class="map-tab-btn" data-map="rescue-monolith" role="tab" aria-selected="false" aria-controls="lb-tbody">Monolith</button>
+      <button class="map-tab-btn" data-map="rescue-metis" role="tab" aria-selected="false" aria-controls="lb-tbody">Metis</button>
+      <button class="map-tab-btn" data-map="rescue-orias" role="tab" aria-selected="false" aria-controls="lb-tbody">Orias</button>
+      <button class="map-tab-btn" data-map="rescue-anthe" role="tab" aria-selected="false" aria-controls="lb-tbody">Anthe</button>
+      <button class="map-tab-btn" data-map="rescue-numa" role="tab" aria-selected="false" aria-controls="lb-tbody">Numa</button>
+      <button class="map-tab-btn" data-map="rescue-caliban" role="tab" aria-selected="false" aria-controls="lb-tbody">Caliban</button>
+      <button class="map-tab-btn" data-map="rescue-zeipel" role="tab" aria-selected="false" aria-controls="lb-tbody">Zeipel</button>
+      <button class="map-tab-btn" data-map="rescue-triton" role="tab" aria-selected="false" aria-controls="lb-tbody">Triton</button>
+      <button class="map-tab-btn" data-map="rescue-naga" role="tab" aria-selected="false" aria-controls="lb-tbody">Naga</button>
+      <button class="map-tab-btn" data-map="rescue-garus" role="tab" aria-selected="false" aria-controls="lb-tbody">Garus</button>
+      <button class="map-tab-btn" data-map="rescue-brugia" role="tab" aria-selected="false" aria-controls="lb-tbody">Brugia</button>
+      <button class="map-tab-btn" data-map="rescue-regna" role="tab" aria-selected="false" aria-controls="lb-tbody">Regna</button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">

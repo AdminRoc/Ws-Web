@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -175,7 +175,7 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">歼灭竞速排行榜</h1>
+      <h1 class="lb-title" aria-label="歼灭竞速排行榜">歼灭竞速排行榜</h1>
       <p class="lb-subtitle">Exterminate Speedrun Leaderboard</p>
     </div>
     <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
@@ -188,38 +188,38 @@
       <button class="lb-tab-btn active" data-cat="普通"><span class="hover-text-swap"><span class="text-cn">普通</span><span class="text-en">Normal</span></span></button>
       <button class="lb-tab-btn" data-cat="钢铁"><span class="hover-text-swap"><span class="text-cn">钢铁</span><span class="text-en">Steel</span></span></button>
     </div>
-    <div class="map-tabs" id="map-tabs">
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
       <button class="map-tab-btn  active" data-mapname="E Prime">E Prime</button>
-      <button class="map-tab-btn" data-mapname="Mariana">Mariana</button>
-      <button class="map-tab-btn" data-mapname="E Gate">E Gate</button>
-      <button class="map-tab-btn" data-mapname="Montes">Montes</button>
-      <button class="map-tab-btn" data-mapname="Pantheon">Pantheon</button>
-      <button class="map-tab-btn" data-mapname="M Prime">M Prime</button>
-      <button class="map-tab-btn" data-mapname="Hellas">Hellas</button>
-      <button class="map-tab-btn" data-mapname="Syrtis">Syrtis</button>
-      <button class="map-tab-btn" data-mapname="Ultor">Ultor</button>
-      <button class="map-tab-btn" data-mapname="Roche">Roche</button>
-      <button class="map-tab-btn" data-mapname="Teshub">Teshub</button>
-      <button class="map-tab-btn" data-mapname="Pallas">Pallas</button>
-      <button class="map-tab-btn" data-mapname="Phlegyas">Phlegyas</button>
-      <button class="map-tab-btn" data-mapname="Carpo">Carpo</button>
-      <button class="map-tab-btn" data-mapname="Armaros">Armaros</button>
-      <button class="map-tab-btn" data-mapname="Baal">Baal</button>
-      <button class="map-tab-btn" data-mapname="Telesto">Telesto</button>
-      <button class="map-tab-btn" data-mapname="Sycorax">Sycorax</button>
-      <button class="map-tab-btn" data-mapname="Puck">Puck</button>
-      <button class="map-tab-btn" data-mapname="Plato">Plato</button>
-      <button class="map-tab-btn" data-mapname="Oxomoco">Oxomoco</button>
-      <button class="map-tab-btn" data-mapname="Dakata">Dakata</button>
-      <button class="map-tab-btn" data-mapname="Narcissus">Narcissus</button>
-      <button class="map-tab-btn" data-mapname="Acheron">Acheron</button>
-      <button class="map-tab-btn" data-mapname="Saxis">Saxis</button>
-      <button class="map-tab-btn" data-mapname="Adaro">Adaro</button>
-      <button class="map-tab-btn" data-mapname="Nex">Nex</button>
-      <button class="map-tab-btn" data-mapname="Halako Perimeter">Halako Perimeter</button>
-      <button class="map-tab-btn" data-mapname="Rhu Manor">Rhu Manor</button>
-      <button class="map-tab-btn" data-mapname="Mausoleum East">Mausoleum East</button>
-      <button class="map-tab-btn" data-mapname="Neso">Neso</button>
+      <button class="map-tab-btn" data-mapname="Mariana" role="tab" aria-selected="false" aria-controls="lb-tbody">Mariana</button>
+      <button class="map-tab-btn" data-mapname="E Gate" role="tab" aria-selected="false" aria-controls="lb-tbody">E Gate</button>
+      <button class="map-tab-btn" data-mapname="Montes" role="tab" aria-selected="false" aria-controls="lb-tbody">Montes</button>
+      <button class="map-tab-btn" data-mapname="Pantheon" role="tab" aria-selected="false" aria-controls="lb-tbody">Pantheon</button>
+      <button class="map-tab-btn" data-mapname="M Prime" role="tab" aria-selected="false" aria-controls="lb-tbody">M Prime</button>
+      <button class="map-tab-btn" data-mapname="Hellas" role="tab" aria-selected="false" aria-controls="lb-tbody">Hellas</button>
+      <button class="map-tab-btn" data-mapname="Syrtis" role="tab" aria-selected="false" aria-controls="lb-tbody">Syrtis</button>
+      <button class="map-tab-btn" data-mapname="Ultor" role="tab" aria-selected="false" aria-controls="lb-tbody">Ultor</button>
+      <button class="map-tab-btn" data-mapname="Roche" role="tab" aria-selected="false" aria-controls="lb-tbody">Roche</button>
+      <button class="map-tab-btn" data-mapname="Teshub" role="tab" aria-selected="false" aria-controls="lb-tbody">Teshub</button>
+      <button class="map-tab-btn" data-mapname="Pallas" role="tab" aria-selected="false" aria-controls="lb-tbody">Pallas</button>
+      <button class="map-tab-btn" data-mapname="Phlegyas" role="tab" aria-selected="false" aria-controls="lb-tbody">Phlegyas</button>
+      <button class="map-tab-btn" data-mapname="Carpo" role="tab" aria-selected="false" aria-controls="lb-tbody">Carpo</button>
+      <button class="map-tab-btn" data-mapname="Armaros" role="tab" aria-selected="false" aria-controls="lb-tbody">Armaros</button>
+      <button class="map-tab-btn" data-mapname="Baal" role="tab" aria-selected="false" aria-controls="lb-tbody">Baal</button>
+      <button class="map-tab-btn" data-mapname="Telesto" role="tab" aria-selected="false" aria-controls="lb-tbody">Telesto</button>
+      <button class="map-tab-btn" data-mapname="Sycorax" role="tab" aria-selected="false" aria-controls="lb-tbody">Sycorax</button>
+      <button class="map-tab-btn" data-mapname="Puck" role="tab" aria-selected="false" aria-controls="lb-tbody">Puck</button>
+      <button class="map-tab-btn" data-mapname="Plato" role="tab" aria-selected="false" aria-controls="lb-tbody">Plato</button>
+      <button class="map-tab-btn" data-mapname="Oxomoco" role="tab" aria-selected="false" aria-controls="lb-tbody">Oxomoco</button>
+      <button class="map-tab-btn" data-mapname="Dakata" role="tab" aria-selected="false" aria-controls="lb-tbody">Dakata</button>
+      <button class="map-tab-btn" data-mapname="Narcissus" role="tab" aria-selected="false" aria-controls="lb-tbody">Narcissus</button>
+      <button class="map-tab-btn" data-mapname="Acheron" role="tab" aria-selected="false" aria-controls="lb-tbody">Acheron</button>
+      <button class="map-tab-btn" data-mapname="Saxis" role="tab" aria-selected="false" aria-controls="lb-tbody">Saxis</button>
+      <button class="map-tab-btn" data-mapname="Adaro" role="tab" aria-selected="false" aria-controls="lb-tbody">Adaro</button>
+      <button class="map-tab-btn" data-mapname="Nex" role="tab" aria-selected="false" aria-controls="lb-tbody">Nex</button>
+      <button class="map-tab-btn" data-mapname="Halako Perimeter" role="tab" aria-selected="false" aria-controls="lb-tbody">Halako Perimeter</button>
+      <button class="map-tab-btn" data-mapname="Rhu Manor" role="tab" aria-selected="false" aria-controls="lb-tbody">Rhu Manor</button>
+      <button class="map-tab-btn" data-mapname="Mausoleum East" role="tab" aria-selected="false" aria-controls="lb-tbody">Mausoleum East</button>
+      <button class="map-tab-btn" data-mapname="Neso" role="tab" aria-selected="false" aria-controls="lb-tbody">Neso</button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">

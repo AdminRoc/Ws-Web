@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -175,7 +175,7 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">破坏竞速排行榜</h1>
+      <h1 class="lb-title" aria-label="破坏竞速排行榜">破坏竞速排行榜</h1>
       <p class="lb-subtitle">Sabotage Speedrun Leaderboard</p>
     </div>
     <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
@@ -184,29 +184,29 @@
       <span class="lb-tip-cn" id="notice-cn" style="transition:opacity .3s ease;"></span>
       <span class="lb-tip-en" id="notice-en" style="opacity:0;transition:opacity .3s ease;font-style:italic;color:rgba(255,215,0,.75);"></span>
     </div>
-    <div class="map-tabs" id="map-tabs">
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
       <button class="map-tab-btn  active" data-map="sabotage-cervantes">Cervantes</button>
-      <button class="map-tab-btn" data-map="sabotage-ishtar">Ishtar</button>
-      <button class="map-tab-btn" data-map="sabotage-terminus">Terminus</button>
-      <button class="map-tab-btn" data-map="sabotage-ares">Ares</button>
-      <button class="map-tab-btn" data-map="sabotage-gradivus">Gradivus</button>
-      <button class="map-tab-btn" data-map="sabotage-ker">Ker</button>
-      <button class="map-tab-btn" data-map="sabotage-formido">Formido</button>
-      <button class="map-tab-btn" data-map="sabotage-thon">Thon</button>
-      <button class="map-tab-btn" data-map="sabotage-galilea">Galilea</button>
-      <button class="map-tab-btn" data-map="sabotage-adrastea">Adrastea</button>
-      <button class="map-tab-btn" data-map="sabotage-thebe">Thebe</button>
-      <button class="map-tab-btn" data-map="sabotage-kokabiel">Kokabiel</button>
-      <button class="map-tab-btn" data-map="sabotage-stribog">Stribog</button>
-      <button class="map-tab-btn" data-map="sabotage-enceladus">Enceladus</button>
-      <button class="map-tab-btn" data-map="sabotage-calypso">Calypso</button>
-      <button class="map-tab-btn" data-map="sabotage-desdemona">Desdemona</button>
-      <button class="map-tab-btn" data-map="sabotage-sao">Sao</button>
-      <button class="map-tab-btn" data-map="sabotage-naeglar">Naeglar</button>
-      <button class="map-tab-btn" data-map="sabotage-rusalka">Rusalka</button>
-      <button class="map-tab-btn" data-map="sabotage-cypress">Cypress</button>
-      <button class="map-tab-btn" data-map="sabotage-marduk">Marduk</button>
-      <button class="map-tab-btn" data-map="sabotage-koro">Koro</button>
+      <button class="map-tab-btn" data-map="sabotage-ishtar" role="tab" aria-selected="false" aria-controls="lb-tbody">Ishtar</button>
+      <button class="map-tab-btn" data-map="sabotage-terminus" role="tab" aria-selected="false" aria-controls="lb-tbody">Terminus</button>
+      <button class="map-tab-btn" data-map="sabotage-ares" role="tab" aria-selected="false" aria-controls="lb-tbody">Ares</button>
+      <button class="map-tab-btn" data-map="sabotage-gradivus" role="tab" aria-selected="false" aria-controls="lb-tbody">Gradivus</button>
+      <button class="map-tab-btn" data-map="sabotage-ker" role="tab" aria-selected="false" aria-controls="lb-tbody">Ker</button>
+      <button class="map-tab-btn" data-map="sabotage-formido" role="tab" aria-selected="false" aria-controls="lb-tbody">Formido</button>
+      <button class="map-tab-btn" data-map="sabotage-thon" role="tab" aria-selected="false" aria-controls="lb-tbody">Thon</button>
+      <button class="map-tab-btn" data-map="sabotage-galilea" role="tab" aria-selected="false" aria-controls="lb-tbody">Galilea</button>
+      <button class="map-tab-btn" data-map="sabotage-adrastea" role="tab" aria-selected="false" aria-controls="lb-tbody">Adrastea</button>
+      <button class="map-tab-btn" data-map="sabotage-thebe" role="tab" aria-selected="false" aria-controls="lb-tbody">Thebe</button>
+      <button class="map-tab-btn" data-map="sabotage-kokabiel" role="tab" aria-selected="false" aria-controls="lb-tbody">Kokabiel</button>
+      <button class="map-tab-btn" data-map="sabotage-stribog" role="tab" aria-selected="false" aria-controls="lb-tbody">Stribog</button>
+      <button class="map-tab-btn" data-map="sabotage-enceladus" role="tab" aria-selected="false" aria-controls="lb-tbody">Enceladus</button>
+      <button class="map-tab-btn" data-map="sabotage-calypso" role="tab" aria-selected="false" aria-controls="lb-tbody">Calypso</button>
+      <button class="map-tab-btn" data-map="sabotage-desdemona" role="tab" aria-selected="false" aria-controls="lb-tbody">Desdemona</button>
+      <button class="map-tab-btn" data-map="sabotage-sao" role="tab" aria-selected="false" aria-controls="lb-tbody">Sao</button>
+      <button class="map-tab-btn" data-map="sabotage-naeglar" role="tab" aria-selected="false" aria-controls="lb-tbody">Naeglar</button>
+      <button class="map-tab-btn" data-map="sabotage-rusalka" role="tab" aria-selected="false" aria-controls="lb-tbody">Rusalka</button>
+      <button class="map-tab-btn" data-map="sabotage-cypress" role="tab" aria-selected="false" aria-controls="lb-tbody">Cypress</button>
+      <button class="map-tab-btn" data-map="sabotage-marduk" role="tab" aria-selected="false" aria-controls="lb-tbody">Marduk</button>
+      <button class="map-tab-btn" data-map="sabotage-koro" role="tab" aria-selected="false" aria-controls="lb-tbody">Koro</button>
     </div>
     <div class="lb-table-wrap">
       <table class="lb-table">

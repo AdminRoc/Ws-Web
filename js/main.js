@@ -753,7 +753,7 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
   const sorted = [...records].sort((a,b) => parseTimeMs(a[timeField]) - parseTimeMs(b[timeField]));
 
   if (!sorted.length) {
-    tbody.innerHTML = `<tr><td class="lb-empty-cell" colspan="4"><div class="lb-empty-state"><div class="lb-empty-ring"></div><svg class="lb-empty-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="rgba(0,212,255,.28)" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M10 16h12M16 10v12" stroke="rgba(0,212,255,.55)" stroke-width="1.5" stroke-linecap="round"/></svg><p class="lb-empty-text">NO SIGNAL</p><p class="lb-empty-sub">暂无记录 &nbsp;·&nbsp; 期待你成为第一</p></div></td></tr>`;
+    tbody.innerHTML = `<tr><td class="lb-empty-cell" colspan="4"><div class="lb-empty-state"><div class="lb-empty-ring"></div><svg class="lb-empty-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="rgba(0,212,255,.28)" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M10 16h12M16 10v12" stroke="rgba(0,212,255,.55)" stroke-width="1.5" stroke-linecap="round"/></svg><p class="lb-empty-text">NO SIGNAL</p><p class="lb-empty-sub">暂无记录 &nbsp;·&nbsp; 期待你成为第一</p><a class="lb-empty-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=leaderboard" target="_blank" rel="noopener">提交成绩</a></div></td></tr>`;
     return;
   }
 
@@ -762,11 +762,11 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
     const rank = idx + 1;
     const urls = getVideoUrls(rec);
     const tr   = document.createElement('tr');
-    if (rank <= 3) tr.classList.add(`rank-${rank}`);
+    if (rank <= 6) tr.classList.add(`rank-${rank}`);
 
     /* 无"录像"字，改为仅凭 cursor:pointer 暗示可点 */
     tr.innerHTML = `
-      <td class="rank-col" style="vertical-align:middle"><span class="rank-badge">#${rank}</span></td>
+      <td class="rank-col" style="vertical-align:middle"><span class="rank-badge" aria-label="第${rank}名">#${rank}</span></td>
       <td class="time-col" style="vertical-align:middle">${esc(rec[timeField] || '—')}</td>
       <td class="player-col" style="vertical-align:middle">${(rec.playerId2||rec.playerId3||rec.playerId4) ? '<span class="player-line1">'+esc(rec.playerId||'—')+'</span>' : esc(rec.playerId||'—')}${rec.playerId2 ? '<span class="player-line2">'+esc(rec.playerId2)+'</span>' : ''}${rec.playerId3 ? '<span class="player-line2">'+esc(rec.playerId3)+'</span>' : ''}${rec.playerId4 ? '<span class="player-line2">'+esc(rec.playerId4)+'</span>' : ''}</td>
       <td style="vertical-align:middle">${esc(rec.uploadTime || '—')}</td>`;
@@ -818,7 +818,7 @@ function renderEidolonLeaderboard(records, tbodyId) {
   });
 
   if (!sorted.length) {
-    tbody.innerHTML = `<tr><td class="lb-empty-cell" colspan="5"><div class="lb-empty-state"><div class="lb-empty-ring"></div><svg class="lb-empty-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="rgba(0,212,255,.28)" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M10 16h12M16 10v12" stroke="rgba(0,212,255,.55)" stroke-width="1.5" stroke-linecap="round"/></svg><p class="lb-empty-text">NO SIGNAL</p><p class="lb-empty-sub">暂无记录 &nbsp;·&nbsp; 期待你成为第一</p></div></td></tr>`;
+    tbody.innerHTML = `<tr><td class="lb-empty-cell" colspan="5"><div class="lb-empty-state"><div class="lb-empty-ring"></div><svg class="lb-empty-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="rgba(0,212,255,.28)" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M10 16h12M16 10v12" stroke="rgba(0,212,255,.55)" stroke-width="1.5" stroke-linecap="round"/></svg><p class="lb-empty-text">NO SIGNAL</p><p class="lb-empty-sub">暂无记录 &nbsp;·&nbsp; 期待你成为第一</p><a class="lb-empty-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=leaderboard" target="_blank" rel="noopener">提交成绩</a></div></td></tr>`;
     return;
   }
 
@@ -827,10 +827,10 @@ function renderEidolonLeaderboard(records, tbodyId) {
     const rank = idx + 1;
     const urls = getVideoUrls(rec);
     const tr   = document.createElement('tr');
-    if (rank <= 3) tr.classList.add(`rank-${rank}`);
+    if (rank <= 6) tr.classList.add(`rank-${rank}`);
 
     tr.innerHTML = `
-      <td class="rank-col"><span class="rank-badge">#${rank}</span></td>
+      <td class="rank-col"><span class="rank-badge" aria-label="第${rank}名">#${rank}</span></td>
       <td class="time-col">${esc(rec.avgRealTime || '—')}</td>
       <td>${esc(rec.captureStatus || '—')}</td>
       <td class="player-col">${esc(rec.playerId || '—')}</td>
@@ -859,6 +859,18 @@ document.addEventListener('DOMContentLoaded', () => {
   alignLogoText();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(alignLogoText);
   window.addEventListener('resize', alignLogoText);
+
+  // Tab 滚动视觉提示：滚动到末端时隐藏右侧渐变遮罩
+  const mapTabs = document.getElementById('map-tabs');
+  if (mapTabs) {
+    const checkTabScroll = () => {
+      const scrollEnd = mapTabs.scrollLeft + mapTabs.clientWidth >= mapTabs.scrollWidth - 10;
+      mapTabs.classList.toggle('scroll-end', scrollEnd);
+    };
+    mapTabs.addEventListener('scroll', checkTabScroll);
+    window.addEventListener('resize', checkTabScroll);
+    checkTabScroll();
+  }
 });
 
 /* ══════════════════════════════════════════════════════════

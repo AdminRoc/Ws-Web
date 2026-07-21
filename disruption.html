@@ -227,10 +227,10 @@
     </a>
 
     <div class="lb-header">
-      <h1 class="lb-title">
+      <h1 class="lb-title" aria-label="中断竞速排行榜">
         中断竞速排行榜
-        <span class="lb-badge-wrap" id="badge-wrap"><span class="lb-badge-en">Solo</span><span class="lb-badge-cn">单人</span></span>
-        <span class="lb-badge-wrap" id="badge-wrap-2"><span class="lb-badge-en">Restricted</span><span class="lb-badge-cn">有限制</span></span>
+        <span class="lb-badge-wrap" id="badge-wrap" aria-live="polite"><span class="lb-badge-en" aria-hidden="false">Solo</span><span class="lb-badge-cn" aria-hidden="true">单人</span></span>
+        <span class="lb-badge-wrap" id="badge-wrap-2" aria-live="polite"><span class="lb-badge-en" aria-hidden="false">Restricted</span><span class="lb-badge-cn" aria-hidden="true">有限制</span></span>
       </h1>
       <p class="lb-subtitle">Disruption Speedrun Leaderboards — Solo</p>
     </div>
@@ -242,13 +242,13 @@
     </div>
 
     <!-- 地图 Tab -->
-    <div class="map-tabs" id="map-tabs">
-      <button class="map-tab-btn active" data-map="kappa">Kappa</button>
-      <button class="map-tab-btn" data-map="apollo">Apollo</button>
-      <button class="map-tab-btn" data-map="ur">UR</button>
-      <button class="map-tab-btn" data-map="armatus">Armatus</button>
-      <button class="map-tab-btn" data-map="tamu">Tamu</button>
-      <button class="map-tab-btn" data-map="olympus">Olympus</button>
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
+      <button class="map-tab-btn active" data-map="kappa" role="tab" aria-selected="true" aria-controls="lb-tbody">Kappa</button>
+      <button class="map-tab-btn" data-map="apollo" role="tab" aria-selected="false" aria-controls="lb-tbody">Apollo</button>
+      <button class="map-tab-btn" data-map="ur" role="tab" aria-selected="false" aria-controls="lb-tbody">UR</button>
+      <button class="map-tab-btn" data-map="armatus" role="tab" aria-selected="false" aria-controls="lb-tbody">Armatus</button>
+      <button class="map-tab-btn" data-map="tamu" role="tab" aria-selected="false" aria-controls="lb-tbody">Tamu</button>
+      <button class="map-tab-btn" data-map="olympus" role="tab" aria-selected="false" aria-controls="lb-tbody">Olympus</button>
     </div>
 
     <div class="lb-table-wrap">
@@ -330,7 +330,9 @@
     renderTimeLeaderboard(records, 'lb-tbody', 'clearTime');
     _updatePageNotice(mapData[map]);
     document.querySelectorAll('#map-tabs .map-tab-btn').forEach(function(btn) {
-      btn.classList.toggle('active', btn.dataset.map === map);
+      var isActive = btn.dataset.map === map;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
   }
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -172,7 +172,7 @@
       <span class="hover-text-swap"><span class="text-cn">返回首页</span><span class="text-en">Home</span></span>
     </a>
     <div class="lb-header">
-      <h1 class="lb-title">刺杀竞速排行榜</h1>
+      <h1 class="lb-title" aria-label="刺杀竞速排行榜">刺杀竞速排行榜</h1>
       <p class="lb-subtitle">Assassination Speedrun Leaderboard</p>
     </div>
     <div class="lb-tip reveal" id="page-notice" style="display:none;cursor:default;position:relative;">
@@ -186,24 +186,24 @@
       <button class="lb-tab-btn active" data-cat="普通"><span class="hover-text-swap"><span class="text-cn">普通</span><span class="text-en">Normal</span></span></button>
       <button class="lb-tab-btn" data-cat="钢铁"><span class="hover-text-swap"><span class="text-cn">钢铁</span><span class="text-en">Steel Path</span></span></button>
     </div>
-    <div class="map-tabs" id="map-tabs">
-      <button class="map-tab-btn" data-mapname="Fossa">Fossa</button>
-      <button class="map-tab-btn" data-mapname="Tolstoj">Tolstoj</button>
-      <button class="map-tab-btn" data-mapname="War">War</button>
-      <button class="map-tab-btn" data-mapname="Iliad">Iliad</button>
-      <button class="map-tab-btn" data-mapname="Exta">Exta</button>
-      <button class="map-tab-btn" data-mapname="Themisto">Themisto</button>
-      <button class="map-tab-btn" data-mapname="ORO">ORO</button>
-      <button class="map-tab-btn" data-mapname="Magnacidium">Magnacidium</button>
-      <button class="map-tab-btn" data-mapname="Naamah">Naamah</button>
-      <button class="map-tab-btn" data-mapname="Tethys">Tethys</button>
-      <button class="map-tab-btn" data-mapname="Titania">Titania</button>
-      <button class="map-tab-btn" data-mapname="Psamathe">Psamathe</button>
-      <button class="map-tab-btn" data-mapname="Exequias">Exequias</button>
-      <button class="map-tab-btn" data-mapname="Hades">Hades</button>
-      <button class="map-tab-btn" data-mapname="Mutalist Alad V">Mutalist Alad V</button>
-      <button class="map-tab-btn" data-mapname="Jordas Golem">Jordas Golem</button>
-      <button class="map-tab-btn" data-mapname="Merrow">Merrow</button>
+    <div class="map-tabs" id="map-tabs" role="tablist" aria-label="地图选择">
+      <button class="map-tab-btn" data-mapname="Fossa" role="tab" aria-selected="false" aria-controls="lb-tbody">Fossa</button>
+      <button class="map-tab-btn" data-mapname="Tolstoj" role="tab" aria-selected="false" aria-controls="lb-tbody">Tolstoj</button>
+      <button class="map-tab-btn" data-mapname="War" role="tab" aria-selected="false" aria-controls="lb-tbody">War</button>
+      <button class="map-tab-btn" data-mapname="Iliad" role="tab" aria-selected="false" aria-controls="lb-tbody">Iliad</button>
+      <button class="map-tab-btn" data-mapname="Exta" role="tab" aria-selected="false" aria-controls="lb-tbody">Exta</button>
+      <button class="map-tab-btn" data-mapname="Themisto" role="tab" aria-selected="false" aria-controls="lb-tbody">Themisto</button>
+      <button class="map-tab-btn" data-mapname="ORO" role="tab" aria-selected="false" aria-controls="lb-tbody">ORO</button>
+      <button class="map-tab-btn" data-mapname="Magnacidium" role="tab" aria-selected="false" aria-controls="lb-tbody">Magnacidium</button>
+      <button class="map-tab-btn" data-mapname="Naamah" role="tab" aria-selected="false" aria-controls="lb-tbody">Naamah</button>
+      <button class="map-tab-btn" data-mapname="Tethys" role="tab" aria-selected="false" aria-controls="lb-tbody">Tethys</button>
+      <button class="map-tab-btn" data-mapname="Titania" role="tab" aria-selected="false" aria-controls="lb-tbody">Titania</button>
+      <button class="map-tab-btn" data-mapname="Psamathe" role="tab" aria-selected="false" aria-controls="lb-tbody">Psamathe</button>
+      <button class="map-tab-btn" data-mapname="Exequias" role="tab" aria-selected="false" aria-controls="lb-tbody">Exequias</button>
+      <button class="map-tab-btn" data-mapname="Hades" role="tab" aria-selected="false" aria-controls="lb-tbody">Hades</button>
+      <button class="map-tab-btn" data-mapname="Mutalist Alad V" role="tab" aria-selected="false" aria-controls="lb-tbody">Mutalist Alad V</button>
+      <button class="map-tab-btn" data-mapname="Jordas Golem" role="tab" aria-selected="false" aria-controls="lb-tbody">Jordas Golem</button>
+      <button class="map-tab-btn" data-mapname="Merrow" role="tab" aria-selected="false" aria-controls="lb-tbody">Merrow</button>
       <button class="map-tab-btn steel-only" data-mapname="The Fragmented">The Fragmented</button>
       <button class="map-tab-btn steel-only" data-mapname="The Fragmented One">The Fragmented One</button>
     </div>
