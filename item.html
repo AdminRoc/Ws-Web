@@ -1970,7 +1970,16 @@
     if (_aucDicts[name]) return Promise.resolve(_aucDicts[name]);
     var url = WM_AUCTION_PROXY.replace(/\/$/, '') + '/v2/' + name;
     return _fetchJsonRetry(url, 1, AUC_RETRY_MAX, { 'Language': 'zh-hans' }).then(function (j) {
-      var arr = (j && Array.isArray(j.data)) ? j.data : [];
+      var arr = [];
+      if (j) {
+        var p = j.payload || j.data || j;
+        if (Array.isArray(p)) {
+          arr = p;
+        } else if (p && typeof p === 'object') {
+          var key = name.split('/')[1];
+          arr = p[key] || Object.values(p).find(function (v) { return Array.isArray(v); }) || [];
+        }
+      }
       var map = {};
       arr.forEach(function (it) { map[it.slug] = it; });
       // 注入中文兜底（赤毒/姐妹武器：WM 代理未透传 Language 头时缺 zh-hans）
@@ -1993,6 +2002,7 @@
      el: 挂载点(会插入 input+drop)；getArr: 返回候选数组的函数；onPick(item|null)；allowEmpty: 是否插入"不限"项
      候选项支持 _label（合成选项，如"存在负面词条"，不经过 i18n 查询直接显示这段文字） */
   function _mkAcField(el, getArr, onPick, allowEmpty, placeholder) {
+    if (!el) return null;
     el.innerHTML = '<div class="it-ac-field-wrap"><input class="it-ac-field-input" autocomplete="off" spellcheck="false" placeholder="' + esc(placeholder || '') + '"><div class="it-ac-field-drop"></div></div>';
     var input = el.querySelector('.it-ac-field-input');
     var drop  = el.querySelector('.it-ac-field-drop');
@@ -2034,6 +2044,7 @@
       });
     }
     input.addEventListener('input', function () { input.dataset.slug = ''; onPick(null); showItems(doFilter(input.value)); });
+    input.addEventListener('compositionend', function () { input.dataset.slug = ''; onPick(null); showItems(doFilter(input.value)); });
     input.addEventListener('focus', function () { showItems(doFilter(input.value)); });
     input.addEventListener('blur',  function () { setTimeout(function () { drop.classList.remove('show'); }, 160); });
     return { input: input, drop: drop, setValue: function (slug, label) { input.dataset.slug = slug || ''; input.value = label || ''; } };
