@@ -753,7 +753,7 @@ function renderTimeLeaderboard(records, tbodyId, timeField) {
   const sorted = [...records].sort((a,b) => parseTimeMs(a[timeField]) - parseTimeMs(b[timeField]));
 
   if (!sorted.length) {
-    tbody.innerHTML = `<tr><td class="lb-empty-cell" colspan="4"><div class="lb-empty-state"><div class="lb-empty-ring"></div><svg class="lb-empty-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="rgba(0,212,255,.28)" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M10 16h12M16 10v12" stroke="rgba(0,212,255,.55)" stroke-width="1.5" stroke-linecap="round"/></svg><p class="lb-empty-text">NO SIGNAL</p><p class="lb-empty-sub">暂无记录 &nbsp;·&nbsp; 期待你成为第一</p><a class="lb-empty-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=leaderboard" target="_blank" rel="noopener">提交成绩</a></div></td></tr>`;
+    tbody.innerHTML = `<tr><td class="lb-empty-cell" colspan="4"><div class="lb-empty-state"><div class="lb-empty-ring"></div><div class="lb-empty-ring2"></div><div class="lb-empty-radar"></div><div class="lb-empty-corner lb-empty-corner--tl"></div><div class="lb-empty-corner lb-empty-corner--tr"></div><div class="lb-empty-corner lb-empty-corner--bl"></div><div class="lb-empty-corner lb-empty-corner--br"></div><div class="lb-empty-wave lb-empty-wave--1"></div><div class="lb-empty-wave lb-empty-wave--2"></div><div class="lb-empty-wave lb-empty-wave--3"></div><svg class="lb-empty-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="rgba(0,212,255,.28)" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M10 16h12M16 10v12" stroke="rgba(0,212,255,.55)" stroke-width="1.5" stroke-linecap="round"/></svg><p class="lb-empty-text">NO SIGNAL</p><p class="lb-empty-sub">暂无记录 &nbsp;·&nbsp; 期待你成为第一</p><a class="lb-empty-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=leaderboard" target="_blank" rel="noopener">提交成绩</a></div></td></tr>`;
     return;
   }
 
@@ -818,7 +818,7 @@ function renderEidolonLeaderboard(records, tbodyId) {
   });
 
   if (!sorted.length) {
-    tbody.innerHTML = `<tr><td class="lb-empty-cell" colspan="5"><div class="lb-empty-state"><div class="lb-empty-ring"></div><svg class="lb-empty-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="rgba(0,212,255,.28)" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M10 16h12M16 10v12" stroke="rgba(0,212,255,.55)" stroke-width="1.5" stroke-linecap="round"/></svg><p class="lb-empty-text">NO SIGNAL</p><p class="lb-empty-sub">暂无记录 &nbsp;·&nbsp; 期待你成为第一</p><a class="lb-empty-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=leaderboard" target="_blank" rel="noopener">提交成绩</a></div></td></tr>`;
+    tbody.innerHTML = `<tr><td class="lb-empty-cell" colspan="5"><div class="lb-empty-state"><div class="lb-empty-ring"></div><div class="lb-empty-ring2"></div><div class="lb-empty-radar"></div><div class="lb-empty-corner lb-empty-corner--tl"></div><div class="lb-empty-corner lb-empty-corner--tr"></div><div class="lb-empty-corner lb-empty-corner--bl"></div><div class="lb-empty-corner lb-empty-corner--br"></div><div class="lb-empty-wave lb-empty-wave--1"></div><div class="lb-empty-wave lb-empty-wave--2"></div><div class="lb-empty-wave lb-empty-wave--3"></div><svg class="lb-empty-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="rgba(0,212,255,.28)" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M10 16h12M16 10v12" stroke="rgba(0,212,255,.55)" stroke-width="1.5" stroke-linecap="round"/></svg><p class="lb-empty-text">NO SIGNAL</p><p class="lb-empty-sub">暂无记录 &nbsp;·&nbsp; 期待你成为第一</p><a class="lb-empty-submit" href="viewer.html?url=https%3A%2F%2Fqcnye09jdqm2.feishu.cn%2Fshare%2Fbase%2Fform%2FshrcnUS6boP9k8GD9iKCi2tXb2e&title=%E6%8F%90%E4%BA%A4%E6%88%90%E7%BB%A9&from=leaderboard" target="_blank" rel="noopener">提交成绩</a></div></td></tr>`;
     return;
   }
 
@@ -870,6 +870,18 @@ document.addEventListener('DOMContentLoaded', () => {
     mapTabs.addEventListener('scroll', checkTabScroll);
     window.addEventListener('resize', checkTabScroll);
     checkTabScroll();
+  }
+
+  // 移动端表格水平滚动提示：滚动到末端时隐藏右侧渐变遮罩
+  const tableWrap = document.querySelector('.lb-table-wrap');
+  if (tableWrap) {
+    const checkTableScroll = () => {
+      const scrollEnd = tableWrap.scrollLeft + tableWrap.clientWidth >= tableWrap.scrollWidth - 10;
+      tableWrap.classList.toggle('scroll-end', scrollEnd);
+    };
+    tableWrap.addEventListener('scroll', checkTableScroll);
+    window.addEventListener('resize', checkTableScroll);
+    checkTableScroll();
   }
 });
 
