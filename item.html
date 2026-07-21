@@ -1965,24 +1965,29 @@
     });
   }
 
-  /* ── v2 字典加载（武器/词条，含 zh-hans），按 type 缓存 ── */
+  /* ── 拍卖字典加载（武器/词条，从本地 data/auction-dicts/ 读取，完全无需实时 API） ──
+     数据由 .github/scripts/harvest_auction_dicts.py 定时收割生成，
+     存放在 data/auction-dicts/auction-{type}-{name}.json（bare array，前端直接 fetch 使用）。
+     本地文件缺失时兜底为空数组，不影响页面渲染。 */
+  var _aucDictFileMap = {
+    'riven/weapons':    'data/auction-dicts/auction-weapons-riven.json',
+    'riven/attributes': 'data/auction-dicts/auction-attrs-riven.json',
+    'lich/weapons':     'data/auction-dicts/auction-weapons-lich.json',
+    'sister/weapons':   'data/auction-dicts/auction-weapons-sister.json',
+  };
   function _aucLoadDict(name) {
     if (_aucDicts[name]) return Promise.resolve(_aucDicts[name]);
-    var url = WM_AUCTION_PROXY.replace(/\/$/, '') + '/v2/' + name;
-    return _fetchJsonRetry(url, 1, AUC_RETRY_MAX, { 'Language': 'zh-hans' }).then(function (j) {
-      var arr = [];
-      if (j) {
-        var p = j.payload || j.data || j;
-        if (Array.isArray(p)) {
-          arr = p;
-        } else if (p && typeof p === 'object') {
-          var key = name.split('/')[1];
-          arr = p[key] || Object.values(p).find(function (v) { return Array.isArray(v); }) || [];
-        }
-      }
+    var url = _aucDictFileMap[name];
+    if (!url) return Promise.reject(new Error('unknown dict: ' + name));
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error('http ' + r.status);
+      return r.json();
+    }).then(function (arr) {
+      if (!Array.isArray(arr)) throw new Error('invalid format');
       var map = {};
-      arr.forEach(function (it) { map[it.slug] = it; });
-      // 注入中文兜底（赤毒/姐妹武器：WM 代理未透传 Language 头时缺 zh-hans）
+      arr.forEach(function (it) { if (it.slug) map[it.slug] = it; });
+      // 本地收割数据已含完整 zh-hans（harvest 脚本走代理且注入兜底），
+      // 再走一遍兜底确保数据完整性（人工修改或脚本遗漏时的安全网）
       var zhMap = name === 'lich/weapons' ? LICH_WEAPON_ZH
                   : name === 'sister/weapons' ? SISTER_WEAPON_ZH
                   : null;
