@@ -1129,8 +1129,8 @@
      留空时仍可用掉落来源 + 维基链接，只是实时交易信息一栏会提示"未配置代理"。 */
   var WM_PROXY_BASE = 'https://wm.wfspeed.run';
 
-  /* 拍卖字典专用代理：wmapi.wfspeed.run（EdgeOne 边缘函数，透传 Language: zh-hans，返回完整 i18n） */
-  var WM_AUCTION_PROXY = 'https://wmapi.wfspeed.run';
+  /* WM_AUCTION_PROXY 已废弃（2026-07-21）：字典改走本地 data/auction-dicts/，
+     搜索降回 WM_PROXY_BASE。新 Worker `wmapi.wfspeed.run` 响应格式不同。 */
 
   /* 赤毒玄骸武器中文名兜底（21种） —— 与 Private-WM worker.js 同步 */
   var LICH_WEAPON_ZH = {
@@ -2202,7 +2202,7 @@
       if (_aucFilterVals.element) p.set('element', _aucFilterVals.element);
       if (_aucFilterVals.ephemera) p.set('having_ephemera', _aucFilterVals.ephemera);
     }
-    var url = WM_AUCTION_PROXY.replace(/\/$/, '') + '/v1/auctions/search?' + p.toString();
+    var url = WM_PROXY_BASE.replace(/\/$/, '') + '/v1/auctions/search?' + p.toString();
     _fetchJsonRetry(url, 1, AUC_RETRY_MAX).then(function (j) {
       var list = (j && j.payload && Array.isArray(j.payload.auctions)) ? j.payload.auctions : [];
       _aucLastList = list.filter(function (a) { return !a.closed && a.visible !== false; });

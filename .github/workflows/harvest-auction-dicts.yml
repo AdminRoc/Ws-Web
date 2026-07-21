@@ -1,9 +1,20 @@
 name: Harvest Auction Dicts
 
+# 收割 Warframe.market 拍卖字典数据（武器/词条列表）到 data/auction-dicts/，
+# 使 item.html 拍卖搜索的自动补全不需要实时 API。一日两次，保持数据新鲜。
+#
+# 收割脚本在私库 AdminRoc/Ws-Web-core(.github/scripts 整体 gitignore，与
+# cache-item-icons.yml / harvest-pinyin.yml 同一约定)；运行前 checkout 私库
+# 覆盖进工作树，只把收割出的数据文件提交回公库，私库脚本绝不提交回公库。
+
 on:
   schedule:
     - cron: '0 5,17 * * *'
   workflow_dispatch:
+
+concurrency:
+  group: ws-web-batch-lock
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -12,20 +23,43 @@ jobs:
   harvest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout 公库
+        uses: actions/checkout@v4
+
+      - name: 拉取私库(收割脚本)
+        uses: actions/checkout@v5
+        with:
+          repository: AdminRoc/Ws-Web-core
+          token: ${{ secrets.PRIVATE_REPO_PAT }}
+          path: _private
+
+      - name: 覆盖私库脚本进工作树(不会被提交回公库)
+        run: |
+          mkdir -p .github/scripts
+          cp -a _private/.github/scripts/harvest_auction_dicts.py .github/scripts/
+          rm -rf _private
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+
       - name: Run harvest script
         run: python .github/scripts/harvest_auction_dicts.py
+
       - name: Commit & push changes
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/auction-dicts/
           if git diff --quiet && git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "chore(auction-dicts): periodic harvest update"
-            git push
+            git commit -m "2026-07-21"
+            for i in 1 2 3 4 5; do
+              if git push; then echo "推送成功(第 $i 次)"; exit 0; fi
+              echo "推送被拒(第 $i 次),拉取远端后 rebase 重试..."
+              git pull --rebase --autostash origin main || true
+            done
+            echo "重试多次仍推送失败" >&2
+            exit 1
           fi
