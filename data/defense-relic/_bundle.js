@@ -37,8 +37,8 @@ var defense_relic_normal_akkadRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_akkadNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_akkadNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_akkadNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_akkadNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-belenus.js ===== */
@@ -73,8 +73,8 @@ var defense_relic_normal_belenusRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_belenusNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_belenusNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_belenusNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_belenusNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-casta.js ===== */
@@ -109,8 +109,8 @@ var defense_relic_normal_castaRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_castaNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_castaNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_castaNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_castaNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-coba.js ===== */
@@ -145,8 +145,8 @@ var defense_relic_normal_cobaRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_cobaNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_cobaNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_cobaNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_cobaNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-gulliver.js ===== */
@@ -181,8 +181,8 @@ var defense_relic_normal_gulliverRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_gulliverNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_gulliverNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_gulliverNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_gulliverNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-helene.js ===== */
@@ -217,8 +217,8 @@ var defense_relic_normal_heleneRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_heleneNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_heleneNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_heleneNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_heleneNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-hydron.js ===== */
@@ -253,8 +253,8 @@ var defense_relic_normal_hydronRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_hydronNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_hydronNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_hydronNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_hydronNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-hyf.js ===== */
@@ -289,8 +289,8 @@ var defense_relic_normal_hyfRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_hyfNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_hyfNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_hyfNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_hyfNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-io.js ===== */
@@ -325,8 +325,8 @@ var defense_relic_normal_ioRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_ioNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_ioNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_ioNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_ioNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-kadesh.js ===== */
@@ -361,8 +361,8 @@ var defense_relic_normal_kadeshRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_kadeshNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_kadeshNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_kadeshNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_kadeshNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-kala-azar.js ===== */
@@ -397,8 +397,8 @@ var defense_relic_normal_kala_azarRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_kala_azarNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_kala_azarNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_kala_azarNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_kala_azarNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-lares.js ===== */
@@ -433,8 +433,8 @@ var defense_relic_normal_laresRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_laresNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_laresNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_laresNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_laresNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-larzac.js ===== */
@@ -469,8 +469,8 @@ var defense_relic_normal_larzacRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_larzacNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_larzacNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_larzacNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_larzacNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-lith.js ===== */
@@ -505,8 +505,8 @@ var defense_relic_normal_lithRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_lithNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_lithNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_lithNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_lithNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-nabuk.js ===== */
@@ -541,8 +541,8 @@ var defense_relic_normal_nabukRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_nabukNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_nabukNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_nabukNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_nabukNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-outer.js ===== */
@@ -577,8 +577,8 @@ var defense_relic_normal_outerRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_outerNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_outerNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_outerNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_outerNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-paimon.js ===== */
@@ -613,8 +613,8 @@ var defense_relic_normal_paimonRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_paimonNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_paimonNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_paimonNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_paimonNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-proteus.js ===== */
@@ -649,8 +649,8 @@ var defense_relic_normal_proteusRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_proteusNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_proteusNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_proteusNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_proteusNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-romula.js ===== */
@@ -685,8 +685,8 @@ var defense_relic_normal_romulaRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_romulaNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_romulaNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_romulaNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_romulaNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-sangeru.js ===== */
@@ -721,8 +721,8 @@ var defense_relic_normal_sangeruRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_sangeruNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_sangeruNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_sangeruNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_sangeruNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-sechura.js ===== */
@@ -757,8 +757,8 @@ var defense_relic_normal_sechuraRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_sechuraNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_sechuraNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_sechuraNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_sechuraNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-seimeni.js ===== */
@@ -793,8 +793,8 @@ var defense_relic_normal_seimeniRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_seimeniNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_seimeniNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_seimeniNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_seimeniNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-sinai.js ===== */
@@ -829,8 +829,8 @@ var defense_relic_normal_sinaiRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_sinaiNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_sinaiNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_sinaiNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_sinaiNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-spear.js ===== */
@@ -865,8 +865,8 @@ var defense_relic_normal_spearRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_spearNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_spearNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_spearNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_spearNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-stephano.js ===== */
@@ -901,8 +901,8 @@ var defense_relic_normal_stephanoRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_stephanoNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_stephanoNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_stephanoNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_stephanoNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-stofler.js ===== */
@@ -937,8 +937,8 @@ var defense_relic_normal_stoflerRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_stoflerNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_stoflerNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_stoflerNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_stoflerNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-taranis.js ===== */
@@ -973,8 +973,8 @@ var defense_relic_normal_taranisRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_taranisNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_taranisNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_taranisNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_taranisNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-normal-tessera.js ===== */
@@ -1009,8 +1009,8 @@ var defense_relic_normal_tesseraRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_tesseraNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_tesseraNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_tesseraNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_tesseraNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-akkad.js ===== */
@@ -1045,8 +1045,8 @@ var defense_relic_steel_akkadRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_akkadNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_akkadNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_akkadNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_akkadNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-belenus.js ===== */
@@ -1081,8 +1081,8 @@ var defense_relic_steel_belenusRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_belenusNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_belenusNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_belenusNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_belenusNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-casta.js ===== */
@@ -1117,8 +1117,8 @@ var defense_relic_steel_castaRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_castaNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_castaNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_castaNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_castaNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-coba.js ===== */
@@ -1153,8 +1153,8 @@ var defense_relic_steel_cobaRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_cobaNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_cobaNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_cobaNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_cobaNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-gulliver.js ===== */
@@ -1189,8 +1189,8 @@ var defense_relic_steel_gulliverRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_gulliverNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_gulliverNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_gulliverNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_gulliverNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-helene.js ===== */
@@ -1225,8 +1225,8 @@ var defense_relic_steel_heleneRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_heleneNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_heleneNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_heleneNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_heleneNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-hydron.js ===== */
@@ -1261,8 +1261,8 @@ var defense_relic_steel_hydronRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_hydronNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_hydronNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_hydronNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_hydronNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-hyf.js ===== */
@@ -1297,8 +1297,8 @@ var defense_relic_steel_hyfRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_hyfNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_hyfNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_hyfNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_hyfNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-io.js ===== */
@@ -1333,8 +1333,8 @@ var defense_relic_steel_ioRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_ioNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_ioNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_ioNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_ioNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-kadesh.js ===== */
@@ -1369,8 +1369,8 @@ var defense_relic_steel_kadeshRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_kadeshNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_kadeshNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_kadeshNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_kadeshNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-kala-azar.js ===== */
@@ -1405,8 +1405,8 @@ var defense_relic_steel_kala_azarRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_kala_azarNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_kala_azarNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_kala_azarNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_kala_azarNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-lares.js ===== */
@@ -1441,8 +1441,8 @@ var defense_relic_steel_laresRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_laresNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_laresNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_laresNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_laresNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-larzac.js ===== */
@@ -1477,8 +1477,8 @@ var defense_relic_steel_larzacRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_larzacNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_larzacNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_larzacNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_larzacNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-lith.js ===== */
@@ -1513,8 +1513,8 @@ var defense_relic_steel_lithRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_lithNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_lithNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_lithNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_lithNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-nabuk.js ===== */
@@ -1549,8 +1549,8 @@ var defense_relic_steel_nabukRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_nabukNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_nabukNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_nabukNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_nabukNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-outer.js ===== */
@@ -1585,8 +1585,8 @@ var defense_relic_steel_outerRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_outerNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_outerNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_outerNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_outerNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-paimon.js ===== */
@@ -1621,8 +1621,8 @@ var defense_relic_steel_paimonRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_paimonNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_paimonNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_paimonNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_paimonNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-proteus.js ===== */
@@ -1657,8 +1657,8 @@ var defense_relic_steel_proteusRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_proteusNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_proteusNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_proteusNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_proteusNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-romula.js ===== */
@@ -1693,8 +1693,8 @@ var defense_relic_steel_romulaRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_romulaNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_romulaNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_romulaNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_romulaNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-sangeru.js ===== */
@@ -1729,8 +1729,8 @@ var defense_relic_steel_sangeruRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_sangeruNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_sangeruNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_sangeruNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_sangeruNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-sechura.js ===== */
@@ -1765,8 +1765,8 @@ var defense_relic_steel_sechuraRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_sechuraNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_sechuraNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_sechuraNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_sechuraNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-seimeni.js ===== */
@@ -1801,8 +1801,8 @@ var defense_relic_steel_seimeniRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_seimeniNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_seimeniNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_seimeniNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_seimeniNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-sinai.js ===== */
@@ -1837,8 +1837,8 @@ var defense_relic_steel_sinaiRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_sinaiNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_sinaiNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_sinaiNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_sinaiNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-spear.js ===== */
@@ -1873,8 +1873,8 @@ var defense_relic_steel_spearRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_spearNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_spearNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_spearNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_spearNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-stephano.js ===== */
@@ -1909,8 +1909,8 @@ var defense_relic_steel_stephanoRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_stephanoNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_stephanoNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_stephanoNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_stephanoNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-stofler.js ===== */
@@ -1945,8 +1945,8 @@ var defense_relic_steel_stoflerRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_stoflerNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_stoflerNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_stoflerNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_stoflerNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-taranis.js ===== */
@@ -1981,8 +1981,8 @@ var defense_relic_steel_taranisRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_taranisNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_taranisNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_taranisNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_taranisNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
 
 /* ===== data/defense-relic/defense-relic-steel-tessera.js ===== */
@@ -2017,6 +2017,6 @@ var defense_relic_steel_tesseraRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_steel_tesseraNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_steel_tesseraNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_steel_tesseraNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_steel_tesseraNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
 ;
