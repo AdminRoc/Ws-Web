@@ -29,5 +29,5 @@ var defense_relic_normal_laresRecords = [
  * Notice_cn : 默认显示的中文提醒（留空则不显示横幅）
  * Notice_en : 鼠标停留时显示的英文提醒（可留空）
  * ──────────────────────────────────────────────────────── */
-var defense_relic_normal_laresNotice_cn = "请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。";
-var defense_relic_normal_laresNotice_en = "All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.";
+var defense_relic_normal_laresNotice_cn = "同时允许「78轮」与「60轮」的投稿成绩、需要提交EELOG、且78轮的成绩将重新换算为60轮再参与排名（请注意，每一轮必须确保所有队伍成员达到 10/10 反应物的状态，且必须全部选择核桃。）";
+var defense_relic_normal_laresNotice_en = "Submissions for both '78 rounds' and '60 rounds' are accepted. EE Log submission is required. Scores from the 78 rounds will be converted to the 60-round equivalent for ranking purposes.（All squad members must collect 10/10 Reactants in each round. All players must select a Void Relic.）";
