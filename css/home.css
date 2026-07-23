@@ -241,6 +241,162 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ══════════════════════════════════════════════════════════
+   扫描线箭头 — Scanline Arrow 滚动提示
+   7 条水平线段构成向下三角形轮廓，暗金色，扫描线动画
+   第一屏 / 第二屏 完全相同，无辉光
+   ══════════════════════════════════════════════════════════ */
+
+.scanline-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  width: 72px;
+  height: 56px;
+  position: relative;
+  /* 重置 button 默认样式 */
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* 7 条扫描线 — 宽度从上到下递减，构成三角形 */
+.sa-line {
+  height: 2px;
+  background: linear-gradient(90deg,
+    rgba(140,105,42,0.06) 0%,
+    rgba(158,126,72,0.4) 15%,
+    rgba(170,135,78,0.6) 35%,
+    rgba(180,142,82,0.7) 50%,
+    rgba(170,135,78,0.6) 65%,
+    rgba(158,126,72,0.4) 85%,
+    rgba(140,105,42,0.06) 100%
+  );
+  opacity: 0;
+  animation: scanlineScan 3s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.42s);
+  transition: opacity 0.2s ease-out, filter 0.2s ease-out;
+  will-change: opacity, filter;
+  position: relative;
+}
+
+/* 三角形轮廓 — 宽度递减 */
+.sa-line:nth-child(1) { width: 72px; }
+.sa-line:nth-child(2) { width: 60px; }
+.sa-line:nth-child(3) { width: 48px; }
+.sa-line:nth-child(4) { width: 36px; }
+.sa-line:nth-child(5) { width: 24px; }
+.sa-line:nth-child(6) { width: 12px; }
+.sa-line:nth-child(7) { width: 6px; }
+
+/* ── 扫描动画：上→下亮起，上→下熄灭 ── */
+@keyframes scanlineScan {
+  0%   { opacity: 0; transform: scaleX(0.95); }
+  4%   { opacity: 1; transform: scaleX(1); }
+  42%  { opacity: 1; transform: scaleX(1); }
+  48%  { opacity: 0; transform: scaleX(0.98); }
+  100% { opacity: 0; transform: scaleX(0.95); }
+}
+
+/* ── Hover：所有线段同时亮起 ── */
+.scanline-arrow:hover .sa-line,
+.scanline-arrow.is-hover .sa-line {
+  opacity: 1 !important;
+  animation: none !important;
+  background: linear-gradient(90deg,
+    rgba(140,105,42,0.15) 0%,
+    rgba(162,120,46,0.55) 15%,
+    rgba(180,142,82,0.75) 35%,
+    rgba(192,152,88,0.85) 50%,
+    rgba(180,142,82,0.75) 65%,
+    rgba(162,120,46,0.55) 85%,
+    rgba(140,105,42,0.15) 100%
+  );
+  filter: drop-shadow(0 0 4px rgba(162,120,46,0.4))
+          drop-shadow(0 0 10px rgba(162,120,46,0.2));
+  transition: opacity 0.2s ease-out, filter 0.2s ease-out;
+}
+
+/* ── Active：线段压缩 + 亮金 ── */
+.scanline-arrow:active .sa-line,
+.scanline-arrow.is-active .sa-line {
+  opacity: 1 !important;
+  animation: none !important;
+  transform: scaleY(1.6);
+  background: linear-gradient(90deg,
+    rgba(180,142,82,0.25) 0%,
+    rgba(192,152,88,0.7) 15%,
+    rgba(210,170,100,0.9) 35%,
+    rgba(220,180,110,1) 50%,
+    rgba(210,170,100,0.9) 65%,
+    rgba(192,152,88,0.7) 85%,
+    rgba(180,142,82,0.25) 100%
+  );
+  filter: drop-shadow(0 0 5px rgba(192,152,88,0.5))
+          drop-shadow(0 0 12px rgba(192,152,88,0.25));
+  transition: transform 0.06s ease-out, filter 0.06s ease-out, background 0.06s ease-out;
+}
+
+/* ── Pressed：闪烁 + 振动 ── */
+.scanline-arrow.is-pressed .sa-line {
+  opacity: 1 !important;
+  animation: pressFlash 0.15s linear infinite !important;
+  filter: drop-shadow(0 0 6px rgba(192,152,88,0.55))
+          drop-shadow(0 0 14px rgba(192,152,88,0.3));
+}
+
+/* ── Scrolling：所有线段淡出 ── */
+.scanline-arrow.is-scrolling .sa-line {
+  opacity: 0 !important;
+  animation: none !important;
+  transition: opacity 0.3s ease-out;
+}
+
+/* ── Return：恢复扫描动画 ── */
+.scanline-arrow.is-returning .sa-line {
+  opacity: 0;
+  animation: scanlineScan 3s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.42s + 0.4s);
+  transition: opacity 0.4s ease-in;
+}
+
+/* ── 第二屏：绝对定位贴底 ── */
+.scroll-section > .scanline-arrow {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ── Pressed 振动 ── */
+@keyframes pressFlash {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .scanline-arrow .sa-line {
+    animation: none !important;
+    transition: none !important;
+  }
+  /* 静止态：所有线段可见，暗金色 */
+  .scanline-arrow .sa-line {
+    opacity: 0.5;
+  }
+  .scanline-arrow.is-scrolling .sa-line {
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+  }
+}
+
 /* ─── 按钮本体
      配色与 WARFRAME 静止状态（锈铁质感）统一：
      深暗铁底 + 铜锈边框 + 磨旧青铜文字
@@ -350,6 +506,17 @@
   position: relative;
   z-index: 10;
   overflow: hidden;
+}
+
+.scroll-section-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  z-index: 10;
 }
 
 .scroll-section::before {

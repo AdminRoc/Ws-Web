@@ -1295,3 +1295,139 @@ function _vcShow(url, rec, lbl) {
   if (document.readyState === 'complete') { setTimeout(preloadAssets, 200); }
   else { window.addEventListener('load', function() { setTimeout(preloadAssets, 200); }); }
 })();
+
+/* ══════════════════════════════════════════════════════════
+   扫描线箭头 — Scanline Arrow 滚动提示交互逻辑
+   支持两个箭头：第一屏 → 第二屏，第二屏 → 第三屏
+   键盘：Enter / Space 均触发精准滚动
+   ══════════════════════════════════════════════════════════ */
+(function() {
+  'use strict';
+
+  var arrows = document.querySelectorAll('.scanline-arrow');
+  if (!arrows.length) return;
+
+  var activeArrow = null;
+
+  arrows.forEach(function(arrow) {
+    var state = 'idle';
+    var scrollTimeout = null;
+    var returnTimeout = null;
+    var pressTimeout = null;
+
+    function setState(newState) {
+      arrow.classList.remove('is-hover', 'is-active', 'is-pressed', 'is-scrolling', 'is-returning');
+      state = newState;
+      if (newState === 'hover') arrow.classList.add('is-hover');
+      if (newState === 'active') arrow.classList.add('is-active');
+      if (newState === 'pressed') arrow.classList.add('is-pressed');
+      if (newState === 'scrolling') arrow.classList.add('is-scrolling');
+      if (newState === 'returning') arrow.classList.add('is-returning');
+    }
+
+    function findNextSection() {
+      var currentSection = arrow.closest('.scroll-section');
+      if (!currentSection) {
+        return document.querySelector('.scroll-section');
+      }
+      var next = currentSection.nextElementSibling;
+      while (next) {
+        if (next.classList.contains('scroll-section')) return next;
+        next = next.nextElementSibling;
+      }
+      return null;
+    }
+
+    function scrollToNext() {
+      if (state === 'scrolling') return;
+      setState('scrolling');
+      var target = findNextSection();
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(function() {
+        setState('returning');
+        clearTimeout(returnTimeout);
+        returnTimeout = setTimeout(function() {
+          setState('idle');
+        }, 400);
+      }, 1500);
+    }
+
+    /* Hover 进入 */
+    arrow.addEventListener('mouseenter', function() {
+      if (state === 'idle') setState('hover');
+    });
+
+    /* Hover 离开 */
+    arrow.addEventListener('mouseleave', function() {
+      if (state === 'hover' || state === 'idle') setState('idle');
+      if (state === 'active' || state === 'pressed') setState('idle');
+      clearTimeout(pressTimeout);
+    });
+
+    /* 鼠标按下 */
+    arrow.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      if (state === 'hover' || state === 'idle') {
+        setState('active');
+        clearTimeout(pressTimeout);
+        pressTimeout = setTimeout(function() {
+          if (state === 'active') setState('pressed');
+        }, 150);
+      }
+    });
+
+    /* 鼠标释放 */
+    arrow.addEventListener('mouseup', function() {
+      if (state === 'active' || state === 'pressed') {
+        clearTimeout(pressTimeout);
+        scrollToNext();
+      }
+    });
+
+    /* 键盘：Enter / Space 触发滚动（button 原生支持） */
+    arrow.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToNext();
+      }
+    });
+
+    /* 焦点管理 */
+    arrow.addEventListener('focus', function() {
+      activeArrow = arrow;
+      if (state === 'idle') setState('hover');
+    });
+
+    arrow.addEventListener('blur', function() {
+      if (activeArrow === arrow) activeArrow = null;
+      if (state === 'hover') setState('idle');
+    });
+
+    /* 点击触发滚动（button 原生 click 事件兜底） */
+    arrow.addEventListener('click', function(e) {
+      e.preventDefault();
+      scrollToNext();
+    });
+  });
+
+  /* ── 全局键盘兜底：当任一箭头可见且聚焦时，Enter/Space 触发滚动 ── */
+  function isArrowVisible(arr) {
+    var rect = arr.getBoundingClientRect();
+    var style = window.getComputedStyle(arr);
+    return rect.width > 0 && rect.height > 0 && style.display !== 'none' && style.visibility !== 'hidden' && parseFloat(style.opacity) > 0.1;
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      var target = activeArrow;
+      if (target && isArrowVisible(target)) {
+        e.preventDefault();
+        target.click();
+      }
+    }
+  });
+
+})();
