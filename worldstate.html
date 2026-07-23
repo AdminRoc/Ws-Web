@@ -2264,6 +2264,306 @@
       .ws-spl-corner--tr, .ws-spl-corner--br { right: 1.2rem; }
     }
 
+  /* ══════════════════════════════════════════════════════════
+     数据时效性提示框 — 滚轮首次下滑触发，全屏居中覆盖
+     ══════════════════════════════════════════════════════════ */
+
+  /* 全屏遮罩 + 背景模糊 */
+  .ws-tip-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .5s ease-out;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  .ws-tip-overlay.is-ready {
+    display: flex;
+  }
+  .ws-tip-overlay.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .ws-tip-overlay.is-leaving {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .45s ease-in;
+  }
+
+  /* 暗色蒙版 */
+  .ws-tip-mask {
+    position: absolute;
+    inset: 0;
+    background: rgba(6,4,1,0.72);
+    pointer-events: none;
+  }
+
+  /* 主卡片 */
+  .ws-tip-card {
+    position: relative;
+    width: min(560px, calc(100vw - 2.4rem));
+    background: rgba(10,7,3,0.94);
+    border: 1px solid rgba(168,126,46,0.14);
+    padding: 3.2rem 3rem 2.8rem;
+    z-index: 1;
+    overflow: hidden;
+    transform: translateY(18px) scale(0.97);
+    transition: transform .5s cubic-bezier(.22,.68,0,1.1);
+  }
+  .ws-tip-overlay.is-visible .ws-tip-card {
+    transform: translateY(0) scale(1);
+  }
+
+  /* ── 四角 L 型角标 ── */
+  .ws-tip-card::before,
+  .ws-tip-card::after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-color: rgba(192,145,58,0.5);
+    border-style: solid;
+    border-width: 0;
+    pointer-events: none;
+    transition: border-color .4s;
+  }
+  .ws-tip-card::before {
+    top: 12px; left: 12px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+  .ws-tip-card::after {
+    bottom: 12px; right: 12px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+
+  .ws-tip-corner-tr,
+  .ws-tip-corner-bl {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-color: rgba(192,145,58,0.5);
+    border-style: solid;
+    border-width: 0;
+    pointer-events: none;
+  }
+  .ws-tip-corner-tr {
+    top: 12px; right: 12px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+  }
+  .ws-tip-corner-bl {
+    bottom: 12px; left: 12px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+  }
+
+  /* 顶部扫描线 */
+  .ws-tip-scanline {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(168,126,46,0.4) 15%,
+      rgba(210,168,58,0.7) 50%,
+      rgba(168,126,46,0.4) 85%,
+      transparent 100%);
+  }
+
+  /* 底部扫描线 */
+  .ws-tip-scanline--bottom {
+    top: auto;
+    bottom: 0;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(168,126,46,0.2) 20%,
+      rgba(192,145,58,0.45) 50%,
+      rgba(168,126,46,0.2) 80%,
+      transparent 100%);
+  }
+
+  /* 暗金扫光 */
+  .ws-tip-sweep {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .ws-tip-sweep::after {
+    content: '';
+    position: absolute;
+    top: -30%; left: -40%;
+    width: 45%;
+    height: 160%;
+    background: linear-gradient(108deg,
+      transparent 10%,
+      rgba(200,155,50,0.05) 45%,
+      rgba(240,200,82,0.025) 55%,
+      transparent 90%);
+    animation: tipCardSweep 10s ease-in-out infinite;
+  }
+  @keyframes tipCardSweep {
+    0%   { transform: translateX(-140%) skewX(-12deg); }
+    40%  { transform: translateX(-140%) skewX(-12deg); }
+    90%  { transform: translateX(520%)  skewX(-12deg); }
+    100% { transform: translateX(520%)  skewX(-12deg); }
+  }
+
+  /* 左侧装饰竖线 */
+  .ws-tip-aside {
+    position: absolute;
+    top: 15%; bottom: 15%;
+    left: 0;
+    width: 2px;
+    background: linear-gradient(to bottom,
+      transparent,
+      rgba(192,145,58,0.5) 25%,
+      rgba(210,168,58,0.75) 50%,
+      rgba(192,145,58,0.5) 75%,
+      transparent);
+    animation: tipAsidePulse 4s ease-in-out infinite;
+  }
+  @keyframes tipAsidePulse {
+    0%,100% { opacity: .45; }
+    50%     { opacity: 1; }
+  }
+
+  /* ── 图标区域 ── */
+  .ws-tip-icon {
+    position: relative;
+    z-index: 1;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.6rem;
+  }
+  .ws-tip-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+
+  /* ── 标题 ── */
+  .ws-tip-title {
+    position: relative;
+    z-index: 1;
+    font-family: 'Futurak', var(--f-sci);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 1.4rem;
+    background: linear-gradient(90deg,
+      rgba(168,126,46,0.7) 0%,
+      rgba(210,168,58,0.95) 50%,
+      rgba(168,126,46,0.7) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: tipTitleShimmer 4s linear infinite;
+  }
+  @keyframes tipTitleShimmer {
+    from { background-position: -200% center; }
+    to   { background-position: 200% center; }
+  }
+
+  /* ── 正文 ── */
+  .ws-tip-body {
+    position: relative;
+    z-index: 1;
+    font-family: var(--f-cn);
+    font-size: 1.08rem;
+    line-height: 2;
+    color: rgba(200,182,148,0.92);
+    text-align: center;
+    letter-spacing: .03em;
+  }
+  .ws-tip-body strong {
+    color: rgba(220,185,90,0.95);
+    font-weight: 500;
+  }
+  .ws-tip-body a {
+    color: rgba(210,175,78,0.95);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(210,175,78,0.25);
+    transition: color .25s, border-color .25s, text-shadow .25s;
+  }
+  .ws-tip-body a:hover {
+    color: #f0d878;
+    border-bottom-color: rgba(240,216,120,0.55);
+    text-shadow: 0 0 8px rgba(240,216,120,0.25);
+  }
+
+  /* ── 分隔线 ── */
+  .ws-tip-divider {
+    position: relative;
+    z-index: 1;
+    width: 60px;
+    height: 1px;
+    margin: 1.8rem auto 0;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(168,126,46,0.45),
+      transparent);
+  }
+
+  /* ── 关闭按钮 ── */
+  .ws-tip-close {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.6rem auto 0;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: 1px solid rgba(168,126,46,0.18);
+    color: rgba(168,126,46,0.55);
+    cursor: pointer;
+    padding: 0;
+    transition: border-color .3s, color .3s, box-shadow .3s;
+  }
+  .ws-tip-close:hover {
+    border-color: rgba(210,168,58,0.5);
+    color: rgba(210,168,58,0.9);
+    box-shadow: 0 0 12px rgba(168,126,46,0.15),
+                inset 0 0 8px rgba(168,126,46,0.08);
+  }
+  .ws-tip-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  /* ── 进度条 ── */
+  .ws-tip-progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg,
+      rgba(168,126,46,0.2),
+      rgba(210,168,58,0.5),
+      rgba(168,126,46,0.2));
+    transform-origin: left;
+    z-index: 3;
+  }
+
   </style>
   <link rel="stylesheet" href="css/fui-core.css">
   <script src="js/fui-core.js"></script>
@@ -2878,6 +3178,41 @@
     </div>
   </div>
 
+  <!-- ══ 数据时效性提示框 ══ -->
+  <div class="ws-tip-overlay" id="ws-tip" aria-modal="true" role="dialog">
+    <div class="ws-tip-mask" aria-hidden="true"></div>
+    <div class="ws-tip-card">
+      <div class="ws-tip-corner-tr" aria-hidden="true"></div>
+      <div class="ws-tip-corner-bl" aria-hidden="true"></div>
+      <div class="ws-tip-scanline" aria-hidden="true"></div>
+      <div class="ws-tip-scanline ws-tip-scanline--bottom" aria-hidden="true"></div>
+      <div class="ws-tip-sweep" aria-hidden="true"></div>
+      <div class="ws-tip-aside" aria-hidden="true"></div>
+
+      <div class="ws-tip-icon">
+        <img src="picture/WS-logo-2.png" alt="" aria-hidden="true">
+      </div>
+
+      <div class="ws-tip-title">Notice</div>
+
+      <div class="ws-tip-body">
+        由于部分接口数据的滞后性，以及本站的静态性质，<br>
+        本页面的部分内容不能确保完全实时更新。<br>
+        如对数据的时效性有较高要求的用户，<br>
+        请您务必尝试我们的<strong>「沃沃」机器人</strong>！<br>
+        <a href="https://warframe.feishu.cn/docx/JxZxdHCaUonbIvxMRuxctjDanXd" target="_blank" rel="noopener">点击此处即可进入介绍 →</a>
+      </div>
+
+      <div class="ws-tip-divider" aria-hidden="true"></div>
+
+      <button type="button" class="ws-tip-close" id="ws-tip-close" aria-label="关闭提示">
+        <svg viewBox="0 0 16 16"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>
+      </button>
+
+      <div class="ws-tip-progress" id="ws-tip-progress" aria-hidden="true"></div>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="beian-row"><a href="https://beian.miit.gov.cn/" target="_self" rel="noopener">沪ICP备2022033368号</a><img src="picture/gongan-beian.png" alt="公安备案" class="beian-icon"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=31015102000215" rel="noreferrer" target="_blank">沪公网安备31015102000215号</a></div>
     <p>Copyright &copy; 2026 CSC Alliance All Rights Reserved.</p>
@@ -2887,6 +3222,126 @@
 </div>
 
 <script src="js/main.js"></script>
+<script>
+(function() {
+  'use strict';
+  var overlay = document.getElementById('ws-tip');
+  var closeBtn = document.getElementById('ws-tip-close');
+  var progress = document.getElementById('ws-tip-progress');
+  if (!overlay || !closeBtn || !progress) return;
+
+  var shown = false;
+  var hideTimer = null;
+  var rafId = null;
+  var active = false;
+  var activateTime = 0;
+  var SHOW_DELAY = 500;
+  var DEFAULT_DURATION = 6000;
+  var HOVER_DURATION = 8000;
+
+  var anim = { start: 0, elapsed: 0, duration: DEFAULT_DURATION, running: false };
+
+  function showTip() {
+    if (shown) return;
+    shown = true;
+    window.removeEventListener('scroll', onFirstScroll);
+    overlay.classList.remove('is-leaving');
+    overlay.classList.add('is-visible');
+    startAnim(DEFAULT_DURATION);
+  }
+
+  function startAnim(duration) {
+    cancelAnimationFrame(rafId);
+    anim.duration = duration;
+    anim.elapsed = 0;
+    anim.start = performance.now();
+    anim.running = true;
+    tick();
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function() {
+      anim.running = false;
+      cancelAnimationFrame(rafId);
+      hideTip();
+    }, duration);
+  }
+
+  function hideTip() {
+    overlay.classList.add('is-leaving');
+    overlay.classList.remove('is-visible');
+    setTimeout(function() {
+      overlay.classList.remove('is-leaving');
+    }, 500);
+  }
+
+  function tick() {
+    if (!anim.running) return;
+    var now = performance.now();
+    anim.elapsed = now - anim.start;
+    var ratio = Math.min(anim.elapsed / anim.duration, 1);
+    progress.style.transform = 'scaleX(' + (1 - ratio) + ')';
+    if (ratio < 1) rafId = requestAnimationFrame(tick);
+  }
+
+  function onFirstScroll() {
+    if (!active) return;
+    if (Date.now() - activateTime < 800) return;
+    setTimeout(showTip, SHOW_DELAY);
+  }
+
+  function activate() {
+    active = true;
+    activateTime = Date.now();
+    overlay.classList.add('is-ready');
+    window.addEventListener('scroll', onFirstScroll);
+  }
+
+  /* 等待载入动画结束后再激活 */
+  var splash = document.getElementById('ws-splash');
+  if (splash) {
+    var obs = new MutationObserver(function(mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        if (mutations[i].type === 'childList') {
+          obs.disconnect();
+          activate();
+          return;
+        }
+      }
+    });
+    obs.observe(splash.parentNode, { childList: true });
+  } else {
+    activate();
+  }
+
+  /* 鼠标悬停在卡片上：暂停 */
+  var card = overlay.querySelector('.ws-tip-card');
+  if (card) {
+    card.addEventListener('mouseenter', function() {
+      anim.running = false;
+      cancelAnimationFrame(rafId);
+      clearTimeout(hideTimer);
+    });
+    card.addEventListener('mouseleave', function() {
+      startAnim(HOVER_DURATION);
+    });
+  }
+
+  /* 关闭按钮 */
+  closeBtn.addEventListener('click', function() {
+    anim.running = false;
+    cancelAnimationFrame(rafId);
+    clearTimeout(hideTimer);
+    hideTip();
+  });
+
+  /* 点击遮罩关闭 */
+  overlay.querySelector('.ws-tip-mask').addEventListener('click', function() {
+    anim.running = false;
+    cancelAnimationFrame(rafId);
+    clearTimeout(hideTimer);
+    hideTip();
+  });
+})();
+</script>
 <script src="js/wf-translations.js"></script>
 <!-- 统一翻译运行时 WF.i18n：作为现有远程字典(dict.zh.json)之外的"同源兜底"。
      远程被墙/未命中时，仍能本地翻译节点名(byLang 426)/物品名(byName)/override —— 只增不减，
