@@ -395,6 +395,11 @@
     opacity: 0;
     transition: opacity 0.1s ease-out;
   }
+  .scroll-s1-heading,
+  .scroll-s2-heading {
+    animation: none !important;
+    filter: drop-shadow(0 0 20px rgba(168,112,35,0.42)) !important;
+  }
 }
 
 /* ─── 按钮本体
@@ -538,11 +543,19 @@
   text-align: center;
   background: linear-gradient(135deg,
     #b87830 0%, #dca848 35%, #cc7a2c 70%, #b87830 100%);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 20px rgba(168,112,35,0.42));
+  animation: headingGlow 6s ease-in-out infinite;
   margin-bottom: 1rem;
+  position: relative;
+}
+
+@keyframes headingGlow {
+  0%   { background-position: 0% 50%; filter: drop-shadow(0 0 16px rgba(168,112,35,0.35)); }
+  50%  { background-position: 100% 50%; filter: drop-shadow(0 0 28px rgba(210,168,58,0.55)); }
+  100% { background-position: 0% 50%; filter: drop-shadow(0 0 16px rgba(168,112,35,0.35)); }
 }
 
 .scroll-s1-sub {
@@ -618,28 +631,37 @@
 
 .scroll-s2-heading {
   font-family: 'Futurak', var(--f-sci);
-  font-size: clamp(1.28rem, 3.3vw, 2.7rem);
+  font-size: clamp(1.7rem, 5vw, 3.75rem);
   font-weight: 400;
-  letter-spacing: .1em;
-  color: rgba(205,175,118,0.88);
+  letter-spacing: .12em;
   text-align: center;
-  margin-bottom: .5rem;
+  background: linear-gradient(135deg,
+    #b87830 0%, #dca848 35%, #cc7a2c 70%, #b87830 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: headingGlow 6s ease-in-out infinite;
+  margin-bottom: 1rem;
+  position: relative;
 }
 
 .scroll-s2-sub {
   font-family: var(--f-cn);
-  font-size: clamp(.85rem, 1.6vw, 1.1rem);
-  color: rgba(152,125,82,0.66);
+  font-size: clamp(.9rem, 1.85vw, 1.2rem);
+  color: rgba(178,148,102,0.66);
   text-align: center;
-  margin-bottom: 3.5rem;
+  letter-spacing: .06em;
+  max-width: 600px;
+  margin: 0 auto 4rem;
 }
 
 /* ── 项目入口网格 ── */
 .lb-entry-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  max-width: 860px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(1.2rem, 3vw, 2.5rem);
+  max-width: 900px;
   width: 100%;
 }
 
@@ -813,7 +835,7 @@
   .scroll-section { padding: 5rem 1.2rem 3rem; }
   .hero-textblock { margin-bottom: 7rem; }
   .scroll-s1-heading { font-size: clamp(1.4rem, 6vw, 2.2rem); }
-  .scroll-s2-heading { font-size: clamp(1.2rem, 5vw, 1.88rem); }
+  .scroll-s2-heading { font-size: clamp(1.4rem, 6vw, 2.2rem); }
   .lb-entry-grid { grid-template-columns: 1fr; gap: 1rem; }
   .lb-entry-card { padding: 1.5rem 1.2rem; }
 }
