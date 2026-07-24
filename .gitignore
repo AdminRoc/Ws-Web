@@ -5,6 +5,9 @@
 server.log
 _test_*.js
 
+# 游戏日志文件（含玩家隐私信息：用户名、计算机名、硬件配置等）
+*.log
+
 # Claude Code 本地配置：launch.json(预览服务器配置)纳入仓库以便换机继续开发；
 # settings.local.json 是本机权限设置，不应同步，忽略掉。
 /.claude/settings.local.json
@@ -31,8 +34,3 @@ __pycache__/
 # 可选：忽略其他潜在编译产物
 *.pyo
 *.pyd
-log/仲裁.log
-log/巨大.log
-log/问题.log
-log/镜像防御.log
-log/中断双人3803.log
