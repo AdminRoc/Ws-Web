@@ -14,7 +14,10 @@ _test_*.js
 
 # Python 缓存（本地跑 .github/scripts/*.py 时产生）
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+*$py.class
 
 # ── 已迁入私库 AdminRoc/Ws-Web-core 的后端文件 ──
 # Action 运行时会临时 checkout 私库并把这些覆盖进工作树以生成产物，
@@ -25,12 +28,3 @@ __pycache__/
 /data/wf-translations.json
 /log/tools/
 /cloudflare-worker/
-
-# Python 字节码编译文件
-__pycache__/
-*.py[cod]
-*$py.class
-
-# 可选：忽略其他潜在编译产物
-*.pyo
-*.pyd

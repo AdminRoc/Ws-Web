@@ -1,11 +1,2 @@
-中断.log
-夜灵.log
-大蜘蛛.log
-歼灭.log
-防御.log
-科研.log
-测试.log
-测试个人信息读取.log
+# 含玩家隐私信息的JSON文件（AccountId、DisplayName等）
 测试个人信息读取.json
-生存.log
-仲裁.log
