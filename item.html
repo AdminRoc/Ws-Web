@@ -1319,15 +1319,39 @@
           if (window._itDismissLoadOverlay) window._itDismissLoadOverlay();
         }
       });
-    // 掉落表体量大，单独后台拉取，不拖慢主索引就绪时间；到达后补充资源类条目并
-    // 静默刷新一次当前自动补全(若用户此时正好在看建议列表)。
-    fetch('data/drops-index.json').then(function (r) { return r.json(); }).then(function (drops) {
-      DROPS = drops;
-      if (loaded) {
-        buildSearch();
-        if (acEl.classList.contains('show')) { acList = rankMatches(inputEl.value); renderAc(); }
-      }
-    }).catch(function () {});
+    // 掉落表体量大(~4.4MB)，单独后台拉取，不拖慢主索引就绪时间；到达后补充资源类条目并
+    // 刷新自动补全。带 2 次重试；最终失败给用户可见提示，不阻塞主流程。
+    function _fetchDropsWithRetry(attempt) {
+      attempt = attempt || 1;
+      return fetch('data/drops-index.json')
+        .then(function (r) {
+          if (!r.ok) throw new Error('http ' + r.status);
+          return r.json();
+        })
+        .then(function (drops) {
+          DROPS = drops;
+          if (loaded) {
+            buildSearch();
+            if (acEl.classList.contains('show')) { acList = rankMatches(inputEl.value); renderAc(); }
+          }
+        })
+        .catch(function (e) {
+          if (attempt < 3) {
+            return new Promise(function (res) { setTimeout(res, 800 * attempt); })
+              .then(function () { return _fetchDropsWithRetry(attempt + 1); });
+          }
+          // 最终失败：不阻塞主流程，只在搜索框下方给一行灰字提示
+          var wrap = document.querySelector('.it-search-wrap');
+          if (wrap && !document.getElementById('it-drops-load-err')) {
+            var err = document.createElement('div');
+            err.id = 'it-drops-load-err';
+            err.className = 'it-load-err';
+            err.textContent = '掉落表数据加载失败（仅显示可交易物品），刷新可重试';
+            wrap.appendChild(err);
+          }
+        });
+    }
+    _fetchDropsWithRetry();
     // wiki 远程热链表只在"本地还没缓存到该条目"时当兜底用，同样后台拉取不阻塞。
     fetch('data/wiki-icon-harvest.json').then(function (r) { return r.json(); }).then(function (icons) {
       WIKI_ICONS = icons;
