@@ -85,19 +85,34 @@ WF.DisruptionParser = (function () {
     function reset() { mission = null; roundStartT = null; }
 
     // 提取存档逻辑为独立函数，供 eom 和 finish() 复用
-    function saveMission(endT) {
+    // opts: { unsettled } — true 时表示中止/失败的未结算任务（≥3轮），截断到最后完成轮
+    function saveMission(endT, opts) {
       if (!mission || !mission.isDisruption) return;
-      // 关闭还未结算的尾轮：
+      const unsettled = !!(opts && opts.unsettled);
+      // 未结算任务：截断到最后一个完成轮的 ModeState=4 时刻（该轮次完成=导管全部结算的时刻），
+      // 避免将中止/失败后的空闲时间计入统计。
+      let effectiveEndT = endT;
+      if (unsettled) {
+        effectiveEndT = (mission.lastModeState4T != null) ? mission.lastModeState4T : endT;
+      }
+      // 关闭还未结算的尾轮（仅正常结算流程）：
       // lastModeState4T 仅当属于最后一轮（>= 最后一轮.startT）时才有效——
       // 否则意味着最后一轮从未到达 ModeState=4（例如中途撤离），回退到 endT。
-      const lr = mission.rounds.length > 0 ? mission.rounds[mission.rounds.length - 1] : null;
-      const roundEndT = (mission.lastModeState4T != null && lr && mission.lastModeState4T >= lr.startT)
-        ? mission.lastModeState4T : endT;
-      if (mission.roundOpen) closeRoundAt(roundEndT);
+      // 未结算任务跳过此步骤：不完整轮不压入 rounds，保留 rounds 仅含已完成轮。
+      let roundEndT = endT;
+      if (unsettled) {
+        mission.roundOpen = false;
+        mission.openConduits = [];
+      } else {
+        const lr = mission.rounds.length > 0 ? mission.rounds[mission.rounds.length - 1] : null;
+        roundEndT = (mission.lastModeState4T != null && lr && mission.lastModeState4T >= lr.startT)
+          ? mission.lastModeState4T : endT;
+        if (mission.roundOpen) closeRoundAt(roundEndT);
+      }
       // 轮次<3 的中断任务不生成记录，计为一次前置 Roll 图
       if (mission.rounds.length < 3) { pendingRoll++; return; }
       const start  = mission.startT || mission.loadT;
-      const dur    = endT - start;
+      const dur    = effectiveEndT - start;
       if (dur <= 0) return;
       const n      = mission.rounds.length;
       const successConds = mission.rounds.reduce((s, r) => s + r.conduits.filter(c => c.success === true).length, 0);
@@ -133,10 +148,10 @@ WF.DisruptionParser = (function () {
       const offset = mission.sessionOffset || 0;
       records.push({
         type: 'disruption',
-        startT: start, endT,
-        endAbsT:  endT + offset,
+        startT: start, endT: effectiveEndT,
+        endAbsT:  effectiveEndT + offset,
         startDate: anchor ? new Date(anchor.date.getTime() + (start - anchor.t) * 1000) : null,
-        endDate:   anchor ? new Date(anchor.date.getTime() + (endT - anchor.t) * 1000) : null,
+        endDate:   anchor ? new Date(anchor.date.getTime() + (effectiveEndT - anchor.t) * 1000) : null,
         totalDuration: dur,
         name: mission.name, score: mission.score,
         rounds: mission.rounds, roundCount: n,
@@ -148,9 +163,10 @@ WF.DisruptionParser = (function () {
         liveSamples: mission.liveSamples,
         killEvents: mission.killEvents,
         stalkerEvents: mission.stalkerEvents,
-        lastModeState4T: roundEndT !== endT ? mission.lastModeState4T : null, // 仅当属于最后一轮时有效；否则 null（撤离时间=0）
+        lastModeState4T: unsettled ? null : (roundEndT !== endT ? mission.lastModeState4T : null),
+        unsettled: unsettled || undefined,
         squadInfo: sq.getSquadInfo(),
-        chatLog:   chat.getChatLog(mission.loadT, start, endT),
+        chatLog:   chat.getChatLog(mission.loadT, start, effectiveEndT),
       });
       pendingRoll = 0;
     }
@@ -397,8 +413,13 @@ WF.DisruptionParser = (function () {
           return;
         }
         if (line.indexOf(PAT.abort) !== -1 || line.indexOf(PAT.failed) !== -1) {
-          // 中止/失败：轮次<3 的中断任务计为一次前置 Roll 图；>=3 轮的中止保持现状直接丢弃
-          if (mission.isDisruption && mission.rounds.length < 3) pendingRoll++;
+          if (mission.isDisruption && mission.rounds.length >= 3) {
+            // ≥3 轮的中止/失败：保存为未结算记录，截断到最后完成轮
+            saveMission(t, { unsettled: true });
+          } else if (mission.isDisruption && mission.rounds.length < 3) {
+            // 轮次<3 计为一次前置 Roll 图
+            pendingRoll++;
+          }
           reset();
         }
       },

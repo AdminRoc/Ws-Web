@@ -37,8 +37,9 @@ WF.disruptionView = (function () {
 
   function summary(rec) {
     const avgRound = rec.totalDuration / rec.roundCount;
+    const tag = rec.unsettled ? '（未结算）' : '';
     return {
-      title: `中断 ${rec.roundCount} 轮${rec.name ? ' · ' + rec.name : ''}`,
+      title: `中断 ${rec.roundCount} 轮${rec.name ? ' · ' + rec.name : ''}${tag}`,
       sub: `${U.fmtDurationLong(rec.totalDuration)} ｜ 平均每轮 ${U.fmtDuration(avgRound)}`,
     };
   }
@@ -70,6 +71,12 @@ WF.disruptionView = (function () {
       hero.appendChild(rollStat);
     }
     if (rec.name) hero.appendChild(_st('任务地图', rec.name, ''));
+    // 未结算标记：中止/失败的任务（≥3轮），时间统计已截断到最后完成轮
+    if (rec.unsettled) {
+      const badge = U.el('span', 'unsettled-badge', '未结算');
+      badge.title = '该任务未正常结算（中止/失败），时间统计已截断到最后完成轮';
+      hero.appendChild(badge);
+    }
     container.appendChild(hero);
 
     WF.squadMixin.renderSquad(container, rec);

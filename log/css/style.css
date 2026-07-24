@@ -408,6 +408,17 @@ body.profile-active #detail-wrap {
 .record-time { font-size: 12.5px; color: var(--c-text2); white-space: nowrap; flex: 0 0 auto; }
 .record-sub { font-size: 14px; color: var(--c-teal); margin-top: 8px; }
 
+/* 未结算任务标记：中止/失败的中断任务（≥3轮），视觉区分于正常结算 */
+.unsettled-badge {
+  display: inline-flex; align-items: center;
+  background: rgba(255, 170, 0, 0.12);
+  border: 1px solid rgba(255, 170, 0, 0.35);
+  border-radius: var(--r-sm);
+  padding: 4px 10px; margin-left: 6px;
+  font-size: 12px; color: #ffaa00; letter-spacing: 1px;
+  white-space: nowrap; vertical-align: middle;
+}
+
 /* ================= 详情通用 ================= */
 .hero-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
 .stat {
