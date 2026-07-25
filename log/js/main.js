@@ -3,6 +3,207 @@
 (function () {
   const U = WF.utils;
 
+  /* ══════════════════════════════════════════════════════
+     安全复制模块：目录授权 + IndexedDB 持久化 + OPFS 流式复制
+     ══════════════════════════════════════════════════════ */
+  const IDB_DB = 'wtf-eelog';
+  const IDB_STORE = 'handles';
+  const IDB_DIR_KEY = 'warframe-dir-handle';
+  const OPFS_NAME = 'eelog_copy.log';
+  const HAS_FSAPI = typeof window.showOpenFilePicker === 'function';
+
+  const safeCopy = {
+    _overlay: null, _pctEl: null, _fillEl: null,
+    _copiedEl: null, _speedEl: null, _subEl: null, _detailEl: null,
+    _abortCtrl: null,
+
+    _cache() {
+      if (this._overlay) return;
+      this._overlay  = document.getElementById('safe-copy-overlay');
+      this._pctEl    = document.getElementById('sco-pct');
+      this._fillEl   = document.getElementById('sco-bar-fill');
+      this._copiedEl = document.getElementById('sco-copied');
+      this._speedEl  = document.getElementById('sco-speed');
+      this._subEl    = document.getElementById('sco-sub');
+      this._detailEl = document.getElementById('sco-detail');
+    },
+
+    /* ── 进度弹窗控制 ── */
+    show() {
+      this._cache();
+      if (!this._overlay) return;
+      this._pctEl.textContent = '0%';
+      this._fillEl.style.width = '0%';
+      this._copiedEl.textContent = '0 MB';
+      this._speedEl.textContent = '—';
+      this._detailEl.textContent = '复制完成后将自动开始解析';
+      this._overlay.classList.remove('closing');
+      this._overlay.classList.add('visible');
+      this._overlay.setAttribute('aria-hidden', 'false');
+    },
+    hide() {
+      this._cache();
+      if (!this._overlay) return;
+      this._overlay.classList.add('closing');
+      this._overlay.setAttribute('aria-hidden', 'true');
+      setTimeout(() => { this._overlay.classList.remove('visible', 'closing'); }, 500);
+    },
+    update(pct, copiedBytes, speedMBps) {
+      this._cache();
+      const p = Math.min(100, Math.round(pct * 100));
+      this._pctEl.textContent = p + '%';
+      this._fillEl.style.width = p + '%';
+      this._copiedEl.textContent = (copiedBytes / 1048576).toFixed(1) + ' MB';
+      if (speedMBps != null && speedMBps > 0) this._speedEl.textContent = speedMBps.toFixed(1) + ' MB/s';
+    },
+    abort() { if (this._abortCtrl) this._abortCtrl.abort(); },
+
+    /* ── IndexedDB 操作 ── */
+    async _idbOpen() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(IDB_DB, 1);
+        req.onupgradeneeded = () => { req.result.createObjectStore(IDB_STORE); };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    },
+    async _idbGet(key) {
+      try {
+        const db = await this._idbOpen();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(IDB_STORE, 'readonly');
+          const req = tx.objectStore(IDB_STORE).get(key);
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => reject(req.error);
+        });
+      } catch { return null; }
+    },
+    async _idbPut(key, value) {
+      try {
+        const db = await this._idbOpen();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(IDB_STORE, 'readwrite');
+          tx.objectStore(IDB_STORE).put(value, key);
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+        });
+      } catch { /* 静默 */ }
+    },
+
+    /* ── 目录 handle 持久化 ── */
+    async getDirHandle() { return this._idbGet(IDB_DIR_KEY); },
+    async saveDirHandle(h) { return this._idbPut(IDB_DIR_KEY, h); },
+
+    /* ── 权限检查与恢复 ── */
+    async verifyPermission(handle, write) {
+      const opts = { mode: write ? 'readwrite' : 'read' };
+      if ((await handle.queryPermission(opts)) === 'granted') return true;
+      if ((await handle.requestPermission(opts)) === 'granted') return true;
+      return false;
+    },
+
+    /* ── 判断文件是否来自游戏目录 ── */
+    async isFromGameDir(fileHandle) {
+      const dir = await this.getDirHandle();
+      if (!dir) return false;
+      try {
+        const rel = await dir.resolve(fileHandle);
+        return Array.isArray(rel) && rel.length === 1 && rel[0] === 'EE.log';
+      } catch { return false; }
+    },
+
+    /* ── OPFS 流式复制 ── */
+    async copyToOPFS(sourceHandle) {
+      this._abortCtrl = new AbortController();
+      const signal = this._abortCtrl.signal;
+      const srcFile = await sourceHandle.getFile();
+      const opfs = await navigator.storage.getDirectory();
+      try { await opfs.removeEntry(OPFS_NAME); } catch {}
+      const dest = await opfs.getFileHandle(OPFS_NAME, { create: true });
+      const writable = await dest.createWritable();
+      const reader = srcFile.stream().getReader();
+      let copied = 0;
+      const t0 = performance.now();
+      const totalSize = srcFile.size;
+      while (true) {
+        if (signal.aborted) { reader.cancel(); await writable.close().catch(() => {}); throw new DOMException('Aborted', 'AbortError'); }
+        const { done, value } = await reader.read();
+        if (done) break;
+        await writable.write(value);
+        copied += value.byteLength;
+        const elapsed = (performance.now() - t0) / 1000;
+        this.update(totalSize > 0 ? copied / totalSize : 0, copied, elapsed > 0 ? (copied / 1048576) / elapsed : null);
+      }
+      await writable.close();
+      const copyHandle = await opfs.getFileHandle(OPFS_NAME);
+      return { copyFile: await copyHandle.getFile(), srcName: srcFile.name, srcLastModified: srcFile.lastModified };
+    },
+
+    /* ── 清理 OPFS ── */
+    async cleanup() {
+      try { const opfs = await navigator.storage.getDirectory(); await opfs.removeEntry(OPFS_NAME).catch(() => {}); } catch {}
+    },
+
+    /* ═══ 入口 A：读取游戏路径（目录授权 → 自动找 EE.log → 复制 → 读取）═══ */
+    async gamePathRead(statusEl) {
+      let dirHandle = await this.getDirHandle();
+      if (dirHandle) {
+        const ok = await this.verifyPermission(dirHandle, false);
+        if (!ok) dirHandle = null;
+      }
+      if (!dirHandle) {
+        dirHandle = await window.showDirectoryPicker({ mode: 'read' });
+        await this.saveDirHandle(dirHandle);
+      }
+      let fileHandle;
+      try {
+        fileHandle = await dirHandle.getFileHandle('EE.log');
+      } catch {
+        throw new Error('在所选目录中未找到 EE.log');
+      }
+      this.show();
+      try {
+        const { copyFile, srcName, srcLastModified } = await this.copyToOPFS(fileHandle);
+        const elapsed = ((performance.now()) / 1000).toFixed(1);
+        this._detailEl.textContent = '复制完成，开始解析…';
+        await new Promise(r => setTimeout(r, 300));
+        return new File([copyFile], srcName, { type: copyFile.type, lastModified: srcLastModified });
+      } finally {
+        this.hide();
+        this.cleanup();
+      }
+    },
+
+    /* ═══ 入口 B：读取其他路径（直接选择文件 → 直接读取）═══ */
+    async otherPathRead() {
+      const [handle] = await window.showOpenFilePicker({
+        types: [{ description: 'EE.log', accept: { 'text/plain': ['.log', '.txt'] } }],
+        multiple: false,
+      });
+      return await handle.getFile();
+    },
+
+    /* ═══ 入口 C：拖拽（检测来源 → 分流）═══ */
+    async dragRead(file, fileHandle) {
+      if (HAS_FSAPI && fileHandle) {
+        const fromGame = await this.isFromGameDir(fileHandle);
+        if (fromGame) {
+          this.show();
+          try {
+            const { copyFile, srcName, srcLastModified } = await this.copyToOPFS(fileHandle);
+            this._detailEl.textContent = '复制完成，开始解析…';
+            await new Promise(r => setTimeout(r, 300));
+            return new File([copyFile], srcName, { type: copyFile.type, lastModified: srcLastModified });
+          } finally {
+            this.hide();
+            this.cleanup();
+          }
+        }
+      }
+      return file;  // 非游戏目录，直接读取
+    },
+  };
+
   const TABS = [
     { id: 'profile',     label: '个人信息', en: 'PROFILE',       special: true },
     { id: 'eidolon',     label: '夜灵',    en: 'EIDOLON',       view: () => WF.eidolonView,     empty: '未找到夜灵捕获记录', priority: (rec) => (rec.full ? 0 : 1) },
@@ -22,37 +223,86 @@
 
   function init() {
     const drop = $('dropzone');
-    const fileInput = $('file-input');
+    const btnGame = $('dz-btn-game');
+    const btnOther = $('dz-btn-other');
+    const statusEl = $('dropzone-status');
 
-    drop.addEventListener('click', () => fileInput.click());
-
-    // 右侧快捷框：复制路径，阻止冒泡避免触发文件选择
-    const shortcut = $('dz-shortcut');
-    const feedback = $('dz-sc-feedback');
-    let fbTimer = null;
-    shortcut.addEventListener('click', (e) => {
-      e.stopPropagation();
-      navigator.clipboard.writeText('%LOCALAPPDATA%\\Warframe').then(() => {
-        feedback.textContent = '✓ 已复制！';
-        clearTimeout(fbTimer);
-        fbTimer = setTimeout(() => { feedback.textContent = ''; }, 2000);
-      }).catch(() => {
-        feedback.textContent = '复制失败，请手动复制';
-        clearTimeout(fbTimer);
-        fbTimer = setTimeout(() => { feedback.textContent = ''; }, 2500);
-      });
+    // ── 按钮 A：读取游戏路径（目录授权 → 复制 → 读取）──
+    btnGame.addEventListener('click', async () => {
+      if (!HAS_FSAPI) {
+        statusEl.textContent = '浏览器不支持 File System Access API，请使用"读取其他路径"';
+        return;
+      }
+      btnGame.disabled = true;
+      btnOther.disabled = true;
+      try {
+        const file = await safeCopy.gamePathRead(statusEl);
+        loadFile(file);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          statusEl.textContent = '读取失败：' + err.message;
+          console.error('游戏路径读取失败:', err);
+        }
+      } finally {
+        btnGame.disabled = false;
+        btnOther.disabled = false;
+      }
     });
-    fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadFile(fileInput.files[0]); });
 
+    // ── 按钮 B：读取其他路径（直接选择 → 直接读取）──
+    btnOther.addEventListener('click', async () => {
+      if (HAS_FSAPI) {
+        btnGame.disabled = true;
+        btnOther.disabled = true;
+        try {
+          const file = await safeCopy.otherPathRead();
+          loadFile(file);
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            statusEl.textContent = '读取失败：' + err.message;
+            console.error('其他路径读取失败:', err);
+          }
+        } finally {
+          btnGame.disabled = false;
+          btnOther.disabled = false;
+        }
+      } else {
+        // 降级：传统 file input
+        $('file-input').click();
+      }
+    });
+
+    // ── 传统 file input 降级 ──
+    $('file-input').addEventListener('change', () => {
+      if ($('file-input').files[0]) loadFile($('file-input').files[0]);
+    });
+
+    // ── 拖拽：全窗体可拖入，检测来源分流 ──
     ['dragenter', 'dragover'].forEach((ev) => drop.addEventListener(ev, (e) => {
       e.preventDefault(); drop.classList.add('dragging');
     }));
     ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, (e) => {
       e.preventDefault(); drop.classList.remove('dragging');
     }));
-    drop.addEventListener('drop', (e) => {
+    drop.addEventListener('drop', async (e) => {
       const f = e.dataTransfer.files && e.dataTransfer.files[0];
-      if (f) loadFile(f);
+      if (!f) return;
+      let fileHandle = null;
+      if (HAS_FSAPI && e.dataTransfer.items && e.dataTransfer.items[0]) {
+        try {
+          const h = await e.dataTransfer.items[0].getAsFileSystemHandle();
+          if (h instanceof FileSystemFileHandle) fileHandle = h;
+        } catch {}
+      }
+      try {
+        const file = await safeCopy.dragRead(f, fileHandle);
+        loadFile(file);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          statusEl.textContent = '读取失败：' + err.message;
+          console.error('拖拽读取失败:', err);
+        }
+      }
     });
 
     const tabBar = $('tab-bar');

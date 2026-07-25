@@ -35,16 +35,23 @@
     <section id="dropzone">
       <div class="dz-frame">
         <div class="dz-icon">⬡</div>
-        <div class="dz-title">拖拽 <b>EE.log</b> 到此处，或点击选择文件</div>
-        <div class="dz-hint">日志默认位置：%LOCALAPPDATA%\Warframe\EE.log ｜ 建议将此文件复制到其他位置再发起读取</div>
+        <div class="dz-title">拖拽 <b>EE.log</b> 到此处</div>
+        <div class="dz-hint">日志默认位置：%LOCALAPPDATA%\Warframe\EE.log</div>
+        <div class="dz-btn-row">
+          <button class="dz-btn dz-btn-game" id="dz-btn-game" type="button">
+            <span class="dz-btn-glow"></span>
+            <span class="dz-btn-icon">◈</span>
+            <span class="dz-btn-text">读取游戏路径</span>
+            <span class="dz-btn-sub">自动复制 · 安全读取</span>
+          </button>
+          <button class="dz-btn dz-btn-other" id="dz-btn-other" type="button">
+            <span class="dz-btn-glow"></span>
+            <span class="dz-btn-icon">◇</span>
+            <span class="dz-btn-text">读取其他路径</span>
+            <span class="dz-btn-sub">直接读取 · 已复制的文件</span>
+          </button>
+        </div>
         <div id="dropzone-status"></div>
-      </div>
-      <div class="dz-shortcut" id="dz-shortcut">
-        <div class="dz-sc-icon">⧉</div>
-        <div class="dz-sc-main">点击复制路径</div>
-        <div class="dz-sc-path">%LOCALAPPDATA%\Warframe</div>
-        <div class="dz-sc-tip">再按 <b>Win+R</b> 粘贴回车<br>即可直达 EE.log 位置</div>
-        <div class="dz-sc-feedback" id="dz-sc-feedback"></div>
       </div>
       <div class="dz-scan"></div>
     </section>
@@ -88,6 +95,29 @@
       <div class="footer-copy">© 2013-2026 [CSC Alliance]. All Rights Reserved.</div>
     </div>
   </footer>
+
+  <!-- 安全复制进度弹窗 -->
+  <div id="safe-copy-overlay" aria-hidden="true">
+    <div class="sco-matrix"></div>
+    <div class="sco-ring-wrap">
+      <div class="sco-ring sco-ring1"></div>
+      <div class="sco-ring sco-ring2"></div>
+      <div class="sco-ring sco-ring3"></div>
+      <div class="sco-pct" id="sco-pct">0%</div>
+    </div>
+    <div class="sco-title">安全复制中</div>
+    <div class="sco-sub" id="sco-sub">正在将日志文件复制到浏览器隔离存储，防止读取行为被反作弊系统误判</div>
+    <div class="sco-bar-wrap">
+      <div class="sco-bar-track">
+        <div class="sco-bar-fill" id="sco-bar-fill"></div>
+      </div>
+      <div class="sco-bar-info">
+        <span id="sco-copied">0 MB</span>
+        <span id="sco-speed">—</span>
+      </div>
+    </div>
+    <div class="sco-detail" id="sco-detail">复制完成后将自动开始解析</div>
+  </div>
 
   <input type="file" id="file-input" accept=".log,.txt" hidden>
 

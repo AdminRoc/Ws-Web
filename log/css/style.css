@@ -317,29 +317,95 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
 }
 @keyframes dzScan { 0% { left: -140px; } 100% { left: 110%; } }
 .dz-frame { flex: 4; }
-.dz-shortcut {
-  flex: 1; min-width: 140px; max-width: 200px;
-  border-left: 1.5px dashed rgba(95, 208, 232, 0.25);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 5px; padding: 18px 14px; cursor: pointer; z-index: 1; text-align: center;
-  transition: background 0.22s, border-color 0.22s;
+
+/* ── 双按钮行 ── */
+.dz-btn-row {
+  display: flex; gap: 14px; justify-content: center;
+  margin-top: 18px; flex-wrap: wrap;
 }
-.dz-shortcut:hover { background: rgba(95, 208, 232, 0.06); border-color: rgba(95, 208, 232, 0.5); }
-.dz-sc-icon { font-size: 18px; color: var(--c-teal); opacity: 0.75; line-height: 1; }
-.dz-sc-main { font-size: 12px; color: var(--c-teal); letter-spacing: 1px; margin-top: 2px; }
-.dz-sc-path {
-  font-size: 9.5px; color: var(--c-text2); font-family: monospace;
-  word-break: break-all; opacity: 0.7; line-height: 1.4;
-  background: rgba(255,255,255,0.04); border-radius: 4px; padding: 3px 6px;
+.dz-btn {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px; padding: 16px 28px;
+  border: 1.5px solid rgba(95,208,232,.3); border-radius: 10px;
+  background: rgba(95,208,232,.04);
+  cursor: pointer; overflow: hidden;
+  transition: border-color .2s, background .2s, box-shadow .3s, transform .15s;
+  font-family: var(--f-px); min-width: 180px;
 }
-.dz-sc-tip { font-size: 11px; color: var(--c-text2); line-height: 1.6; opacity: 0.8; }
-.dz-sc-tip b { color: var(--c-white); font-weight: normal; }
-.dz-sc-feedback { font-size: 11.5px; color: var(--c-teal); min-height: 15px; letter-spacing: 1px; }
+.dz-btn:hover {
+  border-color: rgba(95,208,232,.65);
+  background: rgba(95,208,232,.08);
+  box-shadow: 0 0 20px rgba(95,208,232,.12), inset 0 0 20px rgba(95,208,232,.04);
+  transform: translateY(-1px);
+}
+.dz-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0 12px rgba(95,208,232,.2), inset 0 0 24px rgba(95,208,232,.08);
+}
+
+/* 按钮辉光扫过 */
+.dz-btn-glow {
+  position: absolute; top: 0; left: -60%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(95,208,232,.08), transparent);
+  pointer-events: none;
+  transition: left .6s ease;
+}
+.dz-btn:hover .dz-btn-glow { left: 110%; }
+
+.dz-btn-icon {
+  font-size: 20px; color: var(--c-teal);
+  text-shadow: 0 0 10px rgba(95,208,232,.5);
+  transition: text-shadow .3s;
+}
+.dz-btn:hover .dz-btn-icon {
+  text-shadow: 0 0 16px rgba(95,208,232,.8), 0 0 30px rgba(95,208,232,.3);
+}
+.dz-btn-text {
+  font-size: 14px; letter-spacing: 2px; color: var(--c-white);
+  transition: color .2s;
+}
+.dz-btn:hover .dz-btn-text { color: #fff; }
+.dz-btn-sub {
+  font-size: 10.5px; letter-spacing: 1px; color: var(--c-text2);
+  transition: color .2s;
+}
+.dz-btn:hover .dz-btn-sub { color: rgba(95,208,232,.6); }
+
+/* 游戏路径按钮：青色主调 */
+.dz-btn-game { border-color: rgba(95,208,232,.35); }
+.dz-btn-game:hover { border-color: rgba(95,208,232,.7); }
+
+/* 其他路径按钮：琥珀辅调 */
+.dz-btn-other { border-color: rgba(255,170,0,.25); }
+.dz-btn-other .dz-btn-icon { color: var(--c-gold); text-shadow: 0 0 10px rgba(255,170,0,.4); }
+.dz-btn-other .dz-btn-text { color: var(--c-gold); }
+.dz-btn-other:hover {
+  border-color: rgba(255,170,0,.55);
+  background: rgba(255,170,0,.05);
+  box-shadow: 0 0 20px rgba(255,170,0,.1), inset 0 0 20px rgba(255,170,0,.03);
+}
+.dz-btn-other:hover .dz-btn-icon {
+  text-shadow: 0 0 16px rgba(255,170,0,.7), 0 0 30px rgba(255,170,0,.25);
+}
+.dz-btn-other .dz-btn-glow {
+  background: linear-gradient(90deg, transparent, rgba(255,170,0,.06), transparent);
+}
+
+/* 按钮禁用态 */
+.dz-btn:disabled {
+  opacity: .45; cursor: not-allowed;
+  border-color: rgba(255,255,255,.08);
+  transform: none !important;
+  box-shadow: none !important;
+}
+.dz-btn:disabled .dz-btn-glow { display: none; }
 body.has-data .dz-frame { padding: 16px 26px; }
 body.has-data .dz-icon, body.has-data .dz-hint { display: none; }
-body.has-data .dz-shortcut { padding: 10px 14px; gap: 4px; }
-body.has-data .dz-sc-tip { display: none; }
-body.has-data .dz-sc-feedback:empty { display: none; }
+body.has-data .dz-btn-row { margin-top: 10px; }
+body.has-data .dz-btn { padding: 10px 20px; min-width: 150px; }
+body.has-data .dz-btn-sub { display: none; }
+body.has-data #dropzone-status:empty { display: none; }
 
 /* ================= 工作区 ================= */
 #workspace {
@@ -2705,4 +2771,159 @@ body.profile-active #detail-wrap {
 .dis-tl-wrap .gen-round-table th {
   position: static;
   z-index: auto;
+}
+
+/* ══════════════════════════════════════════════════════
+   安全复制进度弹窗（赛博朋克风格）
+   ══════════════════════════════════════════════════════ */
+#safe-copy-overlay {
+  position: fixed; inset: 0; z-index: 9998;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 20px;
+  background: rgba(4, 6, 12, 0.92);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+#safe-copy-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#safe-copy-overlay.closing {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+/* 矩阵雨背景 */
+.sco-matrix {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(95,208,232,.06) 0px, rgba(95,208,232,.06) 1px,
+      transparent 1px, transparent 32px);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 65%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 65%);
+  animation: scoMatrixDrift 8s linear infinite;
+}
+@keyframes scoMatrixDrift {
+  from { background-position: 0 0; }
+  to { background-position: 32px 64px; }
+}
+
+/* 核心旋转环 */
+.sco-ring-wrap {
+  position: relative;
+  width: 100px; height: 100px;
+  flex-shrink: 0;
+}
+.sco-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+}
+.sco-ring1 {
+  border: 2px dashed rgba(95,208,232,.5);
+  animation: scoSpin 4s linear infinite;
+  box-shadow: 0 0 16px rgba(95,208,232,.15), inset 0 0 10px rgba(95,208,232,.04);
+}
+.sco-ring2 {
+  inset: 12%;
+  border: 2px solid transparent;
+  border-top-color: #5fd0e8;
+  border-right-color: rgba(95,208,232,.25);
+  animation: scoSpin 2.4s linear infinite reverse;
+}
+.sco-ring3 {
+  inset: 24%;
+  border: 1px dotted rgba(0,255,200,.3);
+  animation: scoSpin 8s linear infinite;
+}
+@keyframes scoSpin { to { transform: rotate(360deg); } }
+
+/* 进度百分比（环心） */
+.sco-pct {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-px, monospace);
+  font-size: 18px; letter-spacing: 2px;
+  color: #5fd0e8;
+  text-shadow: 0 0 8px rgba(95,208,232,.7), 0 0 20px rgba(95,208,232,.3);
+}
+
+/* 标题 */
+.sco-title {
+  font-family: var(--f-px, monospace);
+  font-size: clamp(1rem, 2.5vmin, 1.4rem);
+  letter-spacing: .35em; text-indent: .35em;
+  color: #5fd0e8;
+  text-shadow:
+    0 0 5px rgba(95,208,232,.8),
+    0 0 14px rgba(95,208,232,.4),
+    0 0 28px rgba(0,255,200,.2);
+  white-space: nowrap;
+}
+
+/* 副标题/说明 */
+.sco-sub {
+  font-family: var(--f-px, monospace);
+  font-size: clamp(.65rem, 1.6vmin, .82rem);
+  letter-spacing: .14em;
+  color: rgba(95,208,232,.4);
+  max-width: 420px; text-align: center; line-height: 1.6;
+}
+
+/* 进度条容器 */
+.sco-bar-wrap {
+  width: clamp(220px, 40vmin, 380px); max-width: 85vw;
+  position: relative;
+}
+.sco-bar-track {
+  width: 100%; height: 3px; border-radius: 1.5px;
+  background: rgba(95,208,232,.1);
+  overflow: hidden;
+  position: relative;
+}
+.sco-bar-fill {
+  height: 100%; width: 0%; border-radius: 1.5px;
+  background: linear-gradient(90deg, #5fd0e8, #00ffc8);
+  box-shadow: 0 0 8px rgba(95,208,232,.5), 0 0 20px rgba(0,255,200,.2);
+  transition: width 0.15s linear;
+}
+/* 流光扫过效果 */
+.sco-bar-fill::after {
+  content: '';
+  position: absolute; top: -1px; right: -30%; width: 30%; height: calc(100% + 2px);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  animation: scoBarShine 1.6s ease-in-out infinite;
+}
+@keyframes scoBarShine {
+  0% { opacity: 0; transform: translateX(-100%); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(200%); }
+}
+
+/* 进度数字 */
+.sco-bar-info {
+  display: flex; justify-content: space-between; margin-top: 8px;
+  font-family: var(--f-px, monospace);
+  font-size: 11px; letter-spacing: 1px;
+  color: rgba(95,208,232,.35);
+}
+
+/* 文件大小/速度信息 */
+.sco-detail {
+  font-family: var(--f-px, monospace);
+  font-size: 11px; letter-spacing: 1px;
+  color: rgba(95,208,232,.25);
+  animation: scoBlink 2.5s ease-in-out infinite;
+}
+@keyframes scoBlink { 0%,100%{opacity:.2;} 50%{opacity:.55;} }
+
+/* 减少动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .sco-matrix { animation: none; opacity: 0.3; }
+  .sco-ring1, .sco-ring2, .sco-ring3 { animation-duration: 0s; }
+  .sco-bar-fill::after { animation: none; }
+  .sco-detail { animation: none; opacity: 0.4; }
 }
