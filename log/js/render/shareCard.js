@@ -1,4 +1,4 @@
-/* 一键分享
+/* 分享
  * 将当前"详情"分析结果（#detail）渲染为一张 PNG 图片并下载。
  * 截图库 html2canvas 已内置于本地 js/lib/，运行时无任何外部依赖。 */
 window.WF = window.WF || {};
@@ -11,7 +11,7 @@ WF.shareCard = (function () {
     btn = document.createElement('button');
     btn.className = 'share-card-btn';
     btn.type = 'button';
-    btn.innerHTML = '<span class="share-card-ico">⬇</span><span class="share-card-txt">一键分享</span>';
+    btn.innerHTML = '<span class="share-card-ico">⬇</span><span class="share-card-txt">分享</span>';
     document.body.appendChild(btn);
     btn.addEventListener('click', capture);
   }
@@ -534,7 +534,7 @@ WF.shareCard = (function () {
   function setBusy(state, text) {
     busy = state;
     btn.classList.toggle('busy', state);
-    btn.querySelector('.share-card-txt').textContent = text || '一键分享';
+    btn.querySelector('.share-card-txt').textContent = text || '分享';
   }
 
   /* 将生成的 PNG Blob 写入用户指定的 Downloads 目录（已禁用 showSaveFilePicker，
@@ -703,7 +703,7 @@ WF.shareCard = (function () {
     });
   }
 
-  function resetSoon() { setTimeout(() => setBusy(false, '一键分享'), 1800); }
+  function resetSoon() { setTimeout(() => setBusy(false, '分享'), 1800); }
 
   function init() {
     detail = document.getElementById('detail');
