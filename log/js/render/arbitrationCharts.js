@@ -106,7 +106,7 @@ WF.arbitrationCharts = (function () {
     if (rec.roundDetail) {
       for (const rd of rec.roundDetail) {
         if (rd.incomplete) continue;
-        const min = Math.round(rd.atSec / 60);
+        const min = Math.floor(rd.atSec / 60) + 1;
         if (min >= 1 && min <= pm.length) {
           markLines.push({
             xAxis: 'M' + min,

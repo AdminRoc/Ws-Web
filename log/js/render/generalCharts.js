@@ -306,12 +306,378 @@ WF.generalCharts = (function () {
     if (chart && typeof chart.dispose === 'function') chart.dispose();
   }
 
+  /* ═══════════════════════════════════════════════════════════════
+     P0 级图表（复用仲裁分析逻辑，去除无人机/生息相关字段）
+     适用于：防御、镜像防御、生存、拦截、挖掘、叛逃、传承种收割、
+           虚空覆涌、虚空洪流、虚空决战、元素转换、INFESTED 资源回收、
+           Nethercells、联结生存
+     ═══════════════════════════════════════════════════════════════ */
+
+  // ── 分模式压力画像（与仲裁保持一致：镜像防御/拦截/生存/防御各自校准阈值）──
+  const PRESSURE_DEFAULT = { high: 12, recovery: 10, bands: [4, 9, 14, 20] };
+  const PRESSURE_BY_MODE = {
+    '防御':               { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    '镜像防御':           { high: 28, recovery: 20, bands: [17, 23, 30, 36] },
+    '生存':               { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    '拦截':               { high: 16, recovery: 13, bands: [9, 14, 20, 26] },
+    '挖掘':               { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    '叛逃':               { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    '传承种收割':         { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    '虚空覆涌':           { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    '虚空洪流':           { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    '虚空决战':           { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    '元素转换':           { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    'INFESTED 资源回收':  { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    'Nethercells':        { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+    '联结生存':           { high: 12, recovery: 10, bands: [4, 9, 14, 20] },
+  };
+  function pressureOf(rec) {
+    return (rec && rec.endlessTypeCN && PRESSURE_BY_MODE[rec.endlessTypeCN]) || PRESSURE_DEFAULT;
+  }
+
+  // ── 1. 任务时间轴总览（每分钟：平均/峰值活跃敌人、生成数、击杀数）──
+  function timelineOverview(container, rec) {
+    if (!isAvailable() || !rec || !rec.dist || !rec.dist.perMinute) return null;
+    const pm = rec.dist.perMinute.rows;
+    const categories = pm.map((r) => 'M' + r.minute);
+
+    const option = mergeOption({
+      tooltip: {
+        formatter: function (params) {
+          let html = `<div style="font-weight:bold;margin-bottom:4px;">${params[0].axisValue}</div>`;
+          params.forEach((p) => {
+            if (p.seriesName === '生成数' || p.seriesName === '击杀数') {
+              html += `<div>${p.marker} ${p.seriesName}: ${p.data.value || p.data}</div>`;
+            } else {
+              html += `<div>${p.marker} ${p.seriesName}: ${p.value}</div>`;
+            }
+          });
+          return html;
+        },
+      },
+      legend: { top: 4, right: 12, itemGap: 20, data: ['平均活跃敌人', '最大活跃敌人', '生成数', '击杀数'], textStyle: { fontSize: 12, color: COLORS.text }, icon: 'roundRect' },
+      grid: { left: '3%', right: '4%', bottom: '16%', top: '22%', containLabel: true },
+      xAxis: { type: 'category', data: categories, boundaryGap: false },
+      yAxis: [
+        { type: 'value', name: '活跃敌人', position: 'left', axisLabel: { color: COLORS.cyan } },
+        { type: 'value', name: '数量', position: 'right', max: Math.max(1, ...pm.map((r) => r.spawn)) * 1.5, axisLabel: { color: COLORS.amber } },
+      ],
+      dataZoom: [
+        { type: 'inside', start: 0, end: 100 },
+        { type: 'slider', start: 0, end: 100, height: 18, bottom: 4, borderColor: COLORS.axis, fillerColor: 'rgba(0,240,255,0.15)', handleStyle: { color: COLORS.cyan } },
+      ],
+      series: [
+        {
+          name: '平均活跃敌人',
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          lineStyle: { width: 2, color: COLORS.cyan },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: 'rgba(0,240,255,0.35)' },
+              { offset: 1, color: 'rgba(0,240,255,0.02)' },
+            ]),
+          },
+          data: pm.map((r) => r.liveAvg.toFixed(1)),
+        },
+        {
+          name: '最大活跃敌人',
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          lineStyle: { width: 1, color: COLORS.magenta, type: 'dashed' },
+          data: pm.map((r) => r.liveMax),
+        },
+        {
+          name: '生成数',
+          type: 'bar',
+          yAxisIndex: 1,
+          barWidth: '35%',
+          itemStyle: { color: 'rgba(255,170,0,0.25)', borderColor: COLORS.amber, borderWidth: 1 },
+          data: pm.map((r) => r.spawn),
+        },
+        {
+          name: '击杀数',
+          type: 'bar',
+          yAxisIndex: 1,
+          barWidth: '35%',
+          itemStyle: { color: 'rgba(0,255,136,0.25)', borderColor: COLORS.green, borderWidth: 1 },
+          data: pm.map((r) => r.kills || 0),
+        },
+      ],
+    });
+
+    const chart = echarts.init(container);
+    chart.setOption(option);
+    return chart;
+  }
+
+  // ── 2. 清图压力趋势（高压线随分模式画像动态）──
+  function pressureTrendChart(container, rec) {
+    if (!isAvailable() || !rec || !rec.dist || !rec.dist.perMinute) return null;
+    const pm = rec.dist.perMinute.rows;
+    const categories = pm.map((r) => 'M' + r.minute);
+    const p = pressureOf(rec);
+
+    const option = mergeOption({
+      tooltip: { trigger: 'axis' },
+      legend: { data: ['平均活跃敌人', '最大活跃敌人', '估算清图量', '高压线'], top: 0 },
+      xAxis: { type: 'category', data: categories },
+      yAxis: { type: 'value', name: '数量' },
+      series: [
+        {
+          name: '平均活跃敌人',
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          lineStyle: { width: 2, color: COLORS.cyan },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: 'rgba(0,240,255,0.25)' },
+              { offset: 1, color: 'rgba(0,240,255,0.02)' },
+            ]),
+          },
+          data: pm.map((r) => r.liveAvg.toFixed(1)),
+          markLine: {
+            silent: true,
+            data: [{ yAxis: p.high, label: { show: false }, lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 } }],
+          },
+        },
+        {
+          name: '最大活跃敌人',
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          lineStyle: { width: 1, color: COLORS.magenta, type: 'dotted' },
+          data: pm.map((r) => r.liveMax),
+        },
+        {
+          name: '估算清图量',
+          type: 'bar',
+          barWidth: '35%',
+          itemStyle: { color: 'rgba(0,240,255,0.15)', borderColor: COLORS.cyan, borderWidth: 1 },
+          data: pm.map((r) => r.cleared),
+        },
+        /* 哑系列：仅用于在图例中展示"高压线"图示（红色虚线段），不在绘图区绘制任何内容 */
+        {
+          name: '高压线',
+          type: 'line',
+          data: [],
+          symbol: 'none',
+          silent: true,
+          lineStyle: { color: COLORS.red, type: 'dashed', width: 1.5 },
+        },
+      ],
+    });
+    const chart = echarts.init(container);
+    chart.setOption(option);
+    return chart;
+  }
+
+  // ── 3. 高压恢复时间线──
+  function recoveryTimeline(container, rec) {
+    if (!isAvailable() || !rec || !rec.cross || !rec.cross.recoveryEvents) return null;
+    const events = rec.cross.recoveryEvents;
+    if (!events.length) return null;
+    const p = pressureOf(rec);
+
+    const option = mergeOption({
+      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+      grid: { left: '3%', right: '8%', bottom: '12%', top: '4%', containLabel: true },
+      xAxis: { type: 'value', name: '恢复时间(s)', nameLocation: 'middle', nameGap: 30, max: (value) => Math.max(value.max, 30), axisLabel: { color: COLORS.text } },
+      yAxis: { type: 'category', data: events.map((_, i) => '事件 ' + (i + 1)), inverse: true, axisLabel: { color: COLORS.text } },
+      series: [
+        {
+          type: 'bar',
+          barWidth: '60%',
+          itemStyle: {
+            color: function (par) {
+              const v = par.value;
+              if (v <= p.recovery / 2) return COLORS.green;
+              if (v <= p.recovery) return COLORS.amber;
+              return COLORS.red;
+            },
+            borderRadius: [0, 4, 4, 0],
+            shadowBlur: 8,
+            shadowColor: 'rgba(255,0,170,0.4)',
+          },
+          emphasis: { itemStyle: { shadowBlur: 16, shadowColor: 'rgba(255,255,255,0.5)' } },
+          data: events,
+        },
+      ],
+    });
+    const chart = echarts.init(container);
+    chart.setOption(option);
+    return chart;
+  }
+
+  // ── 4. 刷怪数量期望表（仅 Defense/镜像防御：waveBudgets 有数据时显示）──
+  function waveBudgetChart(container, rec) {
+    if (!isAvailable() || !rec || !rec.waveBudgets || !rec.waveBudgets.length) return null;
+    const budgets = rec.waveBudgets;
+    const actuals = rec.waveActuals || [];
+    const categories = budgets.map((w) => 'W' + w.wave);
+
+    const actualMap = {};
+    for (const a of actuals) actualMap[a.wave] = a.actual;
+
+    const rates = budgets.map((w) => {
+      const act = actualMap[w.wave] != null ? actualMap[w.wave] : 0;
+      return w.budget > 0 ? +(act / w.budget * 100).toFixed(1) : 0;
+    });
+
+    // Tier 分界 markLine
+    const tierLines = [];
+    let lastTier = -1;
+    for (let i = 0; i < budgets.length; i++) {
+      if (budgets[i].tier > lastTier) {
+        if (lastTier >= 0) {
+          tierLines.push({
+            xAxis: categories[i],
+            label: { formatter: 'T' + lastTier + '→T' + budgets[i].tier, color: COLORS.muted, fontSize: 10, position: 'insideEndTop' },
+            lineStyle: { color: COLORS.red, type: 'dashed', width: 1 },
+          });
+        }
+        lastTier = budgets[i].tier;
+      }
+    }
+
+    const budgetGrad = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: 'rgba(0,240,255,0.85)' },
+      { offset: 1, color: 'rgba(0,140,200,0.25)' },
+    ]);
+    const actualGrad = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: 'rgba(255,170,0,0.85)' },
+      { offset: 1, color: 'rgba(200,120,0,0.25)' },
+    ]);
+
+    const option = mergeOption({
+      tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+          const idx = params[0].dataIndex;
+          const w = budgets[idx];
+          const act = actualMap[w.wave] != null ? actualMap[w.wave] : 0;
+          const rate = rates[idx];
+          const gap = w.budget - act;
+          let html = `<div style="font-weight:bold;margin-bottom:4px;">W${w.wave}（tier-${w.tier}）</div>`;
+          html += `<div>${params[0].marker} 预算: ${w.budget}</div>`;
+          html += `<div>${params[1].marker} 实际: ${act}</div>`;
+          html += `<div>${params[2].marker} 达成率: ${rate}%</div>`;
+          html += `<div style="color:${COLORS.muted}">Eximus: ${w.eximusPct}% ｜ 同屏: ${w.simultaneous}</div>`;
+          if (gap > 0) html += `<div style="color:${COLORS.red}">缺口: ${gap}只</div>`;
+          return html;
+        },
+      },
+      legend: { top: 0, right: 12, itemGap: 20, data: ['预算', '实际', '达成率'], textStyle: { fontSize: 12, color: COLORS.text } },
+      grid: { left: '3%', right: '6%', bottom: '12%', top: '18%', containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: categories,
+        axisLabel: { color: COLORS.muted, fontSize: 10, interval: Math.max(0, Math.floor(categories.length / 20)) },
+      },
+      yAxis: [
+        { type: 'value', name: '敌人数量', position: 'left', axisLabel: { color: COLORS.cyan }, splitLine: { lineStyle: { color: COLORS.grid } } },
+        { type: 'value', name: '达成率', position: 'right', min: 0, max: 120, axisLabel: { color: COLORS.green, formatter: '{value}%' }, splitLine: { show: false } },
+      ],
+      dataZoom: [
+        { type: 'inside', start: 0, end: 100 },
+        { type: 'slider', start: 0, end: 100, height: 18, bottom: 2, borderColor: COLORS.axis, fillerColor: 'rgba(0,240,255,0.15)', handleStyle: { color: COLORS.cyan } },
+      ],
+      series: [
+        {
+          name: '预算',
+          type: 'bar',
+          barMaxWidth: 20,
+          itemStyle: { color: budgetGrad, borderRadius: [2, 2, 0, 0] },
+          data: budgets.map((w) => w.budget),
+          markLine: { symbol: 'none', data: tierLines, animation: false },
+        },
+        {
+          name: '实际',
+          type: 'bar',
+          barMaxWidth: 20,
+          itemStyle: { color: actualGrad, borderRadius: [2, 2, 0, 0] },
+          data: budgets.map((w) => actualMap[w.wave] != null ? actualMap[w.wave] : 0),
+        },
+        {
+          name: '达成率',
+          type: 'line',
+          yAxisIndex: 1,
+          smooth: true,
+          showSymbol: budgets.length <= 30,
+          symbolSize: 6,
+          lineStyle: { width: 2, color: COLORS.green },
+          itemStyle: { color: COLORS.green },
+          data: rates,
+          markLine: {
+            symbol: 'none',
+            data: [
+              { yAxis: 100, label: { formatter: '100%', color: 'rgba(255,255,255,0.4)', fontSize: 10, position: 'insideEndTop' }, lineStyle: { color: 'rgba(255,255,255,0.2)', type: 'dashed', width: 1 } },
+              { yAxis: 95, label: { formatter: '95%', color: 'rgba(255,100,100,0.4)', fontSize: 10, position: 'insideEndTop' }, lineStyle: { color: 'rgba(255,100,100,0.15)', type: 'dotted', width: 1 } },
+            ],
+            animation: false,
+          },
+        },
+      ],
+    });
+    const chart = echarts.init(container);
+    chart.setOption(option);
+    return chart;
+  }
+
+  // ── 5. 清图效率分布（liveDist：横向条形图，带高压占比 footer）──
+  function liveDistChart(container, rec) {
+    if (!isAvailable() || !rec || !rec.dist || !rec.dist.liveDist) return null;
+    const ld = rec.dist.liveDist;
+    const p = pressureOf(rec);
+
+    const option = mergeOption({
+      tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+          const d = params[0].data;
+          return `${d.label}：${d.pct.toFixed(1)}%（${d.seconds.toFixed(1)}s）`;
+        },
+      },
+      grid: { left: '22%', right: '4%', bottom: '10%', top: '12%', containLabel: true },
+      xAxis: { type: 'value', name: '时间占比 %', axisLabel: { color: COLORS.muted } },
+      yAxis: { type: 'category', data: ld.rows.map((r) => r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`), inverse: true, axisLabel: { color: COLORS.text } },
+      series: [{
+        name: '驻留占比',
+        type: 'bar',
+        barWidth: '60%',
+        itemStyle: {
+          color: function (par) {
+            const lo = ld.rows[par.dataIndex].lo;
+            if (lo >= p.bands[3]) return COLORS.red;
+            if (lo >= p.bands[2]) return COLORS.amber;
+            if (lo >= p.bands[1]) return COLORS.cyan;
+            return COLORS.green;
+          },
+        },
+        label: { show: true, position: 'right', color: COLORS.text, fontSize: 11, formatter: '{c}%' },
+        data: ld.rows.map((r) => ({ value: +r.pct.toFixed(1), label: r.hi == null ? r.lo + '+' : `${r.lo}-${r.hi}`, pct: r.pct, seconds: r.seconds })),
+      }],
+    });
+    const chart = echarts.init(container);
+    chart.setOption(option);
+    return chart;
+  }
+
   return {
     isAvailable,
     baseOption,
     mergeOption,
     segDurationChart,
     liveCountChart,
+    timelineOverview,
+    pressureTrendChart,
+    recoveryTimeline,
+    waveBudgetChart,
+    liveDistChart,
+    pressureOf,
     dispose,
     COLORS,
   };

@@ -11,40 +11,74 @@ WF.GeneralParser = (function () {
     MT_EXTERMINATION:       '歼灭',
     MT_DEFENSE:             '防御',
     MT_SURVIVAL:            '生存',
-    MT_EXCAVATION:          '掘矿',
+    MT_EXCAVATION:          '挖掘',
     MT_INTERCEPTION:        '拦截',
     MT_CAPTURE:             '捕获',
     MT_RESCUE:              '救援',
     MT_SPY:                 '间谍',
     MT_MOBILE_DEFENSE:      '移动防御',
-    MT_ASSAULT:             '突击',
+    MT_ASSAULT:             '强袭',
     MT_SABOTAGE:            '破坏',
-    MT_HIVE:                '蜂巢',
-    MT_JUNCTION:            '通道',
+    MT_HIVE:                '清巢',
+    MT_JUNCTION:            '星际航道结合点',
     MT_PURSUIT:             '追击',
-    MT_ALCHEMY:             '炼金',
+    MT_ALCHEMY:             '元素转换',
+    MT_DEFECTION:           '叛逃',
     MT_ASSASSINATION:       '刺杀',
     MT_ARENA:               '竞技场',
-    MT_CACHES:              '缓存',
+    MT_CACHES:              '衰退室',
     MT_CORPUS_LOOT_DEFENSE: '奸商托管',
     MT_ARTIFACT:            '中断',
-    MT_LANDSCAPE:           '开放世界',
-    MT_RAILJACK:            '铁骨战舰',
-    MT_VOID_CASCADE:        '虚空瀑布',
+    MT_LANDSCAPE:           '自由漫游',
+    MT_RAILJACK:            '前哨战',
+    MT_VOID_CASCADE:        '虚空覆涌',
     MT_VOID_FLOOD:          '虚空洪流',
-    MT_VOID_ARMAGEDDON:     '虚空末日',
+    MT_VOID_ARMAGEDDON:     '虚空决战',
     MT_VOID_FISSURE:        '虚空裂缝',
-    MT_NETHERCELLS:         '深渊',
-    MT_FEED_THE_TENNO:      '纳罗供养',
+    MT_VOID_ECLIPSE:        '联结生存',
+    MT_NETHERCELLS:         'Nethercells',
+    MT_FEED_THE_TENNO:      'INFESTED 资源回收',
+    MT_ENDLESS_CAPTURE:     '传承种收割',
     MT_GENERIC_COOPTIVE:    '合作任务',
   };
 
-  // Endless mission type labels
+  // Endless mission type labels (15 种，官方译名对照 wf-i18n.json MissionName_*)
   const ENDLESS_CN = {
-    defense:      '防御',
-    loopDefense:  '镜像防御',
-    survival:     '生存',
-    interception: '拦截',
+    defense:          '防御',
+    loopDefense:      '镜像防御',
+    survival:         '生存',
+    interception:     '拦截',
+    disruption:       '中断',
+    defection:        '叛逃',
+    excavation:       '挖掘',
+    endlessCapture:   '传承种收割',
+    voidCascade:      '虚空覆涌',
+    voidFlood:        '虚空洪流',
+    voidArmageddon:   '虚空决战',
+    alchemy:          '元素转换',
+    nethercells:      'Nethercells',
+    feedTheTenno:     'INFESTED 资源回收',
+    voidEclipse:      '联结生存',
+  };
+
+  // missionType (from SyncAutoPopulatedConsumables / missionType=) → endlessType
+  const MISSION_TYPE_TO_ENDLESS = {
+    MT_SURVIVAL:        'survival',
+    MT_DEFENSE:         'defense',       // 镜像防御由 LoopDefend 日志行区分
+    MT_INTERCEPTION:    'interception',
+    MT_ARTIFACT:        'disruption',
+    MT_DEFECTION:       'defection',
+    MT_EXCAVATION:      'excavation',
+    MT_ENDLESS_CAPTURE: 'endlessCapture',
+    MT_VOID_CASCADE:    'voidCascade',
+    MT_VOID_FLOOD:      'voidFlood',
+    MT_VOID_ARMAGEDDON: 'voidArmageddon',
+    MT_VOID_ECLIPSE:    'voidEclipse',
+    MT_ALCHEMY:         'alchemy',
+    MT_NETHERCELLS:     'nethercells',
+    MT_FEED_THE_TENNO:  'feedTheTenno',
+    // 其它如 MT_HIVE/MT_CORPUS_LOOT_DEFENSE/MT_MOBILE_DEFENSE/MT_GENERIC_COOPTIVE
+    // 目前无独立日志边界，暂不纳入
   };
 
   const PAT = {
@@ -152,6 +186,7 @@ WF.GeneralParser = (function () {
 
     function newMission(t, carry) {
       carry = carry || {};
+      const initialEndlessType = (carry.missionType && MISSION_TYPE_TO_ENDLESS[carry.missionType]) || null;
       m = {
         loadT:           t,
         startT:          null,
@@ -164,7 +199,7 @@ WF.GeneralParser = (function () {
         sessionOffset:   _sessionOffset,   // 用于多会话绝对排序
         sessionAnchor:   _sessionAnchor,   // 用于计算绝对时刻
         // ── Endless mission segments ──
-        endlessType:      null,       // 'defense'|'loopDefense'|'survival'|'interception'
+        endlessType:      initialEndlessType,       // 13 种：defense/loopDefense/survival/interception/disruption/defection/excavation/endlessCapture/voidCascade/voidFlood/voidArmageddon/alchemy/nethercells/feedTheTenno
         waves:            [],         // defense / loopDefense wave records (pushed by closeCurrentWave)
         currentWave:      null,       // open defense/loopDefense wave
         survivalSegs:     [],         // [{tier, startT, endT, duration, spawned}] for survival
@@ -265,6 +300,17 @@ WF.GeneralParser = (function () {
           w.kills = c;
         }
       });
+
+      // ── 兜底：行为判定——段数 >1 即为无尽任务 ──────────────────
+      // 使命类型未命中 MISSION_TYPE_TO_ENDLESS（新类型/未知 missionType）时，
+      // 若该任务已进入至少 2 轮/段，说明它是无尽任务，自动补设 endlessType，
+      // 确保通用分页能正确挂载 P0 图表。
+      if (!m.endlessType) {
+        if (m.waves.length > 1)            m.endlessType = 'defense';
+        else if (m.survivalSegs.length > 1) m.endlessType = 'survival';
+        else if (m.interSegs.length > 1)    m.endlessType = 'interception';
+      }
+
       const anchor = m.sessionAnchor;
       const offset = m.sessionOffset || 0;
       records.push({
@@ -389,7 +435,11 @@ WF.GeneralParser = (function () {
         // ── mission type fallback ─────────────────────────────
         if (!m.missionType && line.indexOf(PAT.missionTypeFB) !== -1) {
           const rx = /missionType=(\w+)/.exec(line);
-          if (rx && !SKIP_TYPES[rx[1]]) m.missionType = rx[1];
+          if (rx && !SKIP_TYPES[rx[1]]) {
+            m.missionType = rx[1];
+            // 同步识别 endlessType（fallback 路径在 newMission 之后触发，需手动补设）
+            if (!m.endlessType) m.endlessType = MISSION_TYPE_TO_ENDLESS[rx[1]] || null;
+          }
           return;
         }
 

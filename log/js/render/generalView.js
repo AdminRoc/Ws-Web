@@ -83,10 +83,35 @@ WF.generalView = (function () {
   }
 
   function render(container, rec, clock) {
-    clearCharts(); // dispose 必须在 innerHTML 清空之前，防止 ECharts 实例泄漏
+    clearCharts();
     container.innerHTML = '';
 
-    // ── 任务标头（核心一览） ──────────────────────────────────
+    // ── 专用视图委托（仲裁/中断/夜灵/蜘蛛 → 复用各自分页完整渲染）──
+    // 这四类任务在通用分页内直接调用专属视图的 render()，不重复渲染基础标头
+    if (rec.type === 'arbitration' && WF.arbitrationView) {
+      WF.arbitrationView.render(container, rec, clock);
+      gotoPostCommon(container, rec, []);
+      return;
+    }
+    if (rec.type === 'disruption' && WF.disruptionView) {
+      WF.disruptionView.render(container, rec, clock);
+      gotoPostCommon(container, rec, []);
+      return;
+    }
+    if (rec.type === 'eidolon' && WF.eidolonView) {
+      WF.eidolonView.render(container, rec, clock);
+      gotoPostCommon(container, rec, []);
+      return;
+    }
+    if (rec.type === 'profitTaker' && WF.profitTakerView) {
+      WF.profitTakerView.render(container, rec, clock);
+      gotoPostCommon(container, rec, []);
+      return;
+    }
+
+    // ── 以下为所有非专用任务类型的通用渲染路径 ─────────────────────
+
+    // ── 1. 任务标头（核心一览） ──────────────────────────────────
     const hero = U.el('div', 'hero-row');
     hero.appendChild(_st('任务模式', rec.missionTypeCN, 'accent'));
     if (rec.missionName && rec.missionName !== '—') {
@@ -104,10 +129,10 @@ WF.generalView = (function () {
       '击杀数为房主日志的间接推算值，非游戏内确切数字'));
     container.appendChild(hero);
 
-    // ── 队伍成员 ──────────────────────────────────────────────
+    // ── 2. 队伍成员 ──────────────────────────────────────────────
     WF.squadMixin.renderSquad(container, rec);
 
-    // ── 时间节点详情 ──────────────────────────────────────────
+    // ── 3. 时间节点详情 ──────────────────────────────────────────
     const timingBox = U.el('div', 'gen-timing-box');
     timingBox.appendChild(U.el('div', 'gen-timing-title', '时间节点'));
     const timingGrid = U.el('div', 'gen-timing-grid');
@@ -157,12 +182,13 @@ WF.generalView = (function () {
     timingBox.appendChild(timingGrid);
     container.appendChild(timingBox);
 
-    // ── 无尽任务 / 击杀概况 ─────────────────────────────────
+    // ── 4. 无尽任务段表 / 击杀概况 ─────────────────────────────
     const hasWaves    = rec.waves      && rec.waves.length      > 0;
     const hasSurvival = rec.survivalSegs && rec.survivalSegs.length > 0;
     const hasInter    = rec.interSegs  && rec.interSegs.length  > 0;
-    const hasKillData = rec.spawned > 0;  // 击杀数不可靠（EE.log 不记录玩家击杀），以生成数为准
+    const hasKillData = rec.spawned > 0;
 
+    // 段表渲染：defense/waves → 防御表，survivalSegs → 生存表，interSegs → 拦截表
     if (hasWaves) {
       _renderWaveSection(container, rec);
     } else if (hasSurvival) {
@@ -173,30 +199,75 @@ WF.generalView = (function () {
       _renderKillSummary(container, rec);
     }
 
-    // ── 备注 ─────────────────────────────────────────────────
-    // 敌量/击杀口径：仅当本记录确有相关推算数据（liveSamples 或 killEvents）时追加
+    // P0 级增强图表：所有有 liveSamples 的无尽任务均挂载（defense/survival/interception
+    // 在段表之后挂载；defection/excavation/endlessCapture/voidCascade/voidFlood/
+    // voidArmageddon/alchemy/nethercells/feedTheTenno 等类型在段表兜底之后挂载）
+    const hasLiveSamples = Array.isArray(rec.liveSamples) && rec.liveSamples.length > 0;
+    if (hasLiveSamples) {
+      _mountP0Charts(container, rec, rec.endlessType || 'general');
+    }
+
+    // ── 5. 通用后置内容（备注、对话记录、resize）───────────────────
+    gotoPostCommon(container, rec, killEvents);
+  }
+
+  // ── 共用后置渲染逻辑（接收 render() 作用域变量） ──
+  function gotoPostCommon(container, rec, killEvents) {
+    // 备注
     const hasEstimate = (Array.isArray(rec.liveSamples) && rec.liveSamples.length > 0)
-      || killEvents.length > 0;
+      || (killEvents && killEvents.length > 0);
     container.appendChild(U.el('div', 'note',
       '总时长 = SS_STARTED → EOM，与游戏结算界面一致。' +
       '首帧 = HUD REDUX 首次渲染。尾帧 = 最先触发的 EOM 信号。' +
       '波次/轮次时间为各段独立耗时+累计。生成（近似）来自 OnAgentCreated，已过滤宠物/目标实体。' +
       (hasEstimate ? '敌量/击杀为房主日志的间接推算值。' : '')));
 
-    // ── 对话记录 ─────────────────────────────────────────────
+    // 对话记录
     WF.chatMixin.renderChatLog(container, rec);
 
     // 窗口尺寸变化时重绘全部 ECharts（仿中断分页）
     currentResizeHandler = () => { for (const c of activeCharts) if (c && c.resize) c.resize(); };
     window.addEventListener('resize', currentResizeHandler);
 
-    // 初次渲染后重置所有 ECharts 尺寸：
-    // _mountChart 在 section 未挂载 DOM 时调用 echarts.init，容器宽度为 0；
-    // section 随后才被 appendChild 到 container（已在 DOM 树中），此时容器获得真实宽度，
-    // 需要主动 resize 让 ECharts 按正确尺寸重绘。
+    // 初次渲染后重置所有 ECharts 尺寸
     requestAnimationFrame(() => {
       for (const c of activeCharts) if (c && c.resize) c.resize();
     });
+  }
+
+  // ── P0 级增强图表挂载（非仲裁、非中断的无尽任务）─────────────────
+  function _mountP0Charts(container, rec, mode) {
+    // mode: 'defense' | 'survival' | 'interception'
+    const GC = WF.generalCharts;
+    if (!GC || !GC.isAvailable()) return;
+
+    // 1) 任务时间轴总览（每分钟：平均/峰值活跃敌人、生成数、击杀数）
+    _mountChart(container, '任务时间轴总览',
+      '青色面积 = 每分钟平均活跃敌人，绿色散点 = 每分钟生成数，琥珀柱 = 每分钟击杀数，红色虚线 = 段边界',
+      'gen-tl-body', (body) => GC.timelineOverview(body, rec));
+
+    // 2) 清图压力趋势（高压线随分模式画像动态）
+    _mountChart(container, '清图压力趋势',
+      '青色面积 = 平均活跃敌人，洋红虚线 = 最大活跃敌人，青色柱 = 估算清图量，红色虚线 = 高压线',
+      'gen-pressure-body', (body) => GC.pressureTrendChart(body, rec));
+
+    // 3) 高压恢复时间线
+    const p = GC.pressureOf ? GC.pressureOf(rec) : { recovery: 10 };
+    _mountChart(container, '高压恢复时间线',
+      `每次场上活跃敌人从≥${p.recovery}恢复到<${p.recovery}所花费的时间。颜色越绿越快，越红越慢。`,
+      'gen-recovery-body', (body) => GC.recoveryTimeline(body, rec));
+
+    // 4) 清图效率分布（ECharts 横向条形图）
+    _mountChart(container, '清图效率',
+      `横轴为活跃敌人数区间，柱长为驻留时间占比。高压占比（≥${(GC.pressureOf ? GC.pressureOf(rec) : { high: 12 }).high}）：见页脚`,
+      'gen-live-dist-body', (body) => GC.liveDistChart(body, rec));
+
+    // 5) 刷怪数量期望表（Defense/镜像防御：waveBudgets 有数据时显示）
+    if ((mode === 'defense' || mode === 'loopDefense') && rec.waveBudgets && rec.waveBudgets.length > 0) {
+      _mountChart(container, '刷怪数量期望表',
+        '双柱并排 = 每波理论预算（青色）vs 实际生成数（琥珀色），绿色折线 = 达成率。Tier 分界线标注敌人等级档位升级点。达成率低于 95% 说明放置失败率偏高。',
+        'gen-wave-budget-body', (body) => GC.waveBudgetChart(body, rec));
+    }
   }
 
   // ── 防御 / 镜像防御 波次表 ─────────────────────────────────

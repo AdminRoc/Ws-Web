@@ -18,7 +18,10 @@ WF.arbitrationView = (function () {
   const activeCharts = [];
   let currentResizeHandler = null;
   function clearCharts() {
-    for (const c of activeCharts) C.dispose(c);
+    for (const c of activeCharts) {
+      if (C) C.dispose(c);
+      else if (c && typeof c.dispose === 'function') { try { c.dispose(); } catch (e) { /* 忽略 */ } }
+    }
     activeCharts.length = 0;
     if (currentResizeHandler) {
       window.removeEventListener('resize', currentResizeHandler);
