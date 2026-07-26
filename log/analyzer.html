@@ -33,22 +33,37 @@
 
   <main>
     <section id="dropzone">
+      <div class="dz-grid"></div>
       <div class="dz-frame">
-        <div class="dz-icon">⬡</div>
-        <div class="dz-title">拖拽 <b>EE.log</b> 到此处</div>
-        <div class="dz-hint">日志默认位置：%LOCALAPPDATA%\Warframe\EE.log</div>
-        <div class="dz-btn-row">
-          <button class="dz-btn dz-btn-game" id="dz-btn-game" type="button">
-            <span class="dz-btn-glow"></span>
-            <span class="dz-btn-icon">◈</span>
-            <span class="dz-btn-text">读取游戏路径</span>
-            <span class="dz-btn-sub">自动复制 · 安全读取</span>
+        <svg class="dz-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 4L24 30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M16 14L24 4L32 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 28L8 40L40 40L40 28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="dz-title">拖拽 <b>EE.log</b> 到此处，或选择读取方式</div>
+        <div class="dz-hint">
+          <span>日志默认位置：</span>
+          <button class="dz-copy-path" id="dz-copy-path" type="button">
+            <span class="dz-copy-icon">⎘</span>
+            <span class="dz-copy-text">%LOCALAPPDATA%\Warframe</span>
+            <span class="dz-copy-feedback" id="dz-copy-feedback"></span>
           </button>
-          <button class="dz-btn dz-btn-other" id="dz-btn-other" type="button">
+        </div>
+        <div class="dz-notice">
+          <span class="dz-notice-icon">⚠</span>
+          <span>为了读取过程的安全性，请先将日志文件复制到其他位置，再发起读取</span>
+        </div>
+        <div class="dz-btn-row">
+          <button class="dz-btn dz-btn-pick" id="dz-btn-pick" type="button">
             <span class="dz-btn-glow"></span>
             <span class="dz-btn-icon">◇</span>
-            <span class="dz-btn-text">读取其他路径</span>
-            <span class="dz-btn-sub">直接读取 · 已复制的文件</span>
+            <span class="dz-btn-text">选择文件</span>
+            <span class="dz-btn-sub">选择已复制的 EE.log 文件</span>
+          </button>
+          <button class="dz-btn dz-btn-reset" id="dz-btn-reset" type="button" style="display:none">
+            <span class="dz-btn-glow"></span>
+            <span class="dz-btn-icon">↺</span>
+            <span class="dz-btn-text">恢复初始化</span>
           </button>
         </div>
         <div id="dropzone-status"></div>
@@ -95,29 +110,6 @@
       <div class="footer-copy">© 2013-2026 [CSC Alliance]. All Rights Reserved.</div>
     </div>
   </footer>
-
-  <!-- 安全复制进度弹窗 -->
-  <div id="safe-copy-overlay" aria-hidden="true">
-    <div class="sco-matrix"></div>
-    <div class="sco-ring-wrap">
-      <div class="sco-ring sco-ring1"></div>
-      <div class="sco-ring sco-ring2"></div>
-      <div class="sco-ring sco-ring3"></div>
-      <div class="sco-pct" id="sco-pct">0%</div>
-    </div>
-    <div class="sco-title">安全复制中</div>
-    <div class="sco-sub" id="sco-sub">正在将日志文件复制到浏览器隔离存储，防止读取行为被反作弊系统误判</div>
-    <div class="sco-bar-wrap">
-      <div class="sco-bar-track">
-        <div class="sco-bar-fill" id="sco-bar-fill"></div>
-      </div>
-      <div class="sco-bar-info">
-        <span id="sco-copied">0 MB</span>
-        <span id="sco-speed">—</span>
-      </div>
-    </div>
-    <div class="sco-detail" id="sco-detail">复制完成后将自动开始解析</div>
-  </div>
 
   <input type="file" id="file-input" accept=".log,.txt" hidden>
 
