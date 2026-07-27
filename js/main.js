@@ -11,9 +11,12 @@ class StarField {
     if (!this.canvas) return;
     if (getComputedStyle(this.canvas).display === 'none') return;  /* Bug3-fix: 跳过被 CSS 隐藏的 canvas */
     this.ctx    = this.canvas.getContext('2d');
+    this.canvas._starField = this;
     this.stars  = [];
     this.shoots = [];
     this._raf   = null;
+    this._mx = -9999; this._my = -9999;
+    this._energyEnabled = false;
     this._resize = this._resize.bind(this);
     window.addEventListener('resize', this._resize);
     this._resize();
@@ -50,20 +53,44 @@ class StarField {
     const ctx = this.ctx;
     const { width: w, height: h } = this.canvas;
     const now = performance.now()*.001;
+    const gm = window._gsapMouse;
+    if (gm) {
+      this._mx = gm.x; this._my = gm.y;
+      if (!this._energyEnabled && this._mx > -1000) this._energyEnabled = true;
+    }
     const bg = ctx.createLinearGradient(0,0,0,h);
     bg.addColorStop(0,'#07080f'); bg.addColorStop(.45,'#090c18'); bg.addColorStop(1,'#070810');
     ctx.fillStyle = bg; ctx.fillRect(0,0,w,h);
     this.stars.forEach(s => {
-      const op = s.base*(.72+.28*Math.sin(now*s.speed*55+s.phase));
-      ctx.save(); ctx.globalAlpha = op;
-      if (s.size > 1.1) {
-        const gr = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.size*3.5);
-        gr.addColorStop(0,s.color); gr.addColorStop(.4,s.color+'55'); gr.addColorStop(1,'transparent');
-        ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(s.x,s.y,s.size*3.5,0,Math.PI*2); ctx.fill();
+      let op = s.base*(.72+.28*Math.sin(now*s.speed*55+s.phase));
+      let sz = s.size;
+      if (this._energyEnabled) {
+        const dx = s.x - this._mx, dy = s.y - this._my;
+        const d2 = dx*dx + dy*dy;
+        if (d2 < 14400) {
+          const t = 1 - Math.sqrt(d2) / 120;
+          op = Math.min(op + t * 0.55, 1);
+          sz = s.size * (1 + t * 0.5);
+        }
       }
-      ctx.fillStyle = s.color; ctx.beginPath(); ctx.arc(s.x,s.y,s.size,0,Math.PI*2); ctx.fill();
+      ctx.save(); ctx.globalAlpha = op;
+      if (sz > 1.1) {
+        const gr = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,sz*3.5);
+        gr.addColorStop(0,s.color); gr.addColorStop(.4,s.color+'55'); gr.addColorStop(1,'transparent');
+        ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(s.x,s.y,sz*3.5,0,Math.PI*2); ctx.fill();
+      }
+      ctx.fillStyle = s.color; ctx.beginPath(); ctx.arc(s.x,s.y,sz,0,Math.PI*2); ctx.fill();
       ctx.restore();
     });
+    if (this._energyEnabled) {
+      const eg = ctx.createRadialGradient(this._mx,this._my,0,this._mx,this._my,200);
+      eg.addColorStop(0,'rgba(185,142,52,0.13)');
+      eg.addColorStop(.35,'rgba(255,215,0,0.05)');
+      eg.addColorStop(1,'rgba(255,215,0,0)');
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = eg; ctx.fillRect(this._mx-200,this._my-200,400,400);
+      ctx.restore();
+    }
     this._maybeShoot();
     this.shoots = this.shoots.filter(s => s.op > .02);
     this.shoots.forEach(s => {
