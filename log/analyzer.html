@@ -86,7 +86,7 @@
         <div class="dz-title">拖拽 <b>EE.log</b> 到此处，或选择读取方式</div>
         <div class="dz-hint">
           <span>日志默认位置：</span>
-          <button class="dz-copy-path" id="dz-copy-path" type="button">
+          <button class="dz-copy-path" id="dz-copy-path" type="button" title="点击左键即可复制此路径！">
             <span class="dz-copy-icon">⎘</span>
             <span class="dz-copy-text">%LOCALAPPDATA%\Warframe</span>
             <span class="dz-copy-feedback" id="dz-copy-feedback"></span>
@@ -94,14 +94,18 @@
         </div>
         <div class="dz-notice">
           <span class="dz-notice-icon">⚠</span>
-          <span>为了读取过程的安全性，请先将日志文件复制到其他位置，再发起读取</span>
+          <div class="dz-notice-body">
+            安全提醒：请勿直接读取<span class="dz-c-warn">原始目录</span>中的 EE.log！<br>
+            必须先将游戏的 EE.log 文件，从<span class="dz-c-warn">初始位置</span>，复制到<span class="dz-c-safe">"非系统关键位置"</span>再发起读取！<br>
+            <span class="dz-c-danger">"系统关键位置"</span> 举例：<span class="dz-c-danger">桌面（Desktop）</span>、<span class="dz-c-danger">%LOCALAPPDATA%</span> 等路径。
+          </div>
         </div>
         <div class="dz-btn-row">
           <button class="dz-btn dz-btn-pick" id="dz-btn-pick" type="button">
             <span class="dz-btn-glow"></span>
             <span class="dz-btn-icon">◇</span>
             <span class="dz-btn-text">选择文件</span>
-            <span class="dz-btn-sub">选择已复制的 EE.log 文件</span>
+            <span class="dz-btn-sub">使用上方复制的路径，找到 EE.log 文件后，可在同一个窗口中进入其他可用路径，复制过去再发起读取</span>
           </button>
           <button class="dz-btn dz-btn-reset" id="dz-btn-reset" type="button" style="display:none">
             <span class="dz-btn-glow"></span>

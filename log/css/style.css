@@ -377,13 +377,19 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
 .dz-copy-feedback:empty { display: none; }
 /* ── 安全提示 ── */
 .dz-notice {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  margin-top: 18px; padding: 12px 22px;
+  display: flex; align-items: flex-start; justify-content: center; gap: 10px;
+  margin-top: 18px; padding: 14px 22px;
   border: 1px solid rgba(255,170,0,.22); border-radius: 6px;
   background: rgba(255,170,0,.05);
   font-size: 15px; color: var(--c-gold); letter-spacing: .8px;
+  text-align: left; line-height: 1.7;
 }
-.dz-notice-icon { font-size: 16px; opacity: .85; }
+.dz-notice-icon { font-size: 17px; opacity: .85; margin-top: 2px; flex-shrink: 0; }
+.dz-notice-body b { color: #ffcc00; }
+.dz-c-warn { color: #ffaa00; }
+.dz-c-danger { color: #ff8866; }
+.dz-c-safe { color: var(--c-green); }
+.dz-notice-body code { font-size: 13px; background: rgba(255,255,255,.06); padding: 1px 6px; border-radius: 3px; color: var(--c-white); }
 /* ── 按钮行 ── */
 .dz-btn-row {
   display: flex; gap: 16px; justify-content: center;
@@ -426,7 +432,7 @@ main { position: relative; z-index: 1; width: 100%; margin: 0; padding: 0 119px;
 .dz-btn:hover .dz-btn-icon { opacity: 1; text-shadow: 0 0 14px rgba(95,208,232,.7); }
 .dz-btn-text { font-size: 14px; letter-spacing: 2.5px; color: var(--c-white); }
 .dz-btn:hover .dz-btn-text { color: #fff; }
-.dz-btn-sub { font-size: 11px; letter-spacing: 1px; color: var(--c-text2); opacity: .7; }
+.dz-btn-sub { font-size: 12px; letter-spacing: .5px; color: var(--c-text2); opacity: .7; line-height: 1.5; }
 .dz-btn:hover .dz-btn-sub { color: rgba(95,208,232,.55); }
 /* 选择文件按钮 */
 .dz-btn-pick { border-color: rgba(95,208,232,.25); }
