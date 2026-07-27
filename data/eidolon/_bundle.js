@@ -71,11 +71,18 @@ var eidolonDuoRecords = [
     videoUrls:     ["https://youtu.be/0PxKjTw6bvY"]
   },
   {
-    avgRealTime:   "07:47.191",
+    avgRealTime:   "07:47.197",
     captureStatus: "6×3",
     playerId:      "-T14Nt / Loongx.",
     uploadTime:    "2026-06-10",
     videoUrls:     ["https://youtu.be/B4yb-fZ17Yw"]
+  },
+  {
+    avgRealTime:   "07:46.621",
+    captureStatus: "6×3",
+    playerId:      "nocchh / Loongx.",
+    uploadTime:    "2026-07-14",
+    videoUrls:     ["https://youtu.be/F6FyUDpAN0M"]
   },
   // ─── 在此处继续添加新条目 ───
   // {
