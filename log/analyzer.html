@@ -10,12 +10,55 @@
 </head>
 <body>
   <style>
-    .ws-back-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.32rem .9rem;font-family:'XSZT','Microsoft YaHei',monospace;font-size:.72rem;letter-spacing:.08em;color:#5fd0e8;border:1px solid rgba(95,208,232,.35);border-radius:4px;background:rgba(95,208,232,.06);cursor:pointer;text-decoration:none;white-space:nowrap;transition:color .3s,border-color .3s,background .3s,box-shadow .3s;}
-    .ws-back-btn:hover{color:#b0efff;border-color:rgba(95,208,232,.7);background:rgba(95,208,232,.14);box-shadow:0 0 10px rgba(95,208,232,.5), 0 0 22px rgba(95,208,232,.25);}
+    /* ── 返回按钮：极简线条 + SVG 箭头 ── */
+    .ws-back-btn{
+      display:inline-flex;align-items:center;gap:.5rem;
+      padding:.3rem .85rem .3rem .7rem;
+      font-family:'Courier New',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
+      color:#5fd0e8;background:transparent;
+      border:1px solid rgba(95,208,232,.25);border-radius:0;
+      cursor:pointer;text-decoration:none;white-space:nowrap;
+      transition:all .3s cubic-bezier(.4,0,.2,1);
+      position:relative;overflow:hidden;
+    }
+    .ws-back-btn svg{width:10px;height:10px;stroke:currentColor;stroke-width:2;fill:none;transition:transform .3s ease;}
+    .ws-back-btn::before{
+      content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+      background:linear-gradient(90deg,transparent,rgba(95,208,232,.1),transparent);
+      transition:left .5s ease;
+    }
+    .ws-back-btn:hover{
+      color:#41ff8e;border-color:rgba(65,255,142,.4);
+      box-shadow:0 0 10px rgba(65,255,142,.25),inset 0 0 10px rgba(65,255,142,.06);
+    }
+    .ws-back-btn:hover svg{transform:translateX(-3px);}
+    .ws-back-btn:hover::before{left:100%;}
+
+    /* ── Logo：底部流光线（呼吸脉冲由 GSAP 控制） ── */
+    .logo-main{font-size:28px !important;letter-spacing:6px !important;}
+    .nav-logo{position:relative;}
+    .nav-logo::after{
+      content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,#5fd0e8 20%,#a86bff 50%,#ff5fd5 80%,transparent);
+      background-size:200% 100%;animation:navBorderFlow 3s linear infinite;opacity:.6;
+    }
+    .nav-logo:hover::after{opacity:1;}
+    @keyframes navBorderFlow{from{background-position-x:0%}to{background-position-x:-200%}}
+
+    /* ── Tab 按钮间距 ── */
+    .tab-btn{padding:0 24px !important;}
+
+    /* ── 导航链接扫描线 ── */
+    .nav-link{position:relative;overflow:hidden;}
+    .nav-link::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transition:left .5s ease;}
+    .nav-link:hover::after{left:100%;}
   </style>
   <nav class="site-nav">
     <div class="nav-inner">
-      <a id="ws-back-btn" class="ws-back-btn" href="../disruption-multi.html">←&nbsp;竞速榜单</a>
+      <a id="ws-back-btn" class="ws-back-btn" href="../disruption-multi.html">
+        <svg viewBox="0 0 10 10"><polyline points="6,1 2,5 6,9"/></svg>
+        竞速榜单
+      </a>
       <div class="nav-logo">
         <span class="logo-main">WTF&nbsp;EELOG</span>
       </div>
@@ -112,6 +155,19 @@
   </footer>
 
   <input type="file" id="file-input" accept=".log,.txt" hidden>
+
+  <!-- GSAP 动画库（离线化） -->
+  <script src="../vendor/gsap/gsap.min.js"></script>
+  <script src="../vendor/gsap/SplitText.min.js"></script>
+  <script src="../vendor/gsap/ScrollTrigger.min.js"></script>
+  <script src="../vendor/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="../vendor/gsap/MotionPathPlugin.min.js"></script>
+  <script src="../vendor/gsap/CustomEase.min.js"></script>
+  <script src="../vendor/gsap/ScrambleTextPlugin.min.js"></script>
+  <script src="../vendor/gsap/EasePack.min.js"></script>
+  <script src="../vendor/gsap/Observer.min.js"></script>
+  <script src="js/gsapInit.js?v=20260727a"></script>
+  <script src="js/gsapAnalyzer.js?v=20260727a"></script>
 
   <script src="js/utils.js?v=20260707b"></script>
   <script src="js/logReader.js?v=20260718a"></script>

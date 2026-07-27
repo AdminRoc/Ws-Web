@@ -57,7 +57,9 @@ self.onmessage = function (e) {
   // 仲裁的分节点生息基准依赖这份小 JSON；等它就位再开始扫描，
   // 避免扫描过程中基准仍在请求途中导致查不到数据（与主线程原有的"预热"效果对齐）。
   if (baselineUrl) {
-    WF.ArbNodeBaseline.load(baselineUrl).then(start);
+    WF.ArbNodeBaseline.load(baselineUrl).then(start).catch(function(err) {
+      self.postMessage({ type: 'error', message: 'Baseline load failed: ' + err.message });
+    });
   } else {
     start();
   }

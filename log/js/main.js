@@ -340,10 +340,17 @@
     });
   }
 
-  function switchTab(tabId) {
+  function switchTab(tabId, skipPush) {
     state.activeTab = tabId;
     document.body.classList.toggle('profile-active', tabId === 'profile');
     updateTabBar();
+
+    /* 同步地址栏 ?tab= 参数 */
+    if (!skipPush) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('tab', tabId);
+      history.pushState({ tab: tabId }, '', url);
+    }
 
     const listBox   = $('record-list');
     const detailBox = $('detail');
@@ -371,6 +378,14 @@
       view.render(detailBox, rec, state.clock);
     }, tab.priority);
   }
+
+  /* 浏览器前进/后退时同步 Tab */
+  window.addEventListener('popstate', function (e) {
+    var tab = (e.state && e.state.tab) || new URLSearchParams(window.location.search).get('tab');
+    if (tab && TABS.find(function (t) { return t.id === tab; }) && tab !== state.activeTab) {
+      switchTab(tab, true);
+    }
+  });
 
   document.addEventListener('DOMContentLoaded', init);
 })();

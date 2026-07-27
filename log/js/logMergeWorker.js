@@ -78,6 +78,8 @@ self.onmessage = function (e) {
   baselineP.then(function () {
     feeder = WF.logReader.createShardFeeder(parsers);
     tryFeedNext(); // baseline 已就绪，处理期间可能已有分片在 shardBuffer 中等待
+  }).catch(function(err) {
+    self.postMessage({ type: 'error', message: 'Baseline load failed: ' + err.message });
   });
 
   ports.forEach(function (port, idx) {

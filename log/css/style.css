@@ -466,6 +466,7 @@ body.has-data .dz-btn { padding: 10px 20px; min-width: 150px; }
 body.has-data .dz-btn-sub { display: none; }
 body.has-data #dz-btn-reset { display: inline-flex !important; }
 body.has-data #dropzone-status:empty { display: none; }
+body.has-data .dz-scan { animation: none !important; }
 
 /* ================= 工作区 ================= */
 #workspace {
@@ -615,7 +616,7 @@ body.profile-active #detail-wrap {
 /* 条形图悬浮 tooltip */
 .chart-bar-tooltip {
   position: fixed;
-  z-index: 1000;
+  z-index: 10000;
   display: none;
   pointer-events: none;
   background: rgba(4, 5, 12, 0.88);
@@ -2342,7 +2343,7 @@ body.profile-active #detail-wrap {
   .tab-btn { padding: 0 10px; }
   .tab-cn { font-size: 15px; }
   .tab-en { display: none; }
-  main { padding: 0 14px; }
+  main { padding: 0 32px; }
   #workspace { grid-template-columns: 1fr; }
   #record-list-wrap { position: static; }
 }
@@ -2831,5 +2832,53 @@ body.profile-active #detail-wrap {
 .dis-tl-wrap .gen-round-table th {
   position: static;
   z-index: auto;
+}
+
+/* ================= GSAP 动画系统 ================= */
+
+/* 数字解密文字入场：每个字符独立动画 */
+.gsap-decrypt-char {
+  display: inline-block;
+  will-change: opacity, filter, transform;
+}
+
+/* SVG 描边绘制：能量流路径 */
+.gsap-draw-path {
+  will-change: stroke-dasharray, stroke-dashoffset;
+}
+
+/* 粒子容器：固定定位，不阻挡交互 */
+.gsap-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99999;
+  overflow: hidden;
+}
+
+/* 无障碍降级：禁用所有动画 */
+@media (prefers-reduced-motion: reduce) {
+  .gsap-decrypt-char,
+  .gsap-draw-path {
+    will-change: auto;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* 初始状态：SplitText 分割后的字符隐藏 */
+.gsap-decrypt-char,
+.gsap-scroll-reveal {
+  opacity: 0;
+}
+
+/* SplitText 拆分后的容器样式 */
+.split-parent {
+  overflow: hidden;
+  display: inline-block;
+}
+
+.split-line {
+  overflow: hidden;
 }
 

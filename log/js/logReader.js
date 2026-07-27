@@ -187,6 +187,12 @@ WF.logReader = (function () {
    * 同时发起 PREFETCH_AHEAD 个预读请求（并行 I/O），在解析当前块时已在读取后续块。
    * 块边界跨行问题：每块末尾未完成的行存入 leftover，拼接到下一块开头处理。 */
   function _scanFileInChunks(file, perLine, onProgress, onDone) {
+    var done = false;
+    function finish(state) {
+      if (done) return;
+      done = true;
+      onDone(state);
+    }
     const decoder     = new TextDecoder('utf-8');
     const state       = _mkState();
     const totalChunks = Math.max(1, Math.ceil(file.size / STREAM_CHUNK));
@@ -207,7 +213,7 @@ WF.logReader = (function () {
       if (chunkIdx >= totalChunks) {
         if (leftover) perLine(leftover, state);
         if (onProgress) onProgress(100);
-        onDone(state);
+        finish(state);
         return;
       }
 
@@ -252,7 +258,7 @@ WF.logReader = (function () {
         setTimeout(scanBatch, 0);
       }).catch(function (err) {
         console.error('[_scanFileInChunks] 块读取失败:', err);
-        onDone(null);
+        finish(null);
       });
     }
 
