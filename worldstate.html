@@ -3355,7 +3355,13 @@
 (function () {
   'use strict';
 
-  var API  = 'https://api.warframestat.us/pc/';
+  /* API 多源兜底：EdgeOne 代理 → 原始域名 → localStorage 旧缓存。
+     大陆直连 api.warframestat.us 常被墙/超时，EdgeOne 代理走腾讯云 CDN 加速；
+     若 EdgeOne 也挂了再回退原始域名；全部失败则用 localStorage 缓存兜底。 */
+  var API_URLS = [
+    'https://ws-api.wfspeed.run/warframestat/',
+    'https://api.warframestat.us/pc/'
+  ];
   var LANG = 'language=zh';
 
   /* 带超时的 fetch：大陆网络下 api.warframestat.us / raw.githubusercontent.com 等域名
@@ -3941,8 +3947,16 @@
   /* ══ 重要赏金任务（守望者 / 科维兽 / 六人组）
      数据源：oracle.browse.wf/bounty-cycle（服务器侧解算 Seed）
      ══ */
-  var BOUNTY_CYCLE_URL   = 'https://oracle.browse.wf/bounty-cycle';
-  var EXPORT_REGIONS_URL = 'https://browse.wf/warframe-public-export-plus/ExportRegions.json';
+  /* 赏金任务轮次多源兜底：EdgeOne 代理 → 原始域名 → localStorage 旧缓存 */
+  var BOUNTY_CYCLE_URLS = [
+    'https://ws-api.wfspeed.run/bounty-cycle',
+    'https://oracle.browse.wf/bounty-cycle'
+  ];
+  /* 节点数据表多源兜底：EdgeOne 代理 → 原始域名 → localStorage 旧缓存 */
+  var EXPORT_REGIONS_URLS = [
+    'https://ws-api.wfspeed.run/export-regions',
+    'https://browse.wf/warframe-public-export-plus/ExportRegions.json'
+  ];
   var EXPORT_REGIONS_LS  = 'wf_export_regions';
   var BOUNTY_CYCLE_LS    = 'wf_bounty_cycle';
 
@@ -4030,9 +4044,7 @@
         }
       }
     } catch (e) {}
-    return fetch(BOUNTY_CYCLE_URL)
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .catch(function () { return null; })
+    return fetchFirstOk(BOUNTY_CYCLE_URLS)
       .then(function (data) {
         if (!data || !data.bounties) return;
         _bountyCycle = data;
@@ -4051,9 +4063,7 @@
         }
       }
     } catch (e) {}
-    return fetch(EXPORT_REGIONS_URL)
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .catch(function () { return null; })
+    return fetchFirstOk(EXPORT_REGIONS_URLS)
       .then(function (data) {
         if (!data) return;
         _exportRegions = data;
@@ -4132,6 +4142,7 @@
   /* ── 中文字典（calamity-inc/warframe-public-export-plus），7 天缓存 ── */
   var _dict = null;
   var DICT_URLS = [
+    'https://ws-api.wfspeed.run/dict-zh',
     'https://raw.githubusercontent.com/calamity-inc/warframe-public-export-plus/refs/heads/senpai/dict.zh.json',
     'https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@senpai/dict.zh.json'
   ];
@@ -4590,20 +4601,27 @@
   var AUX_COUNTDOWN_LEAD_MS = 15000;
 
   function fetchOne(ep) {
-    return fetchT(API + ep + '?' + LANG, 5000)
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (data) {
-        if (data !== null && data !== undefined) {
-          cacheSet(ep, data);
-          return data;
-        }
-        /* API 返回非 2xx：回退到旧缓存 */
+    function tryApi(i) {
+      if (i >= API_URLS.length) {
+        /* 所有 API 源都失败：回退到 localStorage 旧缓存 */
         return cacheGet(ep);
-      })
-      .catch(function () {
-        /* 网络错误：回退到旧缓存 */
-        return cacheGet(ep);
-      });
+      }
+      return fetchT(API_URLS[i] + ep + '?' + LANG, 5000)
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+          if (data !== null && data !== undefined) {
+            cacheSet(ep, data);
+            return data;
+          }
+          /* 返回 null：尝试下一个 API 源 */
+          return tryApi(i + 1);
+        })
+        .catch(function () {
+          /* 网络错误：尝试下一个 API 源 */
+          return tryApi(i + 1);
+        });
+    }
+    return tryApi(0);
   }
 
   /* 从 rawWS 数据中能填充的键（syndicates 不在列，避免覆盖 API 数据；bounties 单独处理） */
