@@ -1,4 +1,16 @@
 addEventListener('fetch', event => event.respondWith(handleRequest(event.request)));
+
+// CORS 白名单：仅允许自有域名
+const ALLOWED_ORIGINS = ['wfspeed.run', 'war-frame.com'];
+function getAllowedOrigin(origin) {
+  if (!origin || origin === 'null') return ALLOWED_ORIGINS[0];
+  try {
+    const host = new URL(origin).hostname;
+    if (ALLOWED_ORIGINS.some(d => host === d || host.endsWith('.' + d))) return origin;
+  } catch (e) {}
+  return ALLOWED_ORIGINS[0];
+}
+
 const ROUTES = {
   '/warframestat/': { base: 'https://api.warframestat.us/pc/', extraHeaders: true },
   '/bounty-cycle':   { base: 'https://oracle.browse.wf/bounty-cycle' },
@@ -23,10 +35,12 @@ async function handleRequest(request) {
 
   if (!match) return new Response('Not Found', { status: 404 });
 
-  // 来源检查：只允许 wfspeed.run 域名的请求
+  // 来源检查：只允许 wfspeed.run / war-frame.com 域名的请求
   const referer = request.headers.get('Referer') || '';
   const origin = request.headers.get('Origin') || '';
-  const allowed = referer.includes('wfspeed.run') || origin.includes('wfspeed.run');
+  const allowed = ALLOWED_ORIGINS.some(d =>
+    referer.includes(d) || origin.includes(d)
+  );
   if (!allowed) {
     return new Response('Forbidden', { status: 403 });
   }
@@ -48,7 +62,7 @@ async function handleRequest(request) {
     status: resp.status,
     headers: {
       'Content-Type': resp.headers.get('Content-Type') || 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': getAllowedOrigin(origin),
       'Cache-Control': getCacheControl(url.pathname),
     },
   });
