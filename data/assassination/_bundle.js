@@ -1624,7 +1624,12 @@ var assassination_steel_tolstojRecords = [
     uploadTime: "2026-06-05",
     videoUrls:  ["https://www.youtube.com/watch?v=QwlPPpLl8so"],
   },
-
+  {
+    playerId:   "AeThERQAQ",
+    clearTime:  "3:09.367",
+    uploadTime: "2026-07-29",
+    videoUrls:  ["https://v.douyin.com/HwlkJdqWV3E"],
+  },
 ];
 
 /* ── 横幅提醒信息 ────────────────────────────────────────────
