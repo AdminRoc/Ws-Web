@@ -4029,6 +4029,45 @@
     return out;
   }
 
+  /* 赏金任务板兜底解析（下 3 格：英择谛/索拉里斯/Ostron）：
+     当 aux state（ws-intl-zh.json）不可用时，从 D.syndicateMissions 派生同等结构数据，
+     避免该板块在网络不通时完全没有任何兜底。 */
+  var BB_SYNDICATE_MAP = {
+    CetusSyndicate:    { tag: 'CetusSyndicate',    name: 'Ostrons' },
+    SolarisSyndicate:  { tag: 'SolarisSyndicate',  name: 'Solaris United' },
+    EntratiSyndicate:  { tag: 'EntratiSyndicate',  name: 'Entrati' }
+  };
+  function _bountyBoardFromSyndicateMissions(arr) {
+    if (!Array.isArray(arr)) return [];
+    var now = Date.now();
+    var out = [];
+    arr.forEach(function (sm) {
+      var meta = BB_SYNDICATE_MAP[sm.syndicateKey || sm.syndicate];
+      if (!meta) return;
+      if (!sm.jobs || !sm.jobs.length) return;
+      var expMs = sm.expiry ? new Date(sm.expiry).getTime() : 0;
+      if (expMs && expMs < now) return;
+      out.push({
+        tag:    meta.tag,
+        name:   meta.name,
+        expiry: expMs || 0,
+        jobs:   sm.jobs.map(function (j) {
+          var lvl = j.enemyLevels || [];
+          return {
+            objective: j.type || '',
+            minLevel:  lvl[0] || 0,
+            maxLevel:  lvl[1] || 0,
+            stages:    (j.standingStages || []).length || 0,
+            rewards:   (j.rewardPool || []).map(function (r) {
+              return typeof r === 'string' ? { name: r, icon: '', count: 0 } : r;
+            })
+          };
+        })
+      });
+    });
+    return out;
+  }
+
   var _bountyCycle   = null;
   var _exportRegions = null;
 
@@ -6072,10 +6111,14 @@
       groupHtml = tags.map(function () { return '<div class="ws-bounty-syndicate"><div class="ws-empty">赏金数据加载中…</div></div>'; }).join('');
     }
 
-    /* ── 下 3 格：英择谛/索拉里斯/Ostron ── */
+    /* ── 下 3 格：英择谛/索拉里斯/Ostron ──
+       优先级：aux state（ws-intl-zh.json）> D.syndicateMissions 派生 > 空 */
     var bbList = _auxState && Array.isArray(_auxState.bountyBoard) ? _auxState.bountyBoard : null;
+    if (!bbList && _currentServer !== 'cn' && D.syndicateMissions) {
+      bbList = _bountyBoardFromSyndicateMissions(D.syndicateMissions);
+    }
     var byTag = {};
-    if (bbList) { bbList.forEach(function (s) { byTag[s.tag] = s; }); harvestRewardIcons(bbList); }
+    if (bbList && bbList.length) { bbList.forEach(function (s) { byTag[s.tag] = s; }); harvestRewardIcons(bbList); }
     var boardHtml = BOUNTY_BOARD_ORDER.map(function (tag) { return bbCardHtml(tag, byTag[tag]); }).join('');
 
     el.innerHTML = '<div class="ws-bounty-list">' + groupHtml + boardHtml + '</div>';
