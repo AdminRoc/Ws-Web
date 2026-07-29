@@ -6264,6 +6264,12 @@
   function _bbTr(name) {
     if (!name) return '';
     if (BB_REWARD_ZH[name]) return BB_REWARD_ZH[name];
+    /* 处理带数量前缀的格式：如 "100 Endo" → 匹配 "Endo"，"3X 1,500 Credits Cache" → 匹配 "1,500 Credits Cache" */
+    var m = name.match(/^(\d+[Xx]?\s*)(.+)$/);
+    if (m) {
+      var prefix = m[1], base = m[2];
+      if (BB_REWARD_ZH[base]) return prefix + BB_REWARD_ZH[base];
+    }
     var t = tr(name);
     return t !== name ? t : name;
   }
