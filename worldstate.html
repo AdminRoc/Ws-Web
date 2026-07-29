@@ -6020,262 +6020,14 @@
   var BOUNTY_BOARD_ORDER = ['EntratiSyndicate', 'SolarisSyndicate', 'CetusSyndicate'];
   var BOUNTY_BOARD_ZH    = { CetusSyndicate: 'Ostron', SolarisSyndicate: '索拉里斯', EntratiSyndicate: '英择谛' };
 
-  /* 赏金看板专用英→中翻译表：API 返回的 objective / reward.name 是纯英文，
-     现有 _dict / wf-i18n 无法覆盖（键空间不匹配），故在此集中维护。
-     来源：Warframe 国服官方客户端 + 社区通用译名。 */
-  var BB_OBJ_ZH = {
-    'Capture Their Leader':              '俘获他们的领袖',
-    'Weaken the Grineer Foothold':       '削弱Grineer的据点',
-    'Capture the Grineer Commander':     '俘获Grineer指挥官',
-    'Reclaim the Stolen Artifact':       '夺回失窃的神器',
-    'Cull the Enemy':                    '歼灭敌人',
-    'Capture the Grineer Agent':         '俘获Grineer特工',
-    'Rise and Fall (Narmer)':            '兴衰（Narmer）',
-    'Anomaly Retrieval':                 '异常回收',
-    'Brute Force':                       '强力突破',
-    'Strip Mining (Endless)':            '露天采矿（无尽）',
-    'Core Samples':                      '核心样本',
-    'For Science!':                      '为了科学！',
-    "Reclaim What's Ours":              '夺回属于我们的东西',
-    'Isolation Vault Chamber B':         '隔离金库 B区',
-    'Isolation Vault Chamber A':         '隔离金库 A区',
-    'Isolation Vault Chamber C':         '隔离金库 C区',
-    'Seems Legit':                       '看起来没问题',
-    'Picket Duty':                       '纠察任务',
-    'Resource Theft':                    '资源盗窃',
-    'Served Cold':                       '冷餐会',
-    'Operational Intelligence':          '行动情报',
-    'Proof of Life':                     '生存证明',
-    'Digging for Narmer (Narmer)':       '挖掘Narmer（Narmer）',
-    'Sabotage the Enemy Supply Lines':   '破坏敌方补给线',
-    'Assassinate the Commander':         '刺杀指挥官',
-    'Search and Rescue':                 '搜索与救援',
-    'Sabotage Bounty':                   '破坏赏金',
-    'Capture the New Grineer Commander': '俘获新任Grineer指挥官',
-    'Bring Them Home (Narmer)':          '带他们回家（Narmer）',
-    'Archaeology':                       '考古学',
-    'Network Collapse':                  '网络崩溃',
-    'Protect the Innocent':              '保护无辜者',
-    'Distract and Divert':               '牵制与转移',
-    'Scorched Earth':                    '焦土战术',
-    'Agent Down':                        '特工阵亡',
-    "Master's Voice (Narmer)":           '主人之声（Narmer）',
-    'Anomaly Retrieval (Endless)':       '异常回收（无尽）',
-    'Salvage':                           '打捞',
-    'Cleanse the Land':                  '净化大地'
-  };
-  var BB_REWARD_ZH = {
-    'Vitality':                '生命力',
-    'Redirection':             '偏转',
-    'Steel Fiber':             '钢铁纤维',
-    'Intensify':               '聚精会神',
-    'Point Blank':             '精准弹射',
-    'Streamline':              '简化',
-    'Augur Pact':              '预言者契约',
-    'Augur Message':           '预言者信息',
-    'Augur Accord':            '预言者协定',
-    'Augur Reach':             '预言者触及',
-    'Point Strike':            '精准打击',
-    'Gladiator Aegis':         '角斗士之盾',
-    'Gladiator Finesse':       '角斗士灵巧',
-    'Gladiator Rush':          '角斗士冲锋',
-    'Gladiator Vice':          '角斗士之罪',
-    'Vigilante Fervor':        '义警热忱',
-    'Vigilante Pursuit':       '义警追击',
-    'Vigilante Offense':       '义警进攻',
-    'Vigilante Supplies':      '义警补给',
-    'Enhanced Durability':     '强化耐久',
-    'Grim Fury':               '冷酷之怒',
-    'Twirling Spire':          '旋转尖塔',
-    'Carving Mantis':          '螳螂刀锋',
-    'Burning Wasp':            '燃烧黄蜂',
-    'Charged Chamber':         '充能枪膛',
-    'Body Count':              '击杀计数',
-    'Blood Rush':              '嗜血冲动',
-    'Weeping Wounds':          '撕裂伤口',
-    'Focused Defense':         '专注防御',
-    'Hydraulic Crosshairs':    '液压准星',
-    'Laser Sight':             '激光瞄准',
-    'Argon Scope':             '氩元素瞄准镜',
-    'Spring-Loaded Chamber':   '弹簧弹匣',
-    'Repeater Clip':           '连射弹匣',
-    'Pressurized Magazine':    '增压弹匣',
-    'Narrow Barrel':           '窄口枪管',
-    'Targeting Subsystem':     '瞄准子系统',
-    'Guided Ordnance':         '制导弹药',
-    'Catalyzer Link':          '催化链接',
-    'Embedded Catalyzer':      '嵌入式催化器',
-    'Nano-Applicator':         '纳米涂覆器',
-    'Synth Charge':            '合成功能弹药',
-    'Synth Deconstruct':       '合成拆解',
-    'Synth Fiber':             '合成纤维',
-    'Synth Reflex':            '合成反射',
-    'Tek Assault':             'Tek突击',
-    'Tek Collateral':          'Tek连带',
-    'Tek Enhance':             'Tek强化',
-    'Tek Gravity':             'Tek重力',
-    'Residual Boils':          '残余脓疮',
-    'Residual Shock':          '残余冲击',
-    'Residual Malodor':        '残余恶臭',
-    'Residual Viremia':        '残余病毒血症',
-    'Theorem Contagion':       '传染定理',
-    'Necramech Redirection':   'Necramech偏转',
-    'Necramech Steel Fiber':   'Necramech钢铁纤维',
-    'Necramech Thrusters':     'Necramech推进器',
-    'Necramech Streamline':    'Necramech简化',
-    'Necramech Blitz':         'Necramech闪电',
-    'Necramech Slipstream':    'Necramech滑流',
-    'Necramech Seismic Wave':  'Necramech地震波',
-    'Necramech Continuity':    'Necramech延续',
-    'Necramech Efficiency':    'Necramech效率',
-    'Necramech Hydraulics':    'Necramech液压',
-    'Necramech Fury':          'Necramech狂怒',
-    'Necramech Stretch':       'Necramech延伸',
-    'Naramon Lens':            'Naramon镜头',
-    'Madurai Lens':            'Madurai镜头',
-    'Zenurik Lens':            'Zenurik镜头',
-    'Unairu Lens':             'Unairu镜头',
-    'Vazarin Lens':            'Vazarin镜头',
-    'Eidolon Lens':            '夜灵镜头',
-    'Eidolon Lens Blueprint':  '夜灵镜头蓝图',
-    'Plastids':                '生物质',
-    'Oxium':                   '奥克西姆',
-    'Circuits':                '电路',
-    'Rubedo':                  '红晶石',
-    'Ferrite':                 '铁氧体',
-    'Alloy Plate':             '合金板',
-    'Polymer Bundle':          '聚合物束',
-    'Salvage':                 '回收金属',
-    'Nano Spores':             '纳米孢子',
-    'Morphics':                '变形者',
-    'Fieldron':                '场力',
-    'Mutagen Mass':            '诱变质量',
-    'Gallium':                 '镓',
-    'Control Module':          '控制模块',
-    'Orokin Cell':             '奥罗金细胞',
-    'Neurodes':                '神经系统',
-    'Neural Sensors':          '神经传感器',
-    'Iradite':                 '辐照岩',
-    'Nistlepod':               '荆棘荚',
-    'Cetus Wisp':              '希图斯精灵',
-    'Gorgaricus Spore':        '巨孢子',
-    'Mytocardia Spore':        '心孢子',
-    'Tepa Nodule':             '结节',
-    'Ganglion':                '神经束',
-    'Lucent Teroglobe':        '明辉球',
-    'Breath Of The Eidolon':   '夜灵之息',
-    'Scintillant':             '闪烁体',
-    'Fass Residue':            'Fass残渣',
-    'Vome Residue':            'Vome残渣',
-    'Aya':                     'Aya',
-    'Narmer Isoplast':         'Narmer等塑板',
-    'Kuva':                    '赤毒',
-    'Credits Cache':           '现金匣',
-    'Endo':                    '内能',
-    '1,500 Credits Cache':     '1,500现金匣',
-    '2,500 Credits Cache':     '2,500现金匣',
-    '3,000 Credits Cache':     '3,000现金匣',
-    '3X 1,500 Credits Cache':  '3X 1,500现金匣',
-    '2X 3,000 Credits Cache':  '2X 3,000现金匣',
-    'Gara Chassis Blueprint':  'Gara机体蓝图',
-    'Gara Systems Blueprint':  'Gara系统蓝图',
-    'Gara Neuroptics Blueprint': 'Gara头部神经光元蓝图',
-    'Gara Chassis':            'Gara机体',
-    'Gara Systems':            'Gara系统',
-    'Gara Neuroptics':         'Gara头部神经光元',
-    'Revenant Systems Blueprint': 'Revenant系统蓝图',
-    'Revenant Chassis Blueprint': 'Revenant机体蓝图',
-    'Revenant Neuroptics Blueprint': 'Revenant头部神经光元蓝图',
-    'Revenant Systems':        'Revenant系统',
-    'Revenant Chassis':        'Revenant机体',
-    'Revenant Neuroptics':     'Revenant头部神经光元',
-    'Garuda Chassis Blueprint': 'Garuda机体蓝图',
-    'Garuda Systems Blueprint': 'Garuda系统蓝图',
-    'Garuda Neuroptics Blueprint': 'Garuda头部神经光元蓝图',
-    'Garuda Chassis':          'Garuda机体',
-    'Garuda Systems':          'Garuda系统',
-    'Garuda Neuroptics':       'Garuda头部神经光元',
-    'Xaku Chassis Blueprint':  'Xaku机体蓝图',
-    'Xaku Systems Blueprint':  'Xaku系统蓝图',
-    'Xaku Neuroptics Blueprint': 'Xaku头部神经光元蓝图',
-    'Xaku Chassis':            'Xaku机体',
-    'Xaku Systems':            'Xaku系统',
-    'Xaku Neuroptics':         'Xaku头部神经光元',
-    'Caliban Neuroptics Blueprint': 'Caliban头部神经光元蓝图',
-    'Caliban Systems Blueprint': 'Caliban系统蓝图',
-    'Caliban Neuroptics':      'Caliban头部神经光元',
-    'Caliban Systems':         'Caliban系统',
-    'Quassus Blueprint':       'Quassus蓝图',
-    'Quassus':                 'Quassus',
-    'Korumm Blueprint':        'Korumm蓝图',
-    'Korumm':                  'Korumm',
-    'Furax Wraith Blueprint':  'Furax闹鬼蓝图',
-    'Furax Wraith Left Gauntlet': 'Furax闹鬼左手护手',
-    'Furax Wraith':            'Furax闹鬼',
-    'Sporothrix Blueprint':    'Sporothrix蓝图',
-    'Sporothrix Barrel':       'Sporothrix枪管',
-    'Sporothrix Receiver':     'Sporothrix枪机',
-    'Sporothrix':              'Sporothrix',
-    'Verdilac Blueprint':      'Verdilac蓝图',
-    'Verdilac':                'Verdilac',
-    'Arum Spinosa Blueprint':  'Arum Spinosa蓝图',
-    'Arum Spinosa Guard':      'Arum Spinosa护手',
-    'Arum Spinosa Rivet':      'Arum Spinosa铆钉',
-    'Arum Spinosa':            'Arum Spinosa',
-    'Damaged Necramech Weapon Barrel': '损坏的Necramech武器枪管',
-    'Damaged Necramech Weapon Receiver': '损坏的Necramech武器枪机',
-    'Carnis Mandible':         '食尸鬼下颌',
-    'Carnis Carapace':         '食尸鬼甲壳',
-    'Carnis Stinger':          '食尸鬼毒刺',
-    'Jugulus Barbs':           '蛆虫刺',
-    'Jugulus Carapace':        '蛆虫甲壳',
-    'Jugulus Spines':          '蛆虫脊刺',
-    'Saxum Thorax':            'Saxum胸腔',
-    'Saxum Carapace':          'Saxum甲壳',
-    'Saxum Spittle':           'Saxum唾液',
-    'Ayatan Amber Star':       '阿雅坦琥珀星',
-    'Orokin Orientation Matrix': '奥罗金定向矩阵',
-    'Orokin Ballistics Matrix': '奥罗金弹道矩阵',
-    'Orokin Animus Matrix':    '奥罗金灵体矩阵',
-    'Training Debt-Bond':      '训练债务契约',
-    'Shelter Debt-Bond':       '庇护债务契约',
-    'Medical Debt-Bond':       '医疗债务契约',
-    'Advances Debt-Bond':      '预支债务契约',
-    'Familial Debt-Bond':      '家族债务契约',
-    'Meso D8 Relic':           'Meso D8遗物',
-    'Meso K8 Relic':           'Meso K8遗物',
-    'Meso X1 Relic':           'Meso X1遗物',
-    'Neo A16 Relic':           'Neo A16遗物',
-    'Neo C7 Relic':            'Neo C7遗物',
-    'Neo C8 Relic':            'Neo C8遗物',
-    'Neo T11 Relic':           'Neo T11遗物',
-    'Neo V12 Relic':           'Neo V12遗物',
-    'Neo Y1 Relic':            'Neo Y1遗物',
-    'Axi A21 Relic':           'Axi A21遗物',
-    'Axi S20 Relic':           'Axi S20遗物',
-    "Amar's Anguish":          'Amar的苦楚',
-    "Amar's Hatred":           'Amar的仇恨',
-    "Nira's Anguish":          'Nira的苦楚',
-    "Nira's Contempt":         'Nira的蔑视',
-    "Boreal's Contempt":       'Boreal的蔑视',
-    "Boreal's Hatred":         'Boreal的仇恨'
-  };
-
+  /* 赏金看板翻译：国际服直接复用国服 bountyBoard 数据（已含中文译名）， fallback 时保持原文。 */
   function _bbTr(name) {
     if (!name) return '';
-    if (BB_REWARD_ZH[name]) return BB_REWARD_ZH[name];
-    /* 处理带数量前缀的格式：如 "100 Endo" → 匹配 "Endo"，"3X 1,500 Credits Cache" → 匹配 "1,500 Credits Cache" */
-    var m = name.match(/^(\d+[Xx]?\s*)(.+)$/);
-    if (m) {
-      var prefix = m[1], base = m[2];
-      if (BB_REWARD_ZH[base]) return prefix + BB_REWARD_ZH[base];
-    }
     var t = tr(name);
     return t !== name ? t : name;
   }
   function _bbObjTr(obj) {
     if (!obj) return '';
-    if (BB_OBJ_ZH[obj]) return BB_OBJ_ZH[obj];
     var t = tr(obj);
     return t !== obj ? t : obj;
   }
@@ -6427,10 +6179,20 @@
     }
 
     /* ── 下 3 格：英择谛/索拉里斯/Ostron ──
-       优先级：aux state（ws-intl-zh.json）> D.syndicateMissions 派生 > 空 */
-    var bbList = _auxState && Array.isArray(_auxState.bountyBoard) ? _auxState.bountyBoard : null;
-    if (!bbList && _currentServer !== 'cn' && D.syndicateMissions) {
-      bbList = _bountyBoardFromSyndicateMissions(D.syndicateMissions);
+       国际服直接复用国服 bountyBoard 数据（中文译名），国服不可用时降级为国际服英文原文 */
+    var bbList = null;
+    if (_currentServer === 'cn') {
+      bbList = _auxState && Array.isArray(_auxState.bountyBoard) ? _auxState.bountyBoard : null;
+    } else {
+      var cnBb = _auxByServer && _auxByServer.cn && Array.isArray(_auxByServer.cn.bountyBoard) ? _auxByServer.cn.bountyBoard : null;
+      if (cnBb && cnBb.length) {
+        bbList = cnBb;
+      } else {
+        bbList = _auxState && Array.isArray(_auxState.bountyBoard) ? _auxState.bountyBoard : null;
+        if (!bbList && D.syndicateMissions) {
+          bbList = _bountyBoardFromSyndicateMissions(D.syndicateMissions);
+        }
+      }
     }
     var byTag = {};
     if (bbList && bbList.length) { bbList.forEach(function (s) { byTag[s.tag] = s; }); harvestRewardIcons(bbList); }
