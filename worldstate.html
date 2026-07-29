@@ -4641,14 +4641,14 @@
 
   /* ── 数据源优先级与重试机制 ──
      优先级：EdgeOne 代理 > 直连 API > localStorage 缓存
-     重试：失败后 10 秒短间隔重试高优先级源，恢复后自动提升优先级 */
+     重试：失败后 5 秒持续重试，恢复后自动提升优先级 */
   var _retryTimers = {};  // ep → timeout id，防止重复调度
   var _lastSource = {};   // ep → 'edgeone' | 'api' | 'cache'，记录当前使用的数据源
 
   function fetchOne(ep) {
     function tryApi(i) {
       if (i >= API_URLS.length) {
-        /* 所有 API 源都失败：回退到 localStorage 旧缓存，并安排短间隔重试 */
+        /* 所有 API 源都失败：回退到 localStorage 旧缓存，并安排持续重试 */
         _scheduleRetry(ep);
         return cacheGet(ep);
       }
@@ -4675,8 +4675,8 @@
     return tryApi(0);
   }
 
-  /* 短间隔重试：失败后 10 秒重试高优先级源，恢复后自动提升优先级 */
-  var RETRY_INTERVAL_MS = 10000;
+  /* 持续重试：失败后 5 秒重试高优先级源，恢复后自动提升优先级，不停止 */
+  var RETRY_INTERVAL_MS = 5000;
   function _scheduleRetry(ep) {
     if (_retryTimers[ep]) return;  // 已有重试在排队
     _retryTimers[ep] = setTimeout(function () {
@@ -4687,7 +4687,11 @@
   function _retryOne(ep) {
     /* 仅重试 API_URLS 的前两层（EdgeOne + 直连），不重试 localStorage */
     function tryHigher(i) {
-      if (i >= 2) return;  // 只重试前两层
+      if (i >= 2) {
+        /* 前两层都失败：5 秒后再次重试（持续重试直到恢复） */
+        _scheduleRetry(ep);
+        return;
+      }
       var sourceName = i === 0 ? 'edgeone' : 'api';
       return fetchT(API_URLS[i] + ep + '?' + LANG, 5000)
         .then(function (r) { return r.ok ? r.json() : null; })
