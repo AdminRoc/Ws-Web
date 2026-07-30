@@ -183,6 +183,13 @@
     return t[groupId] || groupId;
   }
 
+  function getMarkerDescription(markerId, fallback) {
+    if (typeof MARKER_DESCRIPTIONS !== 'undefined' && MARKER_DESCRIPTIONS[markerId]) {
+      return MARKER_DESCRIPTIONS[markerId];
+    }
+    return fallback || '';
+  }
+
   // ════════════════════════════════════════════════════════════
   //  LOCAL STORAGE — Favorites + Category State
   // ════════════════════════════════════════════════════════════
@@ -377,7 +384,7 @@
           const cat = data.categories.find(c => c.id === m.categoryId);
           const catName = cat ? getCategoryName(cat.id) : m.categoryId;
           const isFav = isFavorite(m.id);
-          const desc = m.popup.description || '';
+          const desc = getMarkerDescription(m.id, m.popup.description);
           return `<div class="popup-card">
             <div class="popup-header">
               <img class="popup-icon" src="${getIconPath(m.categoryId)}" alt="">
@@ -680,9 +687,26 @@
     }
 
     destroyMap();
+
     const data = await loadMapData(mapId);
-    if (!data) return;
-    initMap();
+    if (!data) {
+      document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图数据加载失败</div>';
+      return;
+    }
+
+    // Ensure map container exists and is visible
+    const mapEl = document.getElementById('map');
+    if (!mapEl) return;
+    mapEl.innerHTML = '';
+    mapEl.style.opacity = '1';
+
+    try {
+      initMap();
+    } catch (e) {
+      console.error('Leaflet init failed:', e);
+      return;
+    }
+
     renderSidebar(data);
     renderFavoritesPanel();
     addMarkers(data);
@@ -798,7 +822,20 @@
     bindEvents();
     updateCycleDisplay();
     setInterval(updateCycleDisplay, 1000);
-    await switchMap('duviri');
+    try {
+      await switchMap('duviri');
+    } catch (e) {
+      console.error('Map init failed, retrying...', e);
+      // Reset and retry once
+      destroyMap();
+      await new Promise(r => setTimeout(r, 500));
+      try {
+        await switchMap('duviri');
+      } catch (e2) {
+        console.error('Map init retry failed:', e2);
+        document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图加载失败，请刷新页面重试</div>';
+      }
+    }
     initAnimations();
   }
 
