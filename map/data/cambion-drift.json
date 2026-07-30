@@ -1,0 +1,684 @@
+{
+  "source": "https://wiki.warframe.com/w/Cambion_Drift/Map",
+  "mapImage": "CambianDrift4kMap.png",
+  "mapBounds": [
+    [
+      0,
+      0
+    ],
+    [
+      4000,
+      4000
+    ]
+  ],
+  "origin": "bottom-left",
+  "categories": [
+    {
+      "listId": 1,
+      "name": "General",
+      "symbol": "",
+      "id": "1",
+      "color": "#fa005a",
+      "symbolColor": ""
+    },
+    {
+      "listId": 2,
+      "name": "Blinkpads",
+      "symbol": "",
+      "id": "blinkpad",
+      "color": "#fa005a",
+      "icon": "File:DuviriBlinkpadMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 3,
+      "name": "K-Drive Races",
+      "symbol": "",
+      "id": "k-drive_race",
+      "color": "#ffffff",
+      "symbolColor": ""
+    },
+    {
+      "listId": 4,
+      "name": "Requiem Obelisks",
+      "symbol": "𓉶",
+      "id": "requiem_obelisk",
+      "color": "#000000",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 5,
+      "name": "Mother (Bounty Boards)",
+      "symbol": "",
+      "id": "mother",
+      "color": "#00c4fa",
+      "symbolColor": ""
+    },
+    {
+      "listId": 6,
+      "name": "Mother (Isolation Vaults)",
+      "symbol": "",
+      "id": "mother_isolation_vault",
+      "color": "#ffaa00",
+      "symbolColor": ""
+    },
+    {
+      "listId": 7,
+      "name": "Settings",
+      "symbol": "",
+      "id": "settings",
+      "color": "#000000",
+      "symbolColor": ""
+    }
+  ],
+  "markers": [
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "1",
+      "position": [
+        2834.75,
+        2454.25
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "2",
+      "position": [
+        1113.25,
+        3088.25
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "3",
+      "position": [
+        1638.125,
+        2702.875
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "4",
+      "position": [
+        1289.3208271460212,
+        2127.507527895025
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "5",
+      "position": [
+        941.6875,
+        1988.1875
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "6",
+      "position": [
+        1548.9174041891324,
+        1627.052703510246
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "7",
+      "position": [
+        1836.7098641320574,
+        1899.9959210482534
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "8",
+      "position": [
+        1850.498446365195,
+        936.7397083768789
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "9",
+      "position": [
+        2652.875,
+        1942.75
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "10",
+      "position": [
+        3378.625,
+        1787.625
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "11",
+      "position": [
+        3003.789606480454,
+        1024.774502634604
+      ]
+    },
+    {
+      "categoryId": "k-drive_race",
+      "popup": {
+        "title": "Dead Drop",
+        "description": "\n*16 Gates\n*3,200 Ventkids [[Standing]]\n*10,000 K-Drive [[Affinity]]\n*[[Feverspine]] K-Drive Part Blueprint",
+        "link": {
+          "label": "K-Drive Race",
+          "url": "K-Drive Race"
+        }
+      },
+      "id": "12",
+      "position": [
+        596.4990430460389,
+        2900
+      ]
+    },
+    {
+      "categoryId": "k-drive_race",
+      "popup": {
+        "title": "Exocrine Flow",
+        "description": "\n*15 Gates\n*3,000 Ventkids [[Standing]]\n*9,500 K-Drive [[Affinity]]\n*[[Nodulite]] K-Drive Part Blueprint",
+        "link": {
+          "label": "K-Drive Race",
+          "url": "K-Drive Race"
+        }
+      },
+      "id": "13",
+      "position": [
+        1289.406016696485,
+        2678.5177273180566
+      ]
+    },
+    {
+      "categoryId": "k-drive_race",
+      "popup": {
+        "title": "Burst Hematoma",
+        "description": "\n*14 Gates\n*2,800 Ventkids [[Standing]]\n*9,000 K-Drive [[Affinity]]",
+        "link": {
+          "label": "K-Drive Race",
+          "url": "K-Drive Race"
+        }
+      },
+      "id": "14",
+      "position": [
+        1282.996868150673,
+        2250.0001501142324
+      ]
+    },
+    {
+      "categoryId": "k-drive_race",
+      "popup": {
+        "title": "Pride Before a Fall",
+        "description": "\n*14 Gates\n*2,800 Ventkids [[Standing]]\n*9,000 K-Drive [[Affinity]]\n*[[Steeba]] K-Drive Part Blueprint",
+        "link": {
+          "label": "K-Drive Race",
+          "url": "K-Drive Race"
+        }
+      },
+      "id": "15",
+      "position": [
+        2216.4991300418537,
+        2646.4990993146052
+      ]
+    },
+    {
+      "categoryId": "k-drive_race",
+      "popup": {
+        "title": "The Burrow",
+        "description": "\n*10 Gates\n*2,000 Ventkids [[Standing]]\n*7,000 K-Drive [[Affinity]]",
+        "link": {
+          "label": "K-Drive Race",
+          "url": "K-Drive Race"
+        }
+      },
+      "id": "16",
+      "position": [
+        2750.6646546895377,
+        2171.6358484212606
+      ]
+    },
+    {
+      "categoryId": "k-drive_race",
+      "popup": {
+        "title": "Gutter Run",
+        "description": "\n*13 Gates\n*2,600 Ventkids [[Standing]]\n*8,500 K-Drive [[Affinity]]",
+        "link": {
+          "label": "K-Drive Race",
+          "url": "K-Drive Race"
+        }
+      },
+      "id": "17",
+      "position": [
+        1251.0821545612894,
+        999.084364198658
+      ]
+    },
+    {
+      "categoryId": "k-drive_race",
+      "popup": {
+        "title": "Muck and Mire",
+        "description": "\n*14 Gates\n*2,800 Ventkids [[Standing]]\n*9,000 K-Drive [[Affinity]]\n*[[Gristlebuck]] K-Drive Part Blueprint",
+        "link": {
+          "label": "K-Drive Race",
+          "url": "K-Drive Race"
+        }
+      },
+      "id": "18",
+      "position": [
+        2312.9546186970256,
+        1389.0327249026823
+      ]
+    },
+    {
+      "categoryId": "k-drive_race",
+      "popup": {
+        "title": "Abyssal Skim",
+        "description": "\n*15 Gates\n*3,000 Ventkids [[Standing]]\n*9,500 K-Drive [[Affinity]]",
+        "link": {
+          "label": "K-Drive Race",
+          "url": "K-Drive Race"
+        }
+      },
+      "id": "19",
+      "position": [
+        3470.48160158237,
+        1422.0953362348896
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "20",
+      "position": [
+        2665.9994780251122,
+        2246.00120091386
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "21",
+      "position": [
+        1489.1113851550087,
+        2681.0043533127423
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "22",
+      "position": [
+        442.1521638226546,
+        2858.733575233722
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "23",
+      "position": [
+        3167.1104408129495,
+        1730.356741455114
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "24",
+      "position": [
+        3083.5569257750435,
+        1176.0830131705657
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "25",
+      "position": [
+        2092.5187219610193,
+        1559.1761844430916
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "26",
+      "position": [
+        2104.3499038418263,
+        1805.9498699761082
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "27",
+      "position": [
+        1795.6320531759354,
+        1878.5546415806255
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "28",
+      "position": [
+        1062.1655270639835,
+        2492.068452090014
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "29",
+      "position": [
+        1542.2561579307708,
+        2160.32606735357
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "30",
+      "position": [
+        1698.0486611726526,
+        2206.557493751043
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "31",
+      "position": [
+        1809.5526097334828,
+        2243.07666717491
+      ]
+    },
+    {
+      "categoryId": "requiem_obelisk",
+      "popup": {
+        "title": "Requiem Obelisk",
+        "description": "",
+        "link": {
+          "label": "Requiem Obelisk",
+          "url": "Requiem Obelisk"
+        }
+      },
+      "id": "32",
+      "position": [
+        1824.3354954612928,
+        2322.140792352457
+      ]
+    },
+    {
+      "categoryId": "mother",
+      "popup": {
+        "title": "Mother",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "33",
+      "position": [
+        948.0712800844592,
+        1796.066500604992
+      ]
+    },
+    {
+      "categoryId": "mother",
+      "popup": {
+        "title": "Mother",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "34",
+      "position": [
+        1477.5756298751912,
+        2649.0154617659464
+      ]
+    },
+    {
+      "categoryId": "mother_isolation_vault",
+      "popup": {
+        "title": "Mother",
+        "description": "For Tier 1 Isolation Vault bounty and Tier 1 Arcana Isolation Vault bounty",
+        "link": {
+          "label": "Isolation Vault",
+          "url": "Isolation Vault"
+        }
+      },
+      "id": "35",
+      "position": [
+        2511.6432867746166,
+        1922.6246118077236
+      ]
+    },
+    {
+      "categoryId": "mother_isolation_vault",
+      "popup": {
+        "title": "Mother",
+        "description": "For Tier 3 Isolation Vault bounty and Tier 3 Arcana Isolation Vault bounty",
+        "link": {
+          "label": "Isolation Vault",
+          "url": "Isolation Vault"
+        }
+      },
+      "id": "36",
+      "position": [
+        3252.068148235132,
+        1454.0680017473169
+      ]
+    },
+    {
+      "categoryId": "mother",
+      "popup": {
+        "title": "Mother",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "37",
+      "position": [
+        1488.9986080669657,
+        1087.99759817228
+      ]
+    },
+    {
+      "categoryId": "mother_isolation_vault",
+      "popup": {
+        "title": "Mother",
+        "description": "Located underground. For Tier 2 Isolation Vault bounty and Tier 2 Arcana Isolation Vault bounty",
+        "link": {
+          "label": "Isolation Vault",
+          "url": "Isolation Vault"
+        }
+      },
+      "id": "38",
+      "position": [
+        1006.9196873176609,
+        2235.869519176028
+      ]
+    }
+  ]
+}

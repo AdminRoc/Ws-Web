@@ -1,0 +1,1905 @@
+{
+  "source": "https://wiki.warframe.com/w/Plains_of_Eidolon/Map",
+  "mapImage": "PlainsofEidolon 4k Map.png",
+  "mapBounds": [
+    [
+      0,
+      0
+    ],
+    [
+      4000,
+      4000
+    ]
+  ],
+  "origin": "bottom-left",
+  "categories": [
+    {
+      "listId": 1,
+      "name": "Blinkpads",
+      "symbol": "",
+      "id": "blinkpad",
+      "color": "#fa005a",
+      "icon": "File:DuviriBlinkpadMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 2,
+      "name": "Cave Entrance",
+      "symbol": "",
+      "id": "cave",
+      "color": "#fa005a",
+      "icon": "File:DuviriCaveEntranceMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 3,
+      "name": "Cetus Wisp",
+      "symbol": "",
+      "id": "cetus_wisp",
+      "color": "#fa005a",
+      "icon": "File:PoEWispMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 4,
+      "name": "Lake",
+      "symbol": "",
+      "id": "lake",
+      "color": "#fa005a",
+      "icon": "File:PoeLakeMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 5,
+      "name": "Ocean",
+      "symbol": "",
+      "id": "ocean",
+      "color": "#fa005a",
+      "icon": "File:PoeOceanMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 6,
+      "name": "Pond",
+      "symbol": "",
+      "id": "pond",
+      "color": "#fa005a",
+      "icon": "File:PoePondMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 7,
+      "name": "Radio Consoles (Accepting Bounties)",
+      "symbol": "",
+      "id": "konzu",
+      "color": "#fdb029",
+      "symbolColor": ""
+    },
+    {
+      "listId": 8,
+      "name": "Eidolon Shrine",
+      "symbol": "",
+      "id": "eidolon_shrine",
+      "color": "#fa005a",
+      "symbolColor": ""
+    },
+    {
+      "listId": 9,
+      "name": "Grineer Bases",
+      "symbol": "",
+      "id": "grineer_base",
+      "color": "#009d28",
+      "symbolColor": ""
+    },
+    {
+      "listId": 10,
+      "name": "Operation: Plague Star Boil",
+      "symbol": "",
+      "id": "plague_star",
+      "color": "#ff5d98",
+      "symbolColor": ""
+    },
+    {
+      "listId": 11,
+      "name": "Eidolon Lures",
+      "symbol": "",
+      "id": "eidolon_lure",
+      "color": "#00faec",
+      "symbolColor": ""
+    },
+    {
+      "listId": 12,
+      "name": "Thousand-Year Fish",
+      "symbol": "",
+      "id": "thousand_year_fish",
+      "color": "#0060fa",
+      "symbolColor": ""
+    },
+    {
+      "listId": 13,
+      "name": "Settings",
+      "symbol": "",
+      "id": "settings",
+      "color": "#000000",
+      "symbolColor": ""
+    }
+  ],
+  "markers": [
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "1",
+      "position": [
+        1354,
+        524
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "2",
+      "position": [
+        2153.8472554942236,
+        1325.11810794359
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "3",
+      "position": [
+        1060.5,
+        1634.25
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "4",
+      "position": [
+        1400.5,
+        2195.25
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blindpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "5",
+      "position": [
+        541.25,
+        2241
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "6",
+      "position": [
+        870.375,
+        3177.875
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "7",
+      "position": [
+        3169.429369973403,
+        555.6091533173297
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "8",
+      "position": [
+        3375.125,
+        1583.75
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "9",
+      "position": [
+        2724.482427911768,
+        2225.972147175252
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "10",
+      "position": [
+        1841.5,
+        2829.125
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "11",
+      "position": [
+        2127.153974504432,
+        3553.7419055482915
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "12",
+      "position": [
+        3252.5144167628223,
+        2897.5468126071755
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "13",
+      "position": [
+        1187.2322856122134,
+        3276.025717237275
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "14",
+      "position": [
+        617.6577733664493,
+        2180.717313179313
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "15",
+      "position": [
+        559.625,
+        1411.375
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "16",
+      "position": [
+        977.9286783809953,
+        1419.163309841401
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "17",
+      "position": [
+        1526.6435405817563,
+        910.93031086357
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "18",
+      "position": [
+        1561.5625,
+        1274.9375
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "19",
+      "position": [
+        3068.931818697265,
+        2006.7690450074222
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "20",
+      "position": [
+        3261.3532515276543,
+        2516.1510925046814
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "21",
+      "position": [
+        3044.6250230939772,
+        2965.5174519487323
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "22",
+      "position": [
+        818,
+        3252
+      ]
+    },
+    {
+      "categoryId": "lake",
+      "popup": {
+        "title": "Lake",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "23",
+      "position": [
+        2256.377738766273,
+        1774.838020778234
+      ]
+    },
+    {
+      "categoryId": "ocean",
+      "popup": {
+        "title": "Ocean",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "24",
+      "position": [
+        630.0321420372138,
+        627.2037149124676
+      ]
+    },
+    {
+      "categoryId": "pond",
+      "popup": {
+        "title": "Pond",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "25",
+      "position": [
+        1150.5,
+        1061
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "26",
+      "position": [
+        613,
+        3127.5
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "27",
+      "position": [
+        841.25,
+        2855.25
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "28",
+      "position": [
+        1105,
+        2813.75
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "29",
+      "position": [
+        1972,
+        3103
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "30",
+      "position": [
+        2035,
+        3067.5
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "31",
+      "position": [
+        2015.5,
+        3030
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "32",
+      "position": [
+        1970.5,
+        2944
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "33",
+      "position": [
+        2207.5,
+        3574.5
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "34",
+      "position": [
+        2308,
+        2943.5
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "35",
+      "position": [
+        2574.57579030022,
+        2729.785728770667
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "36",
+      "position": [
+        2937.5,
+        2904.5
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "37",
+      "position": [
+        3049.5,
+        2867.5
+      ]
+    },
+    {
+      "categoryId": "konzu",
+      "popup": {
+        "title": "Radio Console",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "38",
+      "position": [
+        2357.706199637129,
+        1342.1256097755945
+      ]
+    },
+    {
+      "categoryId": "konzu",
+      "popup": {
+        "title": "Radio Console",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "39",
+      "position": [
+        1368.5562298085263,
+        593.5930708241423
+      ]
+    },
+    {
+      "categoryId": "konzu",
+      "popup": {
+        "title": "Radio Console",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "40",
+      "position": [
+        1166.829946955835,
+        1622.7521066748336
+      ]
+    },
+    {
+      "categoryId": "konzu",
+      "popup": {
+        "title": "Radio Console",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "41",
+      "position": [
+        593.609123263828,
+        2262.0393299289117
+      ]
+    },
+    {
+      "categoryId": "konzu",
+      "popup": {
+        "title": "Radio Console",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "42",
+      "position": [
+        920.0120329394839,
+        3234.9602382389985
+      ]
+    },
+    {
+      "categoryId": "konzu",
+      "popup": {
+        "title": "Radio Console",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "43",
+      "position": [
+        1941.5094260602496,
+        2858.627446983382
+      ]
+    },
+    {
+      "categoryId": "konzu",
+      "popup": {
+        "title": "Radio Console",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "44",
+      "position": [
+        2743.0055982444055,
+        2321.177885365498
+      ]
+    },
+    {
+      "categoryId": "konzu",
+      "popup": {
+        "title": "Radio Console",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "45",
+      "position": [
+        3151.279400889912,
+        608.8907999796285
+      ]
+    },
+    {
+      "categoryId": "ocean",
+      "popup": {
+        "title": "Ocean",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "46",
+      "position": [
+        3078.0031318493275,
+        382.0012009138599
+      ]
+    },
+    {
+      "categoryId": "eidolon_shrine",
+      "popup": {
+        "title": "Eidolon Shrine",
+        "description": "For spawning [[Eidolon Gantulyst]] and [[Eidolon Hydrolyst]]",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "47",
+      "position": [
+        2300.5419624949254,
+        1697.0810616855433
+      ]
+    },
+    {
+      "categoryId": "pond",
+      "popup": {
+        "title": "Pond",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "48",
+      "position": [
+        1203.1716167710085,
+        1435.108982932786
+      ]
+    },
+    {
+      "categoryId": "pond",
+      "popup": {
+        "title": "Pond",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "49",
+      "position": [
+        1683.7087639559581,
+        1331.6177245741183
+      ]
+    },
+    {
+      "categoryId": "grineer_base",
+      "popup": {
+        "title": "Hek's Stiletto Grineer Base",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "50",
+      "position": [
+        1748.0001739916293,
+        1903.9951963445603
+      ]
+    },
+    {
+      "categoryId": "grineer_base",
+      "popup": {
+        "title": "Er-Phryah's Vigil Grineer Base",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "51",
+      "position": [
+        554.7250852948551,
+        1328.6537479963145
+      ]
+    },
+    {
+      "categoryId": "grineer_base",
+      "popup": {
+        "title": "Mount Nang Grineer Base",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "52",
+      "position": [
+        1228.5980938269568,
+        3299.003397075293
+      ]
+    },
+    {
+      "categoryId": "grineer_base",
+      "popup": {
+        "title": "The Seethe Grineer Base",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "53",
+      "position": [
+        2255.6708780464082,
+        3450.326795772216
+      ]
+    },
+    {
+      "categoryId": "grineer_base",
+      "popup": {
+        "title": "Hillside Ruin Grineer Base",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "54",
+      "position": [
+        3060.384151595698,
+        870.600025259251
+      ]
+    },
+    {
+      "categoryId": "grineer_base",
+      "popup": {
+        "title": "Ostwan Range Grineer Base",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "55",
+      "position": [
+        3094.3445929064196,
+        2643.906434123443
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "56",
+      "position": [
+        2327.807580670886,
+        1559.878408471858
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "57",
+      "position": [
+        2367.575921153794,
+        1644.9872482759315
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "58",
+      "position": [
+        2430.13960231122,
+        1503.2593973937387
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "59",
+      "position": [
+        1637.1787504278086,
+        1359.133901895379
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "60",
+      "position": [
+        1528,
+        1960.9990993146052
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "61",
+      "position": [
+        1567.655241767932,
+        1918.3777252489347
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "62",
+      "position": [
+        1482.1947731692587,
+        1873.9660782211986
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "63",
+      "position": [
+        1314.1465619763921,
+        2284.0348265019375
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "64",
+      "position": [
+        1345.0835215721254,
+        2366.236589673377
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "65",
+      "position": [
+        2080.2911720196144,
+        2378.666876130683
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "66",
+      "position": [
+        2013.9619994753405,
+        2356.3218095987536
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "67",
+      "position": [
+        2102.936797555402,
+        2684.168849640795
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "68",
+      "position": [
+        1705.1239430645855,
+        1383.0534406667657
+      ]
+    },
+    {
+      "categoryId": "cetus_wisp",
+      "popup": {
+        "title": "Cetus Wisp",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "69",
+      "position": [
+        1722.6028357184023,
+        1310.3922081106798
+      ]
+    },
+    {
+      "categoryId": "plague_star",
+      "popup": {
+        "title": "Plague Star Boil",
+        "description": "[[Hemocyte]] boss spawn point during [[Operation: Plague Star]]",
+        "link": {
+          "label": "Operation: Plague Star",
+          "url": "Operation: Plague Star"
+        }
+      },
+      "id": "70",
+      "position": [
+        1912.0142757152062,
+        2633.269049836039
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "71",
+      "position": [
+        1754.331062909198,
+        1328.6525803816053
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "72",
+      "position": [
+        2094.1681979629593,
+        2026.0264201049176
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "73",
+      "position": [
+        2202.1104737429237,
+        2561.2613442130973
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "74",
+      "position": [
+        1743.9424347936429,
+        2589.6882767486636
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "75",
+      "position": [
+        1236.826382514969,
+        1349.9532487735992
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "76",
+      "position": [
+        1408.6809339362626,
+        999.1963613041694
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "77",
+      "position": [
+        995.2053607684547,
+        793.5600829821974
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "78",
+      "position": [
+        635.7275776629157,
+        1322.5400239619491
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "79",
+      "position": [
+        684.3067321837301,
+        2602.0439473141614
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "80",
+      "position": [
+        1332.3888177892197,
+        3003.9356644658947
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "81",
+      "position": [
+        1353.1190712989655,
+        3262.1032785919515
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "82",
+      "position": [
+        2176.580565162324,
+        3431.136854617316
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "83",
+      "position": [
+        2482.0831747294,
+        3046.469491890333
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "84",
+      "position": [
+        3302.1892465655483,
+        2577.1204240492566
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "85",
+      "position": [
+        3224.8720357767875,
+        2791.3372864397184
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "86",
+      "position": [
+        3030.8420819067755,
+        2641.9721444269376
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "87",
+      "position": [
+        2846.9475671471178,
+        1541.681724275979
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "88",
+      "position": [
+        3044.060088136639,
+        943.0663504907595
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "89",
+      "position": [
+        1036.1757925701113,
+        2105.06274774918
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "90",
+      "position": [
+        1699.940724074049,
+        1865.4464052864348
+      ]
+    },
+    {
+      "categoryId": "eidolon_lure",
+      "popup": {
+        "title": "Eidolon Lure",
+        "description": "",
+        "link": {
+          "label": "Eidolon Lure",
+          "url": "Eidolon Lure"
+        }
+      },
+      "id": "91",
+      "position": [
+        1534.5155076893038,
+        1631.3898148420176
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "92",
+      "position": [
+        3148,
+        352
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "93",
+      "position": [
+        3195,
+        1635
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "Inside cave",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "94",
+      "position": [
+        3042,
+        2032
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "Inside cave",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "95",
+      "position": [
+        3262,
+        2542
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "96",
+      "position": [
+        3402,
+        3052
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "97",
+      "position": [
+        2378,
+        3112
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "98",
+      "position": [
+        2288,
+        3400
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "99",
+      "position": [
+        1834,
+        3168
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "100",
+      "position": [
+        1190,
+        3307
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "101",
+      "position": [
+        941,
+        3338
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "102",
+      "position": [
+        710,
+        2637
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "103",
+      "position": [
+        1389,
+        2572
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "104",
+      "position": [
+        545,
+        2162
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "105",
+      "position": [
+        638,
+        1104
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "Use nearby Rampart to shoot and disable windmill",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "106",
+      "position": [
+        960,
+        698
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "107",
+      "position": [
+        1322,
+        500
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "Inside cave, near entrance",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "108",
+      "position": [
+        1540,
+        1284
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "109",
+      "position": [
+        2236,
+        1903
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "110",
+      "position": [
+        1747,
+        1825
+      ]
+    },
+    {
+      "categoryId": "thousand_year_fish",
+      "popup": {
+        "title": "Thousand-Year Fish",
+        "description": "Inside cave",
+        "link": {
+          "label": "Thousand-Year Fish",
+          "url": "Thousand-Year Fish"
+        }
+      },
+      "id": "111",
+      "position": [
+        951,
+        1438
+      ]
+    }
+  ]
+}

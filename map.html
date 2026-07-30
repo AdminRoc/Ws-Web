@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>交互地图 | WFSpeed</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/map/map.css">
+</head>
+<body>
+  <!-- Top Bar -->
+  <header class="map-topbar">
+    <div class="topbar-left">
+      <a href="/" class="topbar-logo" aria-label="返回首页">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>WFSPEED</span>
+      </a>
+      <div class="topbar-divider"></div>
+      <h1 class="topbar-title">INTERACTIVE MAP</h1>
+    </div>
+    <div class="topbar-center">
+      <div class="cycle-indicator" id="cycleIndicator">
+        <div class="cycle-icon" id="cycleIcon"></div>
+        <div class="cycle-info">
+          <span class="cycle-name" id="cycleName">--</span>
+          <span class="cycle-timer" id="cycleTimer">--:--</span>
+        </div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="search-box">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+          <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="搜索地点..." autocomplete="off">
+        <kbd>/</kbd>
+      </div>
+      <button class="topbar-btn" id="favToggle" title="仅显示收藏">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="map-layout">
+    <!-- Map Tabs (Vertical) -->
+    <nav class="map-nav" id="mapNav">
+      <button class="nav-tab active" data-map="duviri">
+        <div class="nav-tab-icon">◇</div>
+        <div class="nav-tab-label">双衍王境</div>
+        <div class="nav-tab-state" id="stateDuviri"></div>
+      </button>
+      <button class="nav-tab" data-map="plains-of-eidolon">
+        <div class="nav-tab-icon">◈</div>
+        <div class="nav-tab-label">夜灵平野</div>
+        <div class="nav-tab-state" id="stateEidolon"></div>
+      </button>
+      <button class="nav-tab" data-map="orb-vallis">
+        <div class="nav-tab-icon">◉</div>
+        <div class="nav-tab-label">奥布山谷</div>
+        <div class="nav-tab-state" id="stateVallis"></div>
+      </button>
+      <button class="nav-tab" data-map="cambion-drift">
+        <div class="nav-tab-icon">◎</div>
+        <div class="nav-tab-label">魔胎之境</div>
+        <div class="nav-tab-state" id="stateCambion"></div>
+      </button>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="map-sidebar" id="mapSidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title">筛选</h2>
+        <div class="sidebar-actions">
+          <button class="sidebar-btn" id="selectAll">全选</button>
+          <button class="sidebar-btn" id="clearAll">清除</button>
+        </div>
+      </div>
+      <div class="sidebar-stats">
+        <span id="statTotal">0</span> 个地点 · <span id="statVisible">0</span> 个显示
+      </div>
+      <div class="sidebar-groups" id="sidebarGroups"></div>
+    </aside>
+
+    <!-- Map Container -->
+    <div class="map-container">
+      <div id="map"></div>
+      <!-- Map Overlay Info -->
+      <div class="map-overlay-info" id="mapOverlayInfo">
+        <div class="overlay-coords" id="overlayCoords">0, 0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- Map Logic -->
+  <script src="/map/map.js"></script>
+</body>
+</html>

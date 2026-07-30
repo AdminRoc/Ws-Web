@@ -1,0 +1,8066 @@
+{
+  "source": "https://wiki.warframe.com/w/Duviri/Map",
+  "mapImage": "Duviri map with caves.png",
+  "mapBounds": [
+    [
+      0,
+      0
+    ],
+    [
+      4000,
+      4000
+    ]
+  ],
+  "origin": "bottom-left",
+  "categories": [
+    {
+      "listId": 1,
+      "name": "Ueymag Farming Spots",
+      "symbol": "",
+      "id": "ueymag",
+      "color": "#862549",
+      "icon": "File:UeymagMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 2,
+      "name": "Tasoma Farming Spots",
+      "symbol": "",
+      "id": "tasoma",
+      "color": "#fa005a",
+      "icon": "File:TasomaExtractMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 3,
+      "name": "Eevani Farming Spots",
+      "symbol": "1",
+      "id": "eevani",
+      "color": "#a97000",
+      "icon": "File:EevaniMarker.png",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 4,
+      "name": "Connla Sprout Farming Spots",
+      "symbol": "",
+      "id": "connla_sprout",
+      "color": "#009efa",
+      "icon": "File:ConnlaSproutMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 5,
+      "name": "Yao Shrub Farming Spots",
+      "symbol": "",
+      "id": "yao_shrub",
+      "color": "#5100a9",
+      "symbolColor": ""
+    },
+    {
+      "listId": 6,
+      "name": "Silphsela Farming Spots",
+      "symbol": "A",
+      "id": "silphsela",
+      "color": "#ecfa00",
+      "icon": "File:SilphselaMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 7,
+      "name": "Materlith",
+      "symbol": "✵",
+      "id": "blinkpad",
+      "color": "#0984e3",
+      "icon": "File:IconDuviriMaterlith.png",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 8,
+      "name": "Acrithis",
+      "symbol": "",
+      "id": "shop",
+      "color": "#fa005a",
+      "icon": "File:IconDuviriAcrithis.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 9,
+      "name": "Cave Entrance",
+      "symbol": "➾",
+      "id": "cave",
+      "color": "#663b17",
+      "icon": "File:DuviriCaveEntranceMarker.png",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 10,
+      "name": "Fishing Spots",
+      "symbol": "🐟",
+      "id": "fishing",
+      "color": "#81ecec",
+      "icon": "File:DuviriFishingSpotMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 11,
+      "name": "Komi",
+      "symbol": "⚃",
+      "id": "game",
+      "color": "#dfe6e9",
+      "icon": "File:DuviriKomiMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 12,
+      "name": "Owl Puzzle Solo",
+      "symbol": "🦉",
+      "id": "puzzle",
+      "color": "#b2bec3",
+      "icon": "File:DuviriOwlPuzzleSolo.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 13,
+      "name": "Owl Puzzle Coop",
+      "symbol": "🦉",
+      "id": "puzzle_coop",
+      "color": "#0d0e0e",
+      "icon": "File:DuviriOwlPuzzleCoop.png",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 14,
+      "name": "Shawzin Stages",
+      "symbol": "🎶",
+      "id": "shawzin",
+      "color": "#2d3436",
+      "icon": "File:DuviriShawzinStageMarker.png",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 15,
+      "name": "Dracroot Farming Spots",
+      "symbol": "",
+      "id": "dracroot",
+      "color": "#d20000",
+      "icon": "File:DracrootMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 16,
+      "name": "Tamm Herding",
+      "symbol": "🐐",
+      "id": "herding",
+      "color": "#e17055",
+      "icon": "File:DuviriTammHerdingMarker.png",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 17,
+      "name": "Kovnik Farming Spots",
+      "symbol": "",
+      "id": "kovnik",
+      "color": "#02ab00",
+      "icon": "File:KovnikMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 18,
+      "name": "Saggen Pearl Farming Spots",
+      "symbol": "",
+      "id": "saggen_pearl",
+      "color": "#ffffff",
+      "icon": "File:SaggenPearlMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 19,
+      "name": "Scholar's Landing Fragments",
+      "symbol": "A",
+      "id": "scholars_landing",
+      "color": "#990033",
+      "icon": "File:DuviriScholarsLandingMarker.png",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 20,
+      "name": "We are not What We Were Fragments",
+      "symbol": "B",
+      "id": "we_are_not",
+      "color": "#ffff00",
+      "icon": "File:DuviriWeAreNotWhatWeWereMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 21,
+      "name": "Watcher's Island Fragments",
+      "symbol": "C",
+      "id": "watchers_island",
+      "color": "#00ccff",
+      "icon": "File:DuviriWatchersIslandMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 22,
+      "name": "Lake Veruna Fragments",
+      "symbol": "D",
+      "id": "lake_veruna",
+      "color": "#ff0066",
+      "icon": "File:DuviriLakeVerunaMarker.png",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 23,
+      "name": "The Galleria Fragments",
+      "symbol": "E",
+      "id": "galleria",
+      "color": "#ccff00",
+      "icon": "File:DuviriTheGalleriaMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 24,
+      "name": "The Doll Mausoleum Fragments",
+      "symbol": "F",
+      "id": "doll_mausoleum",
+      "color": "#6600ff",
+      "icon": "File:DuviriTheDollMausoleumMarker.png",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 25,
+      "name": "The Caves of Academe Fragments",
+      "symbol": "G",
+      "id": "caves_of_academe",
+      "color": "#ccff00",
+      "icon": "File:DuviriTheCavesOfAcademeMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 26,
+      "name": "Manipura Island Fragments",
+      "symbol": "H",
+      "id": "manipura_island",
+      "color": "#cccccc",
+      "icon": "File:DuviriManipuraIslandMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 27,
+      "name": "The Island of Lorn Fragments",
+      "symbol": "I",
+      "id": "island_of_lorn",
+      "color": "#ffffff",
+      "icon": "File:DuviriTheIslandOfLornMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 28,
+      "name": "The Bleeding Earth Fragments",
+      "symbol": "J",
+      "id": "bleeding_earth",
+      "color": "#ff0000",
+      "icon": "File:DuviriTheBleedingEarthMarker.png",
+      "symbolColor": "#fff"
+    },
+    {
+      "listId": 29,
+      "name": "NPCs",
+      "symbol": "🤖",
+      "id": "npc",
+      "color": "#ffffff",
+      "icon": "File:NPCMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 30,
+      "name": "Settings",
+      "symbol": "",
+      "id": "settings",
+      "color": "#000000",
+      "symbolColor": ""
+    },
+    {
+      "listId": 31,
+      "name": "Undercroft Portal",
+      "symbol": "U",
+      "id": "undercroft",
+      "color": "#00c10f",
+      "icon": "File:UndercroftPortalMarker.png",
+      "symbolColor": "#000"
+    },
+    {
+      "listId": 32,
+      "name": "Somachord",
+      "symbol": "",
+      "id": "somachord",
+      "color": "#fa005a",
+      "icon": "File:SomachordMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 33,
+      "name": "Zariman Tablets",
+      "symbol": "",
+      "id": "1",
+      "color": "#00e2fa",
+      "icon": "File:DuviriZarimanTabletMarker.png",
+      "symbolColor": ""
+    },
+    {
+      "listId": 34,
+      "name": "Tombstones",
+      "symbol": "🪦",
+      "id": "2",
+      "color": "#000000",
+      "symbolColor": "#fff"
+    }
+  ],
+  "markers": [
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "1",
+      "position": [
+        1786.9969196108382,
+        2762.686574279856
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "2",
+      "position": [
+        1223.3304526341149,
+        3011.334690727437
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "3",
+      "position": [
+        1612.1135035668283,
+        3419.0933710526074
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "4",
+      "position": [
+        300.99587520807336,
+        3081.0719281585575
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "5",
+      "position": [
+        589.5645814067318,
+        2456.5743065450815
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "6",
+      "position": [
+        998.109675750984,
+        2014.0972740226518
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "7",
+      "position": [
+        1202.8612660391325,
+        2484.8335204672385
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "8",
+      "position": [
+        1523.1782204542837,
+        2322.442673828179
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "9",
+      "position": [
+        1609.4552931223755,
+        1784.8029021385603
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "10",
+      "position": [
+        1241.1322946627909,
+        1362.0921701387474
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "11",
+      "position": [
+        490.1558400162901,
+        733.5930708241423
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "12",
+      "position": [
+        1916.246581826807,
+        1442.4732075648724
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "13",
+      "position": [
+        2672.150389792236,
+        1533.0672511761545
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "14",
+      "position": [
+        3368.079575199118,
+        1378.1354030377038
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "15",
+      "position": [
+        3039.242675035427,
+        934.1530197839769
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "16",
+      "position": [
+        2875.867667272221,
+        533.961364201997
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "17",
+      "position": [
+        3328.1180273491896,
+        364.13780486542356
+      ]
+    },
+    {
+      "categoryId": "caves_of_academe",
+      "popup": {
+        "title": "The Caves of Academe Fragment N 4",
+        "image": "File:2968522746 preview g04.jpg",
+        "description": "Looking at the massive Archarbor building from the southwest path, you'll find this on the point of a curved rock on the right side of the path, near a materlith.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "18",
+      "position": [
+        1608.6679271993958,
+        3439.7209370819605
+      ]
+    },
+    {
+      "categoryId": "caves_of_academe",
+      "popup": {
+        "title": "The Caves of Academe Fragment N 9",
+        "image": "File:2968522746 preview g09-min.jpg",
+        "description": "This is near the southwest path and might be a bit difficult to see because of the foliage.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "19",
+      "position": [
+        1545.0871133227238,
+        3432.6076319046933
+      ]
+    },
+    {
+      "categoryId": "caves_of_academe",
+      "popup": {
+        "title": "The Caves of Academe Fragment N 5",
+        "image": "File:2968522746 preview g05.jpg",
+        "description": "On top of the roof covering the Dominus Thrax statue, in the southeast.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "20",
+      "position": [
+        1984.8904853355593,
+        3445.8196588527776
+      ]
+    },
+    {
+      "categoryId": "caves_of_academe",
+      "popup": {
+        "title": "The Caves of Academe Fragment N 2",
+        "image": "File:2968522746 preview g02.jpg",
+        "description": "Now this one actually is on the dome- on one of the golden decorations coming off the arch that rises from the dome.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "21",
+      "position": [
+        1611.588178348063,
+        3646.6328896637533
+      ]
+    },
+    {
+      "categoryId": "caves_of_academe",
+      "popup": {
+        "title": "The Caves of Academe Fragment N 8",
+        "image": "File:2968522746 preview g08-min.jpg",
+        "description": "This sits on an island near the main one, to the east.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "22",
+      "position": [
+        1919.9955857754576,
+        3572
+      ]
+    },
+    {
+      "categoryId": "caves_of_academe",
+      "popup": {
+        "title": "The Caves of Academe Fragment N 6",
+        "image": "File:2968522746 preview g06.jpg",
+        "description": "This one's under the dome, not on top of it. It's on top of the arched gate.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "23",
+      "position": [
+        1738.749869506278,
+        3673.9958718586067
+      ]
+    },
+    {
+      "categoryId": "caves_of_academe",
+      "popup": {
+        "title": "The Caves of Academe Fragment N 1",
+        "image": "File:G1.jpg",
+        "description": "This fragment is on the ground, not the dome. It's behind a tree next to the shopkeeper, which is the orange marker on the map.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "24",
+      "position": [
+        1726.0794163623154,
+        3456.41373524915
+      ]
+    },
+    {
+      "categoryId": "caves_of_academe",
+      "popup": {
+        "title": "The Caves of Academe Fragment N 3",
+        "image": "File:2968522746 preview g03.jpg",
+        "description": "To the north part of the island, near the G3 marker, you'll see a console you can interact with. Once you do so, the floor will open up behind it and you can enter the cave.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "25",
+      "position": [
+        1739.9998260083707,
+        3786.0027020561847
+      ]
+    },
+    {
+      "categoryId": "caves_of_academe",
+      "popup": {
+        "title": "The Caves of Academe Fragment N 7",
+        "image": "File:2968522746 preview g07.jpg",
+        "description": "Found in the north, near a tree by the edge of the island.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "26",
+      "position": [
+        1711.5528250766645,
+        3774.534087331539
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Watershed Hamlet.jpg",
+        "description": "Watershed Hamlet",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "27",
+      "position": [
+        1624.7639939336307,
+        1635.3046914036881
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "29",
+      "position": [
+        3226.267956331146,
+        734.9616512917472
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo23.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "30",
+      "position": [
+        785,
+        2013
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Artisan Hamlet bridge.jpg",
+        "description": "Artisan Hamlet bridge",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "33",
+      "position": [
+        1499.0663761154808,
+        1196.4246737676385
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo15.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "34",
+      "position": [
+        570.293432508438,
+        2424.7335731678054
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo26.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "35",
+      "position": [
+        527.1601878926939,
+        3000.983083786806
+      ]
+    },
+    {
+      "categoryId": "lake_veruna",
+      "popup": {
+        "title": "Lake Veruna Fragments N 7",
+        "image": "File:Duvirifragment-D7.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "36",
+      "position": [
+        1092.1368508988555,
+        3579.497158050537
+      ]
+    },
+    {
+      "categoryId": "lake_veruna",
+      "popup": {
+        "title": "Lake Veruna Fragments N 6",
+        "image": "File:Duvirifragment-D6.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "37",
+      "position": [
+        998.6383223105415,
+        3351.4971580545493
+      ]
+    },
+    {
+      "categoryId": "lake_veruna",
+      "popup": {
+        "title": "Lake Veruna Fragments N 8",
+        "image": "File:Duvirifragment-D8.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "38",
+      "position": [
+        803.5767683981288,
+        3319.997158050537
+      ]
+    },
+    {
+      "categoryId": "lake_veruna",
+      "popup": {
+        "title": "Lake Veruna Fragments N 4",
+        "image": "File:Duvirifragment-D4.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "39",
+      "position": [
+        957.1361151947651,
+        3161.997158050537
+      ]
+    },
+    {
+      "categoryId": "lake_veruna",
+      "popup": {
+        "title": "Lake Veruna Fragments N 5",
+        "image": "File:Screenshot 2023-05-02 015930.png",
+        "description": "Hug the right wall. The fragment is on top of the waterfall",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "40",
+      "position": [
+        1125.5,
+        3104
+      ]
+    },
+    {
+      "categoryId": "lake_veruna",
+      "popup": {
+        "title": "Lake Veruna Fragments N 9",
+        "image": "File:DuviriFragment-D9.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "41",
+      "position": [
+        1183.1771920064866,
+        3120.997158050537
+      ]
+    },
+    {
+      "categoryId": "lake_veruna",
+      "popup": {
+        "title": "Lake Veruna Fragments N 2",
+        "image": "File:Duvirifragment-D2.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "42",
+      "position": [
+        1915.6361151947651,
+        2774.497158050537
+      ]
+    },
+    {
+      "categoryId": "lake_veruna",
+      "popup": {
+        "title": "Lake Veruna Fragments N 3",
+        "image": "File:Duvirifragment-D3.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "43",
+      "position": [
+        1812.9775927884837,
+        2536.3257328554096
+      ]
+    },
+    {
+      "categoryId": "lake_veruna",
+      "popup": {
+        "title": "Lake Veruna Fragments N 1",
+        "image": "File:Duvirifragment-D1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "44",
+      "position": [
+        1930.3145016942783,
+        2325.7485790252686
+      ]
+    },
+    {
+      "categoryId": "scholars_landing",
+      "popup": {
+        "title": "Scholar's Landing Fragment N 8",
+        "image": "File:A8.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "45",
+      "position": [
+        1866.5,
+        1988.5
+      ]
+    },
+    {
+      "categoryId": "scholars_landing",
+      "popup": {
+        "title": "Scholar's Landing Fragment N 9",
+        "image": "File:A9.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "46",
+      "position": [
+        1930.499668094804,
+        1899.9939114865163
+      ]
+    },
+    {
+      "categoryId": "scholars_landing",
+      "popup": {
+        "title": "Scholar's Landing Fragment N 2",
+        "image": "File:2968522746 preview 02.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "47",
+      "position": [
+        1751,
+        1753
+      ]
+    },
+    {
+      "categoryId": "scholars_landing",
+      "popup": {
+        "title": "Scholar's Landing Fragment N 5",
+        "image": "File:2968522746 preview 05.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "48",
+      "position": [
+        2115.6634893101505,
+        1716.8552647209376
+      ]
+    },
+    {
+      "categoryId": "scholars_landing",
+      "popup": {
+        "title": "Scholar's Landing Fragment N 4",
+        "image": "File:2968522746 preview 04-min.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "49",
+      "position": [
+        2011,
+        1662
+      ]
+    },
+    {
+      "categoryId": "scholars_landing",
+      "popup": {
+        "title": "Scholar's Landing Fragment N 7",
+        "image": "File:Duvirifragment-A7.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "50",
+      "position": [
+        1743.1527936022032,
+        1484.9202213682756
+      ]
+    },
+    {
+      "categoryId": "scholars_landing",
+      "popup": {
+        "title": "Scholar's Landing Fragment N 6",
+        "image": "File:2968522746 preview 06.jpg",
+        "description": "Hidden inside a secret cave behind a brush",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "51",
+      "position": [
+        2035.3023429295467,
+        1091.7688510285552
+      ]
+    },
+    {
+      "categoryId": "scholars_landing",
+      "popup": {
+        "title": "Scholar's Landing Fragment N 1",
+        "image": "File:2968522746 preview 01.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "52",
+      "position": [
+        1832.820776835531,
+        1016.1124445650687
+      ]
+    },
+    {
+      "categoryId": "scholars_landing",
+      "popup": {
+        "title": "Scholar's Landing Fragment N 3",
+        "image": "File:2968522746 preview 03-min.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "53",
+      "position": [
+        1671.0701006391087,
+        1058.008521350372
+      ]
+    },
+    {
+      "categoryId": "we_are_not",
+      "popup": {
+        "title": "We are not what we were Fragment N 1",
+        "image": "File:Duvirifragment-B1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "54",
+      "position": [
+        416.5,
+        721
+      ]
+    },
+    {
+      "categoryId": "we_are_not",
+      "popup": {
+        "title": "We are not what we were Fragment N 8",
+        "image": "File:Duvirifragment-B8.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "55",
+      "position": [
+        315.51408659223955,
+        780.6418673064744
+      ]
+    },
+    {
+      "categoryId": "we_are_not",
+      "popup": {
+        "title": "We are not what we were Fragment N 3",
+        "image": "File:Duvirifragment-B3.jpg",
+        "description": "Inside the cave, hug the right wall, and it is past the doorway on the right",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "56",
+      "position": [
+        391.25,
+        757.25
+      ]
+    },
+    {
+      "categoryId": "we_are_not",
+      "popup": {
+        "title": "We are not what we were Fragment N 5",
+        "image": "File:Duvirifragment-B5.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "57",
+      "position": [
+        471.09717345751466,
+        881.0510302349642
+      ]
+    },
+    {
+      "categoryId": "we_are_not",
+      "popup": {
+        "title": "We are not what we were Fragment N 4",
+        "image": "File:Duvirifragment-B4.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "58",
+      "position": [
+        590.6174676680415,
+        794.7840029302054
+      ]
+    },
+    {
+      "categoryId": "we_are_not",
+      "popup": {
+        "title": "We are not what we were Fragment N 7",
+        "image": "File:Duvirifragment-B7.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "59",
+      "position": [
+        686.3369630554519,
+        639.2225206309021
+      ]
+    },
+    {
+      "categoryId": "we_are_not",
+      "popup": {
+        "title": "We are not what we were Fragment N 2",
+        "image": "File:Duvirifragment-B2.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "60",
+      "position": [
+        682.5158583760759,
+        499.2133683942285
+      ]
+    },
+    {
+      "categoryId": "we_are_not",
+      "popup": {
+        "title": "We are not what we were Fragment N 9",
+        "image": "File:Screenshot 2023-05-02 021505.png",
+        "description": "Under the cliff",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "61",
+      "position": [
+        627.3754020128949,
+        953.8830286971786
+      ]
+    },
+    {
+      "categoryId": "we_are_not",
+      "popup": {
+        "title": "We are not what we were Fragment N 6",
+        "image": "File:Duvirifragment-B6.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "62",
+      "position": [
+        481.2570951355869,
+        1115.1053843694485
+      ]
+    },
+    {
+      "categoryId": "watchers_island",
+      "popup": {
+        "title": "Watcher's Island Fragment N 9",
+        "image": "File:Watcher's Island Fragment N 9.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "63",
+      "position": [
+        3893.493186851387,
+        382.9943161010742
+      ]
+    },
+    {
+      "categoryId": "watchers_island",
+      "popup": {
+        "title": "Watcher's Island Fragment N 2",
+        "image": "File:Duvirifragment-C2.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "64",
+      "position": [
+        3544.2543282566603,
+        186.99431610107422
+      ]
+    },
+    {
+      "categoryId": "watchers_island",
+      "popup": {
+        "title": "Watcher's Island Fragment N 4",
+        "image": "File:Duvirifragment-C4.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "65",
+      "position": [
+        3216.327162961623,
+        493.9943161010742
+      ]
+    },
+    {
+      "categoryId": "watchers_island",
+      "popup": {
+        "title": "Watcher's Island Fragment N 5",
+        "image": "File:Duvirifragment-C5.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "66",
+      "position": [
+        3002.2751732058923,
+        270.9943161010742
+      ]
+    },
+    {
+      "categoryId": "watchers_island",
+      "popup": {
+        "title": "Watcher's Island Fragment N 1",
+        "image": "File:Duvirifragment-C1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "67",
+      "position": [
+        3116.3080346552697,
+        687.9943161010742
+      ]
+    },
+    {
+      "categoryId": "watchers_island",
+      "popup": {
+        "title": "Watcher's Island Fragment N 3",
+        "image": "File:Watchers island frag 3.png",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "68",
+      "position": [
+        2486.011995791495,
+        448.0228187227505
+      ]
+    },
+    {
+      "categoryId": "watchers_island",
+      "popup": {
+        "title": "Watcher's Island Fragment N 6",
+        "image": "File:Duvirifragment-C6.jpg",
+        "description": "It's in the cave. In the room behind the narrow golden arc. Lays on the Arc-Shaped Altar",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "69",
+      "position": [
+        2828.42712474619,
+        561.4427842621188
+      ]
+    },
+    {
+      "categoryId": "watchers_island",
+      "popup": {
+        "title": "Watcher's Island Fragment N 7",
+        "image": "File:Duvirifragment-C7.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "70",
+      "position": [
+        2828.3303510126825,
+        858.9943161010742
+      ]
+    },
+    {
+      "categoryId": "watchers_island",
+      "popup": {
+        "title": "Watcher's Island Fragment N 8",
+        "image": "File:Watcher's Island Fragment N 8.jpg",
+        "description": "Underground, on top of a building at the top of the stairs.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "71",
+      "position": [
+        3367.4242759015733,
+        958.9943161010742
+      ]
+    },
+    {
+      "categoryId": "galleria",
+      "popup": {
+        "title": "The Galleria Fragment N 9",
+        "image": "File:The Galleria Fragment N 9.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "72",
+      "position": [
+        3627.4179867692183,
+        1259.9886322021484
+      ]
+    },
+    {
+      "categoryId": "galleria",
+      "popup": {
+        "title": "The Galleria Fragment N 3",
+        "image": "File:The Galleria Fragment N 3.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "73",
+      "position": [
+        3435.124743004248,
+        1390.1719318127525
+      ]
+    },
+    {
+      "categoryId": "galleria",
+      "popup": {
+        "title": "The Galleria Fragment N 8",
+        "image": "File:The Galleria Fragment N 8.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "74",
+      "position": [
+        3220,
+        1044
+      ]
+    },
+    {
+      "categoryId": "galleria",
+      "popup": {
+        "title": "The Galleria Fragment N 6",
+        "image": "File:The Galleria Fragment N 6.jpg",
+        "description": "You must leave the Barracks and fly beneath the landmass. The Fragment is in a cabin hanging by its roof.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "75",
+      "position": [
+        3207.3455555638866,
+        1129.9943161010742
+      ]
+    },
+    {
+      "categoryId": "galleria",
+      "popup": {
+        "title": "The Galleria Fragment N 7",
+        "image": "File:The Galleria Fragment N 7.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "76",
+      "position": [
+        3348.1506089183026,
+        1683.974799395763
+      ]
+    },
+    {
+      "categoryId": "galleria",
+      "popup": {
+        "title": "The Galleria Fragment N 5",
+        "image": "File:The Galleria Fragment N 5.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "77",
+      "position": [
+        2969.8484809835,
+        1504.36967697438
+      ]
+    },
+    {
+      "categoryId": "galleria",
+      "popup": {
+        "title": "The Galleria Fragment N 1",
+        "image": "File:The Galleria Fragment N 1.jpg",
+        "description": "Inside cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "78",
+      "position": [
+        2597,
+        1527
+      ]
+    },
+    {
+      "categoryId": "galleria",
+      "popup": {
+        "title": "The Galleria Fragment N 2",
+        "image": "File:The Galleria Fragment N 2.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "79",
+      "position": [
+        2636.675965833002,
+        1789.997158050537
+      ]
+    },
+    {
+      "categoryId": "galleria",
+      "popup": {
+        "title": "The Galleria Fragment N 4",
+        "image": "File:The Galleria Fragment N 4.jpg",
+        "description": "Behind the building in a bush",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "80",
+      "position": [
+        2212.1516875980146,
+        1721.997158050537
+      ]
+    },
+    {
+      "categoryId": "doll_mausoleum",
+      "popup": {
+        "title": "The Doll Mausoleum Fragment N 7",
+        "image": "File:Duvirifragment-F7.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "81",
+      "position": [
+        844.6390501273311,
+        1746.376972835476
+      ]
+    },
+    {
+      "categoryId": "doll_mausoleum",
+      "popup": {
+        "title": "The Doll Mausoleum Fragment N 5",
+        "image": "File:Duvirifragment-F5.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "82",
+      "position": [
+        697.2038099091105,
+        1988.9943161010742
+      ]
+    },
+    {
+      "categoryId": "doll_mausoleum",
+      "popup": {
+        "title": "The Doll Mausoleum Fragment N 3",
+        "image": "File:Duvirifragment-F3.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "83",
+      "position": [
+        809.2504045015112,
+        2075.994316101074
+      ]
+    },
+    {
+      "categoryId": "doll_mausoleum",
+      "popup": {
+        "title": "The Doll Mausoleum Fragment N 1",
+        "image": "File:Duvirifragment-F1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "84",
+      "position": [
+        1036.5101279215023,
+        2159.9886322021484
+      ]
+    },
+    {
+      "categoryId": "doll_mausoleum",
+      "popup": {
+        "title": "The Doll Mausoleum Fragment N 8",
+        "image": "File:Screenshot 2023-05-02 015539.png",
+        "description": "Inside a secret cave hidden behind a brush. You have to crouch/slide to enter.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "85",
+      "position": [
+        1229.125,
+        2349.125
+      ]
+    },
+    {
+      "categoryId": "doll_mausoleum",
+      "popup": {
+        "title": "The Doll Mausoleum Fragment N 9",
+        "image": "File:Duvirifragment-F9.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "86",
+      "position": [
+        978.5925860360753,
+        2383.997158050537
+      ]
+    },
+    {
+      "categoryId": "doll_mausoleum",
+      "popup": {
+        "title": "The Doll Mausoleum Fragment N 4",
+        "image": "File:Duvirifragment-F4.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "87",
+      "position": [
+        1888.0232790298933,
+        2449.31675069551
+      ]
+    },
+    {
+      "categoryId": "doll_mausoleum",
+      "popup": {
+        "title": "The Doll Mausoleum Fragment N 2",
+        "image": "File:The Doll Mausoleum Fragment N 2.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "88",
+      "position": [
+        1429.6147797761396,
+        2645.497158050537
+      ]
+    },
+    {
+      "categoryId": "doll_mausoleum",
+      "popup": {
+        "title": "The Doll Mausoleum Fragment N 6",
+        "image": "File:Duvirifragment-F6.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "89",
+      "position": [
+        1586.0405102014263,
+        1982.020307665893
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "Three statues to face the middle. Puzzle under the tower, use flying horse. ",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "90",
+      "position": [
+        1739.289642053006,
+        3577.994316101074
+      ]
+    },
+    {
+      "categoryId": "manipura_island",
+      "popup": {
+        "title": "Manipura Island Fragment N 2",
+        "image": "File:Duvirifragment-H2.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "91",
+      "position": [
+        381.1734008067019,
+        3196.994316101074
+      ]
+    },
+    {
+      "categoryId": "manipura_island",
+      "popup": {
+        "title": "Manipura Island Fragment N 5",
+        "image": "File:Duvirifragment-H5.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "92",
+      "position": [
+        266.1893410619964,
+        3102.994316101074
+      ]
+    },
+    {
+      "categoryId": "manipura_island",
+      "popup": {
+        "title": "Manipura Island Fragment N 8",
+        "image": "File:Duvirifragment-H8.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "93",
+      "position": [
+        466.2491783280266,
+        3086.994316101074
+      ]
+    },
+    {
+      "categoryId": "manipura_island",
+      "popup": {
+        "title": "Manipura Island Fragment N 7",
+        "image": "File:Duvirifragment-H7.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "94",
+      "position": [
+        344.61416668939773,
+        2931.497158050537
+      ]
+    },
+    {
+      "categoryId": "manipura_island",
+      "popup": {
+        "title": "Manipura Island Fragment N 4",
+        "image": "File:Duvirifragment-H4.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "95",
+      "position": [
+        489.1395484805207,
+        2808.497158050537
+      ]
+    },
+    {
+      "categoryId": "manipura_island",
+      "popup": {
+        "title": "Manipura Island Fragment N 1",
+        "image": "File:Duvirifragment-H1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "96",
+      "position": [
+        317.10754535258275,
+        2764.497158050537
+      ]
+    },
+    {
+      "categoryId": "manipura_island",
+      "popup": {
+        "title": "Manipura Island Fragment N 6",
+        "image": "File:Duvirifragment-H6.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "97",
+      "position": [
+        354.6321645691571,
+        2595.5007878148804
+      ]
+    },
+    {
+      "categoryId": "manipura_island",
+      "popup": {
+        "title": "Manipura Island Fragment N 9",
+        "image": "File:Duvirifragment-H9.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "98",
+      "position": [
+        625.1459245826386,
+        2442.997158050537
+      ]
+    },
+    {
+      "categoryId": "manipura_island",
+      "popup": {
+        "title": "Manipura Island Fragment N 3",
+        "image": "File:Duvirifragment-H3.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "99",
+      "position": [
+        943.1611291338431,
+        2581.997158050537
+      ]
+    },
+    {
+      "categoryId": "island_of_lorn",
+      "popup": {
+        "title": "The Island of Lorn Fragment N 6",
+        "image": "File:The Island of Lorn Fragment N 6.jpg",
+        "description": "Inside cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "100",
+      "position": [
+        987,
+        1037
+      ]
+    },
+    {
+      "categoryId": "island_of_lorn",
+      "popup": {
+        "title": "The Island of Lorn Fragment N 3",
+        "image": "File:Screenshot 2023-05-02 022911.png",
+        "description": "Inside the cave. On top of a upside down statue",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "101",
+      "position": [
+        1205.970615313657,
+        1082.5804819966042
+      ]
+    },
+    {
+      "categoryId": "island_of_lorn",
+      "popup": {
+        "title": "The Island of Lorn Fragment N 8",
+        "image": "File:Duvirifragment-I8.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "102",
+      "position": [
+        1253.6374639855976,
+        1133.497158050537
+      ]
+    },
+    {
+      "categoryId": "island_of_lorn",
+      "popup": {
+        "title": "The Island of Lorn Fragment N 7",
+        "image": "File:The Island of Lorn Fragment N 7.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "103",
+      "position": [
+        1438.6800122055001,
+        1188.997158050537
+      ]
+    },
+    {
+      "categoryId": "island_of_lorn",
+      "popup": {
+        "title": "The Island of Lorn Fragment N 1",
+        "image": "File:The Island of Lorn Fragment N 1.jpg",
+        "description": "Inside cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "104",
+      "position": [
+        1087.53022946491,
+        1299.6622638208742
+      ]
+    },
+    {
+      "categoryId": "island_of_lorn",
+      "popup": {
+        "title": "The Island of Lorn Fragment N 5",
+        "image": "File:Screenshot 2023-05-02 025045.png",
+        "description": "Inside the cave. The fragment is underneath the overhang where water is flowing down.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "105",
+      "position": [
+        1376,
+        1422
+      ]
+    },
+    {
+      "categoryId": "island_of_lorn",
+      "popup": {
+        "title": "The Island of Lorn Fragment N 2",
+        "image": "File:Duvirifragment-I2.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "106",
+      "position": [
+        1036.6043573015236,
+        1537.997158050537
+      ]
+    },
+    {
+      "categoryId": "island_of_lorn",
+      "popup": {
+        "title": "The Island of Lorn Fragment N 9",
+        "image": "File:The Island of Lorn Fragment N 9.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "107",
+      "position": [
+        1516.1679957053548,
+        1584.997158050537
+      ]
+    },
+    {
+      "categoryId": "island_of_lorn",
+      "popup": {
+        "title": "The Island of Lorn Fragment N 4",
+        "image": "File:The Island of Lorn Fragment N 4.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "108",
+      "position": [
+        1607.6565922919517,
+        1654.997158050537
+      ]
+    },
+    {
+      "categoryId": "bleeding_earth",
+      "popup": {
+        "title": "The Bleeding Earth Fragment N 1",
+        "image": "File:Duvirifragment-J1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "109",
+      "position": [
+        464.1218915823483,
+        1653.497158050537
+      ]
+    },
+    {
+      "categoryId": "bleeding_earth",
+      "popup": {
+        "title": "The Bleeding Earth Fragment N 5",
+        "image": "File:Duvirifragment-J5.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "110",
+      "position": [
+        457.6245891640133,
+        1783.497158050537
+      ]
+    },
+    {
+      "categoryId": "bleeding_earth",
+      "popup": {
+        "title": "The Bleeding Earth Fragment N 3",
+        "image": "File:Duvirifragment-J3.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "111",
+      "position": [
+        293.1254391052162,
+        1572.04384205175
+      ]
+    },
+    {
+      "categoryId": "bleeding_earth",
+      "popup": {
+        "title": "The Bleeding Earth Fragment N 8",
+        "image": "File:Duvirifragment-J8.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "112",
+      "position": [
+        274.1122048118227,
+        1749.997158050537
+      ]
+    },
+    {
+      "categoryId": "bleeding_earth",
+      "popup": {
+        "title": "The Bleeding Earth Fragment N 9",
+        "image": "File:Duvirifragment-J9.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "113",
+      "position": [
+        274.11625118432084,
+        1816.997158050537
+      ]
+    },
+    {
+      "categoryId": "bleeding_earth",
+      "popup": {
+        "title": "The Bleeding Earth Fragment N 6",
+        "image": "File:Duvirifragment-J6.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "114",
+      "position": [
+        187.6081584393246,
+        1776.997158050537
+      ]
+    },
+    {
+      "categoryId": "bleeding_earth",
+      "popup": {
+        "title": "The Bleeding Earth Fragment N 2",
+        "image": "File:Duvirifragment-J2.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "115",
+      "position": [
+        166.6084036740217,
+        1880.997158050537
+      ]
+    },
+    {
+      "categoryId": "bleeding_earth",
+      "popup": {
+        "title": "The Bleeding Earth Fragment N 4",
+        "image": "File:Duvirifragment-J4.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "116",
+      "position": [
+        353.15745061339067,
+        1952.997158050537
+      ]
+    },
+    {
+      "categoryId": "bleeding_earth",
+      "popup": {
+        "title": "The Bleeding Earth Fragment N 7",
+        "image": "File:Duvirifragment-J7.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "117",
+      "position": [
+        283.6272867456787,
+        2027.997158050537
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "two person",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "118",
+      "position": [
+        1767.766952966369,
+        1486.6920074447164
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo38.png",
+        "description": "Solo\nUnder the bridge",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "119",
+      "position": [
+        1639.073518790417,
+        3514.320702497141
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "2 people needed",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "120",
+      "position": [
+        1759.5,
+        3800.5
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "121",
+      "position": [
+        1531.75,
+        1386.5
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Solo Owl Puzzle - Chamber of the Muses.jpg",
+        "description": "Solo Owl Puzzle - Chamber of the Muses\n\nThe energy ball is near the rock where the targets hang.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "122",
+      "position": [
+        3154.4033508731886,
+        264.8114895543621
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Owl puzzle near titan's rest.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "123",
+      "position": [
+        3155.0468536342087,
+        688.0186736808613
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "124",
+      "position": [
+        3255.9999135345943,
+        902.004775463816
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Owl Puzzle.jpg",
+        "description": "Solo \nUnder the Island",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "125",
+      "position": [
+        3459.047415659347,
+        1072.296128128572
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "Two person puzzle",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "126",
+      "position": [
+        1820.0928547741732,
+        2368.807716974934
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Owl puzzle.jpg",
+        "description": "2 person",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "127",
+      "position": [
+        1031.6687937511729,
+        3383.5059479776296
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "128",
+      "position": [
+        1874.75,
+        2682
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "129",
+      "position": [
+        544.521615349209,
+        2195.6635035892177
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "130",
+      "position": [
+        635.0288377300953,
+        588.517846363319
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "131",
+      "position": [
+        417.2493647269568,
+        859.2688315379667
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo25.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "132",
+      "position": [
+        588.3128419472075,
+        919.2388155425117
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "133",
+      "position": [
+        766.5456549581227,
+        961.7939119894598
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Owl puzzle - Primrose Village.jpg",
+        "description": "Solo\nBird is behind the building in a cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "134",
+      "position": [
+        989.2423868799799,
+        1100.9652583074544
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo39.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "135",
+      "position": [
+        1304.75,
+        1124.5
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo27.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "136",
+      "position": [
+        1267,
+        1088
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "137",
+      "position": [
+        1272.4588711378476,
+        1371.139666040607
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "138",
+      "position": [
+        2022.5,
+        1303
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "139",
+      "position": [
+        1959.4812790155718,
+        2275.911563596552
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "140",
+      "position": [
+        2045.1295878867923,
+        2470.189151727556
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "141",
+      "position": [
+        1637.659305228044,
+        2497.2359861079412
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "142",
+      "position": [
+        516.7624745258938,
+        2261.592651277524
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "143",
+      "position": [
+        365.75,
+        1812.875
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "144",
+      "position": [
+        1265.75,
+        1584
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "145",
+      "position": [
+        2256.499129510836,
+        1725.5021063372692
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "146",
+      "position": [
+        2445.26363769073,
+        1347.833913289208
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "147",
+      "position": [
+        2776.985106414869,
+        1628.466917072619
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "148",
+      "position": [
+        3159.25,
+        1592.25
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "149",
+      "position": [
+        2835.9401342962974,
+        414.7181271659102
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Owl Puzzle 2.jpg",
+        "description": "Solo Puzzle",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "150",
+      "position": [
+        3356.0050694330534,
+        1028
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo37.png",
+        "description": "Solo\nHack the console\nshoot down the canister \nthe rest is below",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "151",
+      "position": [
+        1894.3390667987608,
+        3485.3293244684924
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo17.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "152",
+      "position": [
+        586.0018231964564,
+        753.9971580505371
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo11.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "153",
+      "position": [
+        504.0007898348466,
+        632.9812787679001
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "description": "Song: Watcher's Eye",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "154",
+      "position": [
+        610.5,
+        684.5
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "image": "File:Warframe0203.jpg",
+        "description": "Song: Lorn Echoes",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "155",
+      "position": [
+        1251.5,
+        1122
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo12.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "157",
+      "position": [
+        1439,
+        1307.25
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "image": "File:Shawzin Stage Agora.jpg",
+        "description": "Song: Galleria Delights",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "159",
+      "position": [
+        1700,
+        1484
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Duviri Owl Solo.png",
+        "description": "Solo.\n\nNote: Barrel with Disk in the cave may get stuck upon container destruction.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "160",
+      "position": [
+        1678.8482752321606,
+        1047.0483662419804
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "image": "File:Shawzin Stage Outlook.jpg",
+        "description": "Song: Verula Sings",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "161",
+      "position": [
+        2232.336108205931,
+        1810.0165831422653
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "description": "Song: Spirits of Manipura",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "162",
+      "position": [
+        3534,
+        231.5
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Duviri Owl Puzzle Solo.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "163",
+      "position": [
+        281.75,
+        3114.25
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "image": "File:Shawzin Stage.jpg",
+        "description": "Song: Verdant Plains",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "164",
+      "position": [
+        631.446355599587,
+        2797.3144263739823
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo33.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "165",
+      "position": [
+        1600.182645825157,
+        1427.6485912156393
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "166",
+      "position": [
+        2889.48629677315,
+        1511.3637277866706
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "167",
+      "position": [
+        2277.7677188971666,
+        1693.5207409417815
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "image": "File:Shawzin Stage Fairshores hamlet.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "168",
+      "position": [
+        2001.6425208438195,
+        1372.4942622830888
+      ]
+    },
+    {
+      "categoryId": "herding",
+      "popup": {
+        "title": "Tamm Herding",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "169",
+      "position": [
+        1548.5638507985393,
+        1220.996634413871
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "170",
+      "position": [
+        637.545151587321,
+        630.1205303848623
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "description": "Song: The Day the Earth Bled",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "171",
+      "position": [
+        305.82368286318183,
+        1781.643923547155
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "172",
+      "position": [
+        729.25,
+        2052.75
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "173",
+      "position": [
+        385.75,
+        2891.75
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "174",
+      "position": [
+        1243.25,
+        3051.25
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "175",
+      "position": [
+        1369.9310002012876,
+        2690.364525719517
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "image": "File:Shawzin Stage 2.jpg",
+        "description": "Song: Passing Days",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "176",
+      "position": [
+        1392.75,
+        2439
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "image": "File:20231007231807 1.jpg",
+        "description": "Song: Dax's March",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "177",
+      "position": [
+        1880.5,
+        2468.25
+      ]
+    },
+    {
+      "categoryId": "herding",
+      "popup": {
+        "title": "Tamm Herding",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "178",
+      "position": [
+        936.2018884996542,
+        2330.5164748090806
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "179",
+      "position": [
+        1059,
+        1738.5
+      ]
+    },
+    {
+      "categoryId": "herding",
+      "popup": {
+        "title": "Tamm Herding",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "180",
+      "position": [
+        2788.5,
+        589.5
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "description": "In the underground city\n\nSong: There Came a Stranger",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "181",
+      "position": [
+        3136.5,
+        732
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "182",
+      "position": [
+        3327.114182178003,
+        906.510893481154
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "183",
+      "position": [
+        1726.5,
+        1458.75
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "184",
+      "position": [
+        1903.25,
+        1813
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo30.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "185",
+      "position": [
+        1677,
+        1879
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "188",
+      "position": [
+        530,
+        791.5
+      ]
+    },
+    {
+      "categoryId": "herding",
+      "popup": {
+        "title": "Tamm Herding",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "189",
+      "position": [
+        3041.75,
+        1309.5
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "190",
+      "position": [
+        3850.549976951345,
+        325.2691193458119
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo40.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "191",
+      "position": [
+        1633,
+        1147
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo8.png",
+        "description": "Solo.\nBe careful to take the disk from the tree - it may fall down and will not respawn.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "192",
+      "position": [
+        857.0109055590034,
+        837.2169504315713
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:King's palace owl puzzle 3.jpg",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "193",
+      "position": [
+        785.886373508278,
+        774.9943161010742
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "image": "File:Cave entrance - Custos Arch 1B.png",
+        "description": "Custos Arch cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "194",
+      "position": [
+        2895.625,
+        725.4375
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "image": "File:Cave entrance - Fair Shores Hamlet 1B.png",
+        "description": "Fair Shores Hamlet cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "195",
+      "position": [
+        2042.1243840667491,
+        1618.5674221360073
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "image": "File:Cave entrance - Moirai Crossing 2C.png",
+        "description": "Morai Crossing cave 2",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "196",
+      "position": [
+        1323.703894381217,
+        1508.2587642709057
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "image": "File:Cave entrance - Primrose Village 2C.png",
+        "description": "Primrose Village cave 2",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "197",
+      "position": [
+        1319.5502381193749,
+        1103.8732416756968
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "image": "File:Cave entrance - Primrose Village 1A.png",
+        "description": "Primrose Village cave 1",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "198",
+      "position": [
+        971.5647173503162,
+        1115.1073939311855
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "image": "File:Cave entrance - Watershed Hamlet 1A.png",
+        "description": "Watershed Hamlet cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "199",
+      "position": [
+        1844.8415921157023,
+        1810.9004666187482
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "image": "File:Cave entrance - Chamber of the Muses 1A.png",
+        "description": "Chamber of the Muses cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "200",
+      "position": [
+        3094,
+        266
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "You need to throw the disc from one into the next",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "201",
+      "position": [
+        2951.46370467265,
+        1472.196318430392
+      ]
+    },
+    {
+      "categoryId": "shawzin",
+      "popup": {
+        "title": "Shawzin Stage",
+        "description": "Song: Elegy of the Dolls",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "202",
+      "position": [
+        1786.8588360584054,
+        3494.5217126239177
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Duviri Owl Puzzle - Lunaro Court.jpg",
+        "description": "Solo puzzle",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "203",
+      "position": [
+        1831,
+        2693
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - The king's palace 1B.png",
+        "description": "The King's Palace cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "204",
+      "position": [
+        599.6265504461923,
+        962.3723291948911
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:King's palace owl puzzle.jpg",
+        "description": "Solo puzzle inside the cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "205",
+      "position": [
+        535,
+        858
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:King's Palace Owl Puzzle.jpg",
+        "description": "Solo puzzle inside the cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "206",
+      "position": [
+        458.20519420888274,
+        886.004796826744
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - The King's palace 1A.png",
+        "description": "The King's Palace cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "207",
+      "position": [
+        307.5914498161482,
+        833.6788950189396
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Primrose Village 2A.png",
+        "description": "Primrose Village cave 2",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "208",
+      "position": [
+        1153.291160115259,
+        1153.291160115259
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Primrose Village 2B.png",
+        "description": "Primrose Village cave 2",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "209",
+      "position": [
+        1241.6795077635775,
+        1180.1612178003477
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Primrose Village 1B.png",
+        "description": "Primrose Village cave 1",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "210",
+      "position": [
+        1068.4383463728732,
+        1067.7312395916867
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Moirai Crossing 2A.png",
+        "description": "Morai Crossing cave 2",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "211",
+      "position": [
+        1362.594767346477,
+        1307.4404384139264
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Moirai Crossing 2B.png",
+        "description": "Morai Crossing cave 2",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "212",
+      "position": [
+        1410.6780284671622,
+        1376.736902970208
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Moirai Crossing 1A.png",
+        "description": "Morai Crossing cave 1",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "213",
+      "position": [
+        1110.9994780251122,
+        1344
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle Solo",
+        "image": "File:Puzzle Preview.png",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "214",
+      "position": [
+        3084,
+        1487.5
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Farbreeze Hamlet 1A.png",
+        "description": "Farbreeze Hamlet cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "215",
+      "position": [
+        1287,
+        2947
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Farbreeze Hamlet 1B.png",
+        "description": "Farbreeze Hamlet cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "216",
+      "position": [
+        1046,
+        3000
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Fair Shores Hamlet 1A.png",
+        "description": "Fair Shores Hamlet cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "219",
+      "position": [
+        1966.1104050891956,
+        1497.2986091625146
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Watershed Hamlet 1C.png",
+        "description": "Watershed Hamlet cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "221",
+      "position": [
+        1779.7877682465403,
+        1888.6822125492686
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Soprano Springs 1A.png",
+        "description": "Soprano Springs cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "222",
+      "position": [
+        2596.5,
+        1553
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Soprano Springs 1B.png",
+        "description": "Soprano Springs cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "223",
+      "position": [
+        2573,
+        1499.5
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Titan's Rest 1A.png",
+        "description": "Titan's Rest cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "224",
+      "position": [
+        3189.758689932516,
+        972.271824131503
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Custos Arch 1A.png",
+        "description": "Custos Arch cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "226",
+      "position": [
+        2738.6245635354985,
+        760.1397897755386
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entranct",
+        "image": "File:Cave entrance - Chamber of the Muses 1B.png",
+        "description": "Chamber of the Muses cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "227",
+      "position": [
+        3050,
+        331.5
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl puzzle",
+        "image": "File:Owl puzzle Morai crossing.jpg",
+        "description": "2 players",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "228",
+      "position": [
+        1081.8733752154176,
+        1474.3176387739516
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Warframe0201.jpg",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "229",
+      "position": [
+        647.5,
+        939.5
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl puzzle",
+        "image": "File:Owl puzzle Agora.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "230",
+      "position": [
+        2015.9614331628468,
+        1564.120199984643
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle Solo",
+        "image": "File:Sovasolo22.png",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "231",
+      "position": [
+        1248.006318678773,
+        2703.9982170255144
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle Solo",
+        "image": "File:Owl puzzle solo neighbor's perspective.jpg",
+        "description": "Neighbor's Perspective",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "232",
+      "position": [
+        1810.1933598375617,
+        2223.1437200505056
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle Solo",
+        "image": "File:Sovasolo45.png",
+        "description": "Fair Shores Hamlet Cavern.\n\nBe ready to catch the disk, when you put it out from the bowl nearby the owl or it may drop in the void.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "233",
+      "position": [
+        2038.2352967702234,
+        1570.4841610153221
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Solo",
+        "image": "File:3e1e089b-c924-4a2d-bfa2-ba46763deb0b.jpg",
+        "description": "In the top of two sides",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "234",
+      "position": [
+        2000.0515305861497,
+        1972.8279195104678
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Solo Soprano Springs",
+        "image": "File:DuviriOwlPuzzleSolo2.png",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "235",
+      "position": [
+        2822.7697119991217,
+        1544.2934735377303
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Lunaro Court 1A.png",
+        "description": "Underneath the pool with hanging moss",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "236",
+      "position": [
+        1579.6765543676192,
+        2679.9346686062804
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Fair Shores Hamlet 1C.png",
+        "description": "Fair Shores Hamlet cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "237",
+      "position": [
+        1992.5,
+        1661.5
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Fair Shores Hamlet 1D.png",
+        "description": "Fair Shores Hamlet cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "238",
+      "position": [
+        2111.021400970402,
+        1543.913834430552
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Watershed Hamlet 1B.png",
+        "description": "Watershed Hamlet cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "239",
+      "position": [
+        1908,
+        1795.5
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave Entrance",
+        "image": "File:Cave entrance - Titan's Rest 1C.png",
+        "description": "Titan's Rest cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "240",
+      "position": [
+        3259.762261269984,
+        940.4520189781082
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Custos Arch 1C.png",
+        "description": "Custus Arch cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "241",
+      "position": [
+        2918.936792738068,
+        871.8626612030131
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Chamber of the Muses 1C.png",
+        "description": "Chamber of the Muses cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "242",
+      "position": [
+        2991.4152378096896,
+        266.2257031167352
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Duviri Owl Puzzle Solo 2.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "243",
+      "position": [
+        2526.537096636193,
+        663.9289653190374
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo7.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "245",
+      "position": [
+        1076.6677552576161,
+        1845.073394884118
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo9.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "246",
+      "position": [
+        688.7325269192878,
+        851.6006137152017
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo10.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "247",
+      "position": [
+        713.2467040895663,
+        749.1637873263294
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - The Citadel 1A.png",
+        "description": "The Citadel cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "248",
+      "position": [
+        722.6631303726516,
+        1962.928424573856
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo14.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "249",
+      "position": [
+        2117,
+        1355.0026744617285
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo19.png",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "250",
+      "position": [
+        466.6904755831214,
+        1706.9469445108791
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo18.png",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "251",
+      "position": [
+        197.49883993006904,
+        1754.3651936403287
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo20.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "252",
+      "position": [
+        2511.83022796332,
+        276.2644233745207
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo21.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "253",
+      "position": [
+        1186.741580766867,
+        3003.044046722106
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Thrax Garden 1A.png",
+        "description": "Thrax Garden cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "254",
+      "position": [
+        1139.8561312727147,
+        3272.4901833313425
+      ]
+    },
+    {
+      "categoryId": "cave",
+      "popup": {
+        "title": "Cave entrance",
+        "image": "File:Cave entrance - Thrax Garden 1B.png",
+        "description": "Thrax Garden cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "255",
+      "position": [
+        976,
+        3092
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo36.png",
+        "description": "Solo on top of the tower",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "257",
+      "position": [
+        1843.4273785533292,
+        3630.993321392921
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 084116031.png",
+        "description": "Around Titan's Rest, in snowy areas above ground, available during all moods",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "260",
+      "position": [
+        3117.0209761074407,
+        845.3360590511686
+      ]
+    },
+    {
+      "categoryId": "connla_sprout",
+      "popup": {
+        "title": "Lunaro Court",
+        "description": "Around Lunaro Court, near water sources, available during all moods",
+        "link": {
+          "label": "Connla Sprout",
+          "url": "Connla Sprout"
+        }
+      },
+      "id": "264",
+      "position": [
+        1929.340852467495,
+        2632.91209974811
+      ]
+    },
+    {
+      "categoryId": "connla_sprout",
+      "popup": {
+        "title": "Neighbor's Outlook",
+        "description": "Around Neighbor's Outlook, near water sources, available during all moods",
+        "link": {
+          "label": "Connla Sprout",
+          "url": "Connla Sprout"
+        }
+      },
+      "id": "265",
+      "position": [
+        2015.2516197071197,
+        2326.3912731516307
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Archarbor",
+        "description": "Around Archarbor, only available during Joy, Envy, and Sorrow mood spirals",
+        "link": {
+          "label": "Eevani",
+          "url": "Eevani"
+        }
+      },
+      "id": "266",
+      "position": [
+        1739.1465619763921,
+        3628.0954268972546
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "The Amphitheater",
+        "description": "Around The Amphiteather, only available during Joy, Envy, Anger, and Fear mood spirals",
+        "link": {
+          "label": "Eevani",
+          "url": "Eevani"
+        }
+      },
+      "id": "267",
+      "position": [
+        324.99712913811686,
+        1816.0060842652613
+      ]
+    },
+    {
+      "categoryId": "silphsela",
+      "popup": {
+        "title": "Royalstead Pastures",
+        "description": "Around Royalstead Pastures, on hill slopes and close to region edges, available during all moods",
+        "link": {
+          "label": "Silphsela",
+          "url": "Silphsela"
+        }
+      },
+      "id": "268",
+      "position": [
+        745.2899515917649,
+        2613.480172816262
+      ]
+    },
+    {
+      "categoryId": "silphsela",
+      "popup": {
+        "title": "Mathila's Farm",
+        "description": "Around Mathila's Farm, on hill slopes and close to region edges, available during all moods",
+        "link": {
+          "label": "Silphsela",
+          "url": "Silphsela"
+        }
+      },
+      "id": "269",
+      "position": [
+        913.7208261802812,
+        1904.4013238091788
+      ]
+    },
+    {
+      "categoryId": "silphsela",
+      "popup": {
+        "title": "Moirai Crossing",
+        "description": "Around Moirai Crossing, on hill slopes and close to region edges, available during all moods",
+        "link": {
+          "label": "Silphsela",
+          "url": "Silphsela"
+        }
+      },
+      "id": "270",
+      "position": [
+        1216.546399281472,
+        1382.656399124987
+      ]
+    },
+    {
+      "categoryId": "silphsela",
+      "popup": {
+        "title": "Primrose Village",
+        "description": "Around Primrose Village, on hill slopes and close to region edges, available during all moods",
+        "link": {
+          "label": "Silphsela",
+          "url": "Silphsela"
+        }
+      },
+      "id": "271",
+      "position": [
+        1072.1782284529213,
+        1149.966955803549
+      ]
+    },
+    {
+      "categoryId": "silphsela",
+      "popup": {
+        "title": "Upperhaven",
+        "description": "Around Upperhaven, on hill slopes and close to region edges, available during all moods",
+        "link": {
+          "label": "Silphsela",
+          "url": "Silphsela"
+        }
+      },
+      "id": "272",
+      "position": [
+        422.2250322011978,
+        2993.0384269384917
+      ]
+    },
+    {
+      "categoryId": "silphsela",
+      "popup": {
+        "title": "Farbreeze Hamlet",
+        "description": "Around Farbreeze Hamlet, on hill slopes and close to region edges, available during all moods",
+        "link": {
+          "label": "Silphsela",
+          "url": "Silphsela"
+        }
+      },
+      "id": "273",
+      "position": [
+        1188.7262661937357,
+        3054.673217045471
+      ]
+    },
+    {
+      "categoryId": "silphsela",
+      "popup": {
+        "title": "Thrax Gardens",
+        "description": "Around Thrax Gardens, on hill slopes and close to region edges, available during all moods",
+        "link": {
+          "label": "Silphsela",
+          "url": "Silphsela"
+        }
+      },
+      "id": "274",
+      "position": [
+        1035.086012889402,
+        3418.7384376680147
+      ]
+    },
+    {
+      "categoryId": "kovnik",
+      "popup": {
+        "title": "Northwind Village",
+        "description": "Around Northwind Village, on grasslands, available during all moods",
+        "link": {
+          "label": "Kovnik",
+          "url": "Kovnik"
+        }
+      },
+      "id": "275",
+      "position": [
+        1369.125644255111,
+        2403.764534118709
+      ]
+    },
+    {
+      "categoryId": "kovnik",
+      "popup": {
+        "title": "Mathila's Farm",
+        "description": "Around Mathila's Farm, on grasslands, available during all moods",
+        "link": {
+          "label": "Kovnik",
+          "url": "Kovnik"
+        }
+      },
+      "id": "276",
+      "position": [
+        930.6443480654176,
+        1905.4652888511102
+      ]
+    },
+    {
+      "categoryId": "kovnik",
+      "popup": {
+        "title": "Farbreeze Hamlet",
+        "description": "Around Farbreeze Hamlet, on grasslands, available during all moods",
+        "link": {
+          "label": "Kovnik",
+          "url": "Kovnik"
+        }
+      },
+      "id": "277",
+      "position": [
+        1167.0781832660841,
+        3056.208786365805
+      ]
+    },
+    {
+      "categoryId": "kovnik",
+      "popup": {
+        "title": "Royalstead Pastures",
+        "description": "Around Royalstead Pastures, on grasslands, available during all moods",
+        "link": {
+          "label": "Kovnik",
+          "url": "Kovnik"
+        }
+      },
+      "id": "278",
+      "position": [
+        765.1495198340897,
+        2677.934033755589
+      ]
+    },
+    {
+      "categoryId": "saggen_pearl",
+      "popup": {
+        "title": "Soprano Springs",
+        "description": "Around Soprano Springs, near buildings and houses, available during all moods",
+        "link": {
+          "label": "Saggen Pearl",
+          "url": "Saggen Pearl"
+        }
+      },
+      "id": "279",
+      "position": [
+        2878.400754966857,
+        1537.3324956925749
+      ]
+    },
+    {
+      "categoryId": "saggen_pearl",
+      "popup": {
+        "title": "Thornguard Barracks",
+        "description": "Around Thornguard Barracks, near buildings and houses, available during all moods",
+        "link": {
+          "label": "Saggen Pearl",
+          "url": "Saggen Pearl"
+        }
+      },
+      "id": "280",
+      "position": [
+        3240.0457882413143,
+        1198.446999745016
+      ]
+    },
+    {
+      "categoryId": "saggen_pearl",
+      "popup": {
+        "title": "Primrose Village",
+        "description": "Around Primrose Village, near buildings and houses, available during all moods",
+        "link": {
+          "label": "Saggen Pearl",
+          "url": "Saggen Pearl"
+        }
+      },
+      "id": "281",
+      "position": [
+        1098.2895830956618,
+        1151.3640341679627
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo32.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "282",
+      "position": [
+        3023.588596353677,
+        1286.2272349783298
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo29.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "283",
+      "position": [
+        2940,
+        933
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl puzzle",
+        "image": "File:Owlz puzzle near chambers.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "284",
+      "position": [
+        3645.489010407246,
+        286.3782463805518
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl puzzle",
+        "image": "File:Owl puzzle inside Morai crossing cave.jpg",
+        "description": "Inside cave, hidden behind plants",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "285",
+      "position": [
+        1245.9221484506966,
+        1382.3937572197003
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo34.png",
+        "description": "paragrimm hutch is in the cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "286",
+      "position": [
+        1753.9783707332313,
+        1777.3128945123874
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Soprano Springs",
+        "description": "Around Soprano Springs, available during all moods",
+        "link": {
+          "label": "Dracroot",
+          "url": "Dracroot"
+        }
+      },
+      "id": "287",
+      "position": [
+        2842.4784555502374,
+        1536.5944218522345
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Artisan Hamlet",
+        "description": "Around Artisan Hamlet, near hillsides, available during all moods ",
+        "link": {
+          "label": "Dracroot",
+          "url": "Dracroot"
+        }
+      },
+      "id": "288",
+      "position": [
+        1580,
+        1168
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Fair Shores Hamlet",
+        "description": "Around Fair Shores Hamlet, near hillsides, available during all moods ",
+        "link": {
+          "label": "Dracroot",
+          "url": "Dracroot"
+        }
+      },
+      "id": "289",
+      "position": [
+        2045.6942866779461,
+        1356.9886512634384
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Chamber of the Muses",
+        "description": "Around Chamber of the Muses, available during all moods ",
+        "link": {
+          "label": "Dracroot",
+          "url": "Dracroot"
+        }
+      },
+      "id": "290",
+      "position": [
+        2992.475897981469,
+        910.7535341682733
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Watershed Hamlet",
+        "description": "Around Watershed Hamlet, near cliffs, available during all moods ",
+        "link": {
+          "label": "Dracroot",
+          "url": "Dracroot"
+        }
+      },
+      "id": "291",
+      "position": [
+        1580.5517589856343,
+        1643.2809187426772
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Moirai Crossing",
+        "description": "Around Moirai Crossing, near hillsides, available during all moods ",
+        "link": {
+          "label": "Dracroot",
+          "url": "Dracroot"
+        }
+      },
+      "id": "292",
+      "position": [
+        1197.2830283819776,
+        1382.4931106167733
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Lonesome Outlook",
+        "description": "Around Lonesome Outlook, available during all moods ",
+        "link": {
+          "label": "Dracroot",
+          "url": "Dracroot"
+        }
+      },
+      "id": "293",
+      "position": [
+        2247.1669391625715,
+        1777.7314097395279
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Materlith",
+        "description": "",
+        "link": {
+          "label": "Materlith",
+          "url": "Materlith"
+        }
+      },
+      "id": "294",
+      "position": [
+        1842.5015964369318,
+        1367.5336255880773
+      ]
+    },
+    {
+      "categoryId": "shop",
+      "popup": {
+        "title": "Acrithis",
+        "description": "",
+        "link": {
+          "label": "Acrithis",
+          "url": "Acrithis"
+        }
+      },
+      "id": "295",
+      "position": [
+        1704,
+        3488.001498751041
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "296",
+      "position": [
+        3421.6381898004133,
+        1254.0518668726052
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Warframe.x64 20230519-005635.jpg",
+        "description": "Above ground. Found during Anger spiral.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "297",
+      "position": [
+        1167.0797423483966,
+        1060.8369484751179
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Sovasolo44.png",
+        "description": "Solo",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "298",
+      "position": [
+        689,
+        881
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "description": "pressure pad - can - can - symbol can\ncan - can - bramble empty symbol can\npressure pad, cans x3, ?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "299",
+      "position": [
+        260.0385187813528,
+        1781.5555351995063
+      ]
+    },
+    {
+      "categoryId": "npc",
+      "popup": {
+        "title": "Bombastine",
+        "description": "Appears when current Spiral is not Envy.",
+        "link": {
+          "label": "Bombastine",
+          "url": "Bombastine"
+        }
+      },
+      "id": "300",
+      "position": [
+        1753.0647553983613,
+        1484.5866159121454
+      ]
+    },
+    {
+      "categoryId": "npc",
+      "popup": {
+        "title": "Mathila",
+        "description": "Appears when current Spiral is not Joy.",
+        "link": {
+          "label": "Mathila",
+          "url": "Mathila"
+        }
+      },
+      "id": "301",
+      "position": [
+        1018.175096603594,
+        1945.0897683110275
+      ]
+    },
+    {
+      "categoryId": "npc",
+      "popup": {
+        "title": "Koral",
+        "description": "",
+        "link": {
+          "label": "Koral",
+          "url": "Koral"
+        }
+      },
+      "id": "302",
+      "position": [
+        1040.1302067632394,
+        1902.1912455321892
+      ]
+    },
+    {
+      "categoryId": "npc",
+      "popup": {
+        "title": "Lodun",
+        "description": "Appears when current Spiral is not Anger.",
+        "link": {
+          "label": "Lodun",
+          "url": "Lodun"
+        }
+      },
+      "id": "303",
+      "position": [
+        361.0250547946166,
+        2910.0387294719817
+      ]
+    },
+    {
+      "categoryId": "npc",
+      "popup": {
+        "title": "Luscinia",
+        "description": "Appears when current Spiral is not Sorrow.",
+        "link": {
+          "label": "Luscinia",
+          "url": "Luscinia"
+        }
+      },
+      "id": "304",
+      "position": [
+        3536.992344368312,
+        247.01351028092392
+      ]
+    },
+    {
+      "categoryId": "npc",
+      "popup": {
+        "title": "Sythel",
+        "description": "Always appears inside a boarded-up house regardless of current Spiral.",
+        "link": {
+          "label": "Sythel",
+          "url": "Sythel"
+        }
+      },
+      "id": "305",
+      "position": [
+        3121.873363172084,
+        663.9789994609223
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "Around Custos Arch, available during all moods",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "306",
+      "position": [
+        2804,
+        588.5
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "307",
+      "position": [
+        2833.7304256050893,
+        803.9804102091047
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 085545487.png",
+        "description": "Around Netherbarrow Crossing, in snowy areas, available during all moods",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "308",
+      "position": [
+        3073,
+        1168
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 092146921.png",
+        "description": "Around Soprano Springs, in snowy areas, available during all moods",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "309",
+      "position": [
+        3215.214534055232,
+        1516.036938863958
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 092608494.png",
+        "description": "",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "310",
+      "position": [
+        3436.7482847915467,
+        1505.3728908511032
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "311",
+      "position": [
+        3087,
+        650
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "Around Netherbarrow, in snowy areas, available during all moods",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "312",
+      "position": [
+        2773.2727958136393,
+        337.9970414071697
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 084729117.png",
+        "description": "Around Fort Wyrmsoul, available during all moods",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "313",
+      "position": [
+        2631.5,
+        569.5
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 083429399.png",
+        "description": "",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "314",
+      "position": [
+        3508.6638482476487,
+        1274.9135264793451
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 085126681.png",
+        "description": "Around Netherbarrow, in snowy areas, available during all moods",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "315",
+      "position": [
+        2820.6489501531382,
+        445.47727214752496
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 085850236.png",
+        "description": "Around Netherbarrow Crossing, in snowy areas, available during all moods",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "316",
+      "position": [
+        3094,
+        1333
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 090239879.png",
+        "description": "East of Thornguard Barracks, in snowy areas, available during all moods",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "317",
+      "position": [
+        3405,
+        1078
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 090820123.png",
+        "description": "East of Thornguard Barracks, in snowy areas, available during all moods",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "318",
+      "position": [
+        3435.124743004248,
+        1100.258151526268
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "image": "File:Image 2023-06-03 091151415.png",
+        "description": "East of Thornguard Barracks, in snowy areas, available during all moods",
+        "link": {
+          "label": "Yao Shrub",
+          "url": "Yao Shrub"
+        }
+      },
+      "id": "319",
+      "position": [
+        3502,
+        1139
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "320",
+      "position": [
+        3157,
+        1369
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "321",
+      "position": [
+        3350.2719292618617,
+        1359.0592334405442
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "322",
+      "position": [
+        3118.9998194517416,
+        987.0012979377827
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "323",
+      "position": [
+        2985.4048301696034,
+        1395.8287860622447
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "324",
+      "position": [
+        3071.5,
+        1543
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Eevani",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "325",
+      "position": [
+        1693,
+        3526.75
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Eevani",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "326",
+      "position": [
+        1667.7113434284722,
+        3746.6052801169217
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Eevani",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "327",
+      "position": [
+        1508.2587642709057,
+        3528.816391511465
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Eevani",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "328",
+      "position": [
+        1769.534719919335,
+        3751.9085809758208
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Eevani",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "329",
+      "position": [
+        1794.2834572608642,
+        3647.610330750805
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Eevani",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "330",
+      "position": [
+        1854.0339802711276,
+        3583.2636136628294
+      ]
+    },
+    {
+      "categoryId": "kovnik",
+      "popup": {
+        "title": "Kovnik",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "331",
+      "position": [
+        1825.3961556330723,
+        3606.5981374419853
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Eevani",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "332",
+      "position": [
+        1887.2679989868952,
+        3468.005208329422
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Eevani",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "333",
+      "position": [
+        1850.1448929746014,
+        3675.1874952170806
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Eevani",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "334",
+      "position": [
+        451.375,
+        1933.25
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "335",
+      "position": [
+        358.75,
+        1860.625
+      ]
+    },
+    {
+      "categoryId": "kovnik",
+      "popup": {
+        "title": "Kovnik",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "336",
+      "position": [
+        331.5,
+        1856.75
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "337",
+      "position": [
+        204.875,
+        1812.625
+      ]
+    },
+    {
+      "categoryId": "eevani",
+      "popup": {
+        "title": "Eevani",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "338",
+      "position": [
+        192,
+        1745.75
+      ]
+    },
+    {
+      "categoryId": "silphsela",
+      "popup": {
+        "title": "Sun Silph",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "339",
+      "position": [
+        257.75,
+        1753.625
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "340",
+      "position": [
+        360.625,
+        1735.625
+      ]
+    },
+    {
+      "categoryId": "blinkpad",
+      "popup": {
+        "title": "Blinkpad",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "341",
+      "position": [
+        2005.3548314450486,
+        501.33870786126215
+      ]
+    },
+    {
+      "categoryId": "undercroft",
+      "popup": {
+        "title": "Undercroft Portal",
+        "image": "File:20231007233234 1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "342",
+      "position": [
+        1336.053292250093,
+        1439.548294180121
+      ]
+    },
+    {
+      "categoryId": "undercroft",
+      "popup": {
+        "title": "Undercroft Portal",
+        "image": "File:20231007233337 1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "343",
+      "position": [
+        2137.526194754401,
+        1598.527596674355
+      ]
+    },
+    {
+      "categoryId": "undercroft",
+      "popup": {
+        "title": "Undercroft Portal",
+        "image": "File:20231007233259 1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "345",
+      "position": [
+        257.2358486026141,
+        833.3529236278603
+      ]
+    },
+    {
+      "categoryId": "undercroft",
+      "popup": {
+        "title": "Undercroft Portal",
+        "image": "File:20231007232955 1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "346",
+      "position": [
+        2078.271681047944,
+        2637.769901447852
+      ]
+    },
+    {
+      "categoryId": "undercroft",
+      "popup": {
+        "title": "Undercroft Portal",
+        "image": "File:20231011213256 1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "347",
+      "position": [
+        3589.269153372328,
+        204.2845489134712
+      ]
+    },
+    {
+      "categoryId": "undercroft",
+      "popup": {
+        "title": "Undercroft Portal",
+        "image": "File:20231008000003 1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "349",
+      "position": [
+        3518.9307379437373,
+        1113.17999990711
+      ]
+    },
+    {
+      "categoryId": "somachord",
+      "popup": {
+        "title": "Below The Thunder Somachord",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "352",
+      "position": [
+        527.25,
+        871.5
+      ]
+    },
+    {
+      "categoryId": "somachord",
+      "popup": {
+        "title": "Unbound Somachord",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "353",
+      "position": [
+        1673.3681976779649,
+        532.2746295381737
+      ]
+    },
+    {
+      "categoryId": "somachord",
+      "popup": {
+        "title": "Drifter's Respite Somachord",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "354",
+      "position": [
+        1744.0788757966195,
+        3587.5062543499494
+      ]
+    },
+    {
+      "categoryId": "somachord",
+      "popup": {
+        "title": "Paragrimm Ascending Somachord",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "355",
+      "position": [
+        467,
+        3032
+      ]
+    },
+    {
+      "categoryId": "somachord",
+      "popup": {
+        "title": "Perdition's Coils Somachord",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "356",
+      "position": [
+        3220,
+        1161.25
+      ]
+    },
+    {
+      "categoryId": "somachord",
+      "popup": {
+        "title": "Shadows And Summoning Somachord",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "357",
+      "position": [
+        3254.5,
+        837.5
+      ]
+    },
+    {
+      "categoryId": "somachord",
+      "popup": {
+        "title": "He Who Waits Somachord",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "358",
+      "position": [
+        2017.1988700299237,
+        1658.8725086636407
+      ]
+    },
+    {
+      "categoryId": "somachord",
+      "popup": {
+        "title": "Into Madness Somachord",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "359",
+      "position": [
+        993.75,
+        1084
+      ]
+    },
+    {
+      "categoryId": "somachord",
+      "popup": {
+        "title": "Eyes That Burn Somachord",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "360",
+      "position": [
+        106.125,
+        1898.25
+      ]
+    },
+    {
+      "categoryId": "somachord",
+      "popup": {
+        "title": "Duviri Paradox Somachord",
+        "image": "File:DuvrirParadoxSomachord.png",
+        "description": "Inside building on the right, behind a bust, when facing the central Dominus Thrax statue.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "361",
+      "position": [
+        746.7047609329943,
+        2027.6286950524252
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "362",
+      "position": [
+        3333.75,
+        633.25
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "363",
+      "position": [
+        2876,
+        434
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "364",
+      "position": [
+        3478.1698683089794,
+        207.09389854001012
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "365",
+      "position": [
+        3786.5,
+        251.25
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "366",
+      "position": [
+        3305.375,
+        466.375
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "367",
+      "position": [
+        3142.875,
+        221.25
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "368",
+      "position": [
+        3125.625,
+        479.5
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "369",
+      "position": [
+        3033.75,
+        264
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "370",
+      "position": [
+        3449.6204320185725,
+        367.6955262170047
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "image": "File:20231007233617 1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "371",
+      "position": [
+        3619.25,
+        209.75
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "372",
+      "position": [
+        3705.239533417509,
+        337.9970414071697
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "373",
+      "position": [
+        3390.5770157894954,
+        193.747258045114
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "374",
+      "position": [
+        3346.7363953559293,
+        697.2072862499358
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "375",
+      "position": [
+        3342.5267671506203,
+        555.8956137690284
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "376",
+      "position": [
+        3086,
+        333
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "377",
+      "position": [
+        3090.056633785213,
+        213.89980130893065
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "378",
+      "position": [
+        3399.7694039449207,
+        588.3128419472076
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "379",
+      "position": [
+        2930.25,
+        308.5
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "380",
+      "position": [
+        3186.5,
+        269.75
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "381",
+      "position": [
+        3873,
+        386.5
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Warframe 20230624004512.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "382",
+      "position": [
+        1023.5,
+        2161.5
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Warframe 20230624114143.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "383",
+      "position": [
+        864.25,
+        1733.75
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Warframe 20230624114929.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "384",
+      "position": [
+        3306.431308828296,
+        524.6732316404182
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "385",
+      "position": [
+        1502.9554634120066,
+        2741.4529906602447
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "386",
+      "position": [
+        1196.2478970723416,
+        3005.203820042827
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "387",
+      "position": [
+        1288.8788854077793,
+        2933.2557050570954
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "388",
+      "position": [
+        3015.1033149794384,
+        305.8236828631818
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "389",
+      "position": [
+        2826.1290277073335,
+        635.3354428961129
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "390",
+      "position": [
+        2902.1430066848875,
+        820.243866176395
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "391",
+      "position": [
+        2876.3336091715787,
+        778.1710126957955
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "392",
+      "position": [
+        2905,
+        761
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "393",
+      "position": [
+        3144.1503025459833,
+        920.6530291048848
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "394",
+      "position": [
+        3133.190147437592,
+        856.306312016909
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "395",
+      "position": [
+        1810.5,
+        1947.5
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "396",
+      "position": [
+        1919.5,
+        1879
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "397",
+      "position": [
+        2019.320190373483,
+        1628.9972471585088
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "398",
+      "position": [
+        1351.4578355427889,
+        1354.9933694487215
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "399",
+      "position": [
+        1396.182339452838,
+        1391.762922070422
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "400",
+      "position": [
+        1262.1856044179872,
+        1108.03632611932
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "401",
+      "position": [
+        474.64542687146997,
+        850.1191276815267
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "402",
+      "position": [
+        380.6002249736592,
+        863.2006031334778
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "403",
+      "position": [
+        1112.6325201970324,
+        3187.637369588956
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "404",
+      "position": [
+        1085.9392392072402,
+        3212.7396603210786
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "405",
+      "position": [
+        1221.3501878044642,
+        2924.416870292264
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "406",
+      "position": [
+        1151.346616466996,
+        3035.609411633848
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "407",
+      "position": [
+        1086.4695692931302,
+        3021.290499314821
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "408",
+      "position": [
+        810.6979246273669,
+        2022.8557245623824
+      ]
+    },
+    {
+      "categoryId": "undercroft",
+      "popup": {
+        "title": "Undercroft Portal",
+        "image": "File:20231007232223 1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "409",
+      "position": [
+        1065.609919248127,
+        3174.2023407464117
+      ]
+    },
+    {
+      "categoryId": "undercroft",
+      "popup": {
+        "title": "Undercroft Portal",
+        "image": "File:20231007233535 1.jpg",
+        "description": "Underground",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "410",
+      "position": [
+        2716.7042533187155,
+        427.0924958366747
+      ]
+    },
+    {
+      "categoryId": "undercroft",
+      "popup": {
+        "title": "Undercroft Portal",
+        "image": "File:20231007232750 1.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "411",
+      "position": [
+        486.25,
+        2188.25
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Warframe 20230625122934.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "412",
+      "position": [
+        618.0113267570425,
+        2947.22106398553
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Warframe 20230624132138.jpg",
+        "description": "Right next to where the Komi spawns",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "413",
+      "position": [
+        3316.3308037649076,
+        912.8748545118328
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Warframe 20230625020203.jpg",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "414",
+      "position": [
+        1933.229939764021,
+        737.1588193869759
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "415",
+      "position": [
+        1931.6872069462238,
+        550.5583049959909
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "416",
+      "position": [
+        1930.8746258887963,
+        587.9948369181425
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "417",
+      "position": [
+        1914.8451634531705,
+        471.64188252878773
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "418",
+      "position": [
+        1803.8291871776273,
+        330.9266373862485
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "419",
+      "position": [
+        1810.1933598375615,
+        359.2119043201267
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "420",
+      "position": [
+        1706.248592460054,
+        492.14565591489276
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "421",
+      "position": [
+        1703.420306421478,
+        441.9427339280085
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "422",
+      "position": [
+        1737.3615024615174,
+        463.15460978171643
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "423",
+      "position": [
+        1720.3905869976147,
+        439.113311116846
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "424",
+      "position": [
+        1680.0857826423219,
+        565.6817740990447
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "425",
+      "position": [
+        1641.1952623924872,
+        599.625886655248
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "426",
+      "position": [
+        1667.3580016671342,
+        636.3970987543091
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "427",
+      "position": [
+        1717.5632885622297,
+        668.9210236296412
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "428",
+      "position": [
+        1579.676408084577,
+        617.3038880803838
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "429",
+      "position": [
+        1694.934742874899,
+        333.756060197411
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "430",
+      "position": [
+        1574.7268722455262,
+        414.36590135720525
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "431",
+      "position": [
+        1595.2328278137659,
+        419.315316930039
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "432",
+      "position": [
+        1682.914139223983,
+        408.0026041174706
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "433",
+      "position": [
+        1600.1827869113272,
+        432.0432389913969
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "434",
+      "position": [
+        1810.9004666187482,
+        695.7953959558674
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "435",
+      "position": [
+        1851.2056236894664,
+        629.3270266288599
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "436",
+      "position": [
+        1753.624887885723,
+        663.2698116031748
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "437",
+      "position": [
+        1759.9888489164018,
+        679.532271884049
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman",
+        "description": "Question: What will be the primary challenge of colonizing Tau?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "438",
+      "position": [
+        1683.0612042325624,
+        536.8764190634109
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "439",
+      "position": [
+        2420.4997505925307,
+        289
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:KullervoOwlPuzzle.png",
+        "description": "2 Person Paragrimm Hutch. Showed up in my single player & doable solo if you can get a good angle to see the glyphs with one door open. Puzzle still works in solo without both doors open. Owl is on the edge of the platform, puzzle is in open cave area below",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "440",
+      "position": [
+        1669.4791103814387,
+        664.6803743153546
+      ]
+    },
+    {
+      "categoryId": "ueymag",
+      "popup": {
+        "title": "Ueymag",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "441",
+      "position": [
+        2356.125,
+        551.125
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Duviri CavePuzzle.png",
+        "description": "Owl Puzzle in the cave, have to find the break-able tablets through the cave & bring them back to the puzzle.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "442",
+      "position": [
+        2804.75,
+        735.375
+      ]
+    },
+    {
+      "categoryId": "puzzle_coop",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Duviri SecondKullervoPuzzle.png",
+        "description": "2 person Owl puzzle, large area. Owl is on the road, puzzle is spread out along the road, tower & the seating area. Two activation pads that send power, however seems to be bugged where the covers will not open even when provided with power if the puzzle spawns after you arrive.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "443",
+      "position": [
+        1717.375,
+        296.875
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Duviri SecondKullervoPuzzle2.png",
+        "description": "Owl puzzle at the landing area of the hold. Owl is inside the main building.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "444",
+      "position": [
+        1909.75,
+        527.25
+      ]
+    },
+    {
+      "categoryId": "fishing",
+      "popup": {
+        "title": "Fishing Spot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "445",
+      "position": [
+        1549.624510970319,
+        2686.6522151182876
+      ]
+    },
+    {
+      "categoryId": "game",
+      "popup": {
+        "title": "Komi",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "446",
+      "position": [
+        721.0279459411578,
+        921.6694951028406
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In the Enigma Puzzle Room\n\nQuestion: What event concluded the Eighteenth Radiation War?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "447",
+      "position": [
+        1720,
+        3584
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "Inside the main tower\n\nQuestion: What are the ideal conditions for contemplating Legems?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "448",
+      "position": [
+        1745.5,
+        3574
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "Question: The 'Tales of Duviri' is?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "449",
+      "position": [
+        297.16162479364664,
+        1802.0616318539164
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tabler",
+        "description": "Inside the Tower\n\nQuestion: What is the core thesis of the \"Palimpsest of Spacetime\"?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "450",
+      "position": [
+        1876,
+        2456
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tabler",
+        "description": "Question: \"What should public architecture celebrate?\"",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "451",
+      "position": [
+        606,
+        532.25
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tabler",
+        "description": "On top of the tower\n\nQuestion: In 'Tales of Duviri' King Thrax lacks:",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "452",
+      "position": [
+        357.70764293274476,
+        738.042702863459
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "Inside the house\n\nQuestion: Why is Mathila excessively joyful?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "453",
+      "position": [
+        1440.7300666675908,
+        2653.0646430119264
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "Question: What was the Prince of Fire's fatal flaw?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "454",
+      "position": [
+        291.32799384885755,
+        2906.20887067671
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "Question: Why is Bombastine the most dangerous Courtier?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "455",
+      "position": [
+        2063.75,
+        1953.75
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "Inside the house\n\nQuestion: Does Sythel deserve our contempt?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "456",
+      "position": [
+        3111.269837220809,
+        662.559053971795
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In a small alcove behind a bush\n\nQuestion: What invaded the Galleria?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "457",
+      "position": [
+        2024.0931611464925,
+        1062.4279387327877
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tabler",
+        "description": "On a table in the hallway through to the Warden\n\nQuestion: Who is constructing the Extrasolar Rail between Pluto and Tau?\n",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "458",
+      "position": [
+        1931.4621728110546,
+        528.9158723275376
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tabler",
+        "description": "On a table in the cave\n\nQuestion: What is 'Kuva'?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "459",
+      "position": [
+        1953,
+        1562.75
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "Question: What is Conceptual Embodiment?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "460",
+      "position": [
+        3850.019646865455,
+        348.95719651556124
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In one of the houses at the bottom of the city\n\nQuestion: What should one never do at a Serving of the Bitter Tea?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "461",
+      "position": [
+        3244.75,
+        1114.25
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "Question: What was the purpose of the Zariman Parades?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "462",
+      "position": [
+        1690.25,
+        2813.5
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In the cave\n\nQuestion: Which emergency visual signals can replace lost audio comms?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "463",
+      "position": [
+        1839.625,
+        1923.25
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In the tent structure\n\nQuestion: Excess time in the Void can result in:",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "464",
+      "position": [
+        3488.8648583744257,
+        1427.8253679109362
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman tablet",
+        "description": "Question: Is Void Travel safe?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "465",
+      "position": [
+        1187.5,
+        3386.5
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In the cave\n\nQuestion: What is your first priority if you are exposed to the Void?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "466",
+      "position": [
+        1254.9377599108254,
+        1074.8023074035523
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "Inside the builiding\n\nQuestion: By what right do the Orokin govern?\n\n",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "467",
+      "position": [
+        774.105148703973,
+        2079.4242667743397
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In the underground city(next to a plant outside one of the buildings)\n\nQuestion: How many principal Orokin Virtues are there?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "468",
+      "position": [
+        3293.173056681049,
+        841.9873996978815
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "Inside the building\n\nQuestion: How should you prepare for Continuity, if chosen?\n\n",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "469",
+      "position": [
+        2221.3759530975394,
+        1739.8362351095004
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In the cave\n\nQuestion: What is the key lesson of The Sorrowful Soprano?\n\n",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "470",
+      "position": [
+        2998.75,
+        318
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In the cave\n\nQuestion: What was the ultimate fate of Albrecht Entrati?\n\n",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "471",
+      "position": [
+        1282.25,
+        1363.5
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In the cave\n\nQuestion: How many fingers are found upon one's hand?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "472",
+      "position": [
+        2876.8639392574687,
+        777.8174593052023
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In the cave here\n\nQuestion: Did you forget, kiddo?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "473",
+      "position": [
+        884,
+        3329
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tablet",
+        "description": "In on of the arches under the road\n\nQuestion: You wouldn't welch on a deal, would you?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "474",
+      "position": [
+        1159.1247910600482,
+        1623.8707229949066
+      ]
+    },
+    {
+      "categoryId": "1",
+      "popup": {
+        "title": "Zariman Tabler",
+        "description": "In the cave\n\nQuestion: What is 'the Wall'?",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "475",
+      "position": [
+        1171,
+        2915
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:20231007215821 1.jpg",
+        "description": "Right side of fountain",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "476",
+      "position": [
+        1423.75,
+        2488
+      ]
+    },
+    {
+      "categoryId": "yao_shrub",
+      "popup": {
+        "title": "Yao Shrub",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "477",
+      "position": [
+        3346.8875256410493,
+        870.8388199843075
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle Solo",
+        "image": "File:Owl Puzzle Skaudivee.png",
+        "description": "Solo Owl Puzzle near the tip near Chamber of the Muses",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "478",
+      "position": [
+        3839.3246568000077,
+        300.608770351931
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Solo Owl Puzzle",
+        "image": "File:20231007223758 1.jpg",
+        "description": "In the entrance of a small cave at the left side of the road leading to \"Soprano Spring\"",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "479",
+      "position": [
+        2565.4267604401916,
+        1495.469214666016
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:20231210004819 1.jpg",
+        "description": "Puzzle box is near a group of willow-looking trees; puzzle components are in the orchard across from it.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "480",
+      "position": [
+        1124.5,
+        2281
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:Nyght-FortWyrmPuzzle2.jpg",
+        "description": "Owl puzzle south of the Fort Wyrmsoul area, right on the edge of the island. Slots for puzzle are in the tents across from it, coin for puzzle is to the right of it on some storage-looking boxes.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "481",
+      "position": [
+        2382.242745817479,
+        335.16861428242356
+      ]
+    },
+    {
+      "categoryId": "puzzle",
+      "popup": {
+        "title": "Owl Puzzle",
+        "image": "File:LonesomeOutlook OwlPuzzle.jpg",
+        "description": "Owl puzzle at the building near the water. One of the coins you need is inside the building.",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "482",
+      "position": [
+        2249.625,
+        1732.875
+      ]
+    },
+    {
+      "categoryId": "shop",
+      "popup": {
+        "title": "Acrithis",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "483",
+      "position": [
+        2911.0019553817438,
+        507.5039134054955
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "484",
+      "position": [
+        3180.9198551676836,
+        276.8323048345333
+      ]
+    },
+    {
+      "categoryId": "tasoma",
+      "popup": {
+        "title": "Tasoma",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "485",
+      "position": [
+        3012.981994635879,
+        294.15642097360376
+      ]
+    },
+    {
+      "categoryId": "dracroot",
+      "popup": {
+        "title": "Dracroot",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "486",
+      "position": [
+        3355.221676730168,
+        697.2072862499358
+      ]
+    },
+    {
+      "categoryId": "connla_sprout",
+      "popup": {
+        "title": "Connla Sprout",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "487",
+      "position": [
+        1642.6090526963499,
+        2624.7803717644642
+      ]
+    },
+    {
+      "categoryId": "shop",
+      "popup": {
+        "title": "Acrithis",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "488",
+      "position": [
+        1076.0984289170542,
+        3503.7305861997197
+      ]
+    },
+    {
+      "categoryId": "shop",
+      "popup": {
+        "title": "Acrithis",
+        "description": "Under the Bridge",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "489",
+      "position": [
+        1720.9999111190118,
+        2341.0023313905076
+      ]
+    },
+    {
+      "categoryId": "shop",
+      "popup": {
+        "title": "Acrithis",
+        "description": "On the street, above the cave",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "490",
+      "position": [
+        1505.4339169851569,
+        2669.5572855953374
+      ]
+    },
+    {
+      "categoryId": "shop",
+      "popup": {
+        "title": "Acrithis",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "491",
+      "position": [
+        393.0311332035331,
+        2537.169084861892
+      ]
+    },
+    {
+      "categoryId": "shop",
+      "popup": {
+        "title": "Acrithis",
+        "description": "",
+        "link": {
+          "label": "",
+          "url": ""
+        }
+      },
+      "id": "492",
+      "position": [
+        1332.7780654546054,
+        1232.5780933937936
+      ]
+    }
+  ]
+}
