@@ -1,8 +1,7 @@
 /**
- * map.js — Warframe Interactive Map Engine
- * Uses Leaflet + Static PNG overlay + Custom hex markers
+ * map.js — Warframe Interactive Map Engine v2
+ * Leaflet + Static PNG overlay + Wiki icons + Chinese labels + GSAP
  */
-
 (function () {
   'use strict';
 
@@ -12,6 +11,7 @@
 
   const MAP_SIZE = 4000;
   const MAP_EXTENT = 0.04;
+  const ICON_BASE = '/map/assets/icons/';
 
   const MAPS = {
     'duviri': {
@@ -52,36 +52,6 @@
     }
   };
 
-  const GROUPS = {
-    'duviri': [
-      { name: '交通与据点', ids: ['blinkpad', 'cave', 'undercroft', 'shop', 'npc'] },
-      { name: '资源采集', ids: ['ueymag', 'tasoma', 'eevani', 'connla_sprout', 'yao_shrub', 'silphsela', 'dracroot', 'kovnik', 'saggen_pearl'] },
-      { name: '活动与谜题', ids: ['game', 'puzzle', 'puzzle_coop', 'shawzin', 'herding', 'fishing'] },
-      { name: '记忆碎片', ids: ['scholars_landing', 'we_are_not', 'watchers_island', 'lake_veruna', 'galleria', 'doll_mausoleum', 'caves_of_academe', 'manipura_island', 'island_of_lorn', 'bleeding_earth'] },
-      { name: '收集品', ids: ['1', '2', 'somachord'] }
-    ],
-    'plains-of-eidolon': [
-      { name: '交通与据点', ids: ['blinkpad', 'cave', 'konzu', 'grineer_base'] },
-      { name: '夜灵狩猎', ids: ['eidolon_lure', 'eidolon_shrine'] },
-      { name: '捕鱼点', ids: ['lake', 'ocean', 'pond'] },
-      { name: '资源与收集', ids: ['cetus_wisp', 'thousand_year_fish'] },
-      { name: '活动', ids: ['plague_star'] }
-    ],
-    'orb-vallis': [
-      { name: '交通与据点', ids: ['blinkpad', 'corpus_base'] },
-      { name: '洞穴', ids: ['cave_with_fishing', 'cave_no_fishing'] },
-      { name: '捕鱼点', ids: ['pond', 'lake'] },
-      { name: '环形装置', ids: ['sola_toroid', 'calda_toroid', 'vega_toroid'] },
-      { name: '首领', ids: ['exploiter_orb', 'profit-taker_orb'] },
-      { name: '活动', ids: ['k-drive_race', '1', '2'] },
-      { name: '记忆碎片', ids: ['eudico_fragment', 'legs_fragment', 'little_duck_fragment', 'rude_zuud_fragment', 'smokefinger_fragment', 'the_business_fragment', 'ticker_fragment'] }
-    ],
-    'cambion-drift': [
-      { name: '交通与据点', ids: ['blinkpad', 'k-drive_race'] },
-      { name: '活动与首领', ids: ['mother', 'mother_isolation_vault', 'requiem_obelisk'] }
-    ]
-  };
-
   // ════════════════════════════════════════════════════════════
   //  STATE
   // ════════════════════════════════════════════════════════════
@@ -107,23 +77,21 @@
   };
 
   const STATE_NAMES = {
-    day: { zh: '白昼', en: 'Day' },
-    night: { zh: '夜晚', en: 'Night' },
-    warm: { zh: '温暖', en: 'Warm' },
-    cold: { zh: '寒冷', en: 'Cold' },
-    fass: { zh: 'Fass', en: 'Fass' },
-    vome: { zh: 'Vome', en: 'Vome' },
-    sorrow: { zh: '悲伤', en: 'Sorrow' },
-    fear: { zh: '恐惧', en: 'Fear' },
-    joy: { zh: '喜悦', en: 'Joy' },
-    anger: { zh: '愤怒', en: 'Anger' },
-    envy: { zh: '嫉妒', en: 'Envy' }
+    day: { zh: '白昼', en: 'Day', icon: '☀️', color: '#ffd700' },
+    night: { zh: '夜晚', en: 'Night', icon: '🌙', color: '#4a6fa5' },
+    warm: { zh: '温暖', en: 'Warm', icon: '🌡️', color: '#ff6b4a' },
+    cold: { zh: '寒冷', en: 'Cold', icon: '❄️', color: '#4ac1ff' },
+    fass: { zh: 'Fass', en: 'Fass', icon: '🔴', color: '#ff4a4a' },
+    vome: { zh: 'Vome', en: 'Vome', icon: '🔵', color: '#4a8fff' },
+    sorrow: { zh: '悲伤', en: 'Sorrow', icon: '💧', color: '#6a4aff' },
+    fear: { zh: '恐惧', en: 'Fear', icon: '👁️', color: '#4a4a4a' },
+    joy: { zh: '喜悦', en: 'Joy', icon: '✨', color: '#ffdd4a' },
+    anger: { zh: '愤怒', en: 'Anger', icon: '🔥', color: '#ff4a4a' },
+    envy: { zh: '嫉妒', en: 'Envy', icon: '💀', color: '#4aff4a' }
   };
 
   function calcCycles() {
     const now = Date.now() / 1000;
-
-    // Eidolon
     const eidElapsed = (now - CYCLE_CONFIG.eidolon.epoch) % CYCLE_CONFIG.eidolon.full;
     const eidNight = CYCLE_CONFIG.eidolon.full - CYCLE_CONFIG.eidolon.day;
     const eidIsDay = eidElapsed < eidNight;
@@ -131,7 +99,6 @@
       ? CYCLE_CONFIG.eidolon.day - eidElapsed
       : CYCLE_CONFIG.eidolon.full - eidElapsed;
 
-    // Vallis
     const valElapsed = (now - CYCLE_CONFIG.vallis.epoch) % CYCLE_CONFIG.vallis.full;
     const valCold = CYCLE_CONFIG.vallis.full - CYCLE_CONFIG.vallis.warm;
     const valIsWarm = valElapsed > valCold;
@@ -139,38 +106,26 @@
       ? CYCLE_CONFIG.vallis.full - valElapsed
       : valCold - valElapsed;
 
-    // Duviri
     const duvElapsed = (Math.floor(now) - 52) % CYCLE_CONFIG.duviri.full;
     const duvIdx = Math.floor(duvElapsed / CYCLE_CONFIG.duviri.phase);
     const duvRemaining = CYCLE_CONFIG.duviri.phase - (duvElapsed % CYCLE_CONFIG.duviri.phase);
     const duvState = CYCLE_CONFIG.duviri.emotions[duvIdx];
 
-    // Cambion (derived from Eidolon)
     const camState = eidIsDay ? 'fass' : 'vome';
 
     return {
-      'plains-of-eidolon': {
-        state: eidIsDay ? 'day' : 'night',
-        remaining: eidRemaining
-      },
-      'orb-vallis': {
-        state: valIsWarm ? 'warm' : 'cold',
-        remaining: valRemaining
-      },
-      'duviri': {
-        state: duvState,
-        remaining: duvRemaining
-      },
-      'cambion-drift': {
-        state: camState,
-        remaining: eidRemaining
-      }
+      'plains-of-eidolon': { state: eidIsDay ? 'day' : 'night', remaining: eidRemaining },
+      'orb-vallis': { state: valIsWarm ? 'warm' : 'cold', remaining: valRemaining },
+      'duviri': { state: duvState, remaining: duvRemaining },
+      'cambion-drift': { state: camState, remaining: eidRemaining }
     };
   }
 
   function formatTime(seconds) {
-    const m = Math.floor(seconds / 60);
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
     const s = Math.floor(seconds % 60);
+    if (h > 0) return `${h}h ${String(m).padStart(2, '0')}m`;
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   }
 
@@ -183,19 +138,13 @@
     const timerEl = document.getElementById('cycleTimer');
     const iconEl = document.getElementById('cycleIcon');
 
-    const stateName = STATE_NAMES[current.state];
-    nameEl.textContent = stateName ? stateName.zh : current.state;
+    const stateInfo = STATE_NAMES[current.state];
+    nameEl.textContent = stateInfo ? stateInfo.zh : current.state;
     timerEl.textContent = formatTime(current.remaining);
 
-    // Update icon color based on state
-    const colors = {
-      day: '#ffd700', night: '#4a6fa5',
-      warm: '#ff6b4a', cold: '#4ac1ff',
-      fass: '#ff4a4a', vome: '#4a8fff',
-      sorrow: '#6a4aff', fear: '#4a4a4a', joy: '#ffdd4a', anger: '#ff4a4a', envy: '#4aff4a'
-    };
-    iconEl.style.background = colors[current.state] || 'var(--c-cyan)';
-    iconEl.style.boxShadow = `0 0 8px ${colors[current.state] || 'var(--c-cyan)'}`;
+    const color = stateInfo ? stateInfo.color : 'var(--c-cyan)';
+    iconEl.style.background = color;
+    iconEl.style.boxShadow = `0 0 12px ${color}, 0 0 24px ${color}40`;
 
     // Update nav tab states
     Object.entries(cycles).forEach(([mapId, data]) => {
@@ -208,12 +157,29 @@
   }
 
   // ════════════════════════════════════════════════════════════
+  //  TRANSLATIONS
+  // ════════════════════════════════════════════════════════════
+
+  function getCategoryName(catId) {
+    return CATEGORY_NAMES[catId] || catId;
+  }
+
+  function getIconPath(catId) {
+    const rel = ICON_MAP[catId] || 'shared/blinkpad.png';
+    return ICON_BASE + rel;
+  }
+
+  function getGroupName(groupId) {
+    const t = MAP_TRANSLATIONS.zh.groups;
+    return t[groupId] || groupId;
+  }
+
+  // ════════════════════════════════════════════════════════════
   //  DATA LOADING
   // ════════════════════════════════════════════════════════════
 
   async function loadMapData(mapId) {
     if (mapData[mapId]) return mapData[mapId];
-
     const url = `/map/data/${mapId}.json`;
     try {
       const resp = await fetch(url);
@@ -233,7 +199,6 @@
 
   function initMap() {
     const cfg = MAPS[currentMap];
-
     map = L.map('map', {
       crs: L.CRS.Simple,
       minZoom: -2,
@@ -243,17 +208,13 @@
       attributionControl: false,
       keyboard: true
     });
-
-    // Fit bounds
     map.fitBounds(cfg.bounds);
 
-    // Add image overlay
     imageOverlay = L.imageOverlay(cfg.image, cfg.bounds, {
       opacity: 1,
       interactive: true
     }).addTo(map);
 
-    // Mouse coords display
     map.on('mousemove', (e) => {
       const coords = document.getElementById('overlayCoords');
       if (coords) {
@@ -272,7 +233,7 @@
   }
 
   // ════════════════════════════════════════════════════════════
-  //  MARKERS
+  //  MARKERS — Wiki Icons + Chinese Labels
   // ════════════════════════════════════════════════════════════
 
   function getMarkerColor(categoryId, categories) {
@@ -280,34 +241,36 @@
     return cat ? cat.color : '#00d4ff';
   }
 
-  function getMarkerSymbol(categoryId, categories) {
-    const cat = categories.find(c => c.id === categoryId);
-    return cat ? (cat.symbol || '') : '';
-  }
+  function createMarkerIcon(categoryId, categories) {
+    const color = getMarkerColor(categoryId, categories);
+    const iconPath = getIconPath(categoryId);
+    const catName = getCategoryName(categoryId);
 
-  function createHexIcon(color, symbol) {
     return L.divIcon({
-      className: 'hex-marker',
-      html: `<div class="hex-marker-inner" style="background:${color};clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)">${symbol ? `<span style="font-size:7px">${symbol}</span>` : ''}</div>`,
-      iconSize: [16, 18],
-      iconAnchor: [8, 18],
-      popupAnchor: [0, -18]
+      className: 'wiki-marker',
+      html: `
+        <div class="wiki-marker-pin" style="--marker-color: ${color}">
+          <div class="wiki-marker-glow"></div>
+          <img class="wiki-marker-icon" src="${iconPath}" alt="${catName}" loading="lazy">
+        </div>
+        <span class="wiki-marker-label">${catName}</span>
+      `,
+      iconSize: [32, 44],
+      iconAnchor: [16, 44],
+      popupAnchor: [0, -44]
     });
   }
 
   function addMarkers(data) {
     if (!data || !data.markers || !data.categories) return;
 
+    const newMarkers = [];
     data.markers.forEach(m => {
       if (!categoryState[m.categoryId]) return;
       if (showFavOnly && !isFavorite(m.id)) return;
       if (searchQuery && !m.popup.title.toLowerCase().includes(searchQuery)) return;
 
-      const color = getMarkerColor(m.categoryId, data.categories);
-      const symbol = getMarkerSymbol(m.categoryId, data.categories);
-      const icon = createHexIcon(color, symbol);
-
-      // Convert pixel coords to Leaflet coords
+      const icon = createMarkerIcon(m.categoryId, data.categories);
       const lat = m.position[1];
       const lng = m.position[0];
 
@@ -315,26 +278,46 @@
         .addTo(map)
         .bindPopup(() => {
           const cat = data.categories.find(c => c.id === m.categoryId);
-          const catName = cat ? cat.name : m.categoryId;
+          const catName = cat ? getCategoryName(cat.id) : m.categoryId;
           const isFav = isFavorite(m.id);
+          const desc = m.popup.description || '';
           return `<div class="popup-card">
-            <div class="popup-title">${m.popup.title}</div>
-            <div class="popup-category">${catName}</div>
+            <div class="popup-header">
+              <img class="popup-icon" src="${getIconPath(m.categoryId)}" alt="">
+              <div>
+                <div class="popup-title">${m.popup.title}</div>
+                <div class="popup-category">${catName}</div>
+              </div>
+            </div>
+            ${desc ? `<div class="popup-desc">${desc}</div>` : ''}
             <div class="popup-actions">
               <button class="popup-btn ${isFav ? 'fav-active' : ''}" onclick="window._toggleFav('${m.id}')">
                 ${isFav ? '★ 已收藏' : '☆ 收藏'}
               </button>
-              ${m.popup.link && m.popup.link.url ? `<a class="popup-btn" href="${m.popup.link.url}" target="_blank">${m.popup.link.label || 'Wiki'}</a>` : ''}
+              ${m.popup.link && m.popup.link.url ? `<a class="popup-btn popup-link" href="${m.popup.link.url}" target="_blank">${m.popup.link.label || 'Wiki'}</a>` : ''}
             </div>
           </div>`;
-        }, { maxWidth: 250 });
+        }, { maxWidth: 280 });
 
       marker._markerId = m.id;
       marker._categoryId = m.categoryId;
-      markers.push(marker);
+      newMarkers.push(marker);
     });
 
+    markers = newMarkers;
     updateStats();
+
+    // GSAP stagger animation for new markers
+    if (typeof gsap !== 'undefined' && markers.length > 0) {
+      const markerEls = markers.map(m => m.getElement()).filter(Boolean);
+      gsap.from(markerEls, {
+        scale: 0,
+        opacity: 0,
+        duration: 0.3,
+        stagger: { amount: Math.min(markerEls.length * 0.01, 0.8), from: 'center' },
+        ease: 'back.out(1.7)'
+      });
+    }
   }
 
   function clearMarkers() {
@@ -359,32 +342,31 @@
       return;
     }
 
-    const groups = GROUPS[currentMap] || [];
+    const groups = MAP_GROUPS[currentMap] || [];
     let html = '';
 
     groups.forEach(group => {
-      const cats = group.ids
+      const cats = group.categories
         .map(id => data.categories.find(c => c.id === id))
         .filter(Boolean);
 
       const totalItems = cats.reduce((sum, c) => {
-        const count = data.markers.filter(m => m.categoryId === c.id).length;
-        return sum + count;
+        return sum + data.markers.filter(m => m.categoryId === c.id).length;
       }, 0);
 
       const checkedCount = cats.reduce((sum, c) => {
         if (!categoryState[c.id]) return sum;
-        const count = data.markers.filter(m => m.categoryId === c.id).length;
-        return sum + count;
+        return sum + data.markers.filter(m => m.categoryId === c.id).length;
       }, 0);
 
       const allOn = cats.every(c => categoryState[c.id]);
       const allOff = cats.every(c => !categoryState[c.id]);
+      const groupName = getGroupName(group.id);
 
-      html += `<div class="cat-group ${allOn ? 'all-on' : ''} ${allOff ? 'all-off' : ''}" data-group="${group.name}">
+      html += `<div class="cat-group ${allOn ? 'all-on' : ''} ${allOff ? 'all-off' : ''}" data-group="${group.id}">
         <div class="cat-group-header" onclick="window._toggleGroup(this)">
           <div class="cat-group-toggle">✓</div>
-          <div class="cat-group-name">${group.name}</div>
+          <div class="cat-group-name">${groupName}</div>
           <div class="cat-group-count">${checkedCount}/${totalItems}</div>
           <div class="cat-group-arrow">▼</div>
         </div>
@@ -393,10 +375,11 @@
       cats.forEach(cat => {
         const count = data.markers.filter(m => m.categoryId === cat.id).length;
         const checked = categoryState[cat.id];
+        const iconPath = getIconPath(cat.id);
         html += `<div class="cat-item" data-cat="${cat.id}">
-          <div class="cat-item-color" style="background:${cat.color};color:${cat.color}"></div>
+          <img class="cat-item-icon" src="${iconPath}" alt="" loading="lazy">
           <input type="checkbox" class="cat-item-check" ${checked ? 'checked' : ''} onchange="window._toggleCategory('${cat.id}', this.checked)">
-          <div class="cat-item-name">${cat.name}</div>
+          <div class="cat-item-name">${getCategoryName(cat.id)}</div>
           <div class="cat-item-count">${count}</div>
         </div>`;
       });
@@ -410,12 +393,8 @@
   function updateStats() {
     const data = mapData[currentMap];
     if (!data) return;
-
-    const total = data.markers.length;
-    const visible = markers.length;
-
-    document.getElementById('statTotal').textContent = total;
-    document.getElementById('statVisible').textContent = visible;
+    document.getElementById('statTotal').textContent = data.markers.length;
+    document.getElementById('statVisible').textContent = markers.length;
   }
 
   // ════════════════════════════════════════════════════════════
@@ -425,9 +404,7 @@
   function loadFavorites() {
     try {
       favorites = JSON.parse(localStorage.getItem('wfspeed-map-favorites') || '{}');
-    } catch (e) {
-      favorites = {};
-    }
+    } catch (e) { favorites = {}; }
   }
 
   function saveFavorites() {
@@ -441,15 +418,10 @@
   window._toggleFav = function (id) {
     if (!favorites[currentMap]) favorites[currentMap] = [];
     const idx = favorites[currentMap].indexOf(id);
-    if (idx >= 0) {
-      favorites[currentMap].splice(idx, 1);
-    } else {
-      favorites[currentMap].push(id);
-    }
+    if (idx >= 0) favorites[currentMap].splice(idx, 1);
+    else favorites[currentMap].push(id);
     saveFavorites();
     refreshMarkers();
-
-    // Reopen popup if marker exists
     const marker = markers.find(m => m._markerId === id);
     if (marker) marker.openPopup();
   };
@@ -474,13 +446,13 @@
     if (!data) return;
 
     document.querySelectorAll('.cat-group').forEach(groupEl => {
-      const group = GROUPS[currentMap].find(g => g.name === groupEl.dataset.group);
+      const groupId = groupEl.dataset.group;
+      const group = MAP_GROUPS[currentMap].find(g => g.id === groupId);
       if (!group) return;
 
       let checkedCount = 0;
       let totalCount = 0;
-
-      group.ids.forEach(id => {
+      group.categories.forEach(id => {
         const cat = data.categories.find(c => c.id === id);
         if (!cat) return;
         const count = data.markers.filter(m => m.categoryId === id).length;
@@ -490,7 +462,6 @@
 
       const countEl = groupEl.querySelector('.cat-group-count');
       if (countEl) countEl.textContent = `${checkedCount}/${totalCount}`;
-
       groupEl.classList.toggle('all-on', checkedCount === totalCount && totalCount > 0);
       groupEl.classList.toggle('all-off', checkedCount === 0);
     });
@@ -505,7 +476,6 @@
   function initSearch() {
     const input = document.getElementById('searchInput');
     let debounce = null;
-
     input.addEventListener('input', () => {
       clearTimeout(debounce);
       debounce = setTimeout(() => {
@@ -513,8 +483,6 @@
         refreshMarkers();
       }, 200);
     });
-
-    // Keyboard shortcut
     document.addEventListener('keydown', (e) => {
       if (e.key === '/' && document.activeElement !== input) {
         e.preventDefault();
@@ -535,44 +503,55 @@
 
   async function switchMap(mapId) {
     if (mapId === currentMap && map) return;
-
     currentMap = mapId;
 
-    // Update nav tabs
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
     document.querySelector(`[data-map="${mapId}"]`)?.classList.add('active');
 
-    // Reset category state
+    // GSAP transition
+    if (typeof gsap !== 'undefined' && map) {
+      await new Promise(resolve => {
+        gsap.to('#map', {
+          opacity: 0,
+          scale: 0.98,
+          duration: 0.25,
+          ease: 'power2.in',
+          onComplete: resolve
+        });
+      });
+    }
+
     initCategoryState();
-
-    // Destroy old map
     destroyMap();
-
-    // Load data
     const data = await loadMapData(mapId);
     if (!data) return;
-
-    // Init new map
     initMap();
-
-    // Render sidebar
     renderSidebar(data);
-
-    // Add markers
     addMarkers(data);
-
-    // Update cycle display
     updateCycleDisplay();
+
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo('#map',
+        { opacity: 0, scale: 1.02 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' }
+      );
+      // Stagger sidebar items
+      const items = document.querySelectorAll('.cat-group');
+      gsap.from(items, {
+        x: -20,
+        opacity: 0,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: 'power2.out'
+      });
+    }
   }
 
   function initCategoryState() {
     const data = mapData[currentMap];
     if (!data) return;
-
     categoryState = {};
-    data.categories.forEach(cat => {
-      categoryState[cat.id] = true;
-    });
+    data.categories.forEach(cat => { categoryState[cat.id] = true; });
   }
 
   // ════════════════════════════════════════════════════════════
@@ -580,12 +559,10 @@
   // ════════════════════════════════════════════════════════════
 
   function bindEvents() {
-    // Nav tabs
     document.querySelectorAll('.nav-tab').forEach(tab => {
       tab.addEventListener('click', () => switchMap(tab.dataset.map));
     });
 
-    // Select all / Clear all
     document.getElementById('selectAll').addEventListener('click', () => {
       Object.keys(categoryState).forEach(k => categoryState[k] = true);
       document.querySelectorAll('.cat-item-check').forEach(cb => cb.checked = true);
@@ -600,7 +577,6 @@
       updateSidebarCounts();
     });
 
-    // Fav toggle
     document.getElementById('favToggle').addEventListener('click', function () {
       showFavOnly = !showFavOnly;
       this.classList.toggle('active', showFavOnly);
@@ -615,9 +591,32 @@
   function initAnimations() {
     if (typeof gsap === 'undefined') return;
 
-    gsap.from('.map-topbar', { y: -60, opacity: 0, duration: 0.6, ease: 'power3.out' });
-    gsap.from('.map-nav', { x: -64, opacity: 0, duration: 0.6, delay: 0.1, ease: 'power3.out' });
-    gsap.from('.map-sidebar', { x: -280, opacity: 0, duration: 0.6, delay: 0.2, ease: 'power3.out' });
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    // Page load sequence
+    tl.from('.map-topbar', { y: -80, opacity: 0, duration: 0.7 })
+      .from('.map-nav', { x: -80, opacity: 0, duration: 0.7 }, '-=0.5')
+      .from('.map-sidebar', { x: -320, opacity: 0, duration: 0.7 }, '-=0.5')
+      .from('.map-container', { opacity: 0, scale: 0.95, duration: 0.6 }, '-=0.4');
+
+    // Cycle indicator pulse
+    gsap.to('#cycleIcon', {
+      scale: 1.2,
+      duration: 1.5,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut'
+    });
+
+    // Nav tab hover effects
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      tab.addEventListener('mouseenter', () => {
+        gsap.to(tab.querySelector('.nav-tab-icon'), { scale: 1.2, duration: 0.2 });
+      });
+      tab.addEventListener('mouseleave', () => {
+        gsap.to(tab.querySelector('.nav-tab-icon'), { scale: 1, duration: 0.2 });
+      });
+    });
   }
 
   // ════════════════════════════════════════════════════════════
@@ -628,19 +627,12 @@
     loadFavorites();
     initSearch();
     bindEvents();
-
-    // Start cycle timer
     updateCycleDisplay();
     setInterval(updateCycleDisplay, 1000);
-
-    // Load initial map
     await switchMap('duviri');
-
-    // Animations
     initAnimations();
   }
 
-  // Start
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
