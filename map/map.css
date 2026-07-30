@@ -709,6 +709,11 @@
 /* ── Leaflet Overrides ── */
 .leaflet-container { background: #030408 !important; }
 
+.leaflet-image-layer {
+  will-change: transform;
+  image-rendering: auto;
+}
+
 .leaflet-control-zoom {
   border: 1px solid var(--border-hi) !important;
   border-radius: 4px !important;

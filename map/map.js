@@ -13,7 +13,6 @@
   const ICON_BASE = '/map/assets/icons/';
   const LS_FAV_KEY = 'wfspeed-map-favorites';
   const LS_CAT_KEY = 'wfspeed-map-categories';
-  const LS_MAP_KEY = 'wfspeed-map-current';
 
   const MAPS = {
     'duviri': {
@@ -213,9 +212,8 @@
 
   function loadCategoryState() {
     try {
-      const lastMap = localStorage.getItem(LS_MAP_KEY);
       const saved = JSON.parse(localStorage.getItem(LS_CAT_KEY) || '{}');
-      if (saved[currentMap] && lastMap === currentMap) {
+      if (saved[currentMap]) {
         categoryState = saved[currentMap];
         return true;
       }
@@ -228,7 +226,6 @@
       const all = JSON.parse(localStorage.getItem(LS_CAT_KEY) || '{}');
       all[currentMap] = categoryState;
       localStorage.setItem(LS_CAT_KEY, JSON.stringify(all));
-      localStorage.setItem(LS_MAP_KEY, currentMap);
     } catch (e) {}
   }
 
@@ -324,6 +321,16 @@
       if (Math.abs(newZoom - currentZoom) >= 0.25) {
         currentZoom = newZoom;
         refreshMarkers();
+      }
+      // Ensure overlay survives zoom/pan
+      if (imageOverlay && map && !map.hasLayer(imageOverlay)) {
+        imageOverlay.addTo(map);
+      }
+    });
+
+    map.on('moveend', () => {
+      if (imageOverlay && map && !map.hasLayer(imageOverlay)) {
+        imageOverlay.addTo(map);
       }
     });
     currentZoom = map.getZoom();
@@ -680,7 +687,6 @@
       });
     }
 
-    const hadState = loadCategoryState();
     const data = await loadMapData(mapId);
 
     if (!data) {
@@ -690,11 +696,14 @@
       return;
     }
 
-    if (!hadState) {
-      categoryState = {};
-      data.categories.forEach(cat => { categoryState[cat.id] = true; });
-      saveCategoryState();
+    categoryState = {};
+    const saved = JSON.parse(localStorage.getItem(LS_CAT_KEY) || '{}');
+    if (saved[mapId]) {
+      categoryState = saved[mapId];
+    } else {
+      data.categories.forEach(cat => { categoryState[cat.id] = false; });
     }
+    saveCategoryState();
 
     destroyMap();
 
