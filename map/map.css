@@ -45,6 +45,21 @@
   background: #070503;
   overflow: hidden;
   transition: opacity .8s cubic-bezier(.4,0,.2,1), visibility .8s;
+  /* Reset any inherited styles that might cause issues */
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1;
+  box-sizing: border-box;
+  /* Override any conflicting styles from global.css */
+  color: rgba(201,164,50,.88);
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: .05em;
+}
+#map-splash *, #map-splash *::before, #map-splash *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 #map-splash.ws-splash--done {
   opacity: 0;
