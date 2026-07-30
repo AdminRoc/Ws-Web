@@ -817,67 +817,129 @@
   }
 
   // ════════════════════════════════════════════════════════════
-  //  SPLASH SCREEN CONTROLLER
+  //  SPLASH SCREEN CONTROLLER (same as worldstate)
   // ════════════════════════════════════════════════════════════
 
-  const _spl = {
-    el: null, bar: null, pct: null, status: null,
-    progress: 0, target: 0, raf: null,
-    msgs: [
-      'INITIALIZING TACTICAL OVERLAY',
-      'LOADING MAP ASSETS',
-      'CALIBRATING COORDINATE SYSTEM',
+  var _mapSpl = document.getElementById('map-splash');
+  if (_mapSpl) {
+    var _mapSplStatus = document.getElementById('map-spl-status');
+    var _mapSplInfo   = document.getElementById('map-spl-info');
+    var _mapSplBarFill = document.getElementById('map-spl-bar-fill');
+    var _mapSplBarPct = document.getElementById('map-spl-bar-pct');
+    var _mapSplLeft   = document.getElementById('map-spl-left');
+    var _mapSplRight  = document.getElementById('map-spl-right');
+    var _mapSplUtc    = document.getElementById('map-spl-utc');
+    var _mapSplHexWrap = document.getElementById('map-spl-hex-wrap');
+
+    var MAP_SPL_STATUSES = [
+      'ESTABLISHING TACTICAL LINK',
+      'AUTHENTICATING TENNO ACCESS',
+      'LOADING MAP TERRAIN DATA',
       'SYNCING MARKER DATABASE',
-      'ESTABLISHING CYCLE DATA LINK',
-      'RENDERING TERRAIN MESH',
+      'CALIBRATING COORDINATE SYSTEM',
+      'LOADING CYCLE DATA',
       'OPTIMIZING VIEWPORT RENDERER'
-    ]
-  };
+    ];
+    var MAP_SPL_INFOS = [
+      '// INITIALIZING LANDSCAPE MAP SYSTEM',
+      '// CONNECTING TO MAP DATA SERVER',
+      '// LOADING TERRAIN MESH DATA',
+      '// SYNCING MARKER POSITIONS',
+      '// CALIBRATING CYCLE TIMERS',
+      '// LOADING FAVORITE LOCATIONS',
+      '// CALIBRATING VIEWPORT RENDERER'
+    ];
 
-  function splInit() {
-    _spl.el = document.getElementById('mapSplash');
-    _spl.bar = document.getElementById('mapSplashBar');
-    _spl.pct = document.getElementById('mapSplashPct');
-    _spl.status = document.getElementById('mapSplashStatus');
-    if (!_spl.el) return;
-    _spl.target = 0;
-    _spl.progress = 0;
-    splTick();
+    /* 侧边十六进制数据流 */
+    var HEX = '0123456789ABCDEF';
+    function mapRndHexLine() {
+      var n = Math.floor(Math.random() * 14) + 6, s = '';
+      for (var i = 0; i < n; i++) s += HEX[Math.floor(Math.random() * 16)];
+      return s;
+    }
+    function mapBuildHexBlock(count) {
+      var lines = [];
+      for (var i = 0; i < count; i++) lines.push(mapRndHexLine());
+      return lines.join('\n');
+    }
+    function mapInitHexSides() {
+      if (_mapSplLeft) _mapSplLeft.textContent = mapBuildHexBlock(48);
+      if (_mapSplRight) _mapSplRight.textContent = mapBuildHexBlock(48);
+    }
+    function mapScrambleSide(el) {
+      if (!el) return;
+      var lines = el.textContent.split('\n');
+      var idx = Math.floor(Math.random() * lines.length);
+      lines[idx] = mapRndHexLine();
+      el.textContent = lines.join('\n');
+    }
+
+    /* UTC 时钟 */
+    function mapUpdateUtc() {
+      if (!_mapSplUtc) return;
+      var now = new Date();
+      _mapSplUtc.textContent = 'UTC ' +
+        String(now.getUTCHours()).padStart(2, '0') + ':' +
+        String(now.getUTCMinutes()).padStart(2, '0') + ':' +
+        String(now.getUTCSeconds()).padStart(2, '0');
+    }
+
+    /* 进度条 */
+    var _mapSplProgress = 0;
+    var _mapSplTarget = 0;
+    var _mapSplMsgIdx = 0;
+    function mapSplSetProgress(p) {
+      _mapSplTarget = Math.min(100, Math.max(0, p));
+    }
+    function mapSplTick() {
+      if (_mapSplProgress < _mapSplTarget) {
+        _mapSplProgress += (_mapSplTarget - _mapSplProgress) * 0.12;
+        if (_mapSplTarget - _mapSplProgress < 0.3) _mapSplProgress = _mapSplTarget;
+      }
+      if (_mapSplBarFill) _mapSplBarFill.style.width = _mapSplProgress + '%';
+      if (_mapSplBarPct) _mapSplBarPct.textContent = Math.round(_mapSplProgress) + '%';
+      if (_mapSplProgress < 100) requestAnimationFrame(mapSplTick);
+    }
+
+    /* 启动 */
+    mapInitHexSides();
+    mapUpdateUtc();
+    setInterval(mapUpdateUtc, 1000);
+    setInterval(function () {
+      mapScrambleSide(_mapSplLeft);
+      mapScrambleSide(_mapSplRight);
+    }, 180);
+    if (_mapSplHexWrap) _mapSplHexWrap.classList.add('map-spl-hex-spinning');
+
+    /* 状态文字轮播 */
+    var _mapSplStatusTimer = setInterval(function () {
+      _mapSplMsgIdx++;
+      if (_mapSplMsgIdx >= MAP_SPL_STATUSES.length) _mapSplMsgIdx = 0;
+      if (_mapSplStatus) _mapSplStatus.textContent = MAP_SPL_STATUSES[_mapSplMsgIdx];
+      if (_mapSplInfo) _mapSplInfo.textContent = MAP_SPL_INFOS[_mapSplMsgIdx];
+    }, 800);
+
+    mapSplSetProgress(15);
+    requestAnimationFrame(mapSplTick);
   }
 
-  function splSet(p, msgIdx) {
-    _spl.target = Math.min(100, Math.max(0, p));
-    if (msgIdx != null && _spl.status) {
-      _spl.status.textContent = _spl.msgs[msgIdx] || _spl.msgs[_spl.msgs.length - 1];
-    }
-  }
-
-  function splTick() {
-    if (_spl.progress < _spl.target) {
-      _spl.progress += (_spl.target - _spl.progress) * 0.12;
-      if (_spl.target - _spl.progress < 0.3) _spl.progress = _spl.target;
-    }
-    if (_spl.bar) _spl.bar.style.width = _spl.progress + '%';
-    if (_spl.pct) _spl.pct.textContent = Math.round(_spl.progress) + '%';
-    if (_spl.progress < 100) {
-      _spl.raf = requestAnimationFrame(splTick);
-    }
-  }
-
-  function splDone() {
-    _spl.target = 100;
-    if (_spl.status) _spl.status.textContent = 'TACTICAL OVERLAY ONLINE';
+  function mapSplDone() {
+    if (!_mapSpl) return;
+    clearInterval(_mapSplStatusTimer);
+    mapSplSetProgress(100);
+    if (_mapSplStatus) _mapSplStatus.textContent = 'TACTICAL OVERLAY ONLINE';
+    if (_mapSplInfo) _mapSplInfo.textContent = '// LANDSCAPE MAP SYSTEM READY';
     setTimeout(function () {
-      if (_spl.raf) cancelAnimationFrame(_spl.raf);
-      if (_spl.bar) _spl.bar.style.width = '100%';
-      if (_spl.pct) _spl.pct.textContent = '100%';
+      _mapSpl.classList.add('ws-splash--done');
       setTimeout(function () {
-        if (_spl.el) _spl.el.classList.add('map-splash--done');
-        setTimeout(function () {
-          if (_spl.el && _spl.el.parentNode) _spl.el.parentNode.removeChild(_spl.el);
-        }, 900);
-      }, 200);
-    }, 300);
+        if (_mapSpl.parentNode) _mapSpl.parentNode.removeChild(_mapSpl);
+      }, 900);
+    }, 400);
+  }
+
+  function mapSplProgress(p) {
+    mapSplSetProgress(p);
+    requestAnimationFrame(mapSplTick);
   }
 
   // ════════════════════════════════════════════════════════════
@@ -885,34 +947,32 @@
   // ════════════════════════════════════════════════════════════
 
   async function init() {
-    splInit();
-    splSet(10, 0);
     loadFavorites();
-    splSet(25, 1);
+    mapSplProgress(25);
     initSearch();
     bindEvents();
-    splSet(40, 2);
+    mapSplProgress(40);
     updateCycleDisplay();
     setInterval(updateCycleDisplay, 1000);
-    splSet(55, 3);
+    mapSplProgress(55);
     try {
       await switchMap('duviri');
-      splSet(85, 5);
+      mapSplProgress(85);
     } catch (e) {
       console.error('Map init failed, retrying...', e);
       destroyMap();
       await new Promise(r => setTimeout(r, 500));
       try {
         await switchMap('duviri');
-        splSet(85, 5);
+        mapSplProgress(85);
       } catch (e2) {
         console.error('Map init retry failed:', e2);
         document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图加载失败，请刷新页面重试</div>';
       }
     }
-    splSet(95, 6);
+    mapSplProgress(95);
     initAnimations();
-    splDone();
+    mapSplDone();
   }
 
   if (document.readyState === 'loading') {

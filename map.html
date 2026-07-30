@@ -10,43 +10,66 @@
   <link rel="stylesheet" href="/map/map.css">
 </head>
 <body>
-  <!-- Page Entry Splash -->
-  <div class="map-splash" id="mapSplash" aria-hidden="true" role="status" aria-label="正在加载地图数据">
-    <div class="map-splash-grid"></div>
-    <div class="map-splash-scan"></div>
-    <div class="map-splash-corner map-splash-corner--tl"></div>
-    <div class="map-splash-corner map-splash-corner--tr"></div>
-    <div class="map-splash-corner map-splash-corner--bl"></div>
-    <div class="map-splash-corner map-splash-corner--br"></div>
-    <div class="map-splash-center">
-      <div class="map-splash-hex">
-        <svg class="map-splash-ring" viewBox="-110 -110 220 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="0" cy="0" r="102" fill="none" stroke="rgba(5,217,232,.25)" stroke-width="1" stroke-dasharray="30 130"/>
-          <circle class="map-splash-ring-o" cx="0" cy="0" r="88"/>
-          <circle class="map-splash-ring-i" cx="0" cy="0" r="76"/>
-          <line class="map-splash-tick" x1="0" y1="-88" x2="0" y2="-100"/>
-          <line class="map-splash-tick" x1="88" y1="0" x2="100" y2="0"/>
-          <line class="map-splash-tick" x1="0" y1="88" x2="0" y2="100"/>
-          <line class="map-splash-tick" x1="-88" y1="0" x2="-100" y2="0"/>
-        </svg>
+  <!-- Page Entry Splash (same as worldstate) -->
+  <div id="map-splash" aria-hidden="true" role="status" aria-label="正在加载地图数据">
+
+    <div class="map-spl-scan"></div>
+
+    <div class="map-spl-corner map-spl-corner--tl"></div>
+    <div class="map-spl-corner map-spl-corner--tr"></div>
+    <div class="map-spl-corner map-spl-corner--bl"></div>
+    <div class="map-spl-corner map-spl-corner--br"></div>
+
+    <div class="map-spl-side map-spl-side--l" id="map-spl-left"></div>
+    <div class="map-spl-side map-spl-side--r" id="map-spl-right"></div>
+
+    <div class="map-spl-center">
+      <div class="map-spl-hex-area">
+        <div class="map-spl-hex-wrap" id="map-spl-hex-wrap">
+          <svg class="map-spl-ring-svg" viewBox="-110 -110 220 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- 外侧装饰弧段 (r=102, 周长≈641, 4段弧) -->
+            <circle cx="0" cy="0" r="102" fill="none"
+                    stroke="rgba(201,164,50,.35)" stroke-width="1"
+                    stroke-dasharray="30 130"/>
+            <!-- 主边框圆圈，绘制动画 -->
+            <circle class="map-spl-ring-o" cx="0" cy="0" r="88"/>
+            <!-- 内圈，绘制动画 -->
+            <circle class="map-spl-ring-i" cx="0" cy="0" r="76"/>
+            <!-- 四方位刻度线 -->
+            <line class="map-spl-ring-tk" x1="0"   y1="-88" x2="0"   y2="-100"/>
+            <line class="map-spl-ring-tk" x1="88"  y1="0"   x2="100" y2="0"/>
+            <line class="map-spl-ring-tk" x1="0"   y1="88"  x2="0"   y2="100"/>
+            <line class="map-spl-ring-tk" x1="-88" y1="0"   x2="-100" y2="0"/>
+          </svg>
+        </div>
+        <div class="map-spl-logo-cnt">
+          <div class="map-spl-logo-bg"></div>
+          <img class="map-spl-logo-img" src="picture/WS-logo-2.png" alt="" aria-hidden="true">
+        </div>
       </div>
-      <div class="map-splash-icon">◈</div>
-    </div>
-    <div class="map-splash-title">LANDSCAPES' MAPS</div>
-    <div class="map-splash-sub">开放世界 · 大地图</div>
-    <div class="map-splash-status">
-      <span class="map-splash-dot"></span>
-      <span id="mapSplashStatus">INITIALIZING TACTICAL OVERLAY</span>
-    </div>
-    <div class="map-splash-bar">
-      <div class="map-splash-bar-track">
-        <div class="map-splash-bar-fill" id="mapSplashBar"></div>
+
+      <div class="map-spl-label-cn">开放世界 · 大地图</div>
+      <div class="map-spl-label-en">LANDSCAPES' MAPS <span class="map-spl-dot">◈</span> TACTICAL OVERLAY</div>
+
+      <div class="map-spl-sr">
+        <span class="map-spl-sr-dot"></span>
+        <span class="map-spl-sr-txt" id="map-spl-status">ESTABLISHING TACTICAL LINK</span>
       </div>
-      <span class="map-splash-bar-pct" id="mapSplashPct">0%</span>
+
+      <div class="map-spl-bar">
+        <div class="map-spl-bar-track">
+          <div class="map-spl-bar-fill" id="map-spl-bar-fill"></div>
+        </div>
+        <span class="map-spl-bar-pct" id="map-spl-bar-pct">0%</span>
+      </div>
+
+      <div class="map-spl-info" id="map-spl-info">// INITIALIZING LANDSCAPE MAP SYSTEM</div>
     </div>
-    <div class="map-splash-footer">
+
+    <div class="map-spl-footer">
       <span>WFSpeed.run</span>
       <span>TENNO TACTICAL NETWORK</span>
+      <span id="map-spl-utc">UTC 00:00:00</span>
     </div>
   </div>
 
