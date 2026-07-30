@@ -651,6 +651,20 @@
   //  MAP SWITCHING
   // ════════════════════════════════════════════════════════════
 
+  function showLoading(show) {
+    const el = document.getElementById('mapLoading');
+    if (el) el.style.display = show ? 'flex' : 'none';
+  }
+
+  function preloadImage(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+      img.src = src;
+    });
+  }
+
   async function switchMap(mapId) {
     if (mapId === currentMap && map) return;
 
@@ -662,7 +676,10 @@
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
     document.querySelector(`[data-map="${mapId}"]`)?.classList.add('active');
 
-    // GSAP transition
+    // Show loading spinner
+    showLoading(true);
+
+    // GSAP transition out
     if (typeof gsap !== 'undefined' && map) {
       await new Promise(resolve => {
         gsap.to('#map', {
@@ -690,22 +707,38 @@
 
     const data = await loadMapData(mapId);
     if (!data) {
+      showLoading(false);
       document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图数据加载失败</div>';
       return;
     }
 
-    // Ensure map container exists and is visible
+    // Ensure map container exists
     const mapEl = document.getElementById('map');
-    if (!mapEl) return;
+    if (!mapEl) { showLoading(false); return; }
     mapEl.innerHTML = '';
     mapEl.style.opacity = '1';
+
+    // Preload the image before creating the overlay
+    const cfg = MAPS[mapId];
+    try {
+      await preloadImage(cfg.image);
+    } catch (e) {
+      console.error('Image preload failed:', e);
+      showLoading(false);
+      mapEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图图片加载失败，请刷新重试</div>';
+      return;
+    }
 
     try {
       initMap();
     } catch (e) {
       console.error('Leaflet init failed:', e);
+      showLoading(false);
       return;
     }
+
+    // Hide loading, show map
+    showLoading(false);
 
     renderSidebar(data);
     renderFavoritesPanel();
