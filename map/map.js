@@ -673,7 +673,6 @@
   async function switchMap(mapId) {
     if (mapId === currentMap && map) return;
 
-    saveCategoryState();
     currentMap = mapId;
 
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -698,8 +697,12 @@
 
     categoryState = {};
     const saved = JSON.parse(localStorage.getItem(LS_CAT_KEY) || '{}');
-    if (saved[mapId]) {
+    const savedKeys = saved[mapId] ? Object.keys(saved[mapId]) : [];
+    if (savedKeys.length > 0) {
       categoryState = saved[mapId];
+      data.categories.forEach(cat => {
+        if (!(cat.id in categoryState)) categoryState[cat.id] = false;
+      });
     } else {
       data.categories.forEach(cat => { categoryState[cat.id] = false; });
     }
@@ -745,7 +748,9 @@
     });
 
     document.getElementById('selectAll').addEventListener('click', () => {
-      Object.keys(categoryState).forEach(k => categoryState[k] = true);
+      const data = mapData[currentMap];
+      if (!data) return;
+      data.categories.forEach(cat => { categoryState[cat.id] = true; });
       document.querySelectorAll('.cat-item-check').forEach(cb => cb.checked = true);
       saveCategoryState();
       refreshMarkers();
@@ -753,7 +758,9 @@
     });
 
     document.getElementById('clearAll').addEventListener('click', () => {
-      Object.keys(categoryState).forEach(k => categoryState[k] = false);
+      const data = mapData[currentMap];
+      if (!data) return;
+      data.categories.forEach(cat => { categoryState[cat.id] = false; });
       document.querySelectorAll('.cat-item-check').forEach(cb => cb.checked = false);
       saveCategoryState();
       refreshMarkers();
