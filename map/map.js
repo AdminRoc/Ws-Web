@@ -452,9 +452,16 @@
     favs.forEach(id => {
       const m = data.markers.find(mk => mk.id === id);
       if (!m) return;
+      const catName = getCategoryName(m.categoryId);
+      const title = m.popup.title || catName;
+      const x = Math.round(m.position[0]);
+      const y = Math.round(m.position[1]);
       html += `<div class="fav-item" onclick="window._flyToMarker('${m.id}')">
         <img class="fav-item-icon" src="${getIconPath(m.categoryId)}" alt="" loading="lazy">
-        <div class="fav-item-name">${m.popup.title}</div>
+        <div class="fav-item-info">
+          <div class="fav-item-name">${catName}${title !== catName ? ' · ' + title : ''}</div>
+          <div class="fav-item-meta">${x}, ${y}</div>
+        </div>
         <div class="fav-item-remove" onclick="event.stopPropagation(); window._toggleFav('${m.id}')">✕</div>
       </div>`;
     });
