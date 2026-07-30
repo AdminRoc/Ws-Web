@@ -52,81 +52,87 @@ const MAP_TRANSLATIONS = {
   }
 };
 
-const CATEGORY_NAMES = {
-  settings: '设置',
-  cave_with_fishing: '有捕鱼点的洞穴',
-  cave_no_fishing: '无捕鱼点的洞穴',
-  sola_toroid: '索拉环形装置',
-  calda_toroid: '告达环形装置',
-  vega_toroid: '维加环形装置',
-  blinkpad: '传送台',
-  exploiter_orb: '剥削者圆蛛（12 号甲板）',
-  corpus_base: '可临时占领的 Corpus 基地',
-  k_drive_race: 'K 式悬浮板竞速',
-  pond: '池塘捕鱼点',
-  lake: '湖泊捕鱼点',
-  eudico_fragment: 'Eudico 的记忆碎片',
-  legs_fragment: 'Legs 的记忆碎片',
-  little_duck_fragment: 'Little Duck 的记忆碎片',
-  rude_zuud_fragment: '粗鲁的 Zuud 的记忆碎片',
-  smokefinger_fragment: 'Smokefinger 的记忆碎片',
-  the_business_fragment: 'Business 的记忆碎片',
-  ticker_fragment: 'Ticker 的记忆碎片',
-  'profit-taker_orb': '利润收割者圆蛛',
-  cave: '洞穴入口',
-  cetus_wisp: '希图斯幽魂',
-  ocean: '海岸捕鱼水域',
-  konzu: '无线电控制台',
-  eidolon_shrine: '夜灵神殿',
-  grineer_base: 'Grineer 基地',
-  plague_star: '瘟疫之星感染瘤',
-  eidolon_lure: '夜灵诱饵',
-  thousand_year_fish: '千年灵鱼',
-  requiem_obelisk: '安魂方尖碑',
-  mother: '母亲（赏金面板）',
-  mother_isolation_vault: '母亲（隔离库）',
-  ueymag: '肉麦采集点',
-  tasoma: '塔苏摩萃取物采集点',
-  eevani: '延凡草采集点',
-  connla_sprout: '慧泉嫩芽采集点',
-  yao_shrub: '瑶丛采集点',
-  silphsela: '日精灵瘦果采集点',
-  shop: '言录使',
-  fishing: '喂食喉兽',
-  game: '围棋',
-  puzzle: '单人幽幽鹰奥理',
-  puzzle_coop: '双人幽幽鹰奥理',
-  shawzin: '三线琴演奏点',
-  dracroot: '龙旋根采集点',
-  herding: '塔塔羊放牧',
-  kovnik: '福烁草采集点',
-  saggen_pearl: '慧珠采集点',
-  scholars_landing: '儒临地碎片',
-  we_are_not: '「我们今非昔比」碎片',
-  watchers_island: '守望者之岛碎片',
-  lake_veruna: '维鲁拉湖碎片',
-  galleria: '艺术回廊碎片',
-  doll_mausoleum: '人偶陵墓碎片',
-  caves_of_academe: '学院的洞穴碎片',
-  manipura_island: '宝石之岛碎片',
-  island_of_lorn: '孤魂岛碎片',
-  bleeding_earth: '大地泣血碎片',
-  npc: '人物',
-  undercroft: '地穴传送门',
-  somachord: '身心和弦琴'
-};
-
+// ═══ Map-specific category names ═══
+// Same ID means different things per map (e.g. '1' = General in Orb Vallis, Zariman Tablets in Duviri)
 const CATEGORY_NAMES_MAP = {
   duviri: {
-    '1': '扎里曼石板',
+    blinkpad: '母石雕像',
+    cave: '洞穴入口',
+    shop: '言录使',
+    npc: '人物',
+    undercroft: '地穴传送门',
+    ueymag: '肉麦采集点',
+    tasoma: '塔苏摩萃取物采集点',
+    eevani: '延凡草采集点',
+    connla_sprout: '慧泉嫩芽采集点',
+    yao_shrub: '瑶丛采集点',
+    silphsela: '日精灵瘦果采集点',
+    dracroot: '龙旋根采集点',
+    kovnik: '福烁草采集点',
+    saggen_pearl: '慧珠采集点',
+    fishing: '喂食喉兽',
+    game: '围棋',
+    herding: '塔塔羊放牧',
+    shawzin: '三线琴演奏点',
+    puzzle: '单人幽幽鹰奥理',
+    puzzle_coop: '双人幽幽鹰奥理',
+    scholars_landing: '儒临地碎片',
+    we_are_not: '「我们今非昔比」碎片',
+    watchers_island: '守望者之岛碎片',
+    lake_veruna: '维鲁拉湖碎片',
+    galleria: '艺术回廊碎片',
+    doll_mausoleum: '人偶陵墓碎片',
+    caves_of_academe: '学院的洞穴碎片',
+    manipura_island: '宝石之岛碎片',
+    island_of_lorn: '孤魂岛碎片',
+    bleeding_earth: '大地泣血碎片',
+    somachord: '身心和弦琴',
+    '1': '扎里曼平板电脑',
     '2': '墓碑'
+  },
+  'plains-of-eidolon': {
+    blinkpad: '传送台',
+    cave: '洞穴入口',
+    konzu: '无线电控制台（接受赏金任务）',
+    grineer_base: 'Grineer 基地',
+    lake: '湖泊捕鱼点',
+    ocean: '海岸捕鱼水域',
+    pond: '池塘捕鱼点',
+    eidolon_shrine: '夜灵神殿',
+    eidolon_lure: '夜灵诱饵',
+    cetus_wisp: '希图斯幽魂',
+    plague_star: '行动代号：瘟疫之星感染瘤',
+    thousand_year_fish: '千年灵鱼'
   },
   'orb-vallis': {
     '1': '通用地点',
-    '2': '热美亚裂缝'
+    blinkpad: '传送台',
+    corpus_base: '可临时占领的 Corpus 基地',
+    cave_with_fishing: '有捕鱼点的洞穴',
+    cave_no_fishing: '无捕鱼点的洞穴',
+    pond: '池塘捕鱼点',
+    lake: '湖泊捕鱼点',
+    k_drive_race: 'K 式悬浮板竞速',
+    exploiter_orb: '剥削者圆蛛（12 号甲板）',
+    'profit-taker_orb': '利润收割者圆蛛',
+    '2': '热美亚裂缝',
+    sola_toroid: '索拉环形装置',
+    calda_toroid: '告达环形装置',
+    vega_toroid: '维加环形装置',
+    eudico_fragment: 'Eudico 的记忆碎片',
+    legs_fragment: 'Legs 的记忆碎片',
+    little_duck_fragment: 'Little Duck 的记忆碎片',
+    rude_zuud_fragment: '粗鲁的 Zuud 的记忆碎片',
+    smokefinger_fragment: 'Smokefinger 的记忆碎片',
+    the_business_fragment: 'Business 的记忆碎片',
+    ticker_fragment: 'Ticker 的记忆碎片'
   },
   'cambion-drift': {
-    '1': '通用地点'
+    blinkpad: '传送台',
+    k_drive_race: 'K 式悬浮板竞速',
+    requiem_obelisk: '安魂方尖碑',
+    mother: '母亲（赏金面板）',
+    mother_isolation_vault: '母亲（隔离库）'
   }
 };
 
@@ -207,6 +213,8 @@ const WIKI_NAME_MAP = {
   'K-Drive Race': 'K 式悬浮板竞速'
 };
 
+// ═══ Sidebar group definitions ═══
+// Verified from map.wfhub.top DOM on 2026-07-30
 const MAP_GROUPS = {
   duviri: [
     { id: 'travel', categories: ['blinkpad', 'cave', 'shop', 'npc', 'undercroft'] },
@@ -225,7 +233,7 @@ const MAP_GROUPS = {
     { id: 'collectibles', categories: ['thousand_year_fish'] }
   ],
   'orb-vallis': [
-    { id: 'travel', categories: ['blinkpad', 'corpus_base'] },
+    { id: 'travel', categories: ['1', 'blinkpad', 'corpus_base'] },
     { id: 'fishing', categories: ['cave_with_fishing', 'cave_no_fishing', 'pond', 'lake'] },
     { id: 'activities', categories: ['k_drive_race', 'exploiter_orb', 'profit-taker_orb', '2'] },
     { id: 'resources', categories: ['sola_toroid', 'calda_toroid', 'vega_toroid'] },
@@ -233,6 +241,7 @@ const MAP_GROUPS = {
   ],
   'cambion-drift': [
     { id: 'travel', categories: ['blinkpad'] },
+    { id: 'activities', categories: ['k_drive_race'] },
     { id: 'landmarks', categories: ['requiem_obelisk'] },
     { id: 'mother', categories: ['mother', 'mother_isolation_vault'] }
   ]

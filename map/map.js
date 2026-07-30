@@ -173,7 +173,7 @@
   function getCategoryName(catId) {
     const mapNames = typeof CATEGORY_NAMES_MAP !== 'undefined' ? CATEGORY_NAMES_MAP[currentMap] : null;
     if (mapNames && mapNames[catId]) return mapNames[catId];
-    return CATEGORY_NAMES[catId] || catId;
+    return catId;
   }
 
   function getIconPath(catId) {
