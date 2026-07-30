@@ -10,6 +10,46 @@
   <link rel="stylesheet" href="/map/map.css">
 </head>
 <body>
+  <!-- Page Entry Splash -->
+  <div class="map-splash" id="mapSplash" aria-hidden="true" role="status" aria-label="正在加载地图数据">
+    <div class="map-splash-grid"></div>
+    <div class="map-splash-scan"></div>
+    <div class="map-splash-corner map-splash-corner--tl"></div>
+    <div class="map-splash-corner map-splash-corner--tr"></div>
+    <div class="map-splash-corner map-splash-corner--bl"></div>
+    <div class="map-splash-corner map-splash-corner--br"></div>
+    <div class="map-splash-center">
+      <div class="map-splash-hex">
+        <svg class="map-splash-ring" viewBox="-110 -110 220 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="0" cy="0" r="102" fill="none" stroke="rgba(5,217,232,.25)" stroke-width="1" stroke-dasharray="30 130"/>
+          <circle class="map-splash-ring-o" cx="0" cy="0" r="88"/>
+          <circle class="map-splash-ring-i" cx="0" cy="0" r="76"/>
+          <line class="map-splash-tick" x1="0" y1="-88" x2="0" y2="-100"/>
+          <line class="map-splash-tick" x1="88" y1="0" x2="100" y2="0"/>
+          <line class="map-splash-tick" x1="0" y1="88" x2="0" y2="100"/>
+          <line class="map-splash-tick" x1="-88" y1="0" x2="-100" y2="0"/>
+        </svg>
+      </div>
+      <div class="map-splash-icon">◈</div>
+    </div>
+    <div class="map-splash-title">LANDSCAPES' MAPS</div>
+    <div class="map-splash-sub">开放世界 · 大地图</div>
+    <div class="map-splash-status">
+      <span class="map-splash-dot"></span>
+      <span id="mapSplashStatus">INITIALIZING TACTICAL OVERLAY</span>
+    </div>
+    <div class="map-splash-bar">
+      <div class="map-splash-bar-track">
+        <div class="map-splash-bar-fill" id="mapSplashBar"></div>
+      </div>
+      <span class="map-splash-bar-pct" id="mapSplashPct">0%</span>
+    </div>
+    <div class="map-splash-footer">
+      <span>WFSpeed.run</span>
+      <span>TENNO TACTICAL NETWORK</span>
+    </div>
+  </div>
+
   <!-- Top Bar -->
   <header class="map-topbar">
     <div class="topbar-left">
