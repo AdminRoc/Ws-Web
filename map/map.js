@@ -1,6 +1,6 @@
 /**
- * map.js — Warframe Interactive Map Engine v2
- * Leaflet + Static PNG overlay + Wiki icons + Chinese labels + GSAP
+ * map.js — Warframe Interactive Map Engine v3
+ * Leaflet + Static PNG + Wiki icons + Chinese labels + GSAP + Neon Gradient + Zoom Scaling + State Persistence
  */
 (function () {
   'use strict';
@@ -10,8 +10,9 @@
   // ════════════════════════════════════════════════════════════
 
   const MAP_SIZE = 4000;
-  const MAP_EXTENT = 0.04;
   const ICON_BASE = '/map/assets/icons/';
+  const LS_FAV_KEY = 'wfspeed-map-favorites';
+  const LS_CAT_KEY = 'wfspeed-map-categories';
 
   const MAPS = {
     'duviri': {
@@ -61,10 +62,11 @@
   let imageOverlay = null;
   let markers = [];
   let mapData = {};
-  let categoryState = {};
-  let favorites = {};
+  let categoryState = {};  // { catId: true/false }
+  let favorites = {};      // { mapId: [markerId, ...] }
   let showFavOnly = false;
   let searchQuery = '';
+  let currentZoom = 2;
 
   // ════════════════════════════════════════════════════════════
   //  CYCLE CALCULATIONS
@@ -77,17 +79,17 @@
   };
 
   const STATE_NAMES = {
-    day: { zh: '白昼', en: 'Day', icon: '☀️', color: '#ffd700' },
-    night: { zh: '夜晚', en: 'Night', icon: '🌙', color: '#4a6fa5' },
-    warm: { zh: '温暖', en: 'Warm', icon: '🌡️', color: '#ff6b4a' },
-    cold: { zh: '寒冷', en: 'Cold', icon: '❄️', color: '#4ac1ff' },
-    fass: { zh: 'Fass', en: 'Fass', icon: '🔴', color: '#ff4a4a' },
-    vome: { zh: 'Vome', en: 'Vome', icon: '🔵', color: '#4a8fff' },
-    sorrow: { zh: '悲伤', en: 'Sorrow', icon: '💧', color: '#6a4aff' },
-    fear: { zh: '恐惧', en: 'Fear', icon: '👁️', color: '#4a4a4a' },
-    joy: { zh: '喜悦', en: 'Joy', icon: '✨', color: '#ffdd4a' },
-    anger: { zh: '愤怒', en: 'Anger', icon: '🔥', color: '#ff4a4a' },
-    envy: { zh: '嫉妒', en: 'Envy', icon: '💀', color: '#4aff4a' }
+    day:    { zh: '白昼', icon: '☀️', color: '#ffd700' },
+    night:  { zh: '夜晚', icon: '🌙', color: '#6f8bff' },
+    warm:   { zh: '温暖', icon: '🌡️', color: '#ff9a4f' },
+    cold:   { zh: '寒冷', icon: '❄️', color: '#45c8ff' },
+    fass:   { zh: 'Fass',  icon: '🔴', color: '#ff5f9e' },
+    vome:   { zh: 'Vome',  icon: '🔵', color: '#45c8ff' },
+    sorrow: { zh: '悲伤', icon: '💧', color: '#6f8bff' },
+    fear:   { zh: '恐惧', icon: '👁️', color: '#a86bff' },
+    joy:    { zh: '喜悦', icon: '✨', color: '#ffd04f' },
+    anger:  { zh: '愤怒', icon: '🔥', color: '#ff7a6b' },
+    envy:   { zh: '嫉妒', icon: '💀', color: '#41ff8e' }
   };
 
   function calcCycles() {
@@ -142,13 +144,20 @@
     nameEl.textContent = stateInfo ? stateInfo.zh : current.state;
     timerEl.textContent = formatTime(current.remaining);
 
-    const color = stateInfo ? stateInfo.color : 'var(--c-cyan)';
+    const color = stateInfo ? stateInfo.color : 'var(--neon-cyan)';
     iconEl.style.background = color;
     iconEl.style.boxShadow = `0 0 12px ${color}, 0 0 24px ${color}40`;
 
-    // Update nav tab states
+    // Nav tab state labels
+    const mapKeys = {
+      'plains-of-eidolon': 'statePlainsOfEidolon',
+      'orb-vallis': 'stateOrbVallis',
+      'duviri': 'stateDuviri',
+      'cambion-drift': 'stateCambionDrift'
+    };
     Object.entries(cycles).forEach(([mapId, data]) => {
-      const stateEl = document.getElementById('state' + mapId.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(''));
+      const elId = mapKeys[mapId];
+      const stateEl = document.getElementById(elId);
       if (stateEl) {
         const sn = STATE_NAMES[data.state];
         stateEl.textContent = sn ? sn.zh : data.state;
@@ -175,6 +184,55 @@
   }
 
   // ════════════════════════════════════════════════════════════
+  //  LOCAL STORAGE — Favorites + Category State
+  // ════════════════════════════════════════════════════════════
+
+  function loadFavorites() {
+    try {
+      favorites = JSON.parse(localStorage.getItem(LS_FAV_KEY) || '{}');
+    } catch (e) { favorites = {}; }
+  }
+
+  function saveFavorites() {
+    localStorage.setItem(LS_FAV_KEY, JSON.stringify(favorites));
+  }
+
+  function isFavorite(id) {
+    return favorites[currentMap] && favorites[currentMap].includes(id);
+  }
+
+  function loadCategoryState() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(LS_CAT_KEY) || '{}');
+      if (saved[currentMap]) {
+        categoryState = saved[currentMap];
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  function saveCategoryState() {
+    try {
+      const all = JSON.parse(localStorage.getItem(LS_CAT_KEY) || '{}');
+      all[currentMap] = categoryState;
+      localStorage.setItem(LS_CAT_KEY, JSON.stringify(all));
+    } catch (e) {}
+  }
+
+  window._toggleFav = function (id) {
+    if (!favorites[currentMap]) favorites[currentMap] = [];
+    const idx = favorites[currentMap].indexOf(id);
+    if (idx >= 0) favorites[currentMap].splice(idx, 1);
+    else favorites[currentMap].push(id);
+    saveFavorites();
+    refreshMarkers();
+    renderFavoritesPanel();
+    const marker = markers.find(m => m._markerId === id);
+    if (marker) marker.openPopup();
+  };
+
+  // ════════════════════════════════════════════════════════════
   //  DATA LOADING
   // ════════════════════════════════════════════════════════════
 
@@ -191,6 +249,32 @@
       console.error(`Failed to load ${url}:`, e);
       return null;
     }
+  }
+
+  // ════════════════════════════════════════════════════════════
+  //  MARKER SIZE — Zoom-based Scaling
+  // ════════════════════════════════════════════════════════════
+
+  function getMarkerSizeClass(zoom) {
+    // Leaflet zoom: 0 (most zoomed out) → 3 (most zoomed in)
+    if (zoom <= 0) return 'size-xs';
+    if (zoom <= 1) return 'size-sm';
+    if (zoom <= 2) return 'size-md';
+    if (zoom <= 3) return 'size-lg';
+    return 'size-xl';
+  }
+
+  function getMarkerIconSize(zoom) {
+    if (zoom <= 0) return [18, 26];
+    if (zoom <= 1) return [24, 34];
+    if (zoom <= 2) return [30, 42];
+    if (zoom <= 3) return [36, 50];
+    return [44, 60];
+  }
+
+  function getMarkerAnchor(zoom) {
+    const s = getMarkerIconSize(zoom);
+    return [s[0] / 2, s[1] - 2];
   }
 
   // ════════════════════════════════════════════════════════════
@@ -221,6 +305,16 @@
         coords.textContent = `${Math.round(e.latlng.lng)}, ${Math.round(e.latlng.lat)}`;
       }
     });
+
+    // Track zoom changes to resize markers
+    map.on('zoomend', () => {
+      const newZoom = map.getZoom();
+      if (Math.abs(newZoom - currentZoom) >= 0.25) {
+        currentZoom = newZoom;
+        refreshMarkers();
+      }
+    });
+    currentZoom = map.getZoom();
   }
 
   function destroyMap() {
@@ -233,21 +327,24 @@
   }
 
   // ════════════════════════════════════════════════════════════
-  //  MARKERS — Wiki Icons + Chinese Labels
+  //  MARKERS — Wiki Icons + Chinese Labels + Zoom Scaling
   // ════════════════════════════════════════════════════════════
 
   function getMarkerColor(categoryId, categories) {
     const cat = categories.find(c => c.id === categoryId);
-    return cat ? cat.color : '#00d4ff';
+    return cat ? cat.color : '#45c8ff';
   }
 
-  function createMarkerIcon(categoryId, categories) {
+  function createMarkerIcon(categoryId, categories, zoom) {
     const color = getMarkerColor(categoryId, categories);
     const iconPath = getIconPath(categoryId);
     const catName = getCategoryName(categoryId);
+    const sizeClass = getMarkerSizeClass(zoom);
+    const iconSize = getMarkerIconSize(zoom);
+    const anchor = getMarkerAnchor(zoom);
 
     return L.divIcon({
-      className: 'wiki-marker',
+      className: `wiki-marker ${sizeClass}`,
       html: `
         <div class="wiki-marker-pin" style="--marker-color: ${color}">
           <div class="wiki-marker-glow"></div>
@@ -255,9 +352,9 @@
         </div>
         <span class="wiki-marker-label">${catName}</span>
       `,
-      iconSize: [32, 44],
-      iconAnchor: [16, 44],
-      popupAnchor: [0, -44]
+      iconSize: iconSize,
+      iconAnchor: anchor,
+      popupAnchor: [0, -anchor[1]]
     });
   }
 
@@ -270,7 +367,7 @@
       if (showFavOnly && !isFavorite(m.id)) return;
       if (searchQuery && !m.popup.title.toLowerCase().includes(searchQuery)) return;
 
-      const icon = createMarkerIcon(m.categoryId, data.categories);
+      const icon = createMarkerIcon(m.categoryId, data.categories, currentZoom);
       const lat = m.position[1];
       const lng = m.position[0];
 
@@ -313,8 +410,8 @@
       gsap.from(markerEls, {
         scale: 0,
         opacity: 0,
-        duration: 0.3,
-        stagger: { amount: Math.min(markerEls.length * 0.01, 0.8), from: 'center' },
+        duration: 0.25,
+        stagger: { amount: Math.min(markerEls.length * 0.008, 0.6), from: 'center' },
         ease: 'back.out(1.7)'
       });
     }
@@ -332,8 +429,45 @@
   }
 
   // ════════════════════════════════════════════════════════════
-  //  SIDEBAR
+  //  SIDEBAR — Favorites Panel + Category Groups
   // ════════════════════════════════════════════════════════════
+
+  function renderFavoritesPanel() {
+    const container = document.getElementById('favPanelItems');
+    if (!container) return;
+
+    const favs = favorites[currentMap] || [];
+    const data = mapData[currentMap];
+    if (!data) { container.innerHTML = ''; return; }
+
+    if (favs.length === 0) {
+      container.innerHTML = '<div class="fav-empty">暂无收藏</div>';
+      document.getElementById('favPanelCount').textContent = '0';
+      return;
+    }
+
+    document.getElementById('favPanelCount').textContent = favs.length;
+
+    let html = '';
+    favs.forEach(id => {
+      const m = data.markers.find(mk => mk.id === id);
+      if (!m) return;
+      html += `<div class="fav-item" onclick="window._flyToMarker('${m.id}')">
+        <img class="fav-item-icon" src="${getIconPath(m.categoryId)}" alt="" loading="lazy">
+        <div class="fav-item-name">${m.popup.title}</div>
+        <div class="fav-item-remove" onclick="event.stopPropagation(); window._toggleFav('${m.id}')">✕</div>
+      </div>`;
+    });
+    container.innerHTML = html;
+  }
+
+  window._flyToMarker = function (id) {
+    const marker = markers.find(m => m._markerId === id);
+    if (marker) {
+      map.flyTo(marker.getLatLng(), currentZoom, { duration: 0.5 });
+      marker.openPopup();
+    }
+  };
 
   function renderSidebar(data) {
     const container = document.getElementById('sidebarGroups');
@@ -368,6 +502,9 @@
           <div class="cat-group-toggle">✓</div>
           <div class="cat-group-name">${groupName}</div>
           <div class="cat-group-count">${checkedCount}/${totalItems}</div>
+          <div class="cat-group-actions">
+            <div class="cat-group-fav-btn" title="收藏此组全部" onclick="event.stopPropagation(); window._favGroup('${group.id}')">★</div>
+          </div>
           <div class="cat-group-arrow">▼</div>
         </div>
         <div class="cat-group-items">`;
@@ -398,47 +535,46 @@
   }
 
   // ════════════════════════════════════════════════════════════
-  //  FAVORITES
-  // ════════════════════════════════════════════════════════════
-
-  function loadFavorites() {
-    try {
-      favorites = JSON.parse(localStorage.getItem('wfspeed-map-favorites') || '{}');
-    } catch (e) { favorites = {}; }
-  }
-
-  function saveFavorites() {
-    localStorage.setItem('wfspeed-map-favorites', JSON.stringify(favorites));
-  }
-
-  function isFavorite(id) {
-    return favorites[currentMap] && favorites[currentMap].includes(id);
-  }
-
-  window._toggleFav = function (id) {
-    if (!favorites[currentMap]) favorites[currentMap] = [];
-    const idx = favorites[currentMap].indexOf(id);
-    if (idx >= 0) favorites[currentMap].splice(idx, 1);
-    else favorites[currentMap].push(id);
-    saveFavorites();
-    refreshMarkers();
-    const marker = markers.find(m => m._markerId === id);
-    if (marker) marker.openPopup();
-  };
-
-  // ════════════════════════════════════════════════════════════
-  //  CATEGORY TOGGLES
+  //  CATEGORY TOGGLES — with localStorage persistence
   // ════════════════════════════════════════════════════════════
 
   window._toggleCategory = function (catId, checked) {
     categoryState[catId] = checked;
+    saveCategoryState();
     refreshMarkers();
     updateSidebarCounts();
+    renderFavoritesPanel();
   };
 
   window._toggleGroup = function (header) {
     const group = header.parentElement;
     group.classList.toggle('collapsed');
+  };
+
+  // Batch favorite: favorite all markers in a group
+  window._favGroup = function (groupId) {
+    const data = mapData[currentMap];
+    if (!data) return;
+    const group = MAP_GROUPS[currentMap].find(g => g.id === groupId);
+    if (!group) return;
+
+    if (!favorites[currentMap]) favorites[currentMap] = [];
+    const favSet = new Set(favorites[currentMap]);
+
+    let added = 0;
+    data.markers.forEach(m => {
+      if (group.categories.includes(m.categoryId)) {
+        if (!favSet.has(m.id)) {
+          favorites[currentMap].push(m.id);
+          favSet.add(m.id);
+          added++;
+        }
+      }
+    });
+
+    saveFavorites();
+    renderFavoritesPanel();
+    refreshMarkers();
   };
 
   function updateSidebarCounts() {
@@ -503,6 +639,10 @@
 
   async function switchMap(mapId) {
     if (mapId === currentMap && map) return;
+
+    // Save current state before switching
+    saveCategoryState();
+
     currentMap = mapId;
 
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -514,44 +654,47 @@
         gsap.to('#map', {
           opacity: 0,
           scale: 0.98,
-          duration: 0.25,
+          duration: 0.2,
           ease: 'power2.in',
           onComplete: resolve
         });
       });
     }
 
-    initCategoryState();
+    // Load saved category state for this map, or init all-on
+    const hadState = loadCategoryState();
+    if (!hadState) {
+      const data = await loadMapData(mapId);
+      if (data) {
+        categoryState = {};
+        data.categories.forEach(cat => { categoryState[cat.id] = true; });
+        saveCategoryState();
+      }
+    }
+
     destroyMap();
     const data = await loadMapData(mapId);
     if (!data) return;
     initMap();
     renderSidebar(data);
+    renderFavoritesPanel();
     addMarkers(data);
     updateCycleDisplay();
 
     if (typeof gsap !== 'undefined') {
       gsap.fromTo('#map',
         { opacity: 0, scale: 1.02 },
-        { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' }
+        { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' }
       );
-      // Stagger sidebar items
       const items = document.querySelectorAll('.cat-group');
       gsap.from(items, {
         x: -20,
         opacity: 0,
-        duration: 0.3,
-        stagger: 0.05,
+        duration: 0.25,
+        stagger: 0.04,
         ease: 'power2.out'
       });
     }
-  }
-
-  function initCategoryState() {
-    const data = mapData[currentMap];
-    if (!data) return;
-    categoryState = {};
-    data.categories.forEach(cat => { categoryState[cat.id] = true; });
   }
 
   // ════════════════════════════════════════════════════════════
@@ -566,6 +709,7 @@
     document.getElementById('selectAll').addEventListener('click', () => {
       Object.keys(categoryState).forEach(k => categoryState[k] = true);
       document.querySelectorAll('.cat-item-check').forEach(cb => cb.checked = true);
+      saveCategoryState();
       refreshMarkers();
       updateSidebarCounts();
     });
@@ -573,6 +717,7 @@
     document.getElementById('clearAll').addEventListener('click', () => {
       Object.keys(categoryState).forEach(k => categoryState[k] = false);
       document.querySelectorAll('.cat-item-check').forEach(cb => cb.checked = false);
+      saveCategoryState();
       refreshMarkers();
       updateSidebarCounts();
     });
@@ -582,6 +727,14 @@
       this.classList.toggle('active', showFavOnly);
       refreshMarkers();
     });
+
+    // Favorites panel toggle
+    const favPanel = document.getElementById('favPanel');
+    if (favPanel) {
+      favPanel.querySelector('.fav-panel-header').addEventListener('click', () => {
+        favPanel.classList.toggle('collapsed');
+      });
+    }
   }
 
   // ════════════════════════════════════════════════════════════
@@ -592,8 +745,6 @@
     if (typeof gsap === 'undefined') return;
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    // Page load sequence
     tl.from('.map-topbar', { y: -80, opacity: 0, duration: 0.7 })
       .from('.map-nav', { x: -80, opacity: 0, duration: 0.7 }, '-=0.5')
       .from('.map-sidebar', { x: -320, opacity: 0, duration: 0.7 }, '-=0.5')
@@ -617,6 +768,17 @@
         gsap.to(tab.querySelector('.nav-tab-icon'), { scale: 1, duration: 0.2 });
       });
     });
+
+    // Rainbow gradient animation for topbar title
+    const titleEl = document.querySelector('.topbar-title');
+    if (titleEl) {
+      gsap.to(titleEl, {
+        backgroundPosition: '1200px',
+        duration: 6,
+        repeat: -1,
+        ease: 'none'
+      });
+    }
   }
 
   // ════════════════════════════════════════════════════════════

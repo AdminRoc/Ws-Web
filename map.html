@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>交互地图 | WFSpeed</title>
+  <title>Warframe 开放世界 · 大地图 | The Maps</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="/css/global.css">
@@ -60,17 +60,17 @@
       <button class="nav-tab" data-map="plains-of-eidolon">
         <div class="nav-tab-icon">◈</div>
         <div class="nav-tab-label">夜灵平野</div>
-        <div class="nav-tab-state" id="stateEidolon"></div>
+        <div class="nav-tab-state" id="statePlainsOfEidolon"></div>
       </button>
       <button class="nav-tab" data-map="orb-vallis">
         <div class="nav-tab-icon">◉</div>
         <div class="nav-tab-label">奥布山谷</div>
-        <div class="nav-tab-state" id="stateVallis"></div>
+        <div class="nav-tab-state" id="stateOrbVallis"></div>
       </button>
       <button class="nav-tab" data-map="cambion-drift">
         <div class="nav-tab-icon">◎</div>
         <div class="nav-tab-label">魔胎之境</div>
-        <div class="nav-tab-state" id="stateCambion"></div>
+        <div class="nav-tab-state" id="stateCambionDrift"></div>
       </button>
     </nav>
 
@@ -85,6 +85,18 @@
       </div>
       <div class="sidebar-stats">
         <span id="statTotal">0</span> 个地点 · <span id="statVisible">0</span> 个显示
+      </div>
+      <!-- Favorites Panel -->
+      <div class="fav-panel" id="favPanel">
+        <div class="fav-panel-header">
+          <div class="fav-panel-icon">★</div>
+          <div class="fav-panel-name">我的收藏</div>
+          <div class="fav-panel-count" id="favPanelCount">0</div>
+          <div class="fav-panel-arrow">▼</div>
+        </div>
+        <div class="fav-panel-items" id="favPanelItems">
+          <div class="fav-empty">暂无收藏</div>
+        </div>
       </div>
       <div class="sidebar-groups" id="sidebarGroups"></div>
     </aside>
