@@ -56,7 +56,6 @@ const CATEGORY_NAMES = {
   settings: '设置',
   cave_with_fishing: '有捕鱼点的洞穴',
   cave_no_fishing: '无捕鱼点的洞穴',
-  '1': '通用地点',
   sola_toroid: '索拉环形装置',
   calda_toroid: '告达环形装置',
   vega_toroid: '维加环形装置',
@@ -73,8 +72,7 @@ const CATEGORY_NAMES = {
   smokefinger_fragment: 'Smokefinger 的记忆碎片',
   the_business_fragment: 'Business 的记忆碎片',
   ticker_fragment: 'Ticker 的记忆碎片',
-  profit_taker_orb: '利润收割者圆蛛',
-  '2': '热美亚裂缝',
+  'profit-taker_orb': '利润收割者圆蛛',
   cave: '洞穴入口',
   cetus_wisp: '希图斯幽魂',
   ocean: '海岸捕鱼水域',
@@ -116,6 +114,20 @@ const CATEGORY_NAMES = {
   npc: '人物',
   undercroft: '地穴传送门',
   somachord: '身心和弦琴'
+};
+
+const CATEGORY_NAMES_MAP = {
+  duviri: {
+    '1': '扎里曼石板',
+    '2': '墓碑'
+  },
+  'orb-vallis': {
+    '1': '通用地点',
+    '2': '热美亚裂缝'
+  },
+  'cambion-drift': {
+    '1': '通用地点'
+  }
 };
 
 const WIKI_NAME_MAP = {
@@ -215,13 +227,12 @@ const MAP_GROUPS = {
   'orb-vallis': [
     { id: 'travel', categories: ['blinkpad', 'corpus_base'] },
     { id: 'fishing', categories: ['cave_with_fishing', 'cave_no_fishing', 'pond', 'lake'] },
-    { id: 'activities', categories: ['k_drive_race', 'exploiter_orb', 'profit_taker_orb', '2'] },
+    { id: 'activities', categories: ['k_drive_race', 'exploiter_orb', 'profit-taker_orb', '2'] },
     { id: 'resources', categories: ['sola_toroid', 'calda_toroid', 'vega_toroid'] },
     { id: 'fragments', categories: ['eudico_fragment', 'legs_fragment', 'little_duck_fragment', 'rude_zuud_fragment', 'smokefinger_fragment', 'the_business_fragment', 'ticker_fragment'] }
   ],
   'cambion-drift': [
     { id: 'travel', categories: ['blinkpad'] },
-    { id: 'activities', categories: ['k_drive_race'] },
     { id: 'landmarks', categories: ['requiem_obelisk'] },
     { id: 'mother', categories: ['mother', 'mother_isolation_vault'] }
   ]

@@ -13,6 +13,7 @@
   const ICON_BASE = '/map/assets/icons/';
   const LS_FAV_KEY = 'wfspeed-map-favorites';
   const LS_CAT_KEY = 'wfspeed-map-categories';
+  const LS_MAP_KEY = 'wfspeed-map-current';
 
   const MAPS = {
     'duviri': {
@@ -170,6 +171,8 @@
   // ════════════════════════════════════════════════════════════
 
   function getCategoryName(catId) {
+    const mapNames = typeof CATEGORY_NAMES_MAP !== 'undefined' ? CATEGORY_NAMES_MAP[currentMap] : null;
+    if (mapNames && mapNames[catId]) return mapNames[catId];
     return CATEGORY_NAMES[catId] || catId;
   }
 
@@ -210,8 +213,9 @@
 
   function loadCategoryState() {
     try {
+      const lastMap = localStorage.getItem(LS_MAP_KEY);
       const saved = JSON.parse(localStorage.getItem(LS_CAT_KEY) || '{}');
-      if (saved[currentMap]) {
+      if (saved[currentMap] && lastMap === currentMap) {
         categoryState = saved[currentMap];
         return true;
       }
@@ -224,6 +228,7 @@
       const all = JSON.parse(localStorage.getItem(LS_CAT_KEY) || '{}');
       all[currentMap] = categoryState;
       localStorage.setItem(LS_CAT_KEY, JSON.stringify(all));
+      localStorage.setItem(LS_MAP_KEY, currentMap);
     } catch (e) {}
   }
 
@@ -367,9 +372,11 @@
 
   function addMarkers(data) {
     if (!data || !data.markers || !data.categories) return;
+    const validCatIds = new Set(data.categories.map(c => c.id));
 
     const newMarkers = [];
     data.markers.forEach(m => {
+      if (!validCatIds.has(m.categoryId)) return;
       if (!categoryState[m.categoryId]) return;
       if (showFavOnly && !isFavorite(m.id)) return;
       if (searchQuery && !m.popup.title.toLowerCase().includes(searchQuery)) return;
