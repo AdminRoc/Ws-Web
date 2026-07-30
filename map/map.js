@@ -656,108 +656,66 @@
     if (el) el.style.display = show ? 'flex' : 'none';
   }
 
-  function preloadImage(src) {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
-      img.src = src;
-    });
-  }
-
   async function switchMap(mapId) {
     if (mapId === currentMap && map) return;
 
-    // Save current state before switching
     saveCategoryState();
-
     currentMap = mapId;
 
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
     document.querySelector(`[data-map="${mapId}"]`)?.classList.add('active');
 
-    // Show loading spinner
     showLoading(true);
 
-    // GSAP transition out
     if (typeof gsap !== 'undefined' && map) {
       await new Promise(resolve => {
-        gsap.to('#map', {
-          opacity: 0,
-          scale: 0.98,
-          duration: 0.2,
-          ease: 'power2.in',
-          onComplete: resolve
-        });
+        gsap.to('#map', { opacity: 0, scale: 0.98, duration: 0.2, ease: 'power2.in', onComplete: resolve });
       });
     }
 
-    // Load saved category state for this map, or init all-on
     const hadState = loadCategoryState();
+    const data = await loadMapData(mapId);
+
+    if (!data) {
+      showLoading(false);
+      document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图数据加载失败</div>';
+      renderSidebar(null);
+      return;
+    }
+
     if (!hadState) {
-      const data = await loadMapData(mapId);
-      if (data) {
-        categoryState = {};
-        data.categories.forEach(cat => { categoryState[cat.id] = true; });
-        saveCategoryState();
-      }
+      categoryState = {};
+      data.categories.forEach(cat => { categoryState[cat.id] = true; });
+      saveCategoryState();
     }
 
     destroyMap();
 
-    const data = await loadMapData(mapId);
-    if (!data) {
-      showLoading(false);
-      document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图数据加载失败</div>';
-      return;
-    }
-
-    // Ensure map container exists
     const mapEl = document.getElementById('map');
     if (!mapEl) { showLoading(false); return; }
     mapEl.innerHTML = '';
     mapEl.style.opacity = '1';
 
-    // Preload the image before creating the overlay
-    const cfg = MAPS[mapId];
-    try {
-      await preloadImage(cfg.image);
-    } catch (e) {
-      console.error('Image preload failed:', e);
-      showLoading(false);
-      mapEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图图片加载失败，请刷新重试</div>';
-      return;
-    }
+    renderSidebar(data);
+    renderFavoritesPanel();
+    updateStats();
+    updateCycleDisplay();
 
     try {
       initMap();
+      addMarkers(data);
+      showLoading(false);
     } catch (e) {
       console.error('Leaflet init failed:', e);
       showLoading(false);
+      mapEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图渲染失败，请刷新重试</div>';
       return;
     }
 
-    // Hide loading, show map
-    showLoading(false);
-
-    renderSidebar(data);
-    renderFavoritesPanel();
-    addMarkers(data);
-    updateCycleDisplay();
-
     if (typeof gsap !== 'undefined') {
-      gsap.fromTo('#map',
-        { opacity: 0, scale: 1.02 },
-        { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' }
-      );
+      gsap.fromTo('#map', { opacity: 0, scale: 1.02 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' });
       const items = document.querySelectorAll('.cat-group');
-      gsap.from(items, {
-        x: -20,
-        opacity: 0,
-        duration: 0.25,
-        stagger: 0.04,
-        ease: 'power2.out'
-      });
+      gsap.from(items, { x: -20, opacity: 0, duration: 0.25, stagger: 0.04, ease: 'power2.out' });
     }
   }
 
