@@ -10,14 +10,14 @@
   // ════════════════════════════════════════════════════════════
 
   const MAP_SIZE = 4000;
-  const ICON_BASE = '/map/assets/icons/';
+  const ICON_BASE = 'assets/icons/';
   const LS_FAV_KEY = 'wfspeed-map-favorites';
   const LS_CAT_KEY = 'wfspeed-map-categories';
 
   const MAPS = {
     'duviri': {
       name: '双衍王境',
-      image: '/map/assets/duviri-map.webp',
+      image: 'assets/duviri-map.webp',
       bounds: [[0, 0], [MAP_SIZE, MAP_SIZE]],
       anchor: 'bottom',
       zoom: 2,
@@ -26,7 +26,7 @@
     },
     'plains-of-eidolon': {
       name: '夜灵平野',
-      image: '/map/assets/plains-eidolon-map.webp',
+      image: 'assets/plains-eidolon-map.webp',
       bounds: [[0, 0], [MAP_SIZE, MAP_SIZE]],
       anchor: 'bottom',
       zoom: 2,
@@ -35,7 +35,7 @@
     },
     'orb-vallis': {
       name: '奥布山谷',
-      image: '/map/assets/orb-vallis-map.webp',
+      image: 'assets/orb-vallis-map.webp',
       bounds: [[0, 0], [MAP_SIZE, MAP_SIZE]],
       anchor: 'center',
       zoom: 2,
@@ -44,7 +44,7 @@
     },
     'cambion-drift': {
       name: '魔胎之境',
-      image: '/map/assets/cambion-drift-map.webp',
+      image: 'assets/cambion-drift-map.webp',
       bounds: [[0, 0], [MAP_SIZE, MAP_SIZE]],
       anchor: 'bottom',
       zoom: 2,
@@ -247,7 +247,7 @@
 
   async function loadMapData(mapId) {
     if (mapData[mapId]) return mapData[mapId];
-    const url = `/map/data/${mapId}.json`;
+    const url = `data/${mapId}.json`;
     try {
       const resp = await fetch(url);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
@@ -884,62 +884,56 @@
         String(now.getUTCSeconds()).padStart(2, '0');
     }
 
-    /* 进度条 */
-    var _mapSplProgress = 0;
-    var _mapSplTarget = 0;
-    var _mapSplMsgIdx = 0;
-    function mapSplSetProgress(p) {
-      _mapSplTarget = Math.min(100, Math.max(0, p));
-    }
-    function mapSplTick() {
-      if (_mapSplProgress < _mapSplTarget) {
-        _mapSplProgress += (_mapSplTarget - _mapSplProgress) * 0.12;
-        if (_mapSplTarget - _mapSplProgress < 0.3) _mapSplProgress = _mapSplTarget;
-      }
-      if (_mapSplBarFill) _mapSplBarFill.style.width = _mapSplProgress + '%';
-      if (_mapSplBarPct) _mapSplBarPct.textContent = Math.round(_mapSplProgress) + '%';
-      if (_mapSplProgress < 100) requestAnimationFrame(mapSplTick);
-    }
-
     /* 启动 */
     mapInitHexSides();
     mapUpdateUtc();
-    setInterval(mapUpdateUtc, 1000);
-    setInterval(function () {
+    var _mapSplClockT = setInterval(mapUpdateUtc, 1000);
+    var _mapSplSideT = setInterval(function () {
       mapScrambleSide(_mapSplLeft);
       mapScrambleSide(_mapSplRight);
-    }, 180);
+    }, 310);
     if (_mapSplHexWrap) _mapSplHexWrap.classList.add('map-spl-hex-spinning');
 
-    /* 状态文字轮播 */
+    /* 进度模拟（不超过 91%，留给真正加载完成时跳到 100%） */
+    var _mapSplProg = 0;
+    var _mapSplProgT = setInterval(function () {
+      _mapSplProg = Math.min(_mapSplProg + Math.random() * 7 + 2.5, 91);
+      if (_mapSplBarFill) _mapSplBarFill.style.width = _mapSplProg + '%';
+      if (_mapSplBarPct)  _mapSplBarPct.textContent  = Math.floor(_mapSplProg) + '%';
+    }, 165);
+
+    /* 状态文本轮换 */
+    var _mapSplMsgIdx = 0;
     var _mapSplStatusTimer = setInterval(function () {
-      _mapSplMsgIdx++;
-      if (_mapSplMsgIdx >= MAP_SPL_STATUSES.length) _mapSplMsgIdx = 0;
+      _mapSplMsgIdx = (_mapSplMsgIdx + 1) % MAP_SPL_STATUSES.length;
       if (_mapSplStatus) _mapSplStatus.textContent = MAP_SPL_STATUSES[_mapSplMsgIdx];
       if (_mapSplInfo) _mapSplInfo.textContent = MAP_SPL_INFOS[_mapSplMsgIdx];
-    }, 800);
+    }, 670);
 
-    mapSplSetProgress(15);
-    requestAnimationFrame(mapSplTick);
-  }
-
-  function mapSplDone() {
-    if (!_mapSpl) return;
-    clearInterval(_mapSplStatusTimer);
-    mapSplSetProgress(100);
-    if (_mapSplStatus) _mapSplStatus.textContent = 'TACTICAL OVERLAY ONLINE';
-    if (_mapSplInfo) _mapSplInfo.textContent = '// LANDSCAPE MAP SYSTEM READY';
-    setTimeout(function () {
-      _mapSpl.classList.add('ws-splash--done');
+    /* 公开隐藏接口 */
+    var _mapSplMinT   = Date.now() + 3000;
+    var _mapSplHidden = false;
+    window._mapSplDone = function () {
+      if (_mapSplHidden) return;
+      _mapSplHidden = true;
+      var delay = Math.max(0, _mapSplMinT - Date.now());
       setTimeout(function () {
-        if (_mapSpl.parentNode) _mapSpl.parentNode.removeChild(_mapSpl);
-      }, 900);
-    }, 400);
-  }
-
-  function mapSplProgress(p) {
-    mapSplSetProgress(p);
-    requestAnimationFrame(mapSplTick);
+        clearInterval(_mapSplProgT);
+        clearInterval(_mapSplStatusTimer);
+        clearInterval(_mapSplSideT);
+        clearInterval(_mapSplClockT);
+        if (_mapSplBarFill)  { _mapSplBarFill.style.width = '100%'; }
+        if (_mapSplBarPct)   { _mapSplBarPct.textContent  = '100%'; }
+        if (_mapSplStatus) { _mapSplStatus.textContent = 'TACTICAL OVERLAY ONLINE'; }
+        if (_mapSplInfo)   { _mapSplInfo.textContent   = '// LANDSCAPE MAP SYSTEM READY'; }
+        setTimeout(function () {
+          _mapSpl.classList.add('ws-splash--done');
+          setTimeout(function () {
+            if (_mapSpl.parentNode) _mapSpl.parentNode.removeChild(_mapSpl);
+          }, 900);
+        }, 360);
+      }, delay);
+    };
   }
 
   // ════════════════════════════════════════════════════════════
@@ -948,31 +942,25 @@
 
   async function init() {
     loadFavorites();
-    mapSplProgress(25);
     initSearch();
     bindEvents();
-    mapSplProgress(40);
     updateCycleDisplay();
     setInterval(updateCycleDisplay, 1000);
-    mapSplProgress(55);
     try {
       await switchMap('duviri');
-      mapSplProgress(85);
     } catch (e) {
       console.error('Map init failed, retrying...', e);
       destroyMap();
       await new Promise(r => setTimeout(r, 500));
       try {
         await switchMap('duviri');
-        mapSplProgress(85);
       } catch (e2) {
         console.error('Map init retry failed:', e2);
         document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图加载失败，请刷新页面重试</div>';
       }
     }
-    mapSplProgress(95);
     initAnimations();
-    mapSplDone();
+    if (window._mapSplDone) window._mapSplDone();
   }
 
   if (document.readyState === 'loading') {
