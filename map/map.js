@@ -17,7 +17,7 @@
   const MAPS = {
     'duviri': {
       name: '双衍王境',
-      image: '/map/assets/duviri-map.png',
+      image: '/map/assets/duviri-map.webp',
       bounds: [[0, 0], [MAP_SIZE, MAP_SIZE]],
       anchor: 'bottom',
       zoom: 2,
@@ -26,7 +26,7 @@
     },
     'plains-of-eidolon': {
       name: '夜灵平野',
-      image: '/map/assets/plains-of-eidolon-map.png',
+      image: '/map/assets/plains-eidolon-map.webp',
       bounds: [[0, 0], [MAP_SIZE, MAP_SIZE]],
       anchor: 'bottom',
       zoom: 2,
@@ -35,7 +35,7 @@
     },
     'orb-vallis': {
       name: '奥布山谷',
-      image: '/map/assets/orb-vallis-map.png',
+      image: '/map/assets/orb-vallis-map.webp',
       bounds: [[0, 0], [MAP_SIZE, MAP_SIZE]],
       anchor: 'center',
       zoom: 2,
@@ -44,7 +44,7 @@
     },
     'cambion-drift': {
       name: '魔胎之境',
-      image: '/map/assets/cambion-drift-map.png',
+      image: '/map/assets/cambion-drift-map.webp',
       bounds: [[0, 0], [MAP_SIZE, MAP_SIZE]],
       anchor: 'bottom',
       zoom: 2,
