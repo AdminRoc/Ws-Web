@@ -322,16 +322,6 @@
         currentZoom = newZoom;
         refreshMarkers();
       }
-      // Ensure overlay survives zoom/pan
-      if (imageOverlay && map && !map.hasLayer(imageOverlay)) {
-        imageOverlay.addTo(map);
-      }
-    });
-
-    map.on('moveend', () => {
-      if (imageOverlay && map && !map.hasLayer(imageOverlay)) {
-        imageOverlay.addTo(map);
-      }
     });
     currentZoom = map.getZoom();
   }

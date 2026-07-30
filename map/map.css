@@ -710,7 +710,6 @@
 .leaflet-container { background: #030408 !important; }
 
 .leaflet-image-layer {
-  will-change: transform;
   image-rendering: auto;
 }
 
