@@ -605,7 +605,7 @@
     if (!container) return;
     const data = mapData[currentMap];
     if (!data || !data.markers) {
-      container.innerHTML = '<div class="locpanel-empty">加载中...</div>';
+      container.innerHTML = `<div class="locpanel-empty">${currentLang === 'en' ? 'Loading...' : '加载中...'}</div>`;
       return;
     }
 
@@ -621,7 +621,7 @@
     visibleMarkers = sortMarkers(visibleMarkers, locSortMode, data);
 
     if (visibleMarkers.length === 0) {
-      container.innerHTML = '<div class="locpanel-empty">无匹配地点</div>';
+      container.innerHTML = `<div class="locpanel-empty">${currentLang === 'en' ? 'No matching locations' : '无匹配地点'}</div>`;
       return;
     }
 
@@ -934,10 +934,21 @@
         statVisible.textContent = markers.length;
       }
     }
-    // Update "个地点 · 个显示" text
+    // Update sidebar stats if it exists
     const statsSpan = document.querySelector('.sidebar-stats');
     if (statsSpan && statTotal && statVisible) {
       statsSpan.innerHTML = `${statTotal.textContent} ${t.locations} · ${statVisible.textContent} ${t.categories}`;
+    }
+
+    // Right panel stats
+    const locStats = document.querySelector('.locpanel-stats');
+    if (locStats) {
+      const data = mapData[currentMap];
+      const total = data ? data.markers.length : 0;
+      const cats = data ? data.categories.length : 0;
+      const locLabel = currentLang === 'en' ? 'locations' : '地点';
+      const catLabel = currentLang === 'en' ? 'categories' : '分类';
+      locStats.textContent = `${total} ${locLabel} · ${cats} ${catLabel}`;
     }
 
     // Favorites panel
