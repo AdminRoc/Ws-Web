@@ -67,6 +67,7 @@
   let showFavOnly = false;
   let searchQuery = '';
   let currentZoom = 2;
+  let currentLang = localStorage.getItem('wfspeed-map-lang') || 'zh';
 
   // ════════════════════════════════════════════════════════════
   //  CYCLE CALCULATIONS
@@ -79,17 +80,17 @@
   };
 
   const STATE_NAMES = {
-    day:    { zh: '白昼', icon: '☀️', color: '#ffd700' },
-    night:  { zh: '夜晚', icon: '🌙', color: '#6f8bff' },
-    warm:   { zh: '温暖', icon: '🌡️', color: '#ff9a4f' },
-    cold:   { zh: '寒冷', icon: '❄️', color: '#45c8ff' },
-    fass:   { zh: 'Fass',  icon: '🔴', color: '#ff5f9e' },
-    vome:   { zh: 'Vome',  icon: '🔵', color: '#45c8ff' },
-    sorrow: { zh: '悲伤', icon: '💧', color: '#6f8bff' },
-    fear:   { zh: '恐惧', icon: '👁️', color: '#a86bff' },
-    joy:    { zh: '喜悦', icon: '✨', color: '#ffd04f' },
-    anger:  { zh: '愤怒', icon: '🔥', color: '#ff7a6b' },
-    envy:   { zh: '嫉妒', icon: '💀', color: '#41ff8e' }
+    day:    { zh: '白昼', en: 'Day',   icon: '☀️', color: '#ffd700' },
+    night:  { zh: '夜晚', en: 'Night', icon: '🌙', color: '#6f8bff' },
+    warm:   { zh: '温暖', en: 'Warm',  icon: '🌡️', color: '#ff9a4f' },
+    cold:   { zh: '寒冷', en: 'Cold',  icon: '❄️', color: '#45c8ff' },
+    fass:   { zh: 'Fass',  en: 'Fass',  icon: '🔴', color: '#ff5f9e' },
+    vome:   { zh: 'Vome',  en: 'Vome',  icon: '🔵', color: '#45c8ff' },
+    sorrow: { zh: '悲伤', en: 'Sorrow', icon: '💧', color: '#6f8bff' },
+    fear:   { zh: '恐惧', en: 'Fear',   icon: '👁️', color: '#a86bff' },
+    joy:    { zh: '喜悦', en: 'Joy',    icon: '✨', color: '#ffd04f' },
+    anger:  { zh: '愤怒', en: 'Anger',  icon: '🔥', color: '#ff7a6b' },
+    envy:   { zh: '嫉妒', en: 'Envy',   icon: '💀', color: '#41ff8e' }
   };
 
   function calcCycles() {
@@ -141,7 +142,8 @@
     const iconEl = document.getElementById('cycleIcon');
 
     const stateInfo = STATE_NAMES[current.state];
-    nameEl.textContent = stateInfo ? stateInfo.zh : current.state;
+    const lang = currentLang === 'en' ? 'en' : 'zh';
+    nameEl.textContent = stateInfo ? stateInfo[lang] : current.state;
     timerEl.textContent = formatTime(current.remaining);
 
     const color = stateInfo ? stateInfo.color : 'var(--neon-cyan)';
@@ -160,7 +162,7 @@
       const stateEl = document.getElementById(elId);
       if (stateEl) {
         const sn = STATE_NAMES[data.state];
-        stateEl.textContent = sn ? sn.zh : data.state;
+        stateEl.textContent = sn ? sn[lang] : data.state;
       }
     });
   }
@@ -170,6 +172,10 @@
   // ════════════════════════════════════════════════════════════
 
   function getCategoryName(catId) {
+    if (currentLang === 'en') {
+      const mapNames = typeof CATEGORY_NAMES_MAP_EN !== 'undefined' ? CATEGORY_NAMES_MAP_EN[currentMap] : null;
+      if (mapNames && mapNames[catId]) return mapNames[catId];
+    }
     const mapNames = typeof CATEGORY_NAMES_MAP !== 'undefined' ? CATEGORY_NAMES_MAP[currentMap] : null;
     if (mapNames && mapNames[catId]) return mapNames[catId];
     return catId;
@@ -181,7 +187,8 @@
   }
 
   function getGroupName(groupId) {
-    const t = MAP_TRANSLATIONS.zh.groups;
+    const lang = currentLang === 'en' ? 'en' : 'zh';
+    const t = MAP_TRANSLATIONS[lang].groups;
     return t[groupId] || groupId;
   }
 
@@ -874,6 +881,117 @@
       const items = document.querySelectorAll('.cat-group');
       gsap.from(items, { x: -20, opacity: 0, duration: 0.25, stagger: 0.04, ease: 'power2.out' });
     }
+
+    // Apply current language to new map
+    applyLanguage();
+  }
+
+  // ════════════════════════════════════════════════════════════
+  //  LANGUAGE TOGGLE
+  // ════════════════════════════════════════════════════════════
+
+  function switchLanguage(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    localStorage.setItem('wfspeed-map-lang', lang);
+
+    // Update toggle buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    // Update all UI text without resetting checkboxes
+    applyLanguage();
+  }
+
+  function applyLanguage() {
+    const t = MAP_TRANSLATIONS[currentLang] || MAP_TRANSLATIONS.zh;
+
+    // Nav tab map names
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      const mapId = tab.dataset.map;
+      const labelEl = tab.querySelector('.nav-tab-label');
+      if (labelEl && t.maps && t.maps[mapId]) {
+        labelEl.textContent = t.maps[mapId];
+      }
+    });
+
+    // Sidebar
+    const sidebarTitle = document.querySelector('.sidebar-title');
+    if (sidebarTitle) sidebarTitle.textContent = t.filters;
+    const selectAllBtn = document.getElementById('selectAll');
+    if (selectAllBtn) selectAllBtn.textContent = t.all;
+    const clearAllBtn = document.getElementById('clearAll');
+    if (clearAllBtn) clearAllBtn.textContent = t.none;
+
+    // Stats
+    const statTotal = document.getElementById('statTotal');
+    const statVisible = document.getElementById('statVisible');
+    if (statTotal && statVisible) {
+      const data = mapData[currentMap];
+      if (data) {
+        statTotal.textContent = data.markers.length;
+        statVisible.textContent = markers.length;
+      }
+    }
+    // Update "个地点 · 个显示" text
+    const statsSpan = document.querySelector('.sidebar-stats');
+    if (statsSpan && statTotal && statVisible) {
+      statsSpan.innerHTML = `${statTotal.textContent} ${t.locations} · ${statVisible.textContent} ${t.categories}`;
+    }
+
+    // Favorites panel
+    const favPanelName = document.querySelector('.fav-panel-name');
+    if (favPanelName) favPanelName.textContent = t.favorites;
+    const favEmpty = document.querySelector('.fav-empty');
+    if (favEmpty) favEmpty.textContent = t.noFavorites;
+
+    // Search placeholder
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.placeholder = t.search + '...';
+
+    // Map loading text
+    const loadingText = document.querySelector('.map-loading-text');
+    if (loadingText) loadingText.textContent = currentLang === 'en' ? 'Loading map...' : '地图加载中...';
+
+    // Right panel
+    const locTitle = document.querySelector('.locpanel-title');
+    if (locTitle) locTitle.textContent = currentLang === 'en' ? 'Location List' : '地点列表';
+    const locSortLabel = document.querySelector('.locpanel-sort-label');
+    if (locSortLabel) locSortLabel.textContent = t.sort;
+
+    // Sort options
+    const locSort = document.getElementById('locSort');
+    if (locSort) {
+      const opts = locSort.options;
+      opts[0].text = currentLang === 'en' ? 'Wiki Order' : 'Wiki 顺序';
+      opts[1].text = t.nameOrder;
+      opts[2].text = t.categoryOrder;
+      opts[3].text = t.nearestOrder;
+    }
+
+    // Cycle state names
+    updateCycleDisplay();
+
+    // Re-render sidebar and location list text (preserves checkboxes)
+    const data = mapData[currentMap];
+    if (data) {
+      // Update sidebar group names and category names
+      document.querySelectorAll('.cat-group').forEach(group => {
+        const groupId = group.dataset.group;
+        const nameEl = group.querySelector('.cat-group-name');
+        if (nameEl) nameEl.textContent = getGroupName(groupId);
+      });
+      document.querySelectorAll('.cat-item').forEach(item => {
+        const catId = item.dataset.cat;
+        const nameEl = item.querySelector('.cat-item-name');
+        if (nameEl) nameEl.textContent = getCategoryName(catId);
+      });
+
+      // Update location list
+      renderLocationList();
+      renderFavoritesPanel();
+    }
   }
 
   // ════════════════════════════════════════════════════════════
@@ -931,6 +1049,11 @@
         }
       });
     }
+
+    // Language toggle
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchLanguage(btn.dataset.lang));
+    });
 
     // Right panel: favorites only toggle
     const locFavToggle = document.getElementById('locFavToggle');
@@ -1117,6 +1240,12 @@
     loadFavorites();
     initSearch();
     bindEvents();
+
+    // Set initial language toggle state
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === currentLang);
+    });
+
     updateCycleDisplay();
     setInterval(updateCycleDisplay, 1000);
     try {
@@ -1132,6 +1261,10 @@
         document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图加载失败，请刷新页面重试</div>';
       }
     }
+
+    // Apply language after map is loaded
+    applyLanguage();
+
     initAnimations();
     if (window._mapSplDone) window._mapSplDone();
   }

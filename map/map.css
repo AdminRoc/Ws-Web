@@ -295,6 +295,34 @@
   box-shadow: 0 0 12px rgba(5,217,232,0.2);
 }
 
+/* ── Language Toggle ── */
+.lang-toggle {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.lang-btn {
+  padding: 6px 10px;
+  font-size: 12px;
+  font-family: var(--f-sci);
+  color: var(--text3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1;
+}
+.lang-btn:hover {
+  color: var(--text1);
+  background: rgba(255,255,255,0.05);
+}
+.lang-btn.active {
+  color: var(--cy);
+  background: rgba(5,217,232,0.1);
+}
+
 /* ── Layout ── */
 .map-layout {
   display: flex;

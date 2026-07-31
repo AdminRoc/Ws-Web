@@ -1,8 +1,61 @@
 /**
- * translations.js — Complete Chinese translation data
+ * translations.js — Complete i18n translation data
  * UI text, category names, Wiki name mappings, group definitions
  */
 const MAP_TRANSLATIONS = {
+  en: {
+    subtitle: 'Interactive Map',
+    search: 'Search locations or categories',
+    filters: 'Filters',
+    all: 'Select All',
+    none: 'Clear All',
+    showing: 'Showing',
+    locations: 'locations',
+    categories: 'categories',
+    closeResults: 'Close location panel',
+    closeFilters: 'Close filters',
+    sort: 'Sort',
+    nameOrder: 'By Name',
+    categoryOrder: 'By Category',
+    nearestOrder: 'Nearest to selected',
+    clearSearch: 'Clear search',
+    resetView: 'Reset View',
+    zoomIn: 'Zoom In',
+    zoomOut: 'Zoom Out',
+    focus: 'Show on Map',
+    hiddenMarkers: 'markers hidden',
+    zoomToReveal: 'Zoom in or widen filters to reveal',
+    noResults: 'No locations match your search and filters.',
+    sourceLabel: 'Map and marker data from community contributions',
+    selected: 'Selected',
+    favorites: 'Favorites',
+    showFavorites: 'Show favorites only',
+    showAllLocations: 'Show all locations',
+    addFavorite: 'Add to favorites',
+    removeFavorite: 'Remove from favorites',
+    noFavorites: 'No favorites under current filters.',
+    cycleState: 'Current State',
+    cycleNext: 'Next',
+    mapHint: 'Drag to pan · Scroll or pinch to zoom',
+    groups: {
+      travel: 'Travel & Landmarks',
+      fishing: 'Caves & Fishing',
+      activities: 'Activities & Bosses',
+      resources: 'Resources',
+      fragments: 'Fragments',
+      eidolon: 'Eidolon Hunts',
+      collectibles: 'Collectibles',
+      landmarks: 'Obelisks',
+      mother: 'Mother',
+      puzzles: 'Puzzles'
+    },
+    maps: {
+      duviri: 'Duviri',
+      'plains-of-eidolon': 'Plains of Eidolon',
+      'orb-vallis': 'Orb Vallis',
+      'cambion-drift': 'Cambion Drift'
+    }
+  },
   zh: {
     subtitle: '交互地图',
     search: '搜索地点或分类',
@@ -48,6 +101,12 @@ const MAP_TRANSLATIONS = {
       landmarks: '方尖碑',
       mother: '母亲',
       puzzles: '谜题'
+    },
+    maps: {
+      duviri: '双衍王境',
+      'plains-of-eidolon': '夜灵平野',
+      'orb-vallis': '奥布山谷',
+      'cambion-drift': '魔胎之境'
     }
   }
 };
@@ -133,6 +192,89 @@ const CATEGORY_NAMES_MAP = {
     requiem_obelisk: '安魂方尖碑',
     mother: '母亲（赏金面板）',
     mother_isolation_vault: '母亲（隔离库）'
+  }
+};
+
+// ═══ English category names ═══
+const CATEGORY_NAMES_MAP_EN = {
+  duviri: {
+    blinkpad: 'Blinkpad',
+    cave: 'Cave Entrance',
+    shop: 'Acrithis',
+    npc: 'NPCs',
+    undercroft: 'Undercroft Portal',
+    ueymag: 'Ueymag Farming Spot',
+    tasoma: 'Tasoma Extract Farming Spot',
+    eevani: 'Eevani Farming Spot',
+    connla_sprout: 'Connla Sprout Farming Spot',
+    yao_shrub: 'Yao Shrub Farming Spot',
+    silphsela: 'Silphsela Farming Spot',
+    dracroot: 'Dracroot Farming Spot',
+    kovnik: 'Kovnik Farming Spot',
+    saggen_pearl: 'Saggen Pearl Farming Spot',
+    fishing: 'Fishing Spots',
+    game: 'Komi',
+    herding: 'Tamm Herding',
+    shawzin: 'Shawzin Stages',
+    puzzle: 'Owl Puzzle Solo',
+    puzzle_coop: 'Owl Puzzle Coop',
+    scholars_landing: "Scholar's Landing Fragments",
+    we_are_not: 'We are not What We Were Fragments',
+    watchers_island: "Watcher's Island Fragments",
+    lake_veruna: 'Lake Veruna Fragments',
+    galleria: 'The Galleria Fragments',
+    doll_mausoleum: 'The Doll Mausoleum Fragments',
+    caves_of_academe: 'The Caves of Academe Fragments',
+    manipura_island: 'Manipura Island Fragments',
+    island_of_lorn: 'The Island of Lorn Fragments',
+    bleeding_earth: 'The Bleeding Earth Fragments',
+    somachord: 'Somachord',
+    '1': 'Zariman Tablets',
+    '2': 'Tombstones'
+  },
+  'plains-of-eidolon': {
+    blinkpad: 'Plains Exit',
+    cave: 'Cave Entrance',
+    konzu: 'Bounty Board',
+    grineer_base: 'Grineer Base',
+    lake: 'Lake Fishing',
+    ocean: 'Ocean Fishing',
+    pond: 'Pond Fishing',
+    eidolon_shrine: 'Eidolon Shrine',
+    eidolon_lure: 'Eidolon Lure',
+    cetus_wisp: 'Cetus Wisp',
+    plague_star: 'Plague Star Infestation',
+    thousand_year_fish: 'Thousand-Year Fish'
+  },
+  'orb-vallis': {
+    '1': 'General',
+    blinkpad: 'Orb Vallis Exit',
+    corpus_base: 'Capturable Corpus Base',
+    cave_with_fishing: 'Cave (Fishing)',
+    cave_no_fishing: 'Cave (No Fishing)',
+    pond: 'Pond Fishing',
+    lake: 'Lake Fishing',
+    k_drive_race: 'K-Drive Race',
+    exploiter_orb: 'Exploiter Orb (Deck 12)',
+    'profit-taker_orb': 'Profit-Taker Orb',
+    '2': 'Thermia Fracture',
+    sola_toroid: 'Sola Toroid Farming Spot',
+    calda_toroid: 'Calda Toroid Farming Spot',
+    vega_toroid: 'Vega Toroid Farming Spot',
+    eudico_fragment: "Eudico's Memory Fragment",
+    legs_fragment: "Legs' Memory Fragment",
+    little_duck_fragment: "Little Duck's Memory Fragment",
+    rude_zuud_fragment: "Rude Zuud's Memory Fragment",
+    smokefinger_fragment: "Smokefinger's Memory Fragment",
+    the_business_fragment: "Business' Memory Fragment",
+    ticker_fragment: "Ticker's Memory Fragment"
+  },
+  'cambion-drift': {
+    blinkpad: 'Cambion Drift Exit',
+    k_drive_race: 'K-Drive Race',
+    requiem_obelisk: 'Requiem Obelisk',
+    mother: 'Mother (Bounty Board)',
+    mother_isolation_vault: 'Mother (Isolation Vault)'
   }
 };
 
