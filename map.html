@@ -294,6 +294,34 @@
         <div class="overlay-coords" id="overlayCoords">0, 0</div>
       </div>
     </div>
+
+    <!-- Right Sidebar: Location List -->
+    <aside class="map-locpanel" id="locPanel">
+      <div class="locpanel-header">
+        <h2 class="locpanel-title">地点列表</h2>
+        <div class="locpanel-stats">
+          <span id="locTotal">0</span> 地点 · <span id="locCatCount">0</span> 分类
+        </div>
+      </div>
+      <div class="locpanel-controls">
+        <div class="locpanel-sort">
+          <label class="locpanel-sort-label">排序</label>
+          <select id="locSort" class="locpanel-sort-select">
+            <option value="wiki">Wiki 顺序</option>
+            <option value="name">按名称</option>
+            <option value="category">按分类</option>
+            <option value="nearest">距离最近</option>
+          </select>
+        </div>
+        <button class="locpanel-fav-toggle" id="locFavToggle" title="仅显示收藏">
+          <span class="locpanel-fav-icon">☆</span>
+          <span class="locpanel-fav-count" id="locFavCount">0</span>
+        </button>
+      </div>
+      <div class="locpanel-list" id="locList">
+        <div class="locpanel-empty">加载中...</div>
+      </div>
+    </aside>
   </div>
 
   <!-- Leaflet -->

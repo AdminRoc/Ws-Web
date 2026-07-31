@@ -437,6 +437,7 @@
     clearMarkers();
     const data = mapData[currentMap];
     if (data) addMarkers(data);
+    renderLocationList();
   }
 
   // ════════════════════════════════════════════════════════════
@@ -550,6 +551,124 @@
     if (!data) return;
     document.getElementById('statTotal').textContent = data.markers.length;
     document.getElementById('statVisible').textContent = markers.length;
+    // Update right panel stats
+    const locTotal = document.getElementById('locTotal');
+    const locCatCount = document.getElementById('locCatCount');
+    if (locTotal) locTotal.textContent = data.markers.length;
+    if (locCatCount) locCatCount.textContent = data.categories.length;
+  }
+
+  // ════════════════════════════════════════════════════════════
+  //  LOCATION LIST PANEL (Right Sidebar)
+  // ════════════════════════════════════════════════════════════
+
+  let locSortMode = 'wiki';
+  let locFavOnly = false;
+
+  function renderLocationList() {
+    const container = document.getElementById('locList');
+    if (!container) return;
+    const data = mapData[currentMap];
+    if (!data || !data.markers) {
+      container.innerHTML = '<div class="locpanel-empty">加载中...</div>';
+      return;
+    }
+
+    // Collect visible markers
+    let visibleMarkers = data.markers.filter(m => {
+      if (!categoryState[m.categoryId]) return false;
+      if (locFavOnly && !isFavorite(m.id)) return false;
+      if (searchQuery && !m.popup.title.toLowerCase().includes(searchQuery)) return false;
+      return true;
+    });
+
+    // Sort
+    visibleMarkers = sortMarkers(visibleMarkers, locSortMode, data);
+
+    if (visibleMarkers.length === 0) {
+      container.innerHTML = '<div class="locpanel-empty">无匹配地点</div>';
+      return;
+    }
+
+    // Group by category
+    const groups = {};
+    visibleMarkers.forEach(m => {
+      if (!groups[m.categoryId]) groups[m.categoryId] = [];
+      groups[m.categoryId].push(m);
+    });
+
+    let html = '';
+    data.categories.forEach(cat => {
+      const items = groups[cat.id];
+      if (!items || items.length === 0) return;
+      const catName = getCategoryName(cat.id);
+      const iconPath = getIconPath(cat.id);
+
+      html += `<div class="locpanel-group" data-cat="${cat.id}">
+        <div class="locpanel-group-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <img class="locpanel-group-icon" src="${iconPath}" alt="" loading="lazy">
+          <div class="locpanel-group-name">${catName}</div>
+          <div class="locpanel-group-count">${items.length}</div>
+          <div class="locpanel-group-arrow">▼</div>
+        </div>
+        <div class="locpanel-group-items">`;
+
+      items.forEach(m => {
+        const isFav = isFavorite(m.id);
+        const x = Math.round(m.position[0]);
+        const y = Math.round(m.position[1]);
+        const title = m.popup.title || catName;
+        html += `<div class="locitem" onclick="window._flyToMarker('${m.id}')">
+          <img class="locitem-icon" src="${iconPath}" alt="" loading="lazy">
+          <div class="locitem-info">
+            <div class="locitem-name">${title}</div>
+            <div class="locitem-meta">${x}, ${y}</div>
+          </div>
+          <div class="locitem-fav ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); window._toggleFav('${m.id}');">${isFav ? '★' : '☆'}</div>
+        </div>`;
+      });
+
+      html += '</div></div>';
+    });
+
+    container.innerHTML = html;
+
+    // Update fav count in panel
+    const locFavCount = document.getElementById('locFavCount');
+    if (locFavCount) {
+      const favs = favorites[currentMap] || [];
+      locFavCount.textContent = favs.length;
+    }
+  }
+
+  function sortMarkers(markerList, mode, data) {
+    const sorted = [...markerList];
+    switch (mode) {
+      case 'name':
+        sorted.sort((a, b) => (a.popup.title || '').localeCompare(b.popup.title || ''));
+        break;
+      case 'category':
+        sorted.sort((a, b) => {
+          if (a.categoryId !== b.categoryId) return a.categoryId.localeCompare(b.categoryId);
+          return (a.popup.title || '').localeCompare(b.popup.title || '');
+        });
+        break;
+      case 'nearest': {
+        if (!map) break;
+        const center = map.getCenter();
+        sorted.sort((a, b) => {
+          const distA = Math.hypot(a.position[0] - center.lng, a.position[1] - center.lat);
+          const distB = Math.hypot(b.position[0] - center.lng, b.position[1] - center.lat);
+          return distA - distB;
+        });
+        break;
+      }
+      case 'wiki':
+      default:
+        // Original order from JSON (wiki order)
+        break;
+    }
+    return sorted;
   }
 
   // ════════════════════════════════════════════════════════════
@@ -707,6 +826,7 @@
 
     renderSidebar(data);
     renderFavoritesPanel();
+    renderLocationList();
     updateStats();
     updateCycleDisplay();
 
@@ -768,6 +888,31 @@
     if (favPanel) {
       favPanel.querySelector('.fav-panel-header').addEventListener('click', () => {
         favPanel.classList.toggle('collapsed');
+      });
+    }
+
+    // Right panel: sort select
+    const locSort = document.getElementById('locSort');
+    if (locSort) {
+      locSort.addEventListener('change', () => {
+        locSortMode = locSort.value;
+        renderLocationList();
+        // Re-sort nearest if map moved
+        if (locSortMode === 'nearest' && map) {
+          map.on('moveend', () => renderLocationList());
+        }
+      });
+    }
+
+    // Right panel: favorites only toggle
+    const locFavToggle = document.getElementById('locFavToggle');
+    if (locFavToggle) {
+      locFavToggle.addEventListener('click', () => {
+        locFavOnly = !locFavOnly;
+        locFavToggle.classList.toggle('active', locFavOnly);
+        const icon = locFavToggle.querySelector('.locpanel-fav-icon');
+        if (icon) icon.textContent = locFavOnly ? '★' : '☆';
+        renderLocationList();
       });
     }
   }
