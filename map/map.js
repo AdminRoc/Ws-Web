@@ -948,7 +948,7 @@
       const cats = data ? data.categories.length : 0;
       const locLabel = currentLang === 'en' ? 'locations' : '地点';
       const catLabel = currentLang === 'en' ? 'categories' : '分类';
-      locStats.textContent = `${total} ${locLabel} · ${cats} ${catLabel}`;
+      locStats.innerHTML = `<span id="locTotal">${total}</span> ${locLabel} · <span id="locCatCount">${cats}</span> ${catLabel}`;
     }
 
     // Favorites panel
