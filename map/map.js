@@ -192,6 +192,32 @@
     return fallback || '';
   }
 
+  function getMarkerTitle(title) {
+    if (!title) return '';
+    const map = typeof MARKER_TITLE_MAP !== 'undefined' ? MARKER_TITLE_MAP[currentMap] : null;
+    if (map && map[title]) return map[title];
+    // Pattern: "XXX Fragment N X" → lookup XXX + "碎片"
+    const fragMatch = title.match(/^(.+?)\s+Fragment\s+N?\s*\d+$/i);
+    if (fragMatch) {
+      const base = fragMatch[1];
+      if (map && map[base]) return map[base] + '碎片';
+      return base + '碎片';
+    }
+    // Pattern: "XXX's Mem Fragment N/N" → lookup XXX + "的记忆碎片"
+    const memMatch = title.match(/^(.+?)(?:'s|s')\s+Mem\s+Fragment/i);
+    if (memMatch) {
+      const base = memMatch[1];
+      if (map && map[base]) return map[base] + '的记忆碎片';
+      return base + '的记忆碎片';
+    }
+    // Pattern: "XXX Somachord" → "身心和弦琴 · XXX"
+    const somMatch = title.match(/^(.+?)\s+Somachord$/i);
+    if (somMatch) {
+      return '身心和弦琴 · ' + somMatch[1];
+    }
+    return title;
+  }
+
   // ════════════════════════════════════════════════════════════
   //  LOCAL STORAGE — Favorites + Category State
   // ════════════════════════════════════════════════════════════
@@ -311,7 +337,9 @@
     map.on('mousemove', (e) => {
       const coords = document.getElementById('overlayCoords');
       if (coords) {
-        coords.textContent = `${Math.round(e.latlng.lng)}, ${Math.round(e.latlng.lat)}`;
+        const gx = Math.round(e.latlng.lng);
+        const gy = Math.round(MAP_SIZE - e.latlng.lat);
+        coords.textContent = `${gx}, ${gy}`;
       }
     });
 
@@ -376,10 +404,10 @@
       if (!validCatIds.has(m.categoryId)) return;
       if (!categoryState[m.categoryId]) return;
       if (showFavOnly && !isFavorite(m.id)) return;
-      if (searchQuery && !m.popup.title.toLowerCase().includes(searchQuery)) return;
+      if (searchQuery && !getMarkerTitle(m.popup.title).toLowerCase().includes(searchQuery) && !m.popup.title.toLowerCase().includes(searchQuery)) return;
 
       const icon = createMarkerIcon(m.categoryId, data.categories, currentZoom);
-      const lat = m.position[1];
+      const lat = MAP_SIZE - m.position[1];
       const lng = m.position[0];
 
       const marker = L.marker([lat, lng], { icon })
@@ -393,7 +421,7 @@
             <div class="popup-header">
               <img class="popup-icon" src="${getIconPath(m.categoryId)}" alt="">
               <div>
-                <div class="popup-title">${m.popup.title}</div>
+                <div class="popup-title">${getMarkerTitle(m.popup.title)}</div>
                 <div class="popup-category">${catName}</div>
               </div>
             </div>
@@ -465,9 +493,9 @@
       const m = data.markers.find(mk => mk.id === id);
       if (!m) return;
       const catName = getCategoryName(m.categoryId);
-      const title = m.popup.title || catName;
+      const title = getMarkerTitle(m.popup.title) || catName;
       const x = Math.round(m.position[0]);
-      const y = Math.round(m.position[1]);
+      const y = Math.round(MAP_SIZE - m.position[1]);
       html += `<div class="fav-item" onclick="window._flyToMarker('${m.id}')">
         <img class="fav-item-icon" src="${getIconPath(m.categoryId)}" alt="" loading="lazy">
         <div class="fav-item-info">
@@ -578,7 +606,7 @@
     let visibleMarkers = data.markers.filter(m => {
       if (!categoryState[m.categoryId]) return false;
       if (locFavOnly && !isFavorite(m.id)) return false;
-      if (searchQuery && !m.popup.title.toLowerCase().includes(searchQuery)) return false;
+      if (searchQuery && !getMarkerTitle(m.popup.title).toLowerCase().includes(searchQuery) && !m.popup.title.toLowerCase().includes(searchQuery)) return false;
       return true;
     });
 
@@ -616,8 +644,8 @@
       items.forEach(m => {
         const isFav = isFavorite(m.id);
         const x = Math.round(m.position[0]);
-        const y = Math.round(m.position[1]);
-        const title = m.popup.title || catName;
+        const y = Math.round(MAP_SIZE - m.position[1]);
+        const title = getMarkerTitle(m.popup.title) || catName;
         html += `<div class="locitem" onclick="window._flyToMarker('${m.id}')">
           <img class="locitem-icon" src="${iconPath}" alt="" loading="lazy">
           <div class="locitem-info">
