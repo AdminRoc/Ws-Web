@@ -1406,9 +1406,9 @@ var exterminate_steel_acheronRecords = [
 
   {
     playerId:   "FrostMainer",
-    clearTime:  "0:26.000",
-    uploadTime: "2026-05-24",
-    videoUrls:  ["https://www.youtube.com/watch?v=2iRbaEA2sb8"],
+    clearTime:  "0:25.000",
+    uploadTime: "2026-07-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=mY4nXtBfQcU"],
   },
   {
     playerId:   "NamelessDeity",
@@ -1610,9 +1610,9 @@ var exterminate_steel_carpoRecords = [
 
   {
     playerId:   "FrostMainer",
-    clearTime:  "0:34.000",
-    uploadTime: "2026-06-21",
-    videoUrls:  ["https://www.youtube.com/watch?v=S7RWM1X1XrU"],
+    clearTime:  "0:32.000",
+    uploadTime: "2026-07-31",
+    videoUrls:  ["https://www.youtube.com/watch?v=NYZPLHjX4cI"],
   },
   {
     playerId:   "oTonJleHue",
@@ -1637,6 +1637,12 @@ var exterminate_steel_carpoRecords = [
     clearTime:  "1:17.000",
     uploadTime: "2026-01-07",
     videoUrls:  ["https://www.youtube.com/watch?v=1cDxpQDgWX4"],
+  },
+  {
+    playerId:   "Violet_Skadi",
+    clearTime:  "0:33.000",
+    uploadTime: "2026-07-28",
+    videoUrls:  ["https://www.bilibili.com/video/BV1EY3q6vEzJ"],
   },
 ];
 
