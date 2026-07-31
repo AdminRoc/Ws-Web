@@ -25,9 +25,9 @@ var exterminate_steel_acheronRecords = [
 
   {
     playerId:   "FrostMainer",
-    clearTime:  "0:26.000",
-    uploadTime: "2026-05-24",
-    videoUrls:  ["https://www.youtube.com/watch?v=2iRbaEA2sb8"],
+    clearTime:  "0:25.000",
+    uploadTime: "2026-07-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=mY4nXtBfQcU"],
   },
   {
     playerId:   "NamelessDeity",

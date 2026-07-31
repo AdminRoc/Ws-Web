@@ -31,9 +31,9 @@ var rescue_regnaRecords = [
   },
   {
     playerId:   "L1ndell",
-    clearTime:  "0:25.000",
-    uploadTime: "2022-08-01",
-    videoUrls:  ["https://www.youtube.com/watch?v=BICQQ99J8Bk"],
+    clearTime:  "0:19.400",
+    uploadTime: "2026-07-22",
+    videoUrls:  ["https://www.youtube.com/watch?v=MjehK15z5TI"],
   },
   {
     playerId:   "Salat",
