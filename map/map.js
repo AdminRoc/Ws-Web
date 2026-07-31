@@ -338,7 +338,7 @@
       const coords = document.getElementById('overlayCoords');
       if (coords) {
         const gx = Math.round(e.latlng.lng);
-        const gy = Math.round(MAP_SIZE - e.latlng.lat);
+        const gy = Math.round(e.latlng.lat);
         coords.textContent = `${gx}, ${gy}`;
       }
     });
@@ -407,7 +407,7 @@
       if (searchQuery && !getMarkerTitle(m.popup.title).toLowerCase().includes(searchQuery) && !m.popup.title.toLowerCase().includes(searchQuery)) return;
 
       const icon = createMarkerIcon(m.categoryId, data.categories, currentZoom);
-      const lat = MAP_SIZE - m.position[1];
+      const lat = m.position[1];
       const lng = m.position[0];
 
       const marker = L.marker([lat, lng], { icon })
@@ -495,7 +495,7 @@
       const catName = getCategoryName(m.categoryId);
       const title = getMarkerTitle(m.popup.title) || catName;
       const x = Math.round(m.position[0]);
-      const y = Math.round(MAP_SIZE - m.position[1]);
+      const y = Math.round(m.position[1]);
       html += `<div class="fav-item" onclick="window._flyToMarker('${m.id}')">
         <img class="fav-item-icon" src="${getIconPath(m.categoryId)}" alt="" loading="lazy">
         <div class="fav-item-info">
@@ -644,7 +644,7 @@
       items.forEach(m => {
         const isFav = isFavorite(m.id);
         const x = Math.round(m.position[0]);
-        const y = Math.round(MAP_SIZE - m.position[1]);
+        const y = Math.round(m.position[1]);
         const title = getMarkerTitle(m.popup.title) || catName;
         html += `<div class="locitem" onclick="window._flyToMarker('${m.id}')">
           <img class="locitem-icon" src="${iconPath}" alt="" loading="lazy">
