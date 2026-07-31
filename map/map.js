@@ -407,8 +407,8 @@
       if (searchQuery && !getMarkerTitle(m.popup.title).toLowerCase().includes(searchQuery) && !m.popup.title.toLowerCase().includes(searchQuery)) return;
 
       const icon = createMarkerIcon(m.categoryId, data.categories, currentZoom);
-      const lat = m.position[0];
-      const lng = m.position[1];
+      const lat = m.position[1];
+      const lng = m.position[0];
 
       const marker = L.marker([lat, lng], { icon })
         .addTo(map)
@@ -494,13 +494,13 @@
       if (!m) return;
       const catName = getCategoryName(m.categoryId);
       const title = getMarkerTitle(m.popup.title) || catName;
-      const gx = Math.round(m.position[1]);
-      const gy = Math.round(m.position[0]);
+      const x = Math.round(m.position[0]);
+      const y = Math.round(m.position[1]);
       html += `<div class="fav-item" onclick="window._flyToMarker('${m.id}')">
         <img class="fav-item-icon" src="${getIconPath(m.categoryId)}" alt="" loading="lazy">
         <div class="fav-item-info">
           <div class="fav-item-name">${catName}${title !== catName ? ' · ' + title : ''}</div>
-          <div class="fav-item-meta">${gx}, ${gy}</div>
+          <div class="fav-item-meta">${x}, ${y}</div>
         </div>
         <div class="fav-item-remove" onclick="event.stopPropagation(); window._toggleFav('${m.id}')">✕</div>
       </div>`;
@@ -643,14 +643,14 @@
 
       items.forEach(m => {
         const isFav = isFavorite(m.id);
-        const gx = Math.round(m.position[1]);
-        const gy = Math.round(m.position[0]);
+        const x = Math.round(m.position[0]);
+        const y = Math.round(m.position[1]);
         const title = getMarkerTitle(m.popup.title) || catName;
         html += `<div class="locitem" onclick="window._flyToMarker('${m.id}')">
           <img class="locitem-icon" src="${iconPath}" alt="" loading="lazy">
           <div class="locitem-info">
             <div class="locitem-name">${title}</div>
-            <div class="locitem-meta">${gx}, ${gy}</div>
+            <div class="locitem-meta">${x}, ${y}</div>
           </div>
           <div class="locitem-fav ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); window._toggleFav('${m.id}');">${isFav ? '★' : '☆'}</div>
         </div>`;
