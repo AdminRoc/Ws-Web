@@ -488,7 +488,7 @@
     if (!data) { container.innerHTML = ''; return; }
 
     if (favs.length === 0) {
-      container.innerHTML = '<div class="fav-empty">暂无收藏</div>';
+      container.innerHTML = `<div class="fav-empty">${currentLang === 'en' ? 'No favorites under current filters.' : '暂无收藏'}</div>`;
       document.getElementById('favPanelCount').textContent = '0';
       return;
     }
