@@ -498,8 +498,6 @@
     }
   });
 
-  let markerLayer = null;
-
   function addMarkers(data) {
     if (!map) return;
     if (markerLayer) {
