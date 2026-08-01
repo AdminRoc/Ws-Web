@@ -345,7 +345,7 @@
       const coords = document.getElementById('overlayCoords');
       if (coords) {
         const gx = Math.round(e.latlng.lng);
-        const gy = Math.round(MAP_SIZE - e.latlng.lat);
+        const gy = Math.round(e.latlng.lat);
         coords.textContent = `${gx}, ${gy}`;
       }
     });
@@ -414,7 +414,7 @@
       if (searchQuery && !getMarkerTitle(m.popup.title).toLowerCase().includes(searchQuery) && !m.popup.title.toLowerCase().includes(searchQuery)) return;
 
       const icon = createMarkerIcon(m.categoryId, data.categories, currentZoom);
-      const lat = MAP_SIZE - m.position[1];
+      const lat = m.position[1];
       const lng = m.position[0];
 
       const marker = L.marker([lat, lng], { icon })
@@ -691,7 +691,7 @@
       case 'nearest': {
         if (!map) break;
         const center = map.getCenter();
-        const centerWikiY = MAP_SIZE - center.lat;
+        const centerWikiY = center.lat;
         sorted.sort((a, b) => {
           const distA = Math.hypot(a.position[0] - center.lng, a.position[1] - centerWikiY);
           const distB = Math.hypot(b.position[0] - center.lng, b.position[1] - centerWikiY);
