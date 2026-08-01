@@ -78,19 +78,51 @@
     duviri: { full: 36000, phase: 7200, emotions: ['joy', 'anger', 'envy', 'sorrow', 'fear'] }
   };
 
+  const CYCLE_EPS = ['cetusCycle', 'vallisCycle', 'cambionCycle', 'duviriCycle'];
+  const API_BASES = [
+    'https://ws-api.wfspeed.run/warframestat/',
+    'https://api.warframestat.us/pc/'
+  ];
+  const _wsData = {};
   let _wsSnapshot = null;
-  function _loadSnapshot() {
-    try { _wsSnapshot = window.WF_WS_SNAPSHOT || null; } catch (e) {}
+
+  function _fetchWithTimeout(url, ms) {
+    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var opts = ctrl ? { signal: ctrl.signal } : {};
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, ms || 4000) : null;
+    return fetch(url, opts).finally(function () { if (timer) clearTimeout(timer); });
+  }
+
+  function _tryApi(ep, bases, idx) {
+    if (idx >= bases.length) return Promise.resolve(null);
+    return _fetchWithTimeout(bases[idx] + ep + '?language=zh', 4000)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; })
+      .then(function (d) {
+        if (d !== null && d !== undefined) return d;
+        return _tryApi(ep, bases, idx + 1);
+      });
+  }
+
+  function _loadCycles() {
+    CYCLE_EPS.forEach(function (ep) {
+      _tryApi(ep, API_BASES, 0).then(function (d) {
+        if (d) _wsData[ep] = d;
+      });
+    });
+    if (!_wsSnapshot) {
+      try { _wsSnapshot = window.WF_WS_SNAPSHOT || null; } catch (e) {}
+    }
     fetch('/data/worldstate-snapshot.js?_=' + Date.now(), { cache: 'no-store' })
-      .then(r => r.text())
-      .then(t => {
+      .then(function (r) { return r.text(); })
+      .then(function (t) {
         var m = t.match(/window\.WF_WS_SNAPSHOT\s*=\s*(\{[\s\S]*\})\s*;?\s*$/);
         if (m) _wsSnapshot = JSON.parse(m[1]);
       })
       .catch(function () {});
   }
-  _loadSnapshot();
-  setInterval(_loadSnapshot, 60000);
+  _loadCycles();
+  setInterval(_loadCycles, 30000);
 
   const STATE_NAMES = {
     day:    { zh: '白昼', en: 'Day',   icon: '☀️', color: '#ffd700' },
@@ -111,25 +143,41 @@
     return Math.max(0, (new Date(expiryStr).getTime() - Date.now()) / 1000);
   }
 
+  function _snapData() {
+    var s = _wsSnapshot;
+    if (!s) return null;
+    return {
+      cetusCycle: s.cetusCycle,
+      vallisCycle: s.vallisCycle,
+      cambionCycle: s.cambionCycle,
+      duviriCycle: s.duviriCycle
+    };
+  }
+
   function calcCycles() {
-    var snap = _wsSnapshot;
-    if (snap && snap.cetusCycle && snap.vallisCycle && snap.duviriCycle) {
+    var api = _wsData;
+    var snap = _snapData();
+    var cetus = api.cetusCycle || (snap && snap.cetusCycle);
+    var vallis = api.vallisCycle || (snap && snap.vallisCycle);
+    var cambion = api.cambionCycle || (snap && snap.cambionCycle);
+    var duviri = api.duviriCycle || (snap && snap.duviriCycle);
+    if (cetus && vallis && duviri) {
       return {
         'plains-of-eidolon': {
-          state: snap.cetusCycle.isDay ? 'day' : 'night',
-          remaining: _calcFromExpiry(snap.cetusCycle.expiry)
+          state: cetus.isDay ? 'day' : 'night',
+          remaining: _calcFromExpiry(cetus.expiry)
         },
         'orb-vallis': {
-          state: snap.vallisCycle.isWarm ? 'warm' : 'cold',
-          remaining: _calcFromExpiry(snap.vallisCycle.expiry)
+          state: vallis.isWarm ? 'warm' : 'cold',
+          remaining: _calcFromExpiry(vallis.expiry)
         },
         'duviri': {
-          state: snap.duviriCycle.state || 'joy',
-          remaining: _calcFromExpiry(snap.duviriCycle.expiry)
+          state: duviri.state || 'joy',
+          remaining: _calcFromExpiry(duviri.expiry)
         },
         'cambion-drift': {
-          state: (snap.cambionCycle && snap.cambionCycle.state) || 'fass',
-          remaining: _calcFromExpiry(snap.cambionCycle && snap.cambionCycle.expiry)
+          state: (cambion && cambion.state) || 'fass',
+          remaining: _calcFromExpiry(cambion && cambion.expiry)
         }
       };
     }
