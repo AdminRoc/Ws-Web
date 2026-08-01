@@ -305,7 +305,10 @@
       keyboard: true
     });
     map.fitBounds(cfg.bounds);
-    map.setZoom(map.getZoom() + 3);
+    var baseZoom = map.getZoom();
+    var minAllowed = baseZoom + 3;
+    map.setMinZoom(minAllowed);
+    map.setZoom(minAllowed);
 
     imageOverlay = L.imageOverlay(cfg.image, cfg.bounds, {
       opacity: 1,
