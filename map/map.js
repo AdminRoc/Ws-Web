@@ -493,6 +493,18 @@
       renderLocationList();
     },
 
+    _rebuild: function (clear) {
+      if (this._container) {
+        this._markerEls.forEach(el => { if (el.parentNode) el.parentNode.removeChild(el); });
+      }
+      this._markerEls = [];
+      this._markerData = [];
+      if (!clear && this._container) {
+        this._buildMarkers();
+        this._updatePositions();
+      }
+    },
+
     getMarkerCount: function () {
       return this._markerEls.length;
     }
@@ -501,22 +513,23 @@
   function addMarkers(data) {
     if (!map) return;
     if (markerLayer) {
-      map.removeLayer(markerLayer);
+      markerLayer._data = data;
+      markerLayer._rebuild();
+    } else {
+      markerLayer = new MarkerLayer(data).addTo(map);
     }
-    markerLayer = new MarkerLayer(data).addTo(map);
   }
 
   function clearMarkers() {
-    if (markerLayer && map) {
-      map.removeLayer(markerLayer);
-      markerLayer = null;
+    if (markerLayer) {
+      markerLayer._rebuild(true);
     }
   }
 
   function refreshMarkers() {
-    clearMarkers();
     const data = mapData[currentMap];
     if (data) addMarkers(data);
+    else clearMarkers();
     renderLocationList();
   }
 
