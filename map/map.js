@@ -391,16 +391,16 @@
 
   function updateMarkerPositions() {
     if (!markerContainer || !imageOverlay || !map) return;
-    const overlayEl = imageOverlay.getElement();
-    if (!overlayEl) return;
-    const oR = overlayEl.getBoundingClientRect();
-    const mR = document.getElementById('map').getBoundingClientRect();
-    const ox = oR.left - mR.left, oy = oR.top - mR.top, ow = oR.width, oh = oR.height;
+    const bounds = imageOverlay.getBounds();
+    const nw = map.latLngToContainerPoint(bounds.getNorthWest());
+    const se = map.latLngToContainerPoint(bounds.getSouthEast());
+    const bw = se.x - nw.x, bh = se.y - nw.y;
+    if (bw <= 0 || bh <= 0) return;
     for (let i = 0; i < markerElements.length; i++) {
       const it = markerElements[i];
       if (it.el.style.display === 'none') continue;
-      const px = ox + (it.data.position[0] / MAP_SIZE) * ow;
-      const py = oy + ((MAP_SIZE - it.data.position[1]) / MAP_SIZE) * oh;
+      const px = nw.x + (it.data.position[0] / MAP_SIZE) * bw;
+      const py = nw.y + ((MAP_SIZE - it.data.position[1]) / MAP_SIZE) * bh;
       it.el.style.transform = 'translate(' + px + 'px,' + py + 'px) translate(-50%,-100%)';
     }
   }
