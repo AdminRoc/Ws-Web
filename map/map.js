@@ -355,10 +355,10 @@
   function createMarkerElements(data) {
     if (!data || !data.markers || !data.categories) return;
     const validCatIds = new Set(data.categories.map(c => c.id));
-    const mapEl = document.getElementById('map');
+    const pane = map.getPane('overlayPane');
     markerContainer = document.createElement('div');
     markerContainer.className = 'imap-layer';
-    mapEl.appendChild(markerContainer);
+    pane.appendChild(markerContainer);
 
     data.markers.forEach(m => {
       if (!validCatIds.has(m.categoryId)) return;
@@ -391,16 +391,20 @@
 
   function updateMarkerPositions() {
     if (!markerContainer || !imageOverlay || !map) return;
-    const bounds = imageOverlay.getBounds();
-    const nw = map.latLngToContainerPoint(bounds.getNorthWest());
-    const se = map.latLngToContainerPoint(bounds.getSouthEast());
-    const bw = se.x - nw.x, bh = se.y - nw.y;
-    if (bw <= 0 || bh <= 0) return;
+    const overlayEl = imageOverlay.getElement();
+    if (!overlayEl) return;
+    var olW = parseFloat(overlayEl.style.width) || 0;
+    var olH = parseFloat(overlayEl.style.height) || 0;
+    if (olW <= 0 || olH <= 0) return;
+    var olL = parseFloat(overlayEl.style.left) || 0;
+    var olT = parseFloat(overlayEl.style.top) || 0;
     for (let i = 0; i < markerElements.length; i++) {
       const it = markerElements[i];
       if (it.el.style.display === 'none') continue;
-      const px = nw.x + (it.data.position[0] / MAP_SIZE) * bw;
-      const py = nw.y + ((MAP_SIZE - it.data.position[1]) / MAP_SIZE) * bh;
+      const mx = it.data.position[0] / MAP_SIZE;
+      const my = (MAP_SIZE - it.data.position[1]) / MAP_SIZE;
+      const px = olL + mx * olW;
+      const py = olT + my * olH;
       it.el.style.transform = 'translate(' + px + 'px,' + py + 'px) translate(-50%,-100%)';
     }
   }
@@ -823,6 +827,11 @@
     try {
       initMap();
       createMarkerElements(data);
+      if (imageOverlay && imageOverlay.getElement()) {
+        updateMarkerPositions();
+      } else if (imageOverlay) {
+        imageOverlay.once('load', updateMarkerPositions);
+      }
       showLoading(false);
     } catch (e) {
       console.error('Leaflet init failed:', e);
