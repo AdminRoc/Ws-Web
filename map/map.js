@@ -60,7 +60,7 @@
   let currentMap = 'duviri';
   let map = null;
   let imageOverlay = null;
-  let markers = [];
+  let markerLayer = null;
   let mapData = {};
   let categoryState = {};  // { catId: true/false }
   let favorites = {};      // { mapId: [markerId, ...] }
@@ -270,8 +270,6 @@
     saveFavorites();
     refreshMarkers();
     renderFavoritesPanel();
-    const marker = markers.find(m => m._markerId === id);
-    if (marker) marker.openPopup();
   };
 
   // ════════════════════════════════════════════════════════════
@@ -294,29 +292,15 @@
   }
 
   // ════════════════════════════════════════════════════════════
-  //  MARKER SIZE — Zoom-based Scaling
+  //  MARKER SIZE — Fixed Size (no zoom-dependent scaling)
   // ════════════════════════════════════════════════════════════
 
-  function getMarkerSizeClass(zoom) {
-    // Leaflet zoom: 0 (most zoomed out) → 3 (most zoomed in)
-    if (zoom <= 0) return 'size-xs';
-    if (zoom <= 1) return 'size-sm';
-    if (zoom <= 2) return 'size-md';
-    if (zoom <= 3) return 'size-lg';
-    return 'size-xl';
+  function getMarkerIconSize() {
+    return [30, 42];
   }
 
-  function getMarkerIconSize(zoom) {
-    if (zoom <= 0) return [18, 26];
-    if (zoom <= 1) return [24, 34];
-    if (zoom <= 2) return [30, 42];
-    if (zoom <= 3) return [36, 50];
-    return [44, 60];
-  }
-
-  function getMarkerAnchor(zoom) {
-    const s = getMarkerIconSize(zoom);
-    return [s[0] / 2, s[1] - 2];
+  function getMarkerAnchor() {
+    return [15, 40];
   }
 
   // ════════════════════════════════════════════════════════════
@@ -350,15 +334,10 @@
       }
     });
 
-    // Track zoom changes to resize markers
+    // Track zoom changes for sidebar refresh only (markers auto-position via MarkerLayer)
     map.on('zoomend', () => {
-      const newZoom = map.getZoom();
-      if (Math.abs(newZoom - currentZoom) >= 0.25) {
-        currentZoom = newZoom;
-        refreshMarkers();
-      }
+      renderLocationList();
     });
-    currentZoom = map.getZoom();
   }
 
   function destroyMap() {
@@ -366,106 +345,174 @@
       map.remove();
       map = null;
       imageOverlay = null;
-      markers = [];
+      markerLayer = null;
     }
   }
 
   // ════════════════════════════════════════════════════════════
-  //  MARKERS — Wiki Icons + Chinese Labels + Zoom Scaling
+  //  CUSTOM MARKER LAYER — Manual CSS positioning (Mapbox-style)
   // ════════════════════════════════════════════════════════════
 
-  function getMarkerColor(categoryId, categories) {
-    const cat = categories.find(c => c.id === categoryId);
-    return cat ? cat.color : '#45c8ff';
-  }
+  /**
+   * Custom Leaflet Layer that positions markers using map.latLngToContainerPoint()
+   * on every zoom/move event — identical to how Mapbox GL positions markers.
+   * This eliminates the sub-pixel misalignment between image overlay and markers.
+   */
+  const MarkerLayer = L.Layer.extend({
+    initialize: function (data, options) {
+      this._data = data;
+      this._markerEls = [];
+      this._markerData = [];
+      L.setOptions(this, options);
+    },
 
-  function createMarkerIcon(categoryId, categories, zoom) {
-    const color = getMarkerColor(categoryId, categories);
-    const iconPath = getIconPath(categoryId);
-    const catName = getCategoryName(categoryId);
-    const sizeClass = getMarkerSizeClass(zoom);
-    const iconSize = getMarkerIconSize(zoom);
-    const anchor = getMarkerAnchor(zoom);
+    onAdd: function (map) {
+      this._map = map;
+      this._container = L.DomUtil.create('div', 'marker-layer');
+      this._container.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:600;';
+      map.getPane('overlayPane').appendChild(this._container);
 
-    return L.divIcon({
-      className: `wiki-marker ${sizeClass}`,
-      html: `
+      this._buildMarkers();
+      this._updatePositions();
+
+      map.on('zoom move resize', this._updatePositions, this);
+      map.on('zoomend', this._onZoomEnd, this);
+    },
+
+    onRemove: function (map) {
+      map.off('zoom move resize', this._updatePositions, this);
+      map.off('zoomend', this._onZoomEnd, this);
+      if (this._container && this._container.parentNode) {
+        this._container.parentNode.removeChild(this._container);
+      }
+      this._markerEls = [];
+      this._markerData = [];
+      this._container = null;
+      this._map = null;
+    },
+
+    _buildMarkers: function () {
+      if (!this._data || !this._data.markers || !this._data.categories) return;
+      const validCatIds = new Set(this._data.categories.map(c => c.id));
+
+      this._data.markers.forEach(m => {
+        if (!validCatIds.has(m.categoryId)) return;
+        if (!categoryState[m.categoryId]) return;
+        if (showFavOnly && !isFavorite(m.id)) return;
+        if (searchQuery && !getMarkerTitle(m.popup.title).toLowerCase().includes(searchQuery) && !m.popup.title.toLowerCase().includes(searchQuery)) return;
+
+        const el = this._createMarkerElement(m);
+        this._container.appendChild(el);
+        this._markerEls.push(el);
+        this._markerData.push(m);
+      });
+
+      updateStats();
+
+      if (typeof gsap !== 'undefined' && this._markerEls.length > 0) {
+        gsap.from(this._markerEls, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.25,
+          stagger: { amount: Math.min(this._markerEls.length * 0.008, 0.6), from: 'center' },
+          ease: 'back.out(1.7)'
+        });
+      }
+    },
+
+    _createMarkerElement: function (m) {
+      const cat = this._data.categories.find(c => c.id === m.categoryId);
+      const color = cat ? cat.color : '#45c8ff';
+      const iconPath = getIconPath(m.categoryId);
+      const catName = getCategoryName(m.categoryId);
+      const isFav = isFavorite(m.id);
+
+      const el = L.DomUtil.create('div', 'wiki-marker');
+      el.innerHTML = `
         <div class="wiki-marker-pin" style="--marker-color: ${color}">
           <div class="wiki-marker-glow"></div>
           <img class="wiki-marker-icon" src="${iconPath}" alt="${catName}" loading="lazy">
         </div>
         <span class="wiki-marker-label">${catName}</span>
-      `,
-      iconSize: iconSize,
-      iconAnchor: anchor,
-      popupAnchor: [0, -anchor[1]]
-    });
-  }
+      `;
+      el.style.cssText = 'position:absolute;pointer-events:auto;cursor:pointer;transform:translate(-50%,-100%);will-change:transform;';
+
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this._showPopup(m, el);
+      });
+
+      return el;
+    },
+
+    _showPopup: function (m, el) {
+      if (!this._map) return;
+      const cat = this._data.categories.find(c => c.id === m.categoryId);
+      const catName = cat ? getCategoryName(cat.id) : m.categoryId;
+      const isFav = isFavorite(m.id);
+      const desc = getMarkerDescription(m.id, m.popup.description);
+      const html = `<div class="popup-card">
+        <div class="popup-header">
+          <img class="popup-icon" src="${getIconPath(m.categoryId)}" alt="">
+          <div>
+            <div class="popup-title">${getMarkerTitle(m.popup.title)}</div>
+            <div class="popup-category">${catName}</div>
+          </div>
+        </div>
+        ${desc ? `<div class="popup-desc">${desc}</div>` : ''}
+        <div class="popup-actions">
+          <button class="popup-btn ${isFav ? 'fav-active' : ''}" onclick="window._toggleFav('${m.id}')">
+            ${isFav ? '★ 已收藏' : '☆ 收藏'}
+          </button>
+          ${m.popup.link && m.popup.link.url ? `<a class="popup-btn popup-link" href="${m.popup.link.url}" target="_blank">${m.popup.link.label || 'Wiki'}</a>` : ''}
+        </div>
+      </div>`;
+
+      const latlng = L.latLng(m.position[1], m.position[0]);
+      L.popup({ maxWidth: 280 })
+        .setLatLng(latlng)
+        .setContent(html)
+        .openOn(this._map);
+    },
+
+    _updatePositions: function () {
+      if (!this._map || !this._container) return;
+      const map = this._map;
+      const size = map.getSize();
+
+      this._markerEls.forEach((el, i) => {
+        const m = this._markerData[i];
+        if (!m) return;
+        const latlng = L.latLng(m.position[1], m.position[0]);
+        const point = map.latLngToContainerPoint(latlng);
+        el.style.transform = `translate(${point.x}px, ${point.y}px) translate(-50%, -100%)`;
+      });
+    },
+
+    _onZoomEnd: function () {
+      renderLocationList();
+    },
+
+    getMarkerCount: function () {
+      return this._markerEls.length;
+    }
+  });
+
+  let markerLayer = null;
 
   function addMarkers(data) {
-    if (!data || !data.markers || !data.categories) return;
-    const validCatIds = new Set(data.categories.map(c => c.id));
-
-    const newMarkers = [];
-    data.markers.forEach(m => {
-      if (!validCatIds.has(m.categoryId)) return;
-      if (!categoryState[m.categoryId]) return;
-      if (showFavOnly && !isFavorite(m.id)) return;
-      if (searchQuery && !getMarkerTitle(m.popup.title).toLowerCase().includes(searchQuery) && !m.popup.title.toLowerCase().includes(searchQuery)) return;
-
-      const icon = createMarkerIcon(m.categoryId, data.categories, currentZoom);
-      const lat = m.position[1];
-      const lng = m.position[0];
-
-      const marker = L.marker([lat, lng], { icon })
-        .addTo(map)
-        .bindPopup(() => {
-          const cat = data.categories.find(c => c.id === m.categoryId);
-          const catName = cat ? getCategoryName(cat.id) : m.categoryId;
-          const isFav = isFavorite(m.id);
-          const desc = getMarkerDescription(m.id, m.popup.description);
-          return `<div class="popup-card">
-            <div class="popup-header">
-              <img class="popup-icon" src="${getIconPath(m.categoryId)}" alt="">
-              <div>
-                <div class="popup-title">${getMarkerTitle(m.popup.title)}</div>
-                <div class="popup-category">${catName}</div>
-              </div>
-            </div>
-            ${desc ? `<div class="popup-desc">${desc}</div>` : ''}
-            <div class="popup-actions">
-              <button class="popup-btn ${isFav ? 'fav-active' : ''}" onclick="window._toggleFav('${m.id}')">
-                ${isFav ? '★ 已收藏' : '☆ 收藏'}
-              </button>
-              ${m.popup.link && m.popup.link.url ? `<a class="popup-btn popup-link" href="${m.popup.link.url}" target="_blank">${m.popup.link.label || 'Wiki'}</a>` : ''}
-            </div>
-          </div>`;
-        }, { maxWidth: 280 });
-
-      marker._markerId = m.id;
-      marker._categoryId = m.categoryId;
-      newMarkers.push(marker);
-    });
-
-    markers = newMarkers;
-    updateStats();
-
-    // GSAP stagger animation for new markers
-    if (typeof gsap !== 'undefined' && markers.length > 0) {
-      const markerEls = markers.map(m => m.getElement()).filter(Boolean);
-      gsap.from(markerEls, {
-        scale: 0,
-        opacity: 0,
-        duration: 0.25,
-        stagger: { amount: Math.min(markerEls.length * 0.008, 0.6), from: 'center' },
-        ease: 'back.out(1.7)'
-      });
+    if (!map) return;
+    if (markerLayer) {
+      map.removeLayer(markerLayer);
     }
+    markerLayer = new MarkerLayer(data).addTo(map);
   }
 
   function clearMarkers() {
-    markers.forEach(m => map.removeLayer(m));
-    markers = [];
+    if (markerLayer && map) {
+      map.removeLayer(markerLayer);
+      markerLayer = null;
+    }
   }
 
   function refreshMarkers() {
@@ -516,10 +563,14 @@
   }
 
   window._flyToMarker = function (id) {
-    const marker = markers.find(m => m._markerId === id);
-    if (marker) {
-      map.flyTo(marker.getLatLng(), currentZoom, { duration: 0.5 });
-      marker.openPopup();
+    if (!markerLayer || !markerLayer._markerData) return;
+    const idx = markerLayer._markerData.findIndex(m => m.id === id);
+    if (idx >= 0) {
+      const m = markerLayer._markerData[idx];
+      const latlng = L.latLng(m.position[1], m.position[0]);
+      map.flyTo(latlng, map.getZoom(), { duration: 0.5 });
+      const el = markerLayer._markerEls[idx];
+      if (el) el.click();
     }
   };
 
@@ -585,7 +636,7 @@
     const data = mapData[currentMap];
     if (!data) return;
     document.getElementById('statTotal').textContent = data.markers.length;
-    document.getElementById('statVisible').textContent = markers.length;
+    document.getElementById('statVisible').textContent = markerLayer ? markerLayer.getMarkerCount() : 0;
     // Update right panel stats
     const locTotal = document.getElementById('locTotal');
     const locCatCount = document.getElementById('locCatCount');
@@ -932,7 +983,7 @@
       const data = mapData[currentMap];
       if (data) {
         statTotal.textContent = data.markers.length;
-        statVisible.textContent = markers.length;
+        statVisible.textContent = markerLayer ? markerLayer.getMarkerCount() : 0;
       }
     }
     // Update sidebar stats if it exists

@@ -951,26 +951,10 @@
   color: #fff;
 }
 
-/* Marker size classes */
-.wiki-marker.size-xs .wiki-marker-pin  { width: 16px; height: 16px; }
-.wiki-marker.size-xs .wiki-marker-icon { width: 10px; height: 10px; }
-.wiki-marker.size-xs .wiki-marker-label { font-size: 8px; padding: 1px 4px; margin-top: 1px; }
-
-.wiki-marker.size-sm .wiki-marker-pin  { width: 22px; height: 22px; }
-.wiki-marker.size-sm .wiki-marker-icon { width: 14px; height: 14px; }
-.wiki-marker.size-sm .wiki-marker-label { font-size: 9px; padding: 1px 5px; margin-top: 2px; }
-
-.wiki-marker.size-md .wiki-marker-pin  { width: 28px; height: 28px; }
-.wiki-marker.size-md .wiki-marker-icon { width: 20px; height: 20px; }
-.wiki-marker.size-md .wiki-marker-label { font-size: 10px; padding: 2px 6px; }
-
-.wiki-marker.size-lg .wiki-marker-pin  { width: 36px; height: 36px; }
-.wiki-marker.size-lg .wiki-marker-icon { width: 26px; height: 26px; }
-.wiki-marker.size-lg .wiki-marker-label { font-size: 11px; padding: 2px 7px; }
-
-.wiki-marker.size-xl .wiki-marker-pin  { width: 44px; height: 44px; }
-.wiki-marker.size-xl .wiki-marker-icon { width: 32px; height: 32px; }
-.wiki-marker.size-xl .wiki-marker-label { font-size: 12px; padding: 3px 8px; }
+/* Marker fixed size (no zoom-dependent scaling) */
+.wiki-marker .wiki-marker-pin  { width: 28px; height: 28px; }
+.wiki-marker .wiki-marker-icon { width: 20px; height: 20px; }
+.wiki-marker .wiki-marker-label { font-size: 10px; padding: 2px 6px; }
 
 /* ── Loading State ── */
 .map-loading {
