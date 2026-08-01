@@ -822,7 +822,7 @@
 
     try {
       initMap();
-      addMarkers(data);
+      createMarkerElements(data);
       showLoading(false);
     } catch (e) {
       console.error('Leaflet init failed:', e);
