@@ -75,8 +75,22 @@
   const CYCLE_CONFIG = {
     eidolon: { epoch: 1548924027, full: 8998.8748, day: 2999.6249 },
     vallis: { epoch: new Date('2026-02-04T19:46:48Z').getTime() / 1000, full: 1600, warm: 400 },
-    duviri: { full: 36000, phase: 7200, emotions: ['sorrow', 'fear', 'joy', 'anger', 'envy'] }
+    duviri: { full: 36000, phase: 7200, emotions: ['joy', 'anger', 'envy', 'sorrow', 'fear'] }
   };
+
+  let _wsSnapshot = null;
+  function _loadSnapshot() {
+    try { _wsSnapshot = window.WF_WS_SNAPSHOT || null; } catch (e) {}
+    fetch('/data/worldstate-snapshot.js?_=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.text())
+      .then(t => {
+        var m = t.match(/window\.WF_WS_SNAPSHOT\s*=\s*(\{[\s\S]*\})\s*;?\s*$/);
+        if (m) _wsSnapshot = JSON.parse(m[1]);
+      })
+      .catch(function () {});
+  }
+  _loadSnapshot();
+  setInterval(_loadSnapshot, 60000);
 
   const STATE_NAMES = {
     day:    { zh: '白昼', en: 'Day',   icon: '☀️', color: '#ffd700' },
@@ -92,29 +106,51 @@
     envy:   { zh: '嫉妒', en: 'Envy',   icon: '💀', color: '#41ff8e' }
   };
 
+  function _calcFromExpiry(expiryStr) {
+    if (!expiryStr) return 0;
+    return Math.max(0, (new Date(expiryStr).getTime() - Date.now()) / 1000);
+  }
+
   function calcCycles() {
-    const now = Date.now() / 1000;
-    const eidElapsed = (now - CYCLE_CONFIG.eidolon.epoch) % CYCLE_CONFIG.eidolon.full;
-    const eidNight = CYCLE_CONFIG.eidolon.full - CYCLE_CONFIG.eidolon.day;
-    const eidIsDay = eidElapsed < eidNight;
-    const eidRemaining = eidIsDay
+    var snap = _wsSnapshot;
+    if (snap && snap.cetusCycle && snap.vallisCycle && snap.duviriCycle) {
+      return {
+        'plains-of-eidolon': {
+          state: snap.cetusCycle.isDay ? 'day' : 'night',
+          remaining: _calcFromExpiry(snap.cetusCycle.expiry)
+        },
+        'orb-vallis': {
+          state: snap.vallisCycle.isWarm ? 'warm' : 'cold',
+          remaining: _calcFromExpiry(snap.vallisCycle.expiry)
+        },
+        'duviri': {
+          state: snap.duviriCycle.state || 'joy',
+          remaining: _calcFromExpiry(snap.duviriCycle.expiry)
+        },
+        'cambion-drift': {
+          state: (snap.cambionCycle && snap.cambionCycle.state) || 'fass',
+          remaining: _calcFromExpiry(snap.cambionCycle && snap.cambionCycle.expiry)
+        }
+      };
+    }
+    var now = Date.now() / 1000;
+    var eidElapsed = (now - CYCLE_CONFIG.eidolon.epoch) % CYCLE_CONFIG.eidolon.full;
+    var eidNight = CYCLE_CONFIG.eidolon.full - CYCLE_CONFIG.eidolon.day;
+    var eidIsDay = eidElapsed < eidNight;
+    var eidRemaining = eidIsDay
       ? CYCLE_CONFIG.eidolon.day - eidElapsed
       : CYCLE_CONFIG.eidolon.full - eidElapsed;
-
-    const valElapsed = (now - CYCLE_CONFIG.vallis.epoch) % CYCLE_CONFIG.vallis.full;
-    const valCold = CYCLE_CONFIG.vallis.full - CYCLE_CONFIG.vallis.warm;
-    const valIsWarm = valElapsed > valCold;
-    const valRemaining = valIsWarm
+    var valElapsed = (now - CYCLE_CONFIG.vallis.epoch) % CYCLE_CONFIG.vallis.full;
+    var valCold = CYCLE_CONFIG.vallis.full - CYCLE_CONFIG.vallis.warm;
+    var valIsWarm = valElapsed > valCold;
+    var valRemaining = valIsWarm
       ? CYCLE_CONFIG.vallis.full - valElapsed
       : valCold - valElapsed;
-
-    const duvElapsed = (Math.floor(now) - 52) % CYCLE_CONFIG.duviri.full;
-    const duvIdx = Math.floor(duvElapsed / CYCLE_CONFIG.duviri.phase);
-    const duvRemaining = CYCLE_CONFIG.duviri.phase - (duvElapsed % CYCLE_CONFIG.duviri.phase);
-    const duvState = CYCLE_CONFIG.duviri.emotions[duvIdx];
-
-    const camState = eidIsDay ? 'fass' : 'vome';
-
+    var duvElapsed = (Math.floor(now) - 52) % CYCLE_CONFIG.duviri.full;
+    var duvIdx = Math.floor(duvElapsed / CYCLE_CONFIG.duviri.phase);
+    var duvRemaining = CYCLE_CONFIG.duviri.phase - (duvElapsed % CYCLE_CONFIG.duviri.phase);
+    var duvState = CYCLE_CONFIG.duviri.emotions[duvIdx];
+    var camState = eidIsDay ? 'fass' : 'vome';
     return {
       'plains-of-eidolon': { state: eidIsDay ? 'day' : 'night', remaining: eidRemaining },
       'orb-vallis': { state: valIsWarm ? 'warm' : 'cold', remaining: valRemaining },
