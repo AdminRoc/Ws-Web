@@ -396,15 +396,23 @@
     var olW = parseFloat(overlayEl.style.width) || 0;
     var olH = parseFloat(overlayEl.style.height) || 0;
     if (olW <= 0 || olH <= 0) return;
-    var olL = parseFloat(overlayEl.style.left) || 0;
-    var olT = parseFloat(overlayEl.style.top) || 0;
+    var tx = 0, ty = 0;
+    var tf = overlayEl.style.transform;
+    if (tf) {
+      var m3d = tf.match(/translate3d\(\s*([-\d.]+)px\s*,\s*([-\d.]+)px/);
+      if (m3d) { tx = parseFloat(m3d[1]); ty = parseFloat(m3d[2]); }
+      else {
+        var m2d = tf.match(/translate\(\s*([-\d.]+)px\s*,\s*([-\d.]+)px/);
+        if (m2d) { tx = parseFloat(m2d[1]); ty = parseFloat(m2d[2]); }
+      }
+    }
     for (let i = 0; i < markerElements.length; i++) {
       const it = markerElements[i];
       if (it.el.style.display === 'none') continue;
       const mx = it.data.position[0] / MAP_SIZE;
       const my = (MAP_SIZE - it.data.position[1]) / MAP_SIZE;
-      const px = olL + mx * olW;
-      const py = olT + my * olH;
+      const px = tx + mx * olW;
+      const py = ty + my * olH;
       it.el.style.transform = 'translate(' + px + 'px,' + py + 'px) translate(-50%,-100%)';
     }
   }
