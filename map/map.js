@@ -305,6 +305,7 @@
       keyboard: true
     });
     map.fitBounds(cfg.bounds);
+    map.setZoom(map.getZoom() + 3);
 
     imageOverlay = L.imageOverlay(cfg.image, cfg.bounds, {
       opacity: 1,
