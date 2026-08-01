@@ -554,8 +554,10 @@
   function updateStats() {
     const data = mapData[currentMap];
     if (!data) return;
-    document.getElementById('statTotal').textContent = data.markers.length;
-    document.getElementById('statVisible').textContent = markerElements.length;
+    const statTotal = document.getElementById('statTotal');
+    const statVisible = document.getElementById('statVisible');
+    if (statTotal) statTotal.textContent = data.markers.length;
+    if (statVisible) statVisible.textContent = markerElements.length;
     // Update right panel stats
     const locTotal = document.getElementById('locTotal');
     const locCatCount = document.getElementById('locCatCount');
@@ -833,23 +835,22 @@
     renderSidebar(data);
     renderFavoritesPanel();
     renderLocationList();
-    updateStats();
     updateCycleDisplay();
 
     try {
       initMap();
       createMarkerElements(data);
+      updateStats();
       if (imageOverlay && imageOverlay.getElement()) {
         updateMarkerPositions();
       } else if (imageOverlay) {
         imageOverlay.once('load', updateMarkerPositions);
       }
-      showLoading(false);
     } catch (e) {
-      console.error('Leaflet init failed:', e);
-      showLoading(false);
+      console.error('Map init failed:', e);
       mapEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#607898;font-size:14px;">地图渲染失败，请刷新重试</div>';
-      return;
+    } finally {
+      showLoading(false);
     }
 
     if (typeof gsap !== 'undefined') {
