@@ -369,8 +369,8 @@
     onAdd: function (map) {
       this._map = map;
       this._container = L.DomUtil.create('div', 'marker-layer');
-      this._container.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:600;';
-      map.getPane('overlayPane').appendChild(this._container);
+      this._container.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:600;';
+      map.getContainer().appendChild(this._container);
 
       this._buildMarkers();
       this._updatePositions();
