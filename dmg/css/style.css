@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════
-   dmg/style.css  �? Warframe Damage Calculator
+   dmg/style.css  �? Warframe Damage Calculator
    Orokin Gold Theme (Ws-Web DESIGN.md compliant)
    ════════════════════════════════════════════════════════════ */
 
@@ -66,7 +66,7 @@ a { color: inherit; text-decoration: none; }
   50% { opacity: 0.6; transform: translateY(-100px) scale(1); }
 }
 
-/* ── 主容�?── */
+/* ── 主容�?── */
 .app-container {
   position: relative; z-index: 1;
   max-width: 1600px; margin: 0 auto; padding: 20px;
@@ -127,7 +127,7 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--c-gold-bright);
 }
 
-/* ── 主布局 3�?── */
+/* ── 主布局 3�?── */
 .main-layout {
   display: grid;
   grid-template-columns: 320px 1fr 360px;
@@ -160,7 +160,7 @@ a { color: inherit; text-decoration: none; }
 }
 .panel-content { padding: 16px; }
 
-/* ── 搜索�?── */
+/* ── 搜索�?── */
 .search-input {
   width: 100%; padding: 10px 14px;
   background: var(--c-card); border: 1px solid var(--c-lb-border);
@@ -267,7 +267,7 @@ select.search-input {
 /* ── 特殊槽位 ── */
 .special-slot { border-color: var(--c-lb-border); }
 
-/* ── 属性区�?── */
+/* ── 属性区�?── */
 .stat-section { margin-bottom: 18px; }
 .stat-section h3 {
   font-family: var(--f-sci); font-size: 1rem; font-weight: 600;
@@ -288,7 +288,7 @@ select.search-input {
 .stat-value.positive { color: var(--c-green); }
 .stat-value.negative { color: var(--c-red); }
 
-/* ── 伤害�?── */
+/* ── 伤害�?── */
 .damage-bar {
   height: 6px; background: var(--c-card);
   border-radius: 3px; overflow: hidden; margin-top: 6px;
@@ -418,11 +418,11 @@ select.search-input {
   color: white; transition: width .5s ease; letter-spacing: .04em;
 }
 
-/* ── 可折�?── */
+/* ── 可折�?── */
 .collapsible-toggle { cursor: pointer; user-select: none; transition: color var(--ease-fast); }
 .collapsible-toggle:hover { color: var(--c-white); }
 
-/* ── 技能网�?── */
+/* ── 技能网�?── */
 .ability-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 .ability-toggle {
   display: flex; align-items: center; gap: 8px;
@@ -441,7 +441,7 @@ select.search-input {
   content: '\2713'; color: #0a0800; font-size: 1.05rem; font-weight: bold;
 }
 
-/* ── 选项�?── */
+/* ── 选项�?── */
 .option-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .checkbox-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 
@@ -449,7 +449,7 @@ select.search-input {
 .weapon-panel { max-height: calc(100vh - 160px); overflow-y: auto; }
 .enemy-panel { max-height: calc(100vh - 160px); overflow-y: auto; }
 
-/* ── MOD 选择器弹�?── */
+/* ── MOD 选择器弹�?── */
 .mod-picker {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,.85);
@@ -474,7 +474,7 @@ select.search-input {
 }
 .mod-picker .picker-header button:hover { color: var(--c-gold-bright); }
 
-/* ── 裂罅创建器弹�?── */
+/* ── 裂罅创建器弹�?── */
 .riven-modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,.85);
@@ -501,7 +501,7 @@ select.search-input {
   margin-bottom: 8px;
 }
 
-/* ── 滚动�?── */
+/* ── 滚动�?── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--c-bg); border-radius: 3px; }
 ::-webkit-scrollbar-thumb { background: var(--c-lb-border); border-radius: 3px; }
@@ -534,11 +534,11 @@ select.search-input {
 .beian-row a { display: inline; white-space: nowrap; }
 .beian-icon { width: 16px; height: 16px; vertical-align: middle; flex-shrink: 0; }
 
-/* ── 空状�?── */
+/* ── 空状�?── */
 .empty-state { text-align: center; padding: 30px 16px; color: var(--c-text3); }
 .empty-state-text { font-family: var(--f-cn); font-size: 1.05rem; }
 
-/* ── 响应�?── */
+/* ── 响应�?── */
 @media (max-width: 1400px) {
   .main-layout { grid-template-columns: 280px 1fr 320px; gap: 16px; }
 }
@@ -562,4 +562,32 @@ select.search-input {
     transition-duration: 0.01ms !important;
   }
   .particle { display: none; }
+}
+
+/* 多攻击形态显示 */
+.attack-result {
+  transition: all var(--ease-fast);
+}
+.attack-result:hover {
+  background: var(--c-card-hov) !important;
+  border-color: var(--c-cyan) !important;
+}
+.attack-result.active {
+  border-color: var(--c-gold-bright) !important;
+  background: rgba(212, 168, 74, 0.1) !important;
+}
+
+/* 伤害区域折叠 */
+.stat-section h3.collapsible-toggle {
+  cursor: pointer;
+  user-select: none;
+  transition: color var(--ease-fast);
+}
+.stat-section h3.collapsible-toggle:hover {
+  color: var(--c-gold-bright);
+}
+
+/* 护甲伤害区域颜色 */
+#armor-damage-breakdown .stat-row:last-child .stat-value {
+  color: var(--c-orange, #f97316);
 }

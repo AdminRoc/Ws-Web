@@ -50,6 +50,15 @@
             <button class="btn btn-primary" style="width:100%;" onclick="App.openRivenCreator()">创建裂罅MOD</button>
           </div>
 
+          <!-- 裂罅MOD显示区域 -->
+          <div id="riven-display" style="display:none;margin-bottom:12px;padding:10px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="color:var(--c-purple);font-weight:600;font-size:0.9rem;">裂罅MOD</span>
+              <button onclick="App.removeRiven()" style="background:none;border:none;color:var(--c-text2);cursor:pointer;font-size:0.8rem;">移除</button>
+            </div>
+            <div id="riven-stats" style="font-size:0.8rem;color:var(--c-text);"></div>
+          </div>
+
            <div id="mod-grid" class="mod-grid"></div>
 
           <div class="stat-section" style="margin-top:16px;">
@@ -57,7 +66,45 @@
             <div style="margin-bottom:8px;">
               <button class="btn btn-secondary" style="width:100%;font-size:0.75rem;" onclick="App.openWarframeModPicker()">选择 Warframe MOD</button>
             </div>
+            
+            <!-- Aura slots (4) -->
+            <div style="font-size:0.7rem;color:var(--c-text-dim);margin-bottom:4px;">光环槽 (4)</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px;">
+              <div class="mod-slot aura-slot" id="wf-aura-0" onclick="App.openModPicker(10)"></div>
+              <div class="mod-slot aura-slot" id="wf-aura-1" onclick="App.openModPicker(11)"></div>
+              <div class="mod-slot aura-slot" id="wf-aura-2" onclick="App.openModPicker(12)"></div>
+              <div class="mod-slot aura-slot" id="wf-aura-3" onclick="App.openModPicker(13)"></div>
+            </div>
+            
+            <!-- Arcane slots (2) -->
+            <div style="font-size:0.7rem;color:var(--c-text-dim);margin-bottom:4px;">赋能槽 (2)</div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;margin-bottom:8px;">
+              <div class="mod-slot arcane-slot" id="wf-arcane-0" onclick="App.openModPicker(14)"></div>
+              <div class="mod-slot arcane-slot" id="wf-arcane-1" onclick="App.openModPicker(15)"></div>
+            </div>
+            
+            <!-- Warframe mod slots (8) -->
+            <div style="font-size:0.7rem;color:var(--c-text-dim);margin-bottom:4px;">MOD槽 (8)</div>
             <div id="warframe-mod-grid" class="mod-grid" style="grid-template-columns:repeat(2,1fr);"></div>
+            
+            <!-- Focus school -->
+            <div style="margin-top:8px;">
+              <div style="font-size:0.7rem;color:var(--c-text-dim);margin-bottom:4px;">源力石</div>
+              <select id="wf-focus" onchange="App.setWarframeFocus(this.value)" style="width:100%;background:var(--c-card);border:1px solid var(--c-border);color:var(--c-text);padding:4px;border-radius:4px;">
+                <option value="none">无</option>
+                <option value="madurai">Madurai (物理伤害提高30%)</option>
+                <option value="vazarin">Vazarin (护盾恢复)</option>
+                <option value="naramon">Naramon (近战连击)</option>
+                <option value="unairu">Unairu (护甲剥离)</option>
+                <option value="zenurik">Zenurik (能量恢复)</option>
+              </select>
+            </div>
+            
+            <!-- Warframe skills -->
+            <div style="margin-top:8px;">
+              <div style="font-size:0.7rem;color:var(--c-text-dim);margin-bottom:4px;">战甲技能</div>
+              <div id="warframe-skills"></div>
+            </div>
           </div>
 
           <div class="stat-section">
@@ -78,6 +125,22 @@
             </div>
           </div>
 
+          <div id="incarnon-evo-section" style="display:none;margin-bottom:12px;padding:10px;background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="color:var(--c-gold-bright);font-weight:600;font-size:0.9rem;">Incarnon 进化</span>
+              <button onclick="App.resetIncarnon()" style="background:none;border:none;color:var(--c-text2);cursor:pointer;font-size:0.8rem;">重置</button>
+            </div>
+            <div id="incarnon-evo-slots" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+          </div>
+
+          <div id="stance-section" style="display:none;margin-bottom:12px;padding:10px;background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="color:var(--c-gold-bright);font-weight:600;font-size:0.9rem;">近战连击</span>
+            </div>
+            <div id="stance-select-area"></div>
+            <div id="stance-info-display" style="margin-top:8px;font-size:0.75rem;color:var(--c-text-dim);"></div>
+          </div>
+
           <div class="stat-section">
             <h3 class="collapsible-toggle" onclick="toggleSection('options-section')">
               计算选项 <span style="float:right;font-size:0.75rem;">&#9660;</span>
@@ -90,7 +153,7 @@
                 </div>
                 <div class="slider-group" style="flex:1;margin-bottom:0;">
                   <div class="slider-header">
-                    <span class="slider-label">病毒层数</span>
+                    <span class="slider-label">负面状态效果叠加层数</span>
                     <span class="slider-value" id="virus-stacks-value">0</span>
                   </div>
                   <input type="range" class="slider-input" id="virus-stacks-slider" min="0" max="10" value="0">
@@ -122,7 +185,7 @@
 
               <div class="slider-group">
                 <div class="slider-header">
-                  <span class="slider-label">外部护甲剥离 %</span>
+                  <span class="slider-label">外部减少目标防御（护甲） %</span>
                   <span class="slider-value" id="armor-strip-value">0%</span>
                 </div>
                 <input type="range" class="slider-input" id="armor-strip-slider" min="0" max="100" value="0">
@@ -131,11 +194,11 @@
               <div class="options-grid">
                 <div class="option-item" data-option="stealth">
                   <div class="option-checkbox"></div>
-                  <span class="option-label">潜行加成 (近战)</span>
+                  <span class="option-label">潜行加成（近战武器专属)</span>
                 </div>
                 <div class="option-item" data-option="heavyAttack">
                   <div class="option-checkbox"></div>
-                  <span class="option-label">重击</span>
+                  <span class="option-label">记重击（近战武器专属)</span>
                 </div>
               </div>
 
@@ -156,7 +219,7 @@
               <div class="option-row">
                 <div class="checkbox-option" data-key="lightAttackComboEnabled">
                   <div class="option-checkbox"></div>
-                  <span class="option-label">轻攻击连击倍率</span>
+                  <span class="option-label">轻攻击连击倍数（用于近战）</span>
                 </div>
                 <div class="slider-group" style="flex:1;margin-bottom:0;">
                   <div class="slider-header">
@@ -184,7 +247,7 @@
               <div class="option-row">
                 <div class="checkbox-option" data-key="sniperComboEnabled">
                   <div class="option-checkbox"></div>
-                  <span class="option-label">狙击连击倍率</span>
+                  <span class="option-label">狙击连击倍数（用于狙击步枪）</span>
                 </div>
                 <div class="slider-group" style="flex:1;margin-bottom:0;">
                   <div class="slider-header">
@@ -204,7 +267,7 @@
                   </div>
                   <div class="ability-toggle" data-ability="mirageEclipse">
                     <div class="option-checkbox"></div>
-                    <span class="option-label">Mirage - 日蚀</span>
+                    <span class="option-label">黯然失色 (Mirage)</span>
                   </div>
                   <div class="ability-toggle" data-ability="xakuWhisper">
                     <div class="option-checkbox"></div>
@@ -212,7 +275,7 @@
                   </div>
                   <div class="ability-toggle" data-ability="sarynSpores">
                     <div class="option-checkbox"></div>
-                    <span class="option-label">Saryn - 毒性孢子</span>
+                    <span class="option-label">剧毒鞭笞 (Saryn)</span>
                   </div>
                   <div class="ability-toggle" data-ability="grendelNourish">
                     <div class="option-checkbox"></div>
@@ -220,11 +283,7 @@
                   </div>
                   <div class="ability-toggle" data-ability="kullervoCrit">
                     <div class="option-checkbox"></div>
-                    <span class="option-label">Kullervo - 暴怒突进</span>
-                  </div>
-                  <div class="ability-toggle" data-ability="harrowCrit">
-                    <div class="option-checkbox"></div>
-                    <span class="option-label">Harrow - 庇佑圣约</span>
+                    <span class="option-label">绝对增加 暴击几率的 (~Kullervo, Harrow)</span>
                   </div>
                 </div>
               </div>
@@ -232,7 +291,7 @@
               <div class="option-row">
                 <div class="checkbox-option" data-key="manualStatusCount">
                   <div class="option-checkbox"></div>
-                  <span class="option-label">手动状态层数</span>
+                  <span class="option-label">手动输入当前敌人的负面状态效果的总数 (默认为武器上的状态数量)</span>
                 </div>
                 <div class="slider-group" style="flex:1;margin-bottom:0;">
                   <div class="slider-header">
@@ -246,11 +305,11 @@
               <div class="options-grid">
                 <div class="option-item checkbox-option" data-key="conditionOverload">
                   <div class="option-checkbox"></div>
-                  <span class="option-label">异况超量</span>
+                  <span class="option-label">基础伤害每异常状态计算为乘法 (~异况超量)</span>
                 </div>
                 <div class="option-item checkbox-option" data-key="madurai">
                   <div class="option-checkbox"></div>
-                  <span class="option-label">Madurai (+30% 物理)</span>
+                  <span class="option-label">Madurai (物理伤害提高30%)</span>
                 </div>
                 <div class="option-item checkbox-option" data-key="mergeAttacks">
                   <div class="option-checkbox"></div>
@@ -258,7 +317,7 @@
                 </div>
                 <div class="option-item checkbox-option" data-key="conditionalModsAlways" style="border-color:var(--c-green);">
                   <div class="option-checkbox" style="background:var(--c-green);border-color:var(--c-green);"></div>
-                  <span class="option-label">条件MOD始终激活</span>
+                  <span class="option-label">对于那些带有条件属性以在发生某些事件时触发的 MOD, 将默认激活所有条件</span>
                 </div>
               </div>
 
@@ -302,15 +361,12 @@
             <div class="slider-group">
               <input type="number" id="enemy-level" class="level-input" value="30" min="1" max="9999" style="width:100%;">
             </div>
-            <div class="option-item" data-option="steelPath" style="margin-top:8px;">
-              <div class="option-checkbox"></div>
-              <span class="option-label">铁臂之路</span>
-            </div>
           </div>
 
           <div class="dps-display">
             <div class="dps-value" id="dps-value">0</div>
             <div class="dps-label">有效 DPS</div>
+            <div id="attack-name" style="font-size:0.85rem;color:var(--c-gold-bright);margin-bottom:8px;"></div>
             <div class="dps-breakdown">
               <div class="dps-stat">
                 <div class="dps-stat-value" id="raw-dps">0</div>
@@ -332,12 +388,29 @@
                 <div class="dps-stat-value" id="armor-dr">0%</div>
                 <div class="dps-stat-label">护甲减伤</div>
               </div>
+              <div class="dps-stat">
+                <div class="dps-stat-value" id="ttk-value">-</div>
+                <div class="dps-stat-label">击杀时间 (TTK)</div>
+              </div>
             </div>
           </div>
 
           <div class="damage-chart">
             <div class="chart-title">伤害分布</div>
             <div id="damage-breakdown"></div>
+          </div>
+
+          <div class="stat-section">
+            <h3 class="collapsible-toggle" onclick="toggleSection('armor-damage-section')">
+              护甲伤害 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+            </h3>
+            <div id="armor-damage-section">
+              <div id="armor-damage-breakdown">
+                <div class="empty-state" style="padding:20px;">
+                  <div class="empty-state-text">选择武器和敌人后显示</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="stat-section">
@@ -368,7 +441,7 @@
 
           <div class="stat-section">
             <h3 class="collapsible-toggle" onclick="toggleSection('overguard-damage-section')">
-              护盾过量伤害 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+              超宏防护伤害 <span style="float:right;font-size:0.75rem;">&#9660;</span>
             </h3>
             <div id="overguard-damage-section" style="display:none;">
               <div id="overguard-damage-breakdown">
@@ -380,6 +453,19 @@
           </div>
 
           <div id="status-info"></div>
+          
+          <!-- 多攻击形态结果 -->
+          <div id="multi-attack-results"></div>
+          
+          <!-- 动态伤害模拟显示 -->
+          <div id="simulation-results"></div>
+          
+          <!-- 模拟按钮 -->
+          <div style="margin-top:16px;">
+            <button onclick="App.runSimulation()" id="sim-btn" style="width:100%;padding:10px;background:var(--c-accent);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:0.9rem;transition:all 0.2s ease;">
+              运行蒙特卡洛模拟 (100次)
+            </button>
+          </div>
         </div>
       </aside>
     </div>
@@ -460,7 +546,8 @@
   </div>
 
   <script src="dmg/vendor/gsap/gsap.min.js"></script>
-  <script src="dmg/js/game-data.js"></script>
+    <script src="dmg/js/lz-string.min.js"></script>
+    <script src="dmg/js/game-data.js"></script>
   <script src="dmg/js/damage-calc.js"></script>
   <script src="dmg/js/app.js"></script>
   <script>

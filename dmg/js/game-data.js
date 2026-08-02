@@ -1,6 +1,6 @@
 /**
  * Warframe 伤害计算器 - 完整游戏数据 (v3)
- * 数据来源: warframe-damage.com/zh/ (公开游戏数据)
+ * 数据来源: 公开游戏数据和社区分析
  * 包含: 662武器 / 587MOD / 495敌人 / 阵营抗性表
  * 生成时间: 2026-08-01T13:13:13.730Z
  */
@@ -125,7 +125,7 @@ const GameData = {
     Toxin:Infinity, Electricity:Infinity, Slash:Infinity, Blast:0
   },
 
-  // === 阵营抗性表 (来自 warframe-damage.com typeOfFaction) ===
+  // === 阵营抗性表 ===
   FACTION_RESISTANCES: {
     Grineer: { Corrosive:1.5, Impact:1.5, Puncture:0.75, Slash:0.75, Viral:1.25, Magnetic:0.5, Radiation:0.75, Gas:0.75, Cold:0.75 },
     'Kuva Grineer': { Corrosive:1.5, Impact:1.5, Heat:0.5, Puncture:0.75, Slash:0.75, Viral:1.25, Magnetic:0.5, Radiation:0.75, Gas:0.75, Cold:0.75 },
@@ -2802,7 +2802,7 @@ const GameData = {
     }
   ],
 
-  // === 武器完整数据 (662个, 从 warframe-damage.com 提取) ===
+  // === 武器完整数据 (662个) ===
   weapons: {"Acceltra":{"category":"Primary","trigger":"Auto","type":"Rifle","magazineSize":48,"reloadTime":2,"multishot":1,"attacks":[{"name":"Rocket Impact","speed":12,"crit_chance":32,"crit_mult":2.8,"status_chance":6,"shot_type":"Projectile","shot_speed":70,"flight":70,"unique":{"force_procs":["impact"]},"damage":{"Impact":35}},{"name":"Rocket Explosion","speed":12,"crit_chance":32,"crit_mult":2.8,"status_chance":6,"shot_type":"AoE","damage":{"Slash":8.8,"Puncture":35.2},"falloff":{"start":0,"end":4,"reduction":0.5},"no_headshot_mult":true}],
     "imageName":"acceltra.webp","tags":["Tenno"],
     "compTags":["PROJECTILE","AOE","ASSAULT_AMMO"],
@@ -4312,7 +4312,7 @@ const GameData = {
     "compTags":["ZYLOK"],
     "comb":[[1,2]]}},
 
-  // === MOD 数据 (587个, 从 warframe-damage.com 提取) ===
+  // === MOD 数据 (587个) ===
   mods: [{"name":"Serration","img":"Serration.webp","tags":["primary-rifle","primary-bow","primary-sniper"],
     "uncomp":["Amalgam Serration","Higasa Serration","Spectral Serration"],
     "action":{"base":1.65}},{"name":"Amalgam Serration","img":"AmalgamSerration.webp","tags":["primary-rifle","primary-bow","primary-sniper"],
@@ -5268,7 +5268,7 @@ const GameData = {
     "type":"frame_mod","action":{"corrosive_by_toxin":1}},{"name":"Archon Vitality","img":"ArchonVitality.webp","tags":["POWER_WEAPON"],
     "type":"frame_mod","action":{"archon_vitality":1}}],
 
-  // === 敌人数据 (495个, 从 warframe-damage.com 提取) ===
+  // === 敌人数据 (495个) ===
   enemies: {"002-ER":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"002-ER","lFactionName":"Corpus"},"Aerial Commander":{"faction":"Grineer","health":800,"armor":250,"shield":0,"localeName":"空中指挥官","lFactionName":"Grineer"},"Acolytes":{"faction":"Stalker","health":5500,"armor":50,"shield":2500,"localeName":"追随者","lFactionName":"Stalker","innateDR":{"health":0.625,"armor":0.625,"shield":0},"eximusOff":true,"unique":"acolytes","maxProcStacks":4},"Amalgam Alkonost":{"faction":"Corpus Amalgam","health":650,"armor":0,"shield":300,"localeName":"并合翠莺","lFactionName":"Corpus Amalgam","immun":{"status":["all"]},"unique":"amalgam"},"Amalgam Cinder Machinist":{"faction":"Sentient","health":1500,"armor":0,"shield":1200,"localeName":"并合熔渣机械师","lFactionName":"Sentient","unique":"sentient"},"Amalgam Arca Kucumatz":{"faction":"Sentient","health":1500,"armor":0,"shield":400,"localeName":"并合弧电羽蛇","lFactionName":"Sentient","unique":"sentient"},"Aerolyst":{"faction":"Sentient","health":2000,"armor":75,"shield":0,"localeName":"空飞使","lFactionName":"Sentient","eximusOff":true,"unique":"sentient"},"Amalgam Arca Heqet":{"faction":"Sentient","health":700,"armor":0,"shield":1100,"localeName":"并合弧电灵蛙","lFactionName":"Sentient","unique":"sentient"},"Amalgam Heqet":{"faction":"Corpus Amalgam","health":500,"armor":0,"shield":400,"localeName":"并合灵蛙","lFactionName":"Corpus Amalgam","unique":"amalgam"},"Alad V":{"faction":"Corpus","health":900,"armor":250,"shield":1500,"localeName":"Alad V","lFactionName":"Corpus","eximusOff":true},"Amalgam Kucumatz":{"faction":"Corpus Amalgam","health":500,"armor":0,"shield":100,"localeName":"并合羽蛇","lFactionName":"Corpus Amalgam","unique":"amalgam"},"Amalgam Osprey":{"faction":"Corpus Amalgam","health":500,"armor":0,"shield":300,"localeName":"并合鱼鹰","lFactionName":"Corpus Amalgam","unique":"amalgam"},"Amalgam Phase MOA":{"faction":"Sentient","health":500,"armor":0,"shield":800,"localeName":"并合相位恐鸟","lFactionName":"Sentient","unique":"sentient"},"Amalgam Satyr":{"faction":"Corpus Amalgam","health":600,"armor":0,"shield":150,"localeName":"并合半羊兽","lFactionName":"Corpus Amalgam","unique":"amalgam"},"Amalgam Swarm Satyr":{"faction":"Sentient","health":1300,"armor":0,"shield":400,"localeName":"并合群集半羊兽","lFactionName":"Sentient","unique":"sentient"},"Ancient Disruptor":{"faction":"Infested","health":400,"armor":0,"shield":0,"localeName":"远古干扰者","lFactionName":"感染"},"Ambulas":{"faction":"Corpus","health":1100,"armor":150,"shield":500,"localeName":"Ambulas","lFactionName":"Corpus"},"Ancient Healer":{"faction":"Infested","health":400,"armor":0,"shield":0,"localeName":"远古治愈者","lFactionName":"感染"},"Deimos Ancient Healer":{"faction":"Infested Deimos","health":400,"armor":0,"shield":0,"localeName":"惊惧远古治愈者","lFactionName":"Infested Deimos"},"Angst":{"faction":"Stalker","health":5500,"armor":50,"shield":2500,"localeName":"焦虑","lFactionName":"Stalker","innateDR":{"health":0.625,"armor":0.625,"shield":0},"eximusOff":true,"unique":"acolytes","maxProcStacks":4},"Anu Mantalyst":{"faction":"Sentient","health":400,"armor":150,"shield":200,"localeName":"安努劫持使","lFactionName":"Sentient"},"Anu Pyrolyst":{"faction":"Sentient","health":1300,"armor":250,"shield":0,"localeName":"安努烈焰使","lFactionName":"Sentient","immun":{"status":["all"]}},"Anti MOA":{"faction":"Corpus","health":50,"armor":0,"shield":500,"localeName":"逆进恐鸟","lFactionName":"Corpus","immun":{"status":["heat"]},"b_lvl":15},"Arcane Machine":{"faction":"Tenno","health":2000,"armor":25,"shield":500,"localeName":"法典仪器","lFactionName":"Tenno"},"Archon Amar":{"faction":"Narmer","health":30000,"armor":25,"shield":0,"localeName":"欺谋狼主","lFactionName":"合一众","innateDR":{"status":0.5,"health":0.2,"armor":0.2},"eximusOff":true,"unique":"archon","maxProcStacks":4},"Archon Boreal":{"faction":"Narmer","health":30000,"armor":25,"shield":0,"localeName":"诡文枭主","lFactionName":"合一众","innateDR":{"status":0.5,"health":0.2,"armor":0.2},"eximusOff":true,"unique":"archon","maxProcStacks":4},"Arbitration Shield Drone":{"faction":"Arbiters of Hexis","health":35,"armor":0,"shield":50,"localeName":"仲裁者神盾无人机","lFactionName":"Arbiters of Hexis","immun":{"status":["all"]},"eximusOff":true},"Armaments Director":{"faction":"Corpus","health":1750,"armor":100,"shield":1200,"localeName":"军备主管","lFactionName":"Corpus"},"Armis Ulta":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Armis Ulta","lFactionName":"Corpus"},"Ashen Kuaka (Old)":{"faction":"Neutral","health":2,"armor":50,"shield":0,"localeName":"库阿卡","lFactionName":"Neutral"},"Artificer":{"faction":"Grineer","health":1500,"armor":150,"shield":0,"localeName":"技工","lFactionName":"Grineer"},"Attack Drone (Archwing Enemy)":{"faction":"Corpus","health":250,"armor":0,"shield":75,"localeName":"无人机(Corpus空战)","lFactionName":"Corpus"},"Archon Nira":{"faction":"Narmer","health":30000,"armor":25,"shield":0,"localeName":"混沌蛇主","lFactionName":"合一众","innateDR":{"status":0.5,"health":0.2,"armor":0.2},"eximusOff":true,"unique":"archon","maxProcStacks":4},"Auditor":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Auditor","lFactionName":"Corpus"},"Aurax Actinic":{"faction":"Corpus","health":1500,"armor":0,"shield":750,"localeName":"傲金光化者","lFactionName":"Corpus","unique":"empyrean-corpus"},"Aurax Atloc Raknoid":{"faction":"Corpus","health":300,"armor":250,"shield":150,"localeName":"傲金锁战蛛形机","lFactionName":"Corpus","innateDR":{"health":0.8,"armor":0.8,"shield":0.8},"immun":{"status":["viral","corrosive","magnetic"]},"unique":"raknoid"},"Aurax Baculus":{"faction":"Corpus","health":300,"armor":0,"shield":750,"localeName":"傲金杖兵","lFactionName":"Corpus","unique":"empyrean-corpus"},"Amalgam MOA":{"faction":"Corpus Amalgam","health":500,"armor":0,"shield":300,"localeName":"并合恐鸟","lFactionName":"Corpus Amalgam","unique":"amalgam"},"Aurax Culveri MOA":{"faction":"Corpus","health":55,"armor":0,"shield":30,"localeName":"傲金重火恐鸟","lFactionName":"Corpus"},"Azoth":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Azoth","lFactionName":"Corpus","eximusOff":true},"Aurax Polaris MOA":{"faction":"Corpus","health":55,"armor":0,"shield":30,"localeName":"傲金极冻恐鸟","lFactionName":"Corpus"},"Aurax Vertec":{"faction":"Corpus","health":1500,"armor":0,"shield":750,"localeName":"傲金终极者","lFactionName":"Corpus","unique":"empyrean-corpus"},"Bailiff Defector":{"faction":"Tenno","health":300,"armor":500,"shield":0,"localeName":"叛徒执法员","lFactionName":"Tenno"},"Amalgam Machinist":{"faction":"Corpus Amalgam","health":600,"armor":0,"shield":300,"localeName":"并合机械师","lFactionName":"Corpus Amalgam","innateDR":{"health":0,"armor":0,"shield":0.5},"unique":"amalgam-machinist"},"Attack Mutalist":{"faction":"Infested","health":65,"armor":0,"shield":0,"localeName":"攻击型异融体","lFactionName":"感染"},"Anu Interference Drone":{"faction":"Sentient","health":400,"armor":150,"shield":200,"localeName":"安努干扰无人机","lFactionName":"Sentient"},"Basilisk":{"faction":"Corpus","health":190,"armor":50,"shield":175,"localeName":"蛇妖战机","lFactionName":"Corpus"},"Bailiff":{"faction":"Grineer","health":700,"armor":500,"shield":0,"localeName":"执法员","lFactionName":"Grineer"},"Blite Captain":{"faction":"Grineer","health":300,"armor":750,"shield":0,"localeName":"Blite舰长","lFactionName":"Grineer"},"Bombard":{"faction":"Grineer","health":300,"armor":500,"shield":0,"localeName":"轰击者","lFactionName":"Grineer","b_lvl":4},"Kuva Bombard":{"faction":"Kuva Grineer","health":300,"armor":500,"shield":0,"localeName":"赤毒轰击者","lFactionName":"Kuva Grineer","b_lvl":4},"Attack Drone":{"faction":"Corpus","health":250,"armor":0,"shield":75,"localeName":"无人机","lFactionName":"Corpus"},"Brood Mother":{"faction":"Infested","health":700,"armor":0,"shield":0,"localeName":"病变虫母","lFactionName":"感染"},"Butcher":{"faction":"Grineer","health":50,"armor":5,"shield":0,"localeName":"屠夫","lFactionName":"Grineer"},"Kuva Butcher":{"faction":"Kuva Grineer","health":50,"armor":5,"shield":0,"localeName":"Kuva Butcher","lFactionName":"Kuva Grineer"},"Captain Vor & Lieutenant Lech Kril":{"faction":"Grineer","health":900,"armor":250,"shield":900,"localeName":"Vor上尉 & Lech Kril中尉","lFactionName":"Grineer","eximusOff":true},"Carrier (Enemy)":{"faction":"Corpus","health":100,"armor":75,"shield":100,"localeName":"母舰","lFactionName":"Corpus"},"Captain Vor":{"faction":"Grineer","health":900,"armor":250,"shield":900,"localeName":"Vor上尉","lFactionName":"Grineer","eximusOff":true},"Charger":{"faction":"Infested","health":80,"armor":0,"shield":0,"localeName":"疾冲者","lFactionName":"感染"},"Carabus":{"faction":"Grineer","health":750,"armor":0,"shield":150,"localeName":"自爆虫","lFactionName":"Grineer"},"Cinderthresh Hyena":{"faction":"Corpus","health":800,"armor":50,"shield":500,"localeName":"炉渣翻打鬣狗","lFactionName":"Corpus"},"Choralyst":{"faction":"Sentient","health":300,"armor":75,"shield":0,"localeName":"唱鸣使","lFactionName":"Sentient","eximusOff":true,"unique":"sentient"},"Condor Dropship":{"faction":"Corpus","health":1000,"armor":100,"shield":0,"localeName":"秃鹫空投艇","lFactionName":"Corpus"},"Basal Diploid":{"faction":"Infested","health":250,"armor":125,"shield":0,"localeName":"基底二倍体","lFactionName":"感染"},"Conculyst":{"faction":"Sentient","health":1150,"armor":150,"shield":0,"localeName":"震荡使","lFactionName":"Sentient","eximusOff":true,"unique":"sentient"},"Coolant Raknoid":{"faction":"Corpus","health":100,"armor":250,"shield":2000,"localeName":"冷却蛛形机","lFactionName":"Corpus"},"Corpus Cestra Target":{"faction":"Corpus","health":800,"armor":50,"shield":1200,"localeName":"Corpus 锡斯特目标","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Corpus Sniper Target":{"faction":"Corpus","health":1000,"armor":50,"shield":1200,"localeName":"Corpus 狙击手目标","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Corpus Supra Target":{"faction":"Corpus","health":800,"armor":50,"shield":1200,"localeName":"Corpus 苏普拉目标","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Corpus Ramsled":{"faction":"Corpus","health":250,"armor":175,"shield":200,"localeName":"Corpus 冲锋艇","lFactionName":"Corpus"},"Brachiolyst":{"faction":"Sentient","health":300,"armor":0,"shield":450,"localeName":"狂战使","lFactionName":"Sentient","eximusOff":true,"unique":"sentient","b_lvl":10},"Bursa":{"faction":"Corpus","health":1200,"armor":200,"shield":700,"localeName":"金流恐鸟","lFactionName":"Corpus"},"Boiler":{"faction":"Infested","health":1200,"armor":0,"shield":0,"localeName":"痈裂者","lFactionName":"感染"},"Corrupted Bombard":{"faction":"Orokin","health":300,"armor":500,"shield":0,"localeName":"堕落轰击者","lFactionName":"Orokin","b_lvl":4},"Corrupted Butcher":{"faction":"Orokin","health":100,"armor":5,"shield":0,"localeName":"堕落屠夫","lFactionName":"Orokin"},"Commander":{"faction":"Grineer","health":500,"armor":95,"shield":0,"localeName":"指挥官（敌人）","lFactionName":"Grineer","b_lvl":3},"Corrupted Drone":{"faction":"Orokin","health":250,"armor":0,"shield":75,"localeName":"堕落无人机","lFactionName":"Orokin","immun":{"status":["slash","impact","electricity","heat","toxin","blast"]}},"Corrupted MOA":{"faction":"Orokin","health":250,"armor":0,"shield":250,"localeName":"堕落恐鸟","lFactionName":"Orokin"},"Corrupted Heavy Gunner":{"faction":"Orokin","health":700,"armor":500,"shield":0,"localeName":"堕落重型机枪手","lFactionName":"Orokin","b_lvl":8},"Corrupted Vor":{"faction":"Orokin","health":1500,"armor":250,"shield":1500,"localeName":"堕落的Vor","lFactionName":"Orokin"},"Battalyst":{"faction":"Sentient","health":1150,"armor":150,"shield":0,"localeName":"武装使","lFactionName":"Sentient","eximusOff":true,"unique":"sentient"},"Corrupted Lancer":{"faction":"Orokin","health":60,"armor":200,"shield":0,"localeName":"堕落枪兵","lFactionName":"Orokin"},"Ballista":{"faction":"Grineer","health":100,"armor":100,"shield":0,"localeName":"弩炮","lFactionName":"Grineer"},"Kuva Ballista":{"faction":"Kuva Grineer","health":100,"armor":100,"shield":0,"localeName":"Kuva Ballista","lFactionName":"Kuva Grineer"},"Corvette":{"faction":"Corpus","health":100,"armor":75,"shield":100,"localeName":"护卫舰","lFactionName":"Corpus"},"Councilor Vay Hek":{"faction":"Grineer","health":2000,"armor":200,"shield":0,"localeName":"Vay Hek议员","lFactionName":"Grineer"},"Corrupted Nullifier":{"faction":"Orokin","health":60,"armor":0,"shield":150,"localeName":"堕落虚能者","lFactionName":"Orokin","b_lvl":15},"Crewman":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"船员","lFactionName":"Corpus"},"Crewship":{"faction":"Corpus","health":1500,"armor":205,"shield":2000,"localeName":"战舰","lFactionName":"Corpus"},"Crawler":{"faction":"Infested","health":50,"armor":0,"shield":0,"localeName":"爬行者","lFactionName":"感染"},"Comet Shard":{"faction":"Corpus","health":300,"armor":175,"shield":200,"localeName":"冰陨碎弹","lFactionName":"Corpus"},"Cutter":{"faction":"Grineer","health":150,"armor":125,"shield":0,"localeName":"切割战机","lFactionName":"Grineer"},"Darek Draga":{"faction":"Grineer","health":130,"armor":10,"shield":0,"localeName":"疏浚兵长","lFactionName":"Grineer"},"Datalyst":{"faction":"Corpus","health":1300,"armor":0,"shield":600,"localeName":"资料师","lFactionName":"Corpus"},"Deimos Therid":{"faction":"Infested Deimos","health":1200,"armor":0,"shield":0,"localeName":"惊惧古壳蛛","lFactionName":"Infested Deimos","immun":{"status":["viral"]},"eximusOff":true,"unique":"saxum"},"Deimos Jugulus":{"faction":"Infested Deimos","health":1600,"armor":300,"shield":0,"localeName":"惊惧喉骨刃者","lFactionName":"Infested Deimos","eximusOff":true,"unique":"jugulus"},"Deimos Tendril Drone":{"faction":"Infested Deimos","health":100,"armor":150,"shield":0,"localeName":"惊惧卷须无人机","lFactionName":"Infested Deimos"},"Deimos Genetrix":{"faction":"Infested Deimos","health":8000,"armor":600,"shield":0,"localeName":"惊惧母艇","lFactionName":"Infested Deimos"},"Deimos Juggernaut":{"faction":"Infested Deimos","health":900,"armor":200,"shield":0,"localeName":"惊惧巨兽","lFactionName":"Infested Deimos"},"Demolisher Anti MOA":{"faction":"Corpus","health":2000,"armor":100,"shield":800,"localeName":"爆破型逆进恐鸟","lFactionName":"Corpus","innateDR":{"health":0.2,"armor":0.2,"shield":0.5},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Bailiff":{"faction":"Grineer","health":2000,"armor":200,"shield":0,"localeName":"爆破型执法员","lFactionName":"Grineer","innateDR":{"health":0.2,"armor":0.2,"shield":0},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Boiler":{"faction":"Infested","health":3000,"armor":0,"shield":0,"localeName":"爆破型痈裂者","lFactionName":"感染","immun":{"status":["viral","radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Bursa":{"faction":"Corpus","health":2000,"armor":100,"shield":800,"localeName":"爆破型金流恐鸟","lFactionName":"Corpus","innateDR":{"health":0.2,"armor":0.2,"shield":0.5},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Devourer":{"faction":"Grineer","health":2500,"armor":250,"shield":0,"localeName":"爆破型吞噬者","lFactionName":"Grineer","innateDR":{"health":0.2,"armor":0.2,"shield":0},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Expired":{"faction":"Grineer","health":1500,"armor":100,"shield":0,"localeName":"爆破型除役尸鬼","lFactionName":"Grineer","innateDR":{"health":0.2,"armor":0.2,"shield":0},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Charger":{"faction":"Infested","health":2500,"armor":0,"shield":0,"localeName":"爆破型疾冲者","lFactionName":"感染","immun":{"status":["viral","radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Heavy Gunner":{"faction":"Grineer","health":2000,"armor":200,"shield":0,"localeName":"爆破型重型机枪手","lFactionName":"Grineer","innateDR":{"health":0.2,"armor":0.2,"shield":0},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolyst Heqet":{"faction":"Corpus","health":2000,"armor":0,"shield":800,"localeName":"爆破使灵蛙","lFactionName":"Corpus","innateDR":{"health":0.2,"armor":0,"shield":0.5},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Hyena":{"faction":"Corpus","health":1500,"armor":50,"shield":700,"localeName":"爆破型鬣狗","lFactionName":"Corpus","innateDR":{"health":0.2,"armor":0.2,"shield":0.5},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Juggernaut":{"faction":"Infested","health":3000,"armor":50,"shield":0,"localeName":"爆破型巨兽","lFactionName":"感染","innateDR":{"health":0.2,"armor":0.2,"shield":0},"immun":{"status":["viral","radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Kuva Guardian":{"faction":"Kuva Grineer","health":2500,"armor":150,"shield":0,"localeName":"爆破型赤毒守卫者","lFactionName":"Kuva Grineer","innateDR":{"health":0.2,"armor":0.2,"shield":0},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolyst Machinist":{"faction":"Corpus","health":2000,"armor":0,"shield":800,"localeName":"爆破使机械师","lFactionName":"Corpus","innateDR":{"health":0.2,"armor":0,"shield":0.5},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolyst MOA":{"faction":"Corpus","health":2000,"armor":0,"shield":800,"localeName":"爆破使恐鸟","lFactionName":"Corpus","innateDR":{"health":0.2,"armor":0,"shield":0.5},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Nox":{"faction":"Grineer","health":2500,"armor":250,"shield":0,"localeName":"爆破型毒化者","lFactionName":"Grineer","innateDR":{"health":0.2,"armor":0.2,"shield":0},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolyst Satyr":{"faction":"Corpus","health":2000,"armor":0,"shield":800,"localeName":"爆破使半羊兽","lFactionName":"Corpus","innateDR":{"health":0.2,"armor":0,"shield":0.5},"immun":{"status":["radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Demolisher Thrasher":{"faction":"Infested","health":3250,"armor":0,"shield":0,"localeName":"爆破型奔跳者","lFactionName":"感染","immun":{"status":["viral","radiation"]},"eximusOff":true,"unique":"demolisher","showPartyCount":true},"Denial Bursa":{"faction":"Corpus","health":1200,"armor":200,"shield":700,"localeName":"守护金流恐鸟","lFactionName":"Corpus","eximusOff":true},"Condrix":{"faction":"Sentient","health":12000,"armor":25,"shield":0,"localeName":"谍影登陆舰","lFactionName":"Sentient","eximusOff":true,"unique":"condrix"},"Dru Pesfor":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Dru Pesfor","lFactionName":"Corpus"},"Dreg":{"faction":"Grineer","health":100,"armor":150,"shield":0,"localeName":"无人机(Grineer空战)","lFactionName":"Grineer"},"Devotee":{"faction":"Tenno","health":100,"armor":100,"shield":100,"localeName":"拥护者","lFactionName":"Tenno"},"Drahk Master":{"faction":"Grineer","health":500,"armor":200,"shield":0,"localeName":"爪喀驯兽师","lFactionName":"Grineer","b_lvl":12},"Kuva Drahk Master":{"faction":"Kuva Grineer","health":500,"armor":200,"shield":0,"localeName":"Kuva Drahk Master","lFactionName":"Kuva Grineer","b_lvl":12},"Eidolon Gantulyst":{"faction":"Sentient","health":55000,"armor":130,"shield":60000,"localeName":"夜灵巨力使","lFactionName":"Sentient","immun":{"status":["all"]},"eximusOff":true,"unique":"eidolon"},"Corpus Trencher Target":{"faction":"Corpus","health":800,"armor":50,"shield":1200,"localeName":"Corpus掘沟者目标","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Draga":{"faction":"Grineer","health":120,"armor":10,"shield":0,"localeName":"疏浚兵","lFactionName":"Grineer"},"Eidolon Hydrolyst":{"faction":"Sentient","health":65000,"armor":150,"shield":70000,"localeName":"夜灵水力使","lFactionName":"Sentient","immun":{"status":["all"]},"eximusOff":true,"unique":"eidolon"},"Corpus Target":{"faction":"Corpus","health":500,"armor":20,"shield":500,"localeName":"Corpus目标","lFactionName":"Corpus"},"Elite Basilisk":{"faction":"Corpus","health":380,"armor":75,"shield":350,"localeName":"精英蛇妖战机","lFactionName":"Corpus"},"Drover Bursa":{"faction":"Corpus","health":1200,"armor":200,"shield":700,"localeName":"驱引金流恐鸟","lFactionName":"Corpus"},"Electric Crawler":{"faction":"Infested","health":50,"armor":0,"shield":0,"localeName":"电击爬行者","lFactionName":"感染"},"Elite Cutter":{"faction":"Grineer","health":300,"armor":150,"shield":0,"localeName":"精英切割战机","lFactionName":"Grineer"},"Eidolon Teralyst":{"faction":"Sentient","health":50000,"armor":125,"shield":50000,"localeName":"夜灵兆力使","lFactionName":"Sentient","immun":{"status":["all"]},"eximusOff":true,"unique":"eidolon"},"Elite Crewman":{"faction":"Corpus","health":60,"armor":0,"shield":200,"localeName":"精英船员","lFactionName":"Corpus","b_lvl":16},"Eidolon Vomvalyst":{"faction":"Sentient","health":700,"armor":0,"shield":0,"localeName":"夜灵轰击使","lFactionName":"Sentient","eximusOff":true,"unique":"vomvalyst"},"Elite Ramsled":{"faction":"Grineer","health":-1,"armor":-1,"shield":0,"localeName":"精英冲锋艇","lFactionName":"Grineer"},"Elite Weaver":{"faction":"Corpus","health":450,"armor":175,"shield":300,"localeName":"精英旋织战机","lFactionName":"Corpus"},"Elite Taktis":{"faction":"Grineer","health":300,"armor":175,"shield":0,"localeName":"精英战术战机","lFactionName":"Grineer"},"Derivator Crewman":{"faction":"Corpus","health":350,"armor":0,"shield":100,"localeName":"引能船员","lFactionName":"Corpus"},"Errant Specter":{"faction":"Corpus","health":200,"armor":50,"shield":0,"localeName":"游荡魅影","lFactionName":"Corpus"},"Executioner/Garesh":{"faction":"Grineer","health":350,"armor":150,"shield":600,"localeName":"行刑者/Garesh","lFactionName":"Grineer","eximusOff":true},"Engineer":{"faction":"Corpus","health":2000,"armor":0,"shield":250,"localeName":"工程师","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Eviscerator":{"faction":"Grineer","health":150,"armor":200,"shield":0,"localeName":"开膛者","lFactionName":"Grineer"},"Kuva Eviscerator":{"faction":"Kuva Grineer","health":150,"armor":200,"shield":0,"localeName":"Kuva Eviscerator","lFactionName":"Kuva Grineer"},"Elite Gokstad Crewship":{"faction":"Grineer","health":3000,"armor":600,"shield":0,"localeName":"精英高克斯塔战舰","lFactionName":"Grineer"},"Executioner/Nok":{"faction":"Grineer","health":250,"armor":150,"shield":500,"localeName":"行刑者/Nok","lFactionName":"Grineer","eximusOff":true},"Executioner/Gorth":{"faction":"Grineer","health":500,"armor":325,"shield":800,"localeName":"行刑者/Gorth","lFactionName":"Grineer","eximusOff":true},"Executioner/Harkonar":{"faction":"Grineer","health":200,"armor":75,"shield":500,"localeName":"行刑者/Harkonar","lFactionName":"Grineer","eximusOff":true},"Executioner/Reth":{"faction":"Grineer","health":250,"armor":75,"shield":350,"localeName":"行刑者/Reth","lFactionName":"Grineer","eximusOff":true},"Dargyn Pilot":{"faction":"Grineer","health":120,"armor":100,"shield":0,"localeName":"轻型艇飞行员","lFactionName":"Grineer"},"Executioner/Dhurnam":{"faction":"Grineer","health":600,"armor":300,"shield":600,"localeName":"行刑者/Dhurnam","lFactionName":"Grineer","eximusOff":true},"Elite Flak":{"faction":"Grineer","health":400,"armor":175,"shield":0,"localeName":"精英高炮战机","lFactionName":"Grineer"},"Drudge":{"faction":"Grineer","health":350,"armor":75,"shield":0,"localeName":"苦工","lFactionName":"Grineer"},"Corrupted Crewman":{"faction":"Orokin","health":60,"armor":0,"shield":150,"localeName":"堕落船员","lFactionName":"Orokin"},"Drone Guardian":{"faction":"Orokin","health":250,"armor":0,"shield":75,"localeName":"无人机保护性的","lFactionName":"Orokin"},"Deimos Carnis":{"faction":"Infested Deimos","health":800,"armor":50,"shield":0,"localeName":"惊惧肉碾虫","lFactionName":"Infested Deimos","immun":{"status":["viral"]},"eximusOff":true},"Executioner/Dok Thul":{"faction":"Grineer","health":600,"armor":300,"shield":600,"localeName":"行刑者/Dok Thul","lFactionName":"Grineer","eximusOff":true},"Executioner/Vay Molta":{"faction":"Grineer","health":350,"armor":225,"shield":750,"localeName":"行刑者/Vay Molta","lFactionName":"Grineer","eximusOff":true},"Corrupted Ancient":{"faction":"Orokin","health":400,"armor":0,"shield":0,"localeName":"远古堕落者","lFactionName":"Orokin"},"Desert Skate":{"faction":"Neutral","health":250,"armor":200,"shield":0,"localeName":"沙漠鳐鱼","lFactionName":"Neutral"},"Detron Crewman":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"德特昂船员","lFactionName":"Corpus"},"Disc MOA":{"faction":"Corpus","health":60,"armor":0,"shield":200,"localeName":"圆盘恐鸟","lFactionName":"Corpus"},"Deimos Saxum":{"faction":"Infested Deimos","health":750,"armor":70,"shield":0,"localeName":"惊惧重岩者","lFactionName":"Infested Deimos","eximusOff":true,"unique":"saxum"},"Comba":{"faction":"Corpus","health":1100,"armor":0,"shield":400,"localeName":"驱逐员","lFactionName":"Corpus"},"Eidolon Lure":{"faction":"Grineer","health":1000,"armor":100,"shield":600,"localeName":"夜灵诱饵","lFactionName":"Grineer"},"Derim Zahn":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Derim Zahn","lFactionName":"Corpus"},"Drahk":{"faction":"Grineer","health":200,"armor":100,"shield":0,"localeName":"爪喀","lFactionName":"Grineer"},"Executioner/Zura":{"faction":"Grineer","health":250,"armor":75,"shield":500,"localeName":"行刑者/Zura","lFactionName":"Grineer","eximusOff":true},"Corpus Tech":{"faction":"Corpus","health":700,"armor":0,"shield":250,"localeName":"Corpus技师","lFactionName":"Corpus"},"Dargyn (Enemy)":{"faction":"Grineer","health":200,"armor":200,"shield":0,"localeName":"轻型艇(敌人)","lFactionName":"Grineer"},"Kuva Dargyn":{"faction":"Kuva Grineer","health":450,"armor":125,"shield":0,"localeName":"Kuva Dargyn","lFactionName":"Kuva Grineer"},"Elite Outrider":{"faction":"Grineer","health":1500,"armor":400,"shield":0,"localeName":"精英先驱战机","lFactionName":"Grineer"},"Elite Harpi":{"faction":"Corpus","health":400,"armor":85,"shield":200,"localeName":"精英鹰掠战机","lFactionName":"Corpus"},"Exploiter Orb":{"faction":"Corpus","health":12000,"armor":200,"shield":0,"localeName":"剥削者圆蛛","lFactionName":"Corpus","immun":{"status":["all"]},"eximusOff":true},"Elite Shield Lancer":{"faction":"Grineer","health":600,"armor":5,"shield":0,"localeName":"精英盾枪兵","lFactionName":"Grineer","b_lvl":5},"Elite Lancer":{"faction":"Grineer","health":150,"armor":200,"shield":0,"localeName":"精英枪兵","lFactionName":"Grineer"},"Kuva Elite Lancer":{"faction":"Kuva Grineer","health":150,"armor":200,"shield":0,"localeName":"Kuva Elite Lancer","lFactionName":"Kuva Grineer","b_lvl":1},"Flak":{"faction":"Grineer","health":200,"armor":150,"shield":0,"localeName":"高炮战机","lFactionName":"Grineer"},"Feral Kavat":{"faction":"Neutral","health":300,"armor":175,"shield":0,"localeName":"野生库娃","lFactionName":"Neutral"},"Feral Diploid":{"faction":"Infested","health":250,"armor":125,"shield":0,"localeName":"凶猛二倍体","lFactionName":"感染"},"Feral Kubrow":{"faction":"Neutral","health":300,"armor":200,"shield":0,"localeName":"野生库狛","lFactionName":"Neutral"},"Frigate":{"faction":"Corpus","health":100,"armor":75,"shield":100,"localeName":"驱逐舰","lFactionName":"Corpus"},"Feyarch Specter":{"faction":"Orokin","health":2250,"armor":200,"shield":1000,"localeName":"精灵之王魅影","lFactionName":"Orokin"},"Flameblade":{"faction":"Grineer","health":50,"armor":5,"shield":0,"localeName":"烈焰刀客","lFactionName":"Grineer"},"Kuva Flameblade":{"faction":"Kuva Grineer","health":50,"armor":5,"shield":0,"localeName":"Kuva Flameblade","lFactionName":"Kuva Grineer"},"Fusion MOA":{"faction":"Corpus","health":250,"armor":0,"shield":250,"localeName":"熔岩恐鸟","lFactionName":"Corpus","immun":{"status":["heat"]},"b_lvl":15},"Vapos Fusion MOA":{"faction":"Corpus","health":100,"armor":0,"shield":250,"localeName":"气雾融合恐鸟","lFactionName":"Corpus","immun":{"status":["heat"]}},"Fusion MOA Guardian":{"faction":"Orokin","health":250,"armor":0,"shield":250,"localeName":"熔岩恐鸟守护者","lFactionName":"Orokin"},"Frozen Infested Hive":{"faction":"Infested","health":4500,"armor":25,"shield":0,"localeName":"感染巢囊 冰冻","lFactionName":"感染"},"Garv":{"faction":"Grineer","health":800,"armor":1400,"shield":0,"localeName":"加弗","lFactionName":"Grineer"},"Gas Infested Hive":{"faction":"Infested","health":4500,"armor":25,"shield":0,"localeName":"感染巢囊 毒气","lFactionName":"感染"},"General Sargas Ruk":{"faction":"Grineer","health":2000,"armor":250,"shield":0,"localeName":"Sargas Ruk将军","lFactionName":"Grineer"},"Ghoul Devourer":{"faction":"Grineer","health":600,"armor":250,"shield":0,"localeName":"吞噬尸鬼","lFactionName":"Grineer"},"Ghoul Auger":{"faction":"Grineer","health":400,"armor":200,"shield":0,"localeName":"钻孔尸鬼","lFactionName":"Grineer"},"Glacik Commander":{"faction":"Grineer","health":300,"armor":750,"shield":0,"localeName":"Glacik指挥官","lFactionName":"Grineer"},"Ghoul Expired Deserter":{"faction":"Grineer","health":150,"armor":20,"shield":80,"localeName":"除役尸鬼逃兵","lFactionName":"Grineer"},"Gokstad Officer":{"faction":"Grineer","health":1000,"armor":1000,"shield":0,"localeName":"高克斯塔军官","lFactionName":"Grineer"},"Gokstad Pilot":{"faction":"Grineer","health":300,"armor":200,"shield":0,"localeName":"高克斯塔飞行员","lFactionName":"Grineer"},"Gox":{"faction":"Corpus","health":350,"armor":500,"shield":250,"localeName":"神锋战机","lFactionName":"Corpus"},"Ghoul Expired":{"faction":"Grineer","health":300,"armor":150,"shield":0,"localeName":"除役尸鬼","lFactionName":"Grineer"},"Grineer Target":{"faction":"Grineer","health":800,"armor":60,"shield":0,"localeName":"Grineer捕获目标","lFactionName":"Grineer"},"Ghoul Rictus":{"faction":"Grineer","health":400,"armor":200,"shield":0,"localeName":"裂嘴尸鬼","lFactionName":"Grineer"},"Gyre Hyena":{"faction":"Corpus","health":800,"armor":25,"shield":500,"localeName":"回旋鬣狗","lFactionName":"Corpus"},"Guardsman":{"faction":"Grineer","health":150,"armor":5,"shield":0,"localeName":"禁卫军","lFactionName":"Grineer"},"Gyrix":{"faction":"Sentient","health":300,"armor":125,"shield":200,"localeName":"螺旋战机","lFactionName":"Sentient","unique":"sentient"},"Harpi":{"faction":"Corpus","health":200,"armor":50,"shield":100,"localeName":"鹰掠战机","lFactionName":"Corpus"},"Frontier Lancer":{"faction":"Grineer","health":100,"armor":100,"shield":0,"localeName":"前线枪兵","lFactionName":"Grineer"},"Hellion Dargyn":{"faction":"Grineer","health":200,"armor":200,"shield":0,"localeName":"恶徒轻型艇","lFactionName":"Grineer"},"Hellion":{"faction":"Grineer","health":100,"armor":100,"shield":0,"localeName":"恶徒","lFactionName":"Grineer"},"Kuva Hellion":{"faction":"Kuva Grineer","health":100,"armor":100,"shield":0,"localeName":"Kuva Hellion","lFactionName":"Kuva Grineer"},"Heavy Gunner":{"faction":"Grineer","health":300,"armor":500,"shield":0,"localeName":"重型机枪手","lFactionName":"Grineer","b_lvl":8},"Kuva Heavy Gunner":{"faction":"Kuva Grineer","health":300,"armor":500,"shield":0,"localeName":"Kuva Heavy Gunner","lFactionName":"Kuva Grineer","b_lvl":8},"Hound":{"faction":"Corpus","health":1,"armor":1,"shield":1,"localeName":"猎犬","lFactionName":"Corpus"},"Hyekka":{"faction":"Grineer","health":200,"armor":175,"shield":0,"localeName":"鬣猫","lFactionName":"Grineer","unique":"hyekka","elemRes":{"heat":0.8}},"Ionyx":{"faction":"Sentient","health":400,"armor":150,"shield":200,"localeName":"离子战机","lFactionName":"Sentient","unique":"sentient"},"Icemire Hyena":{"faction":"Corpus","health":800,"armor":25,"shield":500,"localeName":"冰沼鬣狗","lFactionName":"Corpus"},"Hyena Pack":{"faction":"Corpus","health":800,"armor":25,"shield":1000,"localeName":"鬣狗群","lFactionName":"Corpus"},"Hemocyte":{"faction":"Infested","health":5000,"armor":175,"shield":0,"localeName":"免疫血胞体","lFactionName":"感染","innateDR":{"health":0.7,"armor":0.7,"shield":0.7},"immun":{"status":["all"]},"eximusOff":true,"unique":"hemocyte","b_lvl":10},"Hukin":{"faction":"Corpus","health":12000,"armor":200,"shield":0,"localeName":"Hukin","lFactionName":"Corpus"},"Gokstad Crewship":{"faction":"Grineer","health":3000,"armor":300,"shield":0,"localeName":"高克斯塔战舰","lFactionName":"Grineer"},"Jackal":{"faction":"Corpus","health":1200,"armor":100,"shield":2000,"localeName":"豺狼","lFactionName":"Corpus","eximusOff":true},"Juggernaut":{"faction":"Infested","health":900,"armor":200,"shield":0,"localeName":"巨兽","lFactionName":"感染","eximusOff":true,"unique":"juggernaut","b_lvl":15},"Isolator Bursa":{"faction":"Corpus","health":1200,"armor":200,"shield":700,"localeName":"隔离金流恐鸟","lFactionName":"Corpus","eximusOff":true},"Jordas Golem":{"faction":"Infested","health":20000,"armor":250,"shield":0,"localeName":"Jordas魔像","lFactionName":"感染","eximusOff":true},"Juggernaut Behemoth":{"faction":"Infested","health":1500,"armor":300,"shield":0,"localeName":"重装巨兽","lFactionName":"感染","eximusOff":true,"unique":"juggernaut","b_lvl":15},"Kuva Guardian":{"faction":"Kuva Grineer","health":400,"armor":100,"shield":0,"localeName":"赤毒守卫者","lFactionName":"Kuva Grineer"},"Knave Specter":{"faction":"Orokin","health":1250,"armor":200,"shield":1000,"localeName":"无赖魅影","lFactionName":"Orokin"},"Juno Jactus Osprey":{"faction":"Corpus","health":100,"armor":0,"shield":50,"localeName":"朱诺延爆鱼鹰","lFactionName":"Corpus"},"Infested Mesa":{"faction":"Infested","health":1700,"armor":200,"shield":1000,"localeName":"Infested Mesa","lFactionName":"感染","eximusOff":true},"Juno Geminex MOA":{"faction":"Corpus","health":60,"armor":0,"shield":200,"localeName":"朱诺双子炮恐鸟","lFactionName":"Corpus"},"Kuva Lich":{"faction":"Kuva Grineer","health":1,"armor":1,"shield":1,"localeName":"赤毒玄骸","lFactionName":"Kuva Grineer","eximusOff":true,"unique":"lich"},"Juno Dera MOA":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"朱诺德拉恐鸟","lFactionName":"Corpus"},"Hyekka Master":{"faction":"Grineer","health":650,"armor":200,"shield":0,"localeName":"鬣猫驯兽师","lFactionName":"Grineer","unique":"hyekka","elemRes":{"heat":0.8}},"Kuva Hyekka Master":{"faction":"Kuva Grineer","health":650,"armor":200,"shield":0,"localeName":"Kuva Hyekka Master","lFactionName":"Kuva Grineer","unique":"hyekka","elemRes":{"heat":0.8}},"Infested Hive":{"faction":"Infested","health":4500,"armor":25,"shield":0,"localeName":"感染巢囊","lFactionName":"感染","eximusOff":true},"Kyta Raknoid":{"faction":"Corpus","health":4000,"armor":150,"shield":10000,"localeName":"凯塔蛛形机","lFactionName":"Corpus","innateDR":{"health":0,"armor":0,"shield":0.25},"immun":{"status":["viral","impact","magnetic"]},"eximusOff":true,"unique":"raknoid"},"Latrox Une":{"faction":"Corpus","health":450,"armor":0,"shield":250,"localeName":"拉托罗恩","lFactionName":"Corpus"},"Infested Chroma":{"faction":"Infested","health":2000,"armor":200,"shield":1000,"localeName":"Infested Chroma","lFactionName":"感染","eximusOff":true},"Leaper":{"faction":"Infested","health":100,"armor":0,"shield":0,"localeName":"奔跳者","lFactionName":"感染"},"Kuva Trokarian":{"faction":"Kuva Grineer","health":500,"armor":300,"shield":0,"localeName":"赤毒锐兵","lFactionName":"Kuva Grineer","b_lvl":15,"overguard":{"val":"2"}},"Lancing Infested Hive":{"faction":"Infested","health":4500,"armor":25,"shield":0,"localeName":"感染巢囊 重力","lFactionName":"感染"},"Kela De Thaym":{"faction":"Grineer","health":7250,"armor":250,"shield":1400,"localeName":"Kela De Thaym","lFactionName":"Grineer","eximusOff":true},"Manic":{"faction":"Grineer","health":350,"armor":25,"shield":0,"localeName":"狂躁Grineer","lFactionName":"Grineer"},"Leech Osprey":{"faction":"Corpus","health":100,"armor":0,"shield":50,"localeName":"吸血鱼鹰","lFactionName":"Corpus"},"Leaping Thrasher":{"faction":"Infested","health":600,"armor":0,"shield":0,"localeName":"鞭击奔跳者","lFactionName":"感染","immun":{"status":["viral"]},"eximusOff":true,"unique":"saxum"},"Mania":{"faction":"Stalker","health":5500,"armor":50,"shield":2500,"localeName":"躁狂","lFactionName":"Stalker","innateDR":{"health":0.625,"armor":0.625,"shield":0},"eximusOff":true,"unique":"acolytes","maxProcStacks":4},"Lobber Crawler":{"faction":"Infested","health":50,"armor":0,"shield":0,"localeName":"喷吐爬行者","lFactionName":"感染"},"Malice":{"faction":"Stalker","health":5500,"armor":50,"shield":2500,"localeName":"怨恨","lFactionName":"Stalker","innateDR":{"health":0.625,"armor":0.625,"shield":0},"eximusOff":true,"unique":"acolytes","maxProcStacks":4},"Lancer Dreg":{"faction":"Grineer","health":100,"armor":150,"shield":0,"localeName":"枪兵无人机","lFactionName":"Grineer"},"Juno Glaxion MOA":{"faction":"Corpus","health":60,"armor":0,"shield":300,"localeName":"朱诺冷冻光束步枪恐鸟","lFactionName":"Corpus"},"Lockjaw & Sol":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Lockjaw & Sol","lFactionName":"Corpus"},"M-W.A.M.":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"M-W.A.M.","lFactionName":"Corpus"},"Lephantis":{"faction":"Infested","health":3000,"armor":0,"shield":0,"localeName":"Lephantis","lFactionName":"感染","innateDR":{"health":0.6,"armor":0.6,"shield":0},"immun":{"status":["all"]},"eximusOff":true,"unique":"lephantis"},"Misery":{"faction":"Stalker","health":5500,"armor":50,"shield":2500,"localeName":"苦难","lFactionName":"Stalker","innateDR":{"health":0.625,"armor":0.625,"shield":0},"eximusOff":true,"unique":"acolytes","maxProcStacks":4},"Jad Teran":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Jad Teran","lFactionName":"Corpus"},"Mitosid":{"faction":"Infested","health":500,"armor":125,"shield":0,"localeName":"分裂体","lFactionName":"感染"},"Lynx":{"faction":"Corpus","health":1000,"armor":150,"shield":0,"localeName":"山猫","lFactionName":"Corpus"},"Mine Osprey":{"faction":"Corpus","health":100,"armor":0,"shield":50,"localeName":"地雷鱼鹰","lFactionName":"Corpus"},"Mimic":{"faction":"Sentient","health":800,"armor":125,"shield":0,"localeName":"拟态者","lFactionName":"Sentient","unique":"sentient"},"MOA":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"恐鸟","lFactionName":"Corpus"},"Minima MOA":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"微型恐鸟","lFactionName":"Corpus"},"Mutalist Alad V":{"faction":"Infested","health":2500,"armor":500,"shield":1200,"localeName":"Mutalist Alad V","lFactionName":"感染","eximusOff":true},"Mutalist Osprey":{"faction":"Infested","health":200,"armor":0,"shield":0,"localeName":"剧毒无人机","lFactionName":"感染"},"Jen Dro":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Jen Dro","lFactionName":"Corpus"},"Napalm":{"faction":"Grineer","health":600,"armor":500,"shield":0,"localeName":"火焰轰击者","lFactionName":"Grineer","b_lvl":6},"Kuva Napalm":{"faction":"Kuva Grineer","health":600,"armor":500,"shield":0,"localeName":"Kuva Napalm","lFactionName":"Kuva Grineer"},"Locust Drone":{"faction":"Corpus","health":10,"armor":50,"shield":0,"localeName":"蝗虫无人机","lFactionName":"Corpus"},"Lektro Commander":{"faction":"Grineer","health":300,"armor":750,"shield":0,"localeName":"Lektro指挥官","lFactionName":"Grineer"},"Mutalist Toxic Carrier":{"faction":"Infested","health":65,"armor":0,"shield":0,"localeName":"异融剧毒运送者","lFactionName":"感染"},"Narmer Bombard":{"faction":"Narmer","health":300,"armor":500,"shield":0,"localeName":"合一众轰击者","lFactionName":"合一众"},"Nako Xol":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Nako Xol","lFactionName":"Corpus"},"Manic Bombard":{"faction":"Grineer","health":1500,"armor":500,"shield":0,"localeName":"狂躁轰击者","lFactionName":"Grineer","b_lvl":4},"Narmer Heavy Gunner":{"faction":"Narmer","health":300,"armor":500,"shield":0,"localeName":"合一众重型机枪手","lFactionName":"合一众"},"Kuva Jester":{"faction":"Kuva Grineer","health":350,"armor":200,"shield":0,"localeName":"赤毒小丑","lFactionName":"Kuva Grineer","b_lvl":10},"Narmer Ballista":{"faction":"Narmer","health":100,"armor":100,"shield":0,"localeName":"合一众弩炮","lFactionName":"合一众"},"Narmer Dera MOA":{"faction":"Narmer","health":60,"armor":0,"shield":150,"localeName":"合一众德拉恐鸟","lFactionName":"合一众"},"Narmer Lancer":{"faction":"Narmer","health":100,"armor":100,"shield":0,"localeName":"合一众枪兵","lFactionName":"合一众"},"Maggot":{"faction":"Infested","health":20,"armor":0,"shield":0,"localeName":"蛆虫","lFactionName":"感染"},"Lynx Osprey":{"faction":"Corpus","health":35,"armor":0,"shield":50,"localeName":"山猫鱼鹰","lFactionName":"Corpus"},"Narmer Leech Osprey":{"faction":"Narmer","health":100,"armor":0,"shield":50,"localeName":"合一众吸血鱼鹰","lFactionName":"合一众"},"Narmer Napalm":{"faction":"Narmer","health":600,"armor":500,"shield":0,"localeName":"合一众火焰轰击者","lFactionName":"合一众"},"Narmer Powerfist":{"faction":"Narmer","health":100,"armor":5,"shield":0,"localeName":"合一众重击手","lFactionName":"合一众"},"Narmer Raknoid":{"faction":"Narmer","health":2000,"armor":200,"shield":5000,"localeName":"合一众蛛形机","lFactionName":"合一众"},"Necramech":{"faction":"Orokin","health":3000,"armor":400,"shield":1000,"localeName":"殁世机甲","lFactionName":"Orokin","eximusOff":true,"unique":"necramech","b_lvl":40},"Maroo":{"faction":"Neutral","health":50,"armor":20,"shield":500,"localeName":"Maroo","lFactionName":"Neutral"},"Narmer Jailer":{"faction":"Narmer","health":600,"armor":0,"shield":500,"localeName":"合一众典狱长","lFactionName":"合一众"},"Narmer Trooper":{"faction":"Narmer","health":120,"armor":150,"shield":0,"localeName":"合一众骑兵","lFactionName":"合一众"},"Nauseous Crawler":{"faction":"Infested","health":50,"armor":0,"shield":0,"localeName":"呕心爬行者","lFactionName":"感染"},"Nox":{"faction":"Grineer","health":350,"armor":500,"shield":0,"localeName":"毒化者","lFactionName":"Grineer"},"Nullifier Crewman":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"虚能船员","lFactionName":"Corpus","b_lvl":15},"Narmer Sniper Crewman":{"faction":"Narmer","health":60,"armor":0,"shield":150,"localeName":"合一众狙击手船员","lFactionName":"合一众"},"Narmer Detron Crewman":{"faction":"Narmer","health":60,"armor":0,"shield":150,"localeName":"合一众德特昂船员","lFactionName":"合一众"},"Optio":{"faction":"Corpus","health":250,"armor":0,"shield":100,"localeName":"永冻副官","lFactionName":"Corpus"},"Phorid":{"faction":" Infested","health":5000,"armor":25,"shield":0,"localeName":"Phorid","lFactionName":" Infested","eximusOff":true},"Lancer":{"faction":"Grineer","health":100,"armor":100,"shield":0,"localeName":"枪兵","lFactionName":"Grineer"},"Kuva Lancer":{"faction":"Kuva Grineer","health":100,"armor":100,"shield":0,"localeName":"赤毒枪兵","lFactionName":"Kuva Grineer"},"Narmer Nullifier Crewman":{"faction":"Narmer","health":60,"armor":0,"shield":150,"localeName":"合一众虚能船员","lFactionName":"合一众"},"Narmer Hellion":{"faction":"Narmer","health":100,"armor":100,"shield":0,"localeName":"合一众恶徒","lFactionName":"合一众"},"Narmer Corpus Tech":{"faction":"Narmer","health":700,"armor":0,"shield":250,"localeName":"合一众Corpus技师","lFactionName":"合一众"},"Oxium Osprey":{"faction":"Corpus","health":750,"armor":40,"shield":150,"localeName":"奥席金属鱼鹰","lFactionName":"Corpus","b_lvl":5},"Orphix":{"faction":"Sentient","health":8000,"armor":25,"shield":0,"localeName":"奥影母艇","lFactionName":"Sentient","immun":{"status":["all"]},"eximusOff":true,"unique":"orphix"},"Orokin Drone":{"faction":"Orokin","health":35,"armor":0,"shield":50,"localeName":"Orokin无人机","lFactionName":"Orokin"},"Narmer Mine Osprey":{"faction":"Narmer","health":100,"armor":0,"shield":50,"localeName":"合一众地雷鱼鹰","lFactionName":"合一众"},"Oculyst":{"faction":"Sentient","health":300,"armor":150,"shield":0,"localeName":"全视使","lFactionName":"Sentient","eximusOff":true,"unique":"sentient"},"Ortholyst":{"faction":"Sentient","health":600,"armor":125,"shield":0,"localeName":"直垂使","lFactionName":"Sentient","eximusOff":true,"unique":"sentient"},"Lieutenant Lech Kril":{"faction":"Grineer","health":4000,"armor":250,"shield":400,"localeName":"Lech Kril中尉","lFactionName":"Grineer","eximusOff":true},"Narmer Scorpion":{"faction":"Narmer","health":150,"armor":150,"shield":0,"localeName":"合一众天蝎","lFactionName":"合一众"},"Narmer Glaxion MOA":{"faction":"Narmer","health":60,"armor":0,"shield":300,"localeName":"合一众恐鸟冷冻光束步枪","lFactionName":"合一众"},"Pelna Cade":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Pelna Cade","lFactionName":"Corpus"},"Mutalist Lightning Carrier":{"faction":"Infested","health":65,"armor":0,"shield":0,"localeName":"异融电击运送者","lFactionName":"感染"},"Orbital Strike Drone":{"faction":"Grineer","health":300,"armor":25,"shield":0,"localeName":"卫星冲击无人机","lFactionName":"Grineer","immun":{"status":["impact","cold","electricity","heat","toxin","blast"]}},"Pilot":{"faction":"Corpus","health":1000,"armor":0,"shield":400,"localeName":"飞行员（敌人）","lFactionName":"Corpus"},"Outrider":{"faction":"Grineer","health":1000,"armor":300,"shield":0,"localeName":"先驱战机","lFactionName":"Grineer"},"Narmer Geminex MOA":{"faction":"Narmer","health":60,"armor":0,"shield":200,"localeName":"合一众恐鸟Geminex公司","lFactionName":"合一众"},"Narmer Disc MOA":{"faction":"Narmer","health":60,"armor":0,"shield":200,"localeName":"合一众圆盘恐鸟","lFactionName":"合一众"},"Narmer Thumper Doma":{"faction":"Narmer","health":15000,"armor":100,"shield":0,"localeName":"Narmer Thumper Doma","lFactionName":"合一众","eximusOff":true},"Narmer Crewman":{"faction":"Narmer","health":100,"armor":0,"shield":150,"localeName":"合一众船员","lFactionName":"合一众"},"Narmer Shield Osprey":{"faction":"Narmer","health":35,"armor":0,"shield":50,"localeName":"合一众护盾鱼鹰","lFactionName":"合一众"},"Plains Commander":{"faction":"Grineer","health":1200,"armor":250,"shield":0,"localeName":"平野指挥官","lFactionName":"Grineer","b_lvl":3},"Narmer Prod Crewman":{"faction":"Narmer","health":100,"armor":0,"shield":50,"localeName":"合一众监工船员","lFactionName":"合一众"},"Machinist":{"faction":"Corpus","health":100,"armor":0,"shield":230,"localeName":"机械师","lFactionName":"Corpus"},"Narmer Scorch":{"faction":"Narmer","health":120,"armor":100,"shield":0,"localeName":"合一众怒焚者","lFactionName":"合一众"},"Numon":{"faction":"Corpus","health":750,"armor":0,"shield":450,"localeName":"撕裂者","lFactionName":"Corpus","unique":"empyrean-corpus"},"Latcher":{"faction":"Grineer","health":10,"armor":100,"shield":0,"localeName":"粘子","lFactionName":"Grineer"},"Narmer Deacon":{"faction":"","health":-1,"armor":-1,"shield":0,"localeName":"合一众执事","lFactionName":""},"Narmer Commander":{"faction":"Narmer","health":3500,"armor":250,"shield":0,"localeName":"合一众指挥官","lFactionName":"合一众"},"Penta Ranger":{"faction":"Corpus","health":100,"armor":0,"shield":100,"localeName":"潘塔突击队员","lFactionName":"Corpus"},"Orokin Spectator":{"faction":"Orokin","health":300,"armor":0,"shield":50,"localeName":"Orokin Spectator","lFactionName":"Orokin"},"Narmer Sapping Osprey":{"faction":"Narmer","health":200,"armor":0,"shield":50,"localeName":"合一众基蚀鱼鹰","lFactionName":"合一众"},"Ogma":{"faction":"Grineer","health":600,"armor":500,"shield":0,"localeName":"欧格玛","lFactionName":"Grineer"},"Narmer Shield Lancer":{"faction":"Narmer","health":100,"armor":5,"shield":0,"localeName":"合一众盾枪兵","lFactionName":"合一众"},"Orphid Specter":{"faction":"Orokin","health":1500,"armor":200,"shield":1000,"localeName":"兰花魅影","lFactionName":"Orokin"},"Narmer Flameblade":{"faction":"Narmer","health":50,"armor":5,"shield":0,"localeName":"合一众烈焰刀客","lFactionName":"合一众"},"Nemes":{"faction":"Corpus","health":750,"armor":0,"shield":150,"localeName":"自爆机","lFactionName":"Corpus"},"Nullifier Target":{"faction":"Corpus","health":800,"armor":0,"shield":250,"localeName":"Corpus虚能捕捉目标","lFactionName":"Corpus"},"Profit-Taker Orb":{"faction":"Corpus","health":7000,"armor":150,"shield":30000,"localeName":"利润收割者圆蛛","lFactionName":"Corpus","innateDR":{"health":0,"armor":0,"shield":0.5},"immun":{"status":["all"]},"eximusOff":true},"Pulsing Infested Hive":{"faction":"Infested","health":4500,"armor":25,"shield":0,"localeName":"感染巢囊 脉冲","lFactionName":"感染"},"Prod Crewman":{"faction":"Corpus","health":100,"armor":0,"shield":50,"localeName":"Prod Crewman","lFactionName":"Corpus"},"Protea Specter":{"faction":"Corpus","health":125,"armor":200,"shield":1000,"localeName":"Protea魅影","lFactionName":"Corpus","eximusOff":true},"Propaganda Drone":{"faction":"Grineer","health":200,"armor":25,"shield":0,"localeName":"宣传无人机","lFactionName":"Grineer"},"Pyr Captain":{"faction":"Grineer","health":300,"armor":750,"shield":0,"localeName":"Pyr舰长","lFactionName":"Grineer"},"Powerfist":{"faction":"Grineer","health":100,"armor":5,"shield":0,"localeName":"重击手","lFactionName":"Grineer"},"Kuva Powerfist":{"faction":"Kuva Grineer","health":100,"armor":5,"shield":0,"localeName":"Kuva Powerfist","lFactionName":"Kuva Grineer"},"ProdCrewman2":{"faction":"Corpus","health":100,"armor":0,"shield":50,"localeName":"监工船员2","lFactionName":"Corpus"},"Railgun MOA":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"磁轨炮恐鸟","lFactionName":"Corpus","immun":{"status":["heat"]}},"Vapos Railgun MOA":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"气雾磁轨炮恐鸟","lFactionName":"Corpus","immun":{"status":["heat"]}},"Taro Railgun MOA":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"泰洛磁轨炮恐鸟","lFactionName":"Corpus","immun":{"status":["heat"]}},"Rabbleback Hyena":{"faction":"Corpus","health":800,"armor":25,"shield":500,"localeName":"烈背鬣狗","lFactionName":"Corpus"},"Ramsled":{"faction":"Grineer","health":250,"armor":175,"shield":0,"localeName":"冲锋艇","lFactionName":"Grineer"},"Raider Carver":{"faction":"Grineer","health":500,"armor":200,"shield":0,"localeName":"强袭切割者","lFactionName":"Grineer"},"Rana Del":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Rana Del","lFactionName":"Corpus"},"Ranger":{"faction":"Corpus","health":100,"armor":0,"shield":100,"localeName":"突击队员","lFactionName":"Corpus"},"Raider Eviscerator":{"faction":"Grineer","health":500,"armor":200,"shield":0,"localeName":"强袭开膛者","lFactionName":"Grineer"},"Raider":{"faction":"Grineer","health":500,"armor":200,"shield":0,"localeName":"强袭者","lFactionName":"Grineer"},"Ranger Crewman":{"faction":"Corpus","health":1000,"armor":0,"shield":800,"localeName":"突击船员","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Raptors":{"faction":"Corpus","health":2000,"armor":25,"shield":600,"localeName":"猛禽","lFactionName":"Corpus"},"Razorback":{"faction":"Corpus","health":6000,"armor":100,"shield":2000,"localeName":"利刃豺狼","lFactionName":"Corpus"},"Ratel":{"faction":"Corpus","health":10,"armor":0,"shield":30,"localeName":"蜜獾","lFactionName":"Corpus"},"Quanta Ranger":{"faction":"Corpus","health":100,"armor":0,"shield":100,"localeName":"量子切割器突击队员","lFactionName":"Corpus"},"Raptor RX":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"猛禽RX","lFactionName":"Corpus","eximusOff":true},"Regulator":{"faction":"Grineer","health":120,"armor":200,"shield":0,"localeName":"调整者","lFactionName":"Grineer"},"Recon Commander":{"faction":"Grineer","health":1200,"armor":250,"shield":0,"localeName":"侦察指挥官","lFactionName":"Grineer"},"Remech Osprey":{"faction":"Corpus","health":250,"armor":50,"shield":200,"localeName":"再启动鱼鹰","lFactionName":"Corpus","immun":{"status":["impact"]}},"Ropalolyst":{"faction":" Sentient","health":5000,"armor":200,"shield":2000,"localeName":"蝠力使","lFactionName":" Sentient","eximusOff":true,"unique":"sentient","b_lvl":17},"Roller":{"faction":"Grineer","health":40,"armor":100,"shield":0,"localeName":"滚子","lFactionName":"Grineer","b_lvl":12},"Kuva Roller":{"faction":"Kuva Grineer","health":40,"armor":100,"shield":0,"localeName":"Kuva Roller","lFactionName":"Kuva Grineer","b_lvl":10},"Saturn Six Fugitive":{"faction":"Unaffiliated","health":800,"armor":300,"shield":0,"localeName":"土星六号逃犯","lFactionName":"Unaffiliated"},"Sapping Osprey":{"faction":"Corpus","health":200,"armor":0,"shield":50,"localeName":"基蚀鱼鹰","lFactionName":"Corpus"},"Scavenger Drone":{"faction":"Corpus","health":100,"armor":0,"shield":50,"localeName":"清道夫无人机","lFactionName":"Corpus"},"Scorpion":{"faction":"Grineer","health":150,"armor":150,"shield":0,"localeName":"天蝎","lFactionName":"Grineer","b_lvl":10},"Kuva Scorpion":{"faction":"Kuva Grineer","health":150,"armor":150,"shield":0,"localeName":"Kuva Scorpion","lFactionName":"Kuva Grineer"},"Scrambus":{"faction":"Corpus","health":1100,"armor":0,"shield":400,"localeName":"扰敌员","lFactionName":"Corpus"},"Scyto Raknoid":{"faction":"Corpus","health":5000,"armor":200,"shield":0,"localeName":"赛托蛛形机","lFactionName":"Corpus","innateDR":{"health":0.5,"armor":0.5,"shield":0.5},"immun":{"status":["impact"]},"eximusOff":true,"unique":"raknoid"},"Roller Sentry":{"faction":"Grineer","health":200,"armor":100,"shield":0,"localeName":"滚子哨兵","lFactionName":"Grineer"},"Security Infested Hive":{"faction":"Infested","health":4500,"armor":25,"shield":0,"localeName":"感染巢囊 安保","lFactionName":"感染"},"Runner":{"faction":"Infested","health":100,"armor":0,"shield":0,"localeName":"狂奔者","lFactionName":"感染"},"Sentient Research Director":{"faction":"Corpus","health":1750,"armor":100,"shield":1200,"localeName":"Sentient 研究主管","lFactionName":"Corpus"},"Shadow Stalker":{"faction":"Stalker","health":950,"armor":300,"shield":200,"localeName":"Shadow Stalker","lFactionName":"Stalker","eximusOff":true,"unique":"stalker"},"Scorch":{"faction":"Grineer","health":120,"armor":100,"shield":0,"localeName":"灼痕焦点","lFactionName":"Grineer"},"Kuva Scorch":{"faction":"Kuva Grineer","health":120,"armor":100,"shield":0,"localeName":"Kuva Scorch","lFactionName":"Kuva Grineer"},"Shield Lancer":{"faction":"Grineer","health":40,"armor":5,"shield":0,"localeName":"盾枪兵","lFactionName":"Grineer"},"Kuva Shield Lancer":{"faction":"Kuva Grineer","health":40,"armor":5,"shield":0,"localeName":"Kuva Shield Lancer","lFactionName":"Kuva Grineer","b_lvl":1},"Seeker":{"faction":"Grineer","health":100,"armor":200,"shield":0,"localeName":"弹头导引","lFactionName":"Grineer"},"Kuva Seeker":{"faction":"Kuva Grineer","health":100,"armor":200,"shield":0,"localeName":"Kuva Seeker","lFactionName":"Kuva Grineer"},"Shield Osprey":{"faction":"Corpus","health":35,"armor":0,"shield":50,"localeName":"护盾鱼鹰","lFactionName":"Corpus"},"Shield Dargyn":{"faction":"Grineer","health":100,"armor":200,"shield":0,"localeName":"护盾轻型艇","lFactionName":"Grineer"},"Shockwave MOA":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"震荡恐鸟","lFactionName":"Corpus","immun":{"status":["heat"]}},"Sikula":{"faction":"Grineer","health":100,"armor":50,"shield":50,"localeName":"水雷无人机","lFactionName":"Grineer"},"Sisters of Parvos":{"faction":"Corpus","health":1,"armor":1,"shield":1,"localeName":"帕尔沃斯的姐妹们","lFactionName":"Corpus","eximusOff":true,"unique":"sister"},"Shock Draga":{"faction":"Grineer","health":150,"armor":10,"shield":0,"localeName":"电击疏浚兵","lFactionName":"Grineer"},"Spark":{"faction":"Grineer","health":300,"armor":500,"shield":0,"localeName":"火花","lFactionName":"Grineer"},"Specter (Enemy)":{"faction":"Tenno","health":200,"armor":20,"shield":80,"localeName":"魅影（敌方）","lFactionName":"Tenno"},"Stalker":{"faction":"Stalker","health":750,"armor":300,"shield":200,"localeName":"Stalker","lFactionName":"Stalker","eximusOff":true},"Shield-Hellion Dargyn":{"faction":"Grineer","health":300,"armor":200,"shield":0,"localeName":"护盾恶徒轻型艇","lFactionName":"Grineer"},"Ven'kra Tel":{"faction":"Grineer","health":400,"armor":150,"shield":0,"localeName":"Ven'kra Tel","lFactionName":"Grineer","eximusOff":true},"Stropha Crewman":{"faction":"Corpus","health":600,"armor":0,"shield":50,"localeName":"诡计之刃船员","lFactionName":"Corpus"},"Symbilyst":{"faction":"Sentient","health":1000,"armor":300,"shield":0,"localeName":"共生使","lFactionName":"Sentient","eximusOff":true,"unique":"sentient","b_lvl":10},"Stabilization Infested Hive":{"faction":"Infested","health":4500,"armor":25,"shield":0,"localeName":"感染巢囊 重力","lFactionName":"感染"},"Supressor":{"faction":"Grineer","health":300,"armor":200,"shield":0,"localeName":"怒焚镇压者","lFactionName":"Grineer"},"Summulyst":{"faction":"Sentient","health":3000,"armor":200,"shield":5000,"localeName":"召唤使","lFactionName":"Sentient","eximusOff":true,"unique":"sentient"},"Taktis":{"faction":"Grineer","health":150,"armor":125,"shield":0,"localeName":"战术战机","lFactionName":"Grineer"},"Taro Secura Osprey":{"faction":"Corpus","health":250,"armor":0,"shield":75,"localeName":"保障鱼鹰","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Tarask Bursa":{"faction":"Corpus","health":1200,"armor":0,"shield":800,"localeName":"穷凶金流恐鸟","lFactionName":"Corpus","eximusOff":true,"unique":"bursa"},"Swarm Mutalist MOA":{"faction":"Infested","health":350,"armor":0,"shield":0,"localeName":"异融胞群恐鸟","lFactionName":"感染","b_lvl":12},"Tusk Heavy Gunner":{"faction":"Grineer","health":300,"armor":500,"shield":0,"localeName":"巨牙重型机枪手","lFactionName":"Grineer"},"Tech":{"faction":"Corpus","health":700,"armor":0,"shield":250,"localeName":"Corpus技师","lFactionName":"Corpus"},"Temporal Dreg":{"faction":"Grineer","health":100,"armor":150,"shield":0,"localeName":"滞缓无人机","lFactionName":"Grineer"},"Terra Crewman":{"faction":"Corpus","health":100,"armor":0,"shield":200,"localeName":"大地船员","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Terra Manker":{"faction":"Corpus","health":900,"armor":25,"shield":800,"localeName":"大地残害者","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Terra Raptor SX":{"faction":"Corpus","health":750,"armor":50,"shield":1000,"localeName":"大地猛禽Sx","lFactionName":"Corpus"},"The Grustrag Three":{"faction":"Grineer","health":1700,"armor":200,"shield":0,"localeName":"Grustrag三霸","lFactionName":"Grineer","eximusOff":true},"Terra Overtaker":{"faction":"Corpus","health":400,"armor":0,"shield":250,"localeName":"大地掷弹者","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Terra Jailer":{"faction":"Corpus","health":600,"armor":0,"shield":500,"localeName":"大地狱吏","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Sniper Crewman":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"狙击手船员","lFactionName":"Corpus","b_lvl":15},"The Grustrag Three/Leekter":{"faction":"","health":1700,"armor":200,"shield":0,"localeName":"Leekter","lFactionName":"","eximusOff":true},"The Grustrag Three/Shik Tal":{"faction":"","health":1700,"armor":200,"shield":0,"localeName":"Shik Tal","lFactionName":"","eximusOff":true},"Terra Trencher":{"faction":"Corpus","health":450,"armor":0,"shield":300,"localeName":"大地掘沟者","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"The Sergeant":{"faction":"Corpus","health":500,"armor":150,"shield":1000,"localeName":"海军陆战队中士","lFactionName":"Corpus","eximusOff":true},"Thrax Legatus":{"faction":"UNKNOWN","health":3200,"armor":200,"shield":0,"localeName":"凶魂副将","lFactionName":"野生","eximusOff":true,"overguard":{"val":"10"}},"Toxic Crawler":{"faction":"Infested","health":50,"armor":0,"shield":0,"localeName":"剧毒爬行者","lFactionName":"感染"},"Tia Mayn":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Tia Mayn","lFactionName":"Corpus"},"Tomb Protector Effigy":{"faction":"Neutral","health":5500,"armor":250,"shield":0,"localeName":"古墓捍卫者雕像","lFactionName":"Neutral"},"Terra Plasmor Crewman":{"faction":"Corpus","health":60,"armor":0,"shield":200,"localeName":"大地离子枪船员","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"The Grustrag Three/Vem Tabook":{"faction":"","health":1700,"armor":200,"shield":0,"localeName":"Vem Tabook","lFactionName":"","eximusOff":true},"Toxic Ancient":{"faction":"Infested","health":400,"armor":0,"shield":0,"localeName":"远古剧毒者","lFactionName":"感染"},"Tomb Guardian":{"faction":"Neutral","health":1700,"armor":150,"shield":0,"localeName":"古墓保卫者","lFactionName":"Neutral","immun":{"status":["slash"]}},"Tusk Thumper Doma":{"faction":"Grineer","health":15000,"armor":100,"shield":0,"localeName":"巨牙重击者朵玛","lFactionName":"Grineer","immun":{"status":["all"]},"eximusOff":true,"unique":"tusk-thumper"},"Undying Flyer":{"faction":"Infested","health":400,"armor":0,"shield":0,"localeName":"不死飞行者","lFactionName":"感染"},"Tusk Seeker Drone":{"faction":"Grineer","health":250,"armor":100,"shield":0,"localeName":"巨牙追踪者无人机","lFactionName":"Grineer"},"Tusk Firbolg":{"faction":"Grineer","health":8000,"armor":600,"shield":0,"localeName":"巨牙博格","lFactionName":"Grineer"},"Tusk Bolkor":{"faction":"Grineer","health":10000,"armor":600,"shield":0,"localeName":"巨牙博寇","lFactionName":"Grineer"},"Tomb Protector":{"faction":"Neutral","health":8000,"armor":250,"shield":0,"localeName":"古墓捍卫者","lFactionName":"Neutral"},"Tusk Thumper":{"faction":"Grineer","health":9000,"armor":100,"shield":0,"localeName":"巨牙重击者","lFactionName":"Grineer","immun":{"status":["all"]},"eximusOff":true,"unique":"tusk-thumper"},"Terra Provisor":{"faction":"Corpus","health":300,"armor":0,"shield":450,"localeName":"大地采办者","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Vapos Detron Crewman":{"faction":"Corpus","health":60,"armor":0,"shield":150,"localeName":"气雾德特昂船员","lFactionName":"Corpus"},"Terra Embattor MOA":{"faction":"Corpus","health":600,"armor":0,"shield":600,"localeName":"大地布阵恐鸟","lFactionName":"Corpus"},"Ved Xol":{"faction":"Corpus","health":1000,"armor":50,"shield":2500,"localeName":"Ved Xol","lFactionName":"Corpus"},"Vapos Sniper Ranger":{"faction":"Corpus","health":60,"armor":0,"shield":450,"localeName":"气雾狙击手突击队员","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Weaver":{"faction":"Corpus","health":100,"armor":75,"shield":150,"localeName":"旋织战机","lFactionName":"Corpus"},"Vapos Detron Ranger":{"faction":"Corpus","health":60,"armor":0,"shield":450,"localeName":"气雾德特昂突击队员","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Vapos Tech Ranger":{"faction":"Corpus","health":80,"armor":0,"shield":450,"localeName":"气雾技师突击队员","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Volatile Runner":{"faction":"Infested","health":80,"armor":0,"shield":0,"localeName":"爆炸奔跑者","lFactionName":"感染"},"Ven":{"faction":"Grineer","health":400,"armor":150,"shield":0,"localeName":"Ven","lFactionName":"Grineer"},"Zealot Proselytizer":{"faction":"Infestation","health":1200,"armor":200,"shield":0,"localeName":"狂热劝导者","lFactionName":"Infestation"},"Venin Mutalist":{"faction":"Infested","health":200,"armor":0,"shield":0,"localeName":"蛇毒异融体","lFactionName":"感染"},"Zanuka":{"faction":"Corpus","health":1000,"armor":25,"shield":15000,"localeName":"Zanuka","lFactionName":"Corpus","eximusOff":true},"Zealot Herald":{"faction":"Infestation","health":1000,"armor":200,"shield":0,"localeName":"狂热传令者","lFactionName":"Infestation"},"Zealot Baptizer":{"faction":"Infested","health":1200,"armor":100,"shield":0,"localeName":"狂热施洗者","lFactionName":"感染"},"Zerca":{"faction":"Corpus","health":750,"armor":0,"shield":450,"localeName":"狂暴者","lFactionName":"Corpus","unique":"empyrean-corpus"},"Vambac":{"faction":"Corpus","health":750,"armor":0,"shield":450,"localeName":"威击者","lFactionName":"Corpus","unique":"empyrean-corpus"},"Tar Mutalist MOA":{"faction":"Infested","health":350,"armor":0,"shield":0,"localeName":"异融焦油恐鸟","lFactionName":"感染"},"Vivisect Director":{"faction":"Corpus","health":1750,"armor":100,"shield":1200,"localeName":"活体解剖主管","lFactionName":"Corpus"},"Vapos Elite Ranger":{"faction":"Corpus","health":80,"armor":0,"shield":450,"localeName":"气雾精英突击队员","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Fire Prosecutor":{"faction":"Grineer","health":1500,"armor":5,"shield":0,"localeName":"火焰判官","lFactionName":"Grineer","immun":{"status":["heat"]},"unique":"prosecutor"},"Zealoid Prelate":{"faction":"Infested","health":9000,"armor":0,"shield":0,"localeName":"狂热主教","lFactionName":"感染","eximusOff":true,"unique":"prelate","maxProcStacks":10},"Zeplen":{"faction":"Grineer","health":400,"armor":2750,"shield":0,"localeName":"齐柏伦飞船","lFactionName":"Grineer"},"Void Angel":{"faction":"UNKNOWN","health":25000,"armor":350,"shield":100,"localeName":"虚空天使","lFactionName":"野生","eximusOff":true,"maxProcStacks":4},"Torment":{"faction":"Stalker","health":5500,"armor":50,"shield":2500,"localeName":"折磨","lFactionName":"Stalker","innateDR":{"health":0.625,"armor":0.625,"shield":0},"eximusOff":true,"unique":"acolytes","maxProcStacks":4},"Treasurer":{"faction":"Corpus","health":2500,"armor":0,"shield":150,"localeName":"司库","lFactionName":"Corpus","innateDR":{"health":0.98,"armor":0,"shield":0.99},"eximusOff":true,"unique":"treasurer"},"Vapos Nullifier Ranger":{"faction":"Corpus","health":80,"armor":0,"shield":450,"localeName":"气雾虚能突击队员","lFactionName":"Corpus","unique":"crewmans-rangers","elemRes":{"cold":0.75,"blast":0.75,"magnetic":0.75,"viral":0.75}},"Tusk Command Dargyn":{"faction":"Grineer","health":800,"armor":125,"shield":0,"localeName":"巨牙指挥轻型艇","lFactionName":"Grineer"},"Tusk Thumper Bull":{"faction":"Grineer","health":12000,"armor":100,"shield":0,"localeName":"巨牙重击者","lFactionName":"Grineer","immun":{"status":["all"]},"eximusOff":true,"unique":"tusk-thumper"},"Vapos Aquila":{"faction":"Corpus","health":1000,"armor":50,"shield":100,"localeName":"气雾天鹰","lFactionName":"Corpus"},"Thrax Centurion":{"faction":"UNKNOWN","health":3600,"armor":200,"shield":0,"localeName":"凶魂百夫长","lFactionName":"野生","eximusOff":true,"overguard":{"val":"15"}},"Tyl Regor":{"faction":"Grineer","health":3000,"armor":250,"shield":800,"localeName":"Tyl Regor","lFactionName":"Grineer","eximusOff":true},"Zealoid Bastion":{"faction":"Infested","health":950,"armor":0,"shield":0,"localeName":"狂热护卫","lFactionName":"感染"},"Trooper":{"faction":"Grineer","health":120,"armor":150,"shield":0,"localeName":"骑兵","lFactionName":"Grineer"},"Kuva Trooper":{"faction":"Kuva Grineer","health":120,"armor":150,"shield":0,"localeName":"Kuva Trooper","lFactionName":"Kuva Grineer"},"Violence":{"faction":"Stalker","health":5500,"armor":50,"shield":2500,"localeName":"暴力","lFactionName":"Stalker","innateDR":{"health":0.625,"armor":0.625,"shield":0},"eximusOff":true,"unique":"acolytes","maxProcStacks":4},"Wolf of Saturn Six":{"faction":"Unaffiliated","health":1500,"armor":200,"shield":0,"localeName":"土星六号之狼","lFactionName":"Unaffiliated","immun":{"status":["all"]},"eximusOff":true},"Zanuka Hunter":{"faction":"Corpus","health":600,"armor":25,"shield":1000,"localeName":"Zanuka猎犬","lFactionName":"Corpus"},"The Fragmented Suzerain":{"faction":"Murmur","health":50000,"armor":0,"shield":0,"localeName":"接肢宗主","lFactionName":"低语者","immun":{"status":["viral","cold"]},"eximusOff":true,"unique":"suzerain"},"The Anatomizer":{"faction":"Murmur","health":6000,"armor":0,"shield":0,"localeName":"断肢解构者","lFactionName":"低语者","b_lvl":10},"The Hollow Vein":{"faction":"Murmur","health":7500,"armor":0,"shield":0,"localeName":"断肢空脉","lFactionName":"低语者"},"Rogue Culverin":{"faction":"Murmur","health":500,"armor":175,"shield":0,"localeName":"暴戾重型炮兵","lFactionName":"低语者"},"Demolisher Voidrig":{"faction":"Murmur","health":4500,"armor":100,"shield":0,"localeName":"爆破虚空锐将","lFactionName":"低语者","eximusOff":true,"unique":"demolisherNecramech","maxProcStacks":4,"showPartyCount":true},"H-09 Efervon Tank":{"faction":"Scaldra","health":18000,"armor":100,"shield":0,"localeName":"H-09 Efervon Tank","lFactionName":"炽蛇军","eximusOff":true,"unique":"efervonTank","maxProcStacks":4},"Scaldra Jaeger":{"faction":"Scaldra","health":125,"armor":100,"shield":0,"localeName":"Scaldra Jaeger","lFactionName":"炽蛇军"},"Scaldra Flayer":{"faction":"Scaldra","health":50,"armor":10,"shield":0,"localeName":"Scaldra Flayer","lFactionName":"炽蛇军"},"Scaldra Barbican":{"faction":"Scaldra","health":125,"armor":100,"shield":0,"localeName":"Scaldra Barbican","lFactionName":"炽蛇军"},"Scaldra Eradicator":{"faction":"Scaldra","health":325,"armor":500,"shield":0,"localeName":"Scaldra Eradicator","lFactionName":"炽蛇军"},"Scaldra Dedicant":{"faction":"Scaldra","health":2000,"armor":500,"shield":0,"localeName":"Scaldra Dedicant","lFactionName":"炽蛇军","unique":"dedicant","overguard":{"val":"22"}},"Techrot Galliflex":{"faction":"Techrot","health":100,"armor":0,"shield":100,"localeName":"Techrot Galliflex","lFactionName":"科腐者"},"Techrot Volatile Galliflex":{"faction":"Techrot","health":80,"armor":0,"shield":50,"localeName":"Techrot Volatile Galliflex","lFactionName":"科腐者"},"Techrot Matmas":{"faction":"Techrot","health":300,"armor":0,"shield":150,"localeName":"Techrot Matmas","lFactionName":"科腐者"},"Techrot Skuzzi":{"faction":"Techrot","health":225,"armor":0,"shield":125,"localeName":"Techrot Skuzzi","lFactionName":"科腐者"},"Techrot Obsolyte":{"faction":"Techrot","health":400,"armor":0,"shield":200,"localeName":"Techrot Obsolyte","lFactionName":"科腐者","unique":"obsolyte"},"Techrot Babau":{"faction":"Techrot","health":10000,"armor":0,"shield":500,"localeName":"Techrot Babau","lFactionName":"科腐者","immun":{"status":["toxin","viral"]},"unique":"babau"},"Anarch Arcus":{"faction":"Anarchs","health":100,"armor":200,"shield":0,"localeName":"Anarch Arcus","lFactionName":"自由派"},"Anarch Gladius":{"faction":"Anarchs","health":175,"armor":200,"shield":0,"localeName":"Anarch Gladius","lFactionName":"自由派"},"Anarch Grineer Lancer":{"faction":"Anarchs","health":125,"armor":200,"shield":0,"localeName":"Anarch Grineer Lancer","lFactionName":"自由派"},"Anarch Grineer Trapper":{"faction":"Anarchs","health":100,"armor":200,"shield":0,"localeName":"Anarch Grineer Trapper","lFactionName":"自由派"},"Anarch Libritor":{"faction":"Anarchs","health":325,"armor":200,"shield":0,"localeName":"Anarch Libritor","lFactionName":"自由派"},"Anarch Capsarii":{"faction":"Anarchs","health":75,"armor":200,"shield":0,"localeName":"Anarch Capsarii","lFactionName":"自由派"},"Anarch Tenebra":{"faction":"Anarchs","health":100,"armor":200,"shield":0,"localeName":"Anarch Tenebra","lFactionName":"自由派"}},
 
   // === MOD 中文名映射 ===
@@ -5295,15 +5295,33 @@ const GameData = {
     const baseLevel = 1;
     const delta = Math.max(0, level - baseLevel);
     const smoothstep = t => t * t * (3 - 2 * t);
-    const scaleCurve = (d, c1, e1, c2, e2, lo, hi) => {
-      const f1 = 1 + c1 * Math.pow(d, e1);
-      const f2 = 1 + c2 * Math.pow(d, e2);
-      const t = Math.min(1, Math.max(0, (d - lo) / (hi - lo)));
-      return f1 * (1 - smoothstep(t)) + f2 * smoothstep(t);
-    };
-    const healthScale = scaleCurve(delta, 0.015, 2.12, 10.7332, 0.72, 70, 80);
-    const armorScale = scaleCurve(delta, 0.005, 1.75, 0.4, 0.75, 70, 80);
-    const shieldScale = scaleCurve(delta, 0.02, 1.76, 2.0, 0.76, 70, 80);
+    
+    // 阵营专属缩放曲线
+    const faction = enemy.faction || 'Unknown';
+    let healthScale, armorScale, shieldScale;
+    
+    // 根据阵营选择不同的缩放参数
+    if (faction === 'Grineer' || faction === 'Kuva Grineer') {
+      // Grineer: 高护甲缩放
+      healthScale = this.scaleCurve(delta, 0.015, 2.12, 10.7332, 0.72, 70, 80);
+      armorScale = this.scaleCurve(delta, 0.02, 1.75, 0.4, 0.75, 70, 80);
+      shieldScale = this.scaleCurve(delta, 0.02, 1.76, 2.0, 0.76, 70, 80);
+    } else if (faction === 'Corpus') {
+      // Corpus: 高护盾缩放
+      healthScale = this.scaleCurve(delta, 0.015, 2.12, 10.7332, 0.72, 70, 80);
+      armorScale = this.scaleCurve(delta, 0.02, 1.76, 0.4, 0.75, 70, 80);
+      shieldScale = this.scaleCurve(delta, 0.02, 1.76, 2.0, 0.76, 70, 80);
+    } else if (faction === 'Infested' || faction === 'Infested Deimos') {
+      // Infested: 高生命值缩放
+      healthScale = this.scaleCurve(delta, 0.0225, 2.12, 10.7332, 0.72, 70, 80);
+      armorScale = this.scaleCurve(delta, 0.005, 1.75, 0.4, 0.75, 70, 80);
+      shieldScale = this.scaleCurve(delta, 0.02, 1.76, 2.0, 0.76, 70, 80);
+    } else {
+      // 默认缩放（Orokin, Sentient, Murmur 等）
+      healthScale = this.scaleCurve(delta, 0.015, 2.12, 10.7332, 0.72, 70, 80);
+      armorScale = this.scaleCurve(delta, 0.005, 1.75, 0.4, 0.75, 70, 80);
+      shieldScale = this.scaleCurve(delta, 0.02, 1.76, 2.0, 0.76, 70, 80);
+    }
 
     let finalArmor = enemy.armor > 0
       ? Math.min(this.ARMOR_CAP, Math.floor(enemy.armor * armorScale))
@@ -5311,19 +5329,1249 @@ const GameData = {
     let finalHealth = Math.floor(enemy.health * healthScale);
     let finalShield = Math.floor(enemy.shield * shieldScale);
 
+    // 钢铁之路加成
     if (steelPath) {
       finalHealth = Math.floor(finalHealth * 2.5);
       finalShield = Math.floor(finalShield * 2.5);
       finalArmor = Math.floor(finalArmor * 2.5);
     }
 
+    // 卓越者特殊缩放（不是简单的2.5x）
     if (eximus) {
-      finalHealth = Math.floor(finalHealth * 2.5);
-      finalShield = Math.floor(finalShield * 2.5);
-      finalArmor = Math.floor(finalArmor * 2.5);
+      // 卓越者护甲缩放（分段函数）
+      const eximusArmorScale = this.enemyEximusArmor(level);
+      finalArmor = Math.floor(enemy.armor * eximusArmorScale);
+      
+      // 卓越者生命值缩放（分段函数）
+      const eximusHealthScale = this.enemyEximusHealth(level);
+      finalHealth = Math.floor(enemy.health * eximusHealthScale);
+      
+      // 卓越者护盾缩放
+      const eximusShieldScale = this.enemyEximusShields(level);
+      finalShield = Math.floor(enemy.shield * eximusShieldScale);
+      
+      // 钢铁之路卓越者额外加成
+      if (steelPath) {
+        finalHealth = Math.floor(finalHealth * 2.5);
+        finalShield = Math.floor(finalShield * 2.5);
+        finalArmor = Math.floor(finalArmor * 2.5);
+      }
     }
 
     return { ...enemy, health: finalHealth, armor: finalArmor, shield: finalShield, currentLevel: level };
+  },
+
+  scaleCurve(d, c1, e1, c2, e2, lo, hi) {
+    const smoothstep = t => t * t * (3 - 2 * t);
+    const f1 = 1 + c1 * Math.pow(d, e1);
+    const f2 = 1 + c2 * Math.pow(d, e2);
+    const t = Math.min(1, Math.max(0, (d - lo) / (hi - lo)));
+    return f1 * (1 - smoothstep(t)) + f2 * smoothstep(t);
+  },
+
+  enemyEximusArmor(level) {
+    const baseLevel = 1;
+    const delta = Math.max(0, level - baseLevel);
+    
+    if (level >= 100) {
+      return 1.625 * (1 + 0.02 * Math.pow(delta, 1.75));
+    }
+    
+    if (level < 45) {
+      return 1 + 0.02 * Math.pow(delta, 1.75);
+    }
+    
+    if (level >= 45 && level <= 50) {
+      return 1 + 0.02 * Math.pow(delta, 1.75);
+    }
+    
+    // 45-100级平滑过渡
+    const t = Math.min(1, Math.max(0, (delta - 45) / 55));
+    const low = 1 + 0.02 * Math.pow(delta, 1.75);
+    const high = 1.625 * (1 + 0.02 * Math.pow(delta, 1.75));
+    const smoothstep = t => t * t * (3 - 2 * t);
+    return low * (1 - smoothstep(t)) + high * smoothstep(t);
+  },
+
+  enemyEximusHealth(level) {
+    const baseLevel = 1;
+    const delta = Math.max(0, level - baseLevel);
+    
+    if (level >= 100) {
+      return 6 * (1 + 0.015 * Math.pow(delta, 2.12));
+    }
+    
+    if (level < 45) {
+      return 1 + 0.015 * Math.pow(delta, 2.12);
+    }
+    
+    if (level >= 45 && level <= 50) {
+      return 1 + 0.015 * Math.pow(delta, 2.12);
+    }
+    
+    // 45-100级平滑过渡
+    const t = Math.min(1, Math.max(0, (delta - 45) / 55));
+    const low = 1 + 0.015 * Math.pow(delta, 2.12);
+    const high = 6 * (1 + 0.015 * Math.pow(delta, 2.12));
+    const smoothstep = t => t * t * (3 - 2 * t);
+    return low * (1 - smoothstep(t)) + high * smoothstep(t);
+  },
+
+  enemyEximusShields(level) {
+    const baseLevel = 1;
+    const delta = Math.max(0, level - baseLevel);
+    
+    if (level >= 100) {
+      return 4 * (1 + 0.02 * Math.pow(delta, 1.76));
+    }
+    
+    if (level < 45) {
+      return 1 + 0.02 * Math.pow(delta, 1.76);
+    }
+    
+    if (level >= 45 && level <= 50) {
+      return 1 + 0.02 * Math.pow(delta, 1.76);
+    }
+    
+    // 45-100级平滑过渡
+    const t = Math.min(1, Math.max(0, (delta - 45) / 55));
+    const low = 1 + 0.02 * Math.pow(delta, 1.76);
+    const high = 4 * (1 + 0.02 * Math.pow(delta, 1.76));
+    const smoothstep = t => t * t * (3 - 2 * t);
+    return low * (1 - smoothstep(t)) + high * smoothstep(t);
+  },
+
+  // === Zaw 组件数据 ===
+  ZAW_STRIKES: {
+    "Balla":           { speed: 0.083 },
+    "Cyath":           { speed: 0 },
+    "Dehtat":          { speed: 0.083 },
+    "Dokrahm":         { speed: 0.083 },
+    "Kronsh":          { speed: -0.067 },
+    "Mewan":           { speed: -0.067 },
+    "Ooltha":          { speed: 0 },
+    "Rabvee":          { speed: -0.067 },
+    "Sepfahn":         { speed: 0 },
+    "Plague Keewar":   { speed: -0.033 },
+    "Plague Kripath":  { speed: 0.033 }
+  },
+
+  ZAW_GRIPS: {
+    "Jayap":         { damage: 0,   speed: 0.917, type: ["melee-staff","melee-polearm"] },
+    "Korb":          { damage: 28,  speed: 0.783, type: ["melee-dagger","melee-machete","melee-nikana","melee-rapier","melee-scythes","melee-sword"] },
+    "Kroostra":      { damage: 14,  speed: 0.85,  type: ["melee-staff","melee-polearm"] },
+    "Kwath":         { damage: 14,  speed: 0.85,  type: ["melee-sword","melee-machete","melee-rapier","melee-dagger","melee-nikana","melee-scythes"] },
+    "Laka":          { damage: 0,   speed: 0.917, type: ["melee-sword","melee-machete","melee-rapier","melee-dagger","melee-nikana","melee-scythes"] },
+    "Peye":          { damage: -4,  speed: 1,     type: ["melee-sword","melee-machete","melee-rapier","melee-dagger","melee-nikana","melee-scythes"] },
+    "Seekalla":      { damage: -4,  speed: 1,     type: ["melee-staff","melee-polearm","melee-heavyblade"] },
+    "Shtung":        { damage: 28,  speed: 0.783, type: ["melee-hammer","melee-heavyblade","melee-polearm","melee-staff"] },
+    "Plague Akwin":  { damage: -2,  speed: 0.95,  type: ["melee-sword","melee-machete","melee-rapier","melee-dagger","melee-nikana","melee-scythes"] },
+    "Plague Bokwin": { damage: 7,   speed: 0.883, type: ["melee-hammer","melee-heavyblade","melee-polearm","melee-staff"] }
+  },
+
+  ZAW_LINKS: {
+    "Ruhang":            { damage: 14,  speed: -0.067, crit_chance: 0,   status_chance: 0 },
+    "Ruhang II":         { damage: 28,  speed: -0.133, crit_chance: 0,   status_chance: 0 },
+    "Vargeet Ruhang":    { damage: 14,  speed: -0.067, crit_chance: 7,   status_chance: -4 },
+    "Ekwana Ruhang":     { damage: 14,  speed: -0.067, crit_chance: -4,  status_chance: 7 },
+    "Vargeet II Ruhang": { damage: 14,  speed: -0.067, crit_chance: 14,  status_chance: -8 },
+    "Ekwana II Ruhang":  { damage: 14,  speed: -0.067, crit_chance: -8,  status_chance: 14 },
+    "Vargeet Ruhang II": { damage: 28,  speed: -0.133, crit_chance: 7,   status_chance: -4 },
+    "Ekwana Ruhang II":  { damage: 28,  speed: -0.133, crit_chance: -4,  status_chance: 7 },
+    "Jai":               { damage: -4,  speed: 0.083,  crit_chance: 0,   status_chance: 0 },
+    "Jai II":            { damage: -8,  speed: 0.167,  crit_chance: 0,   status_chance: 0 },
+    "Vargeet Jai":       { damage: -4,  speed: 0.083,  crit_chance: 7,   status_chance: -4 },
+    "Ekwana Jai":        { damage: -4,  speed: 0.083,  crit_chance: -4,  status_chance: 7 },
+    "Vargeet II Jai":    { damage: -4,  speed: 0.083,  crit_chance: 14,  status_chance: -8 },
+    "Ekwana II Jai":     { damage: -4,  speed: 0.083,  crit_chance: -8,  status_chance: 14 },
+    "Vargeet Jai II":    { damage: -8,  speed: 0.167,  crit_chance: 7,   status_chance: -4 },
+    "Ekwana Jai II":     { damage: -8,  speed: 0.167,  crit_chance: -4,  status_chance: 7 }
+  },
+
+  // === Kitgun 组件数据 ===
+  KITGUN_GRIPS: {
+    "primary-shotgun": {
+      "Brash":      { speed: 5.6667, charge: 0.59 },
+      "Shrewd":     { speed: 4.6667, charge: 0 },
+      "Steadyslam": { speed: 3.3333, charge: -0.27 },
+      "Tremor":     { speed: 3, charge: -0.43 },
+      "Palmaris":   { speed: 5.1667, charge: 0.59 }
+    },
+    "primary-rifle-projectile": {
+      "Brash":      { speed: 3.7667, charge: 0.59 },
+      "Shrewd":     { speed: 3.1333, charge: 0 },
+      "Steadyslam": { speed: 2.3167, charge: -0.27 },
+      "Tremor":     { speed: 2.1333, charge: -0.43 },
+      "Palmaris":   { speed: 3.45, charge: 0.59 }
+    },
+    "primary-rifle-hitscan": {
+      "Brash":      { speed: 17, charge: 0.59 },
+      "Shrewd":     { speed: 14, charge: 0 },
+      "Steadyslam": { speed: 10, charge: -0.27 },
+      "Tremor":     { speed: 9, charge: -0.43 },
+      "Palmaris":   { speed: 15.5, charge: 0.59 }
+    },
+    "primary-rifle-beam": {
+      "Brash":      { speed: 8, range: 30, charge: 0.59 },
+      "Shrewd":     { speed: 8, range: 26, charge: 0 },
+      "Steadyslam": { speed: 8, range: 20, charge: -0.27 },
+      "Tremor":     { speed: 8, range: 16, charge: -0.43 },
+      "Palmaris":   { speed: 8, range: 28, charge: 0.59 }
+    },
+    "secondary-shotgun": {
+      "Ramble":   { speed: 2.5, charge: 0 },
+      "Lovetap":  { speed: 1.5, charge: 0 },
+      "Haymaker": { speed: 1.1667, charge: 0 },
+      "Gibber":   { speed: 3.1667, charge: 0 },
+      "Ulnaris":  { speed: 1.8333, charge: 0 }
+    },
+    "secondary-projectile": {
+      "Ramble":   { speed: 3.6667, charge: 0 },
+      "Lovetap":  { speed: 2.5, charge: 0 },
+      "Haymaker": { speed: 2.1667, charge: 0 },
+      "Gibber":   { speed: 4.5, charge: 0 },
+      "Ulnaris":  { speed: 2.8333, charge: 0 }
+    },
+    "secondary-hitscan": {
+      "Ramble":   { speed: 8.8333, charge: 0 },
+      "Lovetap":  { speed: 5.1667, charge: 0 },
+      "Haymaker": { speed: 3.6667, charge: 0 },
+      "Gibber":   { speed: 12, charge: 0 },
+      "Ulnaris":  { speed: 6.6667, charge: 0 }
+    },
+    "secondary-beam": {
+      "Ramble":   { speed: 12, range: 37, charge: 0 },
+      "Lovetap":  { speed: 12, range: 24, charge: 0 },
+      "Haymaker": { speed: 12, range: 21, charge: 0 },
+      "Gibber":   { speed: 12, range: 40, charge: 0 },
+      "Ulnaris":  { speed: 12, range: 30, charge: 0 }
+    }
+  },
+
+  KITGUN_LOADERS: {
+    "shotgun": {
+      "Splat":       { crit_chance: 35, status_chance: 13, magazineSize: 11 },
+      "Killstream":  { crit_chance: 35, status_chance: 13, magazineSize: 7 },
+      "Bashrack":    { crit_chance: 28, status_chance: 17, magazineSize: 11 },
+      "Stitch":      { crit_chance: 28, status_chance: 17, magazineSize: 13 },
+      "Slap":        { crit_chance: 21, status_chance: 21, magazineSize: 7 },
+      "Zip":         { crit_chance: 21, status_chance: 21, magazineSize: 5 },
+      "Sparkfire":   { crit_chance: 17, status_chance: 28, magazineSize: 11 },
+      "Thunderdrum": { crit_chance: 17, status_chance: 28, magazineSize: 13 },
+      "Ramflare":    { crit_chance: 13, status_chance: 35, magazineSize: 11 },
+      "Flutterfire": { crit_chance: 13, status_chance: 35, magazineSize: 7 },
+      "Swiftfire":   { crit_chance: 17, status_chance: 28, magazineSize: 7 },
+      "Zipfire":     { crit_chance: 17, status_chance: 28, magazineSize: 5 }
+    },
+    "projectile": {
+      "Splat":       { crit_chance: 38, status_chance: 16, magazineSize: 23 },
+      "Killstream":  { crit_chance: 38, status_chance: 16, magazineSize: 23 },
+      "Bashrack":    { crit_chance: 31, status_chance: 20, magazineSize: 23 },
+      "Stitch":      { crit_chance: 31, status_chance: 20, magazineSize: 29 },
+      "Slap":        { crit_chance: 24, status_chance: 24, magazineSize: 15 },
+      "Zip":         { crit_chance: 24, status_chance: 24, magazineSize: 9 },
+      "Sparkfire":   { crit_chance: 20, status_chance: 31, magazineSize: 23 },
+      "Thunderdrum": { crit_chance: 20, status_chance: 31, magazineSize: 29 },
+      "Ramflare":    { crit_chance: 16, status_chance: 38, magazineSize: 23 },
+      "Flutterfire": { crit_chance: 16, status_chance: 38, magazineSize: 15 },
+      "Swiftfire":   { crit_chance: 20, status_chance: 31, magazineSize: 15 },
+      "Zipfire":     { crit_chance: 20, status_chance: 31, magazineSize: 9 }
+    },
+    "hitscan": {
+      "Splat":       { crit_chance: 33, status_chance: 11, magazineSize: 67 },
+      "Killstream":  { crit_chance: 33, status_chance: 11, magazineSize: 45 },
+      "Bashrack":    { crit_chance: 26, status_chance: 15, magazineSize: 67 },
+      "Stitch":      { crit_chance: 26, status_chance: 15, magazineSize: 83 },
+      "Slap":        { crit_chance: 19, status_chance: 19, magazineSize: 45 },
+      "Zip":         { crit_chance: 19, status_chance: 19, magazineSize: 29 },
+      "Sparkfire":   { crit_chance: 15, status_chance: 26, magazineSize: 67 },
+      "Thunderdrum": { crit_chance: 15, status_chance: 26, magazineSize: 83 },
+      "Ramflare":    { crit_chance: 11, status_chance: 33, magazineSize: 67 },
+      "Flutterfire": { crit_chance: 11, status_chance: 33, magazineSize: 45 },
+      "Swiftfire":   { crit_chance: 15, status_chance: 26, magazineSize: 45 },
+      "Zipfire":     { crit_chance: 15, status_chance: 26, magazineSize: 29 }
+    },
+    "beam": {
+      "Splat":       { crit_chance: 39, status_chance: 17, magazineSize: 43 },
+      "Killstream":  { crit_chance: 39, status_chance: 17, magazineSize: 31 },
+      "Bashrack":    { crit_chance: 32, status_chance: 21, magazineSize: 43 },
+      "Stitch":      { crit_chance: 32, status_chance: 21, magazineSize: 51 },
+      "Slap":        { crit_chance: 25, status_chance: 25, magazineSize: 31 },
+      "Zip":         { crit_chance: 25, status_chance: 25, magazineSize: 23 },
+      "Sparkfire":   { crit_chance: 21, status_chance: 32, magazineSize: 43 },
+      "Thunderdrum": { crit_chance: 21, status_chance: 32, magazineSize: 51 },
+      "Ramflare":    { crit_chance: 17, status_chance: 39, magazineSize: 43 },
+      "Flutterfire": { crit_chance: 17, status_chance: 39, magazineSize: 31 },
+      "Swiftfire":   { crit_chance: 21, status_chance: 32, magazineSize: 31 },
+      "Zipfire":     { crit_chance: 21, status_chance: 32, magazineSize: 23 }
+    }
+  },
+
+  KITGUN_LOADERS_MAIN: {
+    "Splat":       { crit_mult: 2.3, reloadTime: 1.7 },
+    "Killstream":  { crit_mult: 2.3, reloadTime: 1.3 },
+    "Bashrack":    { crit_mult: 2.1, reloadTime: 1.7 },
+    "Stitch":      { crit_mult: 2.1, reloadTime: 2.1 },
+    "Slap":        { crit_mult: 2,   reloadTime: 1.3 },
+    "Zip":         { crit_mult: 2,   reloadTime: 0.9 },
+    "Sparkfire":   { crit_mult: 1.9, reloadTime: 1.7 },
+    "Thunderdrum": { crit_mult: 1.9, reloadTime: 2.1 },
+    "Ramflare":    { crit_mult: 1.7, reloadTime: 1.7 },
+    "Flutterfire": { crit_mult: 1.7, reloadTime: 1.3 },
+    "Swiftfire":   { crit_mult: 1.9, reloadTime: 1.3 },
+    "Zipfire":     { crit_mult: 1.9, reloadTime: 0.9 }
+  },
+
+  // ═══════════════ Incarnon 进化系统 ═══════════════
+  // 每把Incarnon武器有4个进化槽, 每个槽2-3个选项
+  // 选中后提供永久属性加成
+  INCARNON_EVOLUTIONS: {
+    'Braton': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 射速', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+30% 射速, +15% 多重射击', effects: { speed: 0.30, multishot: 0.15 } }
+      ]
+    },
+    'Braton Prime': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 射速', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+30% 射速, +15% 多重射击', effects: { speed: 0.30, multishot: 0.15 } }
+      ]
+    },
+    'Braton Vandal': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 射速', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+30% 射速, +15% 多重射击', effects: { speed: 0.30, multishot: 0.15 } }
+      ]
+    },
+    'Burston': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+20% 暴击几率', effects: { crit_chance: 0.20 } },
+        { id: 'e1_b', name: '强韧', desc: '+25% 状态几率', effects: { status_chance: 0.25 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+120% 状态伤害', effects: { status_damage: 1.2 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+60% 基础伤害', effects: { base: 0.60 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+35% 射速, +20% 多重射击', effects: { speed: 0.35, multishot: 0.20 } }
+      ]
+    },
+    'Burston Prime': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+20% 暴击几率', effects: { crit_chance: 0.20 } },
+        { id: 'e1_b', name: '强韧', desc: '+25% 状态几率', effects: { status_chance: 0.25 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+120% 状态伤害', effects: { status_damage: 1.2 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+60% 基础伤害', effects: { base: 0.60 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+35% 射速, +20% 多重射击', effects: { speed: 0.35, multishot: 0.20 } }
+      ]
+    },
+    'Lex': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+25% 暴击几率', effects: { crit_chance: 0.25 } },
+        { id: 'e1_b', name: '强韧', desc: '+30% 状态几率', effects: { status_chance: 0.30 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+30 多重射击', effects: { multishot: 0.30 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+35% 爆击伤害', effects: { crit_mult: 0.35 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+150% 状态伤害', effects: { status_damage: 1.5 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+70% 基础伤害', effects: { base: 0.70 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+40% 射速, +25% 多重射击', effects: { speed: 0.40, multishot: 0.25 } }
+      ]
+    },
+    'Lex Prime': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+25% 暴击几率', effects: { crit_chance: 0.25 } },
+        { id: 'e1_b', name: '强韧', desc: '+30% 状态几率', effects: { status_chance: 0.30 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+30 多重射击', effects: { multishot: 0.30 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+35% 爆击伤害', effects: { crit_mult: 0.35 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+150% 状态伤害', effects: { status_damage: 1.5 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+70% 基础伤害', effects: { base: 0.70 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+40% 射速, +25% 多重射击', effects: { speed: 0.40, multishot: 0.25 } }
+      ]
+    },
+    'Lato': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+20% 暴击几率', effects: { crit_chance: 0.20 } },
+        { id: 'e1_b', name: '强韧', desc: '+25% 状态几率', effects: { status_chance: 0.25 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+120% 状态伤害', effects: { status_damage: 1.2 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+35% 射速, +18% 多重射击', effects: { speed: 0.35, multishot: 0.18 } }
+      ]
+    },
+    'Lato Vandal': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+22% 暴击几率', effects: { crit_chance: 0.22 } },
+        { id: 'e1_b', name: '强韧', desc: '+28% 状态几率', effects: { status_chance: 0.28 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+14% 射速', effects: { speed: 0.14 } },
+        { id: 'e2_b', name: '弹幕', desc: '+28 多重射击', effects: { multishot: 0.28 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+32% 爆击伤害', effects: { crit_mult: 0.32 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+130% 状态伤害', effects: { status_damage: 1.3 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+60% 基础伤害', effects: { base: 0.60 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+38% 射速, +22% 多重射击', effects: { speed: 0.38, multishot: 0.22 } }
+      ]
+    },
+    'Latron': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+22 多重射击', effects: { multishot: 0.22 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+28% 爆击伤害', effects: { crit_mult: 0.28 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+110% 状态伤害', effects: { status_damage: 1.1 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+32% 射速, +18% 多重射击', effects: { speed: 0.32, multishot: 0.18 } }
+      ]
+    },
+    'Latron Prime': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+22% 暴击几率', effects: { crit_chance: 0.22 } },
+        { id: 'e1_b', name: '强韧', desc: '+28% 状态几率', effects: { status_chance: 0.28 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+32% 爆击伤害', effects: { crit_mult: 0.32 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+140% 状态伤害', effects: { status_damage: 1.4 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+65% 基础伤害', effects: { base: 0.65 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+38% 射速, +22% 多重射击', effects: { speed: 0.38, multishot: 0.22 } }
+      ]
+    },
+    'Latron Wraith': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+22% 暴击几率', effects: { crit_chance: 0.22 } },
+        { id: 'e1_b', name: '强韧', desc: '+28% 状态几率', effects: { status_chance: 0.28 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+32% 爆击伤害', effects: { crit_mult: 0.32 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+140% 状态伤害', effects: { status_damage: 1.4 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+65% 基础伤害', effects: { base: 0.65 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+38% 射速, +22% 多重射击', effects: { speed: 0.38, multishot: 0.22 } }
+      ]
+    },
+    'Dread': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 蓄力速度', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '致命一击', desc: '+40% 暴击伤害, +10% 暴击几率', effects: { crit_mult: 0.40, crit_chance: 0.10 } }
+      ]
+    },
+    'Furis': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+45% 基础伤害', effects: { base: 0.45 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+30% 射速, +15% 多重射击', effects: { speed: 0.30, multishot: 0.15 } }
+      ]
+    },
+    'Boar': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+12% 暴击几率', effects: { crit_chance: 0.12 } },
+        { id: 'e1_b', name: '强韧', desc: '+18% 状态几率', effects: { status_chance: 0.18 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+2 多重射击', effects: { multishot: 2 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+20% 爆击伤害', effects: { crit_mult: 0.20 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+40% 基础伤害', effects: { base: 0.40 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+25% 射速, +2 多重射击', effects: { speed: 0.25, multishot: 2 } }
+      ]
+    },
+    'Boar Prime': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+3 多重射击', effects: { multishot: 3 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+30% 射速, +3 多重射击', effects: { speed: 0.30, multishot: 3 } }
+      ]
+    },
+    'Boltor': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 射速', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+30% 射速, +15% 多重射击', effects: { speed: 0.30, multishot: 0.15 } }
+      ]
+    },
+    'Boltor Prime': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+25% 状态几率', effects: { status_chance: 0.25 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+60% 基础伤害', effects: { base: 0.60 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+35% 射速, +20% 多重射击', effects: { speed: 0.35, multishot: 0.20 } }
+      ]
+    },
+    'Bronco': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+2 多重射击', effects: { multishot: 2 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+45% 基础伤害', effects: { base: 0.45 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+28% 射速, +2 多重射击', effects: { speed: 0.28, multishot: 2 } }
+      ]
+    },
+    'Bronco Prime': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+25% 状态几率', effects: { status_chance: 0.25 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+3 多重射击', effects: { multishot: 3 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+32% 射速, +3 多重射击', effects: { speed: 0.32, multishot: 3 } }
+      ]
+    },
+    'Mk1-Braton': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+12% 暴击几率', effects: { crit_chance: 0.12 } },
+        { id: 'e1_b', name: '强韧', desc: '+18% 状态几率', effects: { status_chance: 0.18 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 射速', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+18 多重射击', effects: { multishot: 0.18 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+20% 爆击伤害', effects: { crit_mult: 0.20 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+40% 基础伤害', effects: { base: 0.40 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+28% 射速, +12% 多重射击', effects: { speed: 0.28, multishot: 0.12 } }
+      ]
+    },
+    'Gorgon': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+12% 暴击几率', effects: { crit_chance: 0.12 } },
+        { id: 'e1_b', name: '强韧', desc: '+18% 状态几率', effects: { status_chance: 0.18 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+22% 爆击伤害', effects: { crit_mult: 0.22 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+45% 基础伤害', effects: { base: 0.45 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+28% 射速, +15% 多重射击', effects: { speed: 0.28, multishot: 0.15 } }
+      ]
+    },
+    'Gorgon Wraith': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+32% 射速, +20% 多重射击', effects: { speed: 0.32, multishot: 0.20 } }
+      ]
+    },
+    'Dera': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+22 多重射击', effects: { multishot: 0.22 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+28% 爆击伤害', effects: { crit_mult: 0.28 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+30% 射速, +18% 多重射击', effects: { speed: 0.30, multishot: 0.18 } }
+      ]
+    },
+    'Dera Vandal': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+20% 暴击几率', effects: { crit_chance: 0.20 } },
+        { id: 'e1_b', name: '强韧', desc: '+25% 状态几率', effects: { status_chance: 0.25 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+14% 射速', effects: { speed: 0.14 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+120% 状态伤害', effects: { status_damage: 1.2 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+32% 射速, +20% 多重射击', effects: { speed: 0.32, multishot: 0.20 } }
+      ]
+    },
+    'Miter': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 蓄力速度', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+28% 爆击伤害', effects: { crit_mult: 0.28 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '致命一击', desc: '+35% 暴击伤害, +12% 暴击几率', effects: { crit_mult: 0.35, crit_chance: 0.12 } }
+      ]
+    },
+    'Cestra': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+20% 暴击几率', effects: { crit_chance: 0.20 } },
+        { id: 'e1_b', name: '强韧', desc: '+25% 状态几率', effects: { status_chance: 0.25 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+32% 射速, +20% 多重射击', effects: { speed: 0.32, multishot: 0.20 } }
+      ]
+    },
+    'Kunai': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+22% 爆击伤害', effects: { crit_mult: 0.22 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+40% 基础伤害', effects: { base: 0.40 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+28% 射速, +15% 多重射击', effects: { speed: 0.28, multishot: 0.15 } }
+      ]
+    },
+    'Ballistica': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 蓄力速度', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+45% 基础伤害', effects: { base: 0.45 } },
+        { id: 'e4_b', name: '致命一击', desc: '+30% 暴击伤害, +10% 暴击几率', effects: { crit_mult: 0.30, crit_chance: 0.10 } }
+      ]
+    },
+    'Ballistica Prime': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 蓄力速度', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '致命一击', desc: '+35% 暴击伤害, +15% 暴击几率', effects: { crit_mult: 0.35, crit_chance: 0.15 } }
+      ]
+    },
+    'Atomos': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+25% 状态几率', effects: { status_chance: 0.25 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+22 多重射击', effects: { multishot: 0.22 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+28% 爆击伤害', effects: { crit_mult: 0.28 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+30% 射速, +18% 多重射击', effects: { speed: 0.30, multishot: 0.18 } }
+      ]
+    },
+    'Gammacor': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 射速', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+18 多重射击', effects: { multishot: 0.18 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+22% 爆击伤害', effects: { crit_mult: 0.22 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+42% 基础伤害', effects: { base: 0.42 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+25% 射速, +12% 多重射击', effects: { speed: 0.25, multishot: 0.12 } }
+      ]
+    },
+    'Despair': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 射速', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+20 多重射击', effects: { multishot: 0.20 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '致命一击', desc: '+35% 暴击伤害, +12% 暴击几率', effects: { crit_mult: 0.35, crit_chance: 0.12 } }
+      ]
+    },
+    'Angstrum': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+22 多重射击', effects: { multishot: 0.22 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+30% 射速, +18% 多重射击', effects: { speed: 0.30, multishot: 0.18 } }
+      ]
+    },
+    'Ack & Brunt': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 攻击速度', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '范围', desc: '+0.5 范围', effects: { range: 0.5 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '致命一击', desc: '+35% 暴击伤害, +15% 暴击几率', effects: { crit_mult: 0.35, crit_chance: 0.15 } }
+      ]
+    },
+    'Anku': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 攻击速度', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '范围', desc: '+0.5 范围', effects: { range: 0.5 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '致命一击', desc: '+35% 暴击伤害, +15% 暴击几率', effects: { crit_mult: 0.35, crit_chance: 0.15 } }
+      ]
+    },
+    'Bo': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 攻击速度', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '范围', desc: '+0.5 范围', effects: { range: 0.5 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '致命一击', desc: '+35% 暴击伤害, +15% 暴击几率', effects: { crit_mult: 0.35, crit_chance: 0.15 } }
+      ]
+    },
+    'Bo Prime': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 攻击速度', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '范围', desc: '+0.8 范围', effects: { range: 0.8 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+120% 状态伤害', effects: { status_damage: 1.2 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+60% 基础伤害', effects: { base: 0.60 } },
+        { id: 'e4_b', name: '致命一击', desc: '+40% 暴击伤害, +18% 暴击几率', effects: { crit_mult: 0.40, crit_chance: 0.18 } }
+      ]
+    },
+    'Ceramic Dagger': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 攻击速度', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '范围', desc: '+0.3 范围', effects: { range: 0.3 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '致命一击', desc: '+35% 暴击伤害, +15% 暴击几率', effects: { crit_mult: 0.35, crit_chance: 0.15 } }
+      ]
+    },
+    'Destreza': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 攻击速度', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '范围', desc: '+0.3 范围', effects: { range: 0.3 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+28% 爆击伤害', effects: { crit_mult: 0.28 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+110% 状态伤害', effects: { status_damage: 1.1 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '致命一击', desc: '+38% 暴击伤害, +18% 暴击几率', effects: { crit_mult: 0.38, crit_chance: 0.18 } }
+      ]
+    },
+    'Destreza Prime': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+25% 状态几率', effects: { status_chance: 0.25 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 攻击速度', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '范围', desc: '+0.5 范围', effects: { range: 0.5 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+32% 爆击伤害', effects: { crit_mult: 0.32 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+130% 状态伤害', effects: { status_damage: 1.3 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+65% 基础伤害', effects: { base: 0.65 } },
+        { id: 'e4_b', name: '致命一击', desc: '+42% 暴击伤害, +20% 暴击几率', effects: { crit_mult: 0.42, crit_chance: 0.20 } }
+      ]
+    },
+    'Dual Ichor': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 攻击速度', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '范围', desc: '+0.3 范围', effects: { range: 0.3 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+120% 状态伤害', effects: { status_damage: 1.2 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+60% 基础伤害', effects: { base: 0.60 } },
+        { id: 'e4_b', name: '致命一击', desc: '+40% 暴击伤害, +18% 暴击几率', effects: { crit_mult: 0.40, crit_chance: 0.18 } }
+      ]
+    },
+    'Furax': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+12% 暴击几率', effects: { crit_chance: 0.12 } },
+        { id: 'e1_b', name: '强韧', desc: '+18% 状态几率', effects: { status_chance: 0.18 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 攻击速度', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '范围', desc: '+0.3 范围', effects: { range: 0.3 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+22% 爆击伤害', effects: { crit_mult: 0.22 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+42% 基础伤害', effects: { base: 0.42 } },
+        { id: 'e4_b', name: '致命一击', desc: '+30% 暴击伤害, +12% 暴击几率', effects: { crit_mult: 0.30, crit_chance: 0.12 } }
+      ]
+    },
+    'Furax Wraith': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 攻击速度', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '范围', desc: '+0.5 范围', effects: { range: 0.5 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '致命一击', desc: '+35% 暴击伤害, +15% 暴击几率', effects: { crit_mult: 0.35, crit_chance: 0.15 } }
+      ]
+    },
+    'Hate': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 攻击速度', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '范围', desc: '+0.3 范围', effects: { range: 0.3 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+30% 爆击伤害', effects: { crit_mult: 0.30 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+120% 状态伤害', effects: { status_damage: 1.2 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+60% 基础伤害', effects: { base: 0.60 } },
+        { id: 'e4_b', name: '致命一击', desc: '+40% 暴击伤害, +18% 暴击几率', effects: { crit_mult: 0.40, crit_chance: 0.18 } }
+      ]
+    },
+    'Innodem': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 攻击速度', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '范围', desc: '+0.5 范围', effects: { range: 0.5 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '致命一击', desc: '+35% 暴击伤害, +15% 暴击几率', effects: { crit_mult: 0.35, crit_chance: 0.15 } }
+      ]
+    },
+    'Magistar': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+12% 暴击几率', effects: { crit_chance: 0.12 } },
+        { id: 'e1_b', name: '强韧', desc: '+18% 状态几率', effects: { status_chance: 0.18 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 攻击速度', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '范围', desc: '+0.5 范围', effects: { range: 0.5 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+22% 爆击伤害', effects: { crit_mult: 0.22 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+80% 状态伤害', effects: { status_damage: 0.8 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+42% 基础伤害', effects: { base: 0.42 } },
+        { id: 'e4_b', name: '致命一击', desc: '+30% 暴击伤害, +12% 暴击几率', effects: { crit_mult: 0.30, crit_chance: 0.12 } }
+      ]
+    },
+    'Mk1-Furax': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+10% 暴击几率', effects: { crit_chance: 0.10 } },
+        { id: 'e1_b', name: '强韧', desc: '+15% 状态几率', effects: { status_chance: 0.15 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+8% 攻击速度', effects: { speed: 0.08 } },
+        { id: 'e2_b', name: '范围', desc: '+0.3 范围', effects: { range: 0.3 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+18% 爆击伤害', effects: { crit_mult: 0.18 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+60% 状态伤害', effects: { status_damage: 0.6 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+35% 基础伤害', effects: { base: 0.35 } },
+        { id: 'e4_b', name: '致命一击', desc: '+25% 暴击伤害, +10% 暴击几率', effects: { crit_mult: 0.25, crit_chance: 0.10 } }
+      ]
+    },
+    'Dual Toxocyst': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+22 多重射击', effects: { multishot: 0.22 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+28% 爆击伤害', effects: { crit_mult: 0.28 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+32% 射速, +18% 多重射击', effects: { speed: 0.32, multishot: 0.18 } }
+      ]
+    },
+    'Dex Sybaris': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+18% 暴击几率', effects: { crit_chance: 0.18 } },
+        { id: 'e1_b', name: '强韧', desc: '+22% 状态几率', effects: { status_chance: 0.22 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+12% 射速', effects: { speed: 0.12 } },
+        { id: 'e2_b', name: '弹幕', desc: '+22 多重射击', effects: { multishot: 0.22 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+28% 爆击伤害', effects: { crit_mult: 0.28 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '致命一击', desc: '+38% 暴击伤害, +15% 暴击几率', effects: { crit_mult: 0.38, crit_chance: 0.15 } }
+      ]
+    },
+    'Felarx': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+10% 射速', effects: { speed: 0.10 } },
+        { id: 'e2_b', name: '弹幕', desc: '+1 多重射击', effects: { multishot: 1 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+50% 基础伤害', effects: { base: 0.50 } },
+        { id: 'e4_b', name: '致命一击', desc: '+35% 暴击伤害, +12% 暴击几率', effects: { crit_mult: 0.35, crit_chance: 0.12 } }
+      ]
+    },
+    'Laetum': {
+      slot1: [
+        { id: 'e1_a', name: '灵巧', desc: '+15% 暴击几率', effects: { crit_chance: 0.15 } },
+        { id: 'e1_b', name: '强韧', desc: '+20% 状态几率', effects: { status_chance: 0.20 } }
+      ],
+      slot2: [
+        { id: 'e2_a', name: '充能', desc: '+15% 射速', effects: { speed: 0.15 } },
+        { id: 'e2_b', name: '弹幕', desc: '+25 多重射击', effects: { multishot: 0.25 } }
+      ],
+      slot3: [
+        { id: 'e3_a', name: '爆发', desc: '+25% 爆击伤害', effects: { crit_mult: 0.25 } },
+        { id: 'e3_b', name: '侵蚀', desc: '+100% 状态伤害', effects: { status_damage: 1.0 } }
+      ],
+      slot4: [
+        { id: 'e4_a', name: '狂暴', desc: '+55% 基础伤害', effects: { base: 0.55 } },
+        { id: 'e4_b', name: '弹幕风暴', desc: '+30% 射速, +20% 多重射击', effects: { speed: 0.30, multishot: 0.20 } }
+      ]
+    }
+  },
+
+  // ═══════════════ 武器→Incarnon进化 映射 ═══════════════
+  // 检查武器是否有Incarnon进化数据
+  hasIncarnonEvo(weaponName) {
+    return !!this.INCARNON_EVOLUTIONS[weaponName];
+  },
+
+  getIncarnonEvo(weaponName) {
+    return this.INCARNON_EVOLUTIONS[weaponName] || null;
   }
 };
 
