@@ -1855,9 +1855,9 @@ var exterminate_steel_e_primeNotice_en = "";
 var exterminate_steel_halako_perimeterRecords = [
   {
     playerId:   "FrostMainer",
-    clearTime:  "0:34.000",
-    uploadTime: "2026-05-16",
-    videoUrls:  ["https://www.youtube.com/watch?v=VQBmMpIVbV8"],
+    clearTime:  "0:26.000",
+    uploadTime: "2026-08-01",
+    videoUrls:  ["https://www.youtube.com/watch?v=BxhtQ4aYuhI"],
   },
   {
     playerId:   "NamelessDeity",
@@ -1876,6 +1876,12 @@ var exterminate_steel_halako_perimeterRecords = [
     clearTime:  "1:24.000",
     uploadTime: "2026-01-08",
     videoUrls:  ["https://www.youtube.com/watch?v=2-Rw0PGN1JE"],
+  },
+  {
+    playerId:   "Gauss_prime",
+    clearTime:  "0:31.167",
+    uploadTime: "2026-07-30",
+    videoUrls:  ["https://www.youtube.com/watch?v=YWHA01LY5OM"],
   },
 ];
 
