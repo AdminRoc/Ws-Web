@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warframe 伤害计算器</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="dmg/css/style.css">
+  <link rel="icon" href="picture/websitelogo.png">
+</head>
+<body>
+  <canvas id="star-canvas"></canvas>
+  <div class="nebula-bg"></div>
+  <div class="bg-particles"></div>
+
+  <div class="app-container">
+    <header class="header">
+      <div class="header-title">
+        <h1>WARFRAME 伤害计算器</h1>
+        <span class="subtitle">武器配装模拟 / DPS 计算</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary" onclick="App.resetAll()">重置</button>
+        <button class="btn btn-primary" onclick="App.exportBuild()">导出配装</button>
+      </div>
+    </header>
+
+    <div class="main-layout">
+
+      <!-- 左侧 - 武器选择 -->
+      <aside class="panel weapon-panel">
+        <div class="panel-header">
+          <h2>武器选择</h2>
+        </div>
+        <div class="panel-content">
+          <input type="text" id="weapon-search" class="search-input" placeholder="输入或选择武器名称">
+          <div id="weapon-list" class="weapon-list"></div>
+          <div id="weapon-info"></div>
+        </div>
+      </aside>
+
+      <!-- 中间 - MOD 配置 -->
+      <main class="panel mod-panel">
+        <div class="panel-header">
+          <h2>MOD 配置</h2>
+          <span class="capacity" id="capacity">0 / 60</span>
+        </div>
+        <div class="panel-content">
+          <div style="margin-bottom:12px;">
+            <button class="btn btn-primary" style="width:100%;" onclick="App.openRivenCreator()">创建裂罅MOD</button>
+          </div>
+
+           <div id="mod-grid" class="mod-grid"></div>
+
+          <div class="stat-section" style="margin-top:16px;">
+            <h3>Warframe MOD</h3>
+            <div style="margin-bottom:8px;">
+              <button class="btn btn-secondary" style="width:100%;font-size:0.75rem;" onclick="App.openWarframeModPicker()">选择 Warframe MOD</button>
+            </div>
+            <div id="warframe-mod-grid" class="mod-grid" style="grid-template-columns:repeat(2,1fr);"></div>
+          </div>
+
+          <div class="stat-section">
+            <h3>特殊槽位</h3>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;">
+              <div class="mod-slot special-slot" id="exilus-slot" onclick="App.openModPicker(8)">
+                <div class="mod-icon" style="font-size:0.7rem;color:var(--c-cyan);">EXILUS</div>
+                <div class="mod-name">特殊功能槽</div>
+              </div>
+              <div class="mod-slot special-slot" id="aura-slot" onclick="App.openModPicker(9)">
+                <div class="mod-icon" style="font-size:0.7rem;color:var(--c-purple);">光环</div>
+                <div class="mod-name">光环槽</div>
+              </div>
+               <div class="mod-slot special-slot" id="arcane-slot">
+                <div class="mod-icon" style="font-size:0.7rem;color:var(--c-gold-bright);">赋能</div>
+                <div class="mod-name">赋能槽</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-section">
+            <h3 class="collapsible-toggle" onclick="toggleSection('options-section')">
+              计算选项 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+            </h3>
+            <div id="options-section">
+              <div class="option-row">
+                <div class="option-item" data-option="externalVirus">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">外部病毒</span>
+                </div>
+                <div class="slider-group" style="flex:1;margin-bottom:0;">
+                  <div class="slider-header">
+                    <span class="slider-label">病毒层数</span>
+                    <span class="slider-value" id="virus-stacks-value">0</span>
+                  </div>
+                  <input type="range" class="slider-input" id="virus-stacks-slider" min="0" max="10" value="0">
+                </div>
+              </div>
+
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="slider-label">强度</span>
+                  <span class="slider-value" id="ability-strength-value">100%</span>
+                </div>
+                <input type="range" class="slider-input" id="ability-strength-slider" min="0" max="400" value="100">
+              </div>
+
+              <div class="options-grid">
+                <div class="option-item" data-option="headshot">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">爆头加成</span>
+                </div>
+                <div class="option-item" data-option="steelPath">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">钢铁之路</span>
+                </div>
+                <div class="option-item" data-option="eximus">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">卓越者</span>
+                </div>
+              </div>
+
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="slider-label">外部护甲剥离 %</span>
+                  <span class="slider-value" id="armor-strip-value">0%</span>
+                </div>
+                <input type="range" class="slider-input" id="armor-strip-slider" min="0" max="100" value="0">
+              </div>
+
+              <div class="options-grid">
+                <div class="option-item" data-option="stealth">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">潜行加成 (近战)</span>
+                </div>
+                <div class="option-item" data-option="heavyAttack">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">重击</span>
+                </div>
+              </div>
+
+              <div class="option-row">
+                <div class="checkbox-option" data-key="comboMultEnabled">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">连击倍率</span>
+                </div>
+                <div class="slider-group" style="flex:1;margin-bottom:0;">
+                  <div class="slider-header">
+                    <span class="slider-label">连击计数器</span>
+                    <span class="slider-value" id="combo-value">1</span>
+                  </div>
+                  <input type="range" class="slider-input" id="combo-slider" min="1" max="12" value="1">
+                </div>
+              </div>
+
+              <div class="option-row">
+                <div class="checkbox-option" data-key="lightAttackComboEnabled">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">轻攻击连击倍率</span>
+                </div>
+                <div class="slider-group" style="flex:1;margin-bottom:0;">
+                  <div class="slider-header">
+                    <span class="slider-label">倍率</span>
+                    <span class="slider-value" id="light-combo-value">1</span>
+                  </div>
+                  <input type="range" class="slider-input" id="light-combo-slider" min="1" max="12" value="1">
+                </div>
+              </div>
+
+              <div class="option-row">
+                <div class="checkbox-option" data-key="comboAbilityEnabled">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">连击能力倍率</span>
+                </div>
+                <div class="slider-group" style="flex:1;margin-bottom:0;">
+                  <div class="slider-header">
+                    <span class="slider-label">倍率</span>
+                    <span class="slider-value" id="combo-ability-value">1</span>
+                  </div>
+                  <input type="range" class="slider-input" id="combo-ability-slider" min="1" max="12" value="1">
+                </div>
+              </div>
+
+              <div class="option-row">
+                <div class="checkbox-option" data-key="sniperComboEnabled">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">狙击连击倍率</span>
+                </div>
+                <div class="slider-group" style="flex:1;margin-bottom:0;">
+                  <div class="slider-header">
+                    <span class="slider-label">倍率</span>
+                    <span class="slider-value" id="sniper-combo-value">1</span>
+                  </div>
+                  <input type="range" class="slider-input" id="sniper-combo-slider" min="1" max="5" value="1">
+                </div>
+              </div>
+
+              <div class="stat-section">
+                <h3>Warframe 技能</h3>
+                <div class="ability-grid">
+                  <div class="ability-toggle" data-ability="rhinoRoar">
+                    <div class="option-checkbox"></div>
+                    <span class="option-label">Rhino - 战吼</span>
+                  </div>
+                  <div class="ability-toggle" data-ability="mirageEclipse">
+                    <div class="option-checkbox"></div>
+                    <span class="option-label">Mirage - 日蚀</span>
+                  </div>
+                  <div class="ability-toggle" data-ability="xakuWhisper">
+                    <div class="option-checkbox"></div>
+                    <span class="option-label">Xaku - 真理密语</span>
+                  </div>
+                  <div class="ability-toggle" data-ability="sarynSpores">
+                    <div class="option-checkbox"></div>
+                    <span class="option-label">Saryn - 毒性孢子</span>
+                  </div>
+                  <div class="ability-toggle" data-ability="grendelNourish">
+                    <div class="option-checkbox"></div>
+                    <span class="option-label">Grendel - 消化滋养</span>
+                  </div>
+                  <div class="ability-toggle" data-ability="kullervoCrit">
+                    <div class="option-checkbox"></div>
+                    <span class="option-label">Kullervo - 暴怒突进</span>
+                  </div>
+                  <div class="ability-toggle" data-ability="harrowCrit">
+                    <div class="option-checkbox"></div>
+                    <span class="option-label">Harrow - 庇佑圣约</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="option-row">
+                <div class="checkbox-option" data-key="manualStatusCount">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">手动状态层数</span>
+                </div>
+                <div class="slider-group" style="flex:1;margin-bottom:0;">
+                  <div class="slider-header">
+                    <span class="slider-label">层数</span>
+                    <span class="slider-value" id="manual-status-value">0</span>
+                  </div>
+                  <input type="range" class="slider-input" id="manual-status-slider" min="0" max="10" value="0">
+                </div>
+              </div>
+
+              <div class="options-grid">
+                <div class="option-item checkbox-option" data-key="conditionOverload">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">异况超量</span>
+                </div>
+                <div class="option-item checkbox-option" data-key="madurai">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">Madurai (+30% 物理)</span>
+                </div>
+                <div class="option-item checkbox-option" data-key="mergeAttacks">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">合并攻击效果</span>
+                </div>
+                <div class="option-item checkbox-option" data-key="conditionalModsAlways" style="border-color:var(--c-green);">
+                  <div class="option-checkbox" style="background:var(--c-green);border-color:var(--c-green);"></div>
+                  <span class="option-label">条件MOD始终激活</span>
+                </div>
+              </div>
+
+              <div class="stat-section" style="margin-top:12px;">
+                <h3>自定义属性值</h3>
+                <div id="custom-stats-area" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
+                  <div class="empty-state" style="padding:16px;grid-column:1/-1;">
+                    <div class="empty-state-text">选择武器后可自定义属性</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-section">
+            <h3>计算时间</h3>
+            <div class="slider-group">
+              <div class="slider-header">
+                <span class="slider-label">持续时间 (秒)</span>
+                <span class="slider-value" id="calc-time-value">30</span>
+              </div>
+              <input type="range" class="slider-input" id="calc-time-slider" min="1" max="60" value="30">
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- 右侧 - 敌人 + 结果 -->
+      <aside class="panel enemy-panel">
+        <div class="panel-header">
+          <h2>敌人配置</h2>
+        </div>
+        <div class="panel-content">
+          <input type="text" id="enemy-search" class="search-input" placeholder="输入或从列表中选择敌人">
+          <div id="enemy-list" class="weapon-list" style="max-height:150px;"></div>
+
+          <div id="enemy-info"></div>
+
+          <div class="stat-section">
+            <h3>敌人等级</h3>
+            <div class="slider-group">
+              <input type="number" id="enemy-level" class="level-input" value="30" min="1" max="9999" style="width:100%;">
+            </div>
+            <div class="option-item" data-option="steelPath" style="margin-top:8px;">
+              <div class="option-checkbox"></div>
+              <span class="option-label">铁臂之路</span>
+            </div>
+          </div>
+
+          <div class="dps-display">
+            <div class="dps-value" id="dps-value">0</div>
+            <div class="dps-label">有效 DPS</div>
+            <div class="dps-breakdown">
+              <div class="dps-stat">
+                <div class="dps-stat-value" id="raw-dps">0</div>
+                <div class="dps-stat-label">原始 DPS</div>
+              </div>
+              <div class="dps-stat">
+                <div class="dps-stat-value" id="per-shot">0</div>
+                <div class="dps-stat-label">单发伤害</div>
+              </div>
+              <div class="dps-stat">
+                <div class="dps-stat-value" id="fire-rate">0</div>
+                <div class="dps-stat-label">射速</div>
+              </div>
+              <div class="dps-stat">
+                <div class="dps-stat-value" id="dot-dps">0</div>
+                <div class="dps-stat-label">DoT DPS</div>
+              </div>
+              <div class="dps-stat">
+                <div class="dps-stat-value" id="armor-dr">0%</div>
+                <div class="dps-stat-label">护甲减伤</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="damage-chart">
+            <div class="chart-title">伤害分布</div>
+            <div id="damage-breakdown"></div>
+          </div>
+
+          <div class="stat-section">
+            <h3 class="collapsible-toggle" onclick="toggleSection('hp-damage-section')">
+              生命值伤害 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+            </h3>
+            <div id="hp-damage-section">
+              <div id="hp-damage-breakdown">
+                <div class="empty-state" style="padding:20px;">
+                  <div class="empty-state-text">选择武器和敌人后显示</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-section">
+            <h3 class="collapsible-toggle" onclick="toggleSection('shield-damage-section')">
+              护盾伤害 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+            </h3>
+            <div id="shield-damage-section" style="display:none;">
+              <div id="shield-damage-breakdown">
+                <div class="empty-state" style="padding:20px;">
+                  <div class="empty-state-text">选择武器和敌人后显示</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-section">
+            <h3 class="collapsible-toggle" onclick="toggleSection('overguard-damage-section')">
+              护盾过量伤害 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+            </h3>
+            <div id="overguard-damage-section" style="display:none;">
+              <div id="overguard-damage-breakdown">
+                <div class="empty-state" style="padding:20px;">
+                  <div class="empty-state-text">选择武器和敌人后显示</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="status-info"></div>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site-footer">
+      <div class="beian-row">
+        <a href="https://beian.miit.gov.cn/" target="_self" rel="noopener">沪ICP备2022033368号</a>
+        <img src="picture/gongan-beian.png" alt="公安备案" class="beian-icon">
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=31015102000215" rel="noreferrer" target="_blank">沪公网安备31015102000215号</a>
+      </div>
+      <p>Copyright &copy; 2026 CSC Alliance All Rights Reserved.</p>
+      <p>特此声明：本站是纯公益性质，且首页的彩虹风格不代表支持性少数群体，望知悉</p>
+    </footer>
+  </div>
+
+  <!-- MOD 选择器弹窗 -->
+  <div id="mod-picker" class="mod-picker"></div>
+
+  <!-- 裂罅MOD创建器弹窗 -->
+  <div id="riven-creator" class="riven-modal-overlay">
+    <div class="riven-modal">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="margin-bottom:0;">创建裂罅MOD</h3>
+        <button onclick="App.closeRivenCreator()" style="background:none;border:none;color:var(--c-text2);font-size:1.5rem;cursor:pointer;padding:8px;transition:color .18s ease;">&times;</button>
+      </div>
+      <div class="riven-section">
+        <div class="riven-section-title">武器类型</div>
+        <select id="riven-weapon-type" class="search-input">
+          <option value="Primary">主武器</option>
+          <option value="Secondary">副武器</option>
+          <option value="Melee">近战</option>
+        </select>
+      </div>
+      <div class="riven-section">
+        <div class="riven-section-title">正面属性 (1-3条)</div>
+        <div id="riven-positives">
+          <div style="display:flex;gap:6px;margin-bottom:8px;">
+            <select class="search-input riven-positive-select" style="flex:1;">
+              <option value="">选择属性...</option>
+            </select>
+            <input type="number" class="search-input riven-positive-value" style="width:70px;" placeholder="数值" step="0.1">
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:8px;">
+            <select class="search-input riven-positive-select" style="flex:1;">
+              <option value="">选择属性...</option>
+            </select>
+            <input type="number" class="search-input riven-positive-value" style="width:70px;" placeholder="数值" step="0.1">
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:8px;">
+            <select class="search-input riven-positive-select" style="flex:1;">
+              <option value="">选择属性...</option>
+            </select>
+            <input type="number" class="search-input riven-positive-value" style="width:70px;" placeholder="数值" step="0.1">
+          </div>
+        </div>
+      </div>
+      <div class="riven-section">
+        <div class="riven-section-title">负面属性 (0-1条)</div>
+        <div style="display:flex;gap:6px;">
+          <select id="riven-negative" class="search-input" style="flex:1;">
+            <option value="">无负面属性</option>
+          </select>
+          <input type="number" id="riven-negative-value" class="search-input" style="width:70px;" placeholder="数值" step="0.1">
+        </div>
+      </div>
+      <div class="riven-section">
+        <div class="riven-section-title">等级</div>
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">裂罅等级</span>
+            <span class="slider-value" id="riven-rank-value">0</span>
+          </div>
+          <input type="range" class="slider-input" id="riven-rank-slider" min="0" max="8" value="0">
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;" onclick="App.createRivenConfirm()">创建</button>
+    </div>
+  </div>
+
+  <script src="dmg/vendor/gsap/gsap.min.js"></script>
+  <script src="dmg/js/game-data.js"></script>
+  <script src="dmg/js/damage-calc.js"></script>
+  <script src="dmg/js/app.js"></script>
+  <script>
+    function toggleSection(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.display = el.style.display === 'none' ? '' : 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const lightComboSlider = document.getElementById('light-combo-slider');
+      if (lightComboSlider) {
+        lightComboSlider.addEventListener('input', e => {
+          App.state.options.lightAttackComboEnabled = true;
+          App.state.options.lightAttackComboSlider = parseFloat(e.target.value) || 1;
+          document.getElementById('light-combo-value').textContent = e.target.value;
+          App.recalculate();
+        });
+      }
+
+      const comboAbilitySlider = document.getElementById('combo-ability-slider');
+      if (comboAbilitySlider) {
+        comboAbilitySlider.addEventListener('input', e => {
+          App.state.options.comboAbilityEnabled = true;
+          App.state.options.comboAbilitySlider = parseFloat(e.target.value) || 1;
+          document.getElementById('combo-ability-value').textContent = e.target.value;
+          App.recalculate();
+        });
+      }
+
+      const sniperComboSlider = document.getElementById('sniper-combo-slider');
+      if (sniperComboSlider) {
+        sniperComboSlider.addEventListener('input', e => {
+          App.state.options.sniperComboEnabled = true;
+          App.state.options.sniperComboSlider = parseFloat(e.target.value) || 1;
+          document.getElementById('sniper-combo-value').textContent = e.target.value;
+          App.recalculate();
+        });
+      }
+
+      const calcTimeSlider = document.getElementById('calc-time-slider');
+      if (calcTimeSlider) {
+        calcTimeSlider.addEventListener('input', e => {
+          document.getElementById('calc-time-value').textContent = e.target.value;
+        });
+      }
+
+      const rivenRankSlider = document.getElementById('riven-rank-slider');
+      if (rivenRankSlider) {
+        rivenRankSlider.addEventListener('input', e => {
+          App.state.riven.rank = parseInt(e.target.value) || 0;
+          document.getElementById('riven-rank-value').textContent = e.target.value;
+        });
+      }
+
+      const conditionalAlways = document.querySelector('[data-key="conditionalModsAlways"]');
+      if (conditionalAlways) conditionalAlways.classList.add('active');
+    });
+
+    /* 星空 Canvas 初始化 */
+    (function() {
+      var c = document.getElementById('star-canvas');
+      if (!c) return;
+      var ctx = c.getContext('2d');
+      var stars = [];
+      function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
+      function init() {
+        resize();
+        stars = [];
+        for (var i = 0; i < 120; i++) {
+          stars.push({
+            x: Math.random() * c.width,
+            y: Math.random() * c.height,
+            r: Math.random() * 1.5 + 0.3,
+            a: Math.random(),
+            da: (Math.random() - 0.5) * 0.008
+          });
+        }
+      }
+      function draw() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        stars.forEach(function(s) {
+          s.a += s.da;
+          if (s.a > 1) s.da = -Math.abs(s.da);
+          if (s.a < 0.1) s.da = Math.abs(s.da);
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(180,160,120,' + s.a.toFixed(2) + ')';
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      init();
+      draw();
+      window.addEventListener('resize', resize);
+    })();
+  </script>
+</body>
+</html>

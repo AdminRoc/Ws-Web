@@ -1,0 +1,495 @@
+002-ER
+Aerial Commander
+Acolytes
+Amalgam Alkonost
+Amalgam Cinder Machinist
+Amalgam Arca Kucumatz
+Aerolyst
+Amalgam Arca Heqet
+Amalgam Heqet
+Alad V
+Amalgam Kucumatz
+Amalgam Osprey
+Amalgam Phase MOA
+Amalgam Satyr
+Amalgam Swarm Satyr
+Ancient Disruptor
+Ambulas
+Ancient Healer
+Deimos Ancient Healer
+Angst
+Anu Mantalyst
+Anu Pyrolyst
+Anti MOA
+Arcane Machine
+Archon Amar
+Archon Boreal
+Arbitration Shield Drone
+Armaments Director
+Armis Ulta
+Ashen Kuaka (Old)
+Artificer
+Attack Drone (Archwing Enemy)
+Archon Nira
+Auditor
+Aurax Actinic
+Aurax Atloc Raknoid
+Aurax Baculus
+Amalgam MOA
+Aurax Culveri MOA
+Azoth
+Aurax Polaris MOA
+Aurax Vertec
+Bailiff Defector
+Amalgam Machinist
+Attack Mutalist
+Anu Interference Drone
+Basilisk
+Bailiff
+Blite Captain
+Bombard
+Kuva Bombard
+Attack Drone
+Brood Mother
+Butcher
+Kuva Butcher
+Captain Vor & Lieutenant Lech Kril
+Carrier (Enemy)
+Captain Vor
+Charger
+Carabus
+Cinderthresh Hyena
+Choralyst
+Condor Dropship
+Basal Diploid
+Conculyst
+Coolant Raknoid
+Corpus Cestra Target
+Corpus Sniper Target
+Corpus Supra Target
+Corpus Ramsled
+Brachiolyst
+Bursa
+Boiler
+Corrupted Bombard
+Corrupted Butcher
+Commander
+Corrupted Drone
+Corrupted MOA
+Corrupted Heavy Gunner
+Corrupted Vor
+Battalyst
+Corrupted Lancer
+Ballista
+Kuva Ballista
+Corvette
+Councilor Vay Hek
+Corrupted Nullifier
+Crewman
+Crewship
+Crawler
+Comet Shard
+Cutter
+Darek Draga
+Datalyst
+Deimos Therid
+Deimos Jugulus
+Deimos Tendril Drone
+Deimos Genetrix
+Deimos Juggernaut
+Demolisher Anti MOA
+Demolisher Bailiff
+Demolisher Boiler
+Demolisher Bursa
+Demolisher Devourer
+Demolisher Expired
+Demolisher Charger
+Demolisher Heavy Gunner
+Demolyst Heqet
+Demolisher Hyena
+Demolisher Juggernaut
+Demolisher Kuva Guardian
+Demolyst Machinist
+Demolyst MOA
+Demolisher Nox
+Demolyst Satyr
+Demolisher Thrasher
+Denial Bursa
+Condrix
+Dru Pesfor
+Dreg
+Devotee
+Drahk Master
+Kuva Drahk Master
+Eidolon Gantulyst
+Corpus Trencher Target
+Draga
+Eidolon Hydrolyst
+Corpus Target
+Elite Basilisk
+Drover Bursa
+Electric Crawler
+Elite Cutter
+Eidolon Teralyst
+Elite Crewman
+Eidolon Vomvalyst
+Elite Ramsled
+Elite Weaver
+Elite Taktis
+Derivator Crewman
+Errant Specter
+Executioner/Garesh
+Engineer
+Eviscerator
+Kuva Eviscerator
+Elite Gokstad Crewship
+Executioner/Nok
+Executioner/Gorth
+Executioner/Harkonar
+Executioner/Reth
+Dargyn Pilot
+Executioner/Dhurnam
+Elite Flak
+Drudge
+Corrupted Crewman
+Drone Guardian
+Deimos Carnis
+Executioner/Dok Thul
+Executioner/Vay Molta
+Corrupted Ancient
+Desert Skate
+Detron Crewman
+Disc MOA
+Deimos Saxum
+Comba
+Eidolon Lure
+Derim Zahn
+Drahk
+Executioner/Zura
+Corpus Tech
+Dargyn (Enemy)
+Kuva Dargyn
+Elite Outrider
+Elite Harpi
+Exploiter Orb
+Elite Shield Lancer
+Elite Lancer
+Kuva Elite Lancer
+Flak
+Feral Kavat
+Feral Diploid
+Feral Kubrow
+Frigate
+Feyarch Specter
+Flameblade
+Kuva Flameblade
+Fusion MOA
+Vapos Fusion MOA
+Fusion MOA Guardian
+Frozen Infested Hive
+Garv
+Gas Infested Hive
+General Sargas Ruk
+Ghoul Devourer
+Ghoul Auger
+Glacik Commander
+Ghoul Expired Deserter
+Gokstad Officer
+Gokstad Pilot
+Gox
+Ghoul Expired
+Grineer Target
+Ghoul Rictus
+Gyre Hyena
+Guardsman
+Gyrix
+Harpi
+Frontier Lancer
+Hellion Dargyn
+Hellion
+Kuva Hellion
+Heavy Gunner
+Kuva Heavy Gunner
+Hound
+Hyekka
+Ionyx
+Icemire Hyena
+Hyena Pack
+Hemocyte
+Hukin
+Gokstad Crewship
+Jackal
+Juggernaut
+Isolator Bursa
+Jordas Golem
+Juggernaut Behemoth
+Kuva Guardian
+Knave Specter
+Juno Jactus Osprey
+Infested Mesa
+Juno Geminex MOA
+Kuva Lich
+Juno Dera MOA
+Hyekka Master
+Kuva Hyekka Master
+Infested Hive
+Kyta Raknoid
+Latrox Une
+Infested Chroma
+Leaper
+Kuva Trokarian
+Lancing Infested Hive
+Kela De Thaym
+Manic
+Leech Osprey
+Leaping Thrasher
+Mania
+Lobber Crawler
+Malice
+Lancer Dreg
+Juno Glaxion MOA
+Lockjaw & Sol
+M-W.A.M.
+Lephantis
+Misery
+Jad Teran
+Mitosid
+Lynx
+Mine Osprey
+Mimic
+MOA
+Minima MOA
+Mutalist Alad V
+Mutalist Osprey
+Jen Dro
+Napalm
+Kuva Napalm
+Locust Drone
+Lektro Commander
+Mutalist Toxic Carrier
+Narmer Bombard
+Nako Xol
+Manic Bombard
+Narmer Heavy Gunner
+Kuva Jester
+Narmer Ballista
+Narmer Dera MOA
+Narmer Lancer
+Maggot
+Lynx Osprey
+Narmer Leech Osprey
+Narmer Napalm
+Narmer Powerfist
+Narmer Raknoid
+Necramech
+Maroo
+Narmer Jailer
+Narmer Trooper
+Nauseous Crawler
+Nox
+Nullifier Crewman
+Narmer Sniper Crewman
+Narmer Detron Crewman
+Optio
+Phorid
+Lancer
+Kuva Lancer
+Narmer Nullifier Crewman
+Narmer Hellion
+Narmer Corpus Tech
+Oxium Osprey
+Orphix
+Orokin Drone
+Narmer Mine Osprey
+Oculyst
+Ortholyst
+Lieutenant Lech Kril
+Narmer Scorpion
+Narmer Glaxion MOA
+Pelna Cade
+Mutalist Lightning Carrier
+Orbital Strike Drone
+Pilot
+Outrider
+Narmer Geminex MOA
+Narmer Disc MOA
+Narmer Thumper Doma
+Narmer Crewman
+Narmer Shield Osprey
+Plains Commander
+Narmer Prod Crewman
+Machinist
+Narmer Scorch
+Numon
+Latcher
+Narmer Deacon
+Narmer Commander
+Penta Ranger
+Orokin Spectator
+Narmer Sapping Osprey
+Ogma
+Narmer Shield Lancer
+Orphid Specter
+Narmer Flameblade
+Nemes
+Nullifier Target
+Profit-Taker Orb
+Pulsing Infested Hive
+Prod Crewman
+Protea Specter
+Propaganda Drone
+Pyr Captain
+Powerfist
+Kuva Powerfist
+ProdCrewman2
+Railgun MOA
+Vapos Railgun MOA
+Taro Railgun MOA
+Rabbleback Hyena
+Ramsled
+Raider Carver
+Rana Del
+Ranger
+Raider Eviscerator
+Raider
+Ranger Crewman
+Raptors
+Razorback
+Ratel
+Quanta Ranger
+Raptor RX
+Regulator
+Recon Commander
+Remech Osprey
+Ropalolyst
+Roller
+Kuva Roller
+Saturn Six Fugitive
+Sapping Osprey
+Scavenger Drone
+Scorpion
+Kuva Scorpion
+Scrambus
+Scyto Raknoid
+Roller Sentry
+Security Infested Hive
+Runner
+Sentient Research Director
+Shadow Stalker
+Scorch
+Kuva Scorch
+Shield Lancer
+Kuva Shield Lancer
+Seeker
+Kuva Seeker
+Shield Osprey
+Shield Dargyn
+Shockwave MOA
+Sikula
+Sisters of Parvos
+Shock Draga
+Spark
+Specter (Enemy)
+Stalker
+Shield-Hellion Dargyn
+Ven'kra Tel
+Stropha Crewman
+Symbilyst
+Stabilization Infested Hive
+Supressor
+Summulyst
+Taktis
+Taro Secura Osprey
+Tarask Bursa
+Swarm Mutalist MOA
+Tusk Heavy Gunner
+Tech
+Temporal Dreg
+Terra Crewman
+Terra Manker
+Terra Raptor SX
+The Grustrag Three
+Terra Overtaker
+Terra Jailer
+Sniper Crewman
+The Grustrag Three/Leekter
+The Grustrag Three/Shik Tal
+Terra Trencher
+The Sergeant
+Thrax Legatus
+Toxic Crawler
+Tia Mayn
+Tomb Protector Effigy
+Terra Plasmor Crewman
+The Grustrag Three/Vem Tabook
+Toxic Ancient
+Tomb Guardian
+Tusk Thumper Doma
+Undying Flyer
+Tusk Seeker Drone
+Tusk Firbolg
+Tusk Bolkor
+Tomb Protector
+Tusk Thumper
+Terra Provisor
+Vapos Detron Crewman
+Terra Embattor MOA
+Ved Xol
+Vapos Sniper Ranger
+Weaver
+Vapos Detron Ranger
+Vapos Tech Ranger
+Volatile Runner
+Ven
+Zealot Proselytizer
+Venin Mutalist
+Zanuka
+Zealot Herald
+Zealot Baptizer
+Zerca
+Vambac
+Tar Mutalist MOA
+Vivisect Director
+Vapos Elite Ranger
+Fire Prosecutor
+Zealoid Prelate
+Zeplen
+Void Angel
+Torment
+Treasurer
+Vapos Nullifier Ranger
+Tusk Command Dargyn
+Tusk Thumper Bull
+Vapos Aquila
+Thrax Centurion
+Tyl Regor
+Zealoid Bastion
+Trooper
+Kuva Trooper
+Violence
+Wolf of Saturn Six
+Zanuka Hunter
+The Fragmented Suzerain
+The Anatomizer
+The Hollow Vein
+Rogue Culverin
+Demolisher Voidrig
+H-09 Efervon Tank
+Scaldra Jaeger
+Scaldra Flayer
+Scaldra Barbican
+Scaldra Eradicator
+Scaldra Dedicant
+Techrot Galliflex
+Techrot Volatile Galliflex
+Techrot Matmas
+Techrot Skuzzi
+Techrot Obsolyte
+Techrot Babau
+Anarch Arcus
+Anarch Gladius
+Anarch Grineer Lancer
+Anarch Grineer Trapper
+Anarch Libritor
+Anarch Capsarii
+Anarch Tenebra

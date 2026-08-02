@@ -1,0 +1,565 @@
+/* ════════════════════════════════════════════════════════════
+   dmg/style.css  �? Warframe Damage Calculator
+   Orokin Gold Theme (Ws-Web DESIGN.md compliant)
+   ════════════════════════════════════════════════════════════ */
+
+:root {
+  --c-bg: #07080f;
+  --c-bg2: #0d101e;
+  --c-card: rgba(8, 14, 30, 0.72);
+  --c-card-hov: rgba(0, 212, 255, 0.06);
+  --c-cyan: #00d4ff;
+  --c-purple: #8b5cf6;
+  --c-teal: #00ffcc;
+  --c-gold: #ffd700;
+  --c-text: #b0cae8;
+  --c-text2: #607898;
+  --c-text3: #324560;
+  --c-white: #e8f4ff;
+  --c-gold-bright: #d4a84a;
+  --c-gold-mid: rgba(192,148,58,0.88);
+  --c-gold-dim: rgba(162,118,42,0.45);
+  --c-gold-faint: rgba(135,98,32,0.18);
+  --c-lb-card: rgba(12,8,2,.82);
+  --c-lb-border: rgba(185,142,52,.18);
+  --c-lb-border-light: rgba(185,142,52,.06);
+  --c-lb-hover: rgba(185,142,52,.12);
+  --c-red: #ef4444;
+  --c-green: #10b981;
+  --c-blue: #3b82f6;
+  --f-sci: 'Orbitron', 'Rajdhani', sans-serif;
+  --f-body: 'Rajdhani', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --f-cn: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+  --ease-fast: .18s ease;
+  --ease-med: .35s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--f-body);
+  background: var(--c-bg);
+  color: var(--c-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── 背景粒子 ── */
+.bg-particles {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+.particle {
+  position: absolute; width: 2px; height: 2px;
+  background: var(--c-gold-bright); border-radius: 50%; opacity: 0;
+  animation: float 8s infinite ease-in-out;
+}
+@keyframes float {
+  0%, 100% { opacity: 0; transform: translateY(100vh) scale(0); }
+  50% { opacity: 0.6; transform: translateY(-100px) scale(1); }
+}
+
+/* ── 主容�?── */
+.app-container {
+  position: relative; z-index: 1;
+  max-width: 1600px; margin: 0 auto; padding: 20px;
+}
+
+/* ── 头部 ── */
+.header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 30px;
+  background: linear-gradient(135deg, var(--c-bg2) 0%, var(--c-card) 100%);
+  border: 1px solid var(--c-lb-border);
+  border-radius: var(--r-lg);
+  margin-bottom: 24px;
+  position: relative; overflow: hidden;
+}
+.header::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--c-gold-bright), transparent);
+}
+.header-title { display: flex; align-items: center; gap: 16px; }
+.header-title h1 {
+  font-family: var(--f-sci); font-size: 1.6rem; font-weight: 700;
+  letter-spacing: .12em;
+  background: linear-gradient(135deg, var(--c-gold-bright) 0%, #fff 50%, var(--c-gold-bright) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(212,168,74,0.5);
+}
+.header-title .subtitle {
+  font-family: var(--f-cn); color: var(--c-text2); font-size: 1.05rem;
+}
+.header-actions { display: flex; gap: 12px; }
+
+/* ── 按钮 ── */
+.btn {
+  padding: 10px 20px; border: none; border-radius: var(--r-sm);
+  font-family: var(--f-body); font-size: 1.05rem; font-weight: 600;
+  cursor: pointer; transition: all var(--ease-fast);
+  display: inline-flex; align-items: center; gap: 8px;
+  letter-spacing: .04em;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--c-gold-bright) 0%, #b8860b 100%);
+  color: #0a0800;
+  box-shadow: 0 0 16px rgba(212,168,74,.35);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(212,168,74,.55);
+}
+.btn-secondary {
+  background: var(--c-card);
+  color: var(--c-text);
+  border: 1px solid var(--c-lb-border);
+}
+.btn-secondary:hover {
+  background: var(--c-lb-hover);
+  border-color: var(--c-gold-bright);
+}
+
+/* ── 主布局 3�?── */
+.main-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr 360px;
+  gap: 24px;
+  min-height: calc(100vh - 160px);
+}
+
+/* ── 面板 ── */
+.panel {
+  background: var(--c-lb-card);
+  border: 1px solid var(--c-lb-border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.panel-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 18px;
+  background: linear-gradient(90deg, rgba(185,142,52,.10) 0%, rgba(140,95,20,.06) 100%);
+  border-bottom: 1px solid var(--c-lb-border);
+}
+.panel-header h2 {
+  font-family: var(--f-sci); font-size: 1.05rem; font-weight: 600;
+  letter-spacing: .1em; color: var(--c-gold-bright);
+  display: flex; align-items: center; gap: 8px;
+}
+.panel-header .capacity {
+  font-family: var(--f-sci); font-size: 0.95rem; color: var(--c-text2);
+  background: var(--c-bg); padding: 4px 12px; border-radius: var(--r-sm);
+  border: 1px solid var(--c-lb-border); letter-spacing: .06em;
+}
+.panel-content { padding: 16px; }
+
+/* ── 搜索�?── */
+.search-input {
+  width: 100%; padding: 10px 14px;
+  background: var(--c-card); border: 1px solid var(--c-lb-border);
+  border-radius: var(--r-sm);
+  color: var(--c-text); font-family: var(--f-body); font-size: 1.05rem;
+  transition: border-color var(--ease-fast);
+}
+.search-input:focus {
+  outline: none; border-color: var(--c-gold-bright);
+  box-shadow: 0 0 0 3px rgba(212,168,74,.12);
+}
+.search-input::placeholder { color: var(--c-text3); }
+select.search-input {
+  -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%23607898' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+  padding-right: 32px;
+}
+
+/* ── 武器/敌人列表 ── */
+.weapon-list { margin-top: 12px; max-height: 400px; overflow-y: auto; }
+.weapon-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; background: var(--c-card);
+  border: 1px solid transparent; border-radius: var(--r-sm);
+  margin-bottom: 6px; cursor: pointer;
+  transition: all var(--ease-fast);
+}
+.weapon-item:hover {
+  background: var(--c-lb-hover); border-color: var(--c-gold-dim);
+  transform: translateX(3px);
+}
+.weapon-item.active {
+  background: rgba(212,168,74,.08); border-color: var(--c-gold-bright);
+}
+.weapon-item .weapon-icon {
+  width: 44px; height: 44px; background: var(--c-bg);
+  border-radius: var(--r-sm); display: flex;
+  align-items: center; justify-content: center; font-size: 1.4rem;
+}
+.weapon-item .weapon-info { flex: 1; }
+.weapon-item .weapon-name {
+  font-family: var(--f-cn); font-weight: 600; color: var(--c-white);
+  margin-bottom: 2px; font-size: 1.05rem;
+}
+.weapon-item .weapon-type {
+  font-family: var(--f-sci); font-size: 0.9rem; color: var(--c-text3);
+  letter-spacing: .06em;
+}
+
+/* ── MOD 网格 ── */
+.mod-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 12px; margin-bottom: 16px;
+}
+.mod-slot {
+  aspect-ratio: 1; background: var(--c-card);
+  border: 2px dashed var(--c-lb-border); border-radius: var(--r-sm);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer; transition: all var(--ease-fast);
+  position: relative; overflow: hidden;
+  min-height: 120px;
+}
+.mod-slot:hover { border-color: var(--c-gold-bright); background: var(--c-lb-hover); }
+.mod-slot.filled {
+  border-style: solid; border-color: var(--c-blue);
+  background: linear-gradient(135deg, rgba(59,130,246,.08) 0%, rgba(139,92,246,.08) 100%);
+}
+.mod-slot .mod-icon {
+  font-size: 2rem; margin-bottom: 8px; color: var(--c-text3);
+}
+.mod-slot .mod-name {
+  font-size: 1.05rem; color: var(--c-text2);
+  text-align: center; line-height: 1.3;
+}
+.mod-slot .mod-img {
+  width: 100%; height: 100%; object-fit: cover;
+  position: absolute; top: 0; left: 0;
+}
+.mod-slot .mod-img-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+  padding: 8px 4px 4px; text-align: center;
+}
+.mod-slot .mod-img-overlay .mod-name {
+  font-size: 0.95rem; color: #fff; font-weight: 600;
+}
+.mod-slot .mod-img-overlay .mod-stats {
+  font-size: 1.05rem; color: var(--c-gold-bright);
+}
+.mod-slot .remove-mod {
+  position: absolute; top: 4px; right: 4px;
+  width: 24px; height: 24px; background: var(--c-red);
+  color: white; border: none; border-radius: 50%;
+  font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity var(--ease-fast);
+  z-index: 10;
+}
+.mod-slot:hover .remove-mod { opacity: 1; }
+.mod-slot .remove-mod:hover { background: #dc2626; transform: scale(1.1); }
+
+/* ── 特殊槽位 ── */
+.special-slot { border-color: var(--c-lb-border); }
+
+/* ── 属性区�?── */
+.stat-section { margin-bottom: 18px; }
+.stat-section h3 {
+  font-family: var(--f-sci); font-size: 1rem; font-weight: 600;
+  letter-spacing: .1em; color: var(--c-gold-bright);
+  margin-bottom: 10px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--c-lb-border-light);
+}
+.stat-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.03);
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-label { font-family: var(--f-cn); color: var(--c-text2); font-size: 1rem; }
+.stat-value {
+  font-family: var(--f-sci); font-weight: 600; color: var(--c-white);
+  font-size: 1.05rem; letter-spacing: .04em;
+}
+.stat-value.positive { color: var(--c-green); }
+.stat-value.negative { color: var(--c-red); }
+
+/* ── 伤害�?── */
+.damage-bar {
+  height: 6px; background: var(--c-card);
+  border-radius: 3px; overflow: hidden; margin-top: 6px;
+}
+.damage-bar-fill {
+  height: 100%; border-radius: 3px; transition: width .5s ease;
+}
+
+/* ── DPS 面板 ── */
+.dps-display {
+  background: linear-gradient(135deg, var(--c-card) 0%, rgba(212,168,74,.04) 100%);
+  border: 1px solid var(--c-gold-dim); border-radius: var(--r-md);
+  padding: 20px; text-align: center; margin-bottom: 18px;
+}
+.dps-value {
+  font-family: var(--f-sci); font-size: 2.8rem; font-weight: 800;
+  letter-spacing: .08em;
+  background: linear-gradient(135deg, var(--c-gold-bright) 0%, #fff 50%, var(--c-gold-bright) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1; margin-bottom: 6px;
+}
+.dps-label {
+  font-family: var(--f-cn); color: var(--c-text2); font-size: 1.05rem;
+}
+.dps-breakdown {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px; margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--c-lb-border-light);
+}
+.dps-stat { text-align: center; }
+.dps-stat-value {
+  font-family: var(--f-sci); font-size: 1.3rem; font-weight: 700;
+  color: var(--c-cyan); letter-spacing: .04em;
+}
+.dps-stat-label {
+  font-family: var(--f-cn); font-size: 0.9rem; color: var(--c-text3); margin-top: 3px;
+}
+
+/* ── 敌人信息 ── */
+.enemy-config {
+  background: var(--c-card); border-radius: var(--r-sm);
+  padding: 14px; margin-bottom: 14px;
+}
+.enemy-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.enemy-name {
+  font-family: var(--f-cn); font-size: 1rem; font-weight: 600; color: var(--c-white);
+}
+.enemy-level {
+  font-family: var(--f-cn); color: var(--c-text2); font-size: 1rem;
+}
+.level-input {
+  width: 100%; padding: 8px 12px;
+  background: var(--c-bg); border: 1px solid var(--c-lb-border);
+  border-radius: var(--r-sm); color: var(--c-white);
+  font-family: var(--f-sci); font-size: 1.05rem; text-align: center;
+}
+
+/* ── 选项 ── */
+.options-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+}
+.option-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; background: var(--c-card);
+  border: 1px solid transparent; border-radius: var(--r-sm);
+  cursor: pointer; transition: background var(--ease-fast);
+}
+.option-item:hover { background: var(--c-lb-hover); }
+.option-checkbox {
+  width: 16px; height: 16px; min-width: 16px;
+  border: 2px solid var(--c-lb-border); border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--ease-fast);
+}
+.option-item.active .option-checkbox {
+  background: var(--c-gold-bright); border-color: var(--c-gold-bright);
+}
+.option-item.active .option-checkbox::after {
+  content: '\2713'; color: #0a0800; font-size: 1.05rem; font-weight: bold;
+}
+.option-label {
+  font-family: var(--f-cn); font-size: 1rem; color: var(--c-text2);
+}
+
+/* ── 滑块 ── */
+.slider-group { margin-bottom: 14px; }
+.slider-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.slider-label { font-family: var(--f-cn); font-size: 1rem; color: var(--c-text2); }
+.slider-value {
+  font-family: var(--f-sci); font-size: 1rem; color: var(--c-gold-bright);
+  font-weight: 600; letter-spacing: .04em;
+}
+.slider-input {
+  width: 100%; height: 5px; -webkit-appearance: none; appearance: none;
+  background: var(--c-card); border-radius: 3px; outline: none;
+}
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 16px; height: 16px; background: var(--c-gold-bright);
+  border-radius: 50%; cursor: pointer;
+  box-shadow: 0 0 10px rgba(212,168,74,.45);
+  transition: transform var(--ease-fast);
+}
+.slider-input::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+/* ── 伤害分布 ── */
+.damage-chart {
+  background: var(--c-card); border-radius: var(--r-sm);
+  padding: 14px; margin-bottom: 14px;
+}
+.chart-title {
+  font-family: var(--f-sci); font-size: 1rem; color: var(--c-gold-bright);
+  letter-spacing: .1em; margin-bottom: 10px;
+}
+.chart-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.chart-bar-label {
+  width: 70px; font-family: var(--f-cn); font-size: 0.95rem; color: var(--c-text2);
+}
+.chart-bar-track {
+  flex: 1; height: 18px; background: var(--c-bg);
+  border-radius: 3px; overflow: hidden;
+}
+.chart-bar-fill {
+  height: 100%; border-radius: 3px;
+  display: flex; align-items: center; padding-left: 8px;
+  font-family: var(--f-sci); font-size: 1.05rem; font-weight: 600;
+  color: white; transition: width .5s ease; letter-spacing: .04em;
+}
+
+/* ── 可折�?── */
+.collapsible-toggle { cursor: pointer; user-select: none; transition: color var(--ease-fast); }
+.collapsible-toggle:hover { color: var(--c-white); }
+
+/* ── 技能网�?── */
+.ability-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.ability-toggle {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; background: var(--c-card);
+  border: 1px solid transparent; border-radius: var(--r-sm);
+  cursor: pointer; transition: all var(--ease-fast);
+}
+.ability-toggle:hover { background: var(--c-lb-hover); }
+.ability-toggle.active {
+  background: rgba(212,168,74,.08); border-color: var(--c-gold-bright);
+}
+.ability-toggle.active .option-checkbox {
+  background: var(--c-gold-bright); border-color: var(--c-gold-bright);
+}
+.ability-toggle.active .option-checkbox::after {
+  content: '\2713'; color: #0a0800; font-size: 1.05rem; font-weight: bold;
+}
+
+/* ── 选项�?── */
+.option-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.checkbox-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+
+/* ── 面板分类 ── */
+.weapon-panel { max-height: calc(100vh - 160px); overflow-y: auto; }
+.enemy-panel { max-height: calc(100vh - 160px); overflow-y: auto; }
+
+/* ── MOD 选择器弹�?── */
+.mod-picker {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,.85);
+  display: none; z-index: 1000;
+  padding: 40px; overflow-y: auto;
+}
+.mod-picker.active {
+  display: flex; align-items: flex-start; justify-content: center;
+}
+.mod-picker .picker-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 14px;
+}
+.mod-picker .picker-header h3 {
+  font-family: var(--f-sci); color: var(--c-gold-bright);
+  font-size: 1.1rem; letter-spacing: .1em;
+}
+.mod-picker .picker-header button {
+  background: none; border: none; color: var(--c-text2);
+  font-size: 1.5rem; cursor: pointer; padding: 8px;
+  transition: color var(--ease-fast);
+}
+.mod-picker .picker-header button:hover { color: var(--c-gold-bright); }
+
+/* ── 裂罅创建器弹�?── */
+.riven-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,.85);
+  display: none; z-index: 1000;
+  padding: 40px; overflow-y: auto;
+}
+.riven-modal-overlay.active {
+  display: flex; align-items: flex-start; justify-content: center;
+}
+.riven-modal {
+  background: var(--c-lb-card);
+  border: 1px solid var(--c-lb-border);
+  border-radius: var(--r-md);
+  padding: 24px; max-width: 600px; width: 100%;
+  max-height: 85vh; overflow-y: auto;
+}
+.riven-modal h3 {
+  font-family: var(--f-sci); color: var(--c-gold-bright);
+  font-size: 1rem; letter-spacing: .1em; margin-bottom: 16px;
+}
+.riven-modal .riven-section { margin-bottom: 16px; }
+.riven-modal .riven-section-title {
+  font-family: var(--f-cn); font-size: 1rem; color: var(--c-text2);
+  margin-bottom: 8px;
+}
+
+/* ── 滚动�?── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--c-bg); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--c-lb-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--c-text3); }
+
+/* ── 页脚 ── */
+.site-footer {
+  position: relative; z-index: 10;
+  padding: 2.5rem 1rem 2rem; text-align: center;
+  border-top: 1px solid rgba(0,212,255,.07);
+  margin-top: 4rem;
+}
+.site-footer a, .site-footer p {
+  color: rgba(176,202,232,0.55);
+  font-size: .88rem;
+  font-family: 'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif;
+  letter-spacing: .06em; display: block; line-height: 2;
+  transition: color var(--ease-fast), text-shadow var(--ease-fast);
+}
+.site-footer a:hover {
+  color: #e8c264;
+  text-shadow: 0 0 8px rgba(232,194,100,.75), 0 0 20px rgba(232,194,100,.38);
+}
+.site-footer p a { display: inline; }
+.site-footer p:last-child { margin-top: .8em; }
+.beian-row {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: .4rem .7rem;
+}
+.beian-row a { display: inline; white-space: nowrap; }
+.beian-icon { width: 16px; height: 16px; vertical-align: middle; flex-shrink: 0; }
+
+/* ── 空状�?── */
+.empty-state { text-align: center; padding: 30px 16px; color: var(--c-text3); }
+.empty-state-text { font-family: var(--f-cn); font-size: 1.05rem; }
+
+/* ── 响应�?── */
+@media (max-width: 1400px) {
+  .main-layout { grid-template-columns: 280px 1fr 320px; gap: 16px; }
+}
+@media (max-width: 1200px) {
+  .main-layout { grid-template-columns: 1fr 1fr; }
+  .weapon-panel { grid-column: 1 / -1; max-height: none; }
+}
+@media (max-width: 768px) {
+  .main-layout { grid-template-columns: 1fr; }
+  .header { flex-direction: column; gap: 16px; text-align: center; }
+  .dps-value { font-size: 2.2rem; }
+  .dps-breakdown { grid-template-columns: 1fr; }
+  .mod-grid { grid-template-columns: repeat(3, 1fr); }
+  .weapon-panel, .enemy-panel { max-height: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .particle { display: none; }
+}
