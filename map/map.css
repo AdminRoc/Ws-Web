@@ -1218,7 +1218,7 @@
 .locpanel-list {
   flex: 1;
   overflow-y: auto;
-  padding: 4px 0;
+  padding: 4px 0 20px;
 }
 .locpanel-list::-webkit-scrollbar { width: 3px; }
 .locpanel-list::-webkit-scrollbar-track { background: transparent; }
@@ -1285,12 +1285,9 @@
 }
 
 .locpanel-group-items {
-  max-height: 600px;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
 }
 .locpanel-group.collapsed .locpanel-group-items {
-  max-height: 0;
+  display: none;
 }
 
 /* Location list item */
