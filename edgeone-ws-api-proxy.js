@@ -20,7 +20,56 @@ const ROUTES = {
   '/raw-ws':         { base: 'https://oracle.browse.wf/worldState.json' },
 };
 
+// ── 新增：User-Agent 白名单 ──
+// 只允许浏览器和已知客户端，拦截恶意代理
+const ALLOWED_USER_AGENTS = [
+  'Mozilla/5.0',      // Chrome/Firefox/Safari/Edge
+  'Opera/',
+  'Safari/',
+  'Mozilla/5.0 (compatible; wfspeed-data-sync/1.0)',
+];
+
+function isAllowedUserAgent(ua) {
+  if (!ua) return false;
+  return ALLOWED_USER_AGENTS.some(prefix => ua.startsWith(prefix));
+}
+
+// ── 新增：简单的内存限流器 ──
+// 每个 Worker 实例独立，重启后重置
+const RATE_LIMIT = {
+  windowMs: 60000,     // 1 分钟窗口
+  maxRequests: 100,    // 每个 IP 每分钟最多 100 次请求
+};
+const requestCounts = new Map(); // ip -> { count, resetTime }
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const record = requestCounts.get(ip);
+  
+  if (!record || now > record.resetTime) {
+    requestCounts.set(ip, { count: 1, resetTime: now + RATE_LIMIT.windowMs });
+    return false;
+  }
+  
+  record.count++;
+  return record.count > RATE_LIMIT.maxRequests;
+}
+
+// 清理过期记录（每 10 分钟执行一次）
+let lastCleanup = Date.now();
+function cleanupRateLimit() {
+  const now = Date.now();
+  if (now - lastCleanup > 600000) {
+    for (const [ip, record] of requestCounts) {
+      if (now > record.resetTime) requestCounts.delete(ip);
+    }
+    lastCleanup = now;
+  }
+}
+
 async function handleRequest(request) {
+  cleanupRateLimit();
+  
   const url = new URL(request.url);
   let match = null;
   let targetPath = '';
@@ -35,7 +84,15 @@ async function handleRequest(request) {
 
   if (!match) return new Response('Not Found', { status: 404 });
 
-  // 来源检查：只允许 wfspeed.run / war-frame.com 域名的请求
+  // ── 新增：1. User-Agent 检查 ──
+  // 拦截非浏览器请求（如 privatemw-public-proxy）
+  const userAgent = request.headers.get('User-Agent') || '';
+  if (!isAllowedUserAgent(userAgent)) {
+    return new Response('Forbidden', { status: 403 });
+  }
+
+  // ── 原有：2. 来源检查 ──
+  // 只允许 wfspeed.run / war-frame.com 域名的请求
   const referer = request.headers.get('Referer') || '';
   const origin = request.headers.get('Origin') || '';
   const allowed = ALLOWED_ORIGINS.some(d =>
@@ -43,6 +100,15 @@ async function handleRequest(request) {
   );
   if (!allowed) {
     return new Response('Forbidden', { status: 403 });
+  }
+
+  // ── 新增：3. IP 限流检查 ──
+  const clientIP = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'unknown';
+  if (isRateLimited(clientIP)) {
+    return new Response('Rate Limited', { 
+      status: 429, 
+      headers: { 'Retry-After': '60' }
+    });
   }
 
   const target = new URL(match.base + targetPath);
