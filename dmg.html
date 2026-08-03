@@ -62,65 +62,107 @@
            <div id="mod-grid" class="mod-grid"></div>
 
           <div class="stat-section" style="margin-top:16px;">
-            <h3>Warframe MOD</h3>
-            <div style="margin-bottom:8px;">
-              <button class="btn btn-secondary" style="width:100%;font-size:0.75rem;" onclick="App.openWarframeModPicker()">选择 Warframe MOD</button>
-            </div>
-            
-            <!-- Aura slots (4) -->
-            <div style="font-size:0.7rem;color:var(--c-text-dim);margin-bottom:4px;">光环槽 (4)</div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px;">
-              <div class="mod-slot aura-slot" id="wf-aura-0" onclick="App.openModPicker(10)"></div>
-              <div class="mod-slot aura-slot" id="wf-aura-1" onclick="App.openModPicker(11)"></div>
-              <div class="mod-slot aura-slot" id="wf-aura-2" onclick="App.openModPicker(12)"></div>
-              <div class="mod-slot aura-slot" id="wf-aura-3" onclick="App.openModPicker(13)"></div>
-            </div>
-            
-            <!-- Arcane slots (2) -->
-            <div style="font-size:0.7rem;color:var(--c-text-dim);margin-bottom:4px;">赋能槽 (2)</div>
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;margin-bottom:8px;">
-              <div class="mod-slot arcane-slot" id="wf-arcane-0" onclick="App.openModPicker(14)"></div>
-              <div class="mod-slot arcane-slot" id="wf-arcane-1" onclick="App.openModPicker(15)"></div>
-            </div>
-            
-            <!-- Warframe mod slots (8) -->
-            <div style="font-size:0.7rem;color:var(--c-text-dim);margin-bottom:4px;">MOD槽 (8)</div>
-            <div id="warframe-mod-grid" class="mod-grid" style="grid-template-columns:repeat(2,1fr);"></div>
-            
-            <!-- Focus school -->
-            <div style="margin-top:8px;">
-              <div style="font-size:0.7rem;color:var(--c-text-dim);margin-bottom:4px;">源力石</div>
-              <select id="wf-focus" onchange="App.setWarframeFocus(this.value)" style="width:100%;background:var(--c-card);border:1px solid var(--c-border);color:var(--c-text);padding:4px;border-radius:4px;">
-                <option value="none">无</option>
-                <option value="madurai">Madurai (物理伤害提高30%)</option>
-                <option value="vazarin">Vazarin (护盾恢复)</option>
-                <option value="naramon">Naramon (近战连击)</option>
-                <option value="unairu">Unairu (护甲剥离)</option>
-                <option value="zenurik">Zenurik (能量恢复)</option>
-              </select>
-            </div>
-            
-            <!-- Warframe skills -->
-            <div style="margin-top:8px;">
-              <div style="font-size:0.7rem;color:var(--c-text-dim);margin-bottom:4px;">战甲技能</div>
-              <div id="warframe-skills"></div>
+            <h3 class="collapsible-toggle" onclick="toggleSection('warframe-mod-section')">
+              Warframe MOD, 光环MOD, Warframe 秘奥 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+            </h3>
+            <div id="warframe-mod-section">
+              <div style="margin-bottom:8px;">
+                <button class="btn btn-secondary" style="width:100%;font-size:0.75rem;" onclick="App.openWarframeModPicker()">选择 Warframe MOD</button>
+              </div>
+              
+              <!-- Warframe Stats -->
+              <div class="wfStatsBlock">
+                <div class="wfStatItem"><span class="wfStatName">生命值: </span><span class="wfStatVal" id="wf-stat-hp">100</span></div>
+                <div class="wfStatItem"><span class="wfStatName">护盾: </span><span class="wfStatVal" id="wf-stat-shield">100</span></div>
+                <div class="wfStatItem"><span class="wfStatName">护甲: </span><span class="wfStatVal" id="wf-stat-armor">100</span></div>
+              </div>
+              
+              <!-- Aura slot (1) -->
+              <div class="modBlock">
+                <div class="modBlockTitle">光环槽</div>
+                <div class="modsRow">
+                  <div class="mod auraMod" tabindex="0" data-id="17" data-alt="光环" onclick="App.openModPicker(17)"></div>
+                </div>
+              </div>
+              
+              <!-- Warframe MOD slots (4) -->
+              <div class="modBlock">
+                <div class="modBlockTitle">Warframe MOD 槽</div>
+                <div class="modsRow">
+                  <div class="mod wfMod" tabindex="0" data-id="13" data-alt="MOD" onclick="App.openModPicker(13)"></div>
+                  <div class="mod wfMod" tabindex="0" data-id="14" data-alt="MOD" onclick="App.openModPicker(14)"></div>
+                  <div class="mod wfMod" tabindex="0" data-id="15" data-alt="MOD" onclick="App.openModPicker(15)"></div>
+                  <div class="mod wfMod" tabindex="0" data-id="16" data-alt="MOD" onclick="App.openModPicker(16)"></div>
+                </div>
+              </div>
+              
+              <!-- Warframe Arcane slots (2) -->
+              <div class="modBlock">
+                <div class="modBlockTitle">Warframe 赋能</div>
+                <div class="modsRow">
+                  <div class="mod arcaneMod" tabindex="0" data-id="11" data-alt="赋能" onclick="App.openModPicker(11)"></div>
+                  <div class="mod arcaneMod" tabindex="0" data-id="12" data-alt="赋能" onclick="App.openModPicker(12)"></div>
+                </div>
+              </div>
+              
+              <!-- Archon Shards (5) -->
+              <div class="modBlock">
+                <div class="modBlockTitle">源力石</div>
+                <div class="modsRow">
+                  <div class="mod archonShardMod" tabindex="0" data-id="23" data-alt="源力石" onclick="App.openModPicker(23)"></div>
+                  <div class="mod archonShardMod" tabindex="0" data-id="24" data-alt="源力石" onclick="App.openModPicker(24)"></div>
+                  <div class="mod archonShardMod" tabindex="0" data-id="25" data-alt="源力石" onclick="App.openModPicker(25)"></div>
+                  <div class="mod archonShardMod" tabindex="0" data-id="26" data-alt="源力石" onclick="App.openModPicker(26)"></div>
+                  <div class="mod archonShardMod" tabindex="0" data-id="27" data-alt="源力石" onclick="App.openModPicker(27)"></div>
+                </div>
+              </div>
+              
+              <!-- Focus School -->
+              <div class="focusSchoolBlock">
+                <div class="modBlockTitle">源力石</div>
+                <select id="wf-focus" onchange="App.setWarframeFocus(this.value)">
+                  <option value="none">无</option>
+                  <option value="madurai">Madurai (物理伤害提高30%)</option>
+                  <option value="vazarin">Vazarin (护盾恢复)</option>
+                  <option value="naramon">Naramon (近战连击)</option>
+                  <option value="unairu">Unairu (护甲剥离)</option>
+                  <option value="zenurik">Zenurik (能量恢复)</option>
+                </select>
+              </div>
+              
+              <!-- Warframe skills -->
+              <div class="wfSkillsBlock">
+                <div class="modBlockTitle">战甲技能</div>
+                <div id="warframe-skills"></div>
+              </div>
             </div>
           </div>
 
           <div class="stat-section">
             <h3>特殊槽位</h3>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;">
-              <div class="mod-slot special-slot" id="exilus-slot" onclick="App.openModPicker(8)">
-                <div class="mod-icon" style="font-size:0.7rem;color:var(--c-cyan);">EXILUS</div>
-                <div class="mod-name">特殊功能槽</div>
+            <div class="specialSlotsBlock">
+              <!-- Melee Mist (近战赋能) -->
+              <div class="mistMod mistSlot" data-id="10" data-alt="秘奥" onclick="App.openModPicker(10)">
+                <div class="mistName"></div>
               </div>
-              <div class="mod-slot special-slot" id="aura-slot" onclick="App.openModPicker(9)">
-                <div class="mod-icon" style="font-size:0.7rem;color:var(--c-purple);">光环</div>
-                <div class="mod-name">光环槽</div>
+              
+              <!-- Special Function (特殊功能槽) -->
+              <div class="mod specialMod" tabindex="0" data-id="8" data-alt="特殊功能槽" onclick="App.openModPicker(8)"></div>
+              
+              <!-- Stance Panel (架式) -->
+              <div class="stancePanel">
+                <div class="mod stanceMod" tabindex="0" data-id="9" data-alt="架式" onclick="App.openModPicker(9)"></div>
+                <select id="stanceAttackList" onchange="App.selectStanceAttack(this.value)"></select>
               </div>
-               <div class="mod-slot special-slot" id="arcane-slot">
-                <div class="mod-icon" style="font-size:0.7rem;color:var(--c-gold-bright);">赋能</div>
-                <div class="mod-name">赋能槽</div>
+              
+              <!-- Archon Mist (秘奥) -->
+              <div class="archonMistBlock">
+                <div class="mistMod archonMist" data-id="28" data-alt="秘奥" onclick="App.openModPicker(28)">
+                  <div class="mistName"></div>
+                </div>
+                <div class="mistMod archonMist" data-id="29" data-alt="秘奥" onclick="App.openModPicker(29)">
+                  <div class="mistName"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -264,26 +306,50 @@
                   <div class="ability-toggle" data-ability="rhinoRoar">
                     <div class="option-checkbox"></div>
                     <span class="option-label">Rhino - 战吼</span>
+                    <div class="ability-percent-input">
+                      <input type="number" class="ability-value" data-ability-value="rhinoRoar" value="30" min="0" max="100">
+                      <span>%</span>
+                    </div>
                   </div>
                   <div class="ability-toggle" data-ability="mirageEclipse">
                     <div class="option-checkbox"></div>
                     <span class="option-label">黯然失色 (Mirage)</span>
+                    <div class="ability-percent-input">
+                      <input type="number" class="ability-value" data-ability-value="mirageEclipse" value="30" min="0" max="100">
+                      <span>%</span>
+                    </div>
                   </div>
                   <div class="ability-toggle" data-ability="xakuWhisper">
                     <div class="option-checkbox"></div>
                     <span class="option-label">Xaku - 真理密语</span>
+                    <div class="ability-percent-input">
+                      <input type="number" class="ability-value" data-ability-value="xakuWhisper" value="26" min="0" max="100">
+                      <span>%</span>
+                    </div>
                   </div>
                   <div class="ability-toggle" data-ability="sarynSpores">
                     <div class="option-checkbox"></div>
                     <span class="option-label">剧毒鞭笞 (Saryn)</span>
+                    <div class="ability-percent-input">
+                      <input type="number" class="ability-value" data-ability-value="sarynSpores" value="30" min="0" max="100">
+                      <span>%</span>
+                    </div>
                   </div>
                   <div class="ability-toggle" data-ability="grendelNourish">
                     <div class="option-checkbox"></div>
                     <span class="option-label">Grendel - 消化滋养</span>
+                    <div class="ability-percent-input">
+                      <input type="number" class="ability-value" data-ability-value="grendelNourish" value="45" min="0" max="100">
+                      <span>%</span>
+                    </div>
                   </div>
                   <div class="ability-toggle" data-ability="kullervoCrit">
                     <div class="option-checkbox"></div>
                     <span class="option-label">绝对增加 暴击几率的 (~Kullervo, Harrow)</span>
+                    <div class="ability-percent-input">
+                      <input type="number" class="ability-value" data-ability-value="kullervoCrit" value="50" min="0" max="200">
+                      <span>%</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -321,11 +387,22 @@
                 </div>
               </div>
 
+              <!-- 合并攻击效果面板 -->
+              <div id="merge-attacks-panel" style="display:none;margin-top:8px;padding:8px;background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r-sm);">
+                <div style="font-size:0.75rem;color:var(--c-text2);margin-bottom:6px;">选择要合并的攻击类型:</div>
+                <div id="merge-attacks-checkboxes"></div>
+              </div>
+
               <div class="stat-section" style="margin-top:12px;">
-                <h3>自定义属性值</h3>
-                <div id="custom-stats-area" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
-                  <div class="empty-state" style="padding:16px;grid-column:1/-1;">
-                    <div class="empty-state-text">选择武器后可自定义属性</div>
+                <h3 class="collapsible-toggle" onclick="toggleSection('custom-stats-section')">
+                  添加自定义特性值 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+                </h3>
+                <div id="custom-stats-section">
+                  <div id="custom-stats-area" style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;">
+                    <!-- Populated by JS after weapon selection -->
+                    <div class="empty-state" style="padding:12px;grid-column:1/-1;">
+                      <div class="empty-state-text">选择武器后可自定义属性</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -484,6 +561,17 @@
   <!-- MOD 选择器弹窗 -->
   <div id="mod-picker" class="mod-picker"></div>
 
+  <!-- 扩展伤害队列信息弹窗 -->
+  <div id="queue-info-popup" class="modal-overlay" style="display:none;">
+    <div class="modal-content" style="max-width:600px;max-height:80vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="margin-bottom:0;">伤害队列详情</h3>
+        <button onclick="App.closeQueueInfo()" style="background:none;border:none;color:var(--c-text2);font-size:1.5rem;cursor:pointer;padding:8px;">&times;</button>
+      </div>
+      <div id="queue-info-content"></div>
+    </div>
+  </div>
+
   <!-- 裂罅MOD创建器弹窗 -->
   <div id="riven-creator" class="riven-modal-overlay">
     <div class="riven-modal">
@@ -491,46 +579,53 @@
         <h3 style="margin-bottom:0;">创建裂罅MOD</h3>
         <button onclick="App.closeRivenCreator()" style="background:none;border:none;color:var(--c-text2);font-size:1.5rem;cursor:pointer;padding:8px;transition:color .18s ease;">&times;</button>
       </div>
+      
+      <!-- 武器名称预览 -->
+      <div id="riven-weapon-preview" style="text-align:center;margin-bottom:12px;padding:8px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:var(--r-sm);">
+        <span style="color:var(--c-purple);font-weight:600;">裂罅 MOD</span>
+        <div id="riven-weapon-name" style="font-size:0.9rem;color:var(--c-text);margin-top:4px;"></div>
+      </div>
+      
       <div class="riven-section">
         <div class="riven-section-title">武器类型</div>
-        <select id="riven-weapon-type" class="search-input">
+        <select id="riven-weapon-type" class="search-input" onchange="App.updateRivenWeaponPreview()">
           <option value="Primary">主武器</option>
           <option value="Secondary">副武器</option>
           <option value="Melee">近战</option>
         </select>
       </div>
+      
       <div class="riven-section">
-        <div class="riven-section-title">正面属性 (1-3条)</div>
-        <div id="riven-positives">
-          <div style="display:flex;gap:6px;margin-bottom:8px;">
-            <select class="search-input riven-positive-select" style="flex:1;">
+        <div class="riven-section-title">属性 (1-4条)</div>
+        <div id="riven-stats">
+          <!-- 4 stat slots -->
+          <div class="riven-stat-row" data-index="0">
+            <select class="search-input riven-stat-select" style="flex:1;" onchange="App.updateRivenPreview()">
               <option value="">选择属性...</option>
             </select>
-            <input type="number" class="search-input riven-positive-value" style="width:70px;" placeholder="数值" step="0.1">
+            <input type="number" class="search-input riven-stat-value" style="width:80px;" placeholder="数值" step="0.1" min="-9999" max="9999" onchange="App.updateRivenPreview()">
           </div>
-          <div style="display:flex;gap:6px;margin-bottom:8px;">
-            <select class="search-input riven-positive-select" style="flex:1;">
+          <div class="riven-stat-row" data-index="1">
+            <select class="search-input riven-stat-select" style="flex:1;" onchange="App.updateRivenPreview()">
               <option value="">选择属性...</option>
             </select>
-            <input type="number" class="search-input riven-positive-value" style="width:70px;" placeholder="数值" step="0.1">
+            <input type="number" class="search-input riven-stat-value" style="width:80px;" placeholder="数值" step="0.1" min="-9999" max="9999" onchange="App.updateRivenPreview()">
           </div>
-          <div style="display:flex;gap:6px;margin-bottom:8px;">
-            <select class="search-input riven-positive-select" style="flex:1;">
+          <div class="riven-stat-row" data-index="2">
+            <select class="search-input riven-stat-select" style="flex:1;" onchange="App.updateRivenPreview()">
               <option value="">选择属性...</option>
             </select>
-            <input type="number" class="search-input riven-positive-value" style="width:70px;" placeholder="数值" step="0.1">
+            <input type="number" class="search-input riven-stat-value" style="width:80px;" placeholder="数值" step="0.1" min="-9999" max="9999" onchange="App.updateRivenPreview()">
+          </div>
+          <div class="riven-stat-row" data-index="3">
+            <select class="search-input riven-stat-select" style="flex:1;" onchange="App.updateRivenPreview()">
+              <option value="">选择属性...</option>
+            </select>
+            <input type="number" class="search-input riven-stat-value" style="width:80px;" placeholder="数值" step="0.1" min="-9999" max="9999" onchange="App.updateRivenPreview()">
           </div>
         </div>
       </div>
-      <div class="riven-section">
-        <div class="riven-section-title">负面属性 (0-1条)</div>
-        <div style="display:flex;gap:6px;">
-          <select id="riven-negative" class="search-input" style="flex:1;">
-            <option value="">无负面属性</option>
-          </select>
-          <input type="number" id="riven-negative-value" class="search-input" style="width:70px;" placeholder="数值" step="0.1">
-        </div>
-      </div>
+      
       <div class="riven-section">
         <div class="riven-section-title">等级</div>
         <div class="slider-group">
@@ -541,6 +636,7 @@
           <input type="range" class="slider-input" id="riven-rank-slider" min="0" max="8" value="0">
         </div>
       </div>
+      
       <button class="btn btn-primary" style="width:100%;" onclick="App.createRivenConfirm()">创建</button>
     </div>
   </div>
