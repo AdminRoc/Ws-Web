@@ -82,13 +82,13 @@ async function handleRequest(request) {
     }
   }
 
-  if (!match) return new Response('Not Found', { status: 404 });
+  if (!match) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
 
   // ── 新增：1. User-Agent 检查 ──
   // 拦截非浏览器请求（如 privatemw-public-proxy）
   const userAgent = request.headers.get('User-Agent') || '';
   if (!isAllowedUserAgent(userAgent)) {
-    return new Response('Forbidden', { status: 403 });
+    return new Response('Forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
   }
 
   // ── 修正：2. 来源检查 ──
@@ -101,7 +101,7 @@ async function handleRequest(request) {
     // 空 Referer/Origin：可能是浏览器预加载或直接访问
     // 检查 User-Agent 是否为浏览器
     if (!isAllowedUserAgent(userAgent)) {
-      return new Response('Forbidden', { status: 403 });
+      return new Response('Forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
     }
   } else {
     // 有 Referer 或 Origin：检查是否包含允许的域名
@@ -109,7 +109,7 @@ async function handleRequest(request) {
       referer.includes(d) || origin.includes(d)
     );
     if (!allowed) {
-      return new Response('Forbidden', { status: 403 });
+      return new Response('Forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
     }
   }
 
@@ -118,7 +118,10 @@ async function handleRequest(request) {
   if (isRateLimited(clientIP)) {
     return new Response('Rate Limited', { 
       status: 429, 
-      headers: { 'Retry-After': '60' }
+      headers: { 
+        'Content-Type': 'text/plain',
+        'Retry-After': '60' 
+      }
     });
   }
 
