@@ -84,31 +84,27 @@ async function handleRequest(request) {
 
   if (!match) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
 
-  // ── 新增：1. User-Agent 检查 ──
-  // 拦截非浏览器请求（如 privatemw-public-proxy）
-  const userAgent = request.headers.get('User-Agent') || '';
-  if (!isAllowedUserAgent(userAgent)) {
-    return new Response('Forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
-  }
-
-  // ── 修正：2. 来源检查 ──
-  // 允许浏览器预加载（空 Referer/Origin），但检查 User-Agent
-  // 拦截非浏览器请求（如 curl、Postman、恶意爬虫）
+  // ── 修正：来源检查 + User-Agent 检查 ──
+  // 优先检查 Referer/Origin，其次检查 User-Agent
   const referer = request.headers.get('Referer') || '';
   const origin = request.headers.get('Origin') || '';
+  const userAgent = request.headers.get('User-Agent') || '';
   
-  if (!referer && !origin) {
-    // 空 Referer/Origin：可能是浏览器预加载或直接访问
-    // 检查 User-Agent 是否为浏览器
-    if (!isAllowedUserAgent(userAgent)) {
-      return new Response('Forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
-    }
-  } else {
-    // 有 Referer 或 Origin：检查是否包含允许的域名
+  // 情况1：有 Referer 或 Origin → 检查域名
+  if (referer || origin) {
     const allowed = ALLOWED_ORIGINS.some(d =>
       referer.includes(d) || origin.includes(d)
     );
     if (!allowed) {
+      return new Response('Forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
+    }
+  } 
+  // 情况2：无 Referer 且无 Origin → 检查 User-Agent
+  else {
+    // 浏览器 fetch API 默认不发送 User-Agent 头
+    // 所以允许空 User-Agent（浏览器预加载或 fetch 请求）
+    // 但拦截明确的非浏览器 User-Agent（如 curl、Postman）
+    if (userAgent && !isAllowedUserAgent(userAgent)) {
       return new Response('Forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
     }
   }
