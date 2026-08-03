@@ -6,8 +6,10 @@ name: 镜像世界状态(辅助源)
 # 工作树,产物(4 个 ws-*.json + 国服补充源 ws-cn-null00.json 共 5 个)提交回公库,
 # 私库脚本绝不提交回公库。
 #
-# 定时触发由 Cloudflare Workers Cron Triggers 负责(每 2 分钟;见私库 cloudflare-worker/),
+# 定时触发由 Cloudflare Workers Cron Triggers 负责(每 5 分钟;见私库 cloudflare-worker/),
 # 弥补 GitHub 自带 schedule 对不活跃仓库的延迟/跳过。
+# 频率从每 2 分钟调低到每 5 分钟(2026-08-03):降低 GitHub Actions 触发频率,
+# 避免高频 workflow_dispatch 触发 GitHub 限流/封禁;世界状态 5 分钟一次已足够新鲜。
 # 脚本内做"忽略时间戳噪声"的变化检测,世界状态无实质变动时不产生提交,避免历史膨胀。
 on:
   workflow_dispatch:

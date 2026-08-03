@@ -20,8 +20,7 @@ const ROUTES = {
   '/raw-ws':         { base: 'https://oracle.browse.wf/worldState.json' },
 };
 
-// ── 新增：User-Agent 白名单 ──
-// 只允许浏览器和已知客户端，拦截恶意代理
+// ── User-Agent 白名单 ──
 const ALLOWED_USER_AGENTS = [
   'Mozilla/5.0',      // Chrome/Firefox/Safari/Edge
   'Opera/',
@@ -34,13 +33,12 @@ function isAllowedUserAgent(ua) {
   return ALLOWED_USER_AGENTS.some(prefix => ua.startsWith(prefix));
 }
 
-// ── 新增：简单的内存限流器 ──
-// 每个 Worker 实例独立，重启后重置
+// ── 内存限流器 ──
 const RATE_LIMIT = {
   windowMs: 60000,     // 1 分钟窗口
   maxRequests: 100,    // 每个 IP 每分钟最多 100 次请求
 };
-const requestCounts = new Map(); // ip -> { count, resetTime }
+const requestCounts = new Map();
 
 function isRateLimited(ip) {
   const now = Date.now();
@@ -55,7 +53,6 @@ function isRateLimited(ip) {
   return record.count > RATE_LIMIT.maxRequests;
 }
 
-// 清理过期记录（每 10 分钟执行一次）
 let lastCleanup = Date.now();
 function cleanupRateLimit() {
   const now = Date.now();
@@ -84,8 +81,7 @@ async function handleRequest(request) {
 
   if (!match) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
 
-  // ── 修正：来源检查 + User-Agent 检查 ──
-  // 优先检查 Referer/Origin，其次检查 User-Agent
+  // ── 来源检查 + User-Agent 检查 ──
   const referer = request.headers.get('Referer') || '';
   const origin = request.headers.get('Origin') || '';
   const userAgent = request.headers.get('User-Agent') || '';
@@ -101,15 +97,14 @@ async function handleRequest(request) {
   } 
   // 情况2：无 Referer 且无 Origin → 检查 User-Agent
   else {
-    // 浏览器 fetch API 默认不发送 User-Agent 头
-    // 所以允许空 User-Agent（浏览器预加载或 fetch 请求）
+    // 允许空 User-Agent（浏览器 fetch 请求）
     // 但拦截明确的非浏览器 User-Agent（如 curl、Postman）
     if (userAgent && !isAllowedUserAgent(userAgent)) {
       return new Response('Forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
     }
   }
 
-  // ── 新增：3. IP 限流检查 ──
+  // ── IP 限流检查 ──
   const clientIP = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'unknown';
   if (isRateLimited(clientIP)) {
     return new Response('Rate Limited', { 
