@@ -91,15 +91,26 @@ async function handleRequest(request) {
     return new Response('Forbidden', { status: 403 });
   }
 
-  // ── 原有：2. 来源检查 ──
-  // 只允许 wfspeed.run / war-frame.com 域名的请求
+  // ── 修正：2. 来源检查 ──
+  // 允许浏览器预加载（空 Referer/Origin），但检查 User-Agent
+  // 拦截非浏览器请求（如 curl、Postman、恶意爬虫）
   const referer = request.headers.get('Referer') || '';
   const origin = request.headers.get('Origin') || '';
-  const allowed = ALLOWED_ORIGINS.some(d =>
-    referer.includes(d) || origin.includes(d)
-  );
-  if (!allowed) {
-    return new Response('Forbidden', { status: 403 });
+  
+  if (!referer && !origin) {
+    // 空 Referer/Origin：可能是浏览器预加载或直接访问
+    // 检查 User-Agent 是否为浏览器
+    if (!isAllowedUserAgent(userAgent)) {
+      return new Response('Forbidden', { status: 403 });
+    }
+  } else {
+    // 有 Referer 或 Origin：检查是否包含允许的域名
+    const allowed = ALLOWED_ORIGINS.some(d =>
+      referer.includes(d) || origin.includes(d)
+    );
+    if (!allowed) {
+      return new Response('Forbidden', { status: 403 });
+    }
   }
 
   // ── 新增：3. IP 限流检查 ──
