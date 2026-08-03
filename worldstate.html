@@ -4640,7 +4640,8 @@
 
   /* ── 统一分层兜底逻辑（防止被 CF 拦截页等产生大量无用流量）──
      阶段 1（EdgeOne 数据源）：每次尝试间隔 gapEdgeMs（3 秒），最多 maxEdge 次（3 次）
-     阶段 2（URL 数据源）   ：阶段 1 全部失败后，每次尝试间隔 gapUrlMs（1 秒），最多 maxUrl 次（20 次）
+     阶段 2（URL 数据源）   ：阶段 1 全部失败后，轮询各候选 URL，每次间隔 gapUrlMs（1 秒），
+                             最多 maxUrl 次（20 次），均匀分配到各候选源
      全部失败 → 返回 null，调用方保持 action 静态产物显示
      任一成功 → 立即返回真实数据，调用方用真实数据覆盖显示
      注意：429（限流）不计数、立即跳过该 URL 继续；网络异常才计数重试。 */
@@ -4666,7 +4667,8 @@
   /* 分层重试核心：
      buildUrls(stage) → 返回该层要依次尝试的 URL 数组（或空数组表示跳过）
      opts.maxEdge / maxUrl / gapEdgeMs / gapUrlMs
-     每层内部按间隔重试：第 1 次立即发，之后每次间隔 gap；层间切换立即进行。
+     每层内部轮询（round-robin）：依次尝试每个 URL，失败后等 gap 换下一个，
+     全部试完再从头开始；层间切换立即进行。
      返回 Promise<data>，全部失败返回 null。 */
   function fetchLayered(buildUrls, opts) {
     opts = opts || {};
@@ -4677,26 +4679,23 @@
 
     function attempt(urls, index, attemptLeft, gapMs, label) {
       if (attemptLeft <= 0) return Promise.resolve(null);
-      if (index >= urls.length) return Promise.resolve(null);
+      if (urls.length === 0) return Promise.resolve(null);
+      var nextIndex = (index + 1) % urls.length;
       return _tryFetchJson(urls[index]).then(function (data) {
         if (data === 'skip') {
-          /* 429：不计数，直接试下一个 URL（本层内） */
-          return attempt(urls, index + 1, attemptLeft, gapMs, label);
+          /* 429：不计数，直接试下一个 URL（本层内轮询） */
+          return attempt(urls, nextIndex, attemptLeft, gapMs, label);
         }
         if (data !== null && data !== undefined) {
           if (opts.onSuccess) opts.onSuccess(urls[index], label);
           return data;
         }
-        /* 本次失败：若本 URL 还有尝试次数则等待 gap 后重试同一 URL，
-           否则换下一个 URL */
-        if (attemptLeft > 1) {
-          return new Promise(function (res) {
-            setTimeout(function () {
-              res(attempt(urls, index, attemptLeft - 1, gapMs, label));
-            }, gapMs);
-          });
-        }
-        return attempt(urls, index + 1, attemptLeft, gapMs, label);
+        /* 失败：等 gap 后换下一个 URL（轮询分布，避免单一源占用全部重试） */
+        return new Promise(function (res) {
+          setTimeout(function () {
+            res(attempt(urls, nextIndex, attemptLeft - 1, gapMs, label));
+          }, gapMs);
+        });
       });
     }
 
