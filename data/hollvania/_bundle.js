@@ -180,6 +180,12 @@ var victory_plaza_apexRecords = [
     uploadTime: "2025-10-07",
     videoUrls:  ["https://www.youtube.com/watch?v=cqCJqK0yVMc"],
   },
+  {
+    playerId:   "LoseFace",
+    clearTime:  "00:04:41.317",
+    uploadTime: "2026-07-26",
+    videoUrls:  ["https://www.youtube.com/watch?v=8E3rlagKJws"],
+  },
 
 ];
 
