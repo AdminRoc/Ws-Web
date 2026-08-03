@@ -17,7 +17,9 @@ const ROUTES = {
   '/export-regions': { base: 'https://browse.wf/warframe-public-export-plus/ExportRegions.json' },
   '/dict-zh':        { base: 'https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@senpai/dict.zh.json' },
   '/null00':         { base: 'https://api.null00.com/world/ZHCN' },
-  '/raw-ws':         { base: 'https://oracle.browse.wf/worldState.json' },
+  /* raw-ws 改为指向 api.warframe.com（官方 CDN，无 Cloudflare 防护，可正常回源）；
+     oracle.browse.wf 有 Cloudflare 防护会拦截边缘函数回源（返回 403 拦截页） */
+  '/raw-ws':         { base: 'https://api.warframe.com/cdn/worldState.php' },
 };
 
 // ── User-Agent 白名单 ──

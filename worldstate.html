@@ -4084,7 +4084,7 @@
         }
       }
     } catch (e) {}
-    return fetchFirstOk(BOUNTY_CYCLE_URLS)
+    return fetchFirstOk(BOUNTY_CYCLE_URLS, true)
       .then(function (data) {
         if (!data || !data.bounties) return;
         _bountyCycle = data;
@@ -4103,7 +4103,7 @@
         }
       }
     } catch (e) {}
-    return fetchFirstOk(EXPORT_REGIONS_URLS)
+    return fetchFirstOk(EXPORT_REGIONS_URLS, true)
       .then(function (data) {
         if (!data) return;
         _exportRegions = data;
@@ -4163,20 +4163,22 @@
 
   /**
    * 按顺序尝试多个 URL，返回第一个成功的 JSON 响应。
-   * 用于应对中国大陆封锁 raw.githubusercontent.com 的情况：
-   *   1. GitHub raw（国际网络首选）
-   *   2. jsDelivr CDN（在大陆有节点，通常可访问）
-   *   3. 若全部失败返回 null，调用方再决定是否使用过期缓存
+   * edgeFirst=true：urls[0] 为 EdgeOne 代理，urls[1..] 为直连 URL，
+   *   采用统一分层兜底：EdgeOne（3 次×3 秒）→ URL（20 次×1 秒）。
+   * edgeFirst=false（默认）：整个数组都是 URL（如同源 action 静态产物），
+   *   全部按 URL 层处理（20 次×1 秒）。
+   * 若全部失败返回 null，调用方保持 action 静态产物显示。
    */
-  function fetchFirstOk(urls) {
-    function tryNext(i) {
-      if (i >= urls.length) return Promise.resolve(null);
-      return fetchT(urls[i], 5000)
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (d) { return d !== null ? d : tryNext(i + 1); })
-        .catch(function ()  { return tryNext(i + 1); });
-    }
-    return tryNext(0);
+  function fetchFirstOk(urls, edgeFirst) {
+    return fetchLayered(function (stage) {
+      if (edgeFirst) {
+        if (stage === 'edge') return [urls[0]].filter(Boolean);
+        return urls.slice(1).filter(Boolean);
+      }
+      /* 纯 URL 层：EdgeOne 阶段为空数组（跳过），全部走 URL 阶段 */
+      if (stage === 'edge') return [];
+      return urls.filter(Boolean);
+    });
   }
 
   /* ── 中文字典（calamity-inc/warframe-public-export-plus），7 天缓存 ── */
@@ -4259,7 +4261,7 @@
         if (obj && Date.now() - obj.ts < DICT_TTL) { mergeDict(obj.data); return Promise.resolve(); }
       }
     } catch (e) {}
-    return fetchFirstOk(DICT_URLS).then(function (data) {
+    return fetchFirstOk(DICT_URLS, true).then(function (data) {
       if (!data) {
         /* 全部 URL 失败：尝试使用过期缓存（离线兜底） */
         try {
@@ -4322,18 +4324,17 @@
   }
 
   /* ══════════════════════════════════════════════════════════
-     多数据源兜底：EdgeOne 代理 /raw-ws（oracle.browse.wf/worldState.json）
-     → oracle.browse.wf/worldState.json → api.warframe.com/cdn/worldState.php
-     → api.wfhub.top/china/worldState.json → ws.wfhub.top/ws.json
+     多数据源兜底：EdgeOne 代理 /raw-ws（当前指向 api.warframe.com/cdn/worldState.php）
+     → api.warframe.com/cdn/worldState.php（直连）→ api.wfhub.top → ws.wfhub.top
      EdgeOne 代理优先，符合"全部数据源优先走 EdgeOne"的开发目标；
-     同时解决 oracle.browse.wf 直连的 CORS 问题（EdgeOne 代理会附带 CORS 头）。
+     同时解决直连的 CORS 问题（EdgeOne 代理会附带 CORS 头）。
+     注：oracle.browse.wf 有 Cloudflare 防护会拦截非浏览器请求，已移出兜底链。
      ══════════════════════════════════════════════════════════ */
   var _rawWS = null;
   var _rawWSTs = 0;
   var RAW_WS_TTL = 60000; /* 1 分钟，与主轮询同步 */
   var RAW_WS_URLS = [
     'https://ws-api.wfspeed.run/raw-ws',
-    'https://oracle.browse.wf/worldState.json',
     'https://api.warframe.com/cdn/worldState.php',
     'https://api.wfhub.top/china/worldState.json',
     'https://ws.wfhub.top/ws.json'
@@ -4387,14 +4388,8 @@
 
   function getRawWS() {
     if (_rawWS && Date.now() - _rawWSTs < RAW_WS_TTL) return Promise.resolve(_rawWS);
-    function tryNext(i) {
-      if (i >= RAW_WS_URLS.length) return Promise.resolve(null);
-      return fetchT(RAW_WS_URLS[i], 5000)
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (d) { return d ? d : tryNext(i + 1); })
-        .catch(function () { return tryNext(i + 1); });
-    }
-    return tryNext(0).then(function (d) {
+    /* 统一分层兜底：RAW_WS_URLS[0] 为 EdgeOne /raw-ws，[1..] 为直连 URL */
+    return fetchFirstOk(RAW_WS_URLS, true).then(function (d) {
       if (d) { _rawWS = d; _rawWSTs = Date.now(); }
       return d;
     });
@@ -4643,170 +4638,95 @@
      "快十几秒~30秒"的观感一致，不会错过日夜交替等关键节点。 */
   var AUX_COUNTDOWN_LEAD_MS = 15000;
 
-  /* ── 数据源优先级与降级状态机 ──
-     阶段 A：优先走 EdgeOne 代理
-     阶段 B：EdgeOne 连续 DEGRADE_THRESHOLD 次失败 → 降级直连原始 URL
-     阶段 C：直连也连续 DEGRADE_THRESHOLD 次失败 → 回退到 localStorage 旧缓存（action 静态产物）
-     恢复：阶段 B/C 任意一次成功 → 立即回到阶段 A（优先 EdgeOne）
-     重试：失败后指数退避重试，遇到 429 立即停止 */
-  var _retryTimers = {};  // ep → timeout id，防止重复调度
+  /* ── 统一分层兜底逻辑（防止被 CF 拦截页等产生大量无用流量）──
+     阶段 1（EdgeOne 数据源）：每次尝试间隔 gapEdgeMs（3 秒），最多 maxEdge 次（3 次）
+     阶段 2（URL 数据源）   ：阶段 1 全部失败后，每次尝试间隔 gapUrlMs（1 秒），最多 maxUrl 次（20 次）
+     全部失败 → 返回 null，调用方保持 action 静态产物显示
+     任一成功 → 立即返回真实数据，调用方用真实数据覆盖显示
+     注意：429（限流）不计数、立即跳过该 URL 继续；网络异常才计数重试。 */
   var _lastSource = {};   // ep → 'edgeone' | 'api' | 'cache'，记录当前使用的数据源
-  var _retryCount = {};   // ep → 当前重试次数
-  var _degradePhase = {}; // ep → 'A' | 'B' | 'C'，记录当前降级阶段
-  var _degradeFail = {};  // ep → 当前阶段连续失败次数
 
-  // 降级与重试配置
-  var DEGRADE_THRESHOLD = 5;    // 连续失败多少次后降级（用户要求：连续 5 次失败才降级）
-  var RETRY_CONFIG = {
-    maxRetries: 5,           // 最大重试次数
-    baseDelayMs: 5000,       // 基础延迟 5 秒
-    maxDelayMs: 60000,       // 最大延迟 60 秒
-    backoffMultiplier: 2,    // 指数退避倍数
+  var FETCH_LAYER = {
+    gapEdgeMs: 3000,   // EdgeOne 每次尝试间隔
+    maxEdge: 3,        // EdgeOne 最多尝试次数
+    gapUrlMs: 1000,    // URL 每次尝试间隔
+    maxUrl: 20         // URL 最多尝试次数
   };
 
-  // 记录当前阶段连续失败，达到阈值则降级到下一阶段
-  function _bumpDegradeFail(ep, sourceName) {
-    _degradeFail[ep] = (_degradeFail[ep] || 0) + 1;
-    if (_degradeFail[ep] >= DEGRADE_THRESHOLD) {
-      // 阶段 A 失败 5 次 → B；阶段 B 失败 5 次 → C
-      if (_degradePhase[ep] === 'B') {
-        _degradePhase[ep] = 'C';
-        console.log('[degrade]', ep, 'phase C (static fallback) after', _degradeFail[ep], 'consecutive failures');
-      } else {
-        _degradePhase[ep] = 'B';
-        console.log('[degrade]', ep, 'phase B (direct URL) after', _degradeFail[ep], 'consecutive failures');
-      }
-      _degradeFail[ep] = 0;
-    } else {
-      console.log('[degrade]', ep, sourceName, 'failed', _degradeFail[ep], '/', DEGRADE_THRESHOLD);
-    }
-  }
-
-  // 当前阶段成功：恢复优先 EdgeOne，重置连续失败计数
-  function _resetDegrade(ep) {
-    _degradePhase[ep] = 'A';
-    _degradeFail[ep] = 0;
-  }
-
-  function fetchOne(ep) {
-    if (!_degradePhase[ep]) _degradePhase[ep] = 'A';  // 默认阶段 A：优先 EdgeOne
-    var phase = _degradePhase[ep];
-    var urls;
-    if (phase === 'A') {
-      // 阶段 A：全部走 EdgeOne，未达到 5 次失败前不尝试直连
-      urls = [API_URLS[0]];
-    } else if (phase === 'B') {
-      // 阶段 B：直连原始 URL
-      urls = [API_URLS[1]];
-    } else {
-      // 阶段 C：直接回退静态产物，不发起网络请求
-      return Promise.resolve(cacheGet(ep));
-    }
-
-    return fetchT(urls[0] + ep + '?' + LANG, 5000)
+  /* 单个 URL 尝试：成功返回 data，429 返回 'skip'，失败返回 null */
+  function _tryFetchJson(url, timeoutMs) {
+    return fetchT(url, timeoutMs || 5000)
       .then(function (r) {
-        if (r.status === 429) {
-          console.log('[fetchOne]', ep, 'rate limited (429), stop retrying');
-          return null;
-        }
+        if (r.status === 429) return 'skip';   /* 限流：跳过但不计失败 */
         return r.ok ? r.json() : null;
       })
-      .then(function (data) {
+      .catch(function () { return null; });
+  }
+
+  /* 分层重试核心：
+     buildUrls(stage) → 返回该层要依次尝试的 URL 数组（或空数组表示跳过）
+     opts.maxEdge / maxUrl / gapEdgeMs / gapUrlMs
+     每层内部按间隔重试：第 1 次立即发，之后每次间隔 gap；层间切换立即进行。
+     返回 Promise<data>，全部失败返回 null。 */
+  function fetchLayered(buildUrls, opts) {
+    opts = opts || {};
+    var gapEdge = opts.gapEdgeMs != null ? opts.gapEdgeMs : FETCH_LAYER.gapEdgeMs;
+    var maxEdge = opts.maxEdge != null ? opts.maxEdge : FETCH_LAYER.maxEdge;
+    var gapUrl  = opts.gapUrlMs  != null ? opts.gapUrlMs  : FETCH_LAYER.gapUrlMs;
+    var maxUrl  = opts.maxUrl    != null ? opts.maxUrl    : FETCH_LAYER.maxUrl;
+
+    function attempt(urls, index, attemptLeft, gapMs, label) {
+      if (attemptLeft <= 0) return Promise.resolve(null);
+      if (index >= urls.length) return Promise.resolve(null);
+      return _tryFetchJson(urls[index]).then(function (data) {
+        if (data === 'skip') {
+          /* 429：不计数，直接试下一个 URL（本层内） */
+          return attempt(urls, index + 1, attemptLeft, gapMs, label);
+        }
         if (data !== null && data !== undefined) {
-          cacheSet(ep, data);
-          _lastSource[ep] = phase === 'A' ? 'edgeone' : 'api';
-          _resetDegrade(ep);  // 成功 → 回到阶段 A（优先 EdgeOne）
-          /* 成功获取数据：取消该 endpoint 的待执行重试 */
-          if (_retryTimers[ep]) {
-            clearTimeout(_retryTimers[ep]);
-            delete _retryTimers[ep];
-          }
+          if (opts.onSuccess) opts.onSuccess(urls[index], label);
           return data;
         }
-        _bumpDegradeFail(ep, phase === 'A' ? 'edgeone' : 'api');
-        _scheduleRetry(ep);
-        return cacheGet(ep);
-      })
-      .catch(function () {
-        _bumpDegradeFail(ep, phase === 'A' ? 'edgeone' : 'api');
-        _scheduleRetry(ep);
-        return cacheGet(ep);
+        /* 本次失败：若本 URL 还有尝试次数则等待 gap 后重试同一 URL，
+           否则换下一个 URL */
+        if (attemptLeft > 1) {
+          return new Promise(function (res) {
+            setTimeout(function () {
+              res(attempt(urls, index, attemptLeft - 1, gapMs, label));
+            }, gapMs);
+          });
+        }
+        return attempt(urls, index + 1, attemptLeft, gapMs, label);
+      });
+    }
+
+    var edgeUrls = buildUrls('edge');
+    var urlUrls  = buildUrls('url');
+
+    /* 先 EdgeOne 层（最多 maxEdge 次/层内多个 URL），全部失败再 URL 层 */
+    return attempt(edgeUrls, 0, maxEdge, gapEdge, 'edgeone')
+      .then(function (edgeData) {
+        if (edgeData !== null && edgeData !== undefined) return edgeData;
+        return attempt(urlUrls, 0, maxUrl, gapUrl, 'url');
       });
   }
 
-  /* 指数退避重试：失败后按指数增长延迟，最多重试 maxRetries 次 */
-  function _scheduleRetry(ep) {
-    if (_retryTimers[ep]) return;  // 已有重试在排队
-    
-    var currentRetry = _retryCount[ep] || 0;
-    if (currentRetry >= RETRY_CONFIG.maxRetries) {
-      console.log('[retry]', ep, 'max retries reached, stop retrying');
-      return;  // 达到最大重试次数，停止重试
-    }
-    
-    // 计算指数退避延迟
-    var delay = Math.min(
-      RETRY_CONFIG.baseDelayMs * Math.pow(RETRY_CONFIG.backoffMultiplier, currentRetry),
-      RETRY_CONFIG.maxDelayMs
-    );
-    
-    console.log('[retry]', ep, 'scheduling retry', currentRetry + 1, 'in', delay, 'ms');
-    _retryTimers[ep] = setTimeout(function () {
-      delete _retryTimers[ep];
-      _retryCount[ep] = currentRetry + 1;
-      _retryOne(ep);
-    }, delay);
-  }
-  
-  function _retryOne(ep) {
-    /* 按当前降级阶段重试：阶段 A 只试 EdgeOne，阶段 B 只试直连，阶段 C 不再请求 */
-    var phase = _degradePhase[ep] || 'A';
-    var url;
-    if (phase === 'A') {
-      url = API_URLS[0];
-    } else if (phase === 'B') {
-      url = API_URLS[1];
-    } else {
-      /* 阶段 C：不再发网络请求，直接用缓存 */
-      _retryCount[ep] = 0;
-      return;
-    }
-    var sourceName = phase === 'A' ? 'edgeone' : 'api';
-
-    return fetchT(url + ep + '?' + LANG, 5000)
-      .then(function (r) {
-        // 遇到 429 限流，立即停止重试
-        if (r.status === 429) {
-          console.log('[retry]', ep, 'rate limited (429), stop retrying');
-          _retryCount[ep] = RETRY_CONFIG.maxRetries;  // 标记为达到最大重试
-          return null;
-        }
-        return r.ok ? r.json() : null;
-      })
-      .then(function (data) {
-        if (data !== null && data !== undefined) {
-          cacheSet(ep, data);
-          /* 如果数据源变了或数据有更新，重新渲染 */
-          if (_lastSource[ep] !== sourceName) {
-            console.log('[retry]', ep, 'restored to', sourceName);
-          }
-          _lastSource[ep] = sourceName;
-          _resetDegrade(ep);  // 成功 → 回到阶段 A（优先 EdgeOne）
-          _retryCount[ep] = 0;  // 成功后重置重试计数
-          D[ep] = data;
-          renderAll();
-          return;
-        }
-        /* 当前阶段失败：累计失败次数，达到阈值则降级；然后安排下次重试 */
-        _bumpDegradeFail(ep, sourceName);
-        _retryCount[ep] = RETRY_CONFIG.maxRetries;  // 本次重试周期结束，由 fetchOne 重新发起
-        _scheduleRetry(ep);
-      })
-      .catch(function () {
-        _bumpDegradeFail(ep, sourceName);
-        _retryCount[ep] = RETRY_CONFIG.maxRetries;
-        _scheduleRetry(ep);
-      });
+  /* 主 API 数据获取（19 个 endpoint）：分层兜底 EdgeOne → 直连 API */
+  function fetchOne(ep) {
+    return fetchLayered(function (stage) {
+      if (stage === 'edge') return [API_URLS[0] + ep + '?' + LANG];
+      return [API_URLS[1] + ep + '?' + LANG];
+    }, {
+      onSuccess: function (url, label) {
+        /* 记录当前使用源：edgeone / api */
+        _lastSource[ep] = label === 'edgeone' ? 'edgeone' : 'api';
+      }
+    }).then(function (data) {
+      if (data !== null && data !== undefined) {
+        cacheSet(ep, data);
+      }
+      return data;
+    });
   }
 
   /* 从 rawWS 数据中能填充的键（syndicates 不在列，避免覆盖 API 数据；bounties 单独处理） */
@@ -7727,13 +7647,9 @@
   window.addEventListener('resize', function() { if (isOpen) resizePanelCanvas(); });
 })();
 
-/* ── 页面卸载时清理重试定时器 ── */
-window.addEventListener('beforeunload', function () {
-  Object.keys(_retryTimers).forEach(function (ep) {
-    clearTimeout(_retryTimers[ep]);
-  });
-  _retryTimers = {};
-});
+/* ── 页面卸载时清理 ──
+   新版 fetchLayered 用 Promise 链实现分层重试，无独立定时器句柄需要清理；
+   浏览器卸载时会自动中止进行中的 fetch 与 setTimeout。这里仅作防御性处理。 */
 </script>
 
 </body>
