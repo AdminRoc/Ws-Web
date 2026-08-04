@@ -64,63 +64,93 @@
             <div id="riven-stats" style="font-size:0.8rem;color:var(--c-text);"></div>
           </div>
 
-           <div id="mod-grid" class="mod-grid"></div>
-
-          <div class="stat-section" style="margin-top:16px;">
-            <h3 class="collapsible-toggle" onclick="toggleSection('warframe-mod-section')">
-              Warframe MOD, 光环MOD, Warframe 赋能 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+          <!-- 武器配置 -->
+          <div class="stat-section">
+            <h3 class="collapsible-toggle" onclick="toggleSection('weapon-config-section')">
+              武器配置 <span style="float:right;font-size:0.75rem;">&#9660;</span>
             </h3>
-            <div id="warframe-mod-section">
+            <div id="weapon-config-section">
+              <!-- 武器类型选择器: 近战 / 非近战 -->
+              <div class="weapon-type-selector" id="weapon-type-selector">
+                <button type="button" class="wtype-btn active" data-wtype="ranged" onclick="App.setWeaponType('ranged')">非近战武器</button>
+                <button type="button" class="wtype-btn" data-wtype="melee" onclick="App.setWeaponType('melee')">近战武器</button>
+              </div>
+
+              <!-- 武器 MOD 槽位 (8) -->
+              <div class="modBlock">
+                <div class="modBlockTitle">武器 MOD 槽</div>
+                <div id="mod-grid" class="mod-grid"></div>
+              </div>
+
+              <!-- 特殊功能槽 (1) -->
+              <div class="modBlock">
+                <div class="modBlockTitle">特殊功能槽</div>
+                <div class="modsRow" id="weapon-special-slot"></div>
+              </div>
+
+              <!-- 架式 (1, 近战专属) -->
+              <div class="modBlock" id="weapon-stance-block" style="display:none;">
+                <div class="modBlockTitle">架式</div>
+                <div class="modsRow" id="weapon-stance-slot"></div>
+                <select id="stanceAttackList" onchange="App.selectStanceAttack(this.value)"></select>
+              </div>
+
+              <!-- 武器赋能 (2) -->
+              <div class="modBlock">
+                <div class="modBlockTitle">赋能</div>
+                <div class="modsRow" id="weapon-arcane-slots"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 战甲配置 -->
+          <div class="stat-section">
+            <h3 class="collapsible-toggle" onclick="toggleSection('warframe-config-section')">
+              战甲配置 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+            </h3>
+            <div id="warframe-config-section">
               <!-- Warframe Stats -->
               <div class="wfStatsBlock">
                 <div class="wfStatItem"><span class="wfStatName">生命值: </span><span class="wfStatVal" id="wf-stat-hp">100</span></div>
                 <div class="wfStatItem"><span class="wfStatName">护盾: </span><span class="wfStatVal" id="wf-stat-shield">100</span></div>
                 <div class="wfStatItem"><span class="wfStatName">护甲: </span><span class="wfStatVal" id="wf-stat-armor">100</span></div>
               </div>
-              
-              <!-- Aura slot (1) -->
+
+              <!-- 光环槽 (1) -->
               <div class="modBlock">
                 <div class="modBlockTitle">光环槽</div>
                 <div class="modsRow">
-                  <div class="mod auraMod" tabindex="0" data-id="17" data-alt="光环" onclick="App.openModPicker(17)"></div>
+                  <div id="aura-slot" class="mod auraMod" tabindex="0" data-alt="光环" onclick="App.openAuraPicker()"></div>
                 </div>
               </div>
-              
-              <!-- Warframe MOD slots (4) -->
+
+              <!-- 战甲 MOD 槽位 (8) -->
               <div class="modBlock">
-                <div class="modBlockTitle">Warframe MOD 槽</div>
-                <div class="modsRow">
-                  <div class="mod wfMod" tabindex="0" data-id="13" data-alt="MOD" onclick="App.openModPicker(13)"></div>
-                  <div class="mod wfMod" tabindex="0" data-id="14" data-alt="MOD" onclick="App.openModPicker(14)"></div>
-                  <div class="mod wfMod" tabindex="0" data-id="15" data-alt="MOD" onclick="App.openModPicker(15)"></div>
-                  <div class="mod wfMod" tabindex="0" data-id="16" data-alt="MOD" onclick="App.openModPicker(16)"></div>
-                </div>
+                <div class="modBlockTitle">战甲 MOD 槽</div>
+                <div id="warframe-mod-grid" class="mod-grid wf-mod-grid"></div>
               </div>
-              
-              <!-- Warframe Arcane slots (2) -->
+
+              <!-- 战甲特殊功能槽 (1) -->
               <div class="modBlock">
-                <div class="modBlockTitle">Warframe 赋能</div>
-                <div class="modsRow">
-                  <div class="mod arcaneMod" tabindex="0" data-id="11" data-alt="赋能" onclick="App.openModPicker(11)"></div>
-                  <div class="mod arcaneMod" tabindex="0" data-id="12" data-alt="赋能" onclick="App.openModPicker(12)"></div>
-                </div>
+                <div class="modBlockTitle">特殊功能槽</div>
+                <div class="modsRow" id="warframe-special-slot"></div>
               </div>
-              
-              <!-- Archon Shards (5) -->
+
+              <!-- 战甲赋能 (2) -->
+              <div class="modBlock">
+                <div class="modBlockTitle">赋能</div>
+                <div class="modsRow" id="warframe-arcane-slots"></div>
+              </div>
+
+              <!-- 源力石 (5) -->
               <div class="modBlock">
                 <div class="modBlockTitle">源力石</div>
-                <div class="modsRow">
-                  <div class="mod archonShardMod" tabindex="0" data-id="23" data-alt="源力石" onclick="App.openModPicker(23)"></div>
-                  <div class="mod archonShardMod" tabindex="0" data-id="24" data-alt="源力石" onclick="App.openModPicker(24)"></div>
-                  <div class="mod archonShardMod" tabindex="0" data-id="25" data-alt="源力石" onclick="App.openModPicker(25)"></div>
-                  <div class="mod archonShardMod" tabindex="0" data-id="26" data-alt="源力石" onclick="App.openModPicker(26)"></div>
-                  <div class="mod archonShardMod" tabindex="0" data-id="27" data-alt="源力石" onclick="App.openModPicker(27)"></div>
-                </div>
+                <div id="archon-shard-grid" class="archon-shard-grid"></div>
               </div>
-              
-              <!-- Focus School -->
+
+              <!-- 专精 -->
               <div class="focusSchoolBlock">
-                <div class="modBlockTitle">源力石</div>
+                <div class="modBlockTitle">专精</div>
                 <select id="wf-focus" onchange="App.setWarframeFocus(this.value)">
                   <option value="none">无</option>
                   <option value="madurai">Madurai (物理伤害提高30%)</option>
@@ -130,40 +160,11 @@
                   <option value="zenurik">Zenurik (能量恢复)</option>
                 </select>
               </div>
-              
-              <!-- Warframe skills -->
+
+              <!-- 战甲技能 -->
               <div class="wfSkillsBlock">
                 <div class="modBlockTitle">战甲技能</div>
                 <div id="warframe-skills"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="stat-section">
-            <h3>特殊槽位</h3>
-            <div class="specialSlotsBlock">
-              <!-- Melee Mist (近战赋能) -->
-              <div class="mistMod mistSlot" data-id="10" data-alt="赋能" onclick="App.openModPicker(10)">
-                <div class="mistName"></div>
-              </div>
-              
-              <!-- Special Function (特殊功能槽) -->
-              <div class="mod specialMod" tabindex="0" data-id="8" data-alt="特殊功能槽" onclick="App.openModPicker(8)"></div>
-              
-              <!-- Stance Panel (架式) -->
-              <div class="stancePanel">
-                <div class="mod stanceMod" tabindex="0" data-id="9" data-alt="架式" onclick="App.openModPicker(9)"></div>
-                <select id="stanceAttackList" onchange="App.selectStanceAttack(this.value)"></select>
-              </div>
-              
-              <!-- Archon Mist (赋能) -->
-              <div class="archonMistBlock">
-                <div class="mistMod archonMist" data-id="28" data-alt="赋能" onclick="App.openModPicker(28)">
-                  <div class="mistName"></div>
-                </div>
-                <div class="mistMod archonMist" data-id="29" data-alt="赋能" onclick="App.openModPicker(29)">
-                  <div class="mistName"></div>
-                </div>
               </div>
             </div>
           </div>

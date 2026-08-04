@@ -14,10 +14,17 @@ const App = {
     enemyLevel: 30,
     steelPath: false,
     eximus: false,
-    mods: Array(10).fill(null),
-    modRanks: Array(10).fill(0),
-    modPolarities: ['','','','','','','','','',''],
+    mods: Array(8).fill(null),
+    modRanks: Array(8).fill(0),
+    modPolarities: ['','','','','','','',''],
     weaponPolarities: [],
+    weaponType: 'ranged',
+    weaponSpecialMod: null,
+    weaponSpecialRank: 0,
+    weaponStanceMod: null,
+    weaponStanceRank: 0,
+    weaponArcanes: Array(2).fill(null),
+    weaponArcaneRanks: Array(2).fill(0),
     currentCapacity: 0,
     maxCapacity: 60,
     activeAttackIndex: 0,
@@ -74,8 +81,15 @@ const App = {
       negativeValue: 0,
       rank: 0
     },
-    warframeMods: Array(4).fill(null),
-    warframeModRanks: Array(4).fill(0),
+    warframeMods: Array(8).fill(null),
+    warframeModRanks: Array(8).fill(0),
+    auraMod: null,
+    auraModRank: 0,
+    warframeSpecialMod: null,
+    warframeSpecialRank: 0,
+    warframeArcanes: Array(2).fill(null),
+    archonShards: Array(5).fill(null),
+    focusSchool: 'none',
     dpsResult: null,
     weaponSearchQuery: '',
     enemySearchQuery: '',
@@ -175,19 +189,101 @@ const App = {
     'Damage vs. Corpus', 'Damage vs. Grineer', 'Damage vs. Infested'
   ],
 
+  // 源力石数据 (来源: wiki.warframe.com/w/Archon_Shard)
+  // 每种颜色有4-5种可选属性，普通版和Tau版数值不同 (Tau = 1.5x)
+  ARCHON_SHARD_DATA: {
+    crimson: {
+      name: '深红', nameEn: 'Crimson', color: '#dc2626',
+      img: 'dmg/img/mods/shard-crimson.webp',
+      imgTau: 'dmg/img/mods/shard-crimson-tauforged.webp',
+      buffs: [
+        { key: 'meleeCritDmg', name: '近战暴击伤害', regular: 25, tau: 37.5, unit: '%', type: 'melee' },
+        { key: 'primaryStatusChance', name: '主武器异常触发几率', regular: 25, tau: 37.5, unit: '%', type: 'primary' },
+        { key: 'secondaryCritChance', name: '副武器暴击几率', regular: 25, tau: 37.5, unit: '%', type: 'secondary' },
+        { key: 'abilityStrength', name: '技能强度', regular: 10, tau: 15, unit: '%', type: 'ability' },
+        { key: 'abilityDuration', name: '技能持续时间', regular: 10, tau: 15, unit: '%', type: 'ability' }
+      ]
+    },
+    amber: {
+      name: '琥珀', nameEn: 'Amber', color: '#d97706',
+      img: 'dmg/img/mods/shard-amber.webp',
+      imgTau: 'dmg/img/mods/shard-amber-tauforged.webp',
+      buffs: [
+        { key: 'energyOnSpawn', name: '出生时能量填充', regular: 30, tau: 45, unit: '%', type: 'utility' },
+        { key: 'healthOrbEffect', name: '生命球效果', regular: 100, tau: 150, unit: '%', type: 'utility' },
+        { key: 'energyOrbEffect', name: '能量球效果', regular: 50, tau: 75, unit: '%', type: 'utility' },
+        { key: 'castSpeed', name: '施放速度', regular: 25, tau: 37.5, unit: '%', type: 'utility' },
+        { key: 'parkourVelocity', name: '跑酷速度', regular: 15, tau: 22.5, unit: '%', type: 'utility' }
+      ]
+    },
+    azure: {
+      name: '蔚蓝', nameEn: 'Azure', color: '#2563eb',
+      img: 'dmg/img/mods/shard-azure.webp',
+      imgTau: 'dmg/img/mods/shard-azure-tauforged.webp',
+      buffs: [
+        { key: 'maxHealth', name: '最大生命值', regular: 150, tau: 225, unit: '', type: 'survival' },
+        { key: 'shieldCapacity', name: '护盾容量', regular: 150, tau: 225, unit: '', type: 'survival' },
+        { key: 'energyMax', name: '能量上限', regular: 50, tau: 75, unit: '', type: 'survival' },
+        { key: 'armor', name: '护甲', regular: 150, tau: 225, unit: '', type: 'survival' },
+        { key: 'healthRegen', name: '生命值再生', regular: 5, tau: 7.5, unit: '/s', type: 'survival' }
+      ]
+    },
+    topaz: {
+      name: '黄玉', nameEn: 'Topaz', color: '#eab308',
+      img: 'dmg/img/mods/shard-topaz.webp',
+      imgTau: 'dmg/img/mods/shard-topaz-tauforged.webp',
+      buffs: [
+        { key: 'blastMaxHealth', name: '爆炸击杀增加最大生命', regular: 1, tau: 2, unit: '/击杀', maxVal: '300/450', type: 'blast' },
+        { key: 'blastShieldRegen', name: '爆炸击杀恢复护盾', regular: 5, tau: 7.5, unit: '', type: 'blast' },
+        { key: 'heatCritChance', name: '火焰异常叠加暴击几率', regular: 1, tau: 1.5, unit: '%/层', maxVal: '50%/75%', type: 'heat' },
+        { key: 'radiationAbilityDmg', name: '辐射异常增加技能伤害', regular: 10, tau: 15, unit: '%', type: 'radiation' }
+      ]
+    },
+    violet: {
+      name: '紫晶', nameEn: 'Violet', color: '#7c3aed',
+      img: 'dmg/img/mods/shard-violet.webp',
+      imgTau: 'dmg/img/mods/shard-violet-tauforged.webp',
+      buffs: [
+        { key: 'electricityAbilityDmg', name: '电击异常增加技能伤害', regular: 10, tau: 15, unit: '%', type: 'electricity' },
+        { key: 'primaryElectricityDmg', name: '主武器电击伤害', regular: 30, tau: 45, unit: '%', type: 'electricity', note: '每颗深红/蔚蓝/紫晶额外+10%/15%' },
+        { key: 'meleeCritDmg', name: '近战暴击伤害', regular: 25, tau: 37.5, unit: '%', type: 'melee', note: '能量>500时翻倍' },
+        { key: 'healthEnergyConversion', name: '生命/能量球互转', regular: 20, tau: 30, unit: '%', type: 'utility' }
+      ]
+    },
+    emerald: {
+      name: '翡翠', nameEn: 'Emerald', color: '#059669',
+      img: 'dmg/img/mods/shard-emerald.webp',
+      imgTau: 'dmg/img/mods/shard-emerald-tauforged.webp',
+      buffs: [
+        { key: 'toxinDotDmg', name: '毒素异常伤害加成', regular: 30, tau: 45, unit: '%', type: 'toxin' },
+        { key: 'toxinHealthOnProc', name: '毒素异常回血', regular: 2, tau: 3, unit: '', type: 'toxin' },
+        { key: 'corrosiveAbilityDmg', name: '腐蚀异常增加技能伤害', regular: 10, tau: 15, unit: '%', type: 'corrosive' },
+        { key: 'corrosiveMaxStacks', name: '腐蚀异常最大层数', regular: 2, tau: 3, unit: '层', type: 'corrosive' }
+      ]
+    }
+  },
+
   init() {
     this.bindEvents();
     this.renderWeaponList();
     this.renderEnemyList();
     this.renderModSlots();
+    this.renderWeaponSpecialSlot();
+    this.renderWeaponStanceSlot();
+    this.renderWeaponArcaneSlots();
     this.renderWarframeModSlots();
+    this.renderWarframeSpecialSlot();
+    this.renderAuraSlot();
+    this.renderArcaneSlots();
+    this.renderArchonShards();
+    const focusSelect = document.getElementById('wf-focus');
+    if (focusSelect) focusSelect.value = this.state.focusSchool;
     this.initAnimations();
     this.createParticles();
     this.initKeyboardNavigation();
     this.initModHoverPreview();
     this.initModDragSwap();
     this.initClickToDismiss();
-    this.loadTop20Weapons();
   },
 
   bindEvents() {
@@ -541,14 +637,25 @@ const App = {
     this.state.selectedWeaponName = name;
     this.state.selectedWeapon = data;
     this.state.activeAttackIndex = 0;
-    this.state.mods = Array(10).fill(null);
-    this.state.modRanks = Array(10).fill(0);
+    this.state.mods = Array(8).fill(null);
+    this.state.modRanks = Array(8).fill(0);
+    this.state.weaponSpecialMod = null;
+    this.state.weaponSpecialRank = 0;
+    this.state.weaponStanceMod = null;
+    this.state.weaponStanceRank = 0;
+    this.state.weaponArcanes = Array(2).fill(null);
+    this.state.weaponArcaneRanks = Array(2).fill(0);
+    this.state.selectedStanceName = null;
     this.state.currentCapacity = 0;
     this.state.zawComponents = { grip: null, link: null };
     this.state.kitgunComponents = { grip: null, loader: null };
+    this.state.weaponType = (data.category === 'Melee') ? 'melee' : 'ranged';
 
     this.updateWeaponInfo(data);
     this.renderModSlots();
+    this.renderWeaponSpecialSlot();
+    this.renderWeaponStanceSlot();
+    this.renderWeaponArcaneSlots();
     this.renderIncarnonEvolutions();
     this.renderStanceSection();
     this.renderCustomStatsPanel();
@@ -985,12 +1092,11 @@ const App = {
     }
 
     // 武器图片
-    const weaponImgUrl = `img/weapons/${this.state.selectedWeaponName}.png`;
-    
+    const weaponImg = weapon.imageName ? `dmg/img/weapons/${weapon.imageName}` : '';
     container.innerHTML = `
       <div class="stat-section">
         <div style="display:flex;gap:12px;margin-bottom:12px;">
-          <img src="${weaponImgUrl}" onerror="this.style.display='none'" style="width:64px;height:64px;border-radius:8px;background:var(--c-card);">
+          ${weaponImg ? `<img src="${weaponImg}" onerror="this.style.display='none'" style="width:80px;height:80px;border-radius:8px;background:var(--c-card);object-fit:contain;">` : ''}
           <div style="flex:1;">
             <h3 style="margin:0;">${this.state.selectedWeaponName} (${weapon.type})</h3>
             ${weapon.description ? `<div style="font-size:0.7rem;color:var(--c-text-dim);margin-top:4px;line-height:1.4;">${weapon.description}</div>` : ''}
@@ -1163,6 +1269,265 @@ const App = {
 
   // ═══════════════ MOD 系统 ═══════════════
 
+  setWeaponType(type) {
+    this.state.weaponType = (type === 'melee') ? 'melee' : 'ranged';
+    document.querySelectorAll('#weapon-type-selector .wtype-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.wtype === this.state.weaponType);
+    });
+    const stanceBlock = document.getElementById('weapon-stance-block');
+    if (stanceBlock) stanceBlock.style.display = this.state.weaponType === 'melee' ? '' : 'none';
+    this.renderWeaponStanceSlot();
+    this.recalculate();
+  },
+
+  renderWeaponSpecialSlot() {
+    const container = document.getElementById('weapon-special-slot');
+    if (!container) return;
+    const mod = this.state.weaponSpecialMod;
+    const rank = this.state.weaponSpecialRank || 0;
+    if (mod) {
+      const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
+      const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
+      const maxRank = this.getModMaxRank(mod);
+      container.innerHTML = `
+        <div class="mod specialMod filled" style="width:100px;height:124px;">
+          <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
+            ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.75rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
+          </div>
+          <div class="mod-rank-controls">
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setWeaponSpecialRank(${rank - 1})">-</button>
+            <span class="rank-value">${rank}/${maxRank}</span>
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setWeaponSpecialRank(${rank + 1})">+</button>
+          </div>
+          <button class="remove-mod" onclick="event.stopPropagation(); App.removeWeaponSpecialMod()">&times;</button>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `<div class="mod specialMod" onclick="App.openWeaponSpecialPicker()" style="width:100px;height:124px;"><div class="mod-icon">+</div><div class="mod-name">特殊功能槽</div></div>`;
+    }
+  },
+
+  setWeaponSpecialRank(newRank) {
+    const mod = this.state.weaponSpecialMod;
+    if (!mod) return;
+    const maxRank = this.getModMaxRank(mod);
+    this.state.weaponSpecialRank = Math.max(0, Math.min(newRank, maxRank));
+    this.renderWeaponSpecialSlot();
+    this.recalculate();
+  },
+
+  removeWeaponSpecialMod() {
+    this.state.weaponSpecialMod = null;
+    this.state.weaponSpecialRank = 0;
+    this.renderWeaponSpecialSlot();
+    this.recalculate();
+  },
+
+  openWeaponSpecialPicker() {
+    this.state.modPickerType = 'weaponSpecial';
+    const picker = document.getElementById('mod-picker');
+    const allMods = GameData.getAllMods();
+    const filtered = allMods.filter(m => m.type === 'exilus');
+    picker.innerHTML = this.renderWarframeModPickerContent('选择特殊功能槽', filtered, 'App.selectWeaponSpecialMod');
+    picker.classList.add('active');
+  },
+
+  selectWeaponSpecialMod(modName) {
+    const mod = GameData.getAllMods().find(m => m.name === modName);
+    if (!mod) return;
+    this.state.weaponSpecialMod = mod;
+    this.state.weaponSpecialRank = 0;
+    this.renderWeaponSpecialSlot();
+    this.recalculate();
+    this.closeModPicker();
+  },
+
+  renderWeaponStanceSlot() {
+    const container = document.getElementById('weapon-stance-slot');
+    if (!container) return;
+    const mod = this.state.weaponStanceMod;
+    const rank = this.state.weaponStanceRank || 0;
+    if (mod) {
+      const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
+      const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
+      const maxRank = this.getModMaxRank(mod);
+      container.innerHTML = `
+        <div class="mod stanceMod filled" style="width:100px;height:124px;">
+          <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
+            ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.75rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
+          </div>
+          <div class="mod-rank-controls">
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setWeaponStanceRank(${rank - 1})">-</button>
+            <span class="rank-value">${rank}/${maxRank}</span>
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setWeaponStanceRank(${rank + 1})">+</button>
+          </div>
+          <button class="remove-mod" onclick="event.stopPropagation(); App.removeWeaponStanceMod()">&times;</button>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `<div class="mod stanceMod" onclick="App.openWeaponStancePicker()" style="width:100px;height:124px;"><div class="mod-icon">+</div><div class="mod-name">架式</div></div>`;
+    }
+  },
+
+  setWeaponStanceRank(newRank) {
+    const mod = this.state.weaponStanceMod;
+    if (!mod) return;
+    const maxRank = this.getModMaxRank(mod);
+    this.state.weaponStanceRank = Math.max(0, Math.min(newRank, maxRank));
+    this.renderWeaponStanceSlot();
+    this.recalculate();
+  },
+
+  removeWeaponStanceMod() {
+    this.state.weaponStanceMod = null;
+    this.state.weaponStanceRank = 0;
+    this.state.selectedStanceName = null;
+    this.renderWeaponStanceSlot();
+    this.renderStanceSection();
+    this.recalculate();
+  },
+
+  openWeaponStancePicker() {
+    this.state.modPickerType = 'weaponStance';
+    const picker = document.getElementById('mod-picker');
+    const allMods = GameData.getAllMods();
+    const weapon = this.state.selectedWeapon;
+    let filtered = allMods.filter(m => m.type === 'stance');
+    if (weapon && weapon.compTags) {
+      const compTags = weapon.compTags || [];
+      const matched = filtered.filter(m => (m.tags || []).some(t => compTags.includes(t)));
+      if (matched.length > 0) filtered = matched;
+    }
+    picker.innerHTML = this.renderWarframeModPickerContent('选择架式', filtered, 'App.selectWeaponStanceMod');
+    picker.classList.add('active');
+  },
+
+  selectWeaponStanceMod(modName) {
+    const mod = GameData.getAllMods().find(m => m.name === modName);
+    if (!mod) return;
+    this.state.weaponStanceMod = mod;
+    this.state.weaponStanceRank = 0;
+    this.state.selectedStanceName = modName;
+    this.renderWeaponStanceSlot();
+    this.renderStanceSection();
+    this.recalculate();
+    this.closeModPicker();
+  },
+
+  renderWeaponArcaneSlots() {
+    const container = document.getElementById('weapon-arcane-slots');
+    if (!container) return;
+    container.innerHTML = '';
+    for (let i = 0; i < 2; i++) {
+      const mod = this.state.weaponArcanes[i];
+      const slot = document.createElement('div');
+      slot.className = 'mod arcaneMod';
+      slot.style.cssText = 'width:100px;height:100px;';
+      if (mod) {
+        const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
+        const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
+        slot.innerHTML = `
+          <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
+            ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.7rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
+          </div>
+          <button class="remove-mod" onclick="event.stopPropagation(); App.removeWeaponArcane(${i})">&times;</button>
+        `;
+      } else {
+        slot.innerHTML = `<div class="mod-icon">+</div><div class="mod-name">赋能</div>`;
+      }
+      slot.addEventListener('click', () => this.openWeaponArcanePicker(i));
+      container.appendChild(slot);
+    }
+  },
+
+  openWeaponArcanePicker(slotIndex) {
+    this.state.modPickerSlot = slotIndex;
+    this.state.modPickerType = 'weaponArcane';
+    const picker = document.getElementById('mod-picker');
+    const allMods = GameData.getAllMods();
+    const usedNames = this.state.weaponArcanes.filter(m => m !== null).map(m => m.name);
+    const filtered = allMods.filter(m => m.type === 'weapon_mist' && !usedNames.includes(m.name));
+    picker.innerHTML = this.renderWarframeModPickerContent('选择武器赋能', filtered, `App.selectWeaponArcane(${slotIndex},`);
+    picker.classList.add('active');
+  },
+
+  selectWeaponArcane(slotIndex, modName) {
+    const mod = GameData.getAllMods().find(m => m.name === modName);
+    if (!mod) return;
+    this.state.weaponArcanes[slotIndex] = mod;
+    this.renderWeaponArcaneSlots();
+    this.recalculate();
+    this.closeModPicker();
+  },
+
+  removeWeaponArcane(slotIndex) {
+    this.state.weaponArcanes[slotIndex] = null;
+    this.renderWeaponArcaneSlots();
+    this.recalculate();
+  },
+
+  renderWarframeSpecialSlot() {
+    const container = document.getElementById('warframe-special-slot');
+    if (!container) return;
+    const mod = this.state.warframeSpecialMod;
+    const rank = this.state.warframeSpecialRank || 0;
+    if (mod) {
+      const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
+      const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
+      const maxRank = this.getModMaxRank(mod);
+      container.innerHTML = `
+        <div class="mod specialMod filled" style="width:100px;height:124px;">
+          <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
+            ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.75rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
+          </div>
+          <div class="mod-rank-controls">
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setWarframeSpecialRank(${rank - 1})">-</button>
+            <span class="rank-value">${rank}/${maxRank}</span>
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setWarframeSpecialRank(${rank + 1})">+</button>
+          </div>
+          <button class="remove-mod" onclick="event.stopPropagation(); App.removeWarframeSpecialMod()">&times;</button>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `<div class="mod specialMod" onclick="App.openWarframeSpecialPicker()" style="width:100px;height:124px;"><div class="mod-icon">+</div><div class="mod-name">特殊功能槽</div></div>`;
+    }
+  },
+
+  setWarframeSpecialRank(newRank) {
+    const mod = this.state.warframeSpecialMod;
+    if (!mod) return;
+    const maxRank = this.getModMaxRank(mod);
+    this.state.warframeSpecialRank = Math.max(0, Math.min(newRank, maxRank));
+    this.renderWarframeSpecialSlot();
+    this.recalculate();
+  },
+
+  removeWarframeSpecialMod() {
+    this.state.warframeSpecialMod = null;
+    this.state.warframeSpecialRank = 0;
+    this.renderWarframeSpecialSlot();
+    this.recalculate();
+  },
+
+  openWarframeSpecialPicker() {
+    this.state.modPickerType = 'warframeSpecial';
+    const picker = document.getElementById('mod-picker');
+    const allMods = GameData.getAllMods();
+    const filtered = allMods.filter(m => m.type === 'exilus');
+    picker.innerHTML = this.renderWarframeModPickerContent('选择战甲特殊功能槽', filtered, 'App.selectWarframeSpecialMod');
+    picker.classList.add('active');
+  },
+
+  selectWarframeSpecialMod(modName) {
+    const mod = GameData.getAllMods().find(m => m.name === modName);
+    if (!mod) return;
+    this.state.warframeSpecialMod = mod;
+    this.state.warframeSpecialRank = 0;
+    this.renderWarframeSpecialSlot();
+    this.recalculate();
+    this.closeModPicker();
+  },
+
   renderModSlots() {
     const container = document.getElementById('mod-grid');
     if (!container) return;
@@ -1176,16 +1541,16 @@ const App = {
       if (mod) {
         slot.classList.add('filled');
         const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
-        const imgSrc = mod.img ? `img/mods/${mod.img}` : '';
+        const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
         const maxRank = this.getModMaxRank(mod);
         slot.innerHTML = `
           <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
             ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.65rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
           </div>
-          <div class="mod-rank-controls" style="position:absolute;bottom:2px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:2px;z-index:2;">
-            <button class="rank-btn" onclick="event.stopPropagation(); App.setModRank(${i}, ${rank - 1})" style="width:14px;height:14px;font-size:9px;line-height:1;border:1px solid var(--c-border);border-radius:3px;background:var(--c-bg);color:var(--c-text);cursor:pointer;display:flex;align-items:center;justify-content:center;">-</button>
-            <span style="font-size:9px;color:var(--c-gold);min-width:10px;text-align:center;">${rank}/${maxRank}</span>
-            <button class="rank-btn" onclick="event.stopPropagation(); App.setModRank(${i}, ${rank + 1})" style="width:14px;height:14px;font-size:9px;line-height:1;border:1px solid var(--c-border);border-radius:3px;background:var(--c-bg);color:var(--c-text);cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
+          <div class="mod-rank-controls">
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setModRank(${i}, ${rank - 1})">-</button>
+            <span class="rank-value">${rank}/${maxRank}</span>
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setModRank(${i}, ${rank + 1})">+</button>
           </div>
           <button class="remove-mod" onclick="event.stopPropagation(); App.removeMod(${i})">&times;</button>
         `;
@@ -1238,8 +1603,6 @@ const App = {
   },
 
   getSlotLabel(index) {
-    if (index === 8) return 'EXILUS';
-    if (index === 9) return '光环';
     return `MOD ${index + 1}`;
   },
 
@@ -1311,7 +1674,7 @@ const App = {
             const zh = GameData.MOD_NAMES_ZH[m.name] || m.name;
             const drain = this.getModDrain(m, 0);
             const canAfford = drain <= maxDrain;
-            const imgSrc = m.img ? `img/mods/${m.img}` : '';
+            const imgSrc = m.img ? `dmg/img/mods/${m.img}` : '';
             return `
               <div class="weapon-item" onclick="App.selectMod(${slotIndex}, '${m.name.replace(/'/g, "\\'")}')"
                    style="${!canAfford ? 'opacity:0.4;pointer-events:none;' : ''}padding:8px;"
@@ -1379,18 +1742,25 @@ const App = {
     const container = document.getElementById('warframe-mod-grid');
     if (!container) return;
     container.innerHTML = '';
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 8; i++) {
       const slot = document.createElement('div');
       slot.className = 'mod-slot';
       slot.dataset.index = i;
       const mod = this.state.warframeMods[i];
+      const rank = this.state.warframeModRanks[i] || 0;
       if (mod) {
         slot.classList.add('filled');
         const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
-        const imgSrc = mod.img ? `img/mods/${mod.img}` : '';
+        const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
+        const maxRank = this.getModMaxRank(mod);
         slot.innerHTML = `
           <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
-            ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.65rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
+            ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.75rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
+          </div>
+          <div class="mod-rank-controls">
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setWarframeModRank(${i}, ${rank - 1})">-</button>
+            <span class="rank-value">${rank}/${maxRank}</span>
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setWarframeModRank(${i}, ${rank + 1})">+</button>
           </div>
           <button class="remove-mod" onclick="event.stopPropagation(); App.removeWarframeMod(${i})">&times;</button>
         `;
@@ -1405,49 +1775,246 @@ const App = {
     }
   },
 
-  openWarframeModPicker(slotIndex) {
-    this.state.modPickerSlot = slotIndex;
-    this.state.modPickerType = 'warframe';
+  setWarframeModRank(slotIndex, newRank) {
+    const mod = this.state.warframeMods[slotIndex];
+    if (!mod) return;
+    const maxRank = this.getModMaxRank(mod);
+    this.state.warframeModRanks[slotIndex] = Math.max(0, Math.min(newRank, maxRank));
+    this.renderWarframeModSlots();
+    this.recalculate();
+  },
 
+  renderAuraSlot() {
+    const slot = document.getElementById('aura-slot');
+    if (!slot) return;
+    const mod = this.state.auraMod;
+    if (mod) {
+      const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
+      const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
+      const rank = this.state.auraModRank || 0;
+      const maxRank = this.getModMaxRank(mod);
+      slot.innerHTML = `
+        <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
+          ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.75rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
+        </div>
+        <div class="mod-rank-controls">
+          <button class="rank-btn" onclick="event.stopPropagation(); App.setAuraModRank(${rank - 1})">-</button>
+          <span class="rank-value">${rank}/${maxRank}</span>
+          <button class="rank-btn" onclick="event.stopPropagation(); App.setAuraModRank(${rank + 1})">+</button>
+        </div>
+        <button class="remove-mod" onclick="event.stopPropagation(); App.removeAuraMod()">&times;</button>
+      `;
+    } else {
+      slot.innerHTML = `<div class="mod-icon">+</div><div class="mod-name">光环</div>`;
+    }
+  },
+
+  setAuraModRank(newRank) {
+    const mod = this.state.auraMod;
+    if (!mod) return;
+    const maxRank = this.getModMaxRank(mod);
+    this.state.auraModRank = Math.max(0, Math.min(newRank, maxRank));
+    this.renderAuraSlot();
+    this.recalculate();
+  },
+
+  removeAuraMod() {
+    this.state.auraMod = null;
+    this.state.auraModRank = 0;
+    this.renderAuraSlot();
+    this.recalculate();
+  },
+
+  openAuraPicker() {
+    this.state.modPickerType = 'aura';
     const picker = document.getElementById('mod-picker');
     const allMods = GameData.getAllMods();
+    const filtered = allMods.filter(m => m.type === 'aura_mod');
+    picker.innerHTML = this.renderWarframeModPickerContent('选择光环 MOD', filtered, 'App.selectAuraMod');
+    picker.classList.add('active');
+  },
 
-    const warframeMods = allMods.filter(mod => {
-      return mod.type === 'frame_mod' || mod.type === 'aura_mod' || mod.type === 'frame_mist';
-    });
+  selectAuraMod(modName) {
+    const mod = GameData.getAllMods().find(m => m.name === modName);
+    if (!mod) return;
+    this.state.auraMod = mod;
+    this.state.auraModRank = 0;
+    this.renderAuraSlot();
+    this.recalculate();
+    this.closeModPicker();
+  },
 
-    const usedNames = this.state.warframeMods.filter(m => m !== null).map(m => m.name);
-    let filtered = warframeMods.filter(m => !usedNames.includes(m.name));
+  renderArcaneSlots() {
+    const container = document.getElementById('warframe-arcane-slots');
+    if (!container) return;
+    container.innerHTML = '';
+    for (let i = 0; i < 2; i++) {
+      const slot = document.createElement('div');
+      slot.className = 'mod arcaneMod';
+      slot.dataset.index = i;
+      const mod = this.state.warframeArcanes[i];
+      if (mod) {
+        const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
+        const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
+        slot.innerHTML = `
+          <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
+            ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.75rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
+          </div>
+          <button class="remove-mod" onclick="event.stopPropagation(); App.removeWarframeArcane(${i})">&times;</button>
+        `;
+      } else {
+        slot.innerHTML = `<div class="mod-icon">+</div><div class="mod-name">赋能</div>`;
+      }
+      slot.addEventListener('click', () => this.openArcanePicker(i));
+      container.appendChild(slot);
+    }
+  },
 
+  openArcanePicker(slotIndex) {
+    this.state.modPickerSlot = slotIndex;
+    this.state.modPickerType = 'arcane';
+    const picker = document.getElementById('mod-picker');
+    const allMods = GameData.getAllMods();
+    const usedNames = this.state.warframeArcanes.filter(m => m !== null).map(m => m.name);
+    const filtered = allMods.filter(m => m.type === 'frame_mist' && !usedNames.includes(m.name));
+    picker.innerHTML = this.renderWarframeModPickerContent('选择 Warframe 赋能', filtered, `App.selectWarframeArcane(${slotIndex},`);
+    picker.classList.add('active');
+  },
+
+  selectWarframeArcane(slotIndex, modName) {
+    const mod = GameData.getAllMods().find(m => m.name === modName);
+    if (!mod) return;
+    this.state.warframeArcanes[slotIndex] = mod;
+    this.renderArcaneSlots();
+    this.recalculate();
+    this.closeModPicker();
+  },
+
+  removeWarframeArcane(slotIndex) {
+    this.state.warframeArcanes[slotIndex] = null;
+    this.renderArcaneSlots();
+    this.recalculate();
+  },
+
+  renderArchonShards() {
+    const container = document.getElementById('archon-shard-grid');
+    if (!container) return;
+    container.innerHTML = '';
+    for (let i = 0; i < 5; i++) {
+      const shard = this.state.archonShards[i];
+      const slot = document.createElement('div');
+      slot.className = 'archon-shard-slot' + (shard ? ' filled' : '');
+      if (shard) {
+        const data = this.ARCHON_SHARD_DATA[shard.type];
+        const buff = data.buffs[shard.buffIndex];
+        const value = shard.isTau ? buff.tau : buff.regular;
+        const imgSrc = shard.isTau ? data.imgTau : data.img;
+        slot.style.borderColor = data.color;
+        slot.innerHTML = `
+          <img src="${imgSrc}" alt="${data.name}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:var(--r-sm);">
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:3px 4px;background:linear-gradient(transparent,rgba(0,0,0,0.85));text-align:center;">
+            <div style="font-size:0.55rem;color:#fff;line-height:1.1;">${buff.name}<br><span style="color:${data.color};font-weight:600;">+${value}${buff.unit}${shard.isTau?' Tau':''}</span></div>
+          </div>
+          <button class="remove-mod" onclick="event.stopPropagation(); App.removeArchonShard(${i})">&times;</button>
+        `;
+      } else {
+        slot.innerHTML = `<div class="mod-icon">+</div><div class="mod-name">源力石</div>`;
+      }
+      slot.addEventListener('click', () => this.openArchonShardPicker(i));
+      container.appendChild(slot);
+    }
+  },
+
+  openArchonShardPicker(slotIndex) {
+    this.state.modPickerSlot = slotIndex;
+    this.state.modPickerType = 'archonShard';
+    const picker = document.getElementById('mod-picker');
+    const types = Object.entries(this.ARCHON_SHARD_DATA);
+    picker.innerHTML = `
+      <div style="background:var(--c-lb-card);border:1px solid var(--c-lb-border);border-radius:var(--r-md);padding:20px;max-width:900px;width:100%;max-height:80vh;overflow-y:auto;">
+        <div class="picker-header">
+          <h3>选择源力石 - 槽位 ${slotIndex + 1}</h3>
+          <button onclick="App.closeModPicker()" style="background:none;border:none;color:var(--c-text2);font-size:1.5rem;cursor:pointer;padding:8px;">&times;</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          ${types.map(([type, data]) => `
+            <div style="border:1px solid var(--c-lb-border);border-radius:var(--r-sm);overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(${parseInt(data.color.slice(1,3),16)},${parseInt(data.color.slice(3,5),16)},${parseInt(data.color.slice(5,7),16)},0.1);border-bottom:1px solid var(--c-lb-border);">
+                <img src="${data.img}" style="width:36px;height:36px;">
+                <div>
+                  <div style="font-size:0.9rem;font-weight:600;color:${data.color};">${data.name} Archon Shard</div>
+                  <div style="font-size:0.7rem;color:var(--c-text2);">${data.nameEn}</div>
+                </div>
+              </div>
+              <div style="padding:8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;">
+                ${data.buffs.map((buff, buffIndex) => `
+                  <div style="padding:8px;border:1px solid var(--c-lb-border);border-radius:4px;cursor:pointer;transition:all 0.18s;" 
+                       onmouseover="this.style.borderColor='${data.color}';this.style.background='rgba(${parseInt(data.color.slice(1,3),16)},${parseInt(data.color.slice(3,5),16)},${parseInt(data.color.slice(5,7),16)},0.08)'"
+                       onmouseout="this.style.borderColor='var(--c-lb-border)';this.style.background='transparent'">
+                    <div style="font-size:0.75rem;color:var(--c-text);margin-bottom:6px;line-height:1.3;">${buff.name}</div>
+                    ${buff.note ? `<div style="font-size:0.6rem;color:var(--c-text2);margin-bottom:4px;">${buff.note}</div>` : ''}
+                    <div style="display:flex;gap:4px;">
+                      <button onclick="event.stopPropagation();App.selectArchonShard(${slotIndex},'${type}',${buffIndex},false)" style="flex:1;padding:4px;border:1px solid var(--c-lb-border);border-radius:3px;background:var(--c-bg2);color:var(--c-text);cursor:pointer;font-size:0.7rem;">
+                        <div style="color:var(--c-text2);">普通</div>
+                        <div style="color:var(--c-gold-bright);font-weight:600;">+${buff.regular}${buff.unit}</div>
+                      </button>
+                      <button onclick="event.stopPropagation();App.selectArchonShard(${slotIndex},'${type}',${buffIndex},true)" style="flex:1;padding:4px;border:1px solid ${data.color};border-radius:3px;background:rgba(${parseInt(data.color.slice(1,3),16)},${parseInt(data.color.slice(3,5),16)},${parseInt(data.color.slice(5,7),16)},0.12);color:var(--c-text);cursor:pointer;font-size:0.7rem;">
+                        <div style="color:${data.color};">Tau</div>
+                        <div style="color:var(--c-gold-bright);font-weight:600;">+${buff.tau}${buff.unit}</div>
+                      </button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    picker.classList.add('active');
+  },
+
+  selectArchonShard(slotIndex, type, buffIndex, isTau) {
+    this.state.archonShards[slotIndex] = { type, buffIndex, isTau };
+    this.renderArchonShards();
+    this.recalculate();
+    this.closeModPicker();
+  },
+
+  removeArchonShard(slotIndex) {
+    this.state.archonShards[slotIndex] = null;
+    this.renderArchonShards();
+    this.recalculate();
+  },
+
+  renderWarframeModPickerContent(title, filtered, selectFn) {
     const query = this.state.modSearchQuery.toLowerCase();
+    let list = filtered;
     if (query) {
-      filtered = filtered.filter(m => {
+      list = filtered.filter(m => {
         const zh = GameData.MOD_NAMES_ZH[m.name] || '';
         return m.name.toLowerCase().includes(query) || zh.includes(query);
       });
     }
-
-    picker.innerHTML = `
+    return `
       <div style="background:var(--c-lb-card);border:1px solid var(--c-lb-border);border-radius:var(--r-md);padding:20px;max-width:900px;width:100%;max-height:80vh;overflow-y:auto;">
         <div class="picker-header">
-          <h3>选择 Warframe MOD - 槽位 ${slotIndex + 1}</h3>
+          <h3>${title}</h3>
           <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
-            <input type="text" class="search-input" id="mod-search-input" placeholder="搜索 Warframe MOD..."
-                   value="${this.state.modSearchQuery}"
-                   oninput="App.state.modSearchQuery=this.value; App.openWarframeModPicker(${slotIndex});"
+            <input type="text" class="search-input" placeholder="搜索..." value="${this.state.modSearchQuery}"
+                   oninput="App.state.modSearchQuery=this.value; App.renderWarframeModPickerContentRefresh();"
                    style="flex:1;">
             <button onclick="App.closeModPicker()" style="background:none;border:none;color:var(--c-text2);font-size:1.5rem;cursor:pointer;padding:8px;">&times;</button>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;">
-          ${filtered.length === 0 ? '<div style="grid-column:1/-1;text-align:center;color:var(--c-text3);padding:40px;">没有 Warframe MOD</div>' : ''}
-          ${filtered.map(m => {
+          ${list.length === 0 ? '<div style="grid-column:1/-1;text-align:center;color:var(--c-text3);padding:40px;">没有可用选项</div>' : ''}
+          ${list.map(m => {
             const zh = GameData.MOD_NAMES_ZH[m.name] || m.name;
-            const imgSrc = m.img ? `img/mods/${m.img}` : '';
+            const imgSrc = m.img ? `dmg/img/mods/${m.img}` : '';
             const typeLabel = m.type === 'aura_mod' ? '光环' : m.type === 'frame_mist' ? '赋能' : 'MOD';
             return `
-              <div class="weapon-item" onclick="App.selectWarframeMod(${slotIndex}, '${m.name.replace(/'/g, "\\'")}')"
-                   style="padding:8px;">
+              <div class="weapon-item" onclick="${selectFn}('${m.name.replace(/'/g, "\\'")}')" style="padding:8px;">
                 <div style="display:flex;gap:8px;align-items:center;">
                   ${imgSrc ? `<img src="${imgSrc}" alt="${zh}" style="width:48px;height:48px;border-radius:4px;object-fit:cover;">` : ''}
                   <div class="weapon-info">
@@ -1462,6 +2029,26 @@ const App = {
         </div>
       </div>
     `;
+  },
+
+  renderWarframeModPickerContentRefresh() {
+    if (this.state.modPickerType === 'aura') {
+      this.openAuraPicker();
+    } else if (this.state.modPickerType === 'arcane') {
+      this.openArcanePicker(this.state.modPickerSlot);
+    } else if (this.state.modPickerType === 'warframe') {
+      this.openWarframeModPicker(this.state.modPickerSlot);
+    }
+  },
+
+  openWarframeModPicker(slotIndex) {
+    this.state.modPickerSlot = slotIndex;
+    this.state.modPickerType = 'warframe';
+    const picker = document.getElementById('mod-picker');
+    const allMods = GameData.getAllMods();
+    const usedNames = this.state.warframeMods.filter(m => m !== null).map(m => m.name);
+    const filtered = allMods.filter(m => m.type === 'frame_mod' && !usedNames.includes(m.name));
+    picker.innerHTML = this.renderWarframeModPickerContent('选择 Warframe MOD - 槽位 ' + (slotIndex + 1), filtered, `App.selectWarframeMod(${slotIndex},`);
     picker.classList.add('active');
   },
 
@@ -1479,6 +2066,12 @@ const App = {
     this.state.warframeMods[slotIndex] = null;
     this.state.warframeModRanks[slotIndex] = 0;
     this.renderWarframeModSlots();
+    this.recalculate();
+  },
+
+  setWarframeFocus(focus) {
+    this.state.focusSchool = focus || 'none';
+    this.state.options.madurai = (focus === 'madurai');
     this.recalculate();
   },
 
@@ -1944,8 +2537,17 @@ const App = {
       scaledEnemy.armor = Math.max(0, scaledEnemy.armor * (1 - armorStripPct / 100));
     }
     
-    // 收集所有装备的MOD（包括裂罅）
+    // 收集所有装备的MOD（包括裂罅、武器特殊槽、赋能、架式）
     let equippedMods = this.state.mods.filter(m => m !== null);
+    if (this.state.weaponSpecialMod) equippedMods.push(this.state.weaponSpecialMod);
+    this.state.weaponArcanes.forEach(m => { if (m) equippedMods.push(m); });
+    if (this.state.weaponStanceMod) equippedMods.push(this.state.weaponStanceMod);
+    const allModRanks = [
+      ...this.state.modRanks,
+      this.state.weaponSpecialRank || 0,
+      ...this.state.weaponArcaneRanks,
+      this.state.weaponStanceRank || 0
+    ];
     
     // 如果裂罅已激活，转换为action格式并添加到MOD列表
     if (this.state.riven.active) {
@@ -1985,7 +2587,7 @@ const App = {
       armorStrip: this.state.options.armorStrip || 0,
       externalVirus: this.state.options.externalVirus,
       virusStacks: this.state.options.virusStacks || 10,
-      modRanks: this.state.modRanks
+      modRanks: allModRanks
     };
 
     // 为每个攻击形态独立计算伤害
@@ -2870,8 +3472,15 @@ const App = {
     this.state.enemyLevel = 30;
     this.state.steelPath = false;
     this.state.eximus = false;
-    this.state.mods = Array(10).fill(null);
-    this.state.modRanks = Array(10).fill(0);
+    this.state.mods = Array(8).fill(null);
+    this.state.modRanks = Array(8).fill(0);
+    this.state.weaponType = 'ranged';
+    this.state.weaponSpecialMod = null;
+    this.state.weaponSpecialRank = 0;
+    this.state.weaponStanceMod = null;
+    this.state.weaponStanceRank = 0;
+    this.state.weaponArcanes = Array(2).fill(null);
+    this.state.weaponArcaneRanks = Array(2).fill(0);
     this.state.currentCapacity = 0;
     this.state.activeAttackIndex = 0;
     this.state.dpsResult = null;
@@ -2890,8 +3499,15 @@ const App = {
       sarynSpores: false, grendelNourish: false, kullervoCrit: false, harrowCrit: false
     };
     this.state.riven = { active: false, weaponType: '', positives: [], positiveValues: [], negative: null, negativeValue: 0, rank: 0 };
-    this.state.warframeMods = Array(4).fill(null);
-    this.state.warframeModRanks = Array(4).fill(0);
+    this.state.warframeMods = Array(8).fill(null);
+    this.state.warframeModRanks = Array(8).fill(0);
+    this.state.auraMod = null;
+    this.state.auraModRank = 0;
+    this.state.warframeSpecialMod = null;
+    this.state.warframeSpecialRank = 0;
+    this.state.warframeArcanes = Array(2).fill(null);
+    this.state.archonShards = Array(5).fill(null);
+    this.state.focusSchool = 'none';
     this.state.incarnonEvo = [null, null, null, null];
     this.state.selectedStanceName = null;
     this.state.selectedStanceAttackIndex = 0;
@@ -2905,10 +3521,20 @@ const App = {
     document.querySelectorAll('.weapon-item').forEach(item => item.classList.remove('active'));
     document.getElementById('weapon-info').innerHTML = '';
     document.getElementById('enemy-info').innerHTML = '';
+    this.setWeaponType('ranged');
     this.renderModSlots();
+    this.renderWeaponSpecialSlot();
+    this.renderWeaponStanceSlot();
+    this.renderWeaponArcaneSlots();
     this.renderWarframeModSlots();
+    this.renderWarframeSpecialSlot();
+    this.renderAuraSlot();
+    this.renderArcaneSlots();
+    this.renderArchonShards();
     this.renderWeaponList();
     this.renderEnemyList();
+    const focusSelect = document.getElementById('wf-focus');
+    if (focusSelect) focusSelect.value = 'none';
 
     const incarnonSection = document.getElementById('incarnon-evo-section');
     if (incarnonSection) incarnonSection.style.display = 'none';
@@ -2961,6 +3587,16 @@ const App = {
       level: this.state.enemyLevel,
       steelPath: this.state.steelPath,
       mods: this.state.mods.filter(m => m !== null).map(m => m.name),
+      weaponType: this.state.weaponType,
+      weaponSpecialMod: this.state.weaponSpecialMod ? this.state.weaponSpecialMod.name : null,
+      weaponStanceMod: this.state.weaponStanceMod ? this.state.weaponStanceMod.name : null,
+      weaponArcanes: this.state.weaponArcanes.filter(m => m !== null).map(m => m.name),
+      warframeMods: this.state.warframeMods.filter(m => m !== null).map(m => m.name),
+      auraMod: this.state.auraMod ? this.state.auraMod.name : null,
+      warframeSpecialMod: this.state.warframeSpecialMod ? this.state.warframeSpecialMod.name : null,
+      warframeArcanes: this.state.warframeArcanes.filter(m => m !== null).map(m => m.name),
+      archonShards: this.state.archonShards,
+      focusSchool: this.state.focusSchool,
       options: { ...this.state.options },
       abilities: { ...this.state.abilities },
       timestamp: new Date().toISOString()
@@ -2970,7 +3606,8 @@ const App = {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `warframe-build-${this.state.selectedWeaponName.replace(/\s+/g, '-')}-${Date.now()}.json`;
+    const weaponName = this.state.selectedWeaponName || 'unarmed';
+    a.download = `warframe-build-${weaponName.replace(/\s+/g, '-')}-${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
   },
@@ -3106,6 +3743,7 @@ const App = {
     });
 
     document.addEventListener('mouseleave', (e) => {
+      if (!e.target || typeof e.target.closest !== 'function') return;
       const listItem = e.target.closest('.modListItem');
       if (!listItem) return;
       const container = listItem.closest('.modsSPIBlock') || listItem.closest('#resultsModsPopup')?.parentElement;
