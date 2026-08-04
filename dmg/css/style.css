@@ -72,6 +72,26 @@ a { color: inherit; text-decoration: none; }
   max-width: 1600px; margin: 0 auto; padding: 20px;
 }
 
+/* ── 顶部横幅声明 ── */
+.notice-banner {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(90deg, rgba(212,168,74,0.15) 0%, rgba(212,168,74,0.08) 50%, rgba(212,168,74,0.15) 100%);
+  border: 1px solid var(--c-gold-dim);
+  border-radius: var(--r-md);
+  padding: 12px 20px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.notice-banner p {
+  font-family: var(--f-cn);
+  font-size: 0.85rem;
+  color: var(--c-gold-bright);
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* ── 头部 ── */
 .header {
   display: flex; justify-content: space-between; align-items: center;
@@ -193,9 +213,45 @@ select.search-input {
   background: var(--c-lb-hover); border-color: var(--c-gold-dim);
   transform: translateX(3px);
 }
-.weapon-item.active {
+.weapon-item.active,
+.weapon-item.modListItemActive {
   background: rgba(212,168,74,.08); border-color: var(--c-gold-bright);
 }
+li.modListItemActive {
+  background: rgba(212,168,74,.12);
+}
+li.modListItemActive .modListItem {
+  border-color: var(--c-gold-bright);
+}
+
+/* ── MOD 悬停预览 ── */
+.modListItemPrev {
+  position: absolute;
+  z-index: 999;
+  width: 160px;
+  height: 160px;
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: 8px;
+  pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+.modListItemPrev img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.mod[style*="outline"] {
+  transition: outline 0.15s ease;
+}
+
+.mod.dragging {
+  opacity: 0.5;
+}
+
 .weapon-item .weapon-icon {
   width: 44px; height: 44px; background: var(--c-bg);
   border-radius: var(--r-sm); display: flex;
@@ -223,7 +279,7 @@ select.search-input {
   align-items: center; justify-content: center;
   cursor: pointer; transition: all var(--ease-fast);
   position: relative; overflow: hidden;
-  min-height: 120px;
+  min-height: 160px;
 }
 .mod-slot:hover { border-color: var(--c-gold-bright); background: var(--c-lb-hover); }
 .mod-slot.filled {
@@ -687,13 +743,13 @@ select.search-input {
 }
 .modsRow {
   display: flex;
-  gap: 6px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .mod {
-  width: 60px;
-  height: 72px;
+  width: 80px;
+  height: 96px;
   border: 1px solid var(--c-border);
   border-radius: var(--r-sm);
   background: var(--c-card);

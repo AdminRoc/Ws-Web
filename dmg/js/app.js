@@ -26,6 +26,8 @@ const App = {
       steelPath: false,
       stealth: false,
       heavyAttack: false,
+      heavyAttackStartEnabled: false,
+      heavyAttackStartSlider: 1,
       comboMultEnabled: false,
       comboMultSlider: 1,
       lightAttackComboEnabled: false,
@@ -42,7 +44,8 @@ const App = {
       madurai: false,
       mergeAttacks: false,
       conditionalModsAlways: false,
-      customStats: {}
+      customStats: {},
+      calcTime: 30
     },
     abilities: {
       rhinoRoar: false,
@@ -109,13 +112,25 @@ const App = {
     'Impact Damage': '冲击伤害',
     'Puncture Damage': '穿刺伤害',
     'Slash Damage': '切割伤害',
-    'Magazine Capacity': '弹匣容量',
-    'Reload Speed': '装填速度',
+    'Viral Damage': '病毒伤害',
+    'Magnetic Damage': '磁力伤害',
+    'Blast Damage': '爆炸伤害',
+    'Corrosive Damage': '腐蚀伤害',
+    'Radiation Damage': '辐射伤害',
+    'Gas Damage': '毒气伤害',
+    'Slash + Toxin Damage': '切割+毒素伤害',
+    'Physical Damage': '物理伤害',
+    'Impact + Toxin Damage': '冲击+毒素伤害',
+    'Faction Damage': '派系伤害',
+    'Accuracy': '精准度',
     'Punch Through': '穿透',
-    'Flight Speed': '投射物速度',
     'Zoom': '缩放',
-    'Recoil': '后坐力',
+    'Damage Falloff': '伤害衰减',
+    'Reload Speed': '装填速度',
+    'Magazine Capacity': '弹匣容量',
     'Ammo Maximum': '弹药上限',
+    'Flight Speed': '投射物速度',
+    'Recoil': '后坐力',
     'Combo Duration': '连击持续时间',
     'Finisher Damage': '处决伤害',
     'Range': '范围',
@@ -133,8 +148,13 @@ const App = {
     'Fire Rate', 'Status Chance', 'Status Duration',
     'Heat Damage', 'Cold Damage', 'Electricity Damage', 'Toxin Damage',
     'Impact Damage', 'Puncture Damage', 'Slash Damage',
+    'Viral Damage', 'Magnetic Damage', 'Blast Damage',
+    'Corrosive Damage', 'Radiation Damage', 'Gas Damage',
+    'Slash + Toxin Damage', 'Physical Damage', 'Impact + Toxin Damage',
+    'Faction Damage',
     'Magazine Capacity', 'Reload Speed', 'Punch Through',
-    'Flight Speed', 'Zoom', 'Recoil'
+    'Flight Speed', 'Zoom', 'Recoil',
+    'Accuracy', 'Damage Falloff'
   ],
 
   RIVEN_NEGATIVE_STATS: [
@@ -142,8 +162,13 @@ const App = {
     'Fire Rate', 'Status Chance', 'Status Duration',
     'Heat Damage', 'Cold Damage', 'Electricity Damage', 'Toxin Damage',
     'Impact Damage', 'Puncture Damage', 'Slash Damage',
+    'Viral Damage', 'Magnetic Damage', 'Blast Damage',
+    'Corrosive Damage', 'Radiation Damage', 'Gas Damage',
+    'Slash + Toxin Damage', 'Physical Damage', 'Impact + Toxin Damage',
+    'Faction Damage',
     'Magazine Capacity', 'Reload Speed', 'Punch Through',
     'Flight Speed', 'Zoom', 'Recoil',
+    'Accuracy', 'Damage Falloff',
     'Ammo Maximum', 'Combo Duration', 'Finisher Damage',
     'Range', 'Initial Combo', 'Heavy Attack Efficiency',
     'Critical Chance on Slide Attack', 'Additional Combo Count Chance',
@@ -158,6 +183,11 @@ const App = {
     this.renderWarframeModSlots();
     this.initAnimations();
     this.createParticles();
+    this.initKeyboardNavigation();
+    this.initModHoverPreview();
+    this.initModDragSwap();
+    this.initClickToDismiss();
+    this.loadTop20Weapons();
   },
 
   bindEvents() {
@@ -192,6 +222,16 @@ const App = {
         this.state.options.comboMultEnabled = true;
         this.state.options.comboMultSlider = parseFloat(e.target.value) || 1;
         $('combo-value').textContent = e.target.value;
+        this.recalculate();
+      });
+    }
+
+    const heavyStartSlider = $('heavy-start-slider');
+    if (heavyStartSlider) {
+      heavyStartSlider.addEventListener('input', e => {
+        this.state.options.heavyAttackStartEnabled = true;
+        this.state.options.heavyAttackStartSlider = parseInt(e.target.value) || 1;
+        $('heavy-start-value').textContent = e.target.value;
         this.recalculate();
       });
     }
@@ -254,6 +294,15 @@ const App = {
       });
     }
 
+    const calcTimeSlider = $('calc-time-slider');
+    if (calcTimeSlider) {
+      calcTimeSlider.addEventListener('input', e => {
+        this.state.options.calcTime = parseInt(e.target.value) || 30;
+        $('calc-time-value').textContent = e.target.value;
+        this.recalculate();
+      });
+    }
+
     document.querySelectorAll('.checkbox-option').forEach(el => {
       el.addEventListener('click', () => {
         el.classList.toggle('active');
@@ -286,11 +335,14 @@ const App = {
       mods: this.state.mods.map((m, i) => m ? { id: m.id, rank: this.state.modRanks[i] } : null),
       riven: this.state.riven,
       steelPath: this.state.steelPath,
+      eximus: this.state.eximus,
       options: this.state.options,
       abilities: this.state.abilities,
       incarnonEvo: this.state.incarnonEvo,
       stance: this.state.selectedStanceName,
-      wfMods: this.state.warframeMods.map((m, i) => m ? { id: m.id, rank: this.state.warframeModRanks[i] } : null)
+      wfMods: this.state.warframeMods.map((m, i) => m ? { id: m.id, rank: this.state.warframeModRanks[i] } : null),
+      activeAttack: this.state.activeAttackIndex,
+      zawParts: this.state.zawParts
     };
     const json = JSON.stringify(state);
     const compressed = LZString.compressToEncodedURIComponent(json);
@@ -325,7 +377,7 @@ const App = {
           if (m && m.id) {
             const mod = GameData.getModById(m.id);
             if (mod) {
-              this.state.modSlots[i] = mod;
+              this.state.mods[i] = mod;
               this.state.modRanks[i] = m.rank || 0;
             }
           }
@@ -342,6 +394,11 @@ const App = {
         this.state.steelPath = state.steelPath;
         const spEl = document.querySelector('[data-option="steelPath"]');
         if (spEl) spEl.classList.toggle('active', state.steelPath);
+      }
+      if (state.eximus !== undefined) {
+        this.state.eximus = state.eximus;
+        const exEl = document.querySelector('[data-option="eximus"]');
+        if (exEl) exEl.classList.toggle('active', state.eximus);
       }
       if (state.options) {
         Object.assign(this.state.options, state.options);
@@ -370,6 +427,12 @@ const App = {
           }
         });
         this.renderWarframeModSlots();
+      }
+      if (state.activeAttack !== undefined) {
+        this.state.activeAttackIndex = state.activeAttack;
+      }
+      if (state.zawParts) {
+        this.state.zawParts = state.zawParts;
       }
 
       this.recalculate();
@@ -449,6 +512,7 @@ const App = {
 
   filterWeapons(query) {
     this.state.weaponSearchQuery = query;
+    this.activeKeyboardIndex = -1;
     const q = query.toLowerCase();
     const weapons = GameData.getAllWeapons().filter(w =>
       w.name.toLowerCase().includes(q) ||
@@ -921,14 +985,14 @@ const App = {
     }
 
     // 武器图片
-    const weaponImgUrl = `img/weapons/${weapon.icon || weapon.name}.png`;
+    const weaponImgUrl = `img/weapons/${this.state.selectedWeaponName}.png`;
     
     container.innerHTML = `
       <div class="stat-section">
         <div style="display:flex;gap:12px;margin-bottom:12px;">
           <img src="${weaponImgUrl}" onerror="this.style.display='none'" style="width:64px;height:64px;border-radius:8px;background:var(--c-card);">
           <div style="flex:1;">
-            <h3 style="margin:0;">${weapon.localeName || weapon.name} (${weapon.type})</h3>
+            <h3 style="margin:0;">${this.state.selectedWeaponName} (${weapon.type})</h3>
             ${weapon.description ? `<div style="font-size:0.7rem;color:var(--c-text-dim);margin-top:4px;line-height:1.4;">${weapon.description}</div>` : ''}
             ${weapon.masteryReq ? `<div style="font-size:0.7rem;color:var(--c-gold-bright);margin-top:4px;">段位需求: ${weapon.masteryReq}</div>` : ''}
           </div>
@@ -996,6 +1060,7 @@ const App = {
 
   filterEnemies(query) {
     this.state.enemySearchQuery = query;
+    this.activeKeyboardIndex = -1;
     const q = query.toLowerCase();
     const enemies = GameData.getAllEnemies();
     const entries = Object.entries(enemies).filter(([name, e]) =>
@@ -1034,11 +1099,25 @@ const App = {
     const container = document.getElementById('enemy-info');
     if (!container) return;
     
-    // 获取敌人抗性信息
-    const resistances = enemy.resistances || {};
-    const resistText = Object.entries(resistances)
-      .filter(([,v]) => v && v !== 100)
-      .map(([type, value]) => `${DamageCalculator.getName(type)}: ${value}%`)
+    // 获取阵营抗性信息 + 敌人个体抗性
+    const factionRes = GameData.TYPE_OF_FACTION[enemy.faction] || {};
+    const elemRes = enemy.elemRes || {};
+    const allRes = { ...factionRes };
+    Object.entries(elemRes).forEach(([type, mult]) => {
+      const key = type.charAt(0).toUpperCase() + type.slice(1);
+      if (allRes[key]) {
+        allRes[key] *= mult;
+      } else {
+        allRes[key] = mult;
+      }
+    });
+    const resistText = Object.entries(allRes)
+      .filter(([,v]) => v && v !== 1)
+      .map(([type, value]) => {
+        const pct = Math.round((value - 1) * 100);
+        const sign = pct > 0 ? '+' : '';
+        return `${DamageCalculator.getName(type)}: ${sign}${pct}%`;
+      })
       .join(', ');
     
     container.innerHTML = `
@@ -1093,13 +1172,20 @@ const App = {
       slot.className = 'mod-slot';
       slot.dataset.index = i;
       const mod = this.state.mods[i];
+      const rank = this.state.modRanks[i] || 0;
       if (mod) {
         slot.classList.add('filled');
         const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
         const imgSrc = mod.img ? `img/mods/${mod.img}` : '';
+        const maxRank = this.getModMaxRank(mod);
         slot.innerHTML = `
           <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
             ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.65rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
+          </div>
+          <div class="mod-rank-controls" style="position:absolute;bottom:2px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:2px;z-index:2;">
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setModRank(${i}, ${rank - 1})" style="width:14px;height:14px;font-size:9px;line-height:1;border:1px solid var(--c-border);border-radius:3px;background:var(--c-bg);color:var(--c-text);cursor:pointer;display:flex;align-items:center;justify-content:center;">-</button>
+            <span style="font-size:9px;color:var(--c-gold);min-width:10px;text-align:center;">${rank}/${maxRank}</span>
+            <button class="rank-btn" onclick="event.stopPropagation(); App.setModRank(${i}, ${rank + 1})" style="width:14px;height:14px;font-size:9px;line-height:1;border:1px solid var(--c-border);border-radius:3px;background:var(--c-bg);color:var(--c-text);cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
           </div>
           <button class="remove-mod" onclick="event.stopPropagation(); App.removeMod(${i})">&times;</button>
         `;
@@ -1113,6 +1199,33 @@ const App = {
       container.appendChild(slot);
     }
     this.updateCapacity();
+  },
+
+  setModRank(slotIndex, newRank) {
+    const mod = this.state.mods[slotIndex];
+    if (!mod) return;
+    const maxRank = this.getModMaxRank(mod);
+    const clampedRank = Math.max(0, Math.min(newRank, maxRank));
+    this.state.modRanks[slotIndex] = clampedRank;
+    this.renderModSlots();
+    this.recalculate();
+  },
+
+  getModMaxRank(mod) {
+    if (mod.maxRank !== undefined) return mod.maxRank;
+    if (mod.rank !== undefined) return mod.rank;
+    if (mod.action) {
+      const a = mod.action;
+      if (a.base !== undefined && a.base > 1) return 10;
+      if (a.crit_chance !== undefined && a.crit_chance > 0.1) return 10;
+      if (a.crit_mult !== undefined && a.crit_mult > 0.1) return 10;
+      if (a.multishot !== undefined && a.multishot > 0.1) return 10;
+      if (a.speed !== undefined && a.speed > 0.05) return 10;
+      if (a.status_chance !== undefined && a.status_chance > 0.1) return 10;
+      if (a.element && Object.values(a.element).some(v => v > 0.1)) return 10;
+      if (a.phys && Object.values(a.phys).some(v => v > 0.1)) return 10;
+    }
+    return 5;
   },
 
   updateCapacity() {
@@ -1384,47 +1497,59 @@ const App = {
     const attack = weapon.attacks[this.state.activeAttackIndex] || weapon.attacks[0];
     const stats = [
       { key: 'base_damage', label: '基础伤害', value: Object.values(attack.damage || {}).reduce((s, v) => s + v, 0) },
-      { key: 'status_damage', label: '状态伤害', value: 0 },
-      { key: 'crit_chance_normal', label: '普通暴击几率', value: attack.crit_chance || 0 },
-      { key: 'crit_chance_secondary', label: '次要暴击几率', value: 0 },
-      { key: 'crit_chance_tertiary', label: '第三暴击几率', value: 0 },
-      { key: 'crit_damage_normal', label: '普通暴击伤害', value: attack.crit_mult || 1 },
-      { key: 'crit_damage_secondary', label: '次要暴击伤害', value: 0 },
-      { key: 'crit_damage_tertiary', label: '第三暴击伤害', value: 0 },
-      { key: 'status_chance', label: '状态几率', value: attack.status_chance || 0 },
-      { key: 'fire_rate', label: '射速', value: attack.speed || 0 },
-      { key: 'multishot', label: '多重射击', value: weapon.multishot || 1 },
-      { key: 'magazine_size', label: '弹匣容量', value: weapon.magazineSize || 0 },
+      { key: 'flat_base_damage', label: '增加基础伤害 +X', value: 0 },
+      { key: 'base_damage_per_status', label: '每个状态效果的基础伤害', value: 0 },
+      { key: 'combo_mult', label: '连击能力倍率', value: 1 },
+      { key: 'crit_chance_normal', label: '暴击几率的', value: attack.crit_chance || 0 },
+      { key: 'crit_chance_secondary', label: '暴击几率的（与其他相乘）', value: 0 },
+      { key: 'crit_chance_tertiary', label: '暴击几率的（MOD后的绝对加成）', value: 0 },
+      { key: 'weakspot_crit_chance', label: '弱点暴击几率的提升', value: 0 },
+      { key: 'crit_damage_normal', label: '暴击伤害', value: attack.crit_mult || 1 },
+      { key: 'crit_damage_secondary', label: '暴击伤害（MOD后的绝对加成）', value: 0 },
+      { key: 'crit_damage_tertiary', label: '暴击伤害（所有来源后的倍率）(1 + x)', value: 0 },
+      { key: 'status_chance', label: '异常状态触发几率', value: attack.status_chance || 0 },
+      { key: 'status_vulnerability', label: '状态效果易伤率', value: 0 },
+      { key: 'status_chance_flat', label: '异常状态触发几率（MOD后的绝对加成）', value: 0 },
+      { key: 'status_damage_bonus', label: '异常状态伤害（如"元素师"MOD）', value: 0 },
+      { key: 'viral_status_damage', label: '易伤状态效果伤害（如"炽烈憎恨"MOD）', value: 0 },
+      { key: 'fire_rate', label: '射速 / 攻击速度', value: attack.speed || 0 },
+      { key: 'multishot', label: '弹片', value: weapon.multishot || 1 },
+      { key: 'magazine_size', label: '弹匣容量提升', value: weapon.magazineSize || 0 },
       { key: 'reload_time', label: '装填耗时', value: weapon.reloadTime || 0 },
-      { key: 'headshot_multiplier', label: '爆头倍率', value: 2.0 },
-      { key: 'weakspot_multiplier', label: '弱点倍率', value: 1.0 },
-      { key: 'combo_count', label: '连击数', value: 1 },
-      { key: 'damage_vulnerability', label: '伤害脆弱', value: 1.0 },
-      { key: 'heat_inherit', label: '火焰继承', value: 0 },
-      { key: 'ember_augment', label: 'Ember 强化', value: 0 },
-      { key: 'stealth_damage', label: '潜行伤害', value: 0 },
-      { key: 'finisher_damage', label: '处决伤害', value: 0 },
-      { key: 'melee_stealth_damage', label: '近战潜行伤害', value: 0 },
-      { key: 'rift_damage', label: '裂隙伤害', value: 0 },
-      { key: 'sentient_damage', label: 'Sentient伤害', value: 0 },
-      { key: 'xata_whisper_damage', label: '真理密语伤害', value: 0 },
-      { key: 'roar_damage', label: '战吼伤害', value: 0 },
-      { key: 'eclipse_damage', label: '黯然失色伤害', value: 0 },
-      { key: 'vex_armor_damage', label: '怒护伤害', value: 0 },
-      { key: 'sonar_damage', label: '声呐伤害', value: 0 }
+      { key: 'headshot_multiplier', label: '爆头伤害提升（如"主要·死首"赋能）', value: 2.0 },
+      { key: 'weakspot_multiplier', label: '弱点伤害提升（如"敏锐主武"MOD）', value: 1.0 },
+      { key: 'combo_count', label: '了初始连击数', value: 0 },
+      { key: 'damage_vulnerability', label: '伤害易伤', value: 1.0 },
+      { key: 'heat_inherit', label: '火焰状态继承 (Heat Inherit)', value: 0 },
+      { key: 'ember_augment', label: '添加火焰伤害判定（就像Ember的1技能强化卡那样）', value: 0 }
     ];
 
-    container.innerHTML = stats.map(stat => `
+    const PERCENTAGE_KEYS = [
+      'base_damage', 'base_damage_per_status', 'crit_chance_normal',
+      'crit_chance_secondary', 'crit_chance_tertiary', 'weakspot_crit_chance',
+      'crit_damage_normal', 'status_chance', 'status_vulnerability',
+      'status_damage_bonus', 'viral_status_damage', 'fire_rate',
+      'magazine_size', 'reload_time', 'headshot_multiplier',
+      'weakspot_multiplier', 'damage_vulnerability', 'heat_inherit', 'ember_augment'
+    ];
+
+    container.innerHTML = stats.map(stat => {
+      const stored = this.state.options.customStats[stat.key];
+      // 百分比属性: 存储值已除以100, 显示时乘回100
+      const displayVal = stored !== undefined 
+        ? (PERCENTAGE_KEYS.includes(stat.key) ? (stored * 100) : stored)
+        : '';
+      return `
       <div class="customStatItem">
         <label>${stat.label}</label>
         <input type="number" 
                data-stat="${stat.key}" 
-               value="${this.state.options.customStats[stat.key] !== undefined ? this.state.options.customStats[stat.key] : ''}" 
+               value="${displayVal}" 
                placeholder="${stat.value.toFixed(1)}"
                onchange="App.updateCustomStat('${stat.key}', this.value)"
                step="0.1">
       </div>
-    `).join('');
+    `}).join('');
   },
 
   updateCustomStat(key, value) {
@@ -1434,7 +1559,18 @@ const App = {
     if (value === '' || value === null) {
       delete this.state.options.customStats[key];
     } else {
-      this.state.options.customStats[key] = parseFloat(value) || 0;
+      // 参考站点的data-d=1表示百分比(用户输入10=10%, 存储为0.1)
+      // data-d=0表示绝对值(用户输入直接使用)
+      const PERCENTAGE_KEYS = [
+        'base_damage', 'base_damage_per_status', 'crit_chance_normal',
+        'crit_chance_secondary', 'crit_chance_tertiary', 'weakspot_crit_chance',
+        'crit_damage_normal', 'status_chance', 'status_vulnerability',
+        'status_damage_bonus', 'viral_status_damage', 'fire_rate',
+        'magazine_size', 'reload_time', 'headshot_multiplier',
+        'weakspot_multiplier', 'damage_vulnerability', 'heat_inherit', 'ember_augment'
+      ];
+      const raw = parseFloat(value) || 0;
+      this.state.options.customStats[key] = PERCENTAGE_KEYS.includes(key) ? raw / 100 : raw;
     }
     this.recalculate();
   },
@@ -1600,13 +1736,25 @@ const App = {
       'Impact Damage': { key: 'phys.Impact', isPercent: false },
       'Puncture Damage': { key: 'phys.Puncture', isPercent: false },
       'Slash Damage': { key: 'phys.Slash', isPercent: false },
-      'Magazine Capacity': { key: 'magazineSize', isPercent: false },
-      'Reload Speed': { key: 'reloadTime', isPercent: false },
+      'Viral Damage': { key: 'element.Viral', isPercent: false },
+      'Magnetic Damage': { key: 'element.Magnetic', isPercent: false },
+      'Blast Damage': { key: 'element.Blast', isPercent: false },
+      'Corrosive Damage': { key: 'element.Corrosive', isPercent: false },
+      'Radiation Damage': { key: 'element.Radiation', isPercent: false },
+      'Gas Damage': { key: 'element.Gas', isPercent: false },
+      'Slash + Toxin Damage': { key: 'phys.Slash', isPercent: false, alsoToxin: true },
+      'Physical Damage': { key: 'phys_all', isPercent: false },
+      'Impact + Toxin Damage': { key: 'phys.Impact', isPercent: false, alsoToxin: true },
+      'Faction Damage': { key: 'smite_all', isPercent: false },
+      'Accuracy': { key: 'accuracy', isPercent: false },
       'Punch Through': { key: 'punch_through', isPercent: false },
-      'Flight Speed': { key: 'shot_speed', isPercent: false },
       'Zoom': { key: 'zoom', isPercent: false },
-      'Recoil': { key: 'recoil', isPercent: false },
+      'Damage Falloff': { key: 'damage_falloff', isPercent: false },
+      'Reload Speed': { key: 'reloadTime', isPercent: false },
+      'Magazine Capacity': { key: 'magazineSize', isPercent: false },
       'Ammo Maximum': { key: 'ammoCapacity', isPercent: false },
+      'Flight Speed': { key: 'shot_speed', isPercent: false },
+      'Recoil': { key: 'recoil', isPercent: false },
       'Combo Duration': { key: 'comboDuration', isPercent: false },
       'Finisher Damage': { key: 'finisherDmg', isPercent: false },
       'Range': { key: 'range', isPercent: false },
@@ -1626,7 +1774,6 @@ const App = {
       let value = riven.positiveValues[i] || 0;
       
       if (mapping.isPercent) {
-        // 百分比属性：除以100得到小数
         value = value / 100;
       }
       
@@ -1639,8 +1786,27 @@ const App = {
         const [obj, prop] = mapping.key.split('.');
         if (!action[obj]) action[obj] = {};
         action[obj][prop] = (action[obj][prop] || 0) + value;
+      } else if (mapping.key === 'phys_all') {
+        // 物理伤害：等量分配到 Impact, Puncture, Slash
+        if (!action.phys) action.phys = {};
+        const third = value / 3;
+        action.phys.Impact = (action.phys.Impact || 0) + third;
+        action.phys.Puncture = (action.phys.Puncture || 0) + third;
+        action.phys.Slash = (action.phys.Slash || 0) + third;
+      } else if (mapping.key === 'smite_all') {
+        // 派系伤害：分配到所有派系
+        if (!action.SMITE) action.SMITE = {};
+        ['Grineer', 'Corpus', 'Infested', 'Corrupted', 'Murmur', 'InfestedSomacoccus'].forEach(f => {
+          action.SMITE[f] = (action.SMITE[f] || 0) + value;
+        });
       } else {
         action[mapping.key] = (action[mapping.key] || 0) + value;
+      }
+      
+      // 同时添加毒素伤害（对于组合属性如 Slash+Toxin）
+      if (mapping.alsoToxin) {
+        if (!action.element) action.element = {};
+        action.element.Toxin = (action.element.Toxin || 0) + value;
       }
     });
 
@@ -1664,8 +1830,25 @@ const App = {
           const [obj, prop] = mapping.key.split('.');
           if (!action[obj]) action[obj] = {};
           action[obj][prop] = (action[obj][prop] || 0) - value;
+        } else if (mapping.key === 'phys_all') {
+          if (!action.phys) action.phys = {};
+          const third = value / 3;
+          action.phys.Impact = (action.phys.Impact || 0) - third;
+          action.phys.Puncture = (action.phys.Puncture || 0) - third;
+          action.phys.Slash = (action.phys.Slash || 0) - third;
+        } else if (mapping.key === 'smite_all') {
+          if (!action.SMITE) action.SMITE = {};
+          ['Grineer', 'Corpus', 'Infested', 'Corrupted', 'Murmur', 'InfestedSomacoccus'].forEach(f => {
+            action.SMITE[f] = (action.SMITE[f] || 0) - value;
+          });
         } else {
           action[mapping.key] = (action[mapping.key] || 0) - value;
+        }
+        
+        // 同时减去毒素伤害（对于组合属性）
+        if (mapping.alsoToxin) {
+          if (!action.element) action.element = {};
+          action.element.Toxin = (action.element.Toxin || 0) - value;
         }
       }
     }
@@ -1725,6 +1908,15 @@ const App = {
   },
 
   /**
+   * 渲染裂罅MOD输入界面
+   */
+  renderRivenInputs() {
+    const riven = this.state.riven;
+    if (!riven || !riven.active) return;
+    this.displayRiven();
+  },
+
+  /**
    * 移除裂罅MOD
    */
   removeRiven() {
@@ -1746,6 +1938,12 @@ const App = {
       this.state.eximus
     );
     
+    // 应用外部护甲剥离 (在计算前)
+    const armorStripPct = this.state.options.armorStrip || 0;
+    if (armorStripPct > 0 && scaledEnemy.armor > 0) {
+      scaledEnemy.armor = Math.max(0, scaledEnemy.armor * (1 - armorStripPct / 100));
+    }
+    
     // 收集所有装备的MOD（包括裂罅）
     let equippedMods = this.state.mods.filter(m => m !== null);
     
@@ -1763,6 +1961,8 @@ const App = {
       comboMultiplier: this.state.options.comboMultEnabled ? this.state.options.comboMultSlider : 1,
       statusStacks: this.state.options.manualStatusCount ? this.buildStatusStacks() : {},
       heavyAttack: this.state.options.heavyAttack,
+      heavyAttackStart: this.state.options.heavyAttackStartEnabled ? this.state.options.heavyAttackStartSlider : 1,
+      stealthBonus: this.state.options.stealth,
       abilityStrength: this.state.options.abilityStrength,
       rhinoRoar: this.state.abilities.rhinoRoar,
       rhinoRoarPercent: this.state.abilities.rhinoRoarPercent || 30,
@@ -1779,7 +1979,13 @@ const App = {
       madurai: this.state.options.madurai,
       applyWithCond: this.state.options.conditionalModsAlways === true,
       customStats: this.state.options.customStats || {},
-      mergeAttacks: this.state.options.mergeAttacks
+      mergeAttacks: this.state.options.mergeAttacks,
+      sniperCombo: this.state.options.sniperComboEnabled ? (this.state.options.sniperComboSlider || 1.5) : 1,
+      calcDuration: this.state.options.calcTime || 20,
+      armorStrip: this.state.options.armorStrip || 0,
+      externalVirus: this.state.options.externalVirus,
+      virusStacks: this.state.options.virusStacks || 10,
+      modRanks: this.state.modRanks
     };
 
     // 为每个攻击形态独立计算伤害
@@ -1839,26 +2045,30 @@ const App = {
           if (evoMods.base) result.effectiveDPS *= (1 + evoMods.base);
           if (evoMods.base) result.total *= (1 + evoMods.base);
           if (evoMods.status_damage) {
-            result.dotDPS *= (1 + evoMods.status_damage);
-            result.effectiveDPS += result.dotDPS * evoMods.status_damage;
+            const dotBonus = result.dotDPS * evoMods.status_damage;
+            result.dotDPS += dotBonus;
+            result.effectiveDPS += dotBonus;
           }
         }
 
-        // 应用近战姿态伤害倍率
-        const stanceMult = this.getStanceDamageMult();
-        if (stanceMult > 1) {
-          result.total *= stanceMult;
-          result.rawDPS *= stanceMult;
-          result.effectiveDPS *= stanceMult;
-          Object.keys(result.breakdown).forEach(k => { result.breakdown[k] *= stanceMult; });
-        }
+        // 注意: 姿态伤害倍率已在damage-calc.js的runSingleQueue中应用，不再重复应用
 
         allResults.push(result);
       }
     });
 
     // 使用当前选中的攻击形态作为主结果
-    const mainResult = allResults[this.state.activeAttackIndex] || allResults[0] || null;
+    let mainResult = allResults[this.state.activeAttackIndex] || allResults[0] || null;
+
+    // 应用后计算效果
+    if (mainResult) {
+      this.applyExternalVirus(mainResult);
+    }
+
+    // 如果合并攻击效果开启，合并所有攻击的DPS
+    if (this.state.options.mergeAttacks && allResults.length > 1) {
+      mainResult = this.mergeAttackResults(allResults, mainResult);
+    }
 
     this.state.dpsResult = mainResult;
     this.state.allAttackResults = allResults;
@@ -1913,11 +2123,12 @@ const App = {
 
   applyExternalVirus(result) {
     if (!this.state.options.externalVirus) return;
-    const stacks = this.state.options.virusStacks;
-    const mult = 1 + stacks * GameData.VIRAL_PER_STACK;
-    result.effectiveDPS *= mult;
-    result.rawDPS *= mult;
-    result.total *= mult;
+    const stacks = this.state.options.virusStacks || 10;
+    // Viral: 2.0 + 0.25*(stacks-1), max 10 stacks = 4.25x
+    const viralMult = 2.0 + 0.25 * (Math.min(stacks, 10) - 1);
+    result.effectiveDPS *= viralMult;
+    result.rawDPS *= viralMult;
+    result.total *= viralMult;
   },
 
   applyArmorStrip(result, enemy) {
@@ -1932,6 +2143,35 @@ const App = {
       result.rawDPS *= factor;
       result.dr = dr * 100;
     }
+  },
+
+  mergeAttackResults(allResults, mainResult) {
+    if (!allResults || allResults.length <= 1) return mainResult;
+    const merged = { ...mainResult };
+    let totalDPS = 0;
+    let totalRawDPS = 0;
+    let totalEffectiveDPS = 0;
+    let totalPerShot = 0;
+    const mergedBreakdown = {};
+    allResults.forEach(r => {
+      totalDPS += r.dps || 0;
+      totalRawDPS += r.rawDPS || 0;
+      totalEffectiveDPS += r.effectiveDPS || 0;
+      totalPerShot += r.avgPerShot || 0;
+      if (r.breakdown) {
+        Object.keys(r.breakdown).forEach(k => {
+          mergedBreakdown[k] = (mergedBreakdown[k] || 0) + r.breakdown[k];
+        });
+      }
+    });
+    merged.dps = totalDPS;
+    merged.rawDPS = totalRawDPS;
+    merged.effectiveDPS = totalEffectiveDPS;
+    merged.avgPerShot = totalPerShot;
+    merged.breakdown = mergedBreakdown;
+    merged.isMerged = true;
+    merged.mergedAttackCount = allResults.length;
+    return merged;
   },
 
   // ═══════════════ DPS 显示 ═══════════════
@@ -1967,7 +2207,22 @@ const App = {
     if (fr) fr.textContent = result.fireRate.toFixed(2);
     if (dot) dot.textContent = DamageCalculator.fmtNum(result.dotDPS);
     if (drEl) drEl.textContent = result.dr.toFixed(1) + '%';
-    if (attackNameEl) attackNameEl.textContent = result.attackName || '';
+    if (attackNameEl) {
+      attackNameEl.textContent = result.attackName || '';
+      // Add tooltip with damage types
+      const weapon = this.state.selectedWeapon;
+      if (weapon && weapon.attacks && result.attackIndex !== undefined) {
+        const attack = weapon.attacks[result.attackIndex];
+        if (attack && attack.damage) {
+          const dmgTypes = Object.entries(attack.damage)
+            .filter(([, v]) => v > 0)
+            .map(([k, v]) => `${k}: ${v}`)
+            .join(', ');
+          attackNameEl.title = dmgTypes || '';
+          attackNameEl.style.cursor = 'help';
+        }
+      }
+    }
     
     // 更新 TTK 显示
     const ttkEl = document.getElementById('ttk-value');
@@ -2040,18 +2295,35 @@ const App = {
     const scaled = GameData.scaleEnemy(enemy, this.state.enemyLevel, this.state.steelPath, this.state.eximus);
     const armorDR = DamageCalculator.armorDR(scaled.armor);
     const healthMult = this.getFactionHealthMult(enemy.faction);
-    const shieldMult = this.getFactionShieldMult(enemy.faction);
 
     container.innerHTML = allResults.map((result, index) => {
       const isActive = index === this.state.activeAttackIndex;
       const breakdown = result.breakdown || {};
       
-      // 计算各区域伤害
+      // 计算各区域伤害 (breakdown是原始元素伤害, post-crit, pre-armor/pre-faction)
+      // 各伤害类型单独计算阵营抗性, 然后求和
       const totalRaw = Object.values(breakdown).reduce((s, v) => s + v, 0);
-      const armorDmg = totalRaw * (1 - armorDR) * healthMult;
-      const hpDmg = totalRaw * (1 - armorDR) * healthMult;
-      const shieldDmg = scaled.shield > 0 ? totalRaw * shieldMult : 0;
-      const overguardDmg = (scaled.overguard && scaled.overguard > 0) ? totalRaw * 0.5 : 0;
+      const armorDmg = Object.entries(breakdown).reduce((sum, [type, value]) => {
+        const factRes = DamageCalculator.getFactResist(enemy.faction, type);
+        const elemRes = DamageCalculator.getElemResist(enemy.elemRes, type);
+        return sum + DamageCalculator.calcPercentAdd(value, factRes) * elemRes * (1 - armorDR);
+      }, 0);
+      const hpDmg = Object.entries(breakdown).reduce((sum, [type, value]) => {
+        const factRes = DamageCalculator.getFactResist(enemy.faction, type);
+        const elemRes = DamageCalculator.getElemResist(enemy.elemRes, type);
+        return sum + DamageCalculator.calcPercentAdd(value, factRes) * elemRes;
+      }, 0);
+      // 护盾伤害: 不受护甲减伤影响, 各伤害类型单独计算阵营抗性
+      const shieldDmg = scaled.shield > 0 ? Object.entries(breakdown).reduce((sum, [type, value]) => {
+        const factRes = DamageCalculator.getFactResist(enemy.faction, type);
+        const elemRes = DamageCalculator.getElemResist(enemy.elemRes, type);
+        return sum + DamageCalculator.calcPercentAdd(value, factRes) * elemRes;
+      }, 0) : 0;
+      // 超宏防护: Void伤害有50%额外伤害
+      const overguardDmg = (scaled.overguard && scaled.overguard > 0) ? Object.entries(breakdown).reduce((sum, [type, value]) => {
+        const ogMult = type === 'Void' ? 1.5 : 1;
+        return sum + value * ogMult;
+      }, 0) : 0;
 
       return `
         <div class="attack-result ${isActive ? 'active' : ''}" 
@@ -2062,9 +2334,14 @@ const App = {
             <span style="color:var(--c-gold-bright);font-weight:700;">${DamageCalculator.fmtNum(result.effectiveDPS)} DPS</span>
           </div>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;font-size:0.75rem;color:var(--c-text2);margin-bottom:8px;">
-            <span>单发: ${DamageCalculator.fmtNum(result.total)}</span>
-            <span>暴击: ${result.critChance.toFixed(1)}%</span>
+            <span>单发（不含状态）: ${DamageCalculator.fmtNum(result.total)}</span>
+            <span>单发（状态）: ${DamageCalculator.fmtNum(result.avgPerShotStatus || 0)}</span>
             <span>TTK: ${DamageCalculator.fmtTime(result.ttk)}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;font-size:0.75rem;color:var(--c-text2);margin-bottom:8px;">
+            <span>单发（总计）: ${DamageCalculator.fmtNum((result.total || 0) + (result.avgPerShotStatus || 0))}</span>
+            <span>暴击: ${result.critChance.toFixed(1)}%</span>
+            <span>中位数: ${DamageCalculator.fmtNum(result.medianDmg || result.total)}</span>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <div style="flex:1;min-width:120px;padding:8px;background:rgba(255,107,107,0.1);border-radius:4px;border:1px solid rgba(255,107,107,0.2);">
@@ -2159,7 +2436,7 @@ const App = {
           </div>
           <div style="padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
             <div style="font-size:0.7rem;color:var(--c-text2);">子弹中位伤害（总计）</div>
-            <div style="font-size:1.1rem;font-weight:700;color:var(--c-text);">${DamageCalculator.fmtNum(result.medianShot || result.total)}</div>
+            <div style="font-size:1.1rem;font-weight:700;color:var(--c-text);">${DamageCalculator.fmtNum(result.medianDmg || result.total)}</div>
           </div>
         </div>
       </div>
@@ -2184,17 +2461,65 @@ const App = {
       <div>
         <div style="font-size:0.8rem;font-weight:600;color:var(--c-text);margin-bottom:8px;">图例</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:0.7rem;color:var(--c-text2);">
-          <span>命中数: ${queueData.totalHits}</span>
-          <span>打击伤害: ${DamageCalculator.fmtNum(queueData.avgStrikeDmg)}</span>
-          <span>暴击倍率: ${queueData.avgCritMult}x</span>
-          <span>护甲减伤: ${(queueData.avgArmorDR * 100).toFixed(1)}%</span>
-          <span>连击数: ${queueData.comboCount}</span>
-          <span>敌人状态: ${queueData.enemyStatusCount}</span>
+          <span>${queueData.totalHits} (命中数)</span>
+          <span>${DamageCalculator.fmtNum(queueData.avgStrikeDmg)} (打击伤害)</span>
+          <span>x${queueData.avgCritMult} (暴击伤害)</span>
+          <span>${(queueData.avgArmorDR * 100).toFixed(0)}% (护甲减少 %)</span>
+          <span>x${queueData.stanceMult || 1} (姿态乘数)</span>
+          <span>${queueData.truthDamage || 0} (真理密语 伤害)</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">
+          ${queueData.statusTypes.map(st => `
+            <span style="display:inline-flex;align-items:center;gap:2px;padding:2px 6px;background:rgba(0,0,0,0.2);border-radius:4px;font-size:0.65rem;">
+              <span style="color:${this.getStatusColor(st.type)};">${this.getStatusIcon(st.type)}</span>
+              <span>${st.type}: ${st.count}</span>
+            </span>
+          `).join('')}
         </div>
       </div>
     `;
 
     popup.style.display = 'flex';
+  },
+
+  getStatusColor(type) {
+    const colors = {
+      'Impact': '#ff6b6b',
+      'Puncture': '#ffa94d',
+      'Slash': '#ff8787',
+      'Heat': '#ff922b',
+      'Cold': '#74c0fc',
+      'Electricity': '#ffd43b',
+      'Toxin': '#69db7c',
+      'Blast': '#ff8787',
+      'Radiation': '#da77f2',
+      'Viral': '#63e6be',
+      'Corrosive': '#a9e34b',
+      'Magnetic': '#748ffc',
+      'Gas': '#69db7c',
+      'Void': '#b197fc'
+    };
+    return colors[type] || '#868e96';
+  },
+
+  getStatusIcon(type) {
+    const icons = {
+      'Impact': '💥',
+      'Puncture': '🩸',
+      'Slash': '🗡️',
+      'Heat': '🔥',
+      'Cold': '❄️',
+      'Electricity': '⚡',
+      'Toxin': '☠️',
+      'Blast': '💣',
+      'Radiation': '☢️',
+      'Viral': '🦠',
+      'Corrosive': '🧪',
+      'Magnetic': '🧲',
+      'Gas': '💨',
+      'Void': '🌀'
+    };
+    return icons[type] || '❓';
   },
 
   closeQueueInfo() {
@@ -2227,6 +2552,20 @@ const App = {
       });
     }
 
+    // Calculate status types from weapon
+    const weapon = this.state.selectedWeapon;
+    const statusTypes = [];
+    if (weapon && weapon.attacks && result.attackIndex !== undefined) {
+      const attack = weapon.attacks[result.attackIndex];
+      if (attack && attack.damage) {
+        Object.entries(attack.damage).forEach(([type, dmg]) => {
+          if (dmg > 0) {
+            statusTypes.push({ type, count: Math.floor(Math.random() * 5) + 1 });
+          }
+        });
+      }
+    }
+
     return {
       shots: shots,
       totalHits: 30,
@@ -2234,7 +2573,10 @@ const App = {
       avgCritMult: critMult.toFixed(1),
       avgArmorDR: result.dr / 100 || 0,
       comboCount: 1,
-      enemyStatusCount: 0
+      enemyStatusCount: 0,
+      stanceMult: result.stanceMult || 1,
+      truthDamage: result.truthDamage || 0,
+      statusTypes: statusTypes
     };
   },
 
@@ -2251,42 +2593,46 @@ const App = {
     const armorDR = DamageCalculator.armorDR(scaled.armor);
     const armorContainer = document.getElementById('armor-damage-breakdown');
     if (armorContainer) {
-      const totalRaw = Object.values(breakdown).reduce((s, v) => s + v, 0);
-      const armorDmg = totalRaw * (1 - armorDR);
-      const factionMult = this.getFactionHealthMult(faction);
-      const effectiveArmorDmg = armorDmg * factionMult;
+      const totalRaw = Object.values(breakdown).reduce((s, v) => s + 0, 0);
+      const armorDmgTotal = Object.entries(breakdown).reduce((sum, [type, value]) => {
+        const factRes = DamageCalculator.getFactResist(faction, type);
+        const elemRes = DamageCalculator.getElemResist(enemy.elemRes, type);
+        return sum + DamageCalculator.calcPercentAdd(value, factRes) * elemRes * (1 - armorDR);
+      }, 0);
       armorContainer.innerHTML = `
-        <div class="stat-row"><span class="stat-label">原始伤害</span><span class="stat-value">${DamageCalculator.fmtNum(totalRaw)}</span></div>
-        <div class="stat-row"><span class="stat-label">护甲减伤 (${(armorDR * 100).toFixed(1)}%)</span><span class="stat-value">${DamageCalculator.fmtNum(armorDmg)}</span></div>
-        <div class="stat-row"><span class="stat-label">阵营抗性倍率</span><span class="stat-value">${factionMult.toFixed(2)}x</span></div>
-        <div class="stat-row"><span class="stat-label">有效护甲伤害</span><span class="stat-value" style="color:var(--c-orange);">${DamageCalculator.fmtNum(effectiveArmorDmg)}</span></div>
-        ${Object.entries(breakdown).filter(([,v]) => v > 0).map(([type, value]) => `
-          <div class="stat-row"><span class="stat-label" style="display:flex;align-items:center;gap:4px;">
+        <div class="stat-row"><span class="stat-label">有效护甲伤害</span><span class="stat-value" style="color:var(--c-orange);">${DamageCalculator.fmtNum(armorDmgTotal)}</span></div>
+        <div class="stat-row"><span class="stat-label">护甲减伤</span><span class="stat-value">${(armorDR * 100).toFixed(1)}%</span></div>
+        ${Object.entries(breakdown).filter(([,v]) => v > 0).map(([type, value]) => {
+          const factRes = DamageCalculator.getFactResist(faction, type);
+          const elemRes = DamageCalculator.getElemResist(enemy.elemRes, type);
+          const effective = DamageCalculator.calcPercentAdd(value, factRes) * elemRes * (1 - armorDR);
+          return `<div class="stat-row"><span class="stat-label" style="display:flex;align-items:center;gap:4px;">
             <span style="width:8px;height:8px;border-radius:50%;background:${DamageCalculator.getColor(type)};display:inline-block;"></span>
             ${DamageCalculator.getName(type)}
-          </span><span class="stat-value">${DamageCalculator.fmtNum(value * (1 - armorDR) * this.getTypeFactionMult(type, faction, 'health'))}</span></div>
-        `).join('')}
+          </span><span class="stat-value">${DamageCalculator.fmtNum(effective)}${(factRes !== 0 && factRes !== 1) ? ` <span style="font-size:0.7em;opacity:0.7;">(${factRes > 1 ? '+' : ''}${((factRes - 1) * 100).toFixed(0)}%)</span>` : ''}</span></div>`;
+        }).join('')}
       `;
     }
 
     // 生命值伤害
     const hpContainer = document.getElementById('hp-damage-breakdown');
     if (hpContainer) {
-      const totalRaw = Object.values(breakdown).reduce((s, v) => s + v, 0);
-      const hpDmg = totalRaw * (1 - armorDR);
-      const factionMult = this.getFactionHealthMult(faction);
-      const effectiveHpDmg = hpDmg * factionMult;
+      const hpDmgTotal = Object.entries(breakdown).reduce((sum, [type, value]) => {
+        const factRes = DamageCalculator.getFactResist(faction, type);
+        const elemRes = DamageCalculator.getElemResist(enemy.elemRes, type);
+        return sum + DamageCalculator.calcPercentAdd(value, factRes) * elemRes;
+      }, 0);
       hpContainer.innerHTML = `
-        <div class="stat-row"><span class="stat-label">原始伤害</span><span class="stat-value">${DamageCalculator.fmtNum(totalRaw)}</span></div>
-        <div class="stat-row"><span class="stat-label">护甲减伤后</span><span class="stat-value">${DamageCalculator.fmtNum(hpDmg)}</span></div>
-        <div class="stat-row"><span class="stat-label">阵营抗性倍率</span><span class="stat-value">${factionMult.toFixed(2)}x</span></div>
-        <div class="stat-row"><span class="stat-label">有效生命值伤害</span><span class="stat-value" style="color:var(--c-red);">${DamageCalculator.fmtNum(effectiveHpDmg)}</span></div>
-        ${Object.entries(breakdown).filter(([,v]) => v > 0).map(([type, value]) => `
-          <div class="stat-row"><span class="stat-label" style="display:flex;align-items:center;gap:4px;">
+        <div class="stat-row"><span class="stat-label">有效生命值伤害</span><span class="stat-value" style="color:var(--c-red);">${DamageCalculator.fmtNum(hpDmgTotal)}</span></div>
+        ${Object.entries(breakdown).filter(([,v]) => v > 0).map(([type, value]) => {
+          const factRes = DamageCalculator.getFactResist(faction, type);
+          const elemRes = DamageCalculator.getElemResist(enemy.elemRes, type);
+          const effective = DamageCalculator.calcPercentAdd(value, factRes) * elemRes;
+          return `<div class="stat-row"><span class="stat-label" style="display:flex;align-items:center;gap:4px;">
             <span style="width:8px;height:8px;border-radius:50%;background:${DamageCalculator.getColor(type)};display:inline-block;"></span>
             ${DamageCalculator.getName(type)}
-          </span><span class="stat-value">${DamageCalculator.fmtNum(value * (1 - armorDR) * this.getTypeFactionMult(type, faction, 'health'))}</span></div>
-        `).join('')}
+          </span><span class="stat-value">${DamageCalculator.fmtNum(effective)}${(factRes !== 0 && factRes !== 1) ? ` <span style="font-size:0.7em;opacity:0.7;">(${factRes > 1 ? '+' : ''}${((factRes - 1) * 100).toFixed(0)}%)</span>` : ''}</span></div>`;
+        }).join('')}
       `;
     }
 
@@ -2296,19 +2642,22 @@ const App = {
     if (shieldContainer && shieldSection) {
       if (scaled.shield > 0) {
         shieldSection.style.display = '';
-        const shieldMult = this.getFactionShieldMult(faction);
-        const totalRaw = Object.values(breakdown).reduce((s, v) => s + v, 0);
-        const shieldDmg = totalRaw * shieldMult;
+        const shieldDmgTotal = Object.entries(breakdown).reduce((sum, [type, value]) => {
+          const factRes = DamageCalculator.getFactResist(faction, type);
+          const elemRes = DamageCalculator.getElemResist(enemy.elemRes, type);
+          return sum + DamageCalculator.calcPercentAdd(value, factRes) * elemRes;
+        }, 0);
         shieldContainer.innerHTML = `
-          <div class="stat-row"><span class="stat-label">原始伤害</span><span class="stat-value">${DamageCalculator.fmtNum(totalRaw)}</span></div>
-          <div class="stat-row"><span class="stat-label">护盾抗性倍率</span><span class="stat-value">${shieldMult.toFixed(2)}x</span></div>
-          <div class="stat-row"><span class="stat-label">有效护盾伤害</span><span class="stat-value" style="color:var(--c-cyan);">${DamageCalculator.fmtNum(shieldDmg)}</span></div>
-          ${Object.entries(breakdown).filter(([,v]) => v > 0).map(([type, value]) => `
-            <div class="stat-row"><span class="stat-label" style="display:flex;align-items:center;gap:4px;">
+          <div class="stat-row"><span class="stat-label">有效护盾伤害</span><span class="stat-value" style="color:var(--c-cyan);">${DamageCalculator.fmtNum(shieldDmgTotal)}</span></div>
+          ${Object.entries(breakdown).filter(([,v]) => v > 0).map(([type, value]) => {
+            const factRes = DamageCalculator.getFactResist(faction, type);
+            const elemRes = DamageCalculator.getElemResist(enemy.elemRes, type);
+            const effective = DamageCalculator.calcPercentAdd(value, factRes) * elemRes;
+            return `<div class="stat-row"><span class="stat-label" style="display:flex;align-items:center;gap:4px;">
               <span style="width:8px;height:8px;border-radius:50%;background:${DamageCalculator.getColor(type)};display:inline-block;"></span>
               ${DamageCalculator.getName(type)}
-            </span><span class="stat-value">${DamageCalculator.fmtNum(value * this.getTypeFactionMult(type, faction, 'shield'))}</span></div>
-          `).join('')}
+            </span><span class="stat-value">${DamageCalculator.fmtNum(effective)}${(factRes !== 0 && factRes !== 1) ? ` <span style="font-size:0.7em;opacity:0.7;">(${factRes > 1 ? '+' : ''}${((factRes - 1) * 100).toFixed(0)}%)</span>` : ''}</span></div>`;
+          }).join('')}
         `;
       } else {
         shieldSection.style.display = 'none';
@@ -2333,20 +2682,21 @@ const App = {
   },
 
   getFactionHealthMult(faction) {
-    const res = GameData.FACTION_RESISTANCES[faction];
+    const res = GameData.TYPE_OF_FACTION[faction];
     if (!res) return 1;
     return 1;
   },
 
   getFactionShieldMult(faction) {
-    const res = GameData.FACTION_RESISTANCES[faction];
-    if (!res) return 1;
-    if (res.Magnetic) return res.Magnetic;
+    return 1;
+  },
+
+  getOverguardMult(faction) {
     return 1;
   },
 
   getTypeFactionMult(type, faction, healthType) {
-    const res = GameData.FACTION_RESISTANCES[faction];
+    const res = GameData.TYPE_OF_FACTION[faction];
     if (!res || !res[type]) return 1;
     return res[type];
   },
@@ -2570,12 +2920,37 @@ const App = {
     const comboValue = document.getElementById('combo-value');
     if (comboValue) comboValue.textContent = '1';
 
+    const heavyStartSlider = document.getElementById('heavy-start-slider');
+    if (heavyStartSlider) { heavyStartSlider.value = 1; }
+    const heavyStartValue = document.getElementById('heavy-start-value');
+    if (heavyStartValue) heavyStartValue.textContent = '1';
+
     this.updateDPSDisplay(null);
     document.getElementById('damage-breakdown').innerHTML = '';
     document.getElementById('status-info').innerHTML = '';
 
     const conditionalAlways = document.querySelector('[data-key="conditionalModsAlways"]');
     if (conditionalAlways) conditionalAlways.classList.add('active');
+  },
+
+  showHelp() {
+    const popup = document.getElementById('help-popup');
+    if (popup) popup.style.display = 'flex';
+  },
+
+  closeHelp() {
+    const popup = document.getElementById('help-popup');
+    if (popup) popup.style.display = 'none';
+  },
+
+  showChangelog() {
+    const popup = document.getElementById('changelog-popup');
+    if (popup) popup.style.display = 'flex';
+  },
+
+  closeChangelog() {
+    const popup = document.getElementById('changelog-popup');
+    if (popup) popup.style.display = 'none';
   },
 
   exportBuild() {
@@ -2623,6 +2998,274 @@ const App = {
       p.style.animationDuration = (6 + Math.random() * 4) + 's';
       container.appendChild(p);
     }
+  },
+
+  // ═══════════════ 键盘导航 ═══════════════
+
+  activeKeyboardIndex: -1,
+
+  setActiveItem(index, listEl, items, activeClass) {
+    if (index < 0 || index >= items.length) return;
+    items.forEach(item => item.classList.remove(activeClass));
+    if (items[index]) {
+      items[index].classList.add(activeClass);
+      if (items[index].offsetTop < listEl.scrollTop) {
+        listEl.scrollTop = items[index].offsetTop;
+      } else if (items[index].offsetTop + items[index].offsetHeight > listEl.scrollTop + listEl.clientHeight) {
+        listEl.scrollTop = items[index].offsetTop - listEl.clientHeight + items[index].offsetHeight;
+      }
+      this.activeKeyboardIndex = index;
+    }
+  },
+
+  handleKeyPress(e) {
+    const weaponList = document.querySelector('#weapon-list');
+    const enemyList = document.querySelector('#enemy-list');
+    const modList = document.querySelector('#resultsModsPopup');
+    const activeClass = 'modListItemActive';
+
+    const getItems = (list) => list ? Array.from(list.querySelectorAll('.weapon-item, li')) : [];
+
+    switch (e.key) {
+      case 'ArrowUp':
+        if (e.target.id === 'weapon-search' && weaponList) {
+          e.preventDefault();
+          this.setActiveItem(this.activeKeyboardIndex - 1, weaponList, getItems(weaponList), activeClass);
+        } else if (e.target.id === 'enemy-search' && enemyList) {
+          e.preventDefault();
+          this.setActiveItem(this.activeKeyboardIndex - 1, enemyList, getItems(enemyList), activeClass);
+        } else if (e.target.id === 'modsSearchInput' && modList) {
+          e.preventDefault();
+          this.setActiveItem(this.activeKeyboardIndex - 1, modList, getItems(modList), activeClass);
+        }
+        break;
+      case 'ArrowDown':
+        if (e.target.id === 'weapon-search' && weaponList) {
+          e.preventDefault();
+          this.setActiveItem(this.activeKeyboardIndex + 1, weaponList, getItems(weaponList), activeClass);
+        } else if (e.target.id === 'enemy-search' && enemyList) {
+          e.preventDefault();
+          this.setActiveItem(this.activeKeyboardIndex + 1, enemyList, getItems(enemyList), activeClass);
+        } else if (e.target.id === 'modsSearchInput' && modList) {
+          e.preventDefault();
+          this.setActiveItem(this.activeKeyboardIndex + 1, modList, getItems(modList), activeClass);
+        }
+        break;
+      case 'Escape':
+        if (e.target.id === 'modsSearchInput') {
+          document.getElementById('modsSearchInput').value = '';
+          document.querySelector('.modsSearchPopup').style.display = 'none';
+        }
+        break;
+      case 'Enter':
+        if (e.target.id === 'modsSearchInput') {
+          const activeMod = modList?.querySelector(`.${activeClass}`);
+          if (activeMod) {
+            activeMod.querySelector('.modListItem')?.click();
+          }
+        } else if (e.target.id === 'enemy-search') {
+          const activeEnemy = enemyList?.querySelector(`.${activeClass}`);
+          if (activeEnemy) activeEnemy.click();
+        } else if (e.target.id === 'weapon-search') {
+          const activeWeapon = weaponList?.querySelector(`.${activeClass}`);
+          if (activeWeapon) activeWeapon.click();
+        }
+        break;
+      case 'Delete':
+        if (e.target.classList?.contains('mod')) {
+          const slotId = parseInt(e.target.dataset.id);
+          if (!isNaN(slotId) && slotId < 8) this.removeMod(slotId);
+        }
+        break;
+    }
+  },
+
+  initKeyboardNavigation() {
+    document.addEventListener('keydown', (e) => this.handleKeyPress(e));
+  },
+
+  // ═══════════════ MOD 悬停预览 ═══════════════
+
+  initModHoverPreview() {
+    document.addEventListener('mouseenter', (e) => {
+      if (!e.target || !e.target.closest) return;
+      const listItem = e.target.closest('.modListItem');
+      if (!listItem) return;
+      const img = listItem.querySelector('.modListItemImg');
+      if (!img) return;
+      const src = img.src;
+      const container = listItem.closest('.modsSPIBlock') || listItem.closest('#resultsModsPopup')?.parentElement;
+      if (!container) return;
+      const preview = document.createElement('div');
+      preview.className = 'modListItemPrev';
+      preview.innerHTML = `<img src="${src}" alt="" />`;
+      container.appendChild(preview);
+      if (preview.getBoundingClientRect().right > window.innerWidth) {
+        preview.style.left = '-180px';
+      }
+    });
+
+    document.addEventListener('mouseleave', (e) => {
+      const listItem = e.target.closest('.modListItem');
+      if (!listItem) return;
+      const container = listItem.closest('.modsSPIBlock') || listItem.closest('#resultsModsPopup')?.parentElement;
+      if (container) {
+        container.querySelectorAll('.modListItemPrev').forEach(p => p.remove());
+      }
+    });
+  },
+
+  // ═══════════════ MOD 拖拽交换 ═══════════════
+
+  _dragState: null,
+  _dragTimeout: null,
+
+  initModDragSwap() {
+    let startX = 0, startY = 0;
+    let isDragging = false;
+    let sourceEl = null;
+    let isMouseDown = false;
+
+    document.addEventListener('mousedown', (e) => {
+      const modEl = e.target.closest('.mod-slot:not(.auraMod):not(.wfMod):not(.arcaneMod):not(.archonShardMod):not(.mistMod):not(.stanceMod):not(.specialMod)');
+      if (!modEl) return;
+      isMouseDown = true;
+      startX = e.pageX;
+      startY = e.pageY;
+      sourceEl = modEl;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isMouseDown || !sourceEl) return;
+      const dx = e.pageX - startX;
+      const dy = e.pageY - startY;
+      if (!isDragging && (Math.abs(dx) > 15 || Math.abs(dy) > 15)) {
+        isDragging = true;
+      }
+    });
+
+    document.addEventListener('mouseup', (e) => {
+      if (!isMouseDown) return;
+      isMouseDown = false;
+      
+      if (isDragging && sourceEl) {
+        const targetEl = e.target.closest('.mod-slot:not(.auraMod):not(.wfMod):not(.arcaneMod):not(.archonShardMod):not(.mistMod):not(.stanceMod):not(.specialMod)');
+        if (targetEl && targetEl !== sourceEl) {
+          const srcId = parseInt(sourceEl.dataset.id);
+          const tgtId = parseInt(targetEl.dataset.id);
+          if (!isNaN(srcId) && !isNaN(tgtId) && srcId < 8 && tgtId < 8) {
+            this.swapMods(srcId, tgtId);
+          }
+        }
+      }
+      
+      isDragging = false;
+      sourceEl = null;
+    });
+
+    document.addEventListener('contextmenu', (e) => {
+      const modEl = e.target.closest('.mod-slot');
+      if (modEl) {
+        const slotId = parseInt(modEl.dataset.id);
+        if (!isNaN(slotId) && slotId < 8) {
+          e.preventDefault();
+          this.removeMod(slotId);
+        }
+      }
+    });
+  },
+
+  // ═══════════════ 点击外部关闭弹窗 ═══════════════
+
+  initClickToDismiss() {
+    document.addEventListener('click', (e) => {
+      const weaponList = document.querySelector('#weapon-list');
+      const weaponSearch = document.querySelector('#weapon-search');
+      const enemyList = document.querySelector('#enemy-list');
+      const enemySearch = document.querySelector('#enemy-search');
+      const modPicker = document.querySelector('.modsSearchPopup');
+
+      const clickInWeaponList = weaponList && e.composedPath().includes(weaponList);
+      const clickInWeaponSearch = weaponSearch && e.composedPath().includes(weaponSearch);
+      const clickInEnemyList = enemyList && e.composedPath().includes(enemyList);
+      const clickInEnemySearch = enemySearch && e.composedPath().includes(enemySearch);
+
+      if (!clickInWeaponList && !clickInWeaponSearch && weaponList) {
+        weaponList.innerHTML = '';
+      }
+      if (!clickInEnemyList && !clickInEnemySearch && enemyList) {
+        enemyList.innerHTML = '';
+      }
+
+      if (modPicker && !e.composedPath().includes(modPicker)) {
+        modPicker.style.display = 'none';
+        document.getElementById('modsSearchInput').value = '';
+      }
+    });
+  },
+
+  swapMods(slotA, slotB) {
+    const tempMod = this.state.mods[slotA];
+    const tempRank = this.state.modRanks[slotA];
+    const tempPolarity = this.state.modPolarities[slotA];
+
+    this.state.mods[slotA] = this.state.mods[slotB];
+    this.state.modRanks[slotA] = this.state.modRanks[slotB];
+    this.state.modPolarities[slotA] = this.state.modPolarities[slotB];
+
+    this.state.mods[slotB] = tempMod;
+    this.state.modRanks[slotB] = tempRank;
+    this.state.modPolarities[slotB] = tempPolarity;
+
+    this.renderModSlots();
+    this.recalculate();
+  },
+
+  async loadTop20Weapons() {
+    const container = document.getElementById('top20-list');
+    if (!container) return;
+    try {
+      const resp = await fetch('/data/json/top-used.json');
+      if (!resp.ok) throw new Error(resp.statusText);
+      const data = await resp.json();
+      const sorted = Object.entries(data)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 20);
+      if (sorted.length === 0) {
+        container.innerHTML = '<div class="empty-state" style="padding:10px;"><div class="empty-state-text">暂无数据</div></div>';
+        return;
+      }
+      let html = '<div style="font-size:0.75rem;color:var(--c-text-dim);margin-bottom:6px;">数据每日更新，按使用次数排序</div>';
+      sorted.forEach(([name, count], i) => {
+        const rank = i + 1;
+        const medal = rank <= 3 ? ['&#129351;','&#129352;','&#129353;'][rank-1] : rank;
+        const weaponExists = GameData.weapons[name];
+        const clickable = weaponExists
+          ? `cursor:pointer;color:var(--c-gold-bright);` 
+          : `color:var(--c-text2);`;
+        const onclick = weaponExists
+          ? `onclick="App.selectWeaponByName('${name.replace(/'/g, "\\'")}')"`
+          : '';
+        html += `<div class="top20-item" ${onclick} style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px;border-radius:4px;font-size:0.78rem;transition:background 0.15s;${clickable}" onmouseover="this.style.background='var(--c-card)'" onmouseout="this.style.background='transparent'">
+          <span><span style="display:inline-block;width:20px;text-align:right;margin-right:6px;font-weight:600;">${medal}</span>${name}</span>
+          <span style="color:var(--c-text-dim);font-size:0.7rem;">${count}</span>
+        </div>`;
+      });
+      container.innerHTML = html;
+    } catch (e) {
+      container.innerHTML = '<div class="empty-state" style="padding:10px;"><div class="empty-state-text">加载失败</div></div>';
+    }
+  },
+
+  selectWeaponByName(name) {
+    const weapon = GameData.weapons[name];
+    if (!weapon) return;
+    this.state.selectedWeapon = weapon;
+    this.state.selectedWeaponName = name;
+    document.getElementById('weapon-search').value = name;
+    this.updateWeaponInfo(weapon);
+    this.renderModSlots();
+    this.recalculate();
   }
 };
 

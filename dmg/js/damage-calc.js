@@ -1,10 +1,77 @@
 ﻿/**
- * 伤害计算引擎 v2.0
- * 基于公开游戏机制文档和社区数据分析
- * 支持: MOD解析 / 元素组合 / 多重攻击 / AoE / 光束武器 / 蓄力武器 / 状态异常
+ * 伤害计算引擎 v3.0 - 13步随机DPS队列算法
+ * 完整复刻 warframe-damage.com/zh 的计算逻辑
+ * 支持: MOD解析 / 元素组合 / 多重攻击 / AoE / 光束武器 / 蓄力武器 / 状态异常 / DoT / 队列模拟
  */
 
 const DamageCalculator = {
+
+  // ═══════════════ 常量 ═══════════════
+  HEADSHOT_MULT_INITIAL: 3,
+  ARMOR_CAP: 2700,
+  SHIELD_DAMAGE_MULT: 0.5,
+  SHIELD_GATE_DURATION: 0.1,
+  VIRAL_BASE_MULT: 2.0,
+  VIRAL_PER_STACK: 0.25,
+  MAGNETIC_BASE_MULT: 2.0,
+  MAGNETIC_PER_STACK: 0.25,
+  CORROSIVE_BASE_REDUCTION: 0.26,
+  CORROSIVE_PER_STACK: 0.06,
+  HEAT_ARMOR_STRIP: 0.5,
+  PUNCTURE_WEAKEN: 0.05,
+  COLD_CRIT_PER_STACK: 0.05,
+  COLD_CRIT_BONUS_AT_10: 0.5,
+  QUEUE_DURATION: 10,
+
+  STATUS_DURATION: {
+    Impact: 1, Slash: 6, Puncture: 6,
+    Heat: 6, Toxin: 6, Electricity: 6, Cold: 6,
+    Blast: 6, Gas: 6, Magnetic: 6, Radiation: 12,
+    Viral: 6, Corrosive: 8, Void: 3, Tau: 8
+  },
+
+  STATUS_MAX_STACKS: {
+    Impact: 5, Slash: Infinity, Puncture: 5,
+    Heat: Infinity, Toxin: Infinity, Electricity: Infinity, Cold: 10,
+    Blast: 10, Gas: 10, Magnetic: 10, Radiation: 10,
+    Viral: 10, Corrosive: 10, Void: 1, Tau: 10
+  },
+
+  STATUS_DELAY: {
+    Impact: 0, Slash: 1, Puncture: 0,
+    Heat: 1, Toxin: 1, Electricity: 0, Cold: 0,
+    Blast: 1, Gas: 0, Magnetic: 0, Radiation: 0,
+    Viral: 0, Corrosive: 0, Void: 0, Tau: 0
+  },
+
+  DOT_TICK_MULT: {
+    Slash: 0.35, Heat: 0.5, Toxin: 0.5, Electricity: 0.5,
+    Gas: 0.5, Blast: 0.3, Radiation: 0, Magnetic: 0, Viral: 0, Corrosive: 0
+  },
+
+  // ═══════════════ 状态效果公式 ═══════════════
+
+  getViralMult(stacks) {
+    return this.VIRAL_BASE_MULT + this.VIRAL_PER_STACK * Math.max(0, stacks - 1);
+  },
+
+  getMagneticMult(stacks) {
+    return this.MAGNETIC_BASE_MULT + this.MAGNETIC_PER_STACK * Math.max(0, stacks - 1);
+  },
+
+  getCorrosiveReduction(stacks) {
+    return this.CORROSIVE_BASE_REDUCTION + this.CORROSIVE_PER_STACK * stacks;
+  },
+
+  getColdCritBonus(stacks) {
+    let bonus = this.COLD_CRIT_PER_STACK * stacks;
+    if (stacks >= 10) {
+      bonus += this.COLD_CRIT_BONUS_AT_10;
+    }
+    return bonus;
+  },
+
+  // ═══════════════ 核心入口 ═══════════════
 
   calculateBuild(weaponName, modNames, enemyName, enemyLevel, options = {}) {
     const weapon = GameData.weapons[weaponName];
@@ -12,112 +79,1570 @@ const DamageCalculator = {
     const enemy = GameData.enemies[enemyName];
     if (!enemy) return null;
     const scaledEnemy = GameData.scaleEnemy(enemy, enemyLevel, options.steelPath || false, options.eximus || false);
+
+    // 队伍人数缩放 (1-4人)
+    const partySize = Math.max(1, Math.min(4, options.partySize || 1));
+    const partyHealthMult = { 1: 1, 2: 1.5, 3: 2, 4: 3 };
+    scaledEnemy.health = Math.floor((scaledEnemy.health || 0) * (partyHealthMult[partySize] || 1));
+    scaledEnemy.shield = Math.floor((scaledEnemy.shield || 0) * (partyHealthMult[partySize] || 1));
+    scaledEnemy.overguard = Math.floor((scaledEnemy.overguard || 0) * (partyHealthMult[partySize] || 1));
+
     const mods = modNames.map(name => GameData.mods.find(m => m.name === name)).filter(Boolean);
     return this.calcDPS(weapon, mods, scaledEnemy, options);
   },
 
-  processMods(mods, weapon, applyWithCond = false) {
+  /**
+   * 主计算入口 - 使用13步随机队列算法
+   */
+  calcDPS(weapon, mods, enemy, opts = {}) {
+    const applyWithCond = opts.applyWithCond === true;
+    const modRanks = opts.modRanks || mods.map(() => 0);
+    const pMods = this.processMods(mods, weapon, applyWithCond, modRanks);
+
+    // ═══════════════ 应用自定义属性值 ═══════════════
+    // 自定义属性作为加法修正器，在MOD处理之后、队列模拟之前应用
+    // 参考站点的data-d=1表示百分比(用户输入10=10%, 存储为0.1)
+    // data-d=0表示绝对值(用户输入直接使用)
+    const cs = opts.customStats || {};
+    if (cs) {
+      // 百分比属性(data-d=1): 用户输入值已除以100存储
+      if (cs.base_damage) pMods.base += cs.base_damage;
+      if (cs.base_damage_per_status) pMods.basePerStatus += cs.base_damage_per_status;
+      if (cs.crit_chance_normal) pMods.critChance += cs.crit_chance_normal;
+      if (cs.crit_chance_secondary) pMods.multCritChance += cs.crit_chance_secondary;
+      if (cs.crit_chance_tertiary) pMods.flatCritChance += cs.crit_chance_tertiary;
+      if (cs.weakspot_crit_chance) pMods.weakCritChance += cs.weakspot_crit_chance;
+      if (cs.crit_damage_normal) pMods.critMult += cs.crit_damage_normal;
+      if (cs.status_chance) pMods.statusChance += cs.status_chance;
+      if (cs.status_chance_flat) pMods.flatStatusChance += cs.status_chance_flat;
+      if (cs.status_vulnerability) pMods.vulnStatusDamage += cs.status_vulnerability;
+      if (cs.status_damage_bonus) pMods.statusDamage += cs.status_damage_bonus;
+      if (cs.viral_status_damage) pMods.vulnStatusDamage += cs.viral_status_damage;
+      if (cs.fire_rate) pMods.speed += cs.fire_rate;
+      if (cs.magazine_size) pMods.magazineSize += cs.magazine_size;
+      if (cs.reload_time) pMods.reloadTime += cs.reload_time;
+      if (cs.headshot_multiplier) pMods.multForHead += cs.headshot_multiplier;
+      if (cs.weakspot_multiplier) pMods.headshotMult += cs.weakspot_multiplier;
+      if (cs.damage_vulnerability) pMods.dmgVulnerability += cs.damage_vulnerability;
+      if (cs.heat_inherit) pMods.heatInherit += cs.heat_inherit;
+      if (cs.ember_augment) pMods.heatAdd += cs.ember_augment;
+      // 绝对值属性(data-d=0): 直接使用
+      if (cs.flat_base_damage) pMods.flatChangeDmg += cs.flat_base_damage;
+      if (cs.combo_mult && cs.combo_mult !== 1) pMods.abilityCombo += (cs.combo_mult - 1);
+      if (cs.crit_damage_secondary) pMods.flatCritMult += cs.crit_damage_secondary;
+      if (cs.crit_damage_tertiary) pMods.critMultMult += cs.crit_damage_tertiary;
+      if (cs.multishot) pMods.flatMultishot += cs.multishot;
+      if (cs.combo_count) pMods.initialCombo += cs.combo_count;
+    }
+
+    // 映射calcDuration到queueDuration
+    const enrichedOpts = { 
+      ...opts, 
+      rawMods: mods,
+      queueDuration: opts.calcDuration || opts.queueDuration || this.QUEUE_DURATION
+    };
+
+    // 运行13步队列模拟
+    const queueResult = this.runQueueSimulation(weapon, pMods, enemy, enrichedOpts);
+
+    // TTK计算
+    const ttkResult = this.calcTTKQueue(queueResult, weapon, pMods, enemy, opts);
+
+    // 计算护甲DR
+    const enemyArmor = enemy.armor || 0;
+    const dr = this.getDMGReduction(enemyArmor) * 100;
+
+    // 格式化输出
+    return {
+      ...queueResult,
+      ttk: ttkResult.ttk,
+      ttkRegions: ttkResult.regions,
+      dr,
+      format: {
+        effective: this.fmtNum(queueResult.effectiveDPS),
+        raw: this.fmtNum(queueResult.rawDPS),
+        perShot: this.fmtNum(queueResult.avgPerShot),
+        ttk: this.fmtTime(ttkResult.ttk)
+      }
+    };
+  },
+
+  // ═══════════════ 13步随机队列算法 ═══════════════
+
+  /**
+   * 步骤1-13: 完整的随机DPS队列模拟
+   */
+  runQueueSimulation(weapon, pMods, enemy, opts = {}) {
+    const queueDuration = opts.queueDuration || this.QUEUE_DURATION;
+    const iterations = opts.iterations || 100;
+
+    let totalDPS = 0;
+    let totalAvgPerShot = 0;
+    let totalAvgPerShotStatus = 0;
+    let totalMedianDmg = 0;
+    const allResults = [];
+
+    for (let iter = 0; iter < iterations; iter++) {
+      const result = this.runSingleQueue(weapon, pMods, enemy, opts, queueDuration);
+      allResults.push(result);
+      totalDPS += result.dps;
+      totalAvgPerShot += result.avgPerShot;
+      totalAvgPerShotStatus += result.avgPerShotStatus;
+      totalMedianDmg += result.medianDmg;
+    }
+
+    // 计算平均值和中位数
+    const avgDPS = totalDPS / iterations;
+    const avgPerShot = totalAvgPerShot / iterations;
+    const avgPerShotStatus = totalAvgPerShotStatus / iterations;
+    const avgMedianDmg = totalMedianDmg / iterations;
+
+    // 计算统计信息
+    const dpsValues = allResults.map(r => r.dps);
+    const shotValues = allResults.map(r => r.totalDamage);
+    const stats = this.getStats(dpsValues);
+    const shotStats = this.getStats(shotValues);
+
+    // 伤害分解
+    const breakdown = this.aggregateBreakdown(allResults);
+
+    // 状态信息
+    const statusInfo = this.aggregateStatusInfo(allResults);
+
+    return {
+      dps: avgDPS,
+      effectiveDPS: avgDPS,
+      rawDPS: avgDPS,
+      avgPerShot: avgPerShot,
+      avgPerShotStatus: avgPerShotStatus,
+      dotDPS: avgPerShotStatus * this.calcFireRate(weapon, pMods),
+      total: avgPerShot,
+      medianDmg: avgMedianDmg,
+      minDPS: stats.min,
+      maxDPS: stats.max,
+      medianDPS: stats.median,
+      minDmg: shotStats.min,
+      maxDmg: shotStats.max,
+      medianDmgStat: shotStats.median,
+      breakdown,
+      statusInfo,
+      pellets: pMods.multishot || 1,
+      ms: pMods.multishot || 1,
+      fireRate: this.calcFireRate(weapon, pMods),
+      magSize: this.calcMagSize(weapon, pMods),
+      reloadTime: this.calcReload(weapon, pMods),
+      critChance: this.estimateCritChance(weapon, pMods),
+      critDmg: this.estimateCritMult(weapon, pMods),
+      statusChance: this.estimateStatusChance(weapon, pMods),
+      dr: 0,
+      iterations
+    };
+  },
+
+  /**
+   * 单次队列模拟 - 执行13步算法
+   */
+  runSingleQueue(weapon, pMods, enemy, opts, duration) {
+    // ═══ 步骤1: 计算射击/命中次数 ═══
+    const fireRate = this.calcFireRate(weapon, pMods);
+    const magSize = this.calcMagSize(weapon, pMods);
+    const reloadTime = this.calcReload(weapon, pMods);
+    const isBeam = weapon.attacks.some(a => a.shot_type === 'Beam');
+    const isMelee = weapon.category === 'Melee';
+
+    // 重击模式下使用maxHeavyCombo作为连击计数器
+    const effectiveComboMult = opts.isHeavy && isMelee
+      ? (weapon.maxHeavyCombo || 12)
+      : (opts.comboMultiplier || 1) + (pMods.abilityCombo || 0);
+
+    // 初始连击加成 (Initial Combo from mods)
+    const initialCombo = isMelee ? (pMods.initialCombo || 0) : 0;
+
+    let shotCount;
+    if (isBeam) {
+      // 光束武器: 每秒造成 fireRate 次伤害
+      shotCount = Math.floor(fireRate * duration);
+    } else {
+      // 射击武器: 计算弹匣循环 (含装弹时间)
+      const fireTimePerMag = magSize / fireRate;
+      const cycleTime = fireTimePerMag + reloadTime;
+      const fullCycles = Math.floor(duration / cycleTime);
+      const remainingTime = duration - fullCycles * cycleTime;
+      const effectiveFireTime = Math.max(0, remainingTime - reloadTime);
+      const shotsInLastMag = Math.min(magSize, Math.floor(effectiveFireTime * fireRate));
+      shotCount = fullCycles * magSize + shotsInLastMag;
+    }
+
+    // ═══ 步骤2: 创建队列 ═══
+    const queue = [];
+    for (let i = 0; i < shotCount; i++) {
+      queue.push({
+        index: i,
+        time: i / fireRate,
+        pellets: [],
+        statusProcs: [],
+        dotEffects: []
+      });
+    }
+
+    // ═══ 步骤3: 多重射击概率 ═══
+    const baseMultishot = this.calcMultishot(weapon, pMods);
+    queue.forEach(shot => {
+      const pelletCount = this.rollMultishot(baseMultishot);
+      for (let p = 0; p < pelletCount; p++) {
+        shot.pellets.push({
+          damage: {},
+          isCrit: false,
+          critTier: 0,
+          critMult: 1,
+          statusProcs: [],
+          headshot: opts.headshot || false
+        });
+      }
+    });
+
+    // ═══ 步骤4: 计算基础伤害 (不包含暴击) ═══
+    const attacks = weapon.attacks || [weapon.attacks[0]];
+    queue.forEach(shot => {
+      shot.pellets.forEach(pellet => {
+        const atk = attacks[shot.index % attacks.length] || attacks[0];
+        if (!atk) return;
+        const baseDmg = this.getAttackBaseDamage(atk, pMods, weapon);
+        pellet.damage = baseDmg;
+        pellet._atkIndex = shot.index % attacks.length;
+        pellet._baseDamageVec = { ...baseDmg };
+      });
+    });
+
+    // ═══ 步骤6-7: 状态触发概率和类型 ═══
+    const enemyImmunities = enemy.immun?.status || [];
+    queue.forEach(shot => {
+      shot.pellets.forEach(pellet => {
+        const atk = attacks[pellet._atkIndex] || attacks[0];
+        if (!atk) return;
+
+        const statusChance = this.getAttackStatusChance(atk, pMods, {
+          comboMultiplier: effectiveComboMult
+        });
+
+        const procCount = this.rollProcCount(statusChance);
+
+        for (let i = 0; i < procCount; i++) {
+          const procType = this.drawProcType(pellet.damage, enemyImmunities);
+          pellet.statusProcs.push(procType);
+        }
+
+        // 保证触发Puncture状态 (addPunctureStatus)
+        if (pMods.addPunctureStatus > 0) {
+          pellet.statusProcs.push('Puncture');
+        }
+
+        // impactToPuncture: Impact转为Puncture
+        if (pMods.impactToPuncture > 0) {
+          const impactCount = pellet.statusProcs.filter(p => p === 'Impact').length;
+          const convertCount = Math.floor(impactCount * pMods.impactToPuncture);
+          for (let i = 0; i < convertCount; i++) {
+            const idx = pellet.statusProcs.indexOf('Impact');
+            if (idx !== -1) {
+              pellet.statusProcs.splice(idx, 1);
+              pellet.statusProcs.push('Puncture');
+            }
+          }
+        }
+      });
+    });
+
+    // ═══ 步骤8: 近战武器特殊处理 ═══
+    if (isMelee) {
+      // 姿态攻击加成 - 从姿态MOD数据中读取
+      const rawMods = opts.rawMods || [];
+      const stanceMod = rawMods.find(m => m.type === 'stance');
+      let stanceMult = opts.stanceMultiplier || 1;
+      let forcedStatuses = [];
+      if (stanceMod && stanceMod.action && stanceMod.action.stances) {
+        const stanceNames = Object.keys(stanceMod.action.stances);
+        if (stanceNames.length > 0) {
+          // 选择第一个连击
+          const comboName = stanceNames[0];
+          const combo = stanceMod.action.stances[comboName];
+          if (combo && combo.total) {
+            stanceMult = combo.total;
+          }
+          // 收集强制状态触发
+          if (combo && combo.statuses) {
+            forcedStatuses = combo.statuses.filter(s => s && s.trim());
+          }
+        }
+      }
+
+      queue.forEach(shot => {
+        shot.pellets.forEach(pellet => {
+          Object.keys(pellet.damage).forEach(type => {
+            pellet.damage[type] *= stanceMult;
+          });
+          // 添加姿态强制状态触发
+          forcedStatuses.forEach(status => {
+            if (status && status.trim()) {
+              pellet.statusProcs.push(status.trim());
+            }
+          });
+        });
+      });
+
+      // 连击倍率加成 (近战基础伤害 × 连击倍率)
+      const comboMult = effectiveComboMult + initialCombo;
+      if (comboMult > 1) {
+        queue.forEach(shot => {
+          shot.pellets.forEach(pellet => {
+            Object.keys(pellet.damage).forEach(type => {
+              pellet.damage[type] *= comboMult;
+            });
+          });
+        });
+      }
+
+      // 重击基础伤害加成 (Killing Blow等MOD的base_heavy属性)
+      if (opts.isHeavy && pMods.heavyBaseMult > 0) {
+        queue.forEach(shot => {
+          shot.pellets.forEach(pellet => {
+            Object.keys(pellet.damage).forEach(type => {
+              pellet.damage[type] *= (1 + pMods.heavyBaseMult);
+            });
+          });
+        });
+      }
+    }
+
+    // ═══ 步骤9: 猎人弹药/内部出血效果 (移至暴击判定后) ═══
+    // (Hunter Munitions check moved to after crit determination at step 4-5)
+
+    // ═══ 步骤10: 强制触发效果 ═══
+    const forceProcs = weapon.forceProcs || [];
+    queue.forEach(shot => {
+      shot.pellets.forEach(pellet => {
+        forceProcs.forEach(proc => {
+          pellet.statusProcs.push(proc);
+        });
+      });
+    });
+
+    // ═══ 步骤11: 状态时间队列 ═══
+    const statusTimeQueue = this.buildStatusTimeQueue(queue, pMods, enemy);
+
+    // Secondary Encumber: 状态触发时有几率添加随机状态
+    if (pMods.randomStatusAfterStatus > 0) {
+      const allStatusTypes = ['Impact', 'Puncture', 'Slash', 'Heat', 'Cold', 'Electricity', 'Toxin', 'Blast', 'Radiation', 'Viral', 'Corrosive', 'Magnetic', 'Gas'];
+      queue.forEach(shot => {
+        shot.pellets.forEach(pellet => {
+          if (pellet.statusProcs.length > 0) {
+            if (Math.random() < pMods.randomStatusAfterStatus) {
+              const randomType = allStatusTypes[Math.floor(Math.random() * allStatusTypes.length)];
+              pellet.statusProcs.push(randomType);
+            }
+          }
+        });
+      });
+      // 重建状态时间队列以包含额外状态
+      Object.keys(statusTimeQueue).forEach(k => delete statusTimeQueue[k]);
+      Object.assign(statusTimeQueue, this.buildStatusTimeQueue(queue, pMods, enemy));
+    }
+
+    // ═══ 步骤4-5 (延迟): 暴击概率和倍率 (包含状态效果) ═══
+    const isColdImmune = enemyImmunities.includes('Cold') || enemyImmunities.includes('all');
+    const isPunctureImmune = enemyImmunities.includes('Puncture') || enemyImmunities.includes('all');
+    
+    const disableBodyCrit = pMods.disableBodyCrit || false;
+    const critFlatChancePerStatuses = pMods.critFlatChancePerStatuses || 0;
+    const flatCritWithStatus = pMods.flatCritWithStatus || 0;
+    
+    queue.forEach(shot => {
+      const frozenStacksShot = isColdImmune ? 0 : this.getStatusStacksAtTime(statusTimeQueue, 'Cold', shot.time);
+      const frozenDmgMultShot = 1 + (pMods.dmgMultAgainstFrozen || 0) * (frozenStacksShot >= 10 ? 1 : 0);
+      
+      shot.pellets.forEach(pellet => {
+        const atk = attacks[pellet._atkIndex] || attacks[0];
+        if (!atk) return;
+
+        let baseCritChance = this.getAttackCritChance(atk, pMods, {
+          isHeadshot: pellet.headshot,
+          comboMultiplier: effectiveComboMult,
+          isHeavy: opts.isHeavy || false
+        });
+
+        const coldStacks = isColdImmune ? 0 : this.getStatusStacksAtTime(statusTimeQueue, 'Cold', shot.time);
+        const punctureStacks = isPunctureImmune ? 0 : this.getStatusStacksAtTime(statusTimeQueue, 'Puncture', shot.time);
+
+        let finalCritChance = baseCritChance;
+
+        // 冷冻状态暴击加成 (含10层升级tier)
+        let coldTierUpgrade = 0;
+        if (coldStacks > 0) {
+          finalCritChance += 0.05 * coldStacks;
+          if (coldStacks >= 10) {
+            finalCritChance += 0.5;
+            coldTierUpgrade = 1;
+          }
+        }
+
+        if (punctureStacks > 0) {
+          const totalDmg = Object.values(atk.damage || {}).reduce((s, v) => s + v, 0);
+          const punctureDmg = atk.damage?.Puncture || 0;
+          if (totalDmg > 0) {
+            const punctureRatio = punctureDmg / totalDmg;
+            const punctureCritBonus = punctureRatio * ((atk.status_chance || 0) / 100) * 0.1;
+            finalCritChance += Math.min(punctureCritBonus * punctureStacks, 0.5);
+          }
+        }
+
+        if (critFlatChancePerStatuses > 0) {
+          const activeStatuses = this.getActiveStatusCount(statusTimeQueue, shot.time);
+          finalCritChance += critFlatChancePerStatuses * activeStatuses;
+        }
+
+        if (disableBodyCrit && !pellet.headshot) {
+          finalCritChance = 0;
+        }
+
+        if (flatCritWithStatus !== 0) {
+          const totalStatusStacks = this.getActiveStatusCount(statusTimeQueue, shot.time);
+          if (totalStatusStacks < 3) {
+            finalCritChance *= (1 + flatCritWithStatus);
+          }
+        }
+
+        const critTier = Math.min(this.getHitTier(finalCritChance) + coldTierUpgrade, 5);
+
+        // Vigilante set bonus: 每5%概率升级一层暴击
+        let finalTier = critTier;
+        if (pMods.doubleCrit > 0) {
+          const doubleCritChance = Math.min(pMods.doubleCrit, 1);
+          if (Math.random() < doubleCritChance) {
+            finalTier = Math.min(finalTier + 1, 5);
+          }
+        }
+
+        const baseCritMult = atk.crit_mult * (1 + pMods.critMult);
+        let critMult = this.getEffCritMult(finalTier, baseCritMult, coldStacks);
+
+        // 应用额外暴击倍率加成/乘算
+        if (pMods.critMultAdd > 0) critMult += pMods.critMultAdd;
+        if (pMods.critMultMult > 0) critMult *= (1 + pMods.critMultMult);
+
+        // Puncture状态每层增加暴击倍率
+        if (pMods.incrCMPuncStatus > 0 && punctureStacks > 0) {
+          critMult += pMods.incrCMPuncStatus * punctureStacks;
+        }
+
+        // critAfterStatus: 对有状态的敌人强制暴击
+        if (pMods.critAfterStatus > 0) {
+          const activeStatuses = this.getActiveStatusCount(statusTimeQueue, shot.time);
+          if (activeStatuses > 0) {
+            finalTier = Math.max(finalTier, 1);
+            critMult = this.getEffCritMult(finalTier, baseCritMult, coldStacks);
+            if (pMods.critMultAdd > 0) critMult += pMods.critMultAdd;
+            if (pMods.critMultMult > 0) critMult *= (1 + pMods.critMultMult);
+          }
+        }
+
+        if (opts.stealthBonus && weapon.category === 'Melee') {
+          critMult = this.getStealthDmgBonus(finalTier);
+        }
+
+        pellet.isCrit = finalTier > 0;
+        pellet.critTier = finalTier;
+        pellet.critMult = critMult;
+        pellet.finalCritChance = finalCritChance;
+        pellet.frozenDmgMult = frozenDmgMultShot;
+
+        // Melee Duplicate: 暴击时额外攻击一次
+        if (isMelee && pMods.mDuplicate > 0 && finalTier > 0) {
+          if (Math.random() < pMods.mDuplicate) {
+            pellet._duplicateStrike = true;
+          }
+        }
+      });
+    });
+
+    // ═══ 步骤9 (延迟): 猎人弹药/内部出血效果 - 在暴击判定后 ═══
+    const hasHunterMunitions = pMods.addSlash > 0;
+    const hasInternalBleeding = pMods.addSlashOnImpact > 0;
+    const hasMagneticWelt = pMods.addMagneticOnImpact > 0;
+    if (hasHunterMunitions || hasInternalBleeding || hasMagneticWelt) {
+      queue.forEach(shot => {
+        shot.pellets.forEach(pellet => {
+          // Hunter Munitions: 暴击时有几率触发Slash
+          if (hasHunterMunitions && pellet.isCrit) {
+            if (Math.random() < pMods.addSlash) {
+              pellet.statusProcs.push('Slash');
+            }
+          }
+          // Internal Bleeding/Hemorrhage: Impact触发时有几率转为Slash
+          if (hasInternalBleeding) {
+            const hasImpact = pellet.statusProcs.includes('Impact');
+            if (hasImpact && Math.random() < pMods.addSlashOnImpact) {
+              pellet.statusProcs = pellet.statusProcs.filter(p => p !== 'Impact');
+              pellet.statusProcs.push('Slash');
+            }
+          }
+          // Magnetic Welt: Impact触发时有几率添加Magnetic
+          if (hasMagneticWelt) {
+            const hasImpact = pellet.statusProcs.includes('Impact');
+            if (hasImpact && Math.random() < pMods.addMagneticOnImpact) {
+              pellet.statusProcs.push('Magnetic');
+            }
+          }
+          // Corrosive by Toxin: Toxin触发时额外添加Corrosive
+          if (pMods.corrosiveByToxin > 0) {
+            const hasToxin = pellet.statusProcs.includes('Toxin');
+            if (hasToxin && Math.random() < pMods.corrosiveByToxin) {
+              pellet.statusProcs.push('Corrosive');
+            }
+          }
+        });
+      });
+    }
+
+    // ═══ 步骤12: 状态伤害计算 ═══
+    const dotResults = this.calculateStatusDamage(statusTimeQueue, pMods, enemy, weapon, opts);
+
+    // ═══ 步骤13: 计算DPS ═══
+    let totalDamage = 0;
+    let totalDirectDamage = 0;
+    let totalStatusDamage = 0;
+
+    queue.forEach(shot => {
+      shot.pellets.forEach(pellet => {
+        let pelletDmg = 0;
+
+        // 计算阵营元素抗性调整后的伤害 (使用calcPercentAdd正确处理弱点/抗性)
+        let resistAdjustedTotal = 0;
+        Object.entries(pellet.damage).forEach(([type, dmg]) => {
+          const resist = this.getFactResist(enemy.faction, type);
+          let adjusted = this.calcPercentAdd(dmg, resist);
+          const elemMult = this.getElemResist(enemy.elemRes, type);
+          if (elemMult !== 1) adjusted *= elemMult;
+          resistAdjustedTotal += adjusted;
+        });
+
+        // Viral状态: 对生命值伤害增加 (2 + 0.25*(stacks-1), 最大10层)
+        const viralStacks = this.getStatusStacksAtTime(statusTimeQueue, 'Viral', shot.time);
+        if (viralStacks > 0 && enemy.health > 0) {
+          const viralMult = this.getViralMult(viralStacks);
+          resistAdjustedTotal *= viralMult;
+        }
+
+        // 非暴击额外基础伤害 (baseNoncrit)
+        if (!pellet.isCrit && pMods.baseNoncrit > 0) {
+          const noncritBonus = Object.values(pellet._baseDamageVec || {}).reduce((s, v) => s + v, 0);
+          resistAdjustedTotal += noncritBonus * pMods.baseNoncrit;
+        }
+
+        // 应用暴击倍率
+        let dmgWithCrit = resistAdjustedTotal * pellet.critMult;
+
+        // 应用冻结敌人伤害加成
+        dmgWithCrit *= (pellet.frozenDmgMult || 1);
+
+        // 应用头部倍率
+        if (pellet.headshot) {
+          let headMult = this.HEADSHOT_MULT_INITIAL;
+          if (pMods.multForHead > 0) headMult += pMods.multForHead;
+          if (pMods.headshotMult > 0) headMult += pMods.headshotMult;
+          dmgWithCrit *= headMult;
+          if (pMods.multForHeadMult > 0) dmgWithCrit *= (1 + pMods.multForHeadMult);
+        }
+
+        // 应用Condition Overload
+        const coStacks = this.getActiveStatusCount(statusTimeQueue, shot.time);
+        let coMult;
+        if (pMods.multiplicativeBasePerStatus && coStacks > 0) {
+          coMult = 1 + (pMods.basePerStatus || 0) + coStacks * (pMods.basePerStatus || 0);
+        } else {
+          coMult = 1 + coStacks * (pMods.basePerStatus || 0);
+        }
+        dmgWithCrit *= coMult;
+
+        // 应用阵营加成
+        const factMult = this.getFactMult(enemy.faction, pMods);
+        dmgWithCrit *= factMult;
+
+        // 应用护甲减免 (实时护甲)
+        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, shot.time);
+        const armorDR = this.getDMGReduction(currentArmor);
+        dmgWithCrit *= (1 - armorDR);
+
+        // 敌人固有伤害减免 (根据当前伤害区域)
+        // 优先级: overguard > shield > armor > health
+        let currentRegion = 'health';
+        if (enemy.overguard && enemy.overguard > 0) currentRegion = 'overguard';
+        else if (enemy.shield > 0) currentRegion = 'shield';
+        else if (currentArmor > 0) currentRegion = 'armor';
+        const innateDr = this.getInnateDR(enemy, currentRegion);
+        if (innateDr > 0) dmgWithCrit *= (1 - innateDr);
+
+        // 应用特殊敌人DR (Demolisher, Acolyte, Eidolon, Archon, Lephantis)
+        dmgWithCrit = this.applySpecialEnemyDR(dmgWithCrit, enemy, pMods.fireRate || 1, pMods.multishot || 1);
+
+        // Overguard: Void伤害+50%
+        if (currentRegion === 'overguard') {
+          const voidDmg = pellet.damage.Void || 0;
+          const totalDmg = Object.values(pellet.damage).reduce((s, v) => s + v, 0);
+          if (voidDmg > 0 && totalDmg > 0) {
+            const voidBonus = dmgWithCrit * (voidDmg / totalDmg) * 0.5;
+            dmgWithCrit += voidBonus;
+          }
+        }
+
+        // 护盾伤害减半 (Toxin bypass shields)
+        if (enemy.shield > 0) {
+          // 计算Toxin伤害占比 (Toxin bypass shields)
+          const toxinDmg = pellet.damage.Toxin || 0;
+          const totalDmg = Object.values(pellet.damage).reduce((s, v) => s + v, 0);
+          const toxinRatio = totalDmg > 0 ? toxinDmg / totalDmg : 0;
+          
+          // 非Toxin伤害受护盾减半影响
+          const nonToxinDmg = dmgWithCrit * (1 - toxinRatio);
+          const toxinPart = dmgWithCrit * toxinRatio;
+          dmgWithCrit = nonToxinDmg * this.SHIELD_DAMAGE_MULT + toxinPart;
+          
+          // Magnetic状态: 对护盾伤害增加 (2 + 0.25*(stacks-1), 最大10层)
+          const magneticStacks = this.getStatusStacksAtTime(statusTimeQueue, 'Magnetic', shot.time);
+          if (magneticStacks > 0) {
+            const magneticMult = this.getMagneticMult(magneticStacks);
+            dmgWithCrit *= magneticMult;
+          }
+        }
+
+        // 应用额外伤害倍率
+        dmgWithCrit *= (1 + (pMods.multiple || 0));
+        dmgWithCrit *= (1 + (pMods.dblMult || 0));
+        dmgWithCrit *= (1 + (pMods.multDAIKYUBroadhead || 0));
+        dmgWithCrit *= (1 + (pMods.multSharpshot || 0));
+        dmgWithCrit *= (1 + (pMods.vulnStatusDamage || 0));
+        dmgWithCrit *= (1 + (pMods.dmgVulnerability || 0));
+
+        // 应用狙击连击倍率
+        if (opts.sniperCombo && opts.sniperCombo > 1) {
+          dmgWithCrit *= opts.sniperCombo;
+        }
+
+        // 应用额外固定伤害
+        dmgWithCrit += (pMods.flatChangeDmg || 0);
+
+        // Cascadia Empowered: 每种负面状态+额外伤害
+        if (pMods.dmgOnStatusEff > 0) {
+          const statusCount = this.getActiveStatusCount(statusTimeQueue, shot.time);
+          dmgWithCrit += pMods.dmgOnStatusEff * statusCount;
+        }
+
+        pelletDmg = dmgWithCrit;
+        totalDirectDamage += pelletDmg;
+        totalDamage += pelletDmg;
+
+        // Melee Duplicate: 额外攻击一次
+        if (pellet._duplicateStrike) {
+          totalDirectDamage += pelletDmg;
+          totalDamage += pelletDmg;
+        }
+      });
+    });
+
+    // 加入状态伤害
+    totalStatusDamage = dotResults.totalDotDamage;
+    totalDamage += totalStatusDamage;
+
+    // 应用Rhino Roar和Mirage Eclipse (简单乘法加成)
+    if (opts.rhinoRoar || opts.mirageEclipse) {
+      const abilityMult = this.calcAbilityMult(pMods, opts);
+      if (abilityMult !== 1) {
+        totalDamage *= abilityMult;
+        totalDirectDamage *= abilityMult;
+      }
+    }
+
+    // ═══ Xata's Whisper: 作为独立伤害组件添加 (匹配参考站点getXataDmg) ═══
+    let xataTotalDmg = 0;
+    if (opts.xakuWhisper && weapon && weapon.attacks && weapon.attacks[0]) {
+      const xataPercent = (opts.xakuWhisperPercent || 26) / 100;
+      if (xataPercent > 0) {
+        const str = (opts.abilityStrength || 100) / 100;
+        const attack = weapon.attacks[0];
+
+        // 1. 求和武器所有基础伤害类型
+        let totalBaseDmg = 0;
+        for (const type in attack.damage) {
+          totalBaseDmg += attack.damage[type];
+        }
+
+        // 2. 使用最后计算时的伤害区域 (优先级: overguard > shield > armor > health)
+        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, duration > 0 ? duration : 0);
+        let currentRegion = 'health';
+        if (enemy.overguard && enemy.overguard > 0) currentRegion = 'overguard';
+        else if (enemy.shield > 0) currentRegion = 'shield';
+        else if (currentArmor > 0) currentRegion = 'armor';
+
+        // 3. 应用伤害区域乘数
+        xataTotalDmg = totalBaseDmg;
+        if (currentRegion === 'overguard') {
+          xataTotalDmg *= 1.5; // Overguard时+50%
+        }
+
+        // 4. 应用护甲DR或innateDR
+        if (currentRegion === 'armor' && currentArmor > 0) {
+          const armorDR = this.getDMGReduction(currentArmor);
+          const innateDr = this.getInnateDR(enemy, 'armor');
+          xataTotalDmg *= (1 - armorDR) * (1 - innateDr);
+        } else {
+          const innateDr = this.getInnateDR(enemy, currentRegion);
+          if (innateDr > 0) xataTotalDmg *= (1 - innateDr);
+        }
+
+        // 5. 乘以Xata's Whisper百分比并取整
+        xataTotalDmg = Math.round(xataTotalDmg * xataPercent * str);
+        totalDamage += xataTotalDmg;
+        totalDirectDamage += xataTotalDmg;
+      }
+    }
+
+    // ═══ ToxicLash: 作为独立伤害组件添加 (匹配参考站点toxicLashDmg) ═══
+    let toxicLashDirectDmg = 0;
+    let toxicLashTickDmg = 0;
+    if (opts.toxicLash && weapon && weapon.attacks && weapon.attacks[0]) {
+      const tlPercent = (opts.toxicLashPercent || 30) / 100;
+      if (tlPercent > 0) {
+        const isMelee = weapon.category === 'Melee';
+        const str = (opts.abilityStrength || 100) / 100;
+        // 近战武器双倍百分比
+        const effectivePercent = isMelee ? 2 * tlPercent * str : tlPercent * str;
+
+        // 计算武器总基础伤害
+        const attack = weapon.attacks[0];
+        let totalBaseDmg = 0;
+        for (const type in attack.damage) {
+          totalBaseDmg += attack.damage[type];
+        }
+
+        // 计算当前伤害区域的DR因子
+        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, duration > 0 ? duration : 0);
+        let armorFactor = 1;
+        let currentRegion = 'health';
+        if (enemy.overguard && enemy.overguard > 0) currentRegion = 'overguard';
+        else if (enemy.shield > 0) currentRegion = 'shield';
+        else if (currentArmor > 0) currentRegion = 'armor';
+
+        if (currentRegion === 'armor' && currentArmor > 0) {
+          armorFactor = (1 - this.getDMGReduction(currentArmor)) * (1 - this.getInnateDR(enemy, 'armor'));
+        } else {
+          armorFactor = 1 - this.getInnateDR(enemy, currentRegion);
+        }
+
+        // 直接伤害 = 基础伤害 * DR因子 * ToxicLash百分比
+        toxicLashDirectDmg = Math.ceil(totalBaseDmg * armorFactor * effectivePercent);
+        totalDamage += toxicLashDirectDmg;
+        totalDirectDamage += toxicLashDirectDmg;
+
+        // DoT伤害 (简化版: 基础伤害 * 0.5 tick乘数 * DR因子 * ToxicLash百分比)
+        toxicLashTickDmg = Math.ceil(totalBaseDmg * 0.5 * armorFactor * effectivePercent);
+      }
+    }
+
+    // ═══ Nourish: Viral伤害已通过processMods添加到武器伤害池 ═══
+    // 此处仅记录Nourish贡献用于显示 (不在totalDamage中再次添加)
+    let nourishViralDmg = 0;
+    if (opts.grendelNourish && weapon && weapon.attacks && weapon.attacks[0]) {
+      const nourPercent = (opts.grendelNourishPercent || 45) / 100;
+      if (nourPercent > 0) {
+        let totalBaseDmg = 0;
+        for (const type in weapon.attacks[0].damage) {
+          totalBaseDmg += weapon.attacks[0].damage[type];
+        }
+        nourishViralDmg = totalBaseDmg * nourPercent;
+      }
+    }
+
+    const dps = totalDamage / duration;
+    const avgPerShot = shotCount > 0 ? totalDirectDamage / shotCount : 0;
+    const avgPerShotStatus = shotCount > 0 ? totalStatusDamage / shotCount : 0;
+
+    // Reference site approach: per-second median DPS
+    // Each shot's totalDmg is distributed proportionally into per-second buckets
+    // Status DoT is distributed evenly across all seconds
+    const perSecondDmg = new Array(Math.ceil(duration)).fill(0);
+    const statusPerSec = totalStatusDamage / duration;
+    queue.forEach((shot, idx) => {
+      const shotStart = shot.time;
+      const shotEnd = idx < queue.length - 1 ? queue[idx + 1].time : duration;
+      const shotTotalDmg = shot.pellets.reduce((sum, p) => {
+        const baseTotal = Object.values(p.damage).reduce((s, v) => s + v, 0);
+        return sum + baseTotal * p.critMult;
+      }, 0);
+      // Distribute direct damage proportionally into per-second buckets
+      const startSec = Math.floor(shotStart);
+      const endSec = Math.min(Math.ceil(shotEnd), Math.ceil(duration));
+      for (let s = startSec; s < endSec; s++) {
+        const secStart = Math.max(shotStart, s);
+        const secEnd = Math.min(shotEnd, s + 1);
+        const overlap = Math.max(0, secEnd - secStart);
+        if (overlap > 0 && shotEnd > shotStart) {
+          perSecondDmg[s] += (overlap / (shotEnd - shotStart)) * shotTotalDmg;
+        }
+      }
+    });
+    // Add status DoT damage evenly across all seconds
+    for (let s = 0; s < perSecondDmg.length; s++) {
+      perSecondDmg[s] += statusPerSec;
+    }
+    // Calculate median of per-second damage
+    const sortedPerSec = [...perSecondDmg].filter(v => v > 0).sort((a, b) => a - b);
+    const medianDps = sortedPerSec.length > 0 
+      ? sortedPerSec[Math.floor(sortedPerSec.length / 2)] 
+      : dps;
+
+    // 中位数伤害 (per-shot)
+    const shotDamages = queue.map(shot => {
+      return shot.pellets.reduce((sum, p) => {
+        const baseTotal = Object.values(p.damage).reduce((s, v) => s + v, 0);
+        return sum + baseTotal * p.critMult;
+      }, 0);
+    });
+    const sortedDamages = [...shotDamages].sort((a, b) => a - b);
+    const medianDmg = sortedDamages[Math.floor(sortedDamages.length / 2)] || 0;
+
+    return {
+      dps: medianDps,
+      totalDamage,
+      avgPerShot,
+      avgPerShotStatus,
+      medianDmg,
+      breakdown: this.getShotBreakdown(queue, statusTimeQueue, pMods, enemy, weapon),
+      statusInfo: this.getStatusInfoFromQueue(statusTimeQueue)
+    };
+  },
+
+  // ═══════════════ 步骤3: 多重射击 ═══════════════
+
+  rollMultishot(baseMultishot) {
+    const floor = Math.floor(baseMultishot);
+    const frac = baseMultishot - floor;
+    return floor + (Math.random() < frac ? 1 : 0);
+  },
+
+  // ═══════════════ 步骤4-5: 暴击系统 ═══════════════
+
+  getAttackCritChance(atk, pMods, opts = {}) {
+    if (!atk) return 0;
+    const bCrit = (atk.crit_chance || 0) / 100;
+    const mCrit = pMods.critChance || 0;
+    const fCrit = pMods.flatCritChance || 0;
+    const mCritMult = 1 + (pMods.multCritChance || 0);
+    const wCrit = opts.isHeadshot ? (pMods.weakCritChance || 0) : 0;
+    const wMult = opts.isMultiplicativeWeakCC ? (1 + wCrit) : 1;
+    const cCrit = opts.comboMultiplier ? opts.comboMultiplier * (pMods.comboCritPer || 0) : 0;
+    const hCrit = opts.isHeavy ? (pMods.heavyCritMult || 0) : 0;
+    const absCritBonus = this.getAbsCritBonus(opts);
+    const fCritChance = (bCrit * (1 + mCrit) + fCrit) * mCritMult * wMult + cCrit + hCrit + absCritBonus;
+    return Math.min(fCritChance, 5);
+  },
+
+  getHitTier(critChance) {
+    const floor = Math.floor(critChance);
+    const frac = critChance - floor;
+    const upgraded = Math.random() < frac;
+    return upgraded ? floor + 1 : floor;
+  },
+
+  getEffCritMult(tier, critDmg, coldStacks = 0) {
+    if (tier === 0) return 1;
+    return 1 + tier * critDmg;
+  },
+
+  getStealthDmgBonus(critTier) {
+    if (critTier === 1) return 7;
+    return 8 + (critTier - 1);
+  },
+
+  getAbsCritBonus(opts) {
+    let bonus = 0;
+    if (opts.kullervoCrit) bonus += (opts.kullervoCritPercent || 50) / 100;
+    if (opts.harrowCrit) bonus += (opts.harrowCritPercent || 50) / 100;
+    return bonus;
+  },
+
+  // ═══════════════ 步骤6-7: 状态系统 ═══════════════
+
+  getAttackStatusChance(atk, pMods, opts = {}) {
+    if (!atk) return 0;
+    const bSC = (atk.status_chance || 0) / 100;
+    const mSC = pMods.statusChance || 0;
+    const cSC = opts.comboMultiplier ? opts.comboMultiplier * (pMods.statusChanceByCombo || 0) : 0;
+    const hSC = opts.isHeavy ? (pMods.heavyStatusChance || 0) : 0;
+    const flatSC = pMods.flatStatusChance || 0;
+    return Math.min(bSC * (1 + mSC + cSC + hSC) + flatSC, 10);
+  },
+
+  rollProcCount(statusChance) {
+    if (statusChance <= 0) return 0;
+    const floor = Math.floor(statusChance);
+    const frac = statusChance - floor;
+    return floor + (Math.random() < frac ? 1 : 0);
+  },
+
+  drawProcType(dmgVec, enemyImmunities = []) {
+    const types = Object.keys(dmgVec);
+    const weights = types.map(type => {
+      if (enemyImmunities.includes(type) || enemyImmunities.includes('all')) {
+        return 0;
+      }
+      const dmg = dmgVec[type] || 0;
+      return dmg * (GameData.PHYSICAL.includes(type) ? 4 : 1);
+    });
+    const totalW = weights.reduce((s, w) => s + w, 0);
+    if (totalW <= 0) return 'Impact';
+    let roll = Math.random() * totalW;
+    for (let i = 0; i < types.length; i++) {
+      roll -= weights[i];
+      if (roll <= 0) return types[i];
+    }
+    return types[types.length - 1];
+  },
+
+  // ═══════════════ 步骤11: 状态时间队列 ═══════════════
+
+  buildStatusTimeQueue(queue, pMods, enemy) {
+    const statusQueue = {};
+
+    queue.forEach(shot => {
+      shot.pellets.forEach(pellet => {
+        pellet.statusProcs.forEach(procType => {
+          if (!statusQueue[procType]) {
+            statusQueue[procType] = [];
+          }
+          statusQueue[procType].push({
+            time: shot.time,
+            duration: this.STATUS_DURATION[procType] || 6,
+            stacks: 1,
+            tickDamage: 0,
+            critTier: pellet.critTier || 0,
+            isCrit: pellet.isCrit || false
+          });
+        });
+      });
+    });
+
+    // 合并同一时间点的状态
+    Object.keys(statusQueue).forEach(type => {
+      statusQueue[type] = this.mergeStatusEvents(statusQueue[type], type);
+    });
+
+    return statusQueue;
+  },
+
+  mergeStatusEvents(events, type) {
+    if (events.length === 0) return [];
+
+    events.sort((a, b) => a.time - b.time);
+    const merged = [];
+    let currentStacks = 0;
+    let currentEndTime = 0;
+
+    events.forEach(event => {
+      if (event.time >= currentEndTime) {
+        // 新的状态周期
+        currentStacks = event.stacks;
+        currentEndTime = event.time + event.duration;
+        merged.push({
+          time: event.time,
+          endTime: currentEndTime,
+          stacks: currentStacks,
+          type: type,
+          critTier: event.critTier || 0,
+          isCrit: event.isCrit || false
+        });
+      } else {
+        // 叠加到现有状态
+        currentStacks = Math.min(currentStacks + event.stacks, this.STATUS_MAX_STACKS[type] || 10);
+        currentEndTime = Math.max(currentEndTime, event.time + event.duration);
+        merged[merged.length - 1].stacks = currentStacks;
+        merged[merged.length - 1].endTime = currentEndTime;
+      }
+    });
+
+    return merged;
+  },
+
+  // ═══════════════ 步骤12: 状态伤害计算 ═══════════════
+
+  calculateStatusDamage(statusTimeQueue, pMods, enemy, weapon, opts) {
+    let totalDotDamage = 0;
+    const dotBreakdown = {};
+
+    // 获取武器的基础伤害向量(未含MOD)
+    const baseDmgVec = this.getWeaponBaseDamageVec(weapon);
+
+    Object.entries(statusTimeQueue).forEach(([type, events]) => {
+      const tickMult = this.DOT_TICK_MULT[type];
+      if (!tickMult || tickMult === 0) return;
+
+      events.forEach(event => {
+        const eventDuration = event.duration != null ? event.duration : (event.endTime - event.time);
+        const ticks = Math.floor(eventDuration);
+
+        // DoT基础伤害 = 总MOD后伤害 × tick倍率 (Slash/Heat/Toxin/Electricity/Gas都用总伤害)
+        const totalModdedDmg = this.getTotalModdedDamage(baseDmgVec, pMods);
+        let tickDmg = totalModdedDmg * tickMult;
+
+        // 元素MOD加成 (Heat用heat mods, Gas用gas mods等)
+        // Heat继承: 如果heatInherit > 0, 用heatInherit替代元素自身的mod bonus
+        if (pMods.heatInherit > 0 && (type === 'Heat' || type === 'Gas')) {
+          tickDmg *= (1 + pMods.heatInherit);
+        } else {
+          const elementModBonus = pMods.element[type] || 0;
+          if (elementModBonus > 0) {
+            tickDmg *= (1 + elementModBonus);
+          }
+        }
+
+        // 每元素状态伤害加成
+        const perElementBonus = this.getPerElementStatusBonus(type, pMods);
+        if (perElementBonus > 0) {
+          tickDmg *= (1 + perElementBonus);
+        }
+
+        // Mirage Eclipse加成
+        const mirageMult = opts?.mirageBuff || 1;
+        tickDmg *= mirageMult;
+
+        // 双重加成
+        const dblMult = 1 + (pMods.dblMult || 0);
+        tickDmg *= dblMult;
+
+        // 状态伤害加成
+        if (pMods.statusDamage) {
+          tickDmg *= (1 + pMods.statusDamage);
+        }
+
+        // 重击状态伤害加成
+        if (opts && opts.isHeavy && pMods.heavyStatusDmg > 0) {
+          tickDmg *= (1 + pMods.heavyStatusDmg);
+        }
+
+        // 应用阵营元素抗性 (typeOfFaction) - 通过calcPercentAdd
+        const typeFactionRes = this.findTypeOfRes(type, enemy);
+        if (typeFactionRes !== false) {
+          tickDmg = this.calcPercentAdd(tickDmg, typeFactionRes);
+        }
+
+        // 物理DoT (Slash无视护甲)
+        if (type !== 'Slash') {
+          const armorDR = this.getDMGReduction(enemy.armor || 0);
+          tickDmg *= (1 - armorDR);
+          // 敌人固有伤害减免 (armor region)
+          const innateDrArmor = this.getInnateDR(enemy, 'armor');
+          if (innateDrArmor > 0) tickDmg *= (1 - innateDrArmor);
+        }
+
+        // 暴击倍率 - DoT使用固定tier倍率 (1 + tier × 0.5)，不用武器暴击倍率
+        const dotCritMult = this.getDoTCritMult(event.critTier || 0);
+        tickDmg *= dotCritMult;
+
+        // 阵营双倍加成 (faction mods double-dip on DoT)
+        const factMult = this.getFactMult(enemy.faction, pMods);
+        tickDmg *= factMult * factMult;
+
+        // 阵营元素抗性 (使用calcPercentAdd正确处理弱点/抗性)
+        const factResist = this.getFactResist(enemy.faction, type);
+        tickDmg = this.calcPercentAdd(tickDmg, factResist);
+        const elemMult = this.getElemResist(enemy.elemRes, type);
+        if (elemMult !== 1) tickDmg *= elemMult;
+
+        // 应用特殊敌人DR (proc版本)
+        tickDmg = this.applySpecialEnemyDR(tickDmg, enemy, 1, 1, true);
+
+        // 应用Archon双重DR (if applicable)
+        if (enemy.unique === 'archon') {
+          const archonDR = GameData.SPECIAL_ENEMY_DR.getArchonDR(tickDmg, 1, true);
+          if (archonDR) tickDmg = archonDR;
+        }
+
+        // 叠加层数
+        tickDmg *= event.stacks;
+
+        const totalEventDamage = tickDmg * ticks;
+        totalDotDamage += totalEventDamage;
+
+        if (!dotBreakdown[type]) dotBreakdown[type] = 0;
+        dotBreakdown[type] += totalEventDamage;
+      });
+    });
+
+    return {
+      totalDotDamage,
+      dotBreakdown
+    };
+  },
+
+  getWeaponBaseDamageVec(weapon) {
+    if (!weapon || !weapon.attacks || weapon.attacks.length === 0) return {};
+    return weapon.attacks[0].damage || {};
+  },
+
+  getModdedElementDmg(baseDmgVec, elementType, pMods) {
+    const totalBase = Object.values(baseDmgVec).reduce((s, v) => s + v, 0);
+    const baseVal = baseDmgVec[elementType] || 0;
+    const baseMult = 1 + (pMods.base || 0);
+
+    // 物理伤害
+    if (GameData.PHYSICAL.includes(elementType)) {
+      const physMult = pMods.phys[elementType] || 0;
+      return baseVal * baseMult * (1 + physMult);
+    }
+
+    // 基础元素 (武器自带)
+    if (GameData.BASE_ELEMENTS.includes(elementType) && baseVal > 0) {
+      const elemMult = pMods.element[elementType] || 0;
+      return baseVal * baseMult * (1 + elemMult);
+    }
+
+    // 组合元素或武器没有的元素
+    const elemMult = pMods.element[elementType] || 0;
+    if (elemMult > 0) {
+      return totalBase * baseMult * elemMult;
+    }
+
+    return baseVal * baseMult;
+  },
+
+  // 计算所有元素的MOD后总伤害 (用于DoT基础伤害)
+  getTotalModdedDamage(baseDmgVec, pMods) {
+    const baseMult = 1 + (pMods.base || 0);
+    let total = 0;
+
+    // 物理伤害
+    GameData.PHYSICAL.forEach(type => {
+      const baseVal = baseDmgVec[type] || 0;
+      const physMult = pMods.phys[type] || 0;
+      total += baseVal * baseMult * (1 + physMult);
+    });
+
+    // 基础元素 (武器自带)
+    GameData.BASE_ELEMENTS.forEach(type => {
+      const baseVal = baseDmgVec[type] || 0;
+      if (baseVal > 0) {
+        const elemMult = pMods.element[type] || 0;
+        total += baseVal * baseMult * (1 + elemMult);
+      }
+    });
+
+    // 组合元素
+    GameData.COMBINED_ELEMENTS.forEach(type => {
+      const elemMult = pMods.element[type] || 0;
+      if (elemMult > 0) {
+        const totalBase = Object.values(baseDmgVec).reduce((s, v) => s + v, 0);
+        total += totalBase * baseMult * elemMult;
+      }
+    });
+
+    return total;
+  },
+
+  // DoT暴击倍率 - 固定按tier计算 (1x, 1.5x, 2.25x, 3.375x...)
+  getDoTCritMult(critTier) {
+    if (!critTier || critTier <= 0) return 1;
+    return 1 + critTier * 0.5;
+  },
+
+  getPerElementStatusBonus(type, pMods) {
+    switch (type) {
+      case 'Toxin': return pMods.statusDamageToxin || 0;
+      case 'Heat': return pMods.statusDamageHeat || 0;
+      case 'Electricity': return pMods.statusDamageElectricity || 0;
+      case 'Slash': return pMods.statusDamageSlash || 0;
+      case 'Gas': return pMods.statusDamageGas || 0;
+      default: return 0;
+    }
+  },
+
+  getCurrentArmor(baseArmor, statusTimeQueue, time) {
+    let armor = baseArmor;
+
+    // Corrosive削减
+    const corrosiveEvents = statusTimeQueue.Corrosive || [];
+    let corrosiveStacks = 0;
+    corrosiveEvents.forEach(event => {
+      if (time >= event.time && time < event.endTime) {
+        corrosiveStacks = Math.max(corrosiveStacks, event.stacks);
+      }
+    });
+    armor *= (1 - this.getCorrosiveReduction(corrosiveStacks));
+
+    // Heat削减
+    const heatEvents = statusTimeQueue.Heat || [];
+    let hasHeat = false;
+    heatEvents.forEach(event => {
+      if (time >= event.time && time < event.endTime) {
+        hasHeat = true;
+      }
+    });
+    if (hasHeat) {
+      armor *= 0.5;
+    }
+
+    return Math.max(0, armor);
+  },
+
+  getActiveStatusCount(statusTimeQueue, time) {
+    let count = 0;
+    Object.entries(statusTimeQueue).forEach(([type, events]) => {
+      let isActive = false;
+      events.forEach(event => {
+        if (time >= event.time && time < event.endTime) {
+          isActive = true;
+        }
+      });
+      if (isActive) count++;
+    });
+    return count;
+  },
+
+  getStatusStacksAtTime(statusTimeQueue, statusType, time) {
+    const events = statusTimeQueue[statusType] || [];
+    let maxStacks = 0;
+    events.forEach(event => {
+      if (time >= event.time && time < event.endTime) {
+        maxStacks = Math.max(maxStacks, event.stacks);
+      }
+    });
+    return maxStacks;
+  },
+
+  // ═══════════════ 步骤13: DPS计算 ═══════════════
+
+  getShotBreakdown(queue, statusTimeQueue, pMods, enemy, weapon) {
+    const breakdown = {};
+    let totalDirect = 0;
+    let totalStatus = 0;
+
+    queue.forEach(shot => {
+      shot.pellets.forEach(pellet => {
+        Object.entries(pellet.damage).forEach(([type, dmg]) => {
+          const finalDmg = dmg * pellet.critMult;
+          breakdown[type] = (breakdown[type] || 0) + finalDmg;
+          totalDirect += finalDmg;
+        });
+      });
+    });
+
+    // 添加状态伤害到breakdown — 传递真实武器数据计算DoT基础伤害
+    const weaponForDot = weapon && weapon.attacks && weapon.attacks.length > 0 ? weapon : { attacks: queue.length > 0 ? [{}] : [] };
+    const dotResults = this.calculateStatusDamage(statusTimeQueue, pMods, enemy, weaponForDot, {});
+    Object.entries(dotResults.dotBreakdown || {}).forEach(([type, dmg]) => {
+      breakdown[type] = (breakdown[type] || 0) + dmg;
+      totalStatus += dmg;
+    });
+
+    return {
+      breakdown,
+      totalDirect,
+      totalStatus,
+      total: totalDirect + totalStatus
+    };
+  },
+
+  getStatusInfoFromQueue(statusTimeQueue) {
+    const info = {};
+    Object.entries(statusTimeQueue).forEach(([type, events]) => {
+      const totalStacks = events.reduce((sum, e) => sum + e.stacks, 0);
+      info[type] = {
+        stacks: totalStacks,
+        duration: this.STATUS_DURATION[type],
+        maxStacks: this.STATUS_MAX_STACKS[type]
+      };
+    });
+    return info;
+  },
+
+  aggregateBreakdown(allResults) {
+    const breakdown = {};
+    allResults.forEach(result => {
+      Object.entries(result.breakdown.breakdown || {}).forEach(([type, dmg]) => {
+        breakdown[type] = (breakdown[type] || 0) + dmg;
+      });
+    });
+    // 取平均
+    const count = allResults.length;
+    Object.keys(breakdown).forEach(type => {
+      breakdown[type] /= count;
+    });
+    return breakdown;
+  },
+
+  aggregateStatusInfo(allResults) {
+    const info = {};
+    allResults.forEach(result => {
+      Object.entries(result.statusInfo || {}).forEach(([type, data]) => {
+        if (!info[type]) info[type] = { stacks: 0, count: 0 };
+        info[type].stacks += data.stacks;
+        info[type].count++;
+      });
+    });
+    Object.keys(info).forEach(type => {
+      info[type].stacks = info[type].stacks / (info[type].count || 1);
+    });
+    return info;
+  },
+
+  // ═══════════════ TTK计算 ═══════════════
+
+  calcTTKQueue(queueResult, weapon, pMods, enemy, opts = {}) {
+    if (!enemy) return { ttk: 0, regions: { overguard: 0, shield: 0, armor: 0, health: 0 } };
+
+    let overguard = enemy.overguard || 0;
+    let shield = enemy.shield || 0;
+    let health = enemy.health || 0;
+
+    if (overguard + shield + health <= 0) return { ttk: 0, regions: { overguard: 0, shield: 0, armor: 0, health: 0 } };
+
+    const fireRate = queueResult.fireRate || 1;
+    const magSize = queueResult.magSize || 1;
+    const reloadTime = queueResult.reloadTime || 0;
+    const pellets = queueResult.pellets || 1;
+    const critChance = (queueResult.breakdown?.totalDirect || 0) > 0 ? 0.5 : 0;
+    const critDmg = pMods.critMult || 1;
+
+    const timePerShot = 1 / fireRate;
+    const perPelletDmg = queueResult.avgPerShot / pellets;
+
+    const dr = this.getDMGReduction(enemy.armor);
+    const faction = enemy.faction || 'Unknown';
+
+    let totalTime = 0;
+    let shotsInMag = 0;
+    let regions = { overguard: 0, shield: 0, armor: 0, health: 0 };
+
+    const maxIterations = 10000;
+    let iterations = 0;
+
+    while ((overguard + shield + health) > 0 && iterations < maxIterations) {
+      iterations++;
+
+      const isCrit = Math.random() < critChance;
+      const critMult = isCrit ? (1 + critDmg) : 1;
+
+      let pelletDmg = perPelletDmg * critMult;
+
+      // 超宏防护阶段 (应用 multOverguard 加成 + Void伤害1.5x)
+      if (overguard > 0) {
+        const ogDmgMult = 1 + (pMods.multOverguard || 0);
+        // Void伤害对Overguard有1.5x加成
+        const voidBonus = 1.5;
+        const ogDmg = pelletDmg * pellets * ogDmgMult * voidBonus;
+        overguard -= ogDmg;
+        regions.overguard += ogDmg;
+        if (overguard <= 0) { regions.overguard += overguard; overguard = 0; }
+      }
+      // 护盾阶段
+      else if (shield > 0) {
+        const shDmg = pelletDmg * pellets * this.SHIELD_DAMAGE_MULT;
+        shield -= shDmg;
+        regions.shield += shDmg;
+        if (shield <= 0) { regions.shield += shield; shield = 0; }
+      }
+      // 生命值阶段
+      else if (health > 0) {
+        const hpDmg = pelletDmg * pellets * (1 - dr);
+        health -= hpDmg;
+        regions.health += hpDmg;
+        if (health <= 0) { regions.health += health; health = 0; }
+      }
+
+      shotsInMag++;
+      totalTime += timePerShot;
+
+      if (shotsInMag >= magSize && (overguard + shield + health) > 0) {
+        totalTime += reloadTime;
+        shotsInMag = 0;
+      }
+    }
+
+    return {
+      ttk: totalTime,
+      regions,
+      experimental: true
+    };
+  },
+
+  // ═══════════════ MOD处理 ═══════════════
+
+  processMods(mods, weapon, applyWithCond = false, modRanks = []) {
     const result = {
       base: 0, critChance: 0, critMult: 0, multishot: 0, speed: 0,
-      statusChance: 0, punchThrough: 0, magazineSize: 0, reloadTime: 0,
+      statusChance: 0, flatStatusChance: 0, punchThrough: 0, magazineSize: 0, reloadTime: 0,
       statusDamage: 0, basePerStatus: 0, addSlash: 0, addSlashOnImpact: 0,
       smite: {}, element: {}, phys: {},
       flatCritChance: 0, flatCritMult: 0, withCond: {},
-      // 暴击系统
-      multCritChance: 0,  // 乘法暴击几率
-      weakCritChance: 0,  // 弱点暴击几率
-      comboCritPer: 0,    // 连击暴击
-      heavyCritMult: 0,   // 重击暴击加成
-      heavyBaseMult: 0,   // 重击基础伤害加成
-      // 状态系统
-      statusChanceByCombo: 0,  // 连击状态几率
-      // 技能系统
-      lifesteal: 0,
-      finisherDmg: 0,
-      slamMult: 0,
-      windUp: 0,
-      range: 0,
-      meleeComboEff: 0,
-      comboDuration: 0,
-      initialCombo: 0,
-      // 武器特殊属性
-      ammoCapacity: 0,
-      accuracy: 0,
-      recoil: 0,
-      shotSpeed: 0,
-      beamLength: 0,
-      blastRadius: 0,
-      zoom: 0,
-      statusDuration: 0,
-      doubleCrit: 0,      // Vigilante 套装双倍暴击概率
-      // 新增：元素特殊效果
-      addRadiation: 0,
-      addMagnetic: 0,
-      addGas: 0,
-      addViral: 0,
+      multCritChance: 0, weakCritChance: 0, comboCritPer: 0,
+      heavyCritMult: 0, heavyBaseMult: 0,
+      heavyStatusDmg: 0, heavyStatusChance: 0,
+      statusChanceByCombo: 0,
+      lifesteal: 0, finisherDmg: 0, slamMult: 0, windUp: 0,
+      range: 0, meleeComboEff: 0, comboDuration: 0, initialCombo: 0,
+      ammoCapacity: 0, accuracy: 0, recoil: 0, shotSpeed: 0,
+      beamLength: 0, blastRadius: 0, zoom: 0, statusDuration: 0,
+      doubleCrit: 0,
+      addRadiation: 0, addMagnetic: 0, addGas: 0, addViral: 0,
+      dmgMultAgainstFrozen: 0, critFlatChancePerStatuses: 0,
+      flatCritWithStatus: 0, disableBodyCrit: false,
+      multiplicativeBasePerStatus: false,
+      multiple: 0, dblMult: 0, multDAIKYUBroadhead: 0, multSharpshot: 0,
+      vulnStatusDamage: 0, basePerCold: 0,
+      baseNoncrit: 0, baseUncritUnstatus: 0, flatChangeDmg: 0,
+      critMultAdd: 0, critMultMult: 0, critChanceSlide: 0,
+      flatMultishot: 0, setMultishotToDefault: false,
+      speedMult: 0, setSpeedToDefault: false,
+      chargeTime: 0, burstCount: 0, burstDelay: 0, spread: 0,
+      baseMagazineSize: 0, addMagazineSize: 0, hasInfiniteMagazine: false,
+      comboDurationP: 0, comboIn: 0,
+      dmgVulnerability: 0, heatInherit: 0, heatAdd: 0,
+      addMagneticOnImpact: 0, randomStatusAfterStatus: 0,
+      incMaxStacksCorrosion: 0, statusDamageToxin: 0, statusDamageHeat: 0,
+      statusDamageElectricity: 0, statusDamageSlash: 0, statusDamageGas: 0,
+      mInfluence: 0, mDuplicate: 0, multOverguard: 0,
+      debilitate: 0, archonVitality: 0, corrosiveByToxin: 0,
+      dmgOnStatusEff: 0, electricityBonus: 0, electricityShardAbilityDmg: 0,
+      incrCMPuncStatus: 0, incrCCHitReset: 0,
+      critAfterStatus: 0, addPunctureStatus: 0, impactToPuncture: 0,
+      multForHead: 0, multForHeadMult: 0, headshotMult: 0,
+      sniperComboDuration: 0, abilityCombo: 0,
+      energy: 0, dSound: 0, archRange: 0, reloadRate: 0, reloadDelay: 0,
+      ammoEff: 0, na: 0, meleeComboEffP: 0,
     };
-    mods.forEach(mod => {
+
+    mods.forEach((mod, idx) => {
       if (!mod || !mod.action) return;
+      const rank = modRanks[idx] || 0;
+      const maxRank = (mod.maxRank !== undefined) ? mod.maxRank : ((mod.rank !== undefined) ? mod.rank : 10);
+      const rankScale = maxRank > 0 ? (rank / maxRank) : 1;
       const a = mod.action;
-      if (a.base) result.base += a.base;
-      if (a.crit_chance) result.critChance += a.crit_chance;
-      if (a.crit_mult) result.critMult += a.crit_mult;
-      if (a.multishot) result.multishot += a.multishot;
-      if (a.speed) result.speed += a.speed;
-      if (a.status_chance) result.statusChance += a.status_chance;
-      if (a.punch_through) result.punchThrough += a.punch_through;
-      if (a.magazineSize) result.magazineSize += a.magazineSize;
-      if (a.reloadTime) result.reloadTime += a.reloadTime;
-      if (a.status_damage) result.statusDamage += a.status_damage;
-      if (a.base_per_status) result.basePerStatus += a.base_per_status;
-      if (a.add_slash) result.addSlash += a.add_slash;
-      if (a.add_slash_on_impact) result.addSlashOnImpact += a.add_slash_on_impact;
-      if (a.SMITE) Object.entries(a.SMITE).forEach(([f, m]) => { result.smite[f] = (result.smite[f] || 0) + m; });
-      if (a.element) Object.entries(a.element).forEach(([e, m]) => { result.element[e] = (result.element[e] || 0) + m; });
-      if (a.phys) Object.entries(a.phys).forEach(([e, m]) => { result.phys[e] = (result.phys[e] || 0) + m; });
-      if (a.flat_crit_chance) result.flatCritChance += a.flat_crit_chance;
-      if (a.crit_mult_add) result.flatCritMult += a.crit_mult_add;
-      if (a.WITH_COND) Object.entries(a.WITH_COND).forEach(([k, v]) => { if (typeof v === 'number') result.withCond[k] = (result.withCond[k] || 0) + v; });
-      
-      // 新增：暴击系统属性
-      if (a.mult_crit_chance) result.multCritChance += a.mult_crit_chance;
-      if (a.crit_chance_weakp) result.weakCritChance += a.crit_chance_weakp;
-      if (a.crit_chance_per_combo) result.comboCritPer += a.crit_chance_per_combo;
-      if (a.heavy_crit_mult) result.heavyCritMult += a.heavy_crit_mult;
-      if (a.base_heavy) result.heavyBaseMult += a.base_heavy;
-      
-      // 新增：状态系统属性
-      if (a.status_chance_by_combo) result.statusChanceByCombo += a.status_chance_by_combo;
-      
-      // 新增：技能属性
-      if (a.lifesteal) result.lifesteal += a.lifesteal;
-      if (a.finisherDmg) result.finisherDmg += a.finisherDmg;
-      if (a.slam_mult) result.slamMult += a.slam_mult;
-      if (a.windUp) result.windUp += a.windUp;
-      if (a.range) result.range += a.range;
-      if (a.melee_combo_eff) result.meleeComboEff += a.melee_combo_eff;
-      if (a.comboDuration) result.comboDuration += a.comboDuration;
-      if (a.initialCombo) result.initialCombo += a.initialCombo;
-      
-      // 新增：武器特殊属性
-      if (a.ammoCapacity) result.ammoCapacity += a.ammoCapacity;
-      if (a.accuracy) result.accuracy += a.accuracy;
-      if (a.recoil) result.recoil += a.recoil;
-      if (a.shot_speed) result.shotSpeed += a.shot_speed;
-      if (a.beam_length) result.beamLength += a.beam_length;
-      if (a.blast_radius) result.blastRadius += a.blast_radius;
-      if (a.zoom) result.zoom += a.zoom;
-      if (a.status_duration) result.statusDuration += a.status_duration;
-      if (a.double_crit) result.doubleCrit += a.double_crit;
-      
-      // 新增：元素特殊效果
-      if (a.addRadiation) result.addRadiation += a.addRadiation;
-      if (a.addMagnetic) result.addMagnetic += a.addMagnetic;
-      if (a.addGas) result.addGas += a.addGas;
-      if (a.addViral) result.addViral += a.addViral;
+      if (a.base) result.base += a.base * rankScale;
+      if (a.crit_chance) result.critChance += a.crit_chance * rankScale;
+      if (a.crit_mult) result.critMult += a.crit_mult * rankScale;
+      if (a.multishot) result.multishot += a.multishot * rankScale;
+      if (a.speed) result.speed += a.speed * rankScale;
+      if (a.status_chance) result.statusChance += a.status_chance * rankScale;
+      if (a.absolute_status_chance) result.flatStatusChance += a.absolute_status_chance * rankScale;
+      if (a.punch_through) result.punchThrough += a.punch_through * rankScale;
+      if (a.magazineSize) result.magazineSize += a.magazineSize * rankScale;
+      if (a.reloadTime) result.reloadTime += a.reloadTime * rankScale;
+      if (a.status_damage) result.statusDamage += a.status_damage * rankScale;
+      if (a.base_per_status) result.basePerStatus += a.base_per_status * rankScale;
+      if (a.add_slash) result.addSlash += a.add_slash * rankScale;
+      if (a.add_slash_on_impact) result.addSlashOnImpact += a.add_slash_on_impact * rankScale;
+      if (a.SMITE) Object.entries(a.SMITE).forEach(([f, m]) => { result.smite[f] = (result.smite[f] || 0) + m * rankScale; });
+      if (a.element) Object.entries(a.element).forEach(([e, m]) => { result.element[e] = (result.element[e] || 0) + m * rankScale; });
+      if (a.phys) Object.entries(a.phys).forEach(([e, m]) => { result.phys[e] = (result.phys[e] || 0) + m * rankScale; });
+      if (a.flat_crit_chance) result.flatCritChance += a.flat_crit_chance * rankScale;
+      if (a.crit_mult_add) result.flatCritMult += a.crit_mult_add * rankScale;
+      if (a.WITH_COND) Object.entries(a.WITH_COND).forEach(([k, v]) => { if (typeof v === 'number') result.withCond[k] = (result.withCond[k] || 0) + v * rankScale; });
+      if (a.mult_crit_chance) result.multCritChance += a.mult_crit_chance * rankScale;
+      if (a.crit_chance_weakp) result.weakCritChance += a.crit_chance_weakp * rankScale;
+      if (a.crit_chance_per_combo) result.comboCritPer += a.crit_chance_per_combo * rankScale;
+      if (a.heavy_crit_mult) result.heavyCritMult += a.heavy_crit_mult * rankScale;
+      if (a.base_heavy) result.heavyBaseMult += a.base_heavy * rankScale;
+      if (a.h_status_damage) result.heavyStatusDmg += a.h_status_damage * rankScale;
+      if (a.h_status_chance) result.heavyStatusChance += a.h_status_chance * rankScale;
+      if (a.status_chance_by_combo) result.statusChanceByCombo += a.status_chance_by_combo * rankScale;
+      if (a.lifesteal) result.lifesteal += a.lifesteal * rankScale;
+      if (a.finisherDmg) result.finisherDmg += a.finisherDmg * rankScale;
+      if (a.slam_mult) result.slamMult += a.slam_mult * rankScale;
+      if (a.windUp) result.windUp += a.windUp * rankScale;
+      if (a.range) result.range += a.range * rankScale;
+      if (a.melee_combo_eff) result.meleeComboEff += a.melee_combo_eff * rankScale;
+      if (a.comboDuration) result.comboDuration += a.comboDuration * rankScale;
+      if (a.initialCombo) result.initialCombo += a.initialCombo * rankScale;
+      if (a.ammoCapacity) result.ammoCapacity += a.ammoCapacity * rankScale;
+      if (a.accuracy) result.accuracy += a.accuracy * rankScale;
+      if (a.recoil) result.recoil += a.recoil * rankScale;
+      if (a.shot_speed) result.shotSpeed += a.shot_speed * rankScale;
+      if (a.beam_length) result.beamLength += a.beam_length * rankScale;
+      if (a.blast_radius) result.blastRadius += a.blast_radius * rankScale;
+      if (a.zoom) result.zoom += a.zoom * rankScale;
+      if (a.status_duration) result.statusDuration += a.status_duration * rankScale;
+      if (a.double_crit) result.doubleCrit += a.double_crit * rankScale;
+      if (a.addRadiation) result.addRadiation += a.addRadiation * rankScale;
+      if (a.addMagnetic) result.addMagnetic += a.addMagnetic * rankScale;
+      if (a.addGas) result.addGas += a.addGas * rankScale;
+      if (a.addViral) result.addViral += a.addViral * rankScale;
+      if (a.dmgMultAgainstFrozen) result.dmgMultAgainstFrozen += a.dmgMultAgainstFrozen * rankScale;
+      if (a.critFlatChancePerStatuses) result.critFlatChancePerStatuses += a.critFlatChancePerStatuses * rankScale;
+      if (a.flatCritWithStatus) result.flatCritWithStatus += a.flatCritWithStatus * rankScale;
+      if (a.disableBodyCrit) result.disableBodyCrit = true;
+      if (a.multiplicativeBasePerStatus) result.multiplicativeBasePerStatus = true;
+      if (a.multiple) result.multiple += a.multiple * rankScale;
+      if (a.dbl_mult) result.dblMult += a.dbl_mult * rankScale;
+      if (a.multDAIKYUBroadhead) result.multDAIKYUBroadhead += a.multDAIKYUBroadhead * rankScale;
+      if (a.multSharpshot) result.multSharpshot += a.multSharpshot * rankScale;
+      if (a.vuln_status_damage) result.vulnStatusDamage += a.vuln_status_damage * rankScale;
+      if (a.base_per_cold) result.basePerCold += a.base_per_cold * rankScale;
+      if (a.base_noncrit) result.baseNoncrit += a.base_noncrit * rankScale;
+      if (a.base_uncrit_unstatus) result.baseUncritUnstatus += a.base_uncrit_unstatus * rankScale;
+      if (a.flat_change_dmg) result.flatChangeDmg += a.flat_change_dmg * rankScale;
+      if (a.crit_mult_add) result.critMultAdd += a.crit_mult_add * rankScale;
+      if (a.crit_mult_mult) result.critMultMult += a.crit_mult_mult * rankScale;
+      if (a.crit_chance_slide) result.critChanceSlide += a.crit_chance_slide * rankScale;
+      if (a.flat_multishot) result.flatMultishot += a.flat_multishot * rankScale;
+      if (a.set_mutishot_to_default) result.setMultishotToDefault = true;
+      if (a.speed_mult) result.speedMult += a.speed_mult * rankScale;
+      if (a.set_speed_to_default) result.setSpeedToDefault = true;
+      if (a.charge_time) result.chargeTime += a.charge_time * rankScale;
+      if (a.burst_count) result.burstCount += a.burst_count * rankScale;
+      if (a.burst_delay) result.burstDelay += a.burst_delay * rankScale;
+      if (a.spread) result.spread += a.spread * rankScale;
+      if (a.baseMagazineSize) result.baseMagazineSize += a.baseMagazineSize * rankScale;
+      if (a.add_magazineSize) result.addMagazineSize += a.add_magazineSize * rankScale;
+      if (a.hasInfiniteMagazine) result.hasInfiniteMagazine = true;
+      if (a.comboDurationP) result.comboDurationP += a.comboDurationP * rankScale;
+      if (a.comboIn) result.comboIn += a.comboIn * rankScale;
+      if (a.dmgVulnerability) result.dmgVulnerability += a.dmgVulnerability * rankScale;
+      if (a.heatInherit) result.heatInherit += a.heatInherit * rankScale;
+      if (a.heatAdd) result.heatAdd += a.heatAdd * rankScale;
+      if (a.add_magnetic_on_impact) result.addMagneticOnImpact += a.add_magnetic_on_impact * rankScale;
+      if (a.random_status_after_status) result.randomStatusAfterStatus += a.random_status_after_status * rankScale;
+      if (a.incMaxStacks_Corrosion) result.incMaxStacksCorrosion += a.incMaxStacks_Corrosion * rankScale;
+      if (a.status_damage_toxin) result.statusDamageToxin += a.status_damage_toxin * rankScale;
+      if (a.status_damage_heat) result.statusDamageHeat += a.status_damage_heat * rankScale;
+      if (a.status_damage_electricity) result.statusDamageElectricity += a.status_damage_electricity * rankScale;
+      if (a.status_damage_slash) result.statusDamageSlash += a.status_damage_slash * rankScale;
+      if (a.status_damage_gas) result.statusDamageGas += a.status_damage_gas * rankScale;
+      if (a.mInfluence) result.mInfluence += a.mInfluence * rankScale;
+      if (a.mDuplicate) result.mDuplicate += a.mDuplicate * rankScale;
+      if (a.mult_overguard) result.multOverguard += a.mult_overguard * rankScale;
+      if (a.debilitate) result.debilitate += a.debilitate * rankScale;
+      if (a.archon_vitality) result.archonVitality += a.archon_vitality * rankScale;
+      if (a.corrosive_by_toxin) result.corrosiveByToxin += a.corrosive_by_toxin * rankScale;
+      if (a.dmgOnStatusEff) result.dmgOnStatusEff += a.dmgOnStatusEff * rankScale;
+      if (a.electricityBonus) result.electricityBonus += a.electricityBonus * rankScale;
+      if (a.electricityShardAbilityDmg) result.electricityShardAbilityDmg += a.electricityShardAbilityDmg * rankScale;
+      if (a.incr_CM_by_punc_status) result.incrCMPuncStatus += a.incr_CM_by_punc_status * rankScale;
+      if (a.incr_CC_by_hit_with_reset6tier2) result.incrCCHitReset += a.incr_CC_by_hit_with_reset6tier2 * rankScale;
+      if (a.crit_after_status) result.critAfterStatus += a.crit_after_status * rankScale;
+      if (a.addPunctureStatus) result.addPunctureStatus += a.addPunctureStatus * rankScale;
+      if (a.impactToPuncture) result.impactToPuncture += a.impactToPuncture * rankScale;
+      if (a.mult_for_head) result.multForHead += a.mult_for_head * rankScale;
+      if (a.mult_for_head_mult) result.multForHeadMult += a.mult_for_head_mult * rankScale;
+      if (a.headshot_mult) result.headshotMult += a.headshot_mult * rankScale;
+      if (a.sniper_combo_duration) result.sniperComboDuration += a.sniper_combo_duration * rankScale;
+      if (a.abilityCombo) result.abilityCombo += a.abilityCombo * rankScale;
+      if (a.energy) result.energy += a.energy * rankScale;
+      if (a.d_sound) result.dSound += a.d_sound * rankScale;
+      if (a.arch_range) result.archRange += a.arch_range * rankScale;
+      if (a.reloadRate) result.reloadRate += a.reloadRate * rankScale;
+      if (a.reloadDelay) result.reloadDelay += a.reloadDelay * rankScale;
+      if (a.ammoEff) result.ammoEff += a.ammoEff * rankScale;
+      if (a.na) result.na += a.na * rankScale;
+      if (a.melee_combo_effP) result.meleeComboEffP += a.melee_combo_effP * rankScale;
     });
 
-    // 当 isMaxCond 为 true 时, 将 WITH_COND 的值叠加到对应的基础属性上
+    // 应用条件MOD
     if (applyWithCond && result.withCond) {
       const wc = result.withCond;
       if (wc.base) result.base += wc.base;
@@ -140,6 +1665,8 @@ const DamageCalculator = {
     return result;
   },
 
+  // ═══════════════ 元素组合 ═══════════════
+
   resolveElements(modActions) {
     const baseElements = {};
     const physicalElements = {};
@@ -149,21 +1676,33 @@ const DamageCalculator = {
         if (GameData.BASE_ELEMENTS.includes(el)) baseElements[el] = (baseElements[el] || 0) + mult;
       });
     });
-    const elementOrder = ['Cold', 'Heat', 'Toxin', 'Electricity'];
-    const activeElements = elementOrder.filter(el => baseElements[el] > 0);
+
+    // 按照游戏元素层级排序, 两两组合 (低层级优先)
+    const activeElements = Object.keys(baseElements).filter(el => baseElements[el] > 0);
     const combinedElements = {};
     const temp = [...activeElements];
+
     while (temp.length >= 2) {
-      const a = temp.shift(), b = temp.shift();
-      const combined = GameData.ELEMENT_COMBOS[[a, b].sort().join('+')];
-      if (combined) { combinedElements[combined] = (combinedElements[combined] || 0) + 1; temp.push(combined); }
+      // 按层级排序, 最低的两个先组合
+      temp.sort((a, b) => (GameData.ELEMENT_HIERARCHY[a] || 99) - (GameData.ELEMENT_HIERARCHY[b] || 99));
+      const a = temp.shift();
+      const b = temp.shift();
+      const comboKey = [a, b].sort().join('+');
+      const combined = GameData.ELEMENT_COMBOS[comboKey];
+      if (combined) {
+        combinedElements[combined] = (combinedElements[combined] || 0) + 1;
+        temp.push(combined);
+      }
     }
+
     const allElements = {};
     Object.entries(physicalElements).forEach(([k, v]) => { allElements[k] = (allElements[k] || 0) + v; });
     Object.entries(baseElements).forEach(([k, v]) => { allElements[k] = (allElements[k] || 0) + v; });
     Object.entries(combinedElements).forEach(([k, v]) => { allElements[k] = (allElements[k] || 0) + v; });
     return { physical: physicalElements, base: baseElements, combined: combinedElements, all: allElements };
   },
+
+  // ═══════════════ 武器属性计算 ═══════════════
 
   getAttackCombos(weapon) {
     if (weapon.comb && weapon.comb.length > 0) return weapon.comb;
@@ -194,6 +1733,21 @@ const DamageCalculator = {
     Object.entries(elements.combined).forEach(([type, count]) => {
       result[type] = (result[type] || 0) + totalBaseDmg * count;
     });
+
+    // 添加额外组合元素伤害 (addRadiation, addMagnetic, addGas, addViral, heatAdd)
+    const flatCombinedElements = {
+      Radiation: processedMods.addRadiation || 0,
+      Magnetic: processedMods.addMagnetic || 0,
+      Gas: processedMods.addGas || 0,
+      Viral: processedMods.addViral || 0,
+      Heat: processedMods.heatAdd || 0
+    };
+    Object.entries(flatCombinedElements).forEach(([type, mult]) => {
+      if (mult > 0) {
+        result[type] = (result[type] || 0) + totalBaseDmg * mult;
+      }
+    });
+
     return result;
   },
 
@@ -208,511 +1762,75 @@ const DamageCalculator = {
     return 1 - (reduction * factor);
   },
 
-  isBeamAttack(attack) {
-    return attack.shot_type === 'Beam' || attack.shot_type === 'Discharge';
-  },
-
-  isAoEAttack(attack) {
-    return attack.shot_type === 'AoE';
-  },
-
-  calculateBaseDamage(weapon, processedMods) {
-    const combos = this.getAttackCombos(weapon);
-    const result = {};
-    combos.forEach(combo => {
-      combo.forEach(attackIndex => {
-        const attack = weapon.attacks[attackIndex];
-        if (!attack) return;
-        const attackDmg = this.getAttackBaseDamage(attack, processedMods, weapon);
-        const falloffMult = this.getAoEFalloff(attack);
-        Object.entries(attackDmg).forEach(([type, value]) => {
-          result[type] = (result[type] || 0) + value * falloffMult;
-        });
-      });
-    });
-    return result;
-  },
-
-  getAttackCritChance(atk, pMods, opts = {}) {
-    const bCrit = atk.crit_chance / 100;
-    const mCrit = pMods.critChance;
-    const fCrit = pMods.flatCritChance;
-    
-    // 乘法暴击几率
-    const mCritMult = 1 + pMods.multCritChance;
-    
-    // 弱点暴击几率
-    const wCrit = opts.isHeadshot ? pMods.weakCritChance : 0;
-    const wMult = opts.isMultiplicativeWeakCC ? 1 + wCrit : 1;
-    
-    // 连击暴击
-    const cCrit = opts.comboMultiplier ? opts.comboMultiplier * pMods.comboCritPer : 0;
-    
-    // 重击暴击加成
-    const hCrit = opts.isHeavy ? pMods.heavyCritMult : 0;
-    
-    // 最终暴击几率
-    const fCritChance = (bCrit * (1 + mCrit) + fCrit) * mCritMult * wMult + cCrit + hCrit;
-    return Math.min(fCritChance, 5);
-  },
-
-  getAttackCritMultiplier(atk, pMods, opts = {}) {
-    const bMult = atk.crit_mult;
-    const mMult = pMods.critMult;
-    const fMult = pMods.flatCritMult;
-    
-    // 重击暴击倍率
-    const hMult = opts.isHeavy ? pMods.heavyCritMult : 0;
-    
-    // 暴击等级判定
-    const critChance = this.getAttackCritChance(atk, pMods, opts);
-    const tier = Math.floor(critChance);
-    const frac = critChance - tier;
-    const hitTier = Math.random() < frac ? tier + 1 : tier;
-    
-    // 计算暴击倍率
-    let critMult;
-    if (opts.isHeadshot) {
-      const headMult = GameData.HEADSHOT_MULT_INITIAL;
-      critMult = headMult * (1 + hitTier * (2 * bMult * (1 + mMult) - 1));
-    } else {
-      critMult = 1 + hitTier * (bMult * (1 + mMult) - 1);
-    }
-    
-    // 添加平坦暴击倍率
-    critMult += fMult;
-    
-    // 添加武器特殊暴击倍率
-    if (atk.unique && atk.unique.crit_mult) critMult += atk.unique.crit_mult;
-    
-    // 应用重击倍率
-    critMult *= (1 + hMult);
-    
-    return { critMult, hitTier };
-  },
-
-  getAttackStatusChance(atk, pMods, opts = {}) {
-    const bSC = atk.status_chance / 100;
-    const mSC = pMods.statusChance;
-    
-    // 连击状态几率
-    const cSC = opts.comboMultiplier ? opts.comboMultiplier * pMods.statusChanceByCombo : 0;
-    
-    // 最终状态几率
-    const fSC = bSC * (1 + mSC + cSC);
-    return Math.min(fSC, 10);
-  },
-
-  getAttackFireRate(atk, pMods) {
-    const bSpd = atk.speed;
-    const mSpd = pMods.speed;
-    let spd = bSpd * (1 + mSpd);
-    if (atk.unique && atk.unique.speed_mult) spd *= atk.unique.speed_mult;
-    return spd;
-  },
-
-  calculateCritChance(weapon, pMods) {
-    const atk = weapon.attacks[0];
-    return this.getAttackCritChance(atk, pMods);
-  },
-
-  calculateCritMultiplier(weapon, pMods) {
-    const atk = weapon.attacks[0];
-    return this.getAttackCritMultiplier(atk, pMods);
-  },
-
-  getExpectedCritMult(critChance, critDamage) {
-    return 1 + critChance * critDamage;
-  },
-
-  calcDotDPS(bDmg, statusChance, critChance, critDmg, eArmor, fMult, pMods, sStacks = {}) {
-    let totalDotDPS = 0;
-    Object.entries(bDmg).forEach(([type, dmg]) => {
-      if (dmg <= 0) return;
-      const tMult = GameData.DOT_TICK_MULT[type] || 0;
-      if (tMult === 0) return;
-      let tDmg = 0;
-      const isPhys = GameData.PHYSICAL.includes(type);
-      if (isPhys) {
-        tDmg = dmg * tMult;
-        if (type !== 'Slash') tDmg *= (1 - this.getDMGReduction(eArmor));
-      } else {
-        const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-        tDmg = totalBase * tMult;
-        tDmg *= (1 - this.getDMGReduction(eArmor));
-      }
-      if (pMods && pMods.statusDamage) tDmg *= (1 + pMods.statusDamage);
-      tDmg *= fMult * fMult;
-      const expectedProcs = statusChance;
-      const duration = GameData.STATUS_DURATION[type] || 6;
-      totalDotDPS += tDmg * expectedProcs / duration;
-    });
-    return totalDotDPS;
-  },
-
-  // 状态效果对伤害的增益
-  getStatusDmgMult(sStacks, dmgType, isShield = false) {
-    let mult = 1;
-    
-    // Viral: 每层 +25% 对生命值伤害，最多10层
-    if (sStacks.Viral > 0 && !isShield) {
-      const viralCount = Math.min(sStacks.Viral, 10);
-      mult *= (1 + viralCount * 0.25);
-    }
-    
-    // Magnetic: 每层 +25% 护盾伤害，最多10层
-    if (sStacks.Magnetic > 0 && isShield) {
-      const magCount = Math.min(sStacks.Magnetic, 10);
-      mult *= (1 + magCount * 0.25);
-    }
-    
-    // Corrosive: 每层 -25% 护甲，最多10层（永久）
-    if (sStacks.Corrosive > 0) {
-      const corrCount = Math.min(sStacks.Corrosive, 10);
-      // 护甲削减已在 getEffArmor 中处理
-    }
-    
-    // Heat: 立即削减50%护甲 + 持续6秒燃烧
-    if (sStacks.Heat > 0) {
-      // Heat 护甲削减已在 getEffArmor 中处理
-    }
-    
-    return mult;
-  },
-
-  // 状态效果对护盾的伤害
-  getShieldDmgMult(sStacks) {
-    let mult = 1;
-    
-    // Magnetic: 每层 +25% 护盾伤害，最多10层
-    if (sStacks.Magnetic > 0) {
-      const magCount = Math.min(sStacks.Magnetic, 10);
-      mult *= (1 + magCount * 0.25);
-    }
-    
-    return mult;
-  },
-
-  // 状态效果对护甲的削减
-  getArmorReduction(sStacks) {
-    let red = 0;
-    
-    // Corrosive: 每层 -25% 护甲，最多10层（永久）
-    if (sStacks.Corrosive > 0) {
-      const corrCount = Math.min(sStacks.Corrosive, 10);
-      red += corrCount * 0.25;
-    }
-    
-    // Heat: 立即削减50%护甲
-    if (sStacks.Heat > 0) {
-      red += 0.5;
-    }
-    
-    return Math.min(red, 1); // 最多削减100%护甲
-  },
-
-  // 状态效果的持续伤害
-  calcStatusDoT(type, bDmg, cMult, eArmor, fMult, pMods, sStacks = {}) {
-    const tMult = GameData.DOT_TICK_MULT[type] || 0;
-    if (tMult === 0) return 0;
-    
-    let tDmg = 0;
-    const isPhys = GameData.PHYSICAL.includes(type);
-    
-    if (isPhys) {
-      tDmg = bDmg * tMult;
-      if (type !== 'Slash') tDmg *= (1 - this.getDMGReduction(eArmor));
-    } else {
-      const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-      tDmg = totalBase * tMult;
-      tDmg *= (1 - this.getDMGReduction(eArmor));
-    }
-    
-    // 暴击倍率
-    tDmg *= cMult;
-    
-    // 状态伤害加成
-    if (pMods && pMods.statusDamage) {
-      tDmg *= (1 + pMods.statusDamage);
-    }
-    
-    // 阵营双倍加成
-    tDmg *= fMult * fMult;
-    
-    return tDmg;
-  },
-
-  // Slash DoT（无视护甲）
-  calcSlashDoT(bDmg, cMult, fMult, pMods) {
-    const slashDmg = bDmg * 0.35; // 35% 基础伤害
-    let tDmg = slashDmg * cMult;
-    
-    // 状态伤害加成
-    if (pMods && pMods.statusDamage) {
-      tDmg *= (1 + pMods.statusDamage);
-    }
-    
-    // 阵营双倍加成
-    tDmg *= fMult * fMult;
-    
-    return tDmg;
-  },
-
-  // Toxin DoT（穿透护盾）
-  calcToxinDoT(bDmg, cMult, eArmor, fMult, pMods) {
-    const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-    const tDmg = totalBase * 0.5 * cMult; // 50% 基础伤害
-    
-    // Toxin 穿透护盾，直接伤害生命值
-    // 但仍受护甲减伤影响
-    let fDmg = tDmg * (1 - this.getDMGReduction(eArmor));
-    
-    // 状态伤害加成
-    if (pMods && pMods.statusDamage) {
-      fDmg *= (1 + pMods.statusDamage);
-    }
-    
-    // 阵营双倍加成
-    fDmg *= fMult * fMult;
-    
-    return fDmg;
-  },
-
-  // Electricity DoT（连锁闪电）
-  calcElectricDoT(bDmg, cMult, eArmor, fMult, pMods) {
-    const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-    const tDmg = totalBase * 1.0 * cMult; // 100% 基础伤害瞬间
-    
-    // Electricity 受护甲减伤影响
-    let fDmg = tDmg * (1 - this.getDMGReduction(eArmor));
-    
-    // 状态伤害加成
-    if (pMods && pMods.statusDamage) {
-      fDmg *= (1 + pMods.statusDamage);
-    }
-    
-    // 阵营双倍加成
-    fDmg *= fMult * fMult;
-    
-    return fDmg;
-  },
-
-  // Gas DoT（毒气云）
-  calcGasDoT(bDmg, cMult, eArmor, fMult, pMods) {
-    const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-    const tDmg = totalBase * 0.75 * cMult; // 75% 基础伤害
-    
-    // Gas 受护甲减伤影响
-    let fDmg = tDmg * (1 - this.getDMGReduction(eArmor));
-    
-    // 状态伤害加成
-    if (pMods && pMods.statusDamage) {
-      fDmg *= (1 + pMods.statusDamage);
-    }
-    
-    // 阵营双倍加成
-    fDmg *= fMult * fMult;
-    
-    return fDmg;
-  },
-
-  // Heat DoT（燃烧）
-  calcHeatDoT(bDmg, cMult, eArmor, fMult, pMods) {
-    const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-    const tDmg = totalBase * 0.5 * cMult; // 50% 基础伤害
-    
-    // Heat 受护甲减伤影响
-    let fDmg = tDmg * (1 - this.getDMGReduction(eArmor));
-    
-    // 状态伤害加成
-    if (pMods && pMods.statusDamage) {
-      fDmg *= (1 + pMods.statusDamage);
-    }
-    
-    // 阵营双倍加成
-    fDmg *= fMult * fMult;
-    
-    return fDmg;
-  },
-
-  // Radiation DoT（辐射）
-  calcRadDoT(bDmg, cMult, eArmor, fMult, pMods) {
-    const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-    const tDmg = totalBase * 0.5 * cMult; // 50% 基础伤害
-    
-    // Radiation 受护甲减伤影响
-    let fDmg = tDmg * (1 - this.getDMGReduction(eArmor));
-    
-    // 状态伤害加成
-    if (pMods && pMods.statusDamage) {
-      fDmg *= (1 + pMods.statusDamage);
-    }
-    
-    // 阵营双倍加成
-    fDmg *= fMult * fMult;
-    
-    return fDmg;
-  },
-
-  // Blast DoT（爆炸）
-  calcBlastDoT(bDmg, cMult, eArmor, fMult, pMods) {
-    const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-    const tDmg = totalBase * 3.0 * cMult; // 300% 基础伤害 AoE
-    
-    // Blast 受护甲减伤影响
-    let fDmg = tDmg * (1 - this.getDMGReduction(eArmor));
-    
-    // 状态伤害加成
-    if (pMods && pMods.statusDamage) {
-      fDmg *= (1 + pMods.statusDamage);
-    }
-    
-    // 阵营双倍加成
-    fDmg *= fMult * fMult;
-    
-    return fDmg;
-  },
-
-  // 技能附加伤害
-  calcAbilityDMG(bDmg, abStr, pMods, opts = {}) {
-    let totalAbDMG = 0;
-    
-    // Rhino Roar: 乘法伤害加成
-    if (opts.rhinoRoar) {
-      const roarM = 1 + (opts.rhinoRoarPercent || 30) / 100;
-      totalAbDMG += Object.values(bDmg).reduce((s, v) => s + v, 0) * (roarM - 1);
-    }
-    
-    // Mirage Eclipse: 乘法伤害加成
-    if (opts.mirageEclipse) {
-      const eclM = 1 + (opts.mirageEclipsePercent || 30) / 100;
-      totalAbDMG += Object.values(bDmg).reduce((s, v) => s + v, 0) * (eclM - 1);
-    }
-    
-    // Xata's Whisper: 虚空伤害基于武器伤害
-    if (opts.xakuWhisper) {
-      const xataM = (opts.xakuWhisperPercent || 26) / 100;
-      const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-      totalAbDMG += totalBase * xataM * (abStr / 100);
-    }
-    
-    // Toxic Lash: 毒素伤害附加
-    if (opts.toxicLash) {
-      const tlM = (opts.toxicLashPercent || 30) / 100;
-      const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-      totalAbDMG += totalBase * tlM * (abStr / 100);
-    }
-    
-    // Nourish: 病毒伤害附加
-    if (opts.grendelNourish) {
-      const nourM = (opts.grendelNourishPercent || 45) / 100;
-      const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-      totalAbDMG += totalBase * nourM * (abStr / 100);
-    }
-    
-    // Madurai: 物理伤害提高30%
-    if (opts.madurai) {
-      const physTypes = ['Impact', 'Puncture', 'Slash'];
-      const physDmg = physTypes.reduce((sum, type) => sum + (bDmg[type] || 0), 0);
-      totalAbDMG += physDmg * 0.3;
-    }
-    
-    return totalAbDMG;
-  },
-
-  // Kullervo/Harrow 绝对暴击几率加成
-  getAbsCritBonus(opts) {
-    let bonus = 0;
-    
-    // Kullervo 暴怒突进
-    if (opts.kullervoCrit) {
-      bonus += (opts.kullervoCritPercent || 50) / 100;
-    }
-    
-    // Harrow 庇佑圣约
-    if (opts.harrowCrit) {
-      bonus += (opts.harrowCritPercent || 50) / 100;
-    }
-    
-    return bonus;
-  },
-
   calcMultishot(weapon, pMods) {
+    if (pMods.setMultishotToDefault) return 1;
     const bMS = weapon.multishot || 1;
-    const mMS = pMods.multishot;
-    return bMS * (1 + mMS);
+    const mMS = pMods.multishot || 0;
+    const flatMS = pMods.flatMultishot || 0;
+    return bMS * (1 + mMS) + flatMS;
   },
 
   calcFireRate(weapon, pMods) {
     const atk = weapon.attacks[0];
-    return this.getAttackFireRate(atk, pMods);
-  },
-
-  calcStatusChance(weapon, pMods) {
-    const atk = weapon.attacks[0];
-    return this.getAttackStatusChance(atk, pMods);
+    if (!atk) return 1;
+    if (pMods.setSpeedToDefault) return 1;
+    const bSpd = atk.speed || 1;
+    const mSpd = pMods.speed || 0;
+    const mSpdMult = 1 + (pMods.speedMult || 0);
+    let spd = bSpd * (1 + mSpd) * mSpdMult;
+    if (atk.unique && atk.unique.speed_mult) spd *= atk.unique.speed_mult;
+    // 蓄力武器: 蓄力时间会降低有效射速
+    if (pMods.chargeTime > 0 && weapon.trigger === 'Charge') {
+      const chargeDelay = 1 / (1 + pMods.chargeTime);
+      spd *= chargeDelay;
+    }
+    return spd;
   },
 
   calcMagSize(weapon, pMods) {
-    const bMag = weapon.magazineSize;
-    const mMag = pMods.magazineSize;
-    return Math.floor(bMag * (1 + mMag));
+    const bMag = weapon.magazineSize || 1;
+    const mMag = pMods.magazineSize || 0;
+    const addMag = pMods.addMagazineSize || 0;
+    const baseMag = pMods.baseMagazineSize || 0;
+    let mag = Math.floor((bMag + baseMag) * (1 + mMag) + addMag);
+    // 弹药效率增加有效弹匣容量
+    if (pMods.ammoEff > 0) {
+      mag = Math.floor(mag / (1 - Math.min(pMods.ammoEff, 0.99)));
+    }
+    return Math.max(1, mag);
   },
 
   calcReload(weapon, pMods) {
-    const bRel = weapon.reloadTime;
-    const mRel = pMods.reloadTime;
+    const bRel = weapon.reloadTime || 0;
+    const mRel = pMods.reloadTime || 0;
     return bRel * (1 + mRel);
   },
 
-  getHitTier(critChance) {
-    const floor = Math.floor(critChance);
-    const frac = critChance - floor;
-    const upgraded = Math.random() < frac;
-    return upgraded ? floor + 1 : floor;
-  },
-
-  getEffCritMult(tier, critDmg) {
-    if (tier === 0) return 1;
-    return 1 + tier * critDmg;
-  },
-
-  rollProcCount(statusChance) {
-    if (statusChance <= 0) return 0;
-    const floor = Math.floor(statusChance);
-    const frac = statusChance - floor;
-    return floor + (Math.random() < frac ? 1 : 0);
-  },
-
-  drawProcType(dmgVec) {
-    const types = Object.keys(dmgVec);
-    const weights = types.map(type => {
-      const dmg = dmgVec[type] || 0;
-      return dmg * (GameData.PHYSICAL.includes(type) ? 4 : 1);
-    });
-    const totalW = weights.reduce((s, w) => s + w, 0);
-    if (totalW <= 0) return 'Impact';
-    let roll = Math.random() * totalW;
-    for (let i = 0; i < types.length; i++) {
-      roll -= weights[i];
-      if (roll <= 0) return types[i];
-    }
-    return types[types.length - 1];
-  },
+  // ═══════════════ 护甲/护盾系统 ═══════════════
 
   getDMGReduction(armor) {
     if (armor <= 0) return 0;
-    return 0.9 * Math.sqrt(Math.min(armor, GameData.ARMOR_CAP) / GameData.ARMOR_CAP);
+    // Reference site: only uses sqrt(3*armor)/100, armor is capped at 2700 in scaling
+    return Math.sqrt(3 * armor) / 100;
   },
 
   getEffArmor(baseArmor, corrStacks = 0, heatStacks = 0) {
     let armor = baseArmor;
-    armor *= Math.pow(0.75, corrStacks);
-    armor *= Math.pow(0.5, heatStacks);
+    armor *= (1 - this.getCorrosiveReduction(corrStacks));
+    if (heatStacks > 0) armor *= 0.5;
     return Math.max(0, armor);
   },
 
   armorDR(armor) { return this.getDMGReduction(armor); },
+
+  // ═══════════════ 敌人固有伤害减免 ═══════════════
+
+  getInnateDR(enemy, region) {
+    if (!enemy || !enemy.innateDR) return 0;
+    return enemy.innateDR[region] || 0;
+  },
+
+  // ═══════════════ 阵营系统 ═══════════════
 
   getFactMult(faction, mods) {
     if (!mods.smite || !mods.smite[faction]) return 1;
@@ -720,296 +1838,289 @@ const DamageCalculator = {
   },
 
   getFactResist(faction, dmgType) {
-    const res = GameData.FACTION_RESISTANCES[faction];
-    if (!res) return 1;
-    return res[dmgType] || 1;
+    const table = GameData.TYPE_OF_FACTION[faction];
+    if (!table) return 0;
+    return table[dmgType] || 0;
   },
 
-  calcPerShot(weapon, pMods, enemy, opts = {}) {
-    const {
-      headshot = false,
-      corrStacks = 0,
-      heatStacks = 0,
-      comboMultiplier = 0,
-      statusStacks = {},
-      isHeavy = false,
-      isMultiplicativeWeakCC = false,
-    } = opts;
-
-    const ms = this.calcMultishot(weapon, pMods);
-    const fireRate = this.calcFireRate(weapon, pMods);
-    const magSize = this.calcMagSize(weapon, pMods);
-    const reloadTime = this.calcReload(weapon, pMods);
-    const factMult = this.getFactMult(enemy.faction, pMods);
-    const eArmor = this.getEffArmor(enemy.armor, corrStacks, heatStacks);
-    const dr = this.getDMGReduction(eArmor);
-    const coStacks = Object.values(statusStacks).reduce((s, v) => s + v, 0);
-    const coMult = 1 + coStacks * pMods.basePerStatus;
-
-    const combos = this.getAttackCombos(weapon);
-    let totalDmg = 0;
-    let totalDotDPS = 0;
-    const breakdown = {};
-    let wCritChance = 0;
-    let wCritDmg = 0;
-    let wStatusChance = 0;
-
-    combos.forEach(combo => {
-      combo.forEach(atkIdx => {
-        const atk = weapon.attacks[atkIdx];
-        if (!atk) return;
-
-        const bDmg = this.getAttackBaseDamage(atk, pMods, weapon);
-        const fallMult = this.getAoEFalloff(atk);
-
-        // 暴击和状态计算选项
-        const critOpts = {
-          isHeadshot: headshot,
-          comboMultiplier,
-          isHeavy,
-          isMultiplicativeWeakCC,
-        };
-        
-        const critChance = this.getAttackCritChance(atk, pMods, critOpts);
-        const critRes = this.getAttackCritMultiplier(atk, pMods, critOpts);
-        const critDmg = critRes.critMult;
-        const hitTier = critRes.hitTier;
-        const statusChance = this.getAttackStatusChance(atk, pMods, { comboMultiplier });
-
-        wCritChance += critChance;
-        wCritDmg += critDmg;
-        wStatusChance += statusChance;
-
-        const isAoE = this.isAoEAttack(atk);
-        const noHead = atk.no_headshot_mult || false;
-        const headM = headshot && !noHead ? GameData.HEADSHOT_MULT_INITIAL : 1;
-
-        let atkTotalDmg = 0;
-        Object.entries(bDmg).forEach(([type, dmg]) => {
-          if (dmg <= 0) return;
-          
-          // 暴击倍率计算
-          let fDmg = dmg * fallMult * critDmg * coMult;
-          
-          // 头部倍率
-          if (headshot && !noHead) {
-            fDmg *= headM;
-          }
-          
-          if (type !== 'Slash') fDmg *= (1 - dr);
-          const resist = this.getFactResist(enemy.faction, type);
-          fDmg *= resist;
-          breakdown[type] = (breakdown[type] || 0) + fDmg;
-          atkTotalDmg += fDmg;
-        });
-
-        // 重击基础伤害加成
-        if (isHeavy) {
-          atkTotalDmg *= (1 + pMods.heavyBaseMult);
-        }
-
-        atkTotalDmg *= factMult;
-        
-        // 技能附加伤害
-        const abDmg = this.calcAbilityDMG(bDmg, opts.abilityStrength || 100, pMods, opts);
-        atkTotalDmg += abDmg;
-        
-        totalDmg += atkTotalDmg;
-
-        const dotDPS = this.calcDotDPS(bDmg, statusChance, critChance, critDmg, eArmor, factMult, pMods, opts.statusStacks);
-        totalDotDPS += dotDPS;
-      });
-    });
-
-    const numCombos = combos.length;
-    const avgCritChance = numCombos > 0 ? wCritChance / numCombos : 0;
-    const avgCritDmg = numCombos > 0 ? wCritDmg / numCombos : 0;
-    const avgStatusChance = numCombos > 0 ? wStatusChance / numCombos : 0;
-
-    const pellets = ms;
-    const totalPerShot = totalDmg * pellets;
-    const cycleTime = magSize / fireRate + reloadTime;
-    const magDmg = totalPerShot;
-    const effDPS = (magDmg * fireRate) / cycleTime;
-    const rawDPS = totalDmg * pellets * fireRate;
-
-    return {
-      total: totalPerShot,
-      totalWithDot: totalPerShot + totalDotDPS,
-      breakdown,
-      dotDPS: totalDotDPS,
-      rawDPS,
-      effectiveDPS: effDPS + totalDotDPS,
-      pellets,
-      critChance: Math.min(avgCritChance * 100, 500),
-      critDmg: avgCritDmg,
-      statusChance: Math.min(avgStatusChance * 100, 1000),
-      ms,
-      fireRate,
-      magSize,
-      reloadTime,
-      dr: dr * 100
-    };
-  },
-
-  calcDotDMG(type, bDmg, eArmor, fMult, pMods) {
-    const tMult = GameData.DOT_TICK_MULT[type] || 0;
-    if (tMult === 0) return 0;
-    let tDmg = 0;
-    const isPhys = GameData.PHYSICAL.includes(type);
-    if (isPhys) {
-      tDmg = (bDmg[type] || 0) * tMult;
-      if (type !== 'Slash') tDmg *= (1 - this.getDMGReduction(eArmor));
-    } else {
-      const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
-      tDmg = totalBase * tMult;
-      tDmg *= (1 - this.getDMGReduction(eArmor));
-    }
-    if (pMods && pMods.statusDamage) tDmg *= (1 + pMods.statusDamage);
-    tDmg *= fMult * fMult;
-    return tDmg;
-  },
-
-  calcDPS(weapon, mods, enemy, opts = {}) {
-    const applyWithCond = opts.applyWithCond === true;
-    const pMods = this.processMods(mods, weapon, applyWithCond);
-    const perShot = this.calcPerShot(weapon, pMods, enemy, opts);
-    
-    // TTK
-    const ttk = this.calcTTK(perShot, enemy);
-    
-    // 队列式TTK (更精确)
-    const queueTTK = this.calcTTKQueue(perShot, enemy, opts);
-    
-    return {
-      ...perShot,
-      ttk,
-      queueTTK: queueTTK.ttk,
-      ttkRegions: queueTTK.regions,
-      format: {
-        effective: this.fmtNum(perShot.effectiveDPS),
-        raw: this.fmtNum(perShot.rawDPS),
-        perShot: this.fmtNum(perShot.total),
-        ttk: this.fmtTime(ttk),
-        queueTTK: this.fmtTime(queueTTK.ttk)
+  findTypeOfRes(dmgType, enemy) {
+    const faction = enemy?.faction;
+    const typeOfFaction = GameData.TYPE_OF_FACTION;
+    if (!faction || !typeOfFaction[faction]) return false;
+    for (const key in typeOfFaction[faction]) {
+      if (key.toLowerCase() === dmgType.toLowerCase()) {
+        return parseFloat(typeOfFaction[faction][key]);
       }
-    };
+    }
+    return false;
   },
 
-  calcTTK(perShot, enemy) {
-    if (!enemy || !perShot) return 0;
+  getCombinedResist(faction, dmgType, elemRes) {
+    let mult = this.getFactResist(faction, dmgType);
+    if (elemRes) {
+      const key = dmgType.toLowerCase();
+      if (elemRes[key]) mult *= elemRes[key];
+    }
+    return mult;
+  },
+
+  getElemResist(elemRes, dmgType) {
+    if (!elemRes) return 1;
+    const key = dmgType.toLowerCase();
+    return elemRes[key] || 1;
+  },
+
+  // calcPercentAdd: 模拟参考站点的阵营元素抗性计算
+  // b > 1 (弱点): 返回 a * b (增加伤害)
+  // 0 < b <= 1 (抗性): 返回 a * (1 - b) (减少伤害)
+  // b = 0 或 falsy (无抗性): 返回 a (不变)
+  calcPercentAdd(dmg, resist) {
+    if (!resist || resist === 0) return dmg;
+    if (resist > 1) return dmg * resist;
+    return dmg * (1 - resist);
+  },
+
+  // ═══════════════ 特殊敌人DR ═══════════════
+
+  applySpecialEnemyDR(dmg, enemy, speed, multishot, isProc) {
+    if (!enemy || !enemy.unique) return dmg;
     
-    const totalHP = (enemy.health || 0) + (enemy.shield || 0) + (enemy.overguard || 0);
-    if (totalHP <= 0) return 0;
+    const DR = GameData.SPECIAL_ENEMY_DR;
+    let dr = 1;
     
-    // DPS
-    const dps = perShot.effectiveDPS || perShot.rawDPS || 0;
-    if (dps <= 0) return Infinity;
+    switch (enemy.unique) {
+      case 'demolisher':
+        dr = DR.demolisherDR(dmg);
+        break;
+      case 'eidolon':
+        dr = DR.eidolonDR(dmg, speed || 1);
+        break;
+      case 'acolytes':
+        dr = DR.acolytesDR(dmg);
+        break;
+      case 'amalgam':
+      case 'amalgam-machinist':
+      case 'empyrean-corpus':
+        dr = DR.amalgamDR(dmg);
+        break;
+      case 'jugulus':
+        dr = isProc ? DR.jugulusDRProc(dmg) : DR.jugulusDR(dmg);
+        break;
+      case 'saxum':
+        dr = DR.jugulusDR(dmg);
+        break;
+      case 'lephantis':
+      case 'hemocyte':
+        dr = DR.lephantisDR(dmg, speed || 1);
+        break;
+      case 'orphix':
+        dr = DR.orphixDR(dmg);
+        break;
+      case 'bursa':
+        dr = DR.bursaDR(dmg);
+        break;
+      case 'suzerain':
+        dr = DR.suzerainDR(dmg);
+        break;
+      case 'archon':
+        dr = DR.archonDR(dmg, multishot || 1);
+        break;
+      case 'demolisherNecramech':
+        dr = DR.demolisherNecramechDR();
+        break;
+      default:
+        dr = 1;
+    }
     
-    // TTK = 总生命值 / DPS
-    const ttk = totalHP / dps;
-    
-    return ttk;
+    return dmg * dr;
+  },
+
+  // ═══════════════ 技能系统 ═══════════════
+
+  calcAbilityDMG(bDmg, abStr, pMods, opts = {}) {
+    let totalAbDMG = 0;
+    const totalBase = Object.values(bDmg).reduce((s, v) => s + v, 0);
+
+    if (opts.rhinoRoar) {
+      const roarM = 1 + (opts.rhinoRoarPercent || 30) / 100;
+      totalAbDMG += totalBase * (roarM - 1);
+    }
+    if (opts.mirageEclipse) {
+      const eclM = 1 + (opts.mirageEclipsePercent || 30) / 100;
+      totalAbDMG += totalBase * (eclM - 1);
+    }
+    if (opts.xakuWhisper) {
+      const xataM = (opts.xakuWhisperPercent || 26) / 100;
+      totalAbDMG += totalBase * xataM * (abStr / 100);
+    }
+    if (opts.toxicLash) {
+      const tlM = (opts.toxicLashPercent || 30) / 100;
+      totalAbDMG += totalBase * tlM * (abStr / 100);
+    }
+    if (opts.grendelNourish) {
+      const nourM = (opts.grendelNourishPercent || 45) / 100;
+      totalAbDMG += totalBase * nourM * (abStr / 100);
+    }
+    if (opts.madurai) {
+      const physTypes = ['Impact', 'Puncture', 'Slash'];
+      const physDmg = physTypes.reduce((sum, type) => sum + (bDmg[type] || 0), 0);
+      totalAbDMG += physDmg * 0.3;
+    }
+
+    return totalAbDMG;
   },
 
   /**
-   * 队列式TTK计算 (弹匣-by-弹匣模拟)
-   * 按照实际射击节奏: 射击→装填→射击, 更精确地计算击杀时间
-   * 同时追踪4个区域 (超宏防护/护盾/护甲/生命值)
+   * 计算技能伤害倍率 (用于对总伤害的乘法加成)
+   * 只包含Rhino Roar和Mirage Eclipse
    */
-  calcTTKQueue(perShot, enemy, opts = {}) {
-    if (!enemy || !perShot) return { ttk: 0, regions: { overguard: 0, shield: 0, armor: 0, health: 0 } };
+  calcAbilityMult(pMods, opts = {}) {
+    let mult = 1;
 
-    let overguard = enemy.overguard || 0;
-    let shield = enemy.shield || 0;
-    let armor = enemy.armor || 0;
-    let health = enemy.health || 0;
-
-    if (overguard + shield + armor + health <= 0) return { ttk: 0, regions: { overguard: 0, shield: 0, armor: 0, health: 0 } };
-
-    const fireRate = perShot.fireRate || 1;
-    const magSize = perShot.magSize || 1;
-    const reloadTime = perShot.reloadTime || 0;
-    const pellets = perShot.pellets || 1;
-    const critChance = (perShot.critChance || 0) / 100;
-    const critDmg = perShot.critDmg || 1;
-
-    const timePerShot = 1 / fireRate;
-    const cycleTime = (magSize / fireRate) + reloadTime;
-    const perPelletDmg = perShot.total / pellets;
-
-    const dr = perShot.dr / 100 || 0;
-    const faction = enemy.faction || 'Unknown';
-
-    let totalTime = 0;
-    let shotsInMag = 0;
-    let regions = { overguard: 0, shield: 0, armor: 0, health: 0 };
-
-    const maxIterations = 10000;
-    let iterations = 0;
-
-    while ((overguard + shield + health) > 0 && iterations < maxIterations) {
-      iterations++;
-
-      const isCrit = Math.random() < critChance;
-      const critMult = isCrit ? (1 + critDmg) : 1;
-
-      let pelletDmg = perPelletDmg * critMult;
-      let dotDmg = perShot.dotDPS ? (perShot.dotDPS / fireRate) : 0;
-
-      // 超宏防护阶段 (所有伤害类型均等)
-      if (overguard > 0) {
-        const ogDmg = pelletDmg * pellets;
-        overguard -= ogDmg;
-        regions.overguard += ogDmg;
-        if (overguard <= 0) { regions.overguard += overguard; overguard = 0; }
-      }
-      // 护盾阶段 (磁力伤害+25%, 毒素穿透)
-      else if (shield > 0) {
-        const shDmg = pelletDmg * pellets;
-        shield -= shDmg;
-        regions.shield += shDmg;
-        if (shield <= 0) { regions.shield += shield; shield = 0; }
-      }
-      // 生命值阶段 (受护甲减伤)
-      else if (health > 0) {
-        const hpDmg = pelletDmg * pellets * (1 - dr);
-        health -= hpDmg;
-        regions.health += hpDmg;
-        if (health <= 0) { regions.health += health; health = 0; }
-      }
-
-      shotsInMag++;
-      totalTime += timePerShot;
-
-      if (shotsInMag >= magSize && (overguard + shield + health) > 0) {
-        totalTime += reloadTime;
-        shotsInMag = 0;
-      }
+    if (opts.rhinoRoar) {
+      const str = (opts.abilityStrength || 100) / 100;
+      mult *= 1 + ((opts.rhinoRoarPercent || 30) / 100) * str;
+    }
+    if (opts.mirageEclipse) {
+      const str = (opts.abilityStrength || 100) / 100;
+      mult *= 1 + ((opts.mirageEclipsePercent || 30) / 100) * str;
+    }
+    if (opts.madurai) {
+      mult *= 1.3;
     }
 
-    return {
-      ttk: totalTime,
-      regions,
-      experimental: true
-    };
+    return mult;
   },
 
+  // ═══════════════ Xata's Whisper ═══════════════
+
   /**
-   * 中位数TTK计算 (多次模拟取中位数)
+   * 计算Xata's Whisper伤害 (匹配参考站点getXataDmg)
+   * @param {number} attackIndex - 武器攻击索引
+   * @param {string} damageType - 当前伤害区域 (health/shield/armor/overguard)
+   * @param {number} armorMul - 护甲减少倍率 (W)
+   * @param {number} damageFactor - 伤害因子 (Ha*P*ca*J*T 或 21*Ha*P*ca*J*T)
+   * @param {number} baseDamage - 武器伤害倍率 (J)
+   * @param {object} enemy - 敌人对象
+   * @param {object} opts - 额外选项 {xakuWhisperPercent, abilityStrength, weapon}
+   * @returns {number} Xata's Whisper伤害值
    */
-  calcMedianTTK(perShot, enemy, iterations = 100) {
-    const results = [];
-    for (let i = 0; i < iterations; i++) {
-      const r = this.calcTTKQueue(perShot, enemy);
-      results.push(r.ttk);
+  getXataDmg(attackIndex, damageType, armorMul, damageFactor, baseDamage, enemy, opts = {}) {
+    let totalDamage = 0;
+    const xataPercent = (opts.xakuWhisperPercent || 26) / 100;
+    const str = (opts.abilityStrength || 100) / 100;
+
+    if (xataPercent > 0) {
+      const weapon = opts.weapon;
+      if (!weapon || !weapon.attacks || !weapon.attacks[attackIndex]) return 0;
+
+      // 1. 求和武器所有基础伤害类型
+      const attack = weapon.attacks[attackIndex];
+      for (const type in attack.damage) {
+        totalDamage += attack.damage[type];
+      }
+
+      // 2. 乘以伤害因子和武器伤害倍率
+      totalDamage *= damageFactor * baseDamage;
+
+      // 3. Overguard时+50%
+      if (damageType === 'overguard') {
+        totalDamage *= 1.5;
+      }
+
+      // 4. 应用护甲DR或innateDR
+      if (damageType === 'armor' && enemy.armor > 0) {
+        const effectiveArmor = enemy.armor * Math.max(0, armorMul);
+        const effectiveDR = 1 - this.getDMGReduction(effectiveArmor) * (1 - this.getInnateDR(enemy, 'armor'));
+        totalDamage *= effectiveDR;
+      } else {
+        totalDamage *= 1 - this.getInnateDR(enemy, damageType);
+      }
+
+      // 5. 乘以Xata's Whisper百分比并取整
+      totalDamage = Math.round(totalDamage * xataPercent * str);
     }
-    results.sort((a, b) => a - b);
-    const median = results[Math.floor(results.length / 2)];
-    const avg = results.reduce((s, v) => s + v, 0) / results.length;
-    const min = results[0];
-    const max = results[results.length - 1];
-    return { median, avg, min, max, experimental: true };
+
+    return totalDamage;
+  },
+
+  // ═══════════════ ToxicLash ═══════════════
+
+  /**
+   * 计算ToxicLash伤害 (匹配参考站点toxicLashDmg)
+   * @param {number} baseDmg - 武器基础伤害 (D或c)
+   * @param {boolean} isMelee - 是否为近战武器
+   * @param {number} armorFactor - 护甲/DR因子
+   * @param {number} healthMult - 敌人生命类型倍率 (J)
+   * @param {number} elemMod - 元素MOD值 (Gb)
+   * @param {number} statusDmg - 状态伤害加成 (Da + mb)
+   * @param {string} damageType - 当前伤害区域
+   * @param {object} enemy - 敌人对象
+   * @param {object} opts - 额外选项 {toxicLashPercent, abilityStrength}
+   * @returns {object} {direct_hit, tick_dmg}
+   */
+  toxicLashDmg(baseDmg, isMelee, armorFactor, healthMult, elemMod, statusDmg, damageType, enemy, opts = {}) {
+    const result = { direct_hit: 0, tick_dmg: 0 };
+    const tlPercent = (opts.toxicLashPercent || 30) / 100;
+    const str = (opts.abilityStrength || 100) / 100;
+
+    if (tlPercent > 0) {
+      // 近战武器双倍
+      const effectivePercent = isMelee ? 2 * tlPercent * str : tlPercent * str;
+
+      // 直接伤害 = 基础伤害 * 护甲因子 * 生命倍率 * ToxicLash百分比
+      result.direct_hit = baseDmg * armorFactor * healthMult * effectivePercent;
+
+      // DoT伤害 = 基础伤害 * 生命倍率 * ToxicLash百分比 * 0.5 * (1+状态伤害) * 生命倍率 * 护甲因子 * 元素MOD
+      result.tick_dmg = baseDmg * healthMult * effectivePercent * 0.5 * (1 + statusDmg) * healthMult * armorFactor * elemMod;
+
+      // 取整
+      result.direct_hit = Math.ceil(result.direct_hit);
+      result.tick_dmg = Math.ceil(result.tick_dmg);
+    }
+
+    return result;
+  },
+
+  // ═══════════════ Nourish ═══════════════
+
+  /**
+   * 计算Nourish添加的Viral伤害 (匹配参考站点newElements中的Nourish处理)
+   * Nourish添加Viral伤害到武器基础伤害池
+   * @param {object} weapon - 武器对象
+   * @param {number} attackIndex - 攻击索引
+   * @param {object} pMods - MOD后数据
+   * @param {object} opts - 额外选项 {grendelNourishPercent}
+   * @returns {number} 添加的Viral伤害值
+   */
+  calcNourishViralDmg(weapon, attackIndex, pMods, opts = {}) {
+    const nourPercent = (opts.grendelNourishPercent || 45) / 100;
+
+    if (nourPercent <= 0 || !weapon || !weapon.attacks || !weapon.attacks[attackIndex]) {
+      return 0;
+    }
+
+    // 计算武器总基础伤害
+    const attack = weapon.attacks[attackIndex];
+    let totalBaseDmg = 0;
+    for (const type in attack.damage) {
+      totalBaseDmg += attack.damage[type];
+    }
+
+    // Nourish添加的Viral伤害 = 总基础伤害 * 百分比
+    return totalBaseDmg * nourPercent;
+  },
+
+  // ═══════════════ 统计工具 ═══════════════
+
+  getStats(vals) {
+    if (vals.length === 0) return { min: 0, max: 0, avg: 0, median: 0 };
+    const sorted = [...vals].sort((a, b) => a - b);
+    const min = sorted[0];
+    const max = sorted[sorted.length - 1];
+    const avg = vals.reduce((s, v) => s + v, 0) / vals.length;
+    const median = sorted[Math.floor(sorted.length / 2)];
+    return { min, max, avg, median };
   },
 
   fmtTime(sec) {
@@ -1020,44 +2131,6 @@ const DamageCalculator = {
     const min = Math.floor(sec / 60);
     const rem = sec % 60;
     return `${min}m ${rem.toFixed(1)}s`;
-  },
-
-  // 蒙特卡洛模拟
-  runMC(weapon, mods, enemy, opts = {}, iters = 100) {
-    const res = [];
-    
-    for (let i = 0; i < iters; i++) {
-      const r = this.calcDPS(weapon, mods, enemy, opts);
-      res.push(r);
-    }
-    
-    // 统计数据
-    const dmg = res.map(r => r.total);
-    const dot = res.map(r => r.dotDPS);
-    const eff = res.map(r => r.effectiveDPS);
-    const ttk = res.map(r => r.ttk).filter(t => t !== Infinity && t > 0);
-    
-    const stats = {
-      damage: this.getStats(dmg),
-      dotDPS: this.getStats(dot),
-      effectiveDPS: this.getStats(eff),
-      ttk: ttk.length > 0 ? this.getStats(ttk) : { min: Infinity, max: Infinity, avg: Infinity, median: Infinity },
-      iterations: iters
-    };
-    
-    return stats;
-  },
-
-  getStats(vals) {
-    if (vals.length === 0) return { min: 0, max: 0, avg: 0, median: 0 };
-    
-    const sorted = [...vals].sort((a, b) => a - b);
-    const min = sorted[0];
-    const max = sorted[sorted.length - 1];
-    const avg = vals.reduce((s, v) => s + v, 0) / vals.length;
-    const median = sorted[Math.floor(sorted.length / 2)];
-    
-    return { min, max, avg, median };
   },
 
   fmtNum(num) {
@@ -1071,10 +2144,80 @@ const DamageCalculator = {
 
   getStatusInfo(type) {
     return {
-      duration: GameData.STATUS_DURATION[type] || 0,
-      tickMult: GameData.DOT_TICK_MULT[type] || 0,
-      maxStacks: GameData.STATUS_MAX_STACKS[type] || 0
+      duration: this.STATUS_DURATION[type] || 0,
+      tickMult: this.DOT_TICK_MULT[type] || 0,
+      maxStacks: this.STATUS_MAX_STACKS[type] || 0
     };
+  },
+
+  // ═══════════════ 兼容旧接口 ═══════════════
+
+  calcPerShot(weapon, pMods, enemy, opts = {}) {
+    const result = this.runSingleQueue(weapon, pMods, enemy, opts, 1);
+    return {
+      total: result.avgPerShot,
+      totalWithDot: result.avgPerShot + result.avgPerShotStatus,
+      breakdown: result.breakdown.breakdown,
+      dotDPS: result.avgPerShotStatus,
+      rawDPS: result.dps,
+      effectiveDPS: result.dps,
+      pellets: pMods.multishot || 1,
+      critChance: 50,
+      critDmg: pMods.critMult || 1,
+      statusChance: 50,
+      ms: this.calcMultishot(weapon, pMods),
+      fireRate: this.calcFireRate(weapon, pMods),
+      magSize: this.calcMagSize(weapon, pMods),
+      reloadTime: this.calcReload(weapon, pMods),
+      dr: this.getDMGReduction(enemy.armor) * 100
+    };
+  },
+
+  runMC(weapon, mods, enemy, opts = {}, iters = 100) {
+    const res = [];
+    for (let i = 0; i < iters; i++) {
+      const r = this.calcDPS(weapon, mods, enemy, opts);
+      res.push(r);
+    }
+    const dps = res.map(r => r.dps);
+    const ttk = res.map(r => r.ttk).filter(t => t !== Infinity && t > 0);
+    return {
+      damage: this.getStats(res.map(r => r.avgPerShot)),
+      dotDPS: this.getStats(res.map(r => r.avgPerShotStatus)),
+      effectiveDPS: this.getStats(dps),
+      ttk: ttk.length > 0 ? this.getStats(ttk) : { min: Infinity, max: Infinity, avg: Infinity, median: Infinity },
+      iterations: iters
+    };
+  },
+
+  // ═══════════════ 估算统计 (用于UI显示) ═══════════════
+
+  estimateCritChance(weapon, pMods) {
+    const atk = weapon.attacks[0];
+    if (!atk) return 0;
+    const bCrit = (atk.crit_chance || 0) / 100;
+    const mCrit = pMods.critChance || 0;
+    const fCrit = pMods.flatCritChance || 0;
+    const mCritMult = 1 + (pMods.multCritChance || 0);
+    return Math.min(((bCrit * (1 + mCrit) + fCrit) * mCritMult) * 100, 500);
+  },
+
+  estimateCritMult(weapon, pMods) {
+    const atk = weapon.attacks[0];
+    if (!atk) return 1;
+    const baseCM = atk.crit_mult || 2;
+    let cm = baseCM * (1 + (pMods.critMult || 0));
+    if (pMods.critMultAdd) cm += pMods.critMultAdd;
+    if (pMods.critMultMult) cm *= (1 + pMods.critMultMult);
+    return cm;
+  },
+
+  estimateStatusChance(weapon, pMods) {
+    const atk = weapon.attacks[0];
+    if (!atk) return 0;
+    const bSC = (atk.status_chance || 0) / 100;
+    const mSC = pMods.statusChance || 0;
+    return Math.min(bSC * (1 + mSC) * 100, 1000);
   }
 };
 

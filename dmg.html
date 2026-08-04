@@ -14,6 +14,11 @@
   <div class="bg-particles"></div>
 
   <div class="app-container">
+    <!-- 顶部横幅声明 -->
+    <div class="notice-banner">
+      <p>注意：近期上传的dmg模块（即dmg.html）是不完全的版本，此举是为防止个别神人的直接"搬运"，再反过来声明原创；虽然dmg模块已经早在5月就已经写好，但我还是决定等某人自己做完了（实际上不还是搬运"warframe-damage.com"吗）再实装本站的dmg模块。</p>
+    </div>
+
     <header class="header">
       <div class="header-title">
         <h1>WARFRAME 伤害计算器</h1>
@@ -63,13 +68,9 @@
 
           <div class="stat-section" style="margin-top:16px;">
             <h3 class="collapsible-toggle" onclick="toggleSection('warframe-mod-section')">
-              Warframe MOD, 光环MOD, Warframe 秘奥 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+              Warframe MOD, 光环MOD, Warframe 赋能 <span style="float:right;font-size:0.75rem;">&#9660;</span>
             </h3>
             <div id="warframe-mod-section">
-              <div style="margin-bottom:8px;">
-                <button class="btn btn-secondary" style="width:100%;font-size:0.75rem;" onclick="App.openWarframeModPicker()">选择 Warframe MOD</button>
-              </div>
-              
               <!-- Warframe Stats -->
               <div class="wfStatsBlock">
                 <div class="wfStatItem"><span class="wfStatName">生命值: </span><span class="wfStatVal" id="wf-stat-hp">100</span></div>
@@ -142,7 +143,7 @@
             <h3>特殊槽位</h3>
             <div class="specialSlotsBlock">
               <!-- Melee Mist (近战赋能) -->
-              <div class="mistMod mistSlot" data-id="10" data-alt="秘奥" onclick="App.openModPicker(10)">
+              <div class="mistMod mistSlot" data-id="10" data-alt="赋能" onclick="App.openModPicker(10)">
                 <div class="mistName"></div>
               </div>
               
@@ -155,12 +156,12 @@
                 <select id="stanceAttackList" onchange="App.selectStanceAttack(this.value)"></select>
               </div>
               
-              <!-- Archon Mist (秘奥) -->
+              <!-- Archon Mist (赋能) -->
               <div class="archonMistBlock">
-                <div class="mistMod archonMist" data-id="28" data-alt="秘奥" onclick="App.openModPicker(28)">
+                <div class="mistMod archonMist" data-id="28" data-alt="赋能" onclick="App.openModPicker(28)">
                   <div class="mistName"></div>
                 </div>
-                <div class="mistMod archonMist" data-id="29" data-alt="秘奥" onclick="App.openModPicker(29)">
+                <div class="mistMod archonMist" data-id="29" data-alt="赋能" onclick="App.openModPicker(29)">
                   <div class="mistName"></div>
                 </div>
               </div>
@@ -241,6 +242,20 @@
                 <div class="option-item" data-option="heavyAttack">
                   <div class="option-checkbox"></div>
                   <span class="option-label">记重击（近战武器专属)</span>
+                </div>
+              </div>
+
+              <div class="option-row">
+                <div class="checkbox-option" data-key="heavyAttackStartEnabled">
+                  <div class="option-checkbox"></div>
+                  <span class="option-label">从...开始</span>
+                </div>
+                <div class="slider-group" style="flex:1;margin-bottom:0;">
+                  <div class="slider-header">
+                    <span class="slider-label">重击连击起点</span>
+                    <span class="slider-value" id="heavy-start-value">1</span>
+                  </div>
+                  <input type="range" class="slider-input" id="heavy-start-slider" min="1" max="12" value="1">
                 </div>
               </div>
 
@@ -543,6 +558,21 @@
               运行蒙特卡洛模拟 (100次)
             </button>
           </div>
+
+          <!-- 月度热门武器 Top 20 -->
+          <div class="stat-section">
+            <h3 class="collapsible-toggle" onclick="toggleSection('top20-section')">
+              月度热门武器 Top 20 <span style="float:right;font-size:0.75rem;">&#9660;</span>
+            </h3>
+            <div id="top20-section" style="display:none;">
+              <div id="top20-list">
+                <div class="empty-state" style="padding:10px;">
+                  <div class="empty-state-text">加载中...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </aside>
     </div>
@@ -569,6 +599,551 @@
         <button onclick="App.closeQueueInfo()" style="background:none;border:none;color:var(--c-text2);font-size:1.5rem;cursor:pointer;padding:8px;">&times;</button>
       </div>
       <div id="queue-info-content"></div>
+    </div>
+  </div>
+
+  <!-- 帮助弹窗 -->
+  <div id="help-popup" class="modal-overlay" style="display:none;">
+    <div class="modal-content" style="max-width:700px;max-height:85vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="margin-bottom:0;">这是怎么工作的</h3>
+        <button onclick="App.closeHelp()" style="background:none;border:none;color:var(--c-text2);font-size:1.5rem;cursor:pointer;padding:8px;">&times;</button>
+      </div>
+      <div style="font-size:0.85rem;color:var(--c-text);line-height:1.6;">
+        <p style="margin-bottom:12px;">这是一个由粉丝制作的战甲世界每秒伤害计算器。它使用游戏中公开可用的信息（例如维基百科）。该网站与游戏开发人员无关。</p>
+        
+        <h4 style="color:var(--c-gold-bright);margin-bottom:8px;">随机每秒伤害队列的工作原理如下:</h4>
+        <ol style="margin-left:20px;margin-bottom:16px;">
+          <li style="margin-bottom:6px;">计算武器在10秒内进行了多少次射击/命中（对于带有姿态攻击时间的近战武器）</li>
+          <li style="margin-bottom:6px;">从接收到的射击/命中数量中创建一个队列</li>
+          <li style="margin-bottom:6px;">计算多重射击的机率，并将队列中的开火次数增加这个机率的数量</li>
+          <li style="margin-bottom:6px;">计算每次命中的暴击机率</li>
+          <li style="margin-bottom:6px;">基于触发机率的级别，为每次击中计算暴击倍率</li>
+          <li style="margin-bottom:6px;">为每次击中计算触发状态的机率</li>
+          <li style="margin-bottom:6px;">计算特定类型的状态触发，并计算各状态之间的比率</li>
+          <li style="margin-bottom:6px;">对于近战武器，我们还需从姿态攻击中添加一种类型的状态，并添加随着效率连击计数的衰减组合计数器</li>
+          <li style="margin-bottom:6px;">将猎人弹药/内部出血的效果添加到队列中</li>
+          <li style="margin-bottom:6px;">添加强制触发效果，用于携带它们的攻击</li>
+          <li style="margin-bottom:6px;">构建基于时间的状态队列，以确定其活动时间（例如，以后针对每次命中是否激活了腐蚀或火焰从而移除护甲），并包括每种活跃状态的刻度数量</li>
+          <li style="margin-bottom:6px;">计算在该时间轴上被激活状态的实际伤害</li>
+          <li style="margin-bottom:6px;">在10秒钟内收到的伤害除以10, 我们得到了当前每秒随机造成的伤害数</li>
+        </ol>
+        
+        <p style="margin-bottom:12px;color:var(--c-text2);font-size:0.8rem;">每次更改设置中的任何参数都会构建一个新的随机队列。</p>
+        
+        <h4 style="color:var(--c-gold-bright);margin-bottom:8px;">参数计算的细节</h4>
+        <ul style="margin-left:20px;margin-bottom:16px;color:var(--c-text2);font-size:0.8rem;">
+          <li>目前，尚未考虑武器的某些唯一属性</li>
+          <li>对于姿态中的某些攻击的伤害类型的增加，一些细微差别未被考虑</li>
+          <li>使用 镀层通晓霰弹枪等MOD 在所有 范围伤害 式攻击中都未被考虑</li>
+          <li>对于弹丸式攻击, MOD 的工作方式类似于膛线</li>
+          <li>使用火的滴答声被简化为立即从第一个滴答声开始移除 50% 的护甲，而不是逐渐移除三个滴答声</li>
+          <li>游戏中有大量不同的 MOD, 如果当前不可用所需的 MOD, 稍后可能会添加</li>
+          <li>些具有减伤机制的独特敌人将被视为常规敌人</li>
+          <li>同时对不同武器产生加法和乘法效果的 MOD, 按照 MOD 说明书或维基百科的描述进行计算</li>
+          <li>强化 MOD 的效果没有计入</li>
+          <li>对于 AOE 攻击，禁用头部爆头倍率</li>
+          <li>某些武器同时使用多种攻击，需要堆叠他们的 DPS。例如攻击和攻击的 AOE 效果</li>
+          <li>狙击步枪在瞄准模式下没有正确地计算伤害（而连击倍增未被计算）</li>
+          <li>重武器连击的攻击效果似乎平均。因为往往 10 秒钟内连击快速下降，看起来第一次攻击以 x12 开始，而下一次攻击快速掉落至 x1</li>
+          <li>电池武器的 DPS 不总是正确的（计算中可能存在未计算的数据，与装填速度有关）</li>
+          <li>许多因素都计入了 每秒伤害 数值，但并非所有因素都向用户显示</li>
+        </ul>
+        
+        <p style="color:var(--c-text2);font-size:0.8rem;">您可以使用每秒伤害 计算器计算裂罅 MOD 的真实效果-只需将它们添加到您的构建中，然后查看您的伤害如何变化即可</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 更新日志弹窗 -->
+  <div id="changelog-popup" class="modal-overlay" style="display:none;">
+    <div class="modal-content" style="max-width:700px;max-height:85vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="margin-bottom:0;">更新日志</h3>
+        <button onclick="App.closeChangelog()" style="background:none;border:none;color:var(--c-text2);font-size:1.5rem;cursor:pointer;padding:8px;">&times;</button>
+      </div>
+      <div style="font-size:0.8rem;color:var(--c-text);line-height:1.5;">
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2025.01.10</div>
+          <div>Added slam attacks for melee weapons and several mods for them. Added the possibility specify the number of players in a group for the health multiplier for demolishers.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.12.28</div>
+          <div>Added a tooltip about its damage types when hovering over the attack name in the DPS panel.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.12.27</div>
+          <div>Fixed interaction of critical chance mods on vulnerable points that were active even when the "headshot" mode was disabled. Added Slam and Heavy Slam info.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.12.26</div>
+          <div>Added overguard stat not only for eximus enemies.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.12.25</div>
+          <div>Added enemies for two new factions.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.12.20</div>
+          <div>Fix formula for Melee Doughty.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.12.19</div>
+          <div>Added several new magnetic mods and arcanes. Melee Doughty added with experimental formula.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.12.17</div>
+          <div>Added Neutralizer, Reconifex, Vesper 77. Mods Primary Acuity, Pistol Acuity, Worthy Comradery.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.11.14</div>
+          <div>Added Quassus Prime and Trumna Prime.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.10.23</div>
+          <div>Added Archon Continuity (for Power Weapon).</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.10.22</div>
+          <div>Changed the characteristics of Incarnon perks related to adding a chance of status to all Boltors.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.10.21</div>
+          <div>Change damage Balefire Charger from 1000 to 1500.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.10.11</div>
+          <div>Corrections made for Hotfix 37.0.4. Added x0 multiplier to body for Sicarus Incarnon perk.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.10.08</div>
+          <div>Added logic for "Increase Base Critical Chance by +x% of current Status Chance, up to +x%" and "Increase Base Status Chance by +x% of current Critical Chance, up to +x%".</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.10.07</div>
+          <div>Added Incarnon Form for Okina.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.10.03</div>
+          <div>Added Higasa and Amanata, Galvanized Reflex, Galvanized Elementalist, Galvanized Steel.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.09.30</div>
+          <div>Burning Hate now works as on wiki - "Damage increase is multiplicative with Melee Elementalist and Faction Damage Bonus."</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.09.27</div>
+          <div>Changed the values of the Incarnon Form Vasto Prime perks to the correct values (previously there were values from the Vasto).</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.09.26</div>
+          <div>Added "Copy build url to clipboard" button.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.09.20</div>
+          <div>Enabled filter for "Semi" mods only for "Semi" weapons. Also enabled speed lock for these mods.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.09.18</div>
+          <div>The ability to make status effects that influence damage common for multiple attacks with direct and secondary effects has been added.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.09.16</div>
+          <div>Fixed a rare bug that occurred when the crit chance was 100%. Fixed a bug where some mods that added a new element to a weapon depended on the ability's strength, while they should not have depended.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.09.09</div>
+          <div>Added blast status damage effect (ticking status damage, not an AoE effect). Added Burning Hate. Some minor changes.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.08.22</div>
+          <div>Added Epitaph Prime.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.08.14</div>
+          <div>Added section "Weapon builds guide".</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.08.04</div>
+          <div>Corrected the action of the mod (like elementalist) "status damage" and green shards to toxic damage. Previously they multiplied each other, now they add up.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.08.01</div>
+          <div>Added madurai option (physical damage increased by 30%).</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.07.29</div>
+          <div>Fixed unintentional increase in critical headshot damage.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.07.26</div>
+          <div>AX-52: changed headshot critical chance from +100% to 400% after patch.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.07.21</div>
+          <div>Added AX-52.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.07.18</div>
+          <div>Added Primed Deadly Efficiency. Fixed visual bug when enemy without armor has damage reduction number. Also set minimal armor as 200.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.07.12</div>
+          <div>The error related to the extra (+1) multiplier of heavy attack has been fixed.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.07.09</div>
+          <div>Fixed error with decrease armor option when armor equal 2700.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.07.04</div>
+          <div>Added 5th shard. Added Primed Dual Rounds mod. Critical chance of Puncture status now not affected area of effect damage. DR formula now is sqrt(3*armor). Critical Multiplier from Cold status now increased as flat value. Changed formula for scaling Health, Shield and Eximus Health/Shield.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.06.26</div>
+          <div>We are aware of some inaccuracies related to double critical damage with 10 stacks of cold, we will correct it later.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.06.21</div>
+          <div>Corrected the error that was causing an extra 100% damage (+1) to be added to faction mods (the error appeared after the fix on 2024.05.08). Added approximate values of health scaling multipliers compared to old values.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.06.20</div>
+          <div>New weapons and mods have been added. Frozen enemies now receive double critical damage. Health/armor/shield types have been removed. Resistances/Vulnerabilities have been transferred to the faction. The resistance formula is currently unknown, as well as the scaling of health/armor with enemy level growth; at the moment, the old one is in effect.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.06.11</div>
+          <div>Added flat critical chance option.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.05.21</div>
+          <div>Added French language.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.05.20</div>
+          <div>The bug related to loading and displaying the top 20 weapons of the month has been fixed. Adjusted the critical hit chance for the Gotva Prime passive. The error related to calculating the application of status effects for a weapon that has the same statuses as those to which the enemy is immune has been fixed.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.05.17</div>
+          <div>Fixed bug with Viral + Viral from Nourish.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.05.16</div>
+          <div>Added Tenet Glaxion and Sobek Kuva, Clip Delegation and Photon Overcharge.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.05.14</div>
+          <div>Fixed a bug where a Riven mod couldn't be added to an Archwing weapon. Also added the Dual Decurions and their Prisma version. Added unique Cedo forced procs.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.05.08</div>
+          <div>Some changes have been made to the calculation of DR for Demolishers (their innate DR is now squared for status effects). Rhino's Roar is now considered a faction mod and is added to other faction mods.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.05.06</div>
+          <div>Added TOP 20 Monthly Rating of Most Popular Weapons.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.04.27</div>
+          <div>Added Okina Prime, Velox Prime. For Riven attributes added Weapon Recoil and Zoom.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.04.25</div>
+          <div>Disable damage increase from Xata's Whisper unintentionally applying twice on the Phenmor, Laetum and Felarx incarnon perk.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.04.23</div>
+          <div>Added the possibility to change the starting point of the combo for heavy attacks.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.04.19</div>
+          <div>Fixed bug with chance for Laetum Overwhelming Attrition incarnon property.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.04.11</div>
+          <div>The calculation method for the multishot of the beam weapon has been changed (this increases the tick damage of the beam, increases the status chance instead of creating a separate instance of damage). Previously, the multishot of the beam weapons was calculated as for standard ones.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.04.09</div>
+          <div>Added Spanish language (interface only).</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.04.08</div>
+          <div>Fixed new bug with armor. Added DR Demolisher Necramech (such as on wiki for 1 round).</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.04.03</div>
+          <div>Added Noctua.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.01.29</div>
+          <div>Added Onos, Dex Nikana, Ruvox. Fixed some bugs with Hunter Munition (previously sometime it adds 2 procs instead of 1). Changed some conditions for Ichor's cloud.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.01.25</div>
+          <div>Added extended queue information. Added experimental Archon's damage reduction by wiki.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.01.21</div>
+          <div>Changes have been made to many things including design, calculation speed has been optimized, and some discovered bugs have been fixed.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.02.20</div>
+          <div>Fixed some incorrect properties of mods and weapons. Added magazine size accounting for incarnon weapon form.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.01.22</div>
+          <div>Added Acceltra Prime and Akarius Prime.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2024.01.18</div>
+          <div>Added saving parameters for steel path and eximus. Fix reset enemy lvl to 100 after reload page.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.12.21</div>
+          <div>Shard +count corrosion ticks now increased max count stacks on enemy who had it limited (~Acolytes).</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.12.19</div>
+          <div>Added hover tooltips for Arcanes.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.12.18</div>
+          <div>Added new type of health "Indifferent Facade" and several The Murmur enemys +"The Fragmented Suzerain" (his DR for me unknown). Added several melee arcanes. Added several new Archon Shards.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.12.17</div>
+          <div>Added several new mods.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.12.14</div>
+          <div>Changes Velocitus, Mausolon stats in atmo mode. For Profit-Taker Orb shield added 50% damage resistance. Added Grimoire, Ekhein.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.12.12</div>
+          <div>The calculation of the chance of a specific status when the enemy is immune to this status has been changed. The chance of other statuses increases by removing the status with immunity.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.12.10</div>
+          <div>Added Critical Mutation mod.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.11.14</div>
+          <div>Added queue length option.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.10.19</div>
+          <div>Added Dorrclave, Zylok Prime, Masseter Prime. Changed Secondary Outburst.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.09.22</div>
+          <div>Changes status chance for Incarnon Strun and Boar as on wiki (Incarnon Form Status Chance increase is affected by base pellet count.).</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.09.18</div>
+          <div>Added Nourish (Grendel).</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.09.06</div>
+          <div>Fixed a bug where installed Hunter Munitions was not taken into account. Added Velocitus and Corvas Prime.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.09.05</div>
+          <div>Added archwing (primary) mods. Added Arquebex and Mausolon.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.08.28</div>
+          <div>Gotva Prime added. A small error has been fixed for certain types of weapons in the formula for calculating the number of shots fired in 10 seconds. Also, the calculation now includes the recharge rate of battery-powered weapons (previously it was fixed and independent of the magazine size).</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.08.24</div>
+          <div>Automatic activation of the "Heavy Attack" option has been added for melee weapons that have both normal and heavy attacks. Added Hawk Eye, Counterbalance.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.08.22</div>
+          <div>Anku updated to match Hotfix 33.6.5. Added a dependency of mods adding elemental damage (such as Shock Trooper, etc.) on ability strength.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.08.21</div>
+          <div>Added Empowered Blades, Mecha Empowered, Smite Infusion, Venom Dose, Shock Trooper, Freeze Force, Fireball Frenzy, Enraged, Merulina Guardian, Champion's Blessing mods.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.08.16</div>
+          <div>Weapon stats updated to match Hotfix 33.6.4.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.08.15</div>
+          <div>Synchronized last incarnon weapon parameters with wikipedia.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.08.12</div>
+          <div>Added Prisma Ohma.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.07.31</div>
+          <div>Added critical damage for cold procs and critical chance for puncture procs. Updated the maximum number of active statuses on the enemy (for cold, impact, and puncture). Added armor reduction calculation for puncture procs (Latron).</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.07.28</div>
+          <div>Some mods have been changed according to the current patch. Added Fulmin Prime, Gunsen Prime, Argo & Vel.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.07.25</div>
+          <div>Added input syntax highlighting and some small changes.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.07.20</div>
+          <div>Added Nightwatch Napalm for dps calculation.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.07.19</div>
+          <div>Added dependence of the damage of Mesa Regulators on the strength. Added forceproc of Impact for Lex/Lex Prime Incarnon.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.07.04</div>
+          <div>Fix error with create Zaw.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.06.29</div>
+          <div>Fixed bugs from last refactoring - some weapons did not update elements correctly, they remained and overlapped each other. After enable Xata's Whisper DPS not showing.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.06.28</div>
+          <div>Added keyboard support for most controls. At this moment exept create riven mod.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.06.22</div>
+          <div>Changed some characteristics of incarnon perks related to the new patch. Added Rauta, Primary Blight, Akimbo Slip Shot, Secondary Outburst.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.06.21</div>
+          <div>Some code refactoring has been done, which improves the overall performance of the page. I hope that it will not introduce any bugs.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.06.11</div>
+          <div>The base level of the enemy has been set to more accurately calculate scaling of HP and armor for several dozen enemies. Perhaps some enemies were accidentally not taken into account. Before that, the base level of all enemies was considered to be 1.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.06.07</div>
+          <div>Xata's Whisper added.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.06.04</div>
+          <div>Fixed Longbow Sharpshot - before the fix, his damage was not applied to statuses.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.06.03</div>
+          <div>Changed output of Eximus overguard value - previously this number showed a multiplier for base overguard. Now all base overguard set to 12.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.31</div>
+          <div>Korean language added.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.29</div>
+          <div>Japanese language added. Added new Incarnon Adapters.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.26</div>
+          <div>Added "Primary Frostbite". Small visual improvements.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.22</div>
+          <div>Added new Incarnon Adapters. "Proton Snap" added.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.19</div>
+          <div>Prisma Lenz added.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.18</div>
+          <div>Crimson Archon Shard added.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.17</div>
+          <div>Fixed "add" crit/status chances (Incarnon weapon). Before that they were added in the wrong place in the formula.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.16</div>
+          <div>Added mods for first/last bullet shoot: Synth Charge, Primed Chamber, Charged Chamber.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.15</div>
+          <div>Added new Incarnon Adapters.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.10</div>
+          <div>Added extermnal decrease armor option. Added weapons with Incarnon adapters from current week. Fix minor bugs.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.05</div>
+          <div>Gradual addition of weapons with Incarnon adapters. Fixing minor bugs. Adding new mechanics associated with new adapters.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.03</div>
+          <div>Removed some unused "Enemies" for whom their characteristics were unknown. Fixed the error when headshot critical multiplier was increased for AOE weapons. Added Shotgun Vendetta, Longbow Sharpshot.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.05.01</div>
+          <div>Added Mountain's Edge stance.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.04.28</div>
+          <div>Added Chinese Language.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.04.27</div>
+          <div>Added new duviri weapons (still not added stance for Sun & moon, waiting wiki). Reaper bug with beam weapon.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.04.26</div>
+          <div>Ammo efficiency is now taken into account. Minor changes.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.04.21</div>
+          <div>Added First Test Language. Fix minor bugs.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.04.17</div>
+          <div>Added some mods. Info that the weapon has forceproc is displayed for the user. Changed headshot multipliers who increases final damage (such as mod "Target Acquired" and sniper rifle zoom). Previously all headshots calculated as x3 headshot mult + x from mods (now like Primary Deadhead). Added weapon filter.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.04.16</div>
+          <div>Added "Change log" list.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.04.13</div>
+          <div>Added Excalibur "Chromatic Blade" and Baruuk "Reactive Storm", fix little bugs.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.04.06</div>
+          <div>Exalted weapon added.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.04.04</div>
+          <div>Unique enemy damage reduction added for demolishers, eidolons, acolytes, amalgams, empyrean corpus, jugulus, saxum, lephantis, orphix, bursa.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.03.31</div>
+          <div>The Steel Path option added for enemy. Eximus added for enemy.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.03.28</div>
+          <div>Kitguns with components added for calculation.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.03.23</div>
+          <div>Added the possibility to copy and save a link to a specific build in the address bar.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.03.22</div>
+          <div>Fix minor visual bugs. Added the possibility remove mods on touchpad phone devices.</div>
+        </div>
+        <div style="margin-bottom:12px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;">
+          <div style="font-weight:600;color:var(--c-gold-bright);">2023.03.20</div>
+          <div>Zaw with components added for calculation.</div>
+        </div>
+      </div>
     </div>
   </div>
 

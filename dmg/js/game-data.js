@@ -113,41 +113,125 @@ const GameData = {
   STATUS_DURATION: {
     Impact:1, Slash:6, Puncture:6,
     Heat:6, Toxin:6, Electricity:6, Cold:6,
-    Blast:1.5, Gas:6, Magnetic:6, Radiation:12,
+    Blast:6, Gas:6, Magnetic:6, Radiation:12,
     Viral:6, Corrosive:8, Void:3, Tau:8
   },
 
-  DOT_TICK_MULT: { Slash:0.5, Heat:0.5, Toxin:0.5, Electricity:0.5, Gas:0.5 },
+  DOT_TICK_MULT: { Slash:0.35, Heat:0.5, Toxin:0.5, Electricity:0.5, Gas:0.5 },
 
   STATUS_MAX_STACKS: {
     Impact:5, Puncture:5, Cold:10, Viral:10, Corrosive:10,
     Magnetic:10, Radiation:10, Gas:10, Heat:Infinity,
-    Toxin:Infinity, Electricity:Infinity, Slash:Infinity, Blast:0
+    Toxin:Infinity, Electricity:Infinity, Slash:Infinity, Blast:10
   },
 
   // === 阵营抗性表 ===
-  FACTION_RESISTANCES: {
-    Grineer: { Corrosive:1.5, Impact:1.5, Puncture:0.75, Slash:0.75, Viral:1.25, Magnetic:0.5, Radiation:0.75, Gas:0.75, Cold:0.75 },
-    'Kuva Grineer': { Corrosive:1.5, Impact:1.5, Heat:0.5, Puncture:0.75, Slash:0.75, Viral:1.25, Magnetic:0.5, Radiation:0.75, Gas:0.75, Cold:0.75 },
-    Corpus: { Puncture:1.5, Magnetic:1.5, Electricity:0.5, Toxin:1.25, Viral:0.75, Corrosive:0.5, Heat:0.75, Blast:0.75, Gas:0.75 },
-    'Corpus Amalgam': { Electricity:1.5, Blast:0.5, Heat:0.75, Corrosive:0.5, Viral:0.75, Gas:0.75 },
-    Infested: { Slash:1.5, Heat:1.5, Toxin:1.25, Viral:0.75, Corrosive:0.5, Magnetic:0.5, Cold:0.75, Blast:0.75 },
-    'Infested Deimos': { Blast:1.5, Gas:1.5, Viral:0.5, Corrosive:0.5, Magnetic:0.5 },
-    Orokin: { Puncture:1.5, Viral:1.5, Corrosive:0.5, Radiation:0.5, Magnetic:0.5, Impact:0.75, Slash:0.75, Heat:0.75, Cold:0.75, Electricity:0.75, Toxin:0.75, Gas:0.75, Blast:0.75 },
-    Sentient: { Cold:1.5, Magnetic:1.5, Radiation:1.5, Corrosive:0.5, Viral:0.75, Gas:0.75, Blast:0.75, Impact:0.75, Puncture:0.75, Slash:0.75, Heat:0.75, Electricity:0.75, Toxin:0.75 },
-    Narmer: { Toxin:1.5, Slash:1.5, Magnetic:0.5, Corrosive:0.75, Viral:0.75, Heat:0.75, Cold:0.75, Electricity:0.75, Impact:0.75, Puncture:0.75, Radiation:0.75, Gas:0.75, Blast:0.75 },
-    Zariman: { Void:1.5 },
-    Murmur: { Electricity:1.5, Radiation:1.5, Viral:0.5 },
-    Scaldra: { Corrosive:1.5, Impact:1.5, Toxin:0.5 },
-    Techrot: { Gas:1.5, Magnetic:1.5, Cold:0.5 },
-    Anarchs: { Electricity:1.5, Radiation:0.5, Impact:1.5 }
+  // 与参考站点 typeOfFaction 完全一致:
+  // >1 = 弱点加成 (如 1.5 表示 +50%)
+  // <1 = 抗性减成 (如 0.5 表示 -50%)
+  // 未列出的伤害类型不做任何调整 (无默认0.75x)
+  TYPE_OF_FACTION: {
+    Grineer: { Corrosive: 1.5, Impact: 1.5 },
+    'Kuva Grineer': { Corrosive: 1.5, Impact: 1.5, Heat: 0.5 },
+    Corpus: { Puncture: 1.5, Magnetic: 1.5 },
+    'Corpus Amalgam': { Electricity: 1.5, Blast: 0.5, Magnetic: 1.5 },
+    Infested: { Slash: 1.5, Heat: 1.5 },
+    'Infested Deimos': { Blast: 1.5, Gas: 1.5, Viral: 0.5 },
+    Orokin: { Puncture: 1.5, Radiation: 0.5, Viral: 1.5 },
+    Sentient: { Corrosive: 0.5, Cold: 1.5, Magnetic: 1.5, Radiation: 1.5 },
+    Narmer: { Toxin: 1.5, Slash: 1.5, Magnetic: 0.5 },
+    Zariman: { Void: 1.5 },
+    Murmur: { Electricity: 1.5, Radiation: 1.5, Viral: 0.5 },
+    Anarchs: { Electricity: 1.5, Radiation: 0.5, Impact: 1.5 },
+    Scaldra: { Toxin: 0.5, Corrosive: 1.5, Impact: 1.5, Gas: 0.5 },
+    Techrot: { Cold: 0.5, Gas: 1.5, Magnetic: 1.5 }
+  },
+
+  // === 特殊敌人伤害减免公式 ===
+  SPECIAL_ENEMY_DR: {
+    demolisherDR: function(a) {
+      if (1e3 >= a) return 1;
+      if (1e3 < a && 2500 >= a) return .8 + 200 / a;
+      if (2500 < a && 5e3 >= a) return .7 + 450 / a;
+      if (5e3 < a && 1e4 >= a) return .4 + 1950 / a;
+      if (1e4 < a && 2e4 >= a) return .2 + 3950 / a;
+      if (2e4 < a) return .1 + 5950 / a;
+    },
+    archonDR: function(a, b) {
+      const ms = (typeof currWeapon !== 'undefined' && currWeapon && currWeapon.multishot) ? currWeapon.multishot : (b || 1);
+      return 1 / (1 + a * ms / 46e4);
+    },
+    getArchonDR: function(a, b, c) {
+      a = a * b * (c ? (0 < b ? .7 : 1) : 1) / 46e4;
+      return a / (a + 1) * 46e4 / b;
+    },
+    eidolonDR: function(a, b) {
+      const ms = (typeof currWeapon !== 'undefined' && currWeapon && currWeapon.multishot) ? currWeapon.multishot : 1;
+      b = 108 / (b * ms);
+      if (a <= b) return .4 * a;
+      if (a > b) return .02 * a + b;
+    },
+    acolytesDR: function(a) {
+      if (4e3 >= a) return .75;
+      if (4e3 < a && 1e4 >= a) return .6 + 600 / a;
+      if (1e4 < a && 3e4 >= a) return .4 + 2600 / a;
+      if (3e4 < a) return 14600 / a;
+    },
+    amalgamDR: function(a) {
+      if (1e3 >= a) return 1;
+      if (1e3 < a && 6e3 >= a) return .8 + 200 / a;
+      if (6e3 < a && 1e4 >= a) return .7 + 800 / a;
+      if (1e4 < a && 3e4 >= a) return .5 + 2800 / a;
+      if (3e4 < a) return .2 + 11800 / a;
+    },
+    jugulusDR: function(a) {
+      if (1e3 >= a) return 1;
+      if (1e3 < a && 2500 >= a) return .8 + 200 / a;
+      if (2500 < a && 5e3 >= a) return .7 + 450 / a;
+      if (5e3 < a && 1e4 >= a) return .4 + 1950 / a;
+      if (1e4 < a && 2e4 >= a) return .2 + 3950 / a;
+      if (2e4 < a) return .1 + 5950 / a;
+    },
+    jugulusDRProc: function(a) {
+      if (1562.5 >= a) return .64;
+      if (1562.5 < a && 3906 >= a) return .512 + 200 / a;
+      if (3906 < a && 7812.5 >= a) return .448 + 450 / a;
+      if (7812.5 < a && 15625 >= a) return .256 + 1950 / a;
+      if (15625 < a && 31250 >= a) return .128 + 3950 / a;
+      if (31250 < a) return .064 + 5950 / a;
+    },
+    lephantisDR: function(a, b) {
+      if (450 >= a) return 1;
+      if (450 < a) return 1 < b / .25 ? .1 : .1 + 450 / a;
+    },
+    orphixDR: function(a) {
+      if (1e3 >= a) return 1;
+      if (1e3 < a && 2500 >= a) return .7 + 300 / a;
+      if (2500 < a && 5e3 >= a) return .5 + 800 / a;
+      if (5e3 < a && 1e4 >= a) return .2 + 2300 / a;
+      if (1e4 < a) return .02 + 4100 / a;
+    },
+    bursaDR: function(a) {
+      if (1e3 >= a) return 1;
+      if (1e3 < a && 6e3 >= a) return .8 + 200 / a;
+      if (6e3 < a && 1e4 >= a) return .7 + 800 / a;
+      if (1e4 < a && 3e4 >= a) return .5 + 2800 / a;
+      if (3e4 < a) return .2 + 11800 / a;
+    },
+    suzerainDR: function(a) {
+      return 1;
+    },
+    demolisherNecramechDR: function() {
+      return .5875;
+    }
   },
 
   // === 关键常量 ===
   HEADSHOT_MULT_INITIAL: 3,
   ARMOR_CAP: 2700,
-  VIRAL_PER_STACK: 0.9,
-  CORROSIVE_PER_STACK: 0.25,
+  VIRAL_PER_STACK: 0.25,
+  CORROSIVE_PER_STACK: 0.06,
+  CORROSIVE_BASE_REDUCTION: 0.26,
   HEAT_ARMOR_STRIP: 0.5,
 
   // === 武器名列表 (662个, 含中文名) ===
@@ -5292,36 +5376,84 @@ const GameData = {
   getEnemyByName(name) { return this.enemies[name] || null; },
 
   scaleEnemy(enemy, level, steelPath = false, eximus = false) {
-    const baseLevel = 1;
-    const delta = Math.max(0, level - baseLevel);
-    const smoothstep = t => t * t * (3 - 2 * t);
+    const bLvl = enemy.b_lvl || 1;
+    const delta = Math.max(0, level - bLvl);
+    const trans = (a, b, c, d) => {
+      if (c - d < a) return 0;
+      if (c - d > b) return 1;
+      const t = (c - d - a) / (b - a);
+      return 3 * Math.pow(t, 2) - 2 * Math.pow(t, 3);
+    };
     
-    // 阵营专属缩放曲线
     const faction = enemy.faction || 'Unknown';
-    let healthScale, armorScale, shieldScale;
     
-    // 根据阵营选择不同的缩放参数
-    if (faction === 'Grineer' || faction === 'Kuva Grineer') {
-      // Grineer: 高护甲缩放
-      healthScale = this.scaleCurve(delta, 0.015, 2.12, 10.7332, 0.72, 70, 80);
-      armorScale = this.scaleCurve(delta, 0.02, 1.75, 0.4, 0.75, 70, 80);
-      shieldScale = this.scaleCurve(delta, 0.02, 1.76, 2.0, 0.76, 70, 80);
-    } else if (faction === 'Corpus') {
-      // Corpus: 高护盾缩放
-      healthScale = this.scaleCurve(delta, 0.015, 2.12, 10.7332, 0.72, 70, 80);
-      armorScale = this.scaleCurve(delta, 0.02, 1.76, 0.4, 0.75, 70, 80);
-      shieldScale = this.scaleCurve(delta, 0.02, 1.76, 2.0, 0.76, 70, 80);
-    } else if (faction === 'Infested' || faction === 'Infested Deimos') {
-      // Infested: 高生命值缩放
-      healthScale = this.scaleCurve(delta, 0.0225, 2.12, 10.7332, 0.72, 70, 80);
-      armorScale = this.scaleCurve(delta, 0.005, 1.75, 0.4, 0.75, 70, 80);
-      shieldScale = this.scaleCurve(delta, 0.02, 1.76, 2.0, 0.76, 70, 80);
-    } else {
-      // 默认缩放（Orokin, Sentient, Murmur 等）
-      healthScale = this.scaleCurve(delta, 0.015, 2.12, 10.7332, 0.72, 70, 80);
-      armorScale = this.scaleCurve(delta, 0.005, 1.75, 0.4, 0.75, 70, 80);
-      shieldScale = this.scaleCurve(delta, 0.02, 1.76, 2.0, 0.76, 70, 80);
+    let k, r, v, u, x, w;
+    
+    switch (faction) {
+      case 'Infested Deimos':
+      case 'Infested':
+        r = 1 + 0.0225 * Math.pow(delta, 2.12);
+        x = 1 + 36 * Math.pow(delta, 0.72) * Math.sqrt(5) / 5;
+        k = 1 + 0.02 * Math.pow(delta, 1.75);
+        u = 1 + 1.6 * Math.pow(delta, 0.75);
+        v = 1 + 0.005 * Math.pow(delta, 1.75);
+        w = 1 + 0.4 * Math.pow(delta, 0.75);
+        break;
+      case 'Corpus':
+        r = 1 + 0.015 * Math.pow(delta, 2.12);
+        x = 1 + 30 * Math.pow(delta, 0.55) * Math.sqrt(5) / 5;
+        k = 1 + 0.02 * Math.pow(delta, 1.76);
+        u = 1 + 2 * Math.pow(delta, 0.76);
+        v = 1 + 0.005 * Math.pow(delta, 1.75);
+        w = 1 + 0.4 * Math.pow(delta, 0.75);
+        break;
+      case 'Kuva Grineer':
+      case 'Grineer':
+        r = 1 + 0.015 * Math.pow(delta, 2.12);
+        x = 1 + 24 * Math.pow(delta, 0.72) * Math.sqrt(5) / 5;
+        k = 1 + 0.02 * Math.pow(delta, 1.75);
+        u = 1 + 1.6 * Math.pow(delta, 0.75);
+        v = 1 + 0.005 * Math.pow(delta, 1.75);
+        w = 1 + 0.4 * Math.pow(delta, 0.75);
+        break;
+      case 'Orokin':
+        r = 1 + 0.015 * Math.pow(delta, 2.1);
+        x = 1 + 24 * Math.pow(delta, 0.685) * Math.sqrt(5) / 5;
+        k = 1 + 0.02 * Math.pow(delta, 1.75);
+        u = 1 + 2 * Math.pow(delta, 0.75);
+        v = 1 + 0.005 * Math.pow(delta, 1.75);
+        w = 1 + 0.4 * Math.pow(delta, 0.75);
+        break;
+      case 'Techrot':
+        r = 1 + 0.015 * Math.pow(delta, 2.1);
+        x = 1 + 30.5 * Math.pow(delta, 0.72) * Math.sqrt(5) / 5;
+        k = 1 + 0.02 * Math.pow(delta, 1.76);
+        u = 1 + 3.4106 * Math.pow(delta, 0.76);
+        v = 1 + 0.005 * Math.pow(delta, 1.75);
+        w = 1 + 0.4 * Math.pow(delta, 0.75);
+        break;
+      case 'Sentient':
+      case 'Neutral':
+      case 'Murmur':
+        r = 1 + 0.015 * Math.pow(delta, 2);
+        x = 1 + 24 * Math.pow(delta, 0.5) * Math.sqrt(5) / 5;
+        k = 1 + 0.02 * Math.pow(delta, 1.75);
+        u = 1 + 2 * Math.pow(delta, 0.75);
+        v = 1 + 0.005 * Math.pow(delta, 1.75);
+        w = 1 + 0.4 * Math.pow(delta, 0.75);
+        break;
+      default:
+        k = 1 + 0.02 * Math.pow(delta, 1.75);
+        r = 1 + 0.015 * Math.pow(delta, 2);
+        v = 1 + 0.005 * Math.pow(delta, 1.75);
+        u = 1 + 1.6 * Math.pow(delta, 0.75);
+        x = 1 + 24 * Math.sqrt(delta) * Math.sqrt(5) / 5;
+        w = 1 + 0.4 * Math.pow(delta, 0.75);
     }
+    
+    const shieldScale = k * (1 - trans(70, 80, level, bLvl)) + u * trans(70, 80, level, bLvl);
+    const healthScale = r * (1 - trans(70, 80, level, bLvl)) + x * trans(70, 80, level, bLvl);
+    const armorScale = v * (1 - trans(70, 80, level, bLvl)) + w * trans(70, 80, level, bLvl);
 
     let finalArmor = enemy.armor > 0
       ? Math.min(this.ARMOR_CAP, Math.floor(enemy.armor * armorScale))
@@ -5329,28 +5461,22 @@ const GameData = {
     let finalHealth = Math.floor(enemy.health * healthScale);
     let finalShield = Math.floor(enemy.shield * shieldScale);
 
-    // 钢铁之路加成
     if (steelPath) {
       finalHealth = Math.floor(finalHealth * 2.5);
       finalShield = Math.floor(finalShield * 2.5);
       finalArmor = Math.floor(finalArmor * 2.5);
     }
 
-    // 卓越者特殊缩放（不是简单的2.5x）
     if (eximus) {
-      // 卓越者护甲缩放（分段函数）
       const eximusArmorScale = this.enemyEximusArmor(level);
       finalArmor = Math.floor(enemy.armor * eximusArmorScale);
       
-      // 卓越者生命值缩放（分段函数）
       const eximusHealthScale = this.enemyEximusHealth(level);
       finalHealth = Math.floor(enemy.health * eximusHealthScale);
       
-      // 卓越者护盾缩放
       const eximusShieldScale = this.enemyEximusShields(level);
       finalShield = Math.floor(enemy.shield * eximusShieldScale);
       
-      // 钢铁之路卓越者额外加成
       if (steelPath) {
         finalHealth = Math.floor(finalHealth * 2.5);
         finalShield = Math.floor(finalShield * 2.5);
