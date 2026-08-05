@@ -12,6 +12,7 @@ const App = {
     selectedEnemyName: null,
     selectedEnemy: null,
     enemyLevel: 30,
+    partySize: 1,
     steelPath: false,
     eximus: false,
     mods: Array(8).fill(null),
@@ -620,11 +621,17 @@ const App = {
       const data = GameData.getWeaponData(w.name);
       const catZh = data ? (GameData.CATEGORY_NAMES[data.category] || data.category) : '';
       const typeZh = data ? (GameData.WEAPON_TYPE_NAMES[data.type] || data.type) : '';
+      // 高亮匹配关键词 (参考站 hlText 等价)
+      const hl = (text) => {
+        if (!q || q.length === 0) return text;
+        const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+        return text.replace(re, '<span class="hlText">$1</span>');
+      };
       return `
       <div class="weapon-item ${sel === w.name ? 'active' : ''}"
            data-name="${w.name}" onclick="App.selectWeapon('${w.name.replace(/'/g, "\\'")}')">
         <div class="weapon-info">
-          <div class="weapon-name">${w.nameZh}</div>
+          <div class="weapon-name">${hl(w.nameZh)}</div>
           <div class="weapon-type">${catZh}${typeZh ? ' / ' + typeZh : ''}</div>
         </div>
       </div>
@@ -1144,7 +1151,8 @@ const App = {
           ${attack.flight ? `<span>航班: ${attack.flight}</span>` : ''}
           ${attack.shot_speed ? `<span>投射物飞行速度: ${attack.shot_speed.toFixed(2)}</span>` : ''}
           ${attack.forcedProc ? `<span>强制触发: ${attack.forcedProc.map(p => DamageCalculator.getName(p)).join(', ')}</span>` : ''}
-          ${attack.damageFallOff ? `<span>伤害衰减: 开始 ${attack.damageFallOff.start} / 结尾 ${attack.damageFallOff.end}</span>` : ''}
+          ${(!attack.forcedProc && attack.unique && attack.unique.force_procs) ? `<span>强制触发: ${attack.unique.force_procs.map(p => DamageCalculator.getName(p.charAt(0).toUpperCase() + p.slice(1))).join(', ')}</span>` : ''}
+          ${attack.falloff ? `<span>伤害衰减: 开始 ${attack.falloff.start} / 还原 ${attack.falloff.reduction} / 结尾 ${attack.falloff.end}</span>` : ''}
         </div>
       </div>
       ${this.isZawWeapon(this.state.selectedWeaponName) ? this.renderZawComponents() : ''}
@@ -1185,12 +1193,18 @@ const App = {
     ).slice(0, 80);
     const container = document.getElementById('enemy-list');
     const sel = this.state.selectedEnemyName;
+    // 高亮匹配关键词
+    const hl = (text) => {
+      if (!q || q.length === 0) return text;
+      const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      return text.replace(re, '<span class="hlText">$1</span>');
+    };
     container.innerHTML = entries.map(([name, e]) => `
       <div class="weapon-item ${sel === name ? 'active' : ''}"
            data-name="${name}" onclick="App.selectEnemy('${name.replace(/'/g, "\\'")}')">
         <div class="weapon-info">
-          <div class="weapon-name">${e.localeName || name}</div>
-          <div class="weapon-type">${name}</div>
+          <div class="weapon-name">${hl(e.localeName || name)}</div>
+          <div class="weapon-type">${hl(name)}</div>
         </div>
       </div>
     `).join('');
@@ -1201,6 +1215,10 @@ const App = {
     if (!enemy) return;
     this.state.selectedEnemyName = name;
     this.state.selectedEnemy = enemy;
+    // eximusOff 敌人: 自动关闭卓越者
+    if (enemy.eximusOff && this.state.eximus) {
+      this.state.eximus = false;
+    }
     this.updateEnemyInfo(enemy);
     this.recalculate();
 
@@ -1211,6 +1229,14 @@ const App = {
 
   updateEnemyInfo(enemy) {
     const scaled = GameData.scaleEnemy(enemy, this.state.enemyLevel, this.state.steelPath, this.state.eximus);
+    // 队伍人数缩放 (与 recalculate 一致)
+    if (enemy && enemy.showPartyCount) {
+      const partyMult = { 1: 1, 2: 1.5, 3: 2, 4: 3 };
+      const ps = Math.max(1, Math.min(4, this.state.partySize || 1));
+      scaled.health = Math.floor((scaled.health || 0) * (partyMult[ps] || 1));
+      scaled.shield = Math.floor((scaled.shield || 0) * (partyMult[ps] || 1));
+      scaled.overguard = Math.floor((scaled.overguard || 0) * (partyMult[ps] || 1));
+    }
     const dr = DamageCalculator.armorDR(scaled.armor) * 100;
     const container = document.getElementById('enemy-info');
     if (!container) return;
@@ -1249,11 +1275,22 @@ const App = {
             <div class="option-checkbox"></div>
             <span class="option-label">钢铁之路</span>
           </div>
+          ${enemy.eximusOff ? '' : `
           <div class="option-item" data-option="eximus" style="flex:1;">
             <div class="option-checkbox"></div>
             <span class="option-label">卓越者</span>
-          </div>
+          </div>`}
         </div>
+        ${enemy.showPartyCount ? `
+        <div class="stat-row" style="align-items:center;">
+          <span class="stat-label">队伍人数</span>
+          <span class="stat-value"><input type="number" id="party-size-input" value="${this.state.partySize}" min="1" max="4" style="width:60px;background:var(--c-card);border:1px solid var(--c-border);color:var(--c-text);border-radius:4px;padding:2px 4px;font-size:0.8rem;" onchange="App.setPartySize(this.value)"></span>
+        </div>` : ''}
+        ${enemy.unique ? `
+        <div class="stat-row">
+          <span class="stat-label" style="color:#facc15;">独特减伤</span>
+          <span class="stat-value" style="font-size:0.65rem;color:#facc15;">此敌人拥有独特的伤害减免，计算时可能无法完全计入。<br><a class="wiki-link" href="https://warframe.fandom.com/wiki/Damage_Reduction#Special_Enemies_and_Damage_Attenuation" target="_blank" rel="nofollow" style="color:var(--c-cyan);">了解详情（维基）</a></span>
+        </div>` : ''}
         <div class="stat-row"><span class="stat-label">伤害减免</span><span class="stat-value" style="color:var(--c-orange);">${dr.toFixed(1)}%</span></div>
         <div class="stat-row"><span class="stat-label">生命值</span><span class="stat-value">${scaled.health.toLocaleString()}</span></div>
         <div class="stat-row"><span class="stat-label">护甲</span><span class="stat-value">${scaled.armor.toLocaleString()}</span></div>
@@ -1271,6 +1308,17 @@ const App = {
     const level = parseInt(value) || 30;
     this.state.enemyLevel = Math.max(1, Math.min(9999, level));
     document.getElementById('enemy-level').value = this.state.enemyLevel;
+    if (this.state.selectedEnemy) {
+      this.updateEnemyInfo(this.state.selectedEnemy);
+    }
+    this.recalculate();
+  },
+
+  setPartySize(value) {
+    const size = parseInt(value) || 1;
+    this.state.partySize = Math.max(1, Math.min(4, size));
+    const input = document.getElementById('party-size-input');
+    if (input) input.value = this.state.partySize;
     if (this.state.selectedEnemy) {
       this.updateEnemyInfo(this.state.selectedEnemy);
     }
@@ -2539,6 +2587,15 @@ const App = {
       this.state.steelPath,
       this.state.eximus
     );
+
+    // 队伍人数缩放 (仅对有 showPartyCount 的敌人, 与参考站 healthPartyMult 一致)
+    if (this.state.selectedEnemy && this.state.selectedEnemy.showPartyCount) {
+      const partyMult = { 1: 1, 2: 1.5, 3: 2, 4: 3 };
+      const ps = Math.max(1, Math.min(4, this.state.partySize || 1));
+      scaledEnemy.health = Math.floor((scaledEnemy.health || 0) * (partyMult[ps] || 1));
+      scaledEnemy.shield = Math.floor((scaledEnemy.shield || 0) * (partyMult[ps] || 1));
+      scaledEnemy.overguard = Math.floor((scaledEnemy.overguard || 0) * (partyMult[ps] || 1));
+    }
     
     // 应用外部护甲剥离 (在计算前)
     const armorStripPct = this.state.options.armorStrip || 0;
@@ -2687,6 +2744,7 @@ const App = {
     this.updateDamageBreakdown(mainResult ? mainResult.breakdown : {});
     this.updateStatusInfo(mainResult);
     this.updateMultiAttackDisplay(allResults);
+    this.updatePerHitTimeline(mainResult);
     this.saveToURL();
   },
 
@@ -2889,6 +2947,67 @@ const App = {
       </div>
     `;
     this.updateDetailedDamage(result);
+  },
+
+  // ═══════════════ 命中时间线 (per-hit 详情) ═══════════════
+
+  updatePerHitTimeline(result) {
+    const container = document.getElementById('per-hit-timeline');
+    if (!container) return;
+    if (!result || !result.perShotTimeline || result.perShotTimeline.length === 0) {
+      container.innerHTML = '<div class="empty-state" style="padding:20px;"><div class="empty-state-text">选择武器和敌人后显示</div></div>';
+      return;
+    }
+
+    const timeline = result.perShotTimeline;
+    const critHits = timeline.filter(s => s.isCrit).length;
+    const totalShots = timeline.length;
+    const avgDmg = timeline.reduce((s, e) => s + e.damage, 0) / totalShots;
+    const maxDmg = Math.max(...timeline.map(e => e.damage));
+    const minDmg = Math.min(...timeline.map(e => e.damage));
+
+    // 命中时间线表格 (横向滚动)
+    const rows = timeline.map(s => {
+      const critCls = s.isCrit ? ' timeline-hit-crit' : '';
+      const tierLabel = s.critTier > 1 ? `<span class="timeline-tier">T${s.critTier}</span>` : '';
+      const procs = s.procs && s.procs.length > 0
+        ? s.procs.map(p => `<span class="timeline-proc" title="${DamageCalculator.getName(p)}">${this.getProcShort(p)}</span>`).join('')
+        : '';
+      return `
+        <div class="timeline-hit${critCls}" title="${s.time.toFixed(2)}s · ${Math.round(s.damage)}伤害${s.isCrit ? ' · 暴击' : ''}">
+          <span class="timeline-hit-time">${s.time.toFixed(2)}s</span>
+          <span class="timeline-hit-dmg">${Math.round(s.damage)}</span>
+          ${s.isCrit ? `<span class="timeline-hit-critmult">x${s.maxCritMult.toFixed(1)}</span>` : ''}
+          ${tierLabel}
+          ${procs}
+        </div>`;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="timeline-stats" style="display:flex;flex-wrap:wrap;gap:12px;padding:8px 0;font-size:0.72rem;color:var(--c-text2);">
+        <span>总命中: <b style="color:var(--c-text);">${totalShots}</b></span>
+        <span>暴击: <b style="color:var(--c-gold-bright);">${critHits}</b> (${(critHits / totalShots * 100).toFixed(1)}%)</span>
+        <span>平均伤害: <b style="color:var(--c-text);">${Math.round(avgDmg)}</b></span>
+        <span>最低: <b style="color:var(--c-text);">${Math.round(minDmg)}</b></span>
+        <span>最高: <b style="color:var(--c-text);">${Math.round(maxDmg)}</b></span>
+      </div>
+      <div class="timeline-scroll" style="overflow-x:auto;display:flex;gap:2px;padding:6px 0;border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);">
+        ${rows}
+      </div>
+      <div class="timeline-legend" style="font-size:0.65rem;color:var(--c-text-dim);padding:6px 0;">
+        每格 = 一次命中 (时间·伤害·暴击倍率·状态触发)。暴击命中金色高亮。
+      </div>
+    `;
+  },
+
+  getProcShort(proc) {
+    const map = {
+      'Impact': '冲', 'Puncture': '穿', 'Slash': '割', 'Heat': '火', 'Cold': '冰',
+      'Electricity': '电', 'Toxin': '毒', 'Viral': '病毒', 'Corrosive': '腐蚀',
+      'Magnetic': '磁', 'Radiation': '辐射', 'Gas': '毒气', 'Blast': '爆炸',
+      'Void': '虚空', 'Purity': '圣化', 'Infested': '感染', 'Shock': '电击'
+    };
+    return map[proc] || proc.substring(0, 2);
   },
 
   // ═══════════════ 多攻击形态显示 ═══════════════
@@ -3479,6 +3598,7 @@ const App = {
     this.state.selectedEnemyName = null;
     this.state.selectedEnemy = null;
     this.state.enemyLevel = 30;
+    this.state.partySize = 1;
     this.state.steelPath = false;
     this.state.eximus = false;
     this.state.mods = Array(8).fill(null);

@@ -181,6 +181,7 @@ const DamageCalculator = {
     let totalAvgPerShotStatus = 0;
     let totalMedianDmg = 0;
     const allResults = [];
+    let firstTimeline = null;
 
     for (let iter = 0; iter < iterations; iter++) {
       const result = this.runSingleQueue(weapon, pMods, enemy, opts, queueDuration);
@@ -189,6 +190,9 @@ const DamageCalculator = {
       totalAvgPerShot += result.avgPerShot;
       totalAvgPerShotStatus += result.avgPerShotStatus;
       totalMedianDmg += result.medianDmg;
+      if (!firstTimeline && result.perShotTimeline) {
+        firstTimeline = result.perShotTimeline;
+      }
     }
 
     // 计算平均值和中位数
@@ -235,7 +239,8 @@ const DamageCalculator = {
       critDmg: this.estimateCritMult(weapon, pMods),
       statusChance: this.estimateStatusChance(weapon, pMods),
       dr: 0,
-      iterations
+      iterations,
+      perShotTimeline: firstTimeline
     };
   },
 
@@ -416,12 +421,15 @@ const DamageCalculator = {
     // ═══ 步骤9: 猎人弹药/内部出血效果 (移至暴击判定后) ═══
     // (Hunter Munitions check moved to after crit determination at step 4-5)
 
-    // ═══ 步骤10: 强制触发效果 ═══
-    const forceProcs = weapon.forceProcs || [];
+    // ═══ 步骤10: 强制触发效果 (攻击级 force_procs, 参考站 setForceProcs 等价) ═══
     queue.forEach(shot => {
       shot.pellets.forEach(pellet => {
+        const atk = attacks[pellet._atkIndex] || attacks[0];
+        if (!atk || !atk.unique) return;
+        const forceProcs = atk.unique.force_procs || [];
         forceProcs.forEach(proc => {
-          pellet.statusProcs.push(proc);
+          const procName = proc.charAt(0).toUpperCase() + proc.slice(1);
+          pellet.statusProcs.push(procName);
         });
       });
     });
@@ -610,6 +618,9 @@ const DamageCalculator = {
     let totalDirectDamage = 0;
     let totalStatusDamage = 0;
 
+    // per-shot 时间线数据收集 (参考站 infoDmg 等价)
+    const perShotTimeline = [];
+
     queue.forEach(shot => {
       shot.pellets.forEach(pellet => {
         let pelletDmg = 0;
@@ -739,12 +750,33 @@ const DamageCalculator = {
         totalDirectDamage += pelletDmg;
         totalDamage += pelletDmg;
 
+        // 收集 per-shot 时间线数据
+        pellet._finalDamage = pelletDmg;
+        pellet._armorAtTime = currentArmor;
+        pellet._statusProcsAtTime = [...(pellet.statusProcs || [])];
+
         // Melee Duplicate: 额外攻击一次
         if (pellet._duplicateStrike) {
           totalDirectDamage += pelletDmg;
           totalDamage += pelletDmg;
         }
       });
+
+      // 汇总该发的总伤害 (所有弹片)
+      const shotTotal = shot.pellets.reduce((sum, p) => sum + (p._finalDamage || 0), 0);
+      if (shotTotal > 0) {
+        perShotTimeline.push({
+          index: shot.index,
+          time: shot.time,
+          damage: shotTotal,
+          pellets: shot.pellets.length,
+          isCrit: shot.pellets.some(p => p.isCrit),
+          maxCritMult: Math.max(0, ...shot.pellets.map(p => p.critMult || 1)),
+          critTier: Math.max(0, ...shot.pellets.map(p => p.critTier || 0)),
+          procs: [...new Set(shot.pellets.flatMap(p => p.statusProcs || []))],
+          isReload: false
+        });
+      }
     });
 
     // 加入状态伤害
@@ -915,7 +947,8 @@ const DamageCalculator = {
       avgPerShotStatus,
       medianDmg,
       breakdown: this.getShotBreakdown(queue, statusTimeQueue, pMods, enemy, weapon),
-      statusInfo: this.getStatusInfoFromQueue(statusTimeQueue)
+      statusInfo: this.getStatusInfoFromQueue(statusTimeQueue),
+      perShotTimeline
     };
   },
 
@@ -1031,14 +1064,17 @@ const DamageCalculator = {
 
     // 合并同一时间点的状态
     Object.keys(statusQueue).forEach(type => {
-      statusQueue[type] = this.mergeStatusEvents(statusQueue[type], type);
+      statusQueue[type] = this.mergeStatusEvents(statusQueue[type], type, enemy);
     });
 
     return statusQueue;
   },
 
-  mergeStatusEvents(events, type) {
+  mergeStatusEvents(events, type, enemy) {
     if (events.length === 0) return [];
+
+    // 敌人最大状态层数限制 (参考站 maxProcStacks: 爆破型等敌人, 腐蚀例外可+剥离层数)
+    const maxProcStacks = (enemy && enemy.maxProcStacks) || 0;
 
     events.sort((a, b) => a.time - b.time);
     const merged = [];
@@ -1059,8 +1095,19 @@ const DamageCalculator = {
           isCrit: event.isCrit || false
         });
       } else {
-        // 叠加到现有状态
-        currentStacks = Math.min(currentStacks + event.stacks, this.STATUS_MAX_STACKS[type] || 10);
+        // 叠加到现有状态 (受 STATUS_MAX_STACKS 和 敌人 maxProcStacks 限制)
+        const maxStacks = this.STATUS_MAX_STACKS[type] || 10;
+        if (maxProcStacks > 0) {
+          if (type === 'Corrosive') {
+            // 腐蚀例外: 限制 = maxProcStacks + 已有腐蚀层数 (参考站 timelineStatus 逻辑)
+            currentStacks = Math.min(currentStacks + event.stacks, Math.min(maxStacks, maxProcStacks + currentStacks));
+          } else {
+            // 其他状态: 限制 = maxProcStacks
+            currentStacks = Math.min(currentStacks + event.stacks, Math.min(maxStacks, maxProcStacks));
+          }
+        } else {
+          currentStacks = Math.min(currentStacks + event.stacks, maxStacks);
+        }
         currentEndTime = Math.max(currentEndTime, event.time + event.duration);
         merged[merged.length - 1].stacks = currentStacks;
         merged[merged.length - 1].endTime = currentEndTime;
@@ -1930,8 +1977,20 @@ const DamageCalculator = {
       case 'demolisherNecramech':
         dr = DR.demolisherNecramechDR();
         break;
+      case 'dedicant':
+        dr = DR.demolisherNecramechDR();
+        break;
       default:
         dr = 1;
+    }
+    
+    // 爆破虚空锐将/斯卡德拉信徒: 每次攻击伤害上限 176000 (参考站 176E3/U 逻辑, U=多重射击)
+    if (enemy.unique === 'demolisherNecramech' || enemy.unique === 'dedicant') {
+      const ms = multishot || 1;
+      const cap = 176000 / ms;
+      if (dmg > cap) {
+        return cap;
+      }
     }
     
     return dmg * dr;

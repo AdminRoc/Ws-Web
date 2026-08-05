@@ -1278,3 +1278,61 @@ li.modListItemActive .modListItem {
   background: var(--c-cyan);
   border-radius: 1px;
 }
+
+/* ═══ 命中时间线 (per-hit timeline) ═══ */
+.timeline-hit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 54px;
+  padding: 4px 6px;
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  cursor: default;
+  transition: border-color 0.15s;
+}
+.timeline-hit:hover {
+  border-color: var(--c-cyan);
+}
+.timeline-hit-crit {
+  border-color: var(--c-gold-bright);
+  background: rgba(240, 190, 60, 0.08);
+}
+.timeline-hit-time {
+  font-size: 0.58rem;
+  color: var(--c-text-dim);
+}
+.timeline-hit-dmg {
+  font-size: 0.72rem;
+  color: var(--c-text);
+  font-weight: 600;
+}
+.timeline-hit-critmult {
+  font-size: 0.6rem;
+  color: var(--c-gold-bright);
+}
+.timeline-tier {
+  font-size: 0.55rem;
+  color: var(--c-orange);
+}
+.timeline-proc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  font-size: 0.5rem;
+  border-radius: 3px;
+  background: var(--c-cyan);
+  color: #04121a;
+  margin: 1px;
+}
+
+/* ═══ 搜索高亮 (参考站 hlText 等价) ═══ */
+.hlText {
+  color: var(--c-gold-bright);
+  font-weight: 700;
+  background: rgba(240, 190, 60, 0.15);
+  border-radius: 2px;
+}
