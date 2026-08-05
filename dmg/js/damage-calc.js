@@ -307,7 +307,7 @@ const DamageCalculator = {
       shot.pellets.forEach(pellet => {
         const atk = attacks[shot.index % attacks.length] || attacks[0];
         if (!atk) return;
-        const baseDmg = this.getAttackBaseDamage(atk, pMods, weapon);
+        const baseDmg = this.getAttackBaseDamage(atk, pMods, weapon, opts);
         pellet.damage = baseDmg;
         pellet._atkIndex = shot.index % attacks.length;
         pellet._baseDamageVec = { ...baseDmg };
@@ -1709,7 +1709,7 @@ const DamageCalculator = {
     return [[0]];
   },
 
-  getAttackBaseDamage(attack, processedMods, weapon) {
+  getAttackBaseDamage(attack, processedMods, weapon, opts = {}) {
     const weaponDamage = attack.damage || {};
     const result = {};
     Object.entries(weaponDamage).forEach(([type, value]) => { result[type] = value; });
@@ -1735,11 +1735,13 @@ const DamageCalculator = {
     });
 
     // 添加额外组合元素伤害 (addRadiation, addMagnetic, addGas, addViral, heatAdd)
+    // 与参考站点一致: Nourish的Viral百分比与MOD的addViral叠加, 加入武器基础伤害池
+    const nourishMult = (opts.grendelNourish && opts.grendelNourishPercent) ? (opts.grendelNourishPercent / 100) : 0;
     const flatCombinedElements = {
       Radiation: processedMods.addRadiation || 0,
       Magnetic: processedMods.addMagnetic || 0,
       Gas: processedMods.addGas || 0,
-      Viral: processedMods.addViral || 0,
+      Viral: (processedMods.addViral || 0) + nourishMult,
       Heat: processedMods.heatAdd || 0
     };
     Object.entries(flatCombinedElements).forEach(([type, mult]) => {

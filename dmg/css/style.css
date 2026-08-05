@@ -876,7 +876,6 @@ li.modListItemActive .modListItem {
 }
 .mod.arcaneMod {
   border-color: var(--c-gold-bright);
-  aspect-ratio: 175 / 119;
 }
 .mod.archonShardMod {
   border-color: var(--c-orange, #f97316);
@@ -887,6 +886,45 @@ li.modListItemActive .modListItem {
 }
 .mod.specialMod {
   border-color: var(--c-teal);
+}
+
+/* 特殊功能槽/光环/架式 槽位与武器MOD槽同尺寸 (竖版卡片, 与mod-grid同列宽) */
+#weapon-special-slot,
+#warframe-special-slot,
+#weapon-stance-slot {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+#aura-slot-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+#weapon-special-slot .mod,
+#warframe-special-slot .mod,
+#weapon-stance-slot .mod,
+#aura-slot.mod {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 175 / 256;
+}
+
+/* 赋能槽位与源力石槽位同尺寸 (正方形) */
+#weapon-arcane-slots,
+#warframe-arcane-slots {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(80px, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+#weapon-arcane-slots .mod,
+#warframe-arcane-slots .mod {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
 }
 
 /* ── MOD 图片 ── */
@@ -1020,8 +1058,9 @@ li.modListItemActive .modListItem {
   gap: 6px;
 }
 .stancePanel .mod {
-  width: 100px;
-  height: 124px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 175 / 256;
 }
 .stancePanel select {
   padding: 4px 6px;

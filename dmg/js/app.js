@@ -50,9 +50,9 @@ const App = {
       conditionOverload: false,
       madurai: false,
       mergeAttacks: false,
-      conditionalModsAlways: false,
+      conditionalModsAlways: true,
       customStats: {},
-      calcTime: 30
+      calcTime: 20
     },
     abilities: {
       rhinoRoar: false,
@@ -649,7 +649,8 @@ const App = {
     this.state.currentCapacity = 0;
     this.state.zawComponents = { grip: null, link: null };
     this.state.kitgunComponents = { grip: null, loader: null };
-    this.state.weaponType = (data.category === 'Melee') ? 'melee' : 'ranged';
+
+    this.setWeaponType((data.category === 'Melee') ? 'melee' : 'ranged');
 
     this.updateWeaponInfo(data);
     this.renderModSlots();
@@ -1105,11 +1106,18 @@ const App = {
         </div>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;font-size:0.75rem;color:var(--c-text2);margin-bottom:8px;">
           ${weapon.magazineSize ? `<span>弹匣容量: ${weapon.magazineSize}</span>` : ''}
-          ${weapon.ammo ? `<span>弹药最大值: ${weapon.ammo}</span>` : ''}
+          ${weapon.ammoCapacity ? `<span>弹药最大值: ${weapon.ammoCapacity}</span>` : ''}
           ${weapon.reloadTime ? `<span>装填耗时: ${weapon.reloadTime}</span>` : ''}
           ${weapon.noise ? `<span>噪音级别: ${weapon.noise}</span>` : ''}
-          ${weapon.pellets > 1 ? `<span>弹片: ${weapon.pellets}</span>` : ''}
+          ${weapon.pellets > 1 ? `<span>弹片: ${weapon.pellets}</span>` : (weapon.multishot > 1 ? `<span>弹片: ${weapon.multishot}</span>` : '')}
           ${weapon.disposition ? `<span>裂罅倾向: ${weapon.disposition}</span>` : ''}
+          ${weapon.releaseDate ? `<span>发布时间: ${weapon.releaseDate}</span>` : ''}
+          ${weapon.equipTime ? `<span>装备时间: ${weapon.equipTime}</span>` : ''}
+          ${weapon.blockingAngle ? `<span>格挡角度: ${weapon.blockingAngle}</span>` : ''}
+          ${weapon.comboDuration ? `<span>连击持续时间: ${weapon.comboDuration}</span>` : ''}
+          ${weapon.followThrough ? `<span>伤害穿透: ${weapon.followThrough}</span>` : ''}
+          ${weapon.range ? `<span>攻击范围: ${weapon.range}</span>` : ''}
+          ${weapon.windUp ? `<span>重击准备时间: ${weapon.windUp}</span>` : ''}
         </div>
         ${attackTabs}
       </div>
@@ -1133,6 +1141,8 @@ const App = {
           <span>暴击伤害: ${attack.crit_mult}x</span>
           <span>异常状态触发几率: ${attack.status_chance}%</span>
           <span>攻击速度: ${attack.speed.toFixed(2)}/s</span>
+          ${attack.flight ? `<span>航班: ${attack.flight}</span>` : ''}
+          ${attack.shot_speed ? `<span>投射物飞行速度: ${attack.shot_speed.toFixed(2)}</span>` : ''}
           ${attack.forcedProc ? `<span>强制触发: ${attack.forcedProc.map(p => DamageCalculator.getName(p)).join(', ')}</span>` : ''}
           ${attack.damageFallOff ? `<span>伤害衰减: 开始 ${attack.damageFallOff.start} / 结尾 ${attack.damageFallOff.end}</span>` : ''}
         </div>
@@ -1290,7 +1300,7 @@ const App = {
       const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
       const maxRank = this.getModMaxRank(mod);
       container.innerHTML = `
-        <div class="mod specialMod filled" style="width:100px;height:124px;">
+        <div class="mod specialMod filled">
           <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
             ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.75rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
           </div>
@@ -1303,7 +1313,7 @@ const App = {
         </div>
       `;
     } else {
-      container.innerHTML = `<div class="mod specialMod" onclick="App.openWeaponSpecialPicker()" style="width:100px;height:124px;"><div class="mod-icon">+</div><div class="mod-name">特殊功能槽</div></div>`;
+      container.innerHTML = `<div class="mod specialMod" onclick="App.openWeaponSpecialPicker()"><div class="mod-icon">+</div><div class="mod-name">特殊功能槽</div></div>`;
     }
   },
 
@@ -1328,7 +1338,7 @@ const App = {
     const picker = document.getElementById('mod-picker');
     const allMods = GameData.getAllMods();
     const filtered = allMods.filter(m => m.type === 'exilus');
-    picker.innerHTML = this.renderWarframeModPickerContent('选择特殊功能槽', filtered, 'App.selectWeaponSpecialMod');
+    picker.innerHTML = this.renderWarframeModPickerContent('选择特殊功能槽', filtered, 'App.selectWeaponSpecialMod(');
     picker.classList.add('active');
   },
 
@@ -1352,7 +1362,7 @@ const App = {
       const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
       const maxRank = this.getModMaxRank(mod);
       container.innerHTML = `
-        <div class="mod stanceMod filled" style="width:100px;height:124px;">
+        <div class="mod stanceMod filled">
           <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
             ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.75rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
           </div>
@@ -1365,7 +1375,7 @@ const App = {
         </div>
       `;
     } else {
-      container.innerHTML = `<div class="mod stanceMod" onclick="App.openWeaponStancePicker()" style="width:100px;height:124px;"><div class="mod-icon">+</div><div class="mod-name">架式</div></div>`;
+      container.innerHTML = `<div class="mod stanceMod" onclick="App.openWeaponStancePicker()"><div class="mod-icon">+</div><div class="mod-name">架式</div></div>`;
     }
   },
 
@@ -1398,7 +1408,7 @@ const App = {
       const matched = filtered.filter(m => (m.tags || []).some(t => compTags.includes(t)));
       if (matched.length > 0) filtered = matched;
     }
-    picker.innerHTML = this.renderWarframeModPickerContent('选择架式', filtered, 'App.selectWeaponStanceMod');
+    picker.innerHTML = this.renderWarframeModPickerContent('选择架式', filtered, 'App.selectWeaponStanceMod(');
     picker.classList.add('active');
   },
 
@@ -1422,7 +1432,6 @@ const App = {
       const mod = this.state.weaponArcanes[i];
       const slot = document.createElement('div');
       slot.className = 'mod arcaneMod';
-      slot.style.cssText = 'width:100px;height:100px;';
       if (mod) {
         const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
         const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
@@ -1476,7 +1485,7 @@ const App = {
       const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
       const maxRank = this.getModMaxRank(mod);
       container.innerHTML = `
-        <div class="mod specialMod filled" style="width:100px;height:124px;">
+        <div class="mod specialMod filled">
           <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
             ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.75rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
           </div>
@@ -1489,7 +1498,7 @@ const App = {
         </div>
       `;
     } else {
-      container.innerHTML = `<div class="mod specialMod" onclick="App.openWarframeSpecialPicker()" style="width:100px;height:124px;"><div class="mod-icon">+</div><div class="mod-name">特殊功能槽</div></div>`;
+      container.innerHTML = `<div class="mod specialMod" onclick="App.openWarframeSpecialPicker()"><div class="mod-icon">+</div><div class="mod-name">特殊功能槽</div></div>`;
     }
   },
 
@@ -1514,7 +1523,7 @@ const App = {
     const picker = document.getElementById('mod-picker');
     const allMods = GameData.getAllMods();
     const filtered = allMods.filter(m => m.type === 'exilus');
-    picker.innerHTML = this.renderWarframeModPickerContent('选择战甲特殊功能槽', filtered, 'App.selectWarframeSpecialMod');
+    picker.innerHTML = this.renderWarframeModPickerContent('选择战甲特殊功能槽', filtered, 'App.selectWarframeSpecialMod(');
     picker.classList.add('active');
   },
 
@@ -1830,7 +1839,7 @@ const App = {
     const picker = document.getElementById('mod-picker');
     const allMods = GameData.getAllMods();
     const filtered = allMods.filter(m => m.type === 'aura_mod');
-    picker.innerHTML = this.renderWarframeModPickerContent('选择光环 MOD', filtered, 'App.selectAuraMod');
+    picker.innerHTML = this.renderWarframeModPickerContent('选择光环 MOD', filtered, 'App.selectAuraMod(');
     picker.classList.add('active');
   },
 
@@ -2014,7 +2023,7 @@ const App = {
             const imgSrc = m.img ? `dmg/img/mods/${m.img}` : '';
             const typeLabel = m.type === 'aura_mod' ? '光环' : m.type === 'frame_mist' ? '赋能' : 'MOD';
             return `
-              <div class="weapon-item" onclick="${selectFn}('${m.name.replace(/'/g, "\\'")}')" style="padding:8px;">
+              <div class="weapon-item" onclick="${selectFn}'${m.name.replace(/'/g, "\\'")}')" style="padding:8px;">
                 <div style="display:flex;gap:8px;align-items:center;">
                   ${imgSrc ? `<img src="${imgSrc}" alt="${zh}" style="width:48px;height:48px;border-radius:4px;object-fit:cover;">` : ''}
                   <div class="weapon-info">
@@ -3492,7 +3501,7 @@ const App = {
       abilityStrength: 100, externalVirus: false, virusStacks: 0,
       armorStrip: 0, manualStatusCount: false, manualStatusValue: 0,
       conditionOverload: false, madurai: false, mergeAttacks: false,
-      conditionalModsAlways: false, customStats: {}
+      conditionalModsAlways: true, customStats: {}, calcTime: 20
     };
     this.state.abilities = {
       rhinoRoar: false, mirageEclipse: false, xakuWhisper: false,
@@ -3559,26 +3568,6 @@ const App = {
     if (conditionalAlways) conditionalAlways.classList.add('active');
   },
 
-  showHelp() {
-    const popup = document.getElementById('help-popup');
-    if (popup) popup.style.display = 'flex';
-  },
-
-  closeHelp() {
-    const popup = document.getElementById('help-popup');
-    if (popup) popup.style.display = 'none';
-  },
-
-  showChangelog() {
-    const popup = document.getElementById('changelog-popup');
-    if (popup) popup.style.display = 'flex';
-  },
-
-  closeChangelog() {
-    const popup = document.getElementById('changelog-popup');
-    if (popup) popup.style.display = 'none';
-  },
-
   exportBuild() {
     if (!this.state.selectedWeapon) return;
     const build = {
@@ -3586,14 +3575,15 @@ const App = {
       enemy: this.state.selectedEnemyName,
       level: this.state.enemyLevel,
       steelPath: this.state.steelPath,
-      mods: this.state.mods.filter(m => m !== null).map(m => m.name),
+      version: 2,
+      mods: this.state.mods.map((m, i) => m ? { name: m.name, rank: this.state.modRanks[i] || 0 } : null).filter(Boolean),
       weaponType: this.state.weaponType,
-      weaponSpecialMod: this.state.weaponSpecialMod ? this.state.weaponSpecialMod.name : null,
-      weaponStanceMod: this.state.weaponStanceMod ? this.state.weaponStanceMod.name : null,
+      weaponSpecialMod: this.state.weaponSpecialMod ? { name: this.state.weaponSpecialMod.name, rank: this.state.weaponSpecialRank || 0 } : null,
+      weaponStanceMod: this.state.weaponStanceMod ? { name: this.state.weaponStanceMod.name, rank: this.state.weaponStanceRank || 0 } : null,
       weaponArcanes: this.state.weaponArcanes.filter(m => m !== null).map(m => m.name),
-      warframeMods: this.state.warframeMods.filter(m => m !== null).map(m => m.name),
-      auraMod: this.state.auraMod ? this.state.auraMod.name : null,
-      warframeSpecialMod: this.state.warframeSpecialMod ? this.state.warframeSpecialMod.name : null,
+      warframeMods: this.state.warframeMods.map((m, i) => m ? { name: m.name, rank: this.state.warframeModRanks[i] || 0 } : null).filter(Boolean),
+      auraMod: this.state.auraMod ? { name: this.state.auraMod.name, rank: this.state.auraModRank || 0 } : null,
+      warframeSpecialMod: this.state.warframeSpecialMod ? { name: this.state.warframeSpecialMod.name, rank: this.state.warframeSpecialRank || 0 } : null,
       warframeArcanes: this.state.warframeArcanes.filter(m => m !== null).map(m => m.name),
       archonShards: this.state.archonShards,
       focusSchool: this.state.focusSchool,
@@ -3612,7 +3602,228 @@ const App = {
     URL.revokeObjectURL(url);
   },
 
+  // ═══════════════ 导入配装 ═══════════════
+
+  importBuild() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json,application/json';
+    input.style.display = 'none';
+    input.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          this.applyBuild(data);
+        } catch (err) {
+          this.showToast('导入失败: 文件格式不正确');
+        }
+      };
+      reader.readAsText(file);
+    });
+    document.body.appendChild(input);
+    input.click();
+    input.remove();
+  },
+
+  applyBuild(data) {
+    if (!data || typeof data !== 'object') {
+      this.showToast('导入失败: 无效的配装数据');
+      return;
+    }
+
+    // 武器
+    if (data.weapon) {
+      const weapon = GameData.getWeaponData(data.weapon);
+      if (weapon) {
+        this.selectWeapon(data.weapon);
+      } else {
+        this.showToast('导入失败: 找不到武器 ' + data.weapon);
+        return;
+      }
+    }
+
+    // 敌人
+    if (data.enemy) {
+      const enemy = GameData.getEnemyByName ? GameData.getEnemyByName(data.enemy) : null;
+      if (enemy) {
+        this.selectEnemy(data.enemy);
+      }
+    }
+    if (data.level !== undefined) {
+      this.state.enemyLevel = data.level;
+      const lvl = document.getElementById('enemy-level');
+      if (lvl) lvl.value = data.level;
+    }
+    if (data.steelPath !== undefined) {
+      this.state.steelPath = data.steelPath;
+      const sp = document.querySelector('[data-option="steelPath"]');
+      if (sp) sp.classList.toggle('active', data.steelPath);
+    }
+
+    // 武器 MOD (兼容 v1 纯名字数组 和 v2 {name, rank} 对象)
+    if (Array.isArray(data.mods)) {
+      this.state.mods = Array(8).fill(null);
+      this.state.modRanks = Array(8).fill(0);
+      data.mods.forEach((entry, i) => {
+        if (i >= 8) return;
+        const name = typeof entry === 'string' ? entry : (entry ? entry.name : null);
+        const rank = typeof entry === 'object' && entry ? (entry.rank || 0) : 0;
+        const mod = GameData.getAllMods().find(m => m.name === name);
+        if (mod) {
+          this.state.mods[i] = mod;
+          this.state.modRanks[i] = Math.max(0, Math.min(rank, this.getModMaxRank(mod)));
+        }
+      });
+    }
+
+    // 武器类型
+    if (data.weaponType === 'melee' || data.weaponType === 'ranged') {
+      this.setWeaponType(data.weaponType);
+    }
+
+    // 武器特殊功能槽
+    if (data.weaponSpecialMod) {
+      const name = typeof data.weaponSpecialMod === 'string' ? data.weaponSpecialMod : data.weaponSpecialMod.name;
+      const rank = typeof data.weaponSpecialMod === 'object' ? (data.weaponSpecialMod.rank || 0) : 0;
+      const mod = GameData.getAllMods().find(m => m.name === name);
+      if (mod) {
+        this.state.weaponSpecialMod = mod;
+        this.state.weaponSpecialRank = Math.max(0, Math.min(rank, this.getModMaxRank(mod)));
+      }
+    }
+
+    // 武器架式
+    if (data.weaponStanceMod) {
+      const name = typeof data.weaponStanceMod === 'string' ? data.weaponStanceMod : data.weaponStanceMod.name;
+      const rank = typeof data.weaponStanceMod === 'object' ? (data.weaponStanceMod.rank || 0) : 0;
+      const mod = GameData.getAllMods().find(m => m.name === name);
+      if (mod) {
+        this.state.weaponStanceMod = mod;
+        this.state.weaponStanceRank = Math.max(0, Math.min(rank, this.getModMaxRank(mod)));
+        this.state.selectedStanceName = name;
+      }
+    }
+
+    // 武器赋能
+    if (Array.isArray(data.weaponArcanes)) {
+      this.state.weaponArcanes = Array(2).fill(null);
+      this.state.weaponArcaneRanks = Array(2).fill(0);
+      data.weaponArcanes.forEach((name, i) => {
+        if (i >= 2) return;
+        const mod = GameData.getAllMods().find(m => m.name === name);
+        if (mod) this.state.weaponArcanes[i] = mod;
+      });
+    }
+
+    // 战甲 MOD
+    if (Array.isArray(data.warframeMods)) {
+      this.state.warframeMods = Array(8).fill(null);
+      this.state.warframeModRanks = Array(8).fill(0);
+      data.warframeMods.forEach((entry, i) => {
+        if (i >= 8) return;
+        const name = typeof entry === 'string' ? entry : (entry ? entry.name : null);
+        const rank = typeof entry === 'object' && entry ? (entry.rank || 0) : 0;
+        const mod = GameData.getAllMods().find(m => m.name === name);
+        if (mod) {
+          this.state.warframeMods[i] = mod;
+          this.state.warframeModRanks[i] = Math.max(0, Math.min(rank, this.getModMaxRank(mod)));
+        }
+      });
+    }
+
+    // 光环
+    if (data.auraMod) {
+      const name = typeof data.auraMod === 'string' ? data.auraMod : data.auraMod.name;
+      const rank = typeof data.auraMod === 'object' ? (data.auraMod.rank || 0) : 0;
+      const mod = GameData.getAllMods().find(m => m.name === name);
+      if (mod) {
+        this.state.auraMod = mod;
+        this.state.auraModRank = Math.max(0, Math.min(rank, this.getModMaxRank(mod)));
+      }
+    }
+
+    // 战甲特殊功能槽
+    if (data.warframeSpecialMod) {
+      const name = typeof data.warframeSpecialMod === 'string' ? data.warframeSpecialMod : data.warframeSpecialMod.name;
+      const rank = typeof data.warframeSpecialMod === 'object' ? (data.warframeSpecialMod.rank || 0) : 0;
+      const mod = GameData.getAllMods().find(m => m.name === name);
+      if (mod) {
+        this.state.warframeSpecialMod = mod;
+        this.state.warframeSpecialRank = Math.max(0, Math.min(rank, this.getModMaxRank(mod)));
+      }
+    }
+
+    // 战甲赋能
+    if (Array.isArray(data.warframeArcanes)) {
+      this.state.warframeArcanes = Array(2).fill(null);
+      data.warframeArcanes.forEach((name, i) => {
+        if (i >= 2) return;
+        const mod = GameData.getAllMods().find(m => m.name === name);
+        if (mod) this.state.warframeArcanes[i] = mod;
+      });
+    }
+
+    // 源力石
+    if (Array.isArray(data.archonShards)) {
+      this.state.archonShards = Array(5).fill(null);
+      data.archonShards.forEach((shard, i) => {
+        if (i >= 5 || !shard) return;
+        if (this.ARCHON_SHARD_DATA[shard.type] && shard.buffIndex !== undefined) {
+          this.state.archonShards[i] = { type: shard.type, buffIndex: shard.buffIndex, isTau: !!shard.isTau };
+        }
+      });
+    }
+
+    // 专精
+    if (data.focusSchool) {
+      this.setWarframeFocus(data.focusSchool);
+    }
+
+    // 选项
+    if (data.options && typeof data.options === 'object') {
+      Object.assign(this.state.options, data.options);
+      this.syncOptionsUI();
+    }
+
+    // 技能
+    if (data.abilities && typeof data.abilities === 'object') {
+      Object.assign(this.state.abilities, data.abilities);
+      this.syncAbilitiesUI();
+    }
+
+    // 重新渲染
+    this.renderModSlots();
+    this.renderWeaponSpecialSlot();
+    this.renderWeaponStanceSlot();
+    this.renderWeaponArcaneSlots();
+    this.renderWarframeModSlots();
+    this.renderWarframeSpecialSlot();
+    this.renderAuraSlot();
+    this.renderArcaneSlots();
+    this.renderArchonShards();
+    this.renderStanceSection();
+    this.recalculate();
+    this.showToast('配装导入成功');
+  },
+
   // ═══════════════ 动画 ═══════════════
+
+  showToast(message) {
+    let toast = document.getElementById('app-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'app-toast';
+      toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(7,8,15,0.95);border:1px solid var(--c-gold-dim);color:var(--c-text);padding:10px 20px;border-radius:8px;z-index:2000;font-size:0.85rem;opacity:0;transition:opacity 0.3s;pointer-events:none;max-width:80%;text-align:center;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => { toast.style.opacity = '0'; }, 2600);
+  },
 
   initAnimations() {
     if (typeof gsap === 'undefined') return;
@@ -3857,42 +4068,6 @@ const App = {
 
     this.renderModSlots();
     this.recalculate();
-  },
-
-  async loadTop20Weapons() {
-    const container = document.getElementById('top20-list');
-    if (!container) return;
-    try {
-      const resp = await fetch('/data/json/top-used.json');
-      if (!resp.ok) throw new Error(resp.statusText);
-      const data = await resp.json();
-      const sorted = Object.entries(data)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 20);
-      if (sorted.length === 0) {
-        container.innerHTML = '<div class="empty-state" style="padding:10px;"><div class="empty-state-text">暂无数据</div></div>';
-        return;
-      }
-      let html = '<div style="font-size:0.75rem;color:var(--c-text-dim);margin-bottom:6px;">数据每日更新，按使用次数排序</div>';
-      sorted.forEach(([name, count], i) => {
-        const rank = i + 1;
-        const medal = rank <= 3 ? ['&#129351;','&#129352;','&#129353;'][rank-1] : rank;
-        const weaponExists = GameData.weapons[name];
-        const clickable = weaponExists
-          ? `cursor:pointer;color:var(--c-gold-bright);` 
-          : `color:var(--c-text2);`;
-        const onclick = weaponExists
-          ? `onclick="App.selectWeaponByName('${name.replace(/'/g, "\\'")}')"`
-          : '';
-        html += `<div class="top20-item" ${onclick} style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px;border-radius:4px;font-size:0.78rem;transition:background 0.15s;${clickable}" onmouseover="this.style.background='var(--c-card)'" onmouseout="this.style.background='transparent'">
-          <span><span style="display:inline-block;width:20px;text-align:right;margin-right:6px;font-weight:600;">${medal}</span>${name}</span>
-          <span style="color:var(--c-text-dim);font-size:0.7rem;">${count}</span>
-        </div>`;
-      });
-      container.innerHTML = html;
-    } catch (e) {
-      container.innerHTML = '<div class="empty-state" style="padding:10px;"><div class="empty-state-text">加载失败</div></div>';
-    }
   },
 
   selectWeaponByName(name) {
