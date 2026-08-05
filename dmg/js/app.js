@@ -40,6 +40,8 @@ const App = {
       comboMultSlider: 1,
       lightAttackComboEnabled: false,
       lightAttackComboSlider: 1,
+      comboAbilityEnabled: false,
+      comboAbilitySlider: 12,
       sniperComboEnabled: false,
       sniperComboSlider: 1,
       abilityStrength: 100,
@@ -299,6 +301,8 @@ const App = {
     });
 
     document.querySelectorAll('.option-item').forEach(item => {
+      // 双类元素 (option-item checkbox-option) 由 checkbox-option 监听器处理, 避免双重toggle
+      if (item.classList.contains('checkbox-option')) return;
       item.addEventListener('click', () => {
         item.classList.toggle('active');
         const opt = item.dataset.option;
@@ -319,6 +323,36 @@ const App = {
         this.state.options.comboMultEnabled = true;
         this.state.options.comboMultSlider = parseFloat(e.target.value) || 1;
         $('combo-value').textContent = e.target.value;
+        this.recalculate();
+      });
+    }
+
+    const lightComboSlider = $('light-combo-slider');
+    if (lightComboSlider) {
+      lightComboSlider.addEventListener('input', e => {
+        this.state.options.lightAttackComboEnabled = true;
+        this.state.options.lightAttackComboSlider = parseFloat(e.target.value) || 1;
+        $('light-combo-value').textContent = e.target.value;
+        this.recalculate();
+      });
+    }
+
+    const comboAbilitySlider = $('combo-ability-slider');
+    if (comboAbilitySlider) {
+      comboAbilitySlider.addEventListener('input', e => {
+        this.state.options.comboAbilityEnabled = true;
+        this.state.options.comboAbilitySlider = parseFloat(e.target.value) || 1;
+        $('combo-ability-value').textContent = e.target.value;
+        this.recalculate();
+      });
+    }
+
+    const sniperComboSlider = $('sniper-combo-slider');
+    if (sniperComboSlider) {
+      sniperComboSlider.addEventListener('input', e => {
+        this.state.options.sniperComboEnabled = true;
+        this.state.options.sniperComboSlider = parseFloat(e.target.value) || 1.5;
+        $('sniper-combo-value').textContent = e.target.value;
         this.recalculate();
       });
     }
@@ -1638,14 +1672,9 @@ const App = {
     if (mod.rank !== undefined) return mod.rank;
     if (mod.action) {
       const a = mod.action;
+      // 基础伤害MOD (膛线类) 满级10, 其余MOD满级5 (参考站MOD均为满级计算)
       if (a.base !== undefined && a.base > 1) return 10;
-      if (a.crit_chance !== undefined && a.crit_chance > 0.1) return 10;
-      if (a.crit_mult !== undefined && a.crit_mult > 0.1) return 10;
-      if (a.multishot !== undefined && a.multishot > 0.1) return 10;
-      if (a.speed !== undefined && a.speed > 0.05) return 10;
-      if (a.status_chance !== undefined && a.status_chance > 0.1) return 10;
-      if (a.element && Object.values(a.element).some(v => v > 0.1)) return 10;
-      if (a.phys && Object.values(a.phys).some(v => v > 0.1)) return 10;
+      if (a.flat_base_damage && a.flat_base_damage > 0) return 10;
     }
     return 5;
   },
@@ -2626,7 +2655,12 @@ const App = {
     const opts = {
       headshot: this.state.options.headshot,
       steelPath: this.state.steelPath,
-      comboMultiplier: this.state.options.comboMultEnabled ? this.state.options.comboMultSlider : 1,
+      // 连击倍率: 轻攻击连击倍数(近战) 优先, 否则用连击计数器 (参考站 comboCounterSettingsVal/optMeleeCombo)
+      comboMultiplier: this.state.options.lightAttackComboEnabled
+        ? this.state.options.lightAttackComboSlider
+        : (this.state.options.comboMultEnabled ? this.state.options.comboMultSlider : 1),
+      // 连击能力倍率 (仅显赫武器, 参考站 optAbilityCombo)
+      abilityComboMult: this.state.options.comboAbilityEnabled ? this.state.options.comboAbilitySlider : 1,
       statusStacks: this.state.options.manualStatusCount ? this.buildStatusStacks() : {},
       heavyAttack: this.state.options.heavyAttack,
       heavyAttackStart: this.state.options.heavyAttackStartEnabled ? this.state.options.heavyAttackStartSlider : 1,
@@ -3617,6 +3651,7 @@ const App = {
       headshot: false, steelPath: false, eximus: false, stealth: false, heavyAttack: false,
       comboMultEnabled: false, comboMultSlider: 1,
       lightAttackComboEnabled: false, lightAttackComboSlider: 1,
+      comboAbilityEnabled: false, comboAbilitySlider: 12,
       sniperComboEnabled: false, sniperComboSlider: 1,
       abilityStrength: 100, externalVirus: false, virusStacks: 0,
       armorStrip: 0, manualStatusCount: false, manualStatusValue: 0,

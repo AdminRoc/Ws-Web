@@ -594,6 +594,12 @@ li.modListItemActive .modListItem {
 /* â”€â”€ é€‰é¡¹ï¿½?â”€â”€ */
 .option-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .checkbox-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.checkbox-option.active .option-checkbox {
+  background: var(--c-gold-bright); border-color: var(--c-gold-bright);
+}
+.checkbox-option.active .option-checkbox::after {
+  content: '\2713'; color: #0a0800; font-size: 1.05rem; font-weight: bold;
+}
 
 /* â”€â”€ é¢æ¿åˆ†ç±» â”€â”€ */
 .weapon-panel {
@@ -1279,7 +1285,7 @@ li.modListItemActive .modListItem {
   border-radius: 1px;
 }
 
-/* ¨T¨T¨T ÃüÖĞÊ±¼äÏß (per-hit timeline) ¨T¨T¨T */
+/* ï¿½Tï¿½Tï¿½T ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ (per-hit timeline) ï¿½Tï¿½Tï¿½T */
 .timeline-hit {
   display: flex;
   flex-direction: column;
@@ -1329,7 +1335,7 @@ li.modListItemActive .modListItem {
   margin: 1px;
 }
 
-/* ¨T¨T¨T ËÑË÷¸ßÁÁ (²Î¿¼Õ¾ hlText µÈ¼Û) ¨T¨T¨T */
+/* ï¿½Tï¿½Tï¿½T ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Î¿ï¿½Õ¾ hlText ï¿½È¼ï¿½) ï¿½Tï¿½Tï¿½T */
 .hlText {
   color: var(--c-gold-bright);
   font-weight: 700;

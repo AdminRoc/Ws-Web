@@ -737,6 +737,11 @@ const DamageCalculator = {
           dmgWithCrit *= opts.sniperCombo;
         }
 
+        // 连击能力倍率 (仅显赫武器, 参考站 optAbilityCombo Z 逻辑 - 每发应用)
+        if (opts.abilityComboMult && opts.abilityComboMult > 1 && weapon.type === 'Exalted Weapon') {
+          dmgWithCrit *= opts.abilityComboMult;
+        }
+
         // 应用额外固定伤害
         dmgWithCrit += (pMods.flatChangeDmg || 0);
 
@@ -829,8 +834,8 @@ const DamageCalculator = {
           if (innateDr > 0) xataTotalDmg *= (1 - innateDr);
         }
 
-        // 5. 乘以Xata's Whisper百分比并取整
-        xataTotalDmg = Math.round(xataTotalDmg * xataPercent * str);
+        // 5. 乘以Xata's Whisper百分比并取整 (连击能力倍率仅显赫武器, 参考站 Z)
+        xataTotalDmg = Math.round(xataTotalDmg * xataPercent * str * ((opts.abilityComboMult > 1 && weapon.type === 'Exalted Weapon') ? opts.abilityComboMult : 1));
         totalDamage += xataTotalDmg;
         totalDirectDamage += xataTotalDmg;
       }
@@ -907,7 +912,7 @@ const DamageCalculator = {
       const shotTotalDmg = shot.pellets.reduce((sum, p) => {
         const baseTotal = Object.values(p.damage).reduce((s, v) => s + v, 0);
         return sum + baseTotal * p.critMult;
-      }, 0);
+      }, 0) * ((opts.abilityComboMult > 1 && weapon.type === 'Exalted Weapon') ? opts.abilityComboMult : 1);
       // Distribute direct damage proportionally into per-second buckets
       const startSec = Math.floor(shotStart);
       const endSec = Math.min(Math.ceil(shotEnd), Math.ceil(duration));
@@ -931,11 +936,12 @@ const DamageCalculator = {
       : dps;
 
     // 中位数伤害 (per-shot)
+    const abilityComboShotMult = (opts.abilityComboMult > 1 && weapon.type === 'Exalted Weapon') ? opts.abilityComboMult : 1;
     const shotDamages = queue.map(shot => {
       return shot.pellets.reduce((sum, p) => {
         const baseTotal = Object.values(p.damage).reduce((s, v) => s + v, 0);
         return sum + baseTotal * p.critMult;
-      }, 0);
+      }, 0) * abilityComboShotMult;
     });
     const sortedDamages = [...shotDamages].sort((a, b) => a - b);
     const medianDmg = sortedDamages[Math.floor(sortedDamages.length / 2)] || 0;
@@ -1567,7 +1573,10 @@ const DamageCalculator = {
     mods.forEach((mod, idx) => {
       if (!mod || !mod.action) return;
       const rank = modRanks[idx] || 0;
-      const maxRank = (mod.maxRank !== undefined) ? mod.maxRank : ((mod.rank !== undefined) ? mod.rank : 10);
+      // 满级判定: 基础伤害MOD(膛线类)满级10, 其余满级5 (与 app.js getModMaxRank 一致)
+      let maxRank = (mod.maxRank !== undefined) ? mod.maxRank : ((mod.rank !== undefined) ? mod.rank : 5);
+      if (maxRank === 5 && mod.action.base !== undefined && mod.action.base > 1) maxRank = 10;
+      if (maxRank === 5 && mod.action.flat_base_damage && mod.action.flat_base_damage > 0) maxRank = 10;
       const rankScale = maxRank > 0 ? (rank / maxRank) : 1;
       const a = mod.action;
       if (a.base) result.base += a.base * rankScale;
