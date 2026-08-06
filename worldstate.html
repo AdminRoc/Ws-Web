@@ -4753,9 +4753,9 @@
     var gotLiveData = false;
 
     /* warframestat.us API（可能被中国大陆屏蔽） */
-    var apiP = Promise.all(eps.map(fetchOne)).then(function (res) {
-      eps.forEach(function (k, i) { if (res[i] !== null) { D[k] = res[i]; gotLiveData = true; } });
-    });
+    /* warframestat.us 透传被上游 Cloudflare 403 拦截，直连被墙——跳过，省掉 19 个请求。
+       数据由 rawP (raw-ws 透传, 7 字段+bounties) + fallbackP (快照兜底) 全覆盖 */
+    var apiP = Promise.resolve();
 
     /* raw worldState 兜底：与 apiP 并发 */
     var rawP = getRawWS().then(function (ws) {
