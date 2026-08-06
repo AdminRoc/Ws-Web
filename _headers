@@ -1,23 +1,163 @@
-# EdgeOne Pages 静态资源缓存规则（语法与 Cloudflare Pages 的 _headers 一致，EdgeOne Pages 原生支持）。
-#
-# data/*.json：物品检索索引(wm-items.json/drops-index.json)、世界状态镜像快照
-# (ws-intl-zh.json/ws-cn-zh.json)等由 GitHub Actions 定期写回仓库的"预先生成好的
-# 静态数据"，本来就该交给 CDN 长期缓存而不是每次都回源——这正是点5里要的"可搜索
-# 索引库 + 缩略图都走 CDN 长期缓存，多页面复用"的落地方式之一。
-#   - s-maxage=86400：边缘节点缓存 24 小时，命中率收益最大的一档。
-#   - max-age=600：浏览器本地只信 10 分钟，避免数据更新后用户长时间看到旧值。
-#   - stale-while-revalidate=3600：缓存过期后先吐旧值，后台悄悄换新，不让用户等。
-# 注意：EdgeOne Pages 每次新部署都会整体刷新该次构建产物的边缘缓存，旧版本数据
-# 不会因为这条缓存规则而"赖" CDN 不更新。
+# ============================================================================
+# EdgeOne Pages 缓存规则
+# 语法与 Cloudflare Pages 的 _headers 一致，EdgeOne Pages 原生支持。
+# 规则优先级：具体文件路径 > 目录 > 文件后缀 > 全部文件
+# ============================================================================
+
+# --------------------------------------------------------------------------
+# 1. 默认规则：所有文件
+#    边缘缓存 1 天，浏览器缓存 10 分钟
+# --------------------------------------------------------------------------
+/*
+  Cache-Control: public, max-age=600, s-maxage=86400
+
+# --------------------------------------------------------------------------
+# 2. HTML 文件：不缓存
+# --------------------------------------------------------------------------
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+/*.htm
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# --------------------------------------------------------------------------
+# 3. CSS 文件：长期缓存（365 天，immutable）
+# --------------------------------------------------------------------------
+/*.css
+  Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable
+
+# --------------------------------------------------------------------------
+# 4. JS 文件：长期缓存（365 天，immutable）
+#    注意：/data/ 下的 JS 数据文件会被更具体的规则覆盖
+# --------------------------------------------------------------------------
+/*.js
+  Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable
+
+# --------------------------------------------------------------------------
+# 5. 字体文件：缓存 30 天
+# --------------------------------------------------------------------------
+/*.ttf
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.woff2
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.woff
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.otf
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.eot
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+
+# --------------------------------------------------------------------------
+# 6. 图片文件：缓存 30 天
+# --------------------------------------------------------------------------
+/*.png
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.jpg
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.jpeg
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.gif
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.svg
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.webp
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.ico
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+/*.bmp
+  Cache-Control: public, max-age=2592000, s-maxage=2592000
+
+# --------------------------------------------------------------------------
+# 7. /data 目录：默认缓存 1 小时
+# --------------------------------------------------------------------------
+/data
+  Cache-Control: public, max-age=3600, s-maxage=3600
+
+# --------------------------------------------------------------------------
+# 8. /data/*.json：默认缓存 10 分钟（边缘），1 分钟（浏览器）
+#    用于未被下方具体规则覆盖的 JSON 文件
+# --------------------------------------------------------------------------
 /data/*.json
-  Cache-Control: public, max-age=600, s-maxage=86400, stale-while-revalidate=3600
+  Cache-Control: public, max-age=60, s-maxage=600
 
-# data/icons/*：实际下载缓存进本仓库的物品缩略图文件（见 cache_item_icons.py /
-# cache-item-icons.yml），文件名本身已经带版本含义(WM图标文件名、wiki条目名)，同名
-# 文件内容不会变，可以放心长期不过期缓存，不需要像 json 数据那样留短revalidate窗口。
-/data/icons/*
-  Cache-Control: public, max-age=2592000, s-maxage=2592000, immutable
+# --------------------------------------------------------------------------
+# 9. /data/i18n 目录：缓存 1 天
+# --------------------------------------------------------------------------
+/data/i18n/*
+  Cache-Control: public, max-age=86400, s-maxage=86400
 
-# 注：另有一部分物品图标走的是 wm.wfspeed.run/static/*（EdgeOne 边缘函数自己的缓存
-# 逻辑，见 edgeone-function.js），那是本地缓存没命中时的兜底路径，不是本 Pages 站点下
-# 的路径，这里不需要也不应该重复配置。
+# --------------------------------------------------------------------------
+# 10. /data/auction-dicts 目录：缓存 1 小时
+# --------------------------------------------------------------------------
+/data/auction-dicts/*
+  Cache-Control: public, max-age=3600, s-maxage=3600
+
+# --------------------------------------------------------------------------
+# 11. _bundle.js 文件：缓存 1 小时
+#     这些是按任务类型打包的数据文件，由 bundle-data.yml 生成
+# --------------------------------------------------------------------------
+/data/*/_bundle.js
+  Cache-Control: public, max-age=3600, s-maxage=3600
+
+# --------------------------------------------------------------------------
+# 12. 世界状态文件：边缘缓存 2 分钟，浏览器缓存 1 分钟
+#     stale-while-revalidate=300：过期后先吐旧值，后台换新
+# --------------------------------------------------------------------------
+/data/worldstate-all.json
+  Cache-Control: public, max-age=60, s-maxage=120, stale-while-revalidate=300
+/data/worldstate-snapshot.js
+  Cache-Control: public, max-age=60, s-maxage=120, stale-while-revalidate=300
+/data/ws-intl-zh.json
+  Cache-Control: public, max-age=60, s-maxage=120, stale-while-revalidate=300
+/data/ws-intl-en.json
+  Cache-Control: public, max-age=60, s-maxage=120, stale-while-revalidate=300
+/data/ws-cn-zh.json
+  Cache-Control: public, max-age=60, s-maxage=120, stale-while-revalidate=300
+/data/ws-cn-en.json
+  Cache-Control: public, max-age=60, s-maxage=120, stale-while-revalidate=300
+/data/cn-solnodes.json
+  Cache-Control: public, max-age=60, s-maxage=120, stale-while-revalidate=300
+/data/ws-cn-null00.json
+  Cache-Control: public, max-age=60, s-maxage=120, stale-while-revalidate=300
+
+# --------------------------------------------------------------------------
+# 13. Tenet Coda 轮换：边缘缓存 5 分钟，浏览器缓存 1 分钟
+# --------------------------------------------------------------------------
+/data/tenet-coda-rotation.json
+  Cache-Control: public, max-age=60, s-maxage=300
+
+# --------------------------------------------------------------------------
+# 14. 物品库 & 掉落索引：缓存 30 分钟
+# --------------------------------------------------------------------------
+/data/wm-items.json
+  Cache-Control: public, max-age=1800, s-maxage=1800
+/data/drops-index.json
+  Cache-Control: public, max-age=1800, s-maxage=1800
+
+# --------------------------------------------------------------------------
+# 15. Arb 基线 & 拍卖字典：缓存 1 小时
+# --------------------------------------------------------------------------
+/data/arb-node-baseline.json
+  Cache-Control: public, max-age=3600, s-maxage=3600
+/data/arb-node-baseline.js
+  Cache-Control: public, max-age=3600, s-maxage=3600
+
+# --------------------------------------------------------------------------
+# 16. 静态数据文件：缓存 1 天
+#     这些文件变动频率低（每周/每月更新一次）
+# --------------------------------------------------------------------------
+/data/icon-index.json
+  Cache-Control: public, max-age=86400, s-maxage=86400
+/data/wiki-icon-harvest.json
+  Cache-Control: public, max-age=86400, s-maxage=86400
+/data/item-i18n-harvest.json
+  Cache-Control: public, max-age=86400, s-maxage=86400
+/data/pinyin-map.json
+  Cache-Control: public, max-age=86400, s-maxage=86400
+/data/item-names-zh.json
+  Cache-Control: public, max-age=86400, s-maxage=86400
+/data/wm-zh-supplement.json
+  Cache-Control: public, max-age=86400, s-maxage=86400
+/data/arbitration-schedule-v2.json
+  Cache-Control: public, max-age=86400, s-maxage=86400
+/data/calamity-i18n-harvest.json
+  Cache-Control: public, max-age=86400, s-maxage=86400
