@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 伤害计算引擎 v3.0 - 13步随机DPS队列算法
  * 完整复刻 warframe-damage.com/zh 的计算逻辑
  * 支持: MOD解析 / 元素组合 / 多重攻击 / AoE / 光束武器 / 蓄力武器 / 状态异常 / DoT / 队列模拟
@@ -266,8 +266,8 @@ const DamageCalculator = {
       ? (weapon.maxHeavyCombo || 12)
       : (opts.comboMultiplier || 1) + (pMods.abilityCombo || 0);
 
-    // 初始连击加成 (Initial Combo from mods)
-    const initialCombo = isMelee ? (pMods.initialCombo || 0) : 0;
+    // 初始连击加成 (Initial Combo from mods + Incarnon进化)
+    const initialCombo = isMelee ? ((pMods.initialCombo || 0) + (opts.evoInitialCombo || 0)) : 0;
 
     // ═══ 步骤1b: 射击次数 (参考站 createDmgQueue L686-689 三分类语义)
     // M: 光束=0.5 弹药/帧; 普通=攻击级 ammoCost||1; "all"=整匣一发
@@ -380,6 +380,11 @@ const DamageCalculator = {
           const dmgKeys = Object.keys(atk.damage || {});
           pellet.statusProcs.push(baseElems[Math.floor(Math.random() * baseElems.length)]);
           if (dmgKeys.length) pellet.statusProcs.push(dmgKeys[Math.floor(Math.random() * dmgKeys.length)]);
+        }
+
+        // Evensong 特殊 (参考站 setForceProcs @734): 每发强制7层穿刺状态
+        if (weapon.name === 'Evensong') {
+          for (let i = 0; i < 7; i++) pellet.statusProcs.push('Puncture');
         }
 
         // 保证触发Puncture状态 (addPunctureStatus)
@@ -555,6 +560,20 @@ const DamageCalculator = {
           }
         }
 
+        // Incarnon: 爆头暴击几率 (参考站 getFinalWeaponCritChance @503: r = is_headShot ? headCritChance : 0)
+        if (opts.evoHeadCritChance > 0 && pellet.headshot) {
+          finalCritChance += opts.evoHeadCritChance;
+        }
+
+        // Incarnon: 每状态+暴击几率 (参考站 @504: x = status_chance*val, 封顶 max)
+        if (opts.evoIncCritPerStatus && opts.evoIncCritPerStatus.val > 0) {
+          const { val, max } = opts.evoIncCritPerStatus;
+          const atkSC = (atk.status_chance || 0) / 100;
+          let incX = atkSC * val;
+          if (max > 0 && incX > max) incX = max;
+          finalCritChance += incX;
+        }
+
         const critTier = Math.min(this.getHitTier(finalCritChance) + coldTierUpgrade, 5);
 
         // Vigilante set bonus: 每5%概率升级一层暴击
@@ -576,6 +595,14 @@ const DamageCalculator = {
         // Puncture状态每层增加暴击倍率
         if (pMods.incrCMPuncStatus > 0 && punctureStacks > 0) {
           critMult += pMods.incrCMPuncStatus * punctureStacks;
+        }
+
+        // Incarnon: 条件暴击倍率 (参考站 @507: 暴击几率低于cond时 +val)
+        if (opts.evoCritMultBelowCC && opts.evoCritMultBelowCC.cond > 0) {
+          const ccPercent = finalCritChance * 100;
+          if (ccPercent < opts.evoCritMultBelowCC.cond) {
+            critMult += opts.evoCritMultBelowCC.val;
+          }
         }
 
         // critAfterStatus: 对有状态的敌人强制暴击
@@ -748,7 +775,7 @@ const DamageCalculator = {
         dmgWithCrit *= factMult;
 
         // 应用护甲减免 (实时护甲)
-        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, shot.time);
+        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, shot.time, opts.evoDecrArmorByPunc || 0);
         const armorDR = this.getDMGReduction(currentArmor);
         dmgWithCrit *= (1 - armorDR);
 
@@ -815,8 +842,8 @@ const DamageCalculator = {
           dmgWithCrit *= opts.abilityComboMult;
         }
 
-        // 应用额外固定伤害
-        dmgWithCrit += (pMods.flatChangeDmg || 0);
+        // 应用额外固定伤害 (含Incarnon进化 flat_change_dmg)
+        dmgWithCrit += (pMods.flatChangeDmg || 0) + (opts.evoFlatChangeDmg || 0);
 
         // Cascadia Empowered: 每种负面状态+额外伤害
         if (pMods.dmgOnStatusEff > 0) {
@@ -888,7 +915,7 @@ const DamageCalculator = {
         }
 
         // 2. 使用最后计算时的伤害区域 (优先级: overguard > shield > armor > health)
-        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, duration > 0 ? duration : 0);
+        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, duration > 0 ? duration : 0, opts.evoDecrArmorByPunc || 0);
         let currentRegion = 'health';
         if (enemy.overguard && enemy.overguard > 0) currentRegion = 'overguard';
         else if (enemy.shield > 0) currentRegion = 'shield';
@@ -936,7 +963,7 @@ const DamageCalculator = {
         }
 
         // 计算当前伤害区域的DR因子
-        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, duration > 0 ? duration : 0);
+        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, duration > 0 ? duration : 0, opts.evoDecrArmorByPunc || 0);
         let armorFactor = 1;
         let currentRegion = 'health';
         if (enemy.overguard && enemy.overguard > 0) currentRegion = 'overguard';
@@ -1555,7 +1582,7 @@ const DamageCalculator = {
     }
   },
 
-  getCurrentArmor(baseArmor, statusTimeQueue, time) {
+  getCurrentArmor(baseArmor, statusTimeQueue, time, decrArmorByPunc = 0) {
     let armor = baseArmor;
 
     // Corrosive削减
@@ -1578,6 +1605,20 @@ const DamageCalculator = {
     });
     if (hasHeat) {
       armor *= 0.5;
+    }
+
+    // 穿刺减甲 (参考站 decr_armor_by_punc: 每层穿刺状态移除 ea% 护甲, 乘法叠加)
+    if (decrArmorByPunc > 0) {
+      const punctureEvents = statusTimeQueue.Puncture || [];
+      let puncStacks = 0;
+      punctureEvents.forEach(event => {
+        if (time >= event.time && time < event.endTime) {
+          puncStacks = Math.max(puncStacks, event.stacks);
+        }
+      });
+      if (puncStacks > 0) {
+        armor *= Math.pow(1 - decrArmorByPunc, puncStacks);
+      }
     }
 
     return Math.max(0, armor);
@@ -1789,6 +1830,7 @@ const DamageCalculator = {
       addElectricityNotCombined: 0, addToxinNotCombined: 0,
       addHeatNotCombinedSBS: 0, addColdNotCombinedSBS: 0,
       addElectricityNotCombinedSBS: 0, addToxinNotCombinedSBS: 0,
+      physModsInc: 0,
       dmgMultAgainstFrozen: 0, critFlatChancePerStatuses: 0,
       flatCritWithStatus: 0, disableBodyCrit: false,
       multiplicativeBasePerStatus: false,
@@ -1852,6 +1894,7 @@ const DamageCalculator = {
       if (a.SMITE) Object.entries(a.SMITE).forEach(([f, m]) => { result.smite[f] = (result.smite[f] || 0) + m * rankScale; });
       if (a.element) Object.entries(a.element).forEach(([e, m]) => { result.element[e] = (result.element[e] || 0) + m * rankScale; });
       if (a.phys) Object.entries(a.phys).forEach(([e, m]) => { result.phys[e] = (result.phys[e] || 0) + m * rankScale; });
+      if (a.physModsInc) result.physModsInc += a.physModsInc * rankScale;
       if (a.flat_crit_chance) result.flatCritChance += a.flat_crit_chance * rankScale;
       if (a.crit_mult_add) result.flatCritMult += a.crit_mult_add * rankScale;
       if (a.WITH_COND) Object.entries(a.WITH_COND).forEach(([k, v]) => { if (typeof v === 'number') result.withCond[k] = (result.withCond[k] || 0) + v * rankScale; });
@@ -1971,6 +2014,45 @@ const DamageCalculator = {
       if (a.addGasS) result.addGasS += a.addGasS * rankScale;
       if (a.addBlastS) result.addBlastS += a.addBlastS * rankScale;
     });
+
+      // 武器级 unique 属性 (参考站 getStatFromUnique @537: isMaxCond 时取 WITH_COND 键, 否则取普通键)
+      // 作用于所有攻击的全局加成 (Evensong/Cantare/Harmony 等武器)
+      const weaponUnique = weapon && weapon.unique;
+      if (weaponUnique) {
+        const uniqPick = (k) => {
+          if (applyWithCond && weaponUnique.WITH_COND && weaponUnique.WITH_COND[k] !== undefined) return weaponUnique.WITH_COND[k];
+          return weaponUnique[k] !== undefined ? weaponUnique[k] : 0;
+        };
+        const uKeys = {
+          base: 'base', crit_chance: 'critChance', crit_mult: 'critMult', multishot: 'multishot',
+          speed: 'speed', status_chance: 'statusChance', status_damage: 'statusDamage',
+          flat_crit_chance: 'flatCritChance', range: 'range', punch_through: 'punchThrough',
+          reloadTime: 'reloadTime', magazineSize: 'magazineSize', initialCombo: 'initialCombo',
+          windUp: 'windUp', charge_time: 'chargeTime', zoom: 'zoom', beam_length: 'beamLength',
+          shot_speed: 'shotSpeed', accuracy: 'accuracy', comboDuration: 'comboDuration',
+          crit_chance_weakp: 'weakCritChance', mult_for_head: 'multForHead',
+          status_damage_slash: 'statusDamageSlash', physModsInc: 'physModsInc',
+          reloadRate: 'reloadRate', reloadDelay: 'reloadDelay', melee_combo_eff: 'meleeComboEff'
+        };
+        Object.entries(uKeys).forEach(([uk, rk]) => {
+          const uv = uniqPick(uk);
+          if (uv) result[rk] += uv;
+        });
+        // 物理MOD加成 (参考站 getPhysMods @529: 物理MOD值 × (1+physModsInc))
+        if (result.physModsInc > 0 && Object.keys(result.phys).length > 0) {
+          const pmInc = 1 + result.physModsInc;
+          Object.keys(result.phys).forEach(f => { result.phys[f] *= pmInc; });
+        }
+        // unique 元素注入 (addHeat/addCold 等, 参考站 getStatValFromMods 汇总链路)
+        ['addRadiation', 'addMagnetic', 'addGas', 'addViral', 'addCorrosive', 'addBlast',
+          'addHeatNotCombined', 'addColdNotCombined', 'addElectricityNotCombined', 'addToxinNotCombined',
+          'addHeatNotCombinedScaledByStrength', 'addColdNotCombinedScaledByStrength',
+          'addElectricityNotCombinedScaledByStrength', 'addToxinNotCombinedScaledByStrength',
+          'addRadiationS', 'addMagneticS', 'addGasS', 'addBlastS', 'addCorrosiveS'].forEach(ek => {
+          const ev = uniqPick(ek);
+          if (ev && ek in result) result[ek] += ev;
+        });
+      }
 
     // 应用条件MOD
     if (applyWithCond && result.withCond) {
@@ -2120,7 +2202,7 @@ const DamageCalculator = {
       Heat: (processedMods.addHeatNotCombined || 0) + (processedMods.addHeatNotCombinedSBS || 0) * strengthMult + (processedMods.heatAdd || 0),
       Electricity: (processedMods.addElectricityNotCombined || 0) + (processedMods.addElectricityNotCombinedSBS || 0) * strengthMult,
       Cold: (processedMods.addColdNotCombined || 0) + (processedMods.addColdNotCombinedSBS || 0) * strengthMult,
-      Toxin: (processedMods.addToxinNotCombined || 0) + (processedMods.addToxinNotCombinedSBS || 0) * strengthMult,
+      Toxin: (processedMods.addToxinNotCombined || 0) + (processedMods.addToxinNotCombinedSBS || 0) * strengthMult + (opts.evoAddToxin || 0),
       Viral: (processedMods.addViral || 0) + nourishMult,
       Corrosive: (processedMods.addCorrosive || 0) + (processedMods.addCorrosiveS || 0) * strengthMult,
       Radiation: (processedMods.addRadiation || 0) + (processedMods.addRadiationS || 0) * strengthMult,

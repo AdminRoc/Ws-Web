@@ -166,7 +166,8 @@ function initMobileNav() {
     { cn: '功能扩展', sub: [
         { cn: '全站搜索',  href: 'search.html',    feature: true },
         { cn: '世界状态',  href: 'worldstate.html', feature: true },
-        { cn: '日志解析',  href: 'eelog.html',      feature: true }
+        { cn: '日志解析',  href: 'eelog.html',      feature: true },
+        { cn: '智能问答',  href: 'https://bot.wfspeed.run', feature: true, external: true }
     ]}
   ];
 
@@ -212,6 +213,7 @@ function initMobileNav() {
         a.className = 'mnd-sub-item' + (s.feature ? ' nav-feature-link' : '');
         a.href = s.href;
         a.textContent = s.cn;
+        if (s.external) { a.target = '_blank'; a.rel = 'noopener'; }
         if (s.href === currentPage) a.classList.add('mnd-active');
         sub.appendChild(a);
       });

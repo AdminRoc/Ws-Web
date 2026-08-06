@@ -249,7 +249,7 @@ const App = {
         { key: 'electricityAbilityDmg', name: '电击异常增加技能伤害', regular: 10, tau: 15, unit: '%', type: 'electricity' },
         { key: 'primaryElectricityDmg', name: '主武器电击伤害', regular: 30, tau: 45, unit: '%', type: 'electricity', note: '每颗深红/蔚蓝/紫晶额外+10%/15%' },
         { key: 'meleeCritDmg', name: '近战暴击伤害', regular: 25, tau: 37.5, unit: '%', type: 'melee', note: '能量>500时翻倍' },
-        { key: 'healthEnergyConversion', name: '生命/能量球互转', regular: 20, tau: 30, unit: '%', type: 'utility' }
+        { key: 'healthEnergyConversion', name: '生命/能量球互换', regular: 20, tau: 30, unit: '%', type: 'utility' }
       ]
     },
     emerald: {
@@ -753,7 +753,7 @@ const App = {
       const data = GameData.getWeaponData(w.name);
       const catZh = data ? (GameData.CATEGORY_NAMES[data.category] || data.category) : '';
       const typeZh = data ? (GameData.WEAPON_TYPE_NAMES[data.type] || data.type) : '';
-      // 高亮匹配关键词 (参考站 hlText 等价)
+      // 高亮匹配关键字 (参考站 hlText 等价)
       const hl = (text) => {
         if (!q || q.length === 0) return text;
         const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
@@ -931,7 +931,7 @@ const App = {
 
     // 获取可用握柄类型
     const availableGrips = Object.entries(GameData.ZAW_GRIPS).filter(([name, data]) => {
-      // 检查握柄是否兼容当前武器类型
+      // 检查握柄是否兼容当前武器类别
       return data.type.some(t => this.state.selectedWeapon.type.toLowerCase().includes(t.replace('melee-', '')));
     });
 
@@ -953,14 +953,14 @@ const App = {
           击刃: ${strikeName} (速度修正: ${strikeData ? (strikeData.speed > 0 ? '+' : '') + strikeData.speed : 'N/A'})
         </div>
         <div class="stat-row">
-          <span class="stat-label">握柄部 (Grip)</span>
+          <span class="stat-label">握柄 (Grip)</span>
           <select id="zaw-grip" class="weapon-select" style="max-width:150px;" onchange="App.onZawGripChange(this.value)">
             <option value="">-- 选择握柄 --</option>
             ${gripOptions}
           </select>
         </div>
         <div class="stat-row">
-          <span class="stat-label">环接部 (Link)</span>
+          <span class="stat-label">环接 (Link)</span>
           <select id="zaw-link" class="weapon-select" style="max-width:150px;" onchange="App.onZawLinkChange(this.value)">
             <option value="">-- 选择环接 --</option>
             ${linkOptions}
@@ -1013,14 +1013,14 @@ const App = {
           枪膛: ${chamberName} (${weaponType === 'primary' ? '主武器' : '副武器'})
         </div>
         <div class="stat-row">
-          <span class="stat-label">握柄部 (Grip)</span>
+          <span class="stat-label">握柄 (Grip)</span>
           <select id="kitgun-grip" class="weapon-select" style="max-width:150px;" onchange="App.onKitgunGripChange(this.value)">
             <option value="">-- 选择握柄 --</option>
             ${gripOptions}
           </select>
         </div>
         <div class="stat-row">
-          <span class="stat-label">弹仓部 (Loader)</span>
+          <span class="stat-label">弹仓 (Loader)</span>
           <select id="kitgun-loader" class="weapon-select" style="max-width:150px;" onchange="App.onKitgunLoaderChange(this.value)">
             <option value="">-- 选择弹仓 --</option>
             ${loaderOptions}
@@ -1117,17 +1117,93 @@ const App = {
     const evoData = GameData.getIncarnonEvo(weaponName);
     if (!evoData) return null;
 
-    const evoMods = { base: 0, crit_chance: 0, crit_mult: 0, multishot: 0, speed: 0, status_chance: 0, status_damage: 0, range: 0 };
+    const evoMods = {
+      base: 0, crit_chance: 0, crit_mult: 0, multishot: 0, speed: 0,
+      status_chance: 0, status_damage: 0, range: 0,
+      flatCritChance: 0, flatCritMult: 0, flatMultishot: 0, flatStatusChance: 0,
+      ammoCapacity: 0, addToxin: 0, initialCombo: 0, windUp: 0,
+      punchThrough: 0, shotSpeed: 0, magazineSize: 0, reloadTime: 0,
+      chargeTime: 0, accuracy: 0, zoom: 0, beamLength: 0, flatChangeDmg: 0,
+      meleeComboEff: 0, comboDuration: 0, ammoEff: 0, headCritChance: 0,
+      incCritPerStatus: null, critMultBelowCC: null
+    };
     const slotKeys = ['slot1', 'slot2', 'slot3', 'slot4'];
+
+    // 参考站: INCARNON键作用于Incarnon形态攻击, NORMAL键作用于普通形态, WITH_COND在isMaxCond时生效
+    // 简化: 汇总所有键 (普通形态), Incarnon形态的INCARNON键由调用处叠加
+    const applyEffects = (effects) => {
+      if (!effects || typeof effects !== 'object') return;
+      Object.entries(effects).forEach(([k, v]) => {
+        if (k === 'headCritChance') { evoMods.headCritChance += v; return; }
+        if (k === 'inc_add_crit_chance_per_status_up' && v && typeof v === 'object') {
+          evoMods.incCritPerStatus = { val: v.val || 0, max: v.max || 0 };
+          return;
+        }
+        if (k === 'flat_critmult_below_cchance' && v && typeof v === 'object') {
+          evoMods.critMultBelowCC = { val: v.val || 0, cond: v.cond || 0 };
+          return;
+        }
+        if (k === 'l_add_multishot') { evoMods.flatMultishot += v; return; }
+        if (k === 'ammoEff') { evoMods.ammoEff += v; return; }
+        if (typeof v !== 'number') return;
+        if (k === 'add_crit_chance') evoMods.flatCritChance += v;
+        else if (k === 'flat_crit_chance') evoMods.flatCritChance += v;
+        else if (k === 'flat_critmult') evoMods.flatCritMult += v;
+        else if (k === 'crit_mult_add') evoMods.flatCritMult += v;
+        else if (k === 'flat_multishot') evoMods.flatMultishot += v;
+        else if (k === 'flat_status_chance') evoMods.flatStatusChance += v;
+        else if (k === 'absolute_status_chance') evoMods.flatStatusChance += v;
+        else if (k === 'set_ammoCapacity') evoMods.ammoCapacity = Math.max(evoMods.ammoCapacity, v);
+        else if (k === 'add_toxin') evoMods.addToxin += v;
+        else if (k === 'base') evoMods.base += v;
+        else if (k === 'crit_chance') evoMods.crit_chance += v;
+        else if (k === 'crit_mult') evoMods.crit_mult += v;
+        else if (k === 'multishot') evoMods.multishot += v;
+        else if (k === 'speed') evoMods.speed += v;
+        else if (k === 'status_chance') evoMods.status_chance += v;
+        else if (k === 'status_damage') evoMods.status_damage += v;
+        else if (k === 'range') evoMods.range += v;
+        else if (k === 'initialCombo') evoMods.initialCombo += v;
+        else if (k === 'windUp') evoMods.windUp += v;
+        else if (k === 'punch_through') evoMods.punchThrough += v;
+        else if (k === 'shot_speed') evoMods.shotSpeed += v;
+        else if (k === 'magazineSize') evoMods.magazineSize += v;
+        else if (k === 'add_magazineSize') evoMods.magazineSize += v;
+        else if (k === 'reloadTime') evoMods.reloadTime += v;
+        else if (k === 'charge_time') evoMods.chargeTime += v;
+        else if (k === 'accuracy') evoMods.accuracy += v;
+        else if (k === 'zoom') evoMods.zoom += v;
+        else if (k === 'beam_length') evoMods.beamLength += v;
+        else if (k === 'flat_change_dmg') evoMods.flatChangeDmg += v;
+        else if (k === 'melee_combo_eff') evoMods.meleeComboEff += v;
+        else if (k === 'comboDuration') evoMods.comboDuration += v;
+        else if (k in evoMods) evoMods[k] += v;
+      });
+    };
 
     this.state.incarnonEvo.forEach((selectedId, si) => {
       if (!selectedId) return;
       const options = evoData[slotKeys[si]] || [];
       const opt = options.find(o => o.id === selectedId);
       if (opt && opt.effects) {
-        Object.entries(opt.effects).forEach(([k, v]) => {
-          if (k in evoMods) evoMods[k] += v;
-        });
+        // WITH_COND 条件触发 (isMaxCond=conditionalModsAlways 默认true)
+        if (this.state.options.conditionalModsAlways && opt.effects.WITH_COND) {
+          applyEffects(opt.effects.WITH_COND);
+        }
+        // NORMAL 键 (普通形态)
+        if (opt.effects.NORMAL) applyEffects(opt.effects.NORMAL);
+        // INCARNON 键 (Incarnon形态 - 由调用处按攻击形态选择
+        evoMods._incarnon = evoMods._incarnon || {};
+        if (opt.effects.INCARNON) {
+          applyEffects(opt.effects.INCARNON);
+          evoMods._incarnon = opt.effects.INCARNON;
+        }
+        // 通用键
+        const general = { ...opt.effects };
+        delete general.WITH_COND;
+        delete general.NORMAL;
+        delete general.INCARNON;
+        applyEffects(general);
       }
     });
 
@@ -1211,7 +1287,7 @@ const App = {
     return firstStance.total || 1;
   },
 
-  // Kuva/Tenet/Coda 源身元素选择器 (参考站 Progenitor element @447: tags含 Tenet/Kuva Lich/Coda 时显示)
+  // Kuva/Tenet/Coda 源身元素选择器 (参考站 Progenitor element @447: tags含Tenet/Kuva Lich/Coda 时显示)
   // 元素: 9种 (冲击/穿刺/切割/火焰/冰冻/电击/毒素/辐射/磁力); 数值: 25-60%
   renderLichElementSelector(weapon) {
     const isLichWeapon = weapon && weapon.tags && weapon.tags.some(t =>
@@ -1345,7 +1421,7 @@ const App = {
           ${attack.shot_speed ? `<span>投射物飞行速度: ${attack.shot_speed.toFixed(2)}</span>` : ''}
           ${attack.forcedProc ? `<span>强制触发: ${attack.forcedProc.map(p => DamageCalculator.getName(p)).join(', ')}</span>` : ''}
           ${(!attack.forcedProc && attack.unique && attack.unique.force_procs) ? `<span>强制触发: ${attack.unique.force_procs.map(p => DamageCalculator.getName(p.charAt(0).toUpperCase() + p.slice(1))).join(', ')}</span>` : ''}
-          ${attack.falloff ? `<span>伤害衰减: 开始 ${attack.falloff.start} / 还原 ${attack.falloff.reduction} / 结尾 ${attack.falloff.end}</span>` : ''}
+          ${attack.falloff ? `<span>伤害衰减: 开始:${attack.falloff.start} / 还原 ${attack.falloff.reduction} / 结尾 ${attack.falloff.end}</span>` : ''}
         </div>
       </div>
       ${this.isZawWeapon(this.state.selectedWeaponName) ? this.renderZawComponents() : ''}
@@ -1386,7 +1462,7 @@ const App = {
     ).slice(0, 80);
     const container = document.getElementById('enemy-list');
     const sel = this.state.selectedEnemyName;
-    // 高亮匹配关键词
+    // 高亮匹配关键字
     const hl = (text) => {
       if (!q || q.length === 0) return text;
       const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
@@ -2310,17 +2386,17 @@ const App = {
       { key: 'flat_base_damage', label: '增加基础伤害 +X', value: 0 },
       { key: 'base_damage_per_status', label: '每个状态效果的基础伤害', value: 0 },
       { key: 'combo_mult', label: '连击能力倍率', value: 1 },
-      { key: 'crit_chance_normal', label: '暴击几率的', value: attack.crit_chance || 0 },
+      { key: 'crit_chance_normal', label: '暴击几率', value: attack.crit_chance || 0 },
       { key: 'crit_chance_secondary', label: '暴击几率的（与其他相乘）', value: 0 },
       { key: 'crit_chance_tertiary', label: '暴击几率的（MOD后的绝对加成）', value: 0 },
       { key: 'weakspot_crit_chance', label: '弱点暴击几率的提升', value: 0 },
       { key: 'crit_damage_normal', label: '暴击伤害', value: attack.crit_mult || 1 },
       { key: 'crit_damage_secondary', label: '暴击伤害（MOD后的绝对加成）', value: 0 },
-      { key: 'crit_damage_tertiary', label: '暴击伤害（所有来源后的倍率）(1 + x)', value: 0 },
+      { key: 'crit_damage_tertiary', label: '暴击伤害（所有来源后的倍率 (1 + x)', value: 0 },
       { key: 'status_chance', label: '异常状态触发几率', value: attack.status_chance || 0 },
       { key: 'status_vulnerability', label: '状态效果易伤率', value: 0 },
       { key: 'status_chance_flat', label: '异常状态触发几率（MOD后的绝对加成）', value: 0 },
-      { key: 'status_damage_bonus', label: '异常状态伤害（如"元素师"MOD）', value: 0 },
+      { key: 'status_damage_bonus', label: '异常状态伤害（含元素与MOD加成）', value: 0 },
       { key: 'viral_status_damage', label: '易伤状态效果伤害（如"炽烈憎恨"MOD）', value: 0 },
       { key: 'fire_rate', label: '射速 / 攻击速度', value: attack.speed || 0 },
       { key: 'multishot', label: '弹片', value: weapon.multishot || 1 },
@@ -2331,7 +2407,7 @@ const App = {
       { key: 'combo_count', label: '了初始连击数', value: 0 },
       { key: 'damage_vulnerability', label: '伤害易伤', value: 1.0 },
       { key: 'heat_inherit', label: '火焰状态继承 (Heat Inherit)', value: 0 },
-      { key: 'ember_augment', label: '添加火焰伤害判定（就像Ember的1技能强化卡那样）', value: 0 }
+      { key: 'ember_augment', label: '添加火焰伤害判定（就像Ember的技能强化卡那样）', value: 0 }
     ];
 
     const PERCENTAGE_KEYS = [
@@ -2345,7 +2421,7 @@ const App = {
 
     container.innerHTML = stats.map(stat => {
       const stored = this.state.options.customStats[stat.key];
-      // 百分比属性: 存储值已除以100, 显示时乘回100
+      // 百分比属性: 存储值已除以100, 显示时乘以100
       const displayVal = stored !== undefined 
         ? (PERCENTAGE_KEYS.includes(stat.key) ? (stored * 100) : stored)
         : '';
@@ -2369,8 +2445,8 @@ const App = {
     if (value === '' || value === null) {
       delete this.state.options.customStats[key];
     } else {
-      // 参考站点的data-d=1表示百分比(用户输入10=10%, 存储为0.1)
-      // data-d=0表示绝对值(用户输入直接使用)
+      // 参考站点的data-d=1表示百分比 (用户输入10=10%, 存储0.1)
+      // data-d=0表示绝对值 (用户输入直接使用)
       const PERCENTAGE_KEYS = [
         'base_damage', 'base_damage_per_status', 'crit_chance_normal',
         'crit_chance_secondary', 'crit_chance_tertiary', 'weakspot_crit_chance',
@@ -2393,7 +2469,7 @@ const App = {
 
     const weapon = this.state.selectedWeapon;
     if (!weapon) {
-      container.innerHTML = '<div style="font-size:0.7rem;color:var(--c-text2);">选择武器后可用</div>';
+      container.innerHTML = '<div style="font-size:0.7rem;color:var(--c-text2);">选择武器后可自定义</div>';
       return;
     }
 
@@ -2873,7 +2949,7 @@ const App = {
       mergeCombs: this.state.options.mergeAttacks ? this.getActiveMergeCombs() : []
     };
 
-    // ═══════════════ 合并攻击效果模式 ═══════════════
+  // ═══════════════ 合并攻击效果模式 ═══════════════
     // 参考站: 合并对中的攻击共享状态效果 (状态在攻击对间传递, 影响伤害计算)
     // 需要用完整武器一次计算, 让 damage-calc.js 的 runPerAttackSimulation 处理合并
     const activeMergeCombs = opts.mergeCombs || [];
@@ -2912,16 +2988,38 @@ const App = {
             speed: kitgunMods.speed || attack.speed
           };
         }
-        // 应用Incarnon进化效果
+        // 应用Incarnon进化效果 (calcDPS之前)
         const evoMods = this.getIncarnonEvoMods();
         if (evoMods) {
-          if (evoMods.crit_chance) modded = { ...modded, crit_chance: (modded.crit_chance || 0) + evoMods.crit_chance };
-          if (evoMods.crit_mult) modded = { ...modded, crit_mult: (modded.crit_mult || 0) + evoMods.crit_mult };
-          if (evoMods.speed) modded = { ...modded, speed: (modded.speed || 0) + evoMods.speed };
-          if (evoMods.status_chance) modded = { ...modded, status_chance: (modded.status_chance || 0) + evoMods.status_chance };
-          if (evoMods.range) modded = { ...modded, range: (modded.range || 0) + evoMods.range };
+          const isIncAttack = modded.isInc === 1;
+          const incEffects = isIncAttack && evoMods._incarnon ? evoMods._incarnon : null;
+          modded = {
+            ...modded,
+            crit_chance: (modded.crit_chance || 0) + evoMods.flatCritChance + evoMods.crit_chance,
+            crit_mult: (modded.crit_mult || 0) + evoMods.flatCritMult + evoMods.crit_mult,
+            speed: (modded.speed || 0) + evoMods.speed,
+            status_chance: (modded.status_chance || 0) + evoMods.flatStatusChance + evoMods.status_chance,
+            range: (modded.range || 0) + evoMods.range,
+            punch_through: (modded.punch_through || 0) + evoMods.punchThrough,
+            shot_speed: (modded.shot_speed || 0) + evoMods.shotSpeed,
+            charge_time: (modded.charge_time || 0) + evoMods.chargeTime,
+            accuracy: (modded.accuracy || 0) + evoMods.accuracy,
+            zoom: (modded.zoom || 0) + evoMods.zoom,
+            beam_length: (modded.beam_length || 0) + evoMods.beamLength,
+            windUp: (modded.windUp || 0) + evoMods.windUp
+          };
           opts.evoBase = evoMods.base || 0;
           opts.evoStatusDamage = evoMods.status_damage || 0;
+          opts.evoInitialCombo = evoMods.initialCombo || 0;
+          opts.evoFlatChangeDmg = evoMods.flatChangeDmg || 0;
+          opts.evoMeleeComboEff = evoMods.meleeComboEff || 0;
+          opts.evoComboDuration = evoMods.comboDuration || 0;
+          opts.evoAddToxin = evoMods.addToxin || 0;
+          opts.evoHeadCritChance = evoMods.headCritChance || 0;
+          opts.evoIncCritPerStatus = evoMods.incCritPerStatus || null;
+          opts.evoCritMultBelowCC = evoMods.critMultBelowCC || null;
+          opts.evoAmmoEff = evoMods.ammoEff || 0;
+opts.evoDecrArmorByPunc = evoMods.decrArmorByPunc || 0;
         }
         return modded;
       });
@@ -2990,7 +3088,7 @@ const App = {
       return;
     }
 
-    // ═══════════════ 非合并模式: 为每个攻击形态独立计算伤害 ═══════════════
+  // ═══════════════ 非合并模式 ═══════════════
     const allResults = [];
     weapon.attacks.forEach((attack, index) => {
       const isIncAttack = attack.isInc === 1;
@@ -3040,26 +3138,55 @@ const App = {
       // 源身元素注入 (Kuva/Tenet/Coda, 参考站 addPElement)
       this.applyLichElement(effectiveWeapon);
 
+      // 应用Incarnon进化效果 (必须在calcDPS之前: 修改武器属性后再计算)
+      const evoMods = this.getIncarnonEvoMods();
+      if (evoMods) {
+        const atk = effectiveWeapon.attacks[0] || {};
+        const isIncAttack = atk.isInc === 1;
+        // Incarnon形态攻击: INCARNON键覆盖; 普通攻击: 通用键
+        const incEffects = isIncAttack && evoMods._incarnon ? evoMods._incarnon : null;
+        const cc = evoMods.crit_chance || 0;
+        const cm = evoMods.crit_mult || 0;
+        const sc = evoMods.status_chance || 0;
+        const sp = evoMods.speed || 0;
+        effectiveWeapon.attacks[0] = {
+          ...atk,
+          crit_chance: (atk.crit_chance || 0) + evoMods.flatCritChance + cc,
+          crit_mult: (atk.crit_mult || 0) + evoMods.flatCritMult + cm,
+          status_chance: (atk.status_chance || 0) + evoMods.flatStatusChance + sc,
+          speed: (atk.speed || 0) + sp,
+          range: (atk.range || 0) + evoMods.range,
+          punch_through: (atk.punch_through || 0) + evoMods.punchThrough,
+          shot_speed: (atk.shot_speed || 0) + evoMods.shotSpeed,
+          charge_time: (atk.charge_time || 0) + evoMods.chargeTime,
+          accuracy: (atk.accuracy || 0) + evoMods.accuracy,
+          zoom: (atk.zoom || 0) + evoMods.zoom,
+          beam_length: (atk.beam_length || 0) + evoMods.beamLength,
+          windUp: (atk.windUp || 0) + evoMods.windUp
+        };
+        effectiveWeapon.multishot = (effectiveWeapon.multishot || 1) + evoMods.multishot + evoMods.flatMultishot;
+        effectiveWeapon.magazineSize = (effectiveWeapon.magazineSize || 1) + evoMods.magazineSize;
+        effectiveWeapon.reloadTime = (effectiveWeapon.reloadTime || 0) + evoMods.reloadTime;
+        effectiveWeapon.ammoCapacity = evoMods.ammoCapacity > 0 ? evoMods.ammoCapacity : effectiveWeapon.ammoCapacity;
+        // base / status_damage / 其他特殊键 通过 opts 传入计算器
+        opts.evoBase = evoMods.base || 0;
+        opts.evoStatusDamage = evoMods.status_damage || 0;
+        opts.evoInitialCombo = evoMods.initialCombo || 0;
+        opts.evoFlatChangeDmg = evoMods.flatChangeDmg || 0;
+        opts.evoMeleeComboEff = evoMods.meleeComboEff || 0;
+        opts.evoComboDuration = evoMods.comboDuration || 0;
+        opts.evoAddToxin = evoMods.addToxin || 0;
+        opts.evoHeadCritChance = evoMods.headCritChance || 0;
+        opts.evoIncCritPerStatus = evoMods.incCritPerStatus || null;
+        opts.evoCritMultBelowCC = evoMods.critMultBelowCC || null;
+        opts.evoAmmoEff = evoMods.ammoEff || 0;
+opts.evoDecrArmorByPunc = evoMods.decrArmorByPunc || 0;
+      }
+
       const result = DamageCalculator.calcDPS(effectiveWeapon, equippedMods, scaledEnemy, opts);
       if (result) {
         result.attackName = attack.name;
         result.attackIndex = index;
-
-        // 应用Incarnon进化效果（作为武器基础属性修正，非后置乘数）
-        const evoMods = this.getIncarnonEvoMods();
-        if (evoMods) {
-          if (evoMods.crit_chance) effectiveWeapon.attacks[0] = { ...effectiveWeapon.attacks[0], crit_chance: (effectiveWeapon.attacks[0].crit_chance || 0) + evoMods.crit_chance };
-          if (evoMods.crit_mult) effectiveWeapon.attacks[0] = { ...effectiveWeapon.attacks[0], crit_mult: (effectiveWeapon.attacks[0].crit_mult || 0) + evoMods.crit_mult };
-          if (evoMods.multishot) effectiveWeapon.multishot = (effectiveWeapon.multishot || 1) + evoMods.multishot;
-          if (evoMods.speed) effectiveWeapon.attacks[0] = { ...effectiveWeapon.attacks[0], speed: (effectiveWeapon.attacks[0].speed || 0) + evoMods.speed };
-          if (evoMods.status_chance) effectiveWeapon.attacks[0] = { ...effectiveWeapon.attacks[0], status_chance: (effectiveWeapon.attacks[0].status_chance || 0) + evoMods.status_chance };
-          if (evoMods.range) effectiveWeapon.attacks[0] = { ...effectiveWeapon.attacks[0], range: (effectiveWeapon.attacks[0].range || 0) + evoMods.range };
-          // base 和 status_damage 通过 opts 传入计算器
-          opts.evoBase = evoMods.base || 0;
-          opts.evoStatusDamage = evoMods.status_damage || 0;
-        }
-
-        // 注意: 姿态伤害倍率已在damage-calc.js的runSingleQueue中应用，不再重复应用
 
         allResults.push(result);
       }
@@ -3283,13 +3410,13 @@ const App = {
         <div class="stat-row"><span class="stat-label">暴击几率</span><span class="stat-value">${result.critChance.toFixed(1)}%</span></div>
         <div class="stat-row"><span class="stat-label">暴击倍率</span><span class="stat-value">${result.critDmg.toFixed(2)}x</span></div>
         <div class="stat-row"><span class="stat-label">多重射击</span><span class="stat-value">${result.ms.toFixed(2)}</span></div>
-        <div class="stat-row"><span class="stat-label">弹丸数</span><span class="stat-value">${result.pellets}</span></div>
+        <div class="stat-row"><span class="stat-label">弹丸数量</span><span class="stat-value">${result.pellets}</span></div>
       </div>
     `;
     this.updateDetailedDamage(result);
   },
 
-  // ═══════════════ 命中时间线 (per-hit 详情) ═══════════════
+  // ═══════════════ 命中时间线(per-hit 详情) ═══════════════
 
   updatePerHitTimeline(result) {
     const container = document.getElementById('per-hit-timeline');
@@ -3325,24 +3452,24 @@ const App = {
 
     container.innerHTML = `
       <div class="timeline-stats" style="display:flex;flex-wrap:wrap;gap:12px;padding:8px 0;font-size:0.72rem;color:var(--c-text2);">
-        <span>总命中: <b style="color:var(--c-text);">${totalShots}</b></span>
+        <span>总命中 <b style="color:var(--c-text);">${totalShots}</b></span>
         <span>暴击: <b style="color:var(--c-gold-bright);">${critHits}</b> (${(critHits / totalShots * 100).toFixed(1)}%)</span>
         <span>平均伤害: <b style="color:var(--c-text);">${Math.round(avgDmg)}</b></span>
-        <span>最低: <b style="color:var(--c-text);">${Math.round(minDmg)}</b></span>
-        <span>最高: <b style="color:var(--c-text);">${Math.round(maxDmg)}</b></span>
+        <span>最低 <b style="color:var(--c-text);">${Math.round(minDmg)}</b></span>
+        <span>最高 <b style="color:var(--c-text);">${Math.round(maxDmg)}</b></span>
       </div>
       <div class="timeline-scroll" style="overflow-x:auto;display:flex;gap:2px;padding:6px 0;border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);">
         ${rows}
       </div>
       <div class="timeline-legend" style="font-size:0.65rem;color:var(--c-text-dim);padding:6px 0;">
-        每格 = 一次命中 (时间·伤害·暴击倍率·状态触发)。暴击命中金色高亮。
+        每格 = 一次命中（时间·伤害·暴击倍率·状态触发）。暴击命中金色高亮。
       </div>
     `;
   },
 
   getProcShort(proc) {
     const map = {
-      'Impact': '冲', 'Puncture': '穿', 'Slash': '割', 'Heat': '火', 'Cold': '冰',
+      'Impact': '冲', 'Puncture': '穿', 'Slash': '切', 'Heat': '火', 'Cold': '冰',
       'Electricity': '电', 'Toxin': '毒', 'Viral': '病毒', 'Corrosive': '腐蚀',
       'Magnetic': '磁', 'Radiation': '辐射', 'Gas': '毒气', 'Blast': '爆炸',
       'Void': '虚空', 'Purity': '圣化', 'Infested': '感染', 'Shock': '电击'
@@ -4079,6 +4206,7 @@ const App = {
       warframeSpecialMod: this.state.warframeSpecialMod ? { name: this.state.warframeSpecialMod.name, rank: this.state.warframeSpecialRank || 0 } : null,
       warframeArcanes: this.state.warframeArcanes.filter(m => m !== null).map(m => m.name),
       archonShards: this.state.archonShards.map(m => m ? { name: m.name } : null),
+      lichElement: this.state.lichElement,
       focusSchool: this.state.focusSchool,
       options: { ...this.state.options },
       abilities: { ...this.state.abilities },
@@ -4164,7 +4292,7 @@ const App = {
       if (weapon) {
         this.selectWeapon(data.weapon);
       } else {
-        this.showToast('导入失败: 找不到武器 ' + data.weapon);
+        this.showToast('导入失败: 找不到武器' + data.weapon);
         return;
       }
     }
@@ -4187,7 +4315,7 @@ const App = {
       if (sp) sp.classList.toggle('active', data.steelPath);
     }
 
-    // 武器 MOD (兼容 v1 纯名字数组 和 v2 {name, rank} 对象)
+    // 武器 MOD (兼容 v1 纯名字数组 与 v2 {name, rank} 对象)
     if (Array.isArray(data.mods)) {
       this.state.mods = Array(8).fill(null);
       this.state.modRanks = Array(8).fill(0);
