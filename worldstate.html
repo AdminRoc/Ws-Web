@@ -4713,9 +4713,13 @@
   /* 主 API 数据获取（19 个 endpoint）：分层兜底 EdgeOne → 直连 API */
   function fetchOne(ep) {
     return fetchLayered(function (stage) {
+      /* 只走 EdgeOne 透传：直连 api.warframestat.us 在大陆被墙/被上游拦截，
+         原 20 次直连重试只会放大请求风暴（实测单次加载 300+ 请求）。
+         EdgeOne 透传若返回 403/超时则单次快速失败，靠 raw-ws 透传 + 快照兜底 */
       if (stage === 'edge') return [API_URLS[0] + ep + '?' + LANG];
-      return [API_URLS[1] + ep + '?' + LANG];
+      return [];
     }, {
+      maxEdge: 1,
       onSuccess: function (url, label) {
         /* 记录当前使用源：edgeone / api */
         _lastSource[ep] = label === 'edgeone' ? 'edgeone' : 'api';
