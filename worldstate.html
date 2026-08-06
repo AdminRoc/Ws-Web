@@ -4764,7 +4764,9 @@
       var parsed = fromRawWS(ws);
       /* 世界周期 / Baro：仅在 API 未返回时才填充 */
       RAW_WS_KEYS.forEach(function (k) {
-        if (parsed[k] !== undefined && (D[k] === undefined || D[k] === null)) {
+        /* 实时透传数据无条件覆盖旧快照：D 已被嵌入快照填满，填空才写会导致
+           实时数据永远进不来（原主源 apiP 移除后留下的坑，2026-08-07 修复） */
+        if (parsed[k] !== undefined) {
           D[k] = parsed[k];
         }
       });
