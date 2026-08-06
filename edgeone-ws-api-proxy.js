@@ -11,14 +11,16 @@ function getAllowedOrigin(origin) {
   return ALLOWED_ORIGINS[0];
 }
 
+// ── 路由表 ──
+// /warframestat/ 已移除：上游 api.warframestat.us 的 Cloudflare 对 EdgeOne 回源 IP
+// 按 IP 段封禁（即便携带完整浏览器 UA 仍返回 403，2026-08-07 实测 100% 失败），
+// 该分支不可能成功，前端 worldstate.html 已同步禁用（apiP = no-op）。
+// 世界状态实时数据改由 /raw-ws 透传官方 api.warframe.com（无 Cloudflare 防护，回源正常）。
 const ROUTES = {
-  '/warframestat/': { base: 'https://api.warframestat.us/pc/', extraHeaders: true },
   '/bounty-cycle':   { base: 'https://oracle.browse.wf/bounty-cycle' },
   '/export-regions': { base: 'https://browse.wf/warframe-public-export-plus/ExportRegions.json' },
   '/dict-zh':        { base: 'https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@senpai/dict.zh.json' },
   '/null00':         { base: 'https://api.null00.com/world/ZHCN' },
-  /* raw-ws 改为指向 api.warframe.com（官方 CDN，无 Cloudflare 防护，可正常回源）；
-     oracle.browse.wf 有 Cloudflare 防护会拦截边缘函数回源（返回 403 拦截页） */
   '/raw-ws':         { base: 'https://api.warframe.com/cdn/worldState.php' },
 };
 
@@ -45,12 +47,12 @@ const requestCounts = new Map();
 function isRateLimited(ip) {
   const now = Date.now();
   const record = requestCounts.get(ip);
-  
+
   if (!record || now > record.resetTime) {
     requestCounts.set(ip, { count: 1, resetTime: now + RATE_LIMIT.windowMs });
     return false;
   }
-  
+
   record.count++;
   return record.count > RATE_LIMIT.maxRequests;
 }
@@ -68,7 +70,7 @@ function cleanupRateLimit() {
 
 async function handleRequest(request) {
   cleanupRateLimit();
-  
+
   const url = new URL(request.url);
   let match = null;
   let targetPath = '';
@@ -87,7 +89,7 @@ async function handleRequest(request) {
   const referer = request.headers.get('Referer') || '';
   const origin = request.headers.get('Origin') || '';
   const userAgent = request.headers.get('User-Agent') || '';
-  
+
   // 情况1：有 Referer 或 Origin → 检查域名
   if (referer || origin) {
     const allowed = ALLOWED_ORIGINS.some(d =>
@@ -96,7 +98,7 @@ async function handleRequest(request) {
     if (!allowed) {
       return new Response('Forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
     }
-  } 
+  }
   // 情况2：无 Referer 且无 Origin → 检查 User-Agent
   else {
     // 允许空 User-Agent（浏览器 fetch 请求）
@@ -109,25 +111,19 @@ async function handleRequest(request) {
   // ── IP 限流检查 ──
   const clientIP = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'unknown';
   if (isRateLimited(clientIP)) {
-    return new Response('Rate Limited', { 
-      status: 429, 
-      headers: { 
+    return new Response('Rate Limited', {
+      status: 429,
+      headers: {
         'Content-Type': 'text/plain',
-        'Retry-After': '60' 
+        'Retry-After': '60'
       }
     });
   }
 
   const target = new URL(match.base + targetPath);
   const headers = new Headers();
-
-  if (match.extraHeaders) {
-    headers.set('Accept', 'application/json');
-    headers.set('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36');
-  } else {
-    headers.set('User-Agent', 'Mozilla/5.0 (compatible; wfspeed-data-sync/1.0; +https://wfspeed.run)');
-    headers.set('Accept', 'application/json');
-  }
+  headers.set('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36');
+  headers.set('Accept', 'application/json');
 
   const resp = await fetch(target.href, { method: 'GET', headers });
 
@@ -142,12 +138,15 @@ async function handleRequest(request) {
   return out;
 }
 
+// ── 缓存策略 ──
+// 实时透传端点（世界状态/赏金轮次/国服世界状态）：no-store，保证每次请求都拿到
+// 上游最新数据——前端 worldstate.html 自己用 localStorage 做客户端去重（CACHE_TTL），
+// 边缘层不需要也不应该再缓存，避免出现"最多 30 秒旧"的延迟。
+// 静态字典端点（7 天不变的数据）：长期缓存。
 function getCacheControl(path) {
-  if (path.includes('/warframestat/') || path.includes('/raw-ws') || path.includes('/bounty-cycle'))
-    return 'public, max-age=30, stale-while-revalidate=60';
-  if (path.includes('/null00'))
-    return 'public, max-age=60, stale-while-revalidate=120';
+  if (path.includes('/raw-ws') || path.includes('/bounty-cycle') || path.includes('/null00'))
+    return 'no-store';
   if (path.includes('/export-regions') || path.includes('/dict-zh'))
     return 'public, max-age=604800, immutable';
-  return 'public, max-age=60';
+  return 'no-store';
 }
