@@ -104,6 +104,8 @@ const App = {
     // 近战连击/姿态状态
     selectedStanceName: null,
     selectedStanceAttackIndex: 0,
+    // Kuva/Tenet 源身元素 (参考站 Progenitor element: 元素+百分比25-60)
+    lichElement: { elem: '', val: 60 },
     // TTK/Median 计算迭代次数
     ttkIterations: 100,
     // 条件MOD最大激活
@@ -260,6 +262,22 @@ const App = {
         { key: 'corrosiveAbilityDmg', name: '腐蚀异常增加技能伤害', regular: 10, tau: 15, unit: '%', type: 'corrosive' },
         { key: 'corrosiveMaxStacks', name: '腐蚀异常最大层数', regular: 2, tau: 3, unit: '层', type: 'corrosive' }
       ]
+    }
+  },
+
+  // 旧版源力石格式 {type,buffIndex,isTau} → 参考站shard MOD名映射 (普通/Tau)
+  ARCHON_SHARD_LEGACY_MAP: {
+    crimson: {
+      0: ['+25% Critical Damage', '+37.5% Critical Damage'],
+      1: ['+25% Status Chance', '+37.5% Status Chance'],
+      2: ['+25% Critical Chance', '+37.5% Critical Chance']
+    },
+    violet: {
+      1: ['+30% Primary Electricity Damage', '+45% Primary Electricity Damage']
+    },
+    emerald: {
+      0: ['Toxin Status +30% more damage', 'Toxin Status +45% more damage'],
+      3: ['Incr. max stacks of Corrosion +2', 'Incr. max stacks of Corrosion +3']
     }
   },
 
@@ -458,7 +476,7 @@ const App = {
       weapon: this.state.selectedWeaponName,
       enemy: this.state.selectedEnemyName,
       level: this.state.enemyLevel,
-      mods: this.state.mods.map((m, i) => m ? { id: m.id, rank: this.state.modRanks[i] } : null),
+      mods: this.state.mods.map((m, i) => m ? { name: m.name, rank: this.state.modRanks[i] } : null),
       riven: this.state.riven,
       steelPath: this.state.steelPath,
       eximus: this.state.eximus,
@@ -466,7 +484,15 @@ const App = {
       abilities: this.state.abilities,
       incarnonEvo: this.state.incarnonEvo,
       stance: this.state.selectedStanceName,
-      wfMods: this.state.warframeMods.map((m, i) => m ? { id: m.id, rank: this.state.warframeModRanks[i] } : null),
+      wfMods: this.state.warframeMods.map((m, i) => m ? { name: m.name, rank: this.state.warframeModRanks[i] } : null),
+      auraMod: this.state.auraMod ? { name: this.state.auraMod.name, rank: this.state.auraModRank || 0 } : null,
+      warframeSpecialMod: this.state.warframeSpecialMod ? { name: this.state.warframeSpecialMod.name, rank: this.state.warframeSpecialRank || 0 } : null,
+      warframeArcanes: this.state.warframeArcanes.map(m => m ? { name: m.name } : null),
+      archonShards: this.state.archonShards.map(m => m ? { name: m.name } : null),
+      weaponSpecialMod: this.state.weaponSpecialMod ? { name: this.state.weaponSpecialMod.name, rank: this.state.weaponSpecialRank || 0 } : null,
+      weaponArcanes: this.state.weaponArcanes.map((m, i) => m ? { name: m.name, rank: this.state.weaponArcaneRanks[i] || 0 } : null),
+      weaponStanceMod: this.state.weaponStanceMod ? { name: this.state.weaponStanceMod.name, rank: this.state.weaponStanceRank || 0 } : null,
+      lichElement: this.state.lichElement,
       activeAttack: this.state.activeAttackIndex,
       zawParts: this.state.zawParts
     };
@@ -500,8 +526,8 @@ const App = {
       }
       if (state.mods) {
         state.mods.forEach((m, i) => {
-          if (m && m.id) {
-            const mod = GameData.getModById(m.id);
+          if (m && m.name) {
+            const mod = GameData.getAllMods().find(x => x.name === m.name);
             if (mod) {
               this.state.mods[i] = mod;
               this.state.modRanks[i] = m.rank || 0;
@@ -544,8 +570,8 @@ const App = {
       }
       if (state.wfMods) {
         state.wfMods.forEach((m, i) => {
-          if (m && m.id) {
-            const mod = GameData.getWarframeModById(m.id);
+          if (m && m.name) {
+            const mod = GameData.getAllMods().find(x => x.name === m.name);
             if (mod) {
               this.state.warframeMods[i] = mod;
               this.state.warframeModRanks[i] = m.rank || 0;
@@ -553,6 +579,79 @@ const App = {
           }
         });
         this.renderWarframeModSlots();
+      }
+      // 光环
+      if (state.auraMod && state.auraMod.name) {
+        const mod = GameData.getAllMods().find(x => x.name === state.auraMod.name);
+        if (mod) {
+          this.state.auraMod = mod;
+          this.state.auraModRank = state.auraMod.rank !== undefined ? state.auraMod.rank : this.getModMaxRank(mod);
+          this.renderAuraSlot();
+        }
+      }
+      // 战甲特殊槽
+      if (state.warframeSpecialMod && state.warframeSpecialMod.name) {
+        const mod = GameData.getAllMods().find(x => x.name === state.warframeSpecialMod.name);
+        if (mod) {
+          this.state.warframeSpecialMod = mod;
+          this.state.warframeSpecialRank = state.warframeSpecialMod.rank !== undefined ? state.warframeSpecialMod.rank : this.getModMaxRank(mod);
+          this.renderWarframeSpecialSlot();
+        }
+      }
+      // 战甲赋能
+      if (Array.isArray(state.warframeArcanes)) {
+        state.warframeArcanes.forEach((entry, i) => {
+          if (i >= 2 || !entry || !entry.name) return;
+          const mod = GameData.getAllMods().find(x => x.name === entry.name);
+          if (mod) this.state.warframeArcanes[i] = mod;
+        });
+        this.renderArcaneSlots();
+      }
+      // 源力石
+      if (Array.isArray(state.archonShards)) {
+        state.archonShards.forEach((entry, i) => {
+          if (i >= 5 || !entry || !entry.name) return;
+          const mod = GameData.getAllMods().find(x => x.type === 'shard' && x.name === entry.name);
+          if (mod) this.state.archonShards[i] = mod;
+        });
+        this.renderArchonShards();
+      }
+      // 武器特殊槽
+      if (state.weaponSpecialMod && state.weaponSpecialMod.name) {
+        const mod = GameData.getAllMods().find(x => x.name === state.weaponSpecialMod.name);
+        if (mod) {
+          this.state.weaponSpecialMod = mod;
+          this.state.weaponSpecialRank = state.weaponSpecialMod.rank !== undefined ? state.weaponSpecialMod.rank : this.getModMaxRank(mod);
+          this.renderWeaponSpecialSlot();
+        }
+      }
+      // 武器赋能
+      if (Array.isArray(state.weaponArcanes)) {
+        state.weaponArcanes.forEach((entry, i) => {
+          if (i >= 2 || !entry || !entry.name) return;
+          const mod = GameData.getAllMods().find(x => x.name === entry.name);
+          if (mod) {
+            this.state.weaponArcanes[i] = mod;
+            this.state.weaponArcaneRanks[i] = entry.rank || 0;
+          }
+        });
+        this.renderWeaponArcaneSlots();
+      }
+      // 武器架式
+      if (state.weaponStanceMod && state.weaponStanceMod.name) {
+        const mod = GameData.getAllMods().find(x => x.name === state.weaponStanceMod.name);
+        if (mod) {
+          this.state.weaponStanceMod = mod;
+          this.state.weaponStanceRank = state.weaponStanceMod.rank !== undefined ? state.weaponStanceMod.rank : this.getModMaxRank(mod);
+          this.renderWeaponStanceSlot();
+        }
+      }
+      // 源身元素
+      if (state.lichElement && state.lichElement.elem) {
+        this.state.lichElement = {
+          elem: state.lichElement.elem,
+          val: Math.max(25, Math.min(60, state.lichElement.val || 60))
+        };
       }
       if (state.activeAttack !== undefined) {
         this.state.activeAttackIndex = state.activeAttack;
@@ -1112,6 +1211,67 @@ const App = {
     return firstStance.total || 1;
   },
 
+  // Kuva/Tenet/Coda 源身元素选择器 (参考站 Progenitor element @447: tags含 Tenet/Kuva Lich/Coda 时显示)
+  // 元素: 9种 (冲击/穿刺/切割/火焰/冰冻/电击/毒素/辐射/磁力); 数值: 25-60%
+  renderLichElementSelector(weapon) {
+    const isLichWeapon = weapon && weapon.tags && weapon.tags.some(t =>
+      t === 'Tenet' || t === 'Kuva Lich' || t === 'Coda'
+    );
+    if (!isLichWeapon) return '';
+    const ELEMS = [
+      { key: 'impact', zh: '冲击' },
+      { key: 'puncture', zh: '穿刺' },
+      { key: 'slash', zh: '切割' },
+      { key: 'heat', zh: '火焰' },
+      { key: 'cold', zh: '冰冻' },
+      { key: 'electricity', zh: '电击' },
+      { key: 'toxin', zh: '毒素' },
+      { key: 'radiation', zh: '辐射' },
+      { key: 'magnetic', zh: '磁力' }
+    ];
+    const le = this.state.lichElement || { elem: '', val: 60 };
+    return `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:0.75rem;color:var(--c-text2);">
+        <span>源身元素:</span>
+        <select class="search-input" id="lich-element-select" style="width:120px;padding:4px;" onchange="App.setLichElement(this.value)">
+          <option value="">未选择</option>
+          ${ELEMS.map(e => `<option value="${e.key}" ${le.elem === e.key ? 'selected' : ''}>${e.zh}</option>`).join('')}
+        </select>
+        <input type="number" id="lich-element-val" value="${le.val}" min="25" max="60" style="width:70px;padding:4px;background:var(--c-card);border:1px solid var(--c-border);color:var(--c-text);border-radius:4px;" onchange="App.setLichElementVal(this.value)">
+        <span>%</span>
+      </div>
+    `;
+  },
+
+  setLichElement(elem) {
+    this.state.lichElement.elem = elem;
+    this.recalculate();
+  },
+
+  setLichElementVal(val) {
+    this.state.lichElement.val = Math.max(25, Math.min(60, parseFloat(val) || 0));
+    this.recalculate();
+  },
+
+  // 源身元素注入 (参考站 addPElement @736: 注入元素伤害 = 初始总base × val%)
+  applyLichElement(weapon) {
+    const le = this.state.lichElement;
+    if (!le || !le.elem || !(le.val > 0)) return;
+    const isLichWeapon = weapon && weapon.tags && weapon.tags.some(t =>
+      t === 'Tenet' || t === 'Kuva Lich' || t === 'Coda'
+    );
+    if (!isLichWeapon) return;
+    const elemKey = le.elem === 'electricity' ? 'Electricity'
+      : le.elem.charAt(0).toUpperCase() + le.elem.slice(1);
+    const valPct = le.val / 100;
+    weapon.attacks.forEach(attack => {
+      if (!attack || !attack.damage) return;
+      const totalBase = Object.values(attack.damage).reduce((s, v) => s + v, 0);
+      const inject = totalBase * valPct;
+      attack.damage[elemKey] = (attack.damage[elemKey] || 0) + inject;
+    });
+  },
+
   updateWeaponInfo(weapon) {
     const container = document.getElementById('weapon-info');
     if (!container) return;
@@ -1158,6 +1318,7 @@ const App = {
           ${weapon.range ? `<span>攻击范围: ${weapon.range}</span>` : ''}
           ${weapon.windUp ? `<span>重击准备时间: ${weapon.windUp}</span>` : ''}
         </div>
+        ${this.renderLichElementSelector(weapon)}
         ${attackTabs}
       </div>
       <div class="stat-section">
@@ -1984,15 +2145,12 @@ const App = {
       const slot = document.createElement('div');
       slot.className = 'archon-shard-slot' + (shard ? ' filled' : '');
       if (shard) {
-        const data = this.ARCHON_SHARD_DATA[shard.type];
-        const buff = data.buffs[shard.buffIndex];
-        const value = shard.isTau ? buff.tau : buff.regular;
-        const imgSrc = shard.isTau ? data.imgTau : data.img;
-        slot.style.borderColor = data.color;
+        const zhName = GameData.MOD_NAMES_ZH[shard.name] || shard.name;
+        const imgSrc = shard.img ? `dmg/img/mods/${shard.img}` : '';
         slot.innerHTML = `
-          <img src="${imgSrc}" alt="${data.name}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:var(--r-sm);">
+          ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:var(--r-sm);">` : ''}
           <div style="position:absolute;bottom:0;left:0;right:0;padding:3px 4px;background:linear-gradient(transparent,rgba(0,0,0,0.85));text-align:center;">
-            <div style="font-size:0.55rem;color:#fff;line-height:1.1;">${buff.name}<br><span style="color:${data.color};font-weight:600;">+${value}${buff.unit}${shard.isTau?' Tau':''}</span></div>
+            <div style="font-size:0.55rem;color:#fff;line-height:1.1;">${zhName}</div>
           </div>
           <button class="remove-mod" onclick="event.stopPropagation(); App.removeArchonShard(${i})">&times;</button>
         `;
@@ -2004,57 +2162,36 @@ const App = {
     }
   },
 
+  // 获取兼容当前武器的源力石 (参考站: shard 按 tags 与武器 category/compTags 匹配)
+  getCompatibleShards() {
+    const weapon = this.state.selectedWeapon;
+    if (!weapon) return [];
+    const cats = [];
+    if (weapon.category) cats.push(weapon.category.toLowerCase());
+    if (weapon.productCategory) cats.push(weapon.productCategory.toLowerCase());
+    if (weapon.categories) weapon.categories.forEach(c => cats.push(c.toLowerCase()));
+    (weapon.compTags || []).forEach(t => cats.push(t.toLowerCase()));
+    const isMelee = cats.includes('melee');
+    return GameData.getAllMods().filter(m => m.type === 'shard' && (m.tags || []).some(t => {
+      const tl = t.toLowerCase();
+      if (tl === 'melee') return isMelee;
+      return cats.includes(tl);
+    }));
+  },
+
   openArchonShardPicker(slotIndex) {
     this.state.modPickerSlot = slotIndex;
     this.state.modPickerType = 'archonShard';
     const picker = document.getElementById('mod-picker');
-    const types = Object.entries(this.ARCHON_SHARD_DATA);
-    picker.innerHTML = `
-      <div style="background:var(--c-lb-card);border:1px solid var(--c-lb-border);border-radius:var(--r-md);padding:20px;max-width:900px;width:100%;max-height:80vh;overflow-y:auto;">
-        <div class="picker-header">
-          <h3>选择源力石 - 槽位 ${slotIndex + 1}</h3>
-          <button onclick="App.closeModPicker()" style="background:none;border:none;color:var(--c-text2);font-size:1.5rem;cursor:pointer;padding:8px;">&times;</button>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:16px;">
-          ${types.map(([type, data]) => `
-            <div style="border:1px solid var(--c-lb-border);border-radius:var(--r-sm);overflow:hidden;">
-              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(${parseInt(data.color.slice(1,3),16)},${parseInt(data.color.slice(3,5),16)},${parseInt(data.color.slice(5,7),16)},0.1);border-bottom:1px solid var(--c-lb-border);">
-                <img src="${data.img}" style="width:36px;height:36px;">
-                <div>
-                  <div style="font-size:0.9rem;font-weight:600;color:${data.color};">${data.name} Archon Shard</div>
-                  <div style="font-size:0.7rem;color:var(--c-text2);">${data.nameEn}</div>
-                </div>
-              </div>
-              <div style="padding:8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;">
-                ${data.buffs.map((buff, buffIndex) => `
-                  <div style="padding:8px;border:1px solid var(--c-lb-border);border-radius:4px;cursor:pointer;transition:all 0.18s;" 
-                       onmouseover="this.style.borderColor='${data.color}';this.style.background='rgba(${parseInt(data.color.slice(1,3),16)},${parseInt(data.color.slice(3,5),16)},${parseInt(data.color.slice(5,7),16)},0.08)'"
-                       onmouseout="this.style.borderColor='var(--c-lb-border)';this.style.background='transparent'">
-                    <div style="font-size:0.75rem;color:var(--c-text);margin-bottom:6px;line-height:1.3;">${buff.name}</div>
-                    ${buff.note ? `<div style="font-size:0.6rem;color:var(--c-text2);margin-bottom:4px;">${buff.note}</div>` : ''}
-                    <div style="display:flex;gap:4px;">
-                      <button onclick="event.stopPropagation();App.selectArchonShard(${slotIndex},'${type}',${buffIndex},false)" style="flex:1;padding:4px;border:1px solid var(--c-lb-border);border-radius:3px;background:var(--c-bg2);color:var(--c-text);cursor:pointer;font-size:0.7rem;">
-                        <div style="color:var(--c-text2);">普通</div>
-                        <div style="color:var(--c-gold-bright);font-weight:600;">+${buff.regular}${buff.unit}</div>
-                      </button>
-                      <button onclick="event.stopPropagation();App.selectArchonShard(${slotIndex},'${type}',${buffIndex},true)" style="flex:1;padding:4px;border:1px solid ${data.color};border-radius:3px;background:rgba(${parseInt(data.color.slice(1,3),16)},${parseInt(data.color.slice(3,5),16)},${parseInt(data.color.slice(5,7),16)},0.12);color:var(--c-text);cursor:pointer;font-size:0.7rem;">
-                        <div style="color:${data.color};">Tau</div>
-                        <div style="color:var(--c-gold-bright);font-weight:600;">+${buff.tau}${buff.unit}</div>
-                      </button>
-                    </div>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
+    const filtered = this.getCompatibleShards();
+    picker.innerHTML = this.renderWarframeModPickerContent('选择源力石 - 槽位 ' + (slotIndex + 1), filtered, `App.selectArchonShard(${slotIndex},`);
     picker.classList.add('active');
   },
 
-  selectArchonShard(slotIndex, type, buffIndex, isTau) {
-    this.state.archonShards[slotIndex] = { type, buffIndex, isTau };
+  selectArchonShard(slotIndex, modName) {
+    const mod = GameData.getAllMods().find(m => m.name === modName);
+    if (!mod) return;
+    this.state.archonShards[slotIndex] = mod;
     this.renderArchonShards();
     this.recalculate();
     this.closeModPicker();
@@ -2666,6 +2803,10 @@ const App = {
     this.state.warframeMods.forEach(m => equippedMods.push(m || null));
     equippedMods.push(this.state.warframeSpecialMod || null);
     this.state.warframeArcanes.forEach(m => equippedMods.push(m || null));
+    // 源力石 (参考站: shard 并入 modsPanel, 无等级 rankScale=1)
+    this.state.archonShards.forEach(shard => {
+      equippedMods.push(shard ? { ...shard, maxRank: 0 } : null);
+    });
     const allModRanks = [
       ...this.state.modRanks,
       this.state.weaponSpecialRank || 0,
@@ -2675,7 +2816,9 @@ const App = {
       ...this.state.warframeModRanks,
       this.state.warframeSpecialRank || 0,
       // 战甲赋能: 参考站默认满级 (Arcane 满级5)
-      5, 5
+      5, 5,
+      // 源力石: 无等级
+      0, 0, 0, 0, 0
     ];
     
     // 如果裂罅已激活，转换为action格式并添加到MOD列表
@@ -2791,6 +2934,8 @@ const App = {
         magazineSize: weapon.magazineSize || 1,
         reloadTime: weapon.reloadTime || 0
       };
+      // 源身元素注入 (Kuva/Tenet/Coda, 参考站 addPElement)
+      this.applyLichElement(fullWeapon);
       if (this.isZawWeapon(this.state.selectedWeaponName)) {
         // Zaw无弹匣修改
       }
@@ -2851,7 +2996,7 @@ const App = {
       const isIncAttack = attack.isInc === 1;
       const effectiveWeapon = {
         ...weapon,
-        attacks: [attack],
+        attacks: [{ ...attack, damage: { ...attack.damage } }],
         multishot: weapon.multishot || 1,
         magazineSize: (isIncAttack && weapon.incMagazineSize) ? weapon.incMagazineSize : (weapon.magazineSize || 1),
         reloadTime: weapon.reloadTime || 0
@@ -2882,6 +3027,7 @@ const App = {
         const kitgunMods = this.getKitgunComponentModifiers();
         effectiveWeapon.attacks = [{
           ...attack,
+          damage: { ...attack.damage },
           crit_chance: attack.crit_chance + kitgunMods.crit_chance,
           crit_mult: attack.crit_mult + kitgunMods.crit_mult,
           status_chance: attack.status_chance + kitgunMods.status_chance,
@@ -2890,6 +3036,9 @@ const App = {
         if (kitgunMods.magazineSize) effectiveWeapon.magazineSize += kitgunMods.magazineSize;
         if (kitgunMods.reloadTime) effectiveWeapon.reloadTime += kitgunMods.reloadTime;
       }
+
+      // 源身元素注入 (Kuva/Tenet/Coda, 参考站 addPElement)
+      this.applyLichElement(effectiveWeapon);
 
       const result = DamageCalculator.calcDPS(effectiveWeapon, equippedMods, scaledEnemy, opts);
       if (result) {
@@ -3365,17 +3514,27 @@ const App = {
       <div style="margin-bottom:12px;">
         <div style="font-size:0.8rem;font-weight:600;color:var(--c-text);margin-bottom:8px;">射击队列 (前20发)</div>
         <div style="max-height:300px;overflow-y:auto;">
-          ${queueData.shots.slice(0, 20).map((shot, i) => `
+          ${queueData.shots.slice(0, 20).map((shot, i) => {
+            // 状态按类型统计层数
+            const procCounts = {};
+            (shot.procs || []).forEach(p => { procCounts[p] = (procCounts[p] || 0) + 1; });
+            const procIcons = Object.entries(procCounts).map(([type, count]) => {
+              const icon = this.getStatusIcon(type);
+              return count > 1
+                ? `<span style="font-size:0.65rem;" title="${type}">${icon}<sup style="font-size:0.55rem;">${count}</sup></span>`
+                : `<span style="font-size:0.65rem;" title="${type}">${icon}</span>`;
+            }).join('');
+            return `
             <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:${i % 2 === 0 ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.05)'};border-radius:4px;margin-bottom:2px;">
               <div style="width:30px;font-size:0.7rem;color:var(--c-text-dim);">#${i + 1}</div>
               <div style="width:50px;font-size:0.7rem;color:var(--c-text2);">${shot.timestamp.toFixed(2)}s</div>
+              ${shot.isReload ? '<div style="width:24px;font-size:0.7rem;color:var(--c-cyan);" title="装填">↻</div>' : ''}
               <div style="flex:1;font-size:0.8rem;color:var(--c-text);font-weight:600;">${DamageCalculator.fmtNum(shot.damage)}</div>
-              <div style="font-size:0.7rem;color:var(--c-text2);">暴击: ${shot.critMult}x</div>
-              <div style="display:flex;gap:2px;">
-                ${shot.statusIcons.map(icon => `<span style="font-size:0.65rem;">${icon}</span>`).join('')}
-              </div>
+              <div style="font-size:0.7rem;color:var(--c-text2);">${shot.critMult !== '1.0' ? '暴击: ' + shot.critMult + 'x' : ''}</div>
+              <div style="display:flex;gap:2px;">${procIcons}</div>
             </div>
-          `).join('')}
+          `;
+          }).join('')}
         </div>
       </div>
 
@@ -3388,6 +3547,8 @@ const App = {
           <span>${(queueData.avgArmorDR * 100).toFixed(0)}% (护甲减少 %)</span>
           <span>x${queueData.stanceMult || 1} (姿态乘数)</span>
           <span>${queueData.truthDamage || 0} (真理密语 伤害)</span>
+          ${queueData.heavyComboMult && queueData.heavyComboMult > 1 ? `<span>x${queueData.heavyComboMult} (重击连击倍率)</span>` : ''}
+          ${queueData.toxicLash ? `<span>${queueData.toxicLash} (剧毒鞭笞)</span>` : ''}
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">
           ${queueData.statusTypes.map(st => `
@@ -3396,6 +3557,9 @@ const App = {
               <span>${st.type}: ${st.count}</span>
             </span>
           `).join('')}
+          <span style="display:inline-flex;align-items:center;gap:2px;padding:2px 6px;background:rgba(0,0,0,0.2);border-radius:4px;font-size:0.65rem;">
+            负面状态数量: ${queueData.enemyStatusCount}
+          </span>
         </div>
       </div>
     `;
@@ -3455,11 +3619,11 @@ const App = {
       timestamp: shot.time,
       damage: shot.damage || 0,
       critMult: shot.maxCritMult ? shot.maxCritMult.toFixed(1) : '1.0',
-      statusIcons: (shot.procs || []).map(p => this.getStatusIcon(p)),
-      statusDmg: 0
+      isReload: !!shot.isReload,
+      procs: shot.procs || []
     }));
 
-    // 状态类型统计 (来自真实时间线)
+    // 状态类型统计 (来自真实时间线, 保留层数)
     const statusCount = {};
     timeline.forEach(shot => {
       (shot.procs || []).forEach(p => {
@@ -3483,11 +3647,39 @@ const App = {
       avgCritMult: avgCritMult.toFixed(1),
       avgArmorDR: (result && result.dr !== undefined ? result.dr : 0) / 100 || 0,
       comboCount: 1,
-      enemyStatusCount: 0,
+      enemyStatusCount: this.getEnemyStatusCount(result),
       stanceMult: (result && result.stanceMult) || 1,
       truthDamage: (result && result.truthDamage) || 0,
+      heavyComboMult: this.getHeavyComboMult(),
+      toxicLash: this.getToxicLashInfo(),
       statusTypes: statusTypes
     };
+  },
+
+  // 当前敌人负面状态数量 (从状态时间线统计活跃状态种类)
+  getEnemyStatusCount(result) {
+    const si = result && result.statusInfo;
+    if (si && si.activeCount !== undefined) return si.activeCount;
+    if (si && Array.isArray(si.statuses)) {
+      return Object.keys(si.statuses).filter(t => si.statuses[t] > 0).length;
+    }
+    return 0;
+  },
+
+  // 重击连击倍率 (近战重击模式)
+  getHeavyComboMult() {
+    const weapon = this.state.selectedWeapon;
+    const isMelee = weapon && (weapon.category === 'Melee' || weapon.productCategory === 'Melee');
+    if (isMelee && this.state.options.heavyAttack) {
+      return weapon.maxHeavyCombo || 12;
+    }
+    return 0;
+  },
+
+  // 剧毒鞭笞信息 (直接伤害百分比)
+  getToxicLashInfo() {
+    if (!this.state.abilities.toxicLash) return 0;
+    return this.state.abilities.toxicLashPercent || 30;
   },
 
   // ═══════════════ 详细伤害分段 ═══════════════
@@ -3878,6 +4070,7 @@ const App = {
       version: 2,
       mods: this.state.mods.map((m, i) => m ? { name: m.name, rank: this.state.modRanks[i] || 0 } : null).filter(Boolean),
       weaponType: this.state.weaponType,
+      riven: this.state.riven,
       weaponSpecialMod: this.state.weaponSpecialMod ? { name: this.state.weaponSpecialMod.name, rank: this.state.weaponSpecialRank || 0 } : null,
       weaponStanceMod: this.state.weaponStanceMod ? { name: this.state.weaponStanceMod.name, rank: this.state.weaponStanceRank || 0 } : null,
       weaponArcanes: this.state.weaponArcanes.filter(m => m !== null).map(m => m.name),
@@ -3885,7 +4078,7 @@ const App = {
       auraMod: this.state.auraMod ? { name: this.state.auraMod.name, rank: this.state.auraModRank || 0 } : null,
       warframeSpecialMod: this.state.warframeSpecialMod ? { name: this.state.warframeSpecialMod.name, rank: this.state.warframeSpecialRank || 0 } : null,
       warframeArcanes: this.state.warframeArcanes.filter(m => m !== null).map(m => m.name),
-      archonShards: this.state.archonShards,
+      archonShards: this.state.archonShards.map(m => m ? { name: m.name } : null),
       focusSchool: this.state.focusSchool,
       options: { ...this.state.options },
       abilities: { ...this.state.abilities },
@@ -3900,6 +4093,37 @@ const App = {
     a.download = `warframe-build-${weaponName.replace(/\s+/g, '-')}-${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
+  },
+
+  // 复制配装链接 (参考站 Copy build to clipboard: 复制带 ?p= 参数的URL)
+  copyBuildLink() {
+    if (!this.state.selectedWeapon) return;
+    const url = this.saveToURL();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(() => {
+        alert('配装链接已复制到剪贴板');
+      }).catch(() => {
+        this.fallbackCopy(url);
+      });
+    } else {
+      this.fallbackCopy(url);
+    }
+  },
+
+  fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      alert('配装链接已复制到剪贴板');
+    } catch (e) {
+      prompt('复制配装链接 (Ctrl+C):', text);
+    }
+    document.body.removeChild(ta);
   },
 
   // ═══════════════ 导入配装 ═══════════════
@@ -4066,14 +4290,23 @@ const App = {
       });
     }
 
-    // 源力石
+    // 源力石 (新格式: {name}; 旧格式: {type,buffIndex,isTau} 兼容映射)
     if (Array.isArray(data.archonShards)) {
       this.state.archonShards = Array(5).fill(null);
       data.archonShards.forEach((shard, i) => {
         if (i >= 5 || !shard) return;
-        if (this.ARCHON_SHARD_DATA[shard.type] && shard.buffIndex !== undefined) {
-          this.state.archonShards[i] = { type: shard.type, buffIndex: shard.buffIndex, isTau: !!shard.isTau };
+        let mod = null;
+        if (shard.name) {
+          mod = GameData.getAllMods().find(m => m.type === 'shard' && m.name === shard.name);
+        } else if (this.ARCHON_SHARD_DATA[shard.type] && shard.buffIndex !== undefined) {
+          // 旧格式映射: 自定义buff → 参考站shard MOD
+          const legacyMap = this.ARCHON_SHARD_LEGACY_MAP[shard.type] && this.ARCHON_SHARD_LEGACY_MAP[shard.type][shard.buffIndex];
+          if (legacyMap) {
+            const name = legacyMap[shard.isTau ? 1 : 0];
+            mod = GameData.getAllMods().find(m => m.type === 'shard' && m.name === name);
+          }
         }
+        if (mod) this.state.archonShards[i] = mod;
       });
     }
 

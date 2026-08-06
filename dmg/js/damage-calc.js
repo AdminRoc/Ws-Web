@@ -406,7 +406,7 @@ const DamageCalculator = {
     if (isMelee) {
       // 姿态攻击加成 - 从姿态MOD数据中读取
       const rawMods = opts.rawMods || [];
-      const stanceMod = rawMods.find(m => m.type === 'stance');
+      const stanceMod = rawMods.find(m => m && m.type === 'stance');
       let stanceMult = opts.stanceMultiplier || 1;
       let forcedStatuses = [];
       if (stanceMod && stanceMod.action && stanceMod.action.stances) {
@@ -843,6 +843,8 @@ const DamageCalculator = {
       // 汇总该发的总伤害 (所有弹片)
       const shotTotal = shot.pellets.reduce((sum, p) => sum + (p._finalDamage || 0), 0);
       if (shotTotal > 0) {
+        // 换弹判定 (参考站: 弹匣打空后的第一发显示 ↻#N)
+        const isReloadShot = shot.index > 0 && shot.index % shotsPerMag === 0;
         perShotTimeline.push({
           index: shot.index,
           time: shot.time,
@@ -851,8 +853,9 @@ const DamageCalculator = {
           isCrit: shot.pellets.some(p => p.isCrit),
           maxCritMult: Math.max(0, ...shot.pellets.map(p => p.critMult || 1)),
           critTier: Math.max(0, ...shot.pellets.map(p => p.critTier || 0)),
-          procs: [...new Set(shot.pellets.flatMap(p => p.statusProcs || []))],
-          isReload: false
+          // 保留重复 = 状态层数 (参考站: 状态图标+层数显示)
+          procs: shot.pellets.flatMap(p => p.statusProcs || []),
+          isReload: isReloadShot
         });
       }
     });
