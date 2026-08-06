@@ -472,7 +472,7 @@ const DamageCalculator = {
     });
 
     // ═══ 步骤11: 状态时间队列 ═══
-    const statusTimeQueue = this.buildStatusTimeQueue(queue, pMods, enemy);
+    const statusTimeQueue = this.buildStatusTimeQueue(queue, pMods, enemy, opts.mergeStatusEvents);
 
     // Secondary Encumber: 状态触发时有几率添加随机状态
     if (pMods.randomStatusAfterStatus > 0) {
@@ -489,7 +489,7 @@ const DamageCalculator = {
       });
       // 重建状态时间队列以包含额外状态
       Object.keys(statusTimeQueue).forEach(k => delete statusTimeQueue[k]);
-      Object.assign(statusTimeQueue, this.buildStatusTimeQueue(queue, pMods, enemy));
+      Object.assign(statusTimeQueue, this.buildStatusTimeQueue(queue, pMods, enemy, opts.mergeStatusEvents));
     }
 
     // ═══ 步骤4-5 (延迟): 暴击概率和倍率 (包含状态效果) ═══
@@ -1027,8 +1027,31 @@ const DamageCalculator = {
       medianDmg,
       breakdown: this.getShotBreakdown(queue, statusTimeQueue, pMods, enemy, weapon),
       statusInfo: this.getStatusInfoFromQueue(statusTimeQueue),
-      perShotTimeline
+      perShotTimeline,
+      // 本攻击的原始状态事件 (供合并攻击效果使用: 合并对中的其他攻击需要看到这些状态)
+      statusEvents: this.collectStatusEvents(queue)
     };
+  },
+
+  // 收集队列中所有状态事件 (原始形式, 供合并攻击效果跨攻击传递)
+  collectStatusEvents(queue) {
+    const events = [];
+    (queue || []).forEach(shot => {
+      shot.pellets.forEach(pellet => {
+        pellet.statusProcs.forEach(procType => {
+          events.push({
+            type: procType,
+            time: shot.time,
+            duration: this.STATUS_DURATION[procType] || 6,
+            stacks: 1,
+            critTier: pellet.critTier || 0,
+            isCrit: pellet.isCrit || false,
+            atkIndex: pellet._atkIndex
+          });
+        });
+      });
+    });
+    return events;
   },
 
   // ═══════════════ 分攻击模拟 + 随机窗口语义 (参考站等价) ═══════════════
@@ -1062,6 +1085,51 @@ const DamageCalculator = {
       });
       return { perAttack, primaryIndex: 0 };
     }
+
+    // ═══════════════ 合并攻击效果 (参考站 mergeStatuses) ═══════════════
+    // 合并对中的攻击共享状态效果: 攻击A触发的状态(护甲削减/暴击提升/易伤等)
+    // 在攻击B的伤害计算时可见。每个攻击仍独立全速射击, 仅状态池共享。
+    const mergeCombs = (opts.mergeCombs || []).filter(c => Array.isArray(c) && c.length >= 2);
+    if (mergeCombs.length > 0) {
+      const mergedIndices = new Set();
+      mergeCombs.forEach(c => c.forEach(i => mergedIndices.add(i)));
+
+      // 阶段1: 收集每个攻击的状态事件 (独立全速射击)
+      const collectedEvents = {};
+      for (let i = 0; i < attacks.length; i++) {
+        const r1 = this.runSingleQueue(weapon, pMods, enemy, opts, duration, i);
+        collectedEvents[i] = r1.statusEvents || [];
+      }
+
+      // 阶段2: 合并对中的攻击使用共享状态重算; 未合并的攻击独立计算
+      for (let i = 0; i < attacks.length; i++) {
+        const mergedOpts = { ...opts };
+        if (mergedIndices.has(i)) {
+          // 收集所有包含攻击i的合并对的状态事件
+          const mergeEvents = [];
+          for (const comb of mergeCombs) {
+            if (comb.includes(i)) {
+              for (const j of comb) {
+                if (j !== i && collectedEvents[j]) {
+                  mergeEvents.push(...collectedEvents[j]);
+                }
+              }
+            }
+          }
+          mergedOpts.mergeStatusEvents = mergeEvents.length > 0 ? mergeEvents : undefined;
+        }
+        const r = this.runSingleQueue(weapon, pMods, enemy, mergedOpts, duration, i);
+        perAttack.push({
+          index: i,
+          name: (attacks[i] && attacks[i].name) || ('攻击 ' + (i + 1)),
+          ...r,
+          windowDPS: this.calcWindowDPS(r.perShotTimeline, duration)
+        });
+      }
+      return { perAttack, primaryIndex: 0 };
+    }
+
+    // ═══════════════ 无合并: 组合攻击混跑 (参考站 comb 语义近似) ═══════════════
     const hasComb = weapon.comb && weapon.comb.length > 0;
     let combIdx = null;
     if (hasComb) {
@@ -1071,7 +1139,7 @@ const DamageCalculator = {
       }
     }
     if (combIdx && combIdx.length > 0) {
-      // 组合攻击: 组内按序交替混跑 (参考站 comb 语义近似)
+      // 组合攻击: 组内按序交替混跑
       const r = this.runSingleQueue(weapon, pMods, enemy, opts, duration);
       perAttack.push({
         index: combIdx[0],
@@ -1183,7 +1251,7 @@ const DamageCalculator = {
 
   // ═══════════════ 步骤11: 状态时间队列 ═══════════════
 
-  buildStatusTimeQueue(queue, pMods, enemy) {
+  buildStatusTimeQueue(queue, pMods, enemy, externalEvents = []) {
     const statusQueue = {};
 
     queue.forEach(shot => {
@@ -1202,6 +1270,24 @@ const DamageCalculator = {
             atkIndex: pellet._atkIndex
           });
         });
+      });
+    });
+
+    // 合并外部状态事件 (参考站 mergeStatuses: 合并对攻击的状态共享)
+    // 外部事件来自同一合并对中的其他攻击, 使本攻击的伤害计算能看到它们的状态效果
+    (externalEvents || []).forEach(evt => {
+      if (!evt || !evt.type) return;
+      if (!statusQueue[evt.type]) {
+        statusQueue[evt.type] = [];
+      }
+      statusQueue[evt.type].push({
+        time: evt.time,
+        duration: evt.duration !== undefined ? evt.duration : (this.STATUS_DURATION[evt.type] || 6),
+        stacks: evt.stacks || 1,
+        tickDamage: 0,
+        critTier: evt.critTier || 0,
+        isCrit: evt.isCrit || false,
+        atkIndex: evt.atkIndex
       });
     });
 

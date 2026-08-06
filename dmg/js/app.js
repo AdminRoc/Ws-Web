@@ -17,8 +17,6 @@ const App = {
     eximus: false,
     mods: Array(8).fill(null),
     modRanks: Array(8).fill(0),
-    modPolarities: ['','','','','','','',''],
-    weaponPolarities: [],
     weaponType: 'ranged',
     weaponSpecialMod: null,
     weaponSpecialRank: 0,
@@ -26,8 +24,6 @@ const App = {
     weaponStanceRank: 0,
     weaponArcanes: Array(2).fill(null),
     weaponArcaneRanks: Array(2).fill(0),
-    currentCapacity: 0,
-    maxCapacity: 60,
     activeAttackIndex: 0,
     options: {
       headshot: false,
@@ -53,6 +49,7 @@ const App = {
       conditionOverload: false,
       madurai: false,
       mergeAttacks: false,
+      mergeAttackCombs: [],
       conditionalModsAlways: true,
       customStats: {},
       calcTime: 20
@@ -689,7 +686,6 @@ const App = {
     this.state.weaponArcanes = Array(2).fill(null);
     this.state.weaponArcaneRanks = Array(2).fill(0);
     this.state.selectedStanceName = null;
-    this.state.currentCapacity = 0;
     this.state.zawComponents = { grip: null, link: null };
     this.state.kitgunComponents = { grip: null, loader: null };
 
@@ -1625,6 +1621,11 @@ const App = {
     const container = document.getElementById('mod-grid');
     if (!container) return;
     container.innerHTML = '';
+    // 套装计数 (用于套装徽标显示)
+    const setCounts = {};
+    this.state.mods.forEach(m => {
+      if (m && m.set && m.set.name) setCounts[m.set.name] = (setCounts[m.set.name] || 0) + 1;
+    });
     for (let i = 0; i < 8; i++) {
       const slot = document.createElement('div');
       slot.className = 'mod-slot';
@@ -1636,10 +1637,19 @@ const App = {
         const zhName = GameData.MOD_NAMES_ZH[mod.name] || mod.name;
         const imgSrc = mod.img ? `dmg/img/mods/${mod.img}` : '';
         const maxRank = this.getModMaxRank(mod);
+        // 套装徽标
+        let setBadge = '';
+        if (mod.set && mod.set.name) {
+          const count = setCounts[mod.set.name] || 1;
+          // 套装件数上限 = 最大的set键 (1,2,3...)
+          const maxSetCount = Math.max(...Object.keys(mod.set).filter(k => k !== 'name').map(Number));
+          setBadge = `<div style="position:absolute;top:4px;left:4px;background:rgba(139,92,246,0.85);color:#fff;border-radius:3px;padding:1px 5px;font-size:0.6rem;font-weight:600;">${count}/${maxSetCount}</div>`;
+        }
         slot.innerHTML = `
           <div style="position:absolute;inset:0;background:var(--c-card);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);overflow:hidden;">
             ${imgSrc ? `<img src="${imgSrc}" alt="${zhName}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.65rem;color:var(--c-text2);padding:4px;text-align:center;line-height:1.2;">${zhName}</span>`}
           </div>
+          ${setBadge}
           <div class="mod-rank-controls">
             <button class="rank-btn" onclick="event.stopPropagation(); App.setModRank(${i}, ${rank - 1})">-</button>
             <span class="rank-value">${rank}/${maxRank}</span>
@@ -1656,7 +1666,6 @@ const App = {
       slot.addEventListener('click', () => this.openModPicker(i));
       container.appendChild(slot);
     }
-    this.updateCapacity();
   },
 
   setModRank(slotIndex, newRank) {
@@ -1679,15 +1688,6 @@ const App = {
       if (a.flat_base_damage && a.flat_base_damage > 0) return 10;
     }
     return 5;
-  },
-
-  updateCapacity() {
-    const el = document.getElementById('capacity');
-    if (el) el.textContent = `${this.state.currentCapacity} / ${this.state.maxCapacity}`;
-  },
-
-  getModDrain(mod, rank) {
-    return 2 + rank;
   },
 
   getSlotLabel(index) {
@@ -1742,8 +1742,6 @@ const App = {
       });
     }
 
-    const maxDrain = this.state.maxCapacity - this.state.currentCapacity;
-
     picker.innerHTML = `
       <div style="background:var(--c-lb-card);border:1px solid var(--c-lb-border);border-radius:var(--r-md);padding:20px;max-width:900px;width:100%;max-height:80vh;overflow-y:auto;">
         <div class="picker-header">
@@ -1760,18 +1758,16 @@ const App = {
           ${filtered.length === 0 ? '<div style="grid-column:1/-1;text-align:center;color:var(--c-text3);padding:40px;">没有兼容的 MOD</div>' : ''}
           ${filtered.map(m => {
             const zh = GameData.MOD_NAMES_ZH[m.name] || m.name;
-            const drain = this.getModDrain(m, 0);
-            const canAfford = drain <= maxDrain;
             const imgSrc = m.img ? `dmg/img/mods/${m.img}` : '';
+            const setTag = m.set && m.set.name ? `<span style="display:inline-block;margin-left:4px;background:rgba(139,92,246,0.3);color:var(--c-purple);border-radius:3px;padding:0 4px;font-size:0.6rem;">${m.set.name}</span>` : '';
             return `
               <div class="weapon-item" onclick="App.selectMod(${slotIndex}, '${m.name.replace(/'/g, "\\'")}')"
-                   style="${!canAfford ? 'opacity:0.4;pointer-events:none;' : ''}padding:8px;"
-                   title="容量: ${drain}">
+                   style="padding:8px;">
                 <div style="display:flex;gap:8px;align-items:center;">
                   ${imgSrc ? `<img src="${imgSrc}" alt="${zh}" style="width:48px;height:48px;border-radius:4px;object-fit:cover;">` : ''}
                   <div class="weapon-info">
-                    <div class="weapon-name" style="font-size:0.8rem;">${zh}</div>
-                    <div class="weapon-type" style="font-size:0.7rem;">${m.name} / 消耗 ${drain}</div>
+                    <div class="weapon-name" style="font-size:0.8rem;">${zh}${setTag}</div>
+                    <div class="weapon-type" style="font-size:0.7rem;">${m.name}</div>
                   </div>
                 </div>
               </div>
@@ -1787,10 +1783,6 @@ const App = {
     const mod = GameData.getAllMods().find(m => m.name === modName);
     if (!mod) return;
 
-    const drain = this.getModDrain(mod, 0);
-    const newCapacity = this.state.currentCapacity + drain;
-    if (newCapacity > this.state.maxCapacity) return;
-
     if (slotIndex < 8) {
       const usedNames = this.state.mods.filter((m, i) => m !== null && i < 8).map(m => m.name);
       if (mod.uncomp) {
@@ -1801,7 +1793,6 @@ const App = {
 
     this.state.mods[slotIndex] = mod;
     this.state.modRanks[slotIndex] = 0;
-    this.state.currentCapacity = newCapacity;
 
     this.renderModSlots();
     this.recalculate();
@@ -1811,8 +1802,6 @@ const App = {
   removeMod(slotIndex) {
     const mod = this.state.mods[slotIndex];
     if (!mod) return;
-    const drain = this.getModDrain(mod, this.state.modRanks[slotIndex]);
-    this.state.currentCapacity = Math.max(0, this.state.currentCapacity - drain);
     this.state.mods[slotIndex] = null;
     this.state.modRanks[slotIndex] = 0;
     this.renderModSlots();
@@ -2263,36 +2252,65 @@ const App = {
     if (!container) return;
 
     const weapon = this.state.selectedWeapon;
-    if (!weapon || weapon.attacks.length <= 1) {
-      container.innerHTML = '<div style="font-size:0.7rem;color:var(--c-text2);">此武器只有一个攻击形态</div>';
+    if (!weapon) {
+      container.innerHTML = '<div style="font-size:0.7rem;color:var(--c-text2);">选择武器后可用</div>';
+      return;
+    }
+
+    // 参考站: 合并攻击对来自武器 comb 属性 (如 Kuva Bramma: [[0,1],[2,3]])
+    const combs = weapon.comb || [];
+    const validCombs = combs.filter(group => Array.isArray(group) && group.length >= 2);
+    if (validCombs.length === 0) {
+      container.innerHTML = '<div style="font-size:0.7rem;color:var(--c-text2);">此武器没有可合并的攻击对</div>';
       return;
     }
 
     const attacks = weapon.attacks;
-    container.innerHTML = attacks.map((attack, i) => `
-      <div class="option-item checkbox-option" data-merge-attack="${i}" style="margin-bottom:4px;">
-        <div class="option-checkbox"></div>
-        <span class="option-label" style="font-size:0.7rem;">${attack.name}</span>
-      </div>
-    `).join('');
+    const stored = Array.isArray(this.state.options.mergeAttackCombs) ? this.state.options.mergeAttackCombs : [];
 
-    // Bind events
-    container.querySelectorAll('.checkbox-option').forEach(el => {
+    container.innerHTML = validCombs.map((group, gi) => {
+      const labels = group
+        .filter(i => i >= 0 && i < attacks.length)
+        .map(i => `"${attacks[i] && attacks[i].name || ('攻击 ' + (i + 1))}"`);
+      const active = stored.includes(gi);
+      return `
+        <div class="option-item checkbox-option merge-comb-option ${active ? 'active' : ''}" data-merge-comb="${gi}" style="margin-bottom:4px;">
+          <div class="option-checkbox"></div>
+          <span class="option-label" style="font-size:0.7rem;">${labels.join(' 和 ')}</span>
+        </div>
+      `;
+    }).join('');
+
+    // 绑定事件
+    container.querySelectorAll('.merge-comb-option').forEach(el => {
       el.addEventListener('click', () => {
         el.classList.toggle('active');
+        this.updateMergeAttacksState();
         this.recalculate();
       });
     });
   },
 
-  getMergeAttacksList() {
+  // 更新合并攻击对状态到 state.options.mergeAttackCombs
+  updateMergeAttacksState() {
     const active = [];
-    document.querySelectorAll('[data-merge-attack]').forEach(el => {
+    document.querySelectorAll('[data-merge-comb]').forEach(el => {
       if (el.classList.contains('active')) {
-        active.push(parseInt(el.dataset.mergeAttack));
+        active.push(parseInt(el.dataset.mergeComb));
       }
     });
-    return active;
+    this.state.options.mergeAttackCombs = active;
+  },
+
+  // 获取勾选的合并对 (返回 comb 索引数组, 如 [[0,1],[2,3]])
+  getActiveMergeCombs() {
+    const weapon = this.state.selectedWeapon;
+    if (!weapon || !weapon.comb) return [];
+    const stored = Array.isArray(this.state.options.mergeAttackCombs) ? this.state.options.mergeAttackCombs : [];
+    if (stored.length === 0) return [];
+    return stored
+      .filter(gi => weapon.comb[gi] && Array.isArray(weapon.comb[gi]) && weapon.comb[gi].length >= 2)
+      .map(gi => weapon.comb[gi]);
   },
 
   // ═══════════════ 裂罅MOD系统 ═══════════════
@@ -2355,7 +2373,12 @@ const App = {
     const preview = document.getElementById('riven-weapon-name');
     if (preview && stats.length > 0) {
       const weaponName = this.state.selectedWeaponName || '未选择武器';
-      preview.textContent = `${weaponName} - ${stats.map(s => `+${s.value}% ${s.stat}`).join(', ')}`;
+      const isPercent = ['Damage', 'Multishot', 'Critical Chance', 'Critical Damage', 'Fire Rate', 'Status Chance', 'Status Duration'];
+      preview.textContent = `${weaponName} - ${stats.map(s => {
+        const sign = s.value < 0 ? '-' : '+';
+        const absVal = Math.abs(s.value);
+        return `${sign}${absVal}${isPercent.includes(s.stat) ? '%' : ''} ${s.stat}`;
+      }).join(', ')}`;
     }
   },
 
@@ -2566,21 +2589,16 @@ const App = {
     
     let html = '';
     
-    // 正面属性
+    // 属性 (参考站: 直接显示属性值, 负值=负面属性)
     riven.positives.forEach((stat, i) => {
       const value = riven.positiveValues[i] || 0;
       const zh = this.RIVEN_STATS_ZH[stat] || stat;
       const isPercent = ['Damage', 'Multishot', 'Critical Chance', 'Critical Damage', 'Fire Rate', 'Status Chance', 'Status Duration'].includes(stat);
-      html += `<div style="color:var(--c-green);">+${value}${isPercent ? '%' : ''} ${zh}</div>`;
+      const sign = value < 0 ? '-' : '+';
+      const absVal = Math.abs(value);
+      const color = value < 0 ? 'var(--c-red)' : 'var(--c-green)';
+      html += `<div style="color:${color};">${sign}${absVal}${isPercent ? '%' : ''} ${zh}</div>`;
     });
-    
-    // 负面属性
-    if (riven.negative) {
-      const value = riven.negativeValue || 0;
-      const zh = this.RIVEN_STATS_ZH[riven.negative] || riven.negative;
-      const isPercent = ['Damage', 'Multishot', 'Critical Chance', 'Critical Damage', 'Fire Rate', 'Status Chance', 'Status Duration'].includes(riven.negative);
-      html += `<div style="color:var(--c-red);">-${value}${isPercent ? '%' : ''} ${zh}</div>`;
-    }
     
     // 等级
     html += `<div style="color:var(--c-text2);margin-top:4px;">等级: ${riven.rank}/8</div>`;
@@ -2635,22 +2653,24 @@ const App = {
     }
     
     // 收集所有装备的MOD（包括裂罅、武器特殊槽、赋能、架式）
-    let equippedMods = this.state.mods.filter(m => m !== null);
-    if (this.state.weaponSpecialMod) equippedMods.push(this.state.weaponSpecialMod);
-    this.state.weaponArcanes.forEach(m => { if (m) equippedMods.push(m); });
-    if (this.state.weaponStanceMod) equippedMods.push(this.state.weaponStanceMod);
+    // 注意: 所有槽位无条件占位(含null), 与 allModRanks 索引严格一一对应 (processMods 按 idx 取 rank)
+    let equippedMods = this.state.mods.slice();
+    equippedMods.push(this.state.weaponSpecialMod || null);
+    this.state.weaponArcanes.forEach(m => equippedMods.push(m || null));
+    equippedMods.push(this.state.weaponStanceMod || null);
     const allModRanks = [
       ...this.state.modRanks,
       this.state.weaponSpecialRank || 0,
       ...this.state.weaponArcaneRanks,
-      this.state.weaponStanceRank || 0
+      this.state.weaponStanceRank || 0,
+      (this.state.riven.active ? (this.state.riven.rank || 8) : 0)
     ];
     
     // 如果裂罅已激活，转换为action格式并添加到MOD列表
     if (this.state.riven.active) {
       const rivenAction = this.rivenToModAction();
       if (rivenAction) {
-        equippedMods.push({ name: '裂罅MOD', action: rivenAction });
+        equippedMods.push({ name: '裂罅MOD', action: rivenAction, maxRank: 8 });
       }
     }
 
@@ -2691,10 +2711,127 @@ const App = {
       virusStacks: this.state.options.virusStacks || 10,
       isMaxCond: this.state.options.isMaxCond !== false,
       manualCountStatus: this.state.options.manualCountStatus,
-      modRanks: allModRanks
+      modRanks: allModRanks,
+      // 合并攻击效果: 勾选的合并对 (参考站 mergeStatuses 语义)
+      mergeCombs: this.state.options.mergeAttacks ? this.getActiveMergeCombs() : []
     };
 
-    // 为每个攻击形态独立计算伤害
+    // ═══════════════ 合并攻击效果模式 ═══════════════
+    // 参考站: 合并对中的攻击共享状态效果 (状态在攻击对间传递, 影响伤害计算)
+    // 需要用完整武器一次计算, 让 damage-calc.js 的 runPerAttackSimulation 处理合并
+    const activeMergeCombs = opts.mergeCombs || [];
+    const useMergeMode = this.state.options.mergeAttacks && activeMergeCombs.length > 0 && weapon.attacks.length > 1;
+
+    if (useMergeMode) {
+      // 构建完整武器 (每个攻击应用Zaw/Kitgun/Incarnon修改)
+      const fullAttacks = weapon.attacks.map((attack) => {
+        let modded = { ...attack };
+        // 应用Zaw组件修改
+        if (this.isZawWeapon(this.state.selectedWeaponName)) {
+          const zawMods = this.getZawComponentModifiers();
+          modded = {
+            ...modded,
+            damage: { ...attack.damage },
+            crit_chance: attack.crit_chance + zawMods.crit_chance,
+            status_chance: attack.status_chance + zawMods.status_chance,
+            speed: attack.speed + zawMods.speed
+          };
+          if (zawMods.damage !== 0) {
+            const baseDmg = Object.values(attack.damage).reduce((s, v) => s + v, 0);
+            const dmgRatio = (baseDmg + zawMods.damage) / baseDmg;
+            Object.keys(modded.damage).forEach(k => {
+              modded.damage[k] *= dmgRatio;
+            });
+          }
+        }
+        // 应用Kitgun组件修改
+        if (this.isKitgunWeapon(this.state.selectedWeaponName)) {
+          const kitgunMods = this.getKitgunComponentModifiers();
+          modded = {
+            ...modded,
+            crit_chance: attack.crit_chance + kitgunMods.crit_chance,
+            crit_mult: attack.crit_mult + kitgunMods.crit_mult,
+            status_chance: attack.status_chance + kitgunMods.status_chance,
+            speed: kitgunMods.speed || attack.speed
+          };
+        }
+        // 应用Incarnon进化效果
+        const evoMods = this.getIncarnonEvoMods();
+        if (evoMods) {
+          if (evoMods.crit_chance) modded = { ...modded, crit_chance: (modded.crit_chance || 0) + evoMods.crit_chance };
+          if (evoMods.crit_mult) modded = { ...modded, crit_mult: (modded.crit_mult || 0) + evoMods.crit_mult };
+          if (evoMods.speed) modded = { ...modded, speed: (modded.speed || 0) + evoMods.speed };
+          if (evoMods.status_chance) modded = { ...modded, status_chance: (modded.status_chance || 0) + evoMods.status_chance };
+          if (evoMods.range) modded = { ...modded, range: (modded.range || 0) + evoMods.range };
+          opts.evoBase = evoMods.base || 0;
+          opts.evoStatusDamage = evoMods.status_damage || 0;
+        }
+        return modded;
+      });
+
+      // 完整武器: 应用武器级修改 (multishot/magazine/incarnon mag)
+      const fullWeapon = {
+        ...weapon,
+        attacks: fullAttacks,
+        multishot: weapon.multishot || 1,
+        magazineSize: weapon.magazineSize || 1,
+        reloadTime: weapon.reloadTime || 0
+      };
+      if (this.isZawWeapon(this.state.selectedWeaponName)) {
+        // Zaw无弹匣修改
+      }
+      if (this.isKitgunWeapon(this.state.selectedWeaponName)) {
+        const kitgunMods = this.getKitgunComponentModifiers();
+        if (kitgunMods.magazineSize) fullWeapon.magazineSize += kitgunMods.magazineSize;
+        if (kitgunMods.reloadTime) fullWeapon.reloadTime += kitgunMods.reloadTime;
+      }
+      const evoMods = this.getIncarnonEvoMods();
+      if (evoMods && evoMods.multishot) fullWeapon.multishot = (fullWeapon.multishot || 1) + evoMods.multishot;
+
+      const result = DamageCalculator.calcDPS(fullWeapon, equippedMods, scaledEnemy, opts);
+      const allResults = [];
+      if (result && result.perAttack && result.perAttack.length > 0) {
+        result.perAttack.forEach((pa, idx) => {
+          const atk = weapon.attacks[pa.index !== undefined ? pa.index : idx];
+          allResults.push({
+            ...pa,
+            attackName: atk ? atk.name : ('攻击 ' + (idx + 1)),
+            attackIndex: pa.index !== undefined ? pa.index : idx
+          });
+        });
+      } else if (result) {
+        // 兜底: 单结果
+        result.attackName = weapon.attacks[0] && weapon.attacks[0].name;
+        result.attackIndex = 0;
+        allResults.push(result);
+      }
+      // 主结果使用 calcDPS 完整返回 (含 effectiveDPS/rawDPS/fireRate/dotDPS/dr 等字段)
+      let mainResult = result || allResults[0] || null;
+      if (mainResult) {
+        // perAttack 中当前选中攻击的 windowDPS 覆盖混合队列 DPS 显示
+        const activePa = allResults[this.state.activeAttackIndex];
+        if (activePa && activePa.windowDPS !== undefined) {
+          mainResult.dps = activePa.windowDPS;
+        }
+        mainResult.attackName = activePa ? activePa.attackName : (weapon.attacks[0] && weapon.attacks[0].name);
+        mainResult.attackIndex = activePa ? activePa.attackIndex : 0;
+      }
+      // 应用后计算效果
+      if (mainResult) {
+        this.applyExternalVirus(mainResult);
+      }
+      this.state.dpsResult = mainResult;
+      this.state.allAttackResults = allResults;
+      this.updateDPSDisplay(mainResult);
+      this.updateDamageBreakdown(mainResult ? mainResult.breakdown : {});
+      this.updateStatusInfo(mainResult);
+      this.updateMultiAttackDisplay(allResults);
+      this.updatePerHitTimeline(mainResult);
+      this.saveToURL();
+      return;
+    }
+
+    // ═══════════════ 非合并模式: 为每个攻击形态独立计算伤害 ═══════════════
     const allResults = [];
     weapon.attacks.forEach((attack, index) => {
       const isIncAttack = attack.isInc === 1;
@@ -3101,17 +3238,17 @@ const App = {
              style="padding:12px;margin-bottom:8px;background:var(--c-card);border-radius:var(--r-sm);cursor:pointer;border:1px solid ${isActive ? 'var(--c-gold-bright)' : 'var(--c-border)'};">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
             <span style="font-weight:600;color:var(--c-text);">${result.attackName}</span>
-            <span style="color:var(--c-gold-bright);font-weight:700;">${DamageCalculator.fmtNum(result.effectiveDPS)} DPS</span>
+            <span style="color:var(--c-gold-bright);font-weight:700;">${DamageCalculator.fmtNum(result.effectiveDPS !== undefined ? result.effectiveDPS : (result.dps || 0))} DPS</span>
           </div>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;font-size:0.75rem;color:var(--c-text2);margin-bottom:8px;">
-            <span>单发（不含状态）: ${DamageCalculator.fmtNum(result.total)}</span>
+            <span>单发（不含状态）: ${DamageCalculator.fmtNum(result.total !== undefined ? result.total : (result.avgPerShot || 0))}</span>
             <span>单发（状态）: ${DamageCalculator.fmtNum(result.avgPerShotStatus || 0)}</span>
-            <span>TTK: ${DamageCalculator.fmtTime(result.ttk)}</span>
+            <span>TTK: ${DamageCalculator.fmtTime(result.ttk || 0)}</span>
           </div>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;font-size:0.75rem;color:var(--c-text2);margin-bottom:8px;">
-            <span>单发（总计）: ${DamageCalculator.fmtNum((result.total || 0) + (result.avgPerShotStatus || 0))}</span>
-            <span>暴击: ${result.critChance.toFixed(1)}%</span>
-            <span>中位数: ${DamageCalculator.fmtNum(result.medianDmg || result.total)}</span>
+            <span>单发（总计）: ${DamageCalculator.fmtNum((result.total !== undefined ? result.total : (result.avgPerShot || 0)) + (result.avgPerShotStatus || 0))}</span>
+            <span>暴击: ${(result.critChance || 0).toFixed(1)}%</span>
+            <span>中位数: ${DamageCalculator.fmtNum(result.medianDmg || result.total || 0)}</span>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <div style="flex:1;min-width:120px;padding:8px;background:rgba(255,107,107,0.1);border-radius:4px;border:1px solid rgba(255,107,107,0.2);">
@@ -3298,54 +3435,43 @@ const App = {
   },
 
   generateMockQueueData(result, enemy) {
-    const shots = [];
-    const fireRate = result.fireRate || 10;
-    const interval = 1 / fireRate;
-    const totalDamage = result.total || 100;
-    const critChance = (result.critChance || 25) / 100;
-    const critMult = result.critDmg || 2;
+    // 使用真实计算数据 (runSingleQueue 的 perShotTimeline), 而非随机生成
+    const timeline = (result && result.perShotTimeline) || [];
+    const shots = timeline.map(shot => ({
+      timestamp: shot.time,
+      damage: shot.damage || 0,
+      critMult: shot.maxCritMult ? shot.maxCritMult.toFixed(1) : '1.0',
+      statusIcons: (shot.procs || []).map(p => this.getStatusIcon(p)),
+      statusDmg: 0
+    }));
 
-    for (let i = 0; i < 30; i++) {
-      const isCrit = Math.random() < critChance;
-      const damage = totalDamage * (isCrit ? critMult : 1);
-      const statusIcons = [];
-      if (Math.random() < 0.3) statusIcons.push('🔥');
-      if (Math.random() < 0.2) statusIcons.push('❄️');
-      if (Math.random() < 0.15) statusIcons.push('⚡');
-
-      shots.push({
-        timestamp: i * interval,
-        damage: damage,
-        critMult: isCrit ? critMult.toFixed(1) : '1.0',
-        statusIcons: statusIcons,
-        statusDmg: isCrit ? damage * 0.3 : 0
+    // 状态类型统计 (来自真实时间线)
+    const statusCount = {};
+    timeline.forEach(shot => {
+      (shot.procs || []).forEach(p => {
+        statusCount[p] = (statusCount[p] || 0) + 1;
       });
-    }
+    });
+    const statusTypes = Object.entries(statusCount).map(([type, count]) => ({ type, count }));
 
-    // Calculate status types from weapon
-    const weapon = this.state.selectedWeapon;
-    const statusTypes = [];
-    if (weapon && weapon.attacks && result.attackIndex !== undefined) {
-      const attack = weapon.attacks[result.attackIndex];
-      if (attack && attack.damage) {
-        Object.entries(attack.damage).forEach(([type, dmg]) => {
-          if (dmg > 0) {
-            statusTypes.push({ type, count: Math.floor(Math.random() * 5) + 1 });
-          }
-        });
-      }
-    }
+    // 平均暴击倍率
+    const critMults = timeline.map(s => s.maxCritMult || 1);
+    const avgCritMult = critMults.length > 0
+      ? (critMults.reduce((s, v) => s + v, 0) / critMults.length)
+      : 1;
 
     return {
       shots: shots,
-      totalHits: 30,
-      avgStrikeDmg: totalDamage,
-      avgCritMult: critMult.toFixed(1),
-      avgArmorDR: result.dr / 100 || 0,
+      totalHits: timeline.length,
+      avgStrikeDmg: timeline.length > 0
+        ? timeline.reduce((s, x) => s + (x.damage || 0), 0) / timeline.length
+        : 0,
+      avgCritMult: avgCritMult.toFixed(1),
+      avgArmorDR: (result && result.dr !== undefined ? result.dr : 0) / 100 || 0,
       comboCount: 1,
       enemyStatusCount: 0,
-      stanceMult: result.stanceMult || 1,
-      truthDamage: result.truthDamage || 0,
+      stanceMult: (result && result.stanceMult) || 1,
+      truthDamage: (result && result.truthDamage) || 0,
       statusTypes: statusTypes
     };
   },
@@ -3650,7 +3776,6 @@ const App = {
     this.state.weaponStanceRank = 0;
     this.state.weaponArcanes = Array(2).fill(null);
     this.state.weaponArcaneRanks = Array(2).fill(0);
-    this.state.currentCapacity = 0;
     this.state.activeAttackIndex = 0;
     this.state.dpsResult = null;
     this.state.options = {
@@ -4217,15 +4342,12 @@ const App = {
   swapMods(slotA, slotB) {
     const tempMod = this.state.mods[slotA];
     const tempRank = this.state.modRanks[slotA];
-    const tempPolarity = this.state.modPolarities[slotA];
 
     this.state.mods[slotA] = this.state.mods[slotB];
     this.state.modRanks[slotA] = this.state.modRanks[slotB];
-    this.state.modPolarities[slotA] = this.state.modPolarities[slotB];
 
     this.state.mods[slotB] = tempMod;
     this.state.modRanks[slotB] = tempRank;
-    this.state.modPolarities[slotB] = tempPolarity;
 
     this.renderModSlots();
     this.recalculate();
