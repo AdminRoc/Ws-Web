@@ -1611,7 +1611,8 @@ const App = {
     const mod = GameData.getAllMods().find(m => m.name === modName);
     if (!mod) return;
     this.state.warframeSpecialMod = mod;
-    this.state.warframeSpecialRank = 0;
+    // 默认满级 (参考站: MOD按满级计算, 无等级缩放)
+    this.state.warframeSpecialRank = this.getModMaxRank(mod);
     this.renderWarframeSpecialSlot();
     this.recalculate();
     this.closeModPicker();
@@ -1915,7 +1916,8 @@ const App = {
     const mod = GameData.getAllMods().find(m => m.name === modName);
     if (!mod) return;
     this.state.auraMod = mod;
-    this.state.auraModRank = 0;
+    // 默认满级 (参考站: MOD按满级计算, 无等级缩放)
+    this.state.auraModRank = this.getModMaxRank(mod);
     this.renderAuraSlot();
     this.recalculate();
     this.closeModPicker();
@@ -2133,7 +2135,8 @@ const App = {
     const mod = GameData.getAllMods().find(m => m.name === modName);
     if (!mod) return;
     this.state.warframeMods[slotIndex] = mod;
-    this.state.warframeModRanks[slotIndex] = 0;
+    // 默认满级 (参考站: MOD按满级计算, 无等级缩放)
+    this.state.warframeModRanks[slotIndex] = this.getModMaxRank(mod);
     this.renderWarframeModSlots();
     this.recalculate();
     this.closeModPicker();
@@ -2652,18 +2655,27 @@ const App = {
       scaledEnemy.armor = Math.max(0, scaledEnemy.armor * (1 - armorStripPct / 100));
     }
     
-    // 收集所有装备的MOD（包括裂罅、武器特殊槽、赋能、架式）
+    // 收集所有装备的MOD（武器面板 + 战甲面板: 光环/战甲MOD/战甲特殊槽/战甲赋能）
     // 注意: 所有槽位无条件占位(含null), 与 allModRanks 索引严格一一对应 (processMods 按 idx 取 rank)
+    // 参考站: 光环/战甲MOD(frame_mod)/战甲赋能(frame_mist) 直接并入 modsPanel 参与武器计算
     let equippedMods = this.state.mods.slice();
     equippedMods.push(this.state.weaponSpecialMod || null);
     this.state.weaponArcanes.forEach(m => equippedMods.push(m || null));
     equippedMods.push(this.state.weaponStanceMod || null);
+    equippedMods.push(this.state.auraMod || null);
+    this.state.warframeMods.forEach(m => equippedMods.push(m || null));
+    equippedMods.push(this.state.warframeSpecialMod || null);
+    this.state.warframeArcanes.forEach(m => equippedMods.push(m || null));
     const allModRanks = [
       ...this.state.modRanks,
       this.state.weaponSpecialRank || 0,
       ...this.state.weaponArcaneRanks,
       this.state.weaponStanceRank || 0,
-      (this.state.riven.active ? (this.state.riven.rank || 8) : 0)
+      this.state.auraModRank || 0,
+      ...this.state.warframeModRanks,
+      this.state.warframeSpecialRank || 0,
+      // 战甲赋能: 参考站默认满级 (Arcane 满级5)
+      5, 5
     ];
     
     // 如果裂罅已激活，转换为action格式并添加到MOD列表
@@ -2673,6 +2685,8 @@ const App = {
         equippedMods.push({ name: '裂罅MOD', action: rivenAction, maxRank: 8 });
       }
     }
+    // 裂罅rank追加到 allModRanks (与 equippedMods 末尾对应)
+    allModRanks.push(this.state.riven.active ? (this.state.riven.rank || 8) : 0);
 
     const opts = {
       headshot: this.state.options.headshot,

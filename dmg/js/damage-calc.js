@@ -1780,6 +1780,12 @@ const DamageCalculator = {
       beamLength: 0, blastRadius: 0, zoom: 0, statusDuration: 0,
       doubleCrit: 0,
       addRadiation: 0, addMagnetic: 0, addGas: 0, addViral: 0,
+      addCorrosive: 0, addBlast: 0,
+      addRadiationS: 0, addMagneticS: 0, addGasS: 0, addBlastS: 0, addCorrosiveS: 0,
+      addHeatNotCombined: 0, addColdNotCombined: 0,
+      addElectricityNotCombined: 0, addToxinNotCombined: 0,
+      addHeatNotCombinedSBS: 0, addColdNotCombinedSBS: 0,
+      addElectricityNotCombinedSBS: 0, addToxinNotCombinedSBS: 0,
       dmgMultAgainstFrozen: 0, critFlatChancePerStatuses: 0,
       flatCritWithStatus: 0, disableBodyCrit: false,
       multiplicativeBasePerStatus: false,
@@ -1944,6 +1950,23 @@ const DamageCalculator = {
       if (a.ammoEff) result.ammoEff += a.ammoEff * rankScale;
       if (a.na) result.na += a.na * rankScale;
       if (a.melee_combo_effP) result.meleeComboEffP += a.melee_combo_effP * rankScale;
+      // 战甲MOD元素注入键 (参考站 setAdditionalMods @740-746)
+      // NotCombined = 独立添加(不组合); ScaledByStrength = 按能力强度缩放; S后缀 = 按强度缩放
+      if (a.addHeatNotCombined) result.addHeatNotCombined += a.addHeatNotCombined * rankScale;
+      if (a.addColdNotCombined) result.addColdNotCombined += a.addColdNotCombined * rankScale;
+      if (a.addElectricityNotCombined) result.addElectricityNotCombined += a.addElectricityNotCombined * rankScale;
+      if (a.addToxinNotCombined) result.addToxinNotCombined += a.addToxinNotCombined * rankScale;
+      if (a.addHeatNotCombinedScaledByStrength) result.addHeatNotCombinedSBS += a.addHeatNotCombinedScaledByStrength * rankScale;
+      if (a.addColdNotCombinedScaledByStrength) result.addColdNotCombinedSBS += a.addColdNotCombinedScaledByStrength * rankScale;
+      if (a.addElectricityNotCombinedScaledByStrength) result.addElectricityNotCombinedSBS += a.addElectricityNotCombinedScaledByStrength * rankScale;
+      if (a.addToxinNotCombinedScaledByStrength) result.addToxinNotCombinedSBS += a.addToxinNotCombinedScaledByStrength * rankScale;
+      if (a.addCorrosive) result.addCorrosive += a.addCorrosive * rankScale;
+      if (a.addBlast) result.addBlast += a.addBlast * rankScale;
+      if (a.addCorrosiveS) result.addCorrosiveS += a.addCorrosiveS * rankScale;
+      if (a.addRadiationS) result.addRadiationS += a.addRadiationS * rankScale;
+      if (a.addMagneticS) result.addMagneticS += a.addMagneticS * rankScale;
+      if (a.addGasS) result.addGasS += a.addGasS * rankScale;
+      if (a.addBlastS) result.addBlastS += a.addBlastS * rankScale;
     });
 
     // 应用条件MOD
@@ -2084,19 +2107,27 @@ const DamageCalculator = {
       result[type] = (result[type] || 0) + totalBaseDmg * count;
     });
 
-    // 添加额外组合元素伤害 (addRadiation, addMagnetic, addGas, addViral, heatAdd)
-    // 与参考站点一致: Nourish的Viral百分比与MOD的addViral叠加, 加入武器基础伤害池
+    // 添加额外组合元素伤害 (参考站 setAdditionalMods @740-746)
+    // 注入基准 = 初始总基础伤害 e (getTotalBaseDmg = currWeaponInitial.damage 总和, 不含MOD)
+    // 注入量 = e × 系数; ScaledByStrength/S后缀键按能力强度缩放
     const nourishMult = (opts.grendelNourish && opts.grendelNourishPercent) ? (opts.grendelNourishPercent / 100) : 0;
-    const flatCombinedElements = {
-      Radiation: processedMods.addRadiation || 0,
-      Magnetic: processedMods.addMagnetic || 0,
-      Gas: processedMods.addGas || 0,
+    const strengthMult = (opts.abilityStrength || 100) / 100;
+    const baseForInject = Object.values(weaponDamage).reduce((s, v) => s + v, 0);
+    const injectElements = {
+      Heat: (processedMods.addHeatNotCombined || 0) + (processedMods.addHeatNotCombinedSBS || 0) * strengthMult + (processedMods.heatAdd || 0),
+      Electricity: (processedMods.addElectricityNotCombined || 0) + (processedMods.addElectricityNotCombinedSBS || 0) * strengthMult,
+      Cold: (processedMods.addColdNotCombined || 0) + (processedMods.addColdNotCombinedSBS || 0) * strengthMult,
+      Toxin: (processedMods.addToxinNotCombined || 0) + (processedMods.addToxinNotCombinedSBS || 0) * strengthMult,
       Viral: (processedMods.addViral || 0) + nourishMult,
-      Heat: processedMods.heatAdd || 0
+      Corrosive: (processedMods.addCorrosive || 0) + (processedMods.addCorrosiveS || 0) * strengthMult,
+      Radiation: (processedMods.addRadiation || 0) + (processedMods.addRadiationS || 0) * strengthMult,
+      Magnetic: (processedMods.addMagnetic || 0) + (processedMods.addMagneticS || 0) * strengthMult,
+      Gas: (processedMods.addGas || 0) + (processedMods.addGasS || 0) * strengthMult,
+      Blast: (processedMods.addBlast || 0) + (processedMods.addBlastS || 0) * strengthMult
     };
-    Object.entries(flatCombinedElements).forEach(([type, mult]) => {
+    Object.entries(injectElements).forEach(([type, mult]) => {
       if (mult > 0) {
-        result[type] = (result[type] || 0) + totalBaseDmg * mult;
+        result[type] = (result[type] || 0) + baseForInject * mult;
       }
     });
 
