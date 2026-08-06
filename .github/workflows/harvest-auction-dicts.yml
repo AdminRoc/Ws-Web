@@ -9,7 +9,7 @@ name: Harvest Auction Dicts
 
 on:
   schedule:
-    - cron: '0 5,17 * * *'
+    - cron: '0 2 * * 1'   # 每周一 02:00 UTC（拍卖字典月度级变化；2026-08-07 从每日 2 次降为每周，省构建配额）
   workflow_dispatch:
 
 concurrency:
