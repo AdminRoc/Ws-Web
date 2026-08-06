@@ -1,0 +1,34 @@
+name: Deploy to EdgeOne Makers
+
+# 直传模式：取消 EdgeOne 的 Git 自动构建后，仅本工作流执行部署时才消耗构建次数。
+# 触发策略（目标 ~35 次/月）：
+#   - push 代码（非 data/.github/md 等）→ 立即部署（日常改代码不积压）
+#   - 每天 03:17 UTC 定时 → 兜底把当天数据工作流写回仓库的 data/** 变更上线
+#   - workflow_dispatch → 手动随时部署
+# data/** 的推送不触发：世界状态实时数据走 ws-api.wfspeed.run 透传（raw-ws），
+# 静态快照仅作离线兜底，每日一次部署完全够用。
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/**'
+      - '.github/**'
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * *'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to EdgeOne Makers
+        env:
+          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
+        run: npx edgeone makers deploy . -n wfspeedwebsite -t "$EDGEONE_API_TOKEN"
