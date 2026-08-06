@@ -37,3 +37,6 @@ __pycache__/
 /dmg/enemies-raw.txt
 /dmg/enemy-names.txt
 /dmg/scripts/
+
+# ── 物品缩略图缓存（~500MB，由 cache-item-icons.yml 自动下载，不纳入部署产物）──
+/data/icons/
