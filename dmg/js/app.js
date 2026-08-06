@@ -300,21 +300,19 @@ const App = {
       this.recalculate();
     });
 
-    document.querySelectorAll('.option-item').forEach(item => {
-      // 双类元素 (option-item checkbox-option) 由 checkbox-option 监听器处理, 避免双重toggle
-      if (item.classList.contains('checkbox-option')) return;
-      item.addEventListener('click', () => {
-        item.classList.toggle('active');
-        const opt = item.dataset.option;
-        if (opt === 'steelPath') {
-          this.state.steelPath = item.classList.contains('active');
-        } else if (opt === 'eximus') {
-          this.state.eximus = item.classList.contains('active');
-        } else if (opt in this.state.options) {
-          this.state.options[opt] = item.classList.contains('active');
-        }
-        this.recalculate();
-      });
+    document.addEventListener('click', e => {
+      const item = e.target.closest('.option-item');
+      if (!item || item.classList.contains('checkbox-option')) return;
+      item.classList.toggle('active');
+      const opt = item.dataset.option;
+      if (opt === 'steelPath') {
+        this.state.steelPath = item.classList.contains('active');
+      } else if (opt === 'eximus') {
+        this.state.eximus = item.classList.contains('active');
+      } else if (opt in this.state.options) {
+        this.state.options[opt] = item.classList.contains('active');
+      }
+      this.recalculate();
     });
 
     const comboSlider = $('combo-slider');
@@ -575,7 +573,11 @@ const App = {
   syncOptionsUI() {
     document.querySelectorAll('.option-item').forEach(item => {
       const opt = item.dataset.option;
-      if (opt in this.state.options) {
+      if (opt === 'steelPath') {
+        item.classList.toggle('active', this.state.steelPath);
+      } else if (opt === 'eximus') {
+        item.classList.toggle('active', this.state.eximus);
+      } else if (opt in this.state.options) {
         item.classList.toggle('active', this.state.options[opt]);
       }
     });
@@ -2687,17 +2689,20 @@ const App = {
       armorStrip: this.state.options.armorStrip || 0,
       externalVirus: this.state.options.externalVirus,
       virusStacks: this.state.options.virusStacks || 10,
+      isMaxCond: this.state.options.isMaxCond !== false,
+      manualCountStatus: this.state.options.manualCountStatus,
       modRanks: allModRanks
     };
 
     // 为每个攻击形态独立计算伤害
     const allResults = [];
     weapon.attacks.forEach((attack, index) => {
+      const isIncAttack = attack.isInc === 1;
       const effectiveWeapon = {
         ...weapon,
         attacks: [attack],
         multishot: weapon.multishot || 1,
-        magazineSize: weapon.magazineSize || 1,
+        magazineSize: (isIncAttack && weapon.incMagazineSize) ? weapon.incMagazineSize : (weapon.magazineSize || 1),
         reloadTime: weapon.reloadTime || 0
       };
 
@@ -2740,17 +2745,18 @@ const App = {
         result.attackName = attack.name;
         result.attackIndex = index;
 
-        // 应用Incarnon进化效果
+        // 应用Incarnon进化效果（作为武器基础属性修正，非后置乘数）
         const evoMods = this.getIncarnonEvoMods();
         if (evoMods) {
-          if (evoMods.base) result.rawDPS *= (1 + evoMods.base);
-          if (evoMods.base) result.effectiveDPS *= (1 + evoMods.base);
-          if (evoMods.base) result.total *= (1 + evoMods.base);
-          if (evoMods.status_damage) {
-            const dotBonus = result.dotDPS * evoMods.status_damage;
-            result.dotDPS += dotBonus;
-            result.effectiveDPS += dotBonus;
-          }
+          if (evoMods.crit_chance) effectiveWeapon.attacks[0] = { ...effectiveWeapon.attacks[0], crit_chance: (effectiveWeapon.attacks[0].crit_chance || 0) + evoMods.crit_chance };
+          if (evoMods.crit_mult) effectiveWeapon.attacks[0] = { ...effectiveWeapon.attacks[0], crit_mult: (effectiveWeapon.attacks[0].crit_mult || 0) + evoMods.crit_mult };
+          if (evoMods.multishot) effectiveWeapon.multishot = (effectiveWeapon.multishot || 1) + evoMods.multishot;
+          if (evoMods.speed) effectiveWeapon.attacks[0] = { ...effectiveWeapon.attacks[0], speed: (effectiveWeapon.attacks[0].speed || 0) + evoMods.speed };
+          if (evoMods.status_chance) effectiveWeapon.attacks[0] = { ...effectiveWeapon.attacks[0], status_chance: (effectiveWeapon.attacks[0].status_chance || 0) + evoMods.status_chance };
+          if (evoMods.range) effectiveWeapon.attacks[0] = { ...effectiveWeapon.attacks[0], range: (effectiveWeapon.attacks[0].range || 0) + evoMods.range };
+          // base 和 status_damage 通过 opts 传入计算器
+          opts.evoBase = evoMods.base || 0;
+          opts.evoStatusDamage = evoMods.status_damage || 0;
         }
 
         // 注意: 姿态伤害倍率已在damage-calc.js的runSingleQueue中应用，不再重复应用

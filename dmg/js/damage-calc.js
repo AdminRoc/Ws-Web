@@ -60,6 +60,7 @@ const DamageCalculator = {
   },
 
   getCorrosiveReduction(stacks) {
+    if (!stacks || stacks <= 0) return 0;
     return this.CORROSIVE_BASE_REDUCTION + this.CORROSIVE_PER_STACK * stacks;
   },
 
@@ -152,9 +153,13 @@ const DamageCalculator = {
     const enemyArmor = enemy.armor || 0;
     const dr = this.getDMGReduction(enemyArmor) * 100;
 
+    // 分攻击模拟 + 随机1s窗口语义 (参考站 "一秒钟随机攻击系列" 等价)
+    const perAttackResult = this.runPerAttackSimulation(weapon, pMods, enemy, enrichedOpts, enrichedOpts.queueDuration);
+
     // 格式化输出
     return {
       ...queueResult,
+      perAttack: perAttackResult.perAttack,
       ttk: ttkResult.ttk,
       ttkRegions: ttkResult.regions,
       dr,
@@ -247,12 +252,13 @@ const DamageCalculator = {
   /**
    * 单次队列模拟 - 执行13步算法
    */
-  runSingleQueue(weapon, pMods, enemy, opts, duration) {
+  runSingleQueue(weapon, pMods, enemy, opts, duration, attackOnly = null) {
     // ═══ 步骤1: 计算射击/命中次数 ═══
-    const fireRate = this.calcFireRate(weapon, pMods);
+    const fireRate = this.calcFireRate(weapon, pMods, attackOnly);
     const magSize = this.calcMagSize(weapon, pMods);
     const reloadTime = this.calcReload(weapon, pMods);
-    const isBeam = weapon.attacks.some(a => a.shot_type === 'Beam');
+    const isBeam = (weapon.compTags && weapon.compTags.includes('BEAM')) ||
+      (weapon.attacks || []).some(a => a && a.isBeam === true);
     const isMelee = weapon.category === 'Melee';
 
     // 重击模式下使用maxHeavyCombo作为连击计数器
@@ -263,19 +269,28 @@ const DamageCalculator = {
     // 初始连击加成 (Initial Combo from mods)
     const initialCombo = isMelee ? (pMods.initialCombo || 0) : 0;
 
+    // ═══ 步骤1b: 射击次数 (参考站 createDmgQueue L686-689 三分类语义)
+    // M: 光束=0.5 弹药/帧; 普通=攻击级 ammoCost||1; "all"=整匣一发
+    const costAtk = weapon.attacks[attackOnly ?? 0] || weapon.attacks[0] || {};
+    let ammoCost;
+    if (isBeam) ammoCost = 0.5;
+    else if (costAtk.ammoCost === 'all') ammoCost = magSize || 1;
+    else ammoCost = Number(costAtk.ammoCost) || 1;
+    const shotsPerMag = Math.max(1, Math.floor((magSize || 1) / ammoCost));
+    const fireTimePerMag = shotsPerMag / fireRate; // ka/ja: 一匣打空所需时间
     let shotCount;
-    if (isBeam) {
-      // 光束武器: 每秒造成 fireRate 次伤害
-      shotCount = Math.floor(fireRate * duration);
+    if (duration < fireTimePerMag) {
+      // 弹匣未打空 (参考站 z<Z): 纯射击, 不扣装弹
+      shotCount = Math.floor(duration * fireRate);
+      if (shotCount === 0 && duration >= 1 / fireRate) shotCount = 1;
     } else {
-      // 射击武器: 计算弹匣循环 (含装弹时间)
-      const fireTimePerMag = magSize / fireRate;
+      // 跨越重装: 首匣打空后每 cycle = 打空时长 + 装弹
+      const afterFirst = duration - fireTimePerMag;
       const cycleTime = fireTimePerMag + reloadTime;
-      const fullCycles = Math.floor(duration / cycleTime);
-      const remainingTime = duration - fullCycles * cycleTime;
-      const effectiveFireTime = Math.max(0, remainingTime - reloadTime);
-      const shotsInLastMag = Math.min(magSize, Math.floor(effectiveFireTime * fireRate));
-      shotCount = fullCycles * magSize + shotsInLastMag;
+      const extraCycles = Math.floor(afterFirst / cycleTime);
+      const remainder = afterFirst - extraCycles * cycleTime;
+      const remainingShots = Math.min(shotsPerMag, Math.floor(Math.max(0, remainder - reloadTime) * fireRate));
+      shotCount = shotsPerMag + extraCycles * shotsPerMag + remainingShots;
     }
 
     // ═══ 步骤2: 创建队列 ═══
@@ -291,9 +306,16 @@ const DamageCalculator = {
     }
 
     // ═══ 步骤3: 多重射击概率 ═══
+    // 参考站: 攻击级 multishot 作为基础值 (base+flat)*(1+multishot%), 覆盖武器级
+    const attacks = weapon.attacks || [weapon.attacks[0]];
     const baseMultishot = this.calcMultishot(weapon, pMods);
+    const flatMS = pMods.flatMultishot || 0;
+    const mMS = pMods.multishot || 0;
     queue.forEach(shot => {
-      const pelletCount = this.rollMultishot(baseMultishot);
+      const atkIdx = attackOnly ?? (shot.index % attacks.length);
+      const atk = attacks[atkIdx] || attacks[0];
+      const atkBaseMS = atk && atk.multishot ? (atk.multishot + flatMS) * (1 + mMS) : baseMultishot;
+      const pelletCount = this.rollMultishot(atkBaseMS);
       for (let p = 0; p < pelletCount; p++) {
         shot.pellets.push({
           damage: {},
@@ -307,14 +329,15 @@ const DamageCalculator = {
     });
 
     // ═══ 步骤4: 计算基础伤害 (不包含暴击) ═══
-    const attacks = weapon.attacks || [weapon.attacks[0]];
     queue.forEach(shot => {
       shot.pellets.forEach(pellet => {
-        const atk = attacks[shot.index % attacks.length] || attacks[0];
+        const atkIdx = attackOnly ?? (shot.index % attacks.length);
+        const atk = attacks[atkIdx] || attacks[0];
         if (!atk) return;
         const baseDmg = this.getAttackBaseDamage(atk, pMods, weapon, opts);
         pellet.damage = baseDmg;
-        pellet._atkIndex = shot.index % attacks.length;
+        pellet._atkIndex = atkIdx;
+        pellet._sniperCombo = !!atk.sniperCombo;
         pellet._baseDamageVec = { ...baseDmg };
       });
     });
@@ -326,15 +349,37 @@ const DamageCalculator = {
         const atk = attacks[pellet._atkIndex] || attacks[0];
         if (!atk) return;
 
-        const statusChance = this.getAttackStatusChance(atk, pMods, {
-          comboMultiplier: effectiveComboMult
-        });
+        // 参考站 noIncrStatus: 该攻击状态机率不随MOD/连击加成缩放 (保持基础值)
+        const statusChance = atk.noIncrStatus
+          ? ((atk.status_chance || 0) / 100)
+          : this.getAttackStatusChance(atk, pMods, {
+              comboMultiplier: effectiveComboMult
+            });
 
         const procCount = this.rollProcCount(statusChance);
 
         for (let i = 0; i < procCount; i++) {
           const procType = this.drawProcType(pellet.damage, enemyImmunities);
           pellet.statusProcs.push(procType);
+        }
+
+        // 强制状态 (force_procs): 攻击级 + unique + 最大条件时 WITH_COND (参考站 setForceProcs)
+        const forcedProcs = [
+          ...(atk.force_procs || []),
+          ...((atk.unique && atk.unique.force_procs) || []),
+          ...(opts.applyWithCond && atk.unique && atk.unique.WITH_COND && atk.unique.WITH_COND.force_procs
+            ? atk.unique.WITH_COND.force_procs : [])
+        ];
+        forcedProcs.forEach(fp => {
+          if (typeof fp === 'string') pellet.statusProcs.push(fp);
+        });
+
+        // Cedo/Cedo Prime 特殊 (参考站 cedoRnd): 每发补随机基础元素 + 随机伤害类型状态
+        if (atk.cedoRnd && (weapon.name === 'Cedo' || weapon.name === 'Cedo Prime')) {
+          const baseElems = ['heat', 'cold', 'electricity', 'toxin'];
+          const dmgKeys = Object.keys(atk.damage || {});
+          pellet.statusProcs.push(baseElems[Math.floor(Math.random() * baseElems.length)]);
+          if (dmgKeys.length) pellet.statusProcs.push(dmgKeys[Math.floor(Math.random() * dmgKeys.length)]);
         }
 
         // 保证触发Puncture状态 (addPunctureStatus)
@@ -406,16 +451,8 @@ const DamageCalculator = {
         });
       }
 
-      // 重击基础伤害加成 (Killing Blow等MOD的base_heavy属性)
-      if (opts.isHeavy && pMods.heavyBaseMult > 0) {
-        queue.forEach(shot => {
-          shot.pellets.forEach(pellet => {
-            Object.keys(pellet.damage).forEach(type => {
-              pellet.damage[type] *= (1 + pMods.heavyBaseMult);
-            });
-          });
-        });
-      }
+      // ═══ 步骤8: 连击倍率加成 (近战基础伤害 × 连击倍率) ═══
+      // (base_heavy 已由 getBaseDamageModifier 加法并入基础, 不再后置乘法)
     }
 
     // ═══ 步骤9: 猎人弹药/内部出血效果 (移至暴击判定后) ═══
@@ -663,15 +700,48 @@ const DamageCalculator = {
           if (pMods.multForHeadMult > 0) dmgWithCrit *= (1 + pMods.multForHeadMult);
         }
 
-        // 应用Condition Overload
-        const coStacks = this.getActiveStatusCount(statusTimeQueue, shot.time);
-        let coMult;
-        if (pMods.multiplicativeBasePerStatus && coStacks > 0) {
-          coMult = 1 + (pMods.basePerStatus || 0) + coStacks * (pMods.basePerStatus || 0);
+        // 应用Condition Overload (参考站 reCalcWithNonCritBase @19w:195296)
+        // 门 控: isMaxCond(默认true) && shot_type!="AoE" && !名字含"slam" && !免疫all
+        // k = base_per_status(MOD+攻击unique) ; r = base_per_cold ; h = BaseModsDmg(基础MOD倍率=1+pMods.base)
+        // 乘法分支(atk.isCoMult||multiplicative): 每型 = (1 + r + count*k) * h
+        // 加法分支(默认CO):               每型 = count*k + r + h
+        // diffCount = 手动(is_set?) : auto主张damage键数 + (damage含Viral?0:externalVirus?1:0)
+        // auto 语义参考站: 攻击经过MOD组合后的实际伤害键数 (参考站 getCountDifferentStatuses→damage按键)
+        const atkSimple = attacks[pellet._atkIndex] || attacks[0];
+        const basePerStatus = pMods.basePerStatus || 0;
+        const basePerCold = pMods.basePerCold || 0;
+        const atkNowBPS = (atkSimple.unique && atkSimple.unique.base_per_status) || 0;
+        const kStat = basePerStatus + atkNowBPS;
+        const rStat = basePerCold;
+        const hStat = this.getBaseDamageModifier(pMods, weapon, atkSimple, opts);
+        const atkNameNow = String(atkSimple.name || '').toLowerCase();
+        const coGated = (opts.isMaxCond !== false)
+          && atkSimple.shot_type !== 'AoE'
+          && !atkNameNow.includes('slam')
+          && !(enemy.immun && enemy.immun.status && enemy.immun.status.includes('all'));
+        let diffCount;
+        if (opts.manualCountStatus !== undefined) {
+          diffCount = opts.manualCountStatus;
         } else {
-          coMult = 1 + coStacks * (pMods.basePerStatus || 0);
+          // 用当前 pellet 已完成MOD组合的伤害向量键数 (= 参考站攻击实际伤害键数)
+          const atkDamageKeys = Object.keys(pellet.damage || {}).filter(k => (pellet.damage[k] || 0) > 0);
+          diffCount = atkDamageKeys.length;
+          if (opts.externalVirus && !atkDamageKeys.includes('Viral')) diffCount += 1;
+        }
+        let coMult = 1;
+        if ((kStat > 0 || rStat > 0) && coGated) {
+          if (atkSimple.isCoMult || pMods.multiplicativeBasePerStatus) {
+            coMult = 1 + rStat + diffCount * kStat;
+          } else {
+            coMult = (diffCount * kStat + rStat + hStat) / hStat;
+          }
         }
         dmgWithCrit *= coMult;
+
+        // 处决伤害加成 (参考站: 仅攻击级 enableFinisherModsWithSlash 标记时生效)
+        if (atkSimple.enableFinisherModsWithSlash && pMods.finisherDmg > 0) {
+          dmgWithCrit *= (1 + pMods.finisherDmg);
+        }
 
         // 应用阵营加成
         const factMult = this.getFactMult(enemy.faction, pMods);
@@ -732,9 +802,12 @@ const DamageCalculator = {
         dmgWithCrit *= (1 + (pMods.vulnStatusDamage || 0));
         dmgWithCrit *= (1 + (pMods.dmgVulnerability || 0));
 
-        // 应用狙击连击倍率
-        if (opts.sniperCombo && opts.sniperCombo > 1) {
-          dmgWithCrit *= opts.sniperCombo;
+        // 应用狙击连击倍率 (参考站: 攻击级 sniperCombo 标记, 带标记默认×1.5, 用户设置覆盖, 无标记×1)
+        const sniperMult = pellet._sniperCombo
+          ? ((opts.sniperCombo && opts.sniperCombo > 1) ? opts.sniperCombo : 1.5)
+          : 1;
+        if (sniperMult > 1) {
+          dmgWithCrit *= sniperMult;
         }
 
         // 连击能力倍率 (仅显赫武器, 参考站 optAbilityCombo Z 逻辑 - 每发应用)
@@ -958,6 +1031,69 @@ const DamageCalculator = {
     };
   },
 
+  // ═══════════════ 分攻击模拟 + 随机窗口语义 (参考站等价) ═══════════════
+
+  calcWindowDPS(timeline, duration, windows = 200) {
+    if (!timeline || timeline.length === 0) return 0;
+    let acc = 0;
+    const maxStart = Math.max(duration - 1, 0.001);
+    for (let w = 0; w < windows; w++) {
+      const start = Math.random() * maxStart;
+      const end = start + 1;
+      let dmg = 0;
+      for (const shot of timeline) {
+        if (shot.time >= start && shot.time < end) dmg += shot.damage;
+      }
+      acc += dmg;
+    }
+    return acc / windows;
+  },
+
+  runPerAttackSimulation(weapon, pMods, enemy, opts = {}, duration = 20) {
+    const attacks = weapon.attacks || [];
+    const perAttack = [];
+    if (attacks.length <= 1) {
+      const r = this.runSingleQueue(weapon, pMods, enemy, opts, duration);
+      perAttack.push({
+        index: 0,
+        name: (attacks[0] && attacks[0].name) || '攻击',
+        ...r,
+        windowDPS: this.calcWindowDPS(r.perShotTimeline, duration)
+      });
+      return { perAttack, primaryIndex: 0 };
+    }
+    const hasComb = weapon.comb && weapon.comb.length > 0;
+    let combIdx = null;
+    if (hasComb) {
+      for (const group of weapon.comb) {
+        const idxs = (group || []).filter(i => i >= 0 && i < attacks.length);
+        if (idxs.length > 0) { combIdx = idxs; break; }
+      }
+    }
+    if (combIdx && combIdx.length > 0) {
+      // 组合攻击: 组内按序交替混跑 (参考站 comb 语义近似)
+      const r = this.runSingleQueue(weapon, pMods, enemy, opts, duration);
+      perAttack.push({
+        index: combIdx[0],
+        name: combIdx.map(i => (attacks[i] && attacks[i].name) || ('攻击 ' + (i + 1))).join(' + '),
+        ...r,
+        windowDPS: this.calcWindowDPS(r.perShotTimeline, duration)
+      });
+      return { perAttack, primaryIndex: combIdx[0] };
+    }
+    // 无组合: 每个攻击独立全速队列
+    for (let i = 0; i < attacks.length; i++) {
+      const r = this.runSingleQueue(weapon, pMods, enemy, opts, duration, i);
+      perAttack.push({
+        index: i,
+        name: (attacks[i] && attacks[i].name) || ('攻击 ' + (i + 1)),
+        ...r,
+        windowDPS: this.calcWindowDPS(r.perShotTimeline, duration)
+      });
+    }
+    return { perAttack, primaryIndex: 0 };
+  },
+
   // ═══════════════ 步骤3: 多重射击 ═══════════════
 
   rollMultishot(baseMultishot) {
@@ -1062,15 +1198,18 @@ const DamageCalculator = {
             stacks: 1,
             tickDamage: 0,
             critTier: pellet.critTier || 0,
-            isCrit: pellet.isCrit || false
+            isCrit: pellet.isCrit || false,
+            atkIndex: pellet._atkIndex
           });
         });
       });
     });
 
-    // 合并同一时间点的状态
+    // 保留未合并的原始 proc 事件 (DoT 计算用; 合并版供状态效果查询)
     Object.keys(statusQueue).forEach(type => {
-      statusQueue[type] = this.mergeStatusEvents(statusQueue[type], type, enemy);
+      const rawEvents = statusQueue[type];
+      statusQueue[type] = this.mergeStatusEvents(rawEvents, type, enemy);
+      statusQueue[type]._raw = rawEvents;
     });
 
     return statusQueue;
@@ -1132,11 +1271,16 @@ const DamageCalculator = {
     // 获取武器的基础伤害向量(未含MOD)
     const baseDmgVec = this.getWeaponBaseDamageVec(weapon);
 
-    Object.entries(statusTimeQueue).forEach(([type, events]) => {
+    Object.entries(statusTimeQueue).forEach(([type, typeQueue]) => {
       const tickMult = this.DOT_TICK_MULT[type];
       if (!tickMult || tickMult === 0) return;
 
+      // DoT 按原始 proc 事件独立计算 (参考站语义: 每proc完整DoT, 期望等价稳态叠加)
+      const events = (typeQueue._raw && typeQueue._raw.length) ? typeQueue._raw : (typeQueue.events || typeQueue);
+      if (!Array.isArray(events)) return;
+
       events.forEach(event => {
+        if (!event || typeof event.time !== 'number') return;
         const eventDuration = event.duration != null ? event.duration : (event.endTime - event.time);
         const ticks = Math.floor(eventDuration);
 
@@ -1169,9 +1313,10 @@ const DamageCalculator = {
         const dblMult = 1 + (pMods.dblMult || 0);
         tickDmg *= dblMult;
 
-        // 状态伤害加成
-        if (pMods.statusDamage) {
-          tickDmg *= (1 + pMods.statusDamage);
+        // 状态伤害加成 (含 Incarnon 进化 status_damage 效果)
+        const totalStatusDmg = (pMods.statusDamage || 0) + (opts?.evoStatusDamage || 0);
+        if (totalStatusDmg > 0) {
+          tickDmg *= (1 + totalStatusDmg);
         }
 
         // 重击状态伤害加成
@@ -1194,8 +1339,14 @@ const DamageCalculator = {
           if (innateDrArmor > 0) tickDmg *= (1 - innateDrArmor);
         }
 
-        // 暴击倍率 - DoT使用固定tier倍率 (1 + tier × 0.5)，不用武器暴击倍率
-        const dotCritMult = this.getDoTCritMult(event.critTier || 0);
+        // 暴击倍率 - 参考站用武器完整暴击倍率 (k[n].crit: 非暴击1, 暴击=weapon crit_mult×tier)
+        let dotCritMult = 1;
+        if (event.isCrit) {
+          const dotAtk = event.atkIndex != null ? (weapon.attacks[event.atkIndex] || weapon.attacks[0]) : (weapon.attacks[0] || {});
+          const dotAtkMult = (dotAtk && dotAtk.crit_mult) || 2;
+          const dotBaseCritMult = dotAtkMult * (1 + (pMods.critMult || 0));
+          dotCritMult = this.getEffCritMult(event.critTier || 1, dotBaseCritMult);
+        }
         tickDmg *= dotCritMult;
 
         // 阵营双倍加成 (faction mods double-dip on DoT)
@@ -1534,7 +1685,7 @@ const DamageCalculator = {
       smite: {}, element: {}, phys: {},
       flatCritChance: 0, flatCritMult: 0, withCond: {},
       multCritChance: 0, weakCritChance: 0, comboCritPer: 0,
-      heavyCritMult: 0, heavyBaseMult: 0,
+      heavyCritMult: 0, heavyBaseMult: 0, flagBaseMagazineSize: 0,
       heavyStatusDmg: 0, heavyStatusChance: 0,
       statusChanceByCombo: 0,
       lifesteal: 0, finisherDmg: 0, slamMult: 0, windUp: 0,
@@ -1570,6 +1721,13 @@ const DamageCalculator = {
       ammoEff: 0, na: 0, meleeComboEffP: 0,
     };
 
+    // set 套装计数 (参考站 findAllBaseModsDmg @516: mods.hasOwnProperty("set") 时 base × set[套件数])
+    // 例 Sacrificial set {1:1, 2:1.25}: 同套装装1件=1×, 装2件=1.25×
+    const setCounts = {};
+    if (mods) {
+      mods.forEach(m => { if (m && m.set && m.set.name) setCounts[m.set.name] = (setCounts[m.set.name] || 0) + 1; });
+    }
+
     mods.forEach((mod, idx) => {
       if (!mod || !mod.action) return;
       const rank = modRanks[idx] || 0;
@@ -1579,7 +1737,10 @@ const DamageCalculator = {
       if (maxRank === 5 && mod.action.flat_base_damage && mod.action.flat_base_damage > 0) maxRank = 10;
       const rankScale = maxRank > 0 ? (rank / maxRank) : 1;
       const a = mod.action;
-      if (a.base) result.base += a.base * rankScale;
+      // set 加成: 同套装件数 → set[count] 倍 (参考 findAllBaseModsDmg modsPanel[c].set[a])
+      const setMult = (mod.set && mod.set.name && setCounts[mod.set.name])
+        ? (mod.set[setCounts[mod.set.name]] || 1) : 1;
+      if (a.base) result.base += a.base * rankScale * setMult;
       if (a.crit_chance) result.critChance += a.crit_chance * rankScale;
       if (a.crit_mult) result.critMult += a.crit_mult * rankScale;
       if (a.multishot) result.multishot += a.multishot * rankScale;
@@ -1604,6 +1765,7 @@ const DamageCalculator = {
       if (a.crit_chance_per_combo) result.comboCritPer += a.crit_chance_per_combo * rankScale;
       if (a.heavy_crit_mult) result.heavyCritMult += a.heavy_crit_mult * rankScale;
       if (a.base_heavy) result.heavyBaseMult += a.base_heavy * rankScale;
+      if (a.base_per_magasize || (a.WITH_COND && a.WITH_COND.base_per_magasize)) result.flagBaseMagazineSize += 1;
       if (a.h_status_damage) result.heavyStatusDmg += a.h_status_damage * rankScale;
       if (a.h_status_chance) result.heavyStatusChance += a.h_status_chance * rankScale;
       if (a.status_chance_by_combo) result.statusChanceByCombo += a.status_chance_by_combo * rankScale;
@@ -1765,11 +1927,57 @@ const DamageCalculator = {
     return [[0]];
   },
 
+  // setQuantize: 参考站 16 等分网格量化 (min.js @206711)
+  // 对武器总伤害按 /16 网格取整到最近网格点:
+  //   step = totalBase / 16; 该型伤害 = Math.round(typeDmg / step) * step
+  // 总伤害是 16 的倍数时各型无变形; 非 16 倍数时产生量化变形 (如 Aeolak Alt 97 → 58.2→60.625)
+  setQuantize(totalBase, typeDmg) {
+    if (typeDmg === 0) return 0;
+    const step = totalBase / 16;
+    return Math.round(typeDmg / step) * step;
+  },
+
+  // findAllBaseModsDmg 等价 (参考站 min.js @516): 收集基础伤害加成总和 b
+  // b = slam_base + base_heavy(近战重击) + 武器unique.base + customStat.base + base_per_magasize + ΣΣ槽(base×set)
+  // BaseModsDmg (参考站 @517):
+  //   noncrit路径 (hasNonCritModsF -> base_noncrit/base_uncrit_unstatus): (1+b+ADD)×(1+MULT)
+  //   常规路径: 1+b + (strengthType==="mesa" ? 1.5×strengthMult : 0)
+  // isNeedCalcHeavy 等价 (参考站 @507): 攻击定义 isHeavy 字段时以攻击自身为准, 未定义才用全局 is_Heavy
+  isHeavyAttack(attack, opts) {
+    const hl = attack && attack.isHeavy;
+    if (attack && Object.prototype.hasOwnProperty.call(attack, 'isHeavy')) return hl === true;
+    return !!opts.isHeavy;
+  },
+
+  getBaseDamageModifier(processedMods, weapon, attack, opts = {}) {
+    let b = (processedMods.base || 0);
+    // Incarnon进化 base 效果 (参考站 evo "狂暴" +50% base damage)
+    if (opts.evoBase) b += opts.evoBase;
+    // 近战重击: base_heavy 加法并入基础 (参考 findAllBaseModsDmg isNeedCalcHeavy 时收集 base_heavy)
+    const isMelee = weapon && (weapon.productCategory === 'Melee' || weapon.category === 'Melee');
+    if (isMelee && this.isHeavyAttack(attack, opts)) {
+      b += (processedMods.heavyBaseMult || 0);
+    }
+    // 武器级 unique.base (参考 getStatFromUnique("base"), isMaxCond 时取 WITH_COND.base)
+    const uni = weapon && weapon.unique;
+    if (uni) {
+      if (opts.isMaxCond !== false && uni.WITH_COND && uni.WITH_COND.base) b += uni.WITH_COND.base;
+      else if (uni.base) b += uni.base;
+    }
+    // getBasePerMagasize (参考 @516: 有 base_per_magasize mod 时 0.33×√弹匣)
+    if (processedMods.flagBaseMagazineSize > 0) {
+      b += 0.33 * Math.sqrt(weapon.magazineSize || 10);
+    }
+    // mesa 特判: strengthType==="mesa" 时额外 1.5×strengthMult; 本地无该类武器 → 恒 0 (骨架)
+    // noncrit 路径: 本地无 base_noncrit/base_uncrit_unstatus mod 数据 → 恒走常规路径 (骨架备用)
+    return 1 + b;
+  },
+
   getAttackBaseDamage(attack, processedMods, weapon, opts = {}) {
     const weaponDamage = attack.damage || {};
     const result = {};
     Object.entries(weaponDamage).forEach(([type, value]) => { result[type] = value; });
-    const baseMultiplier = 1 + processedMods.base;
+    const baseMultiplier = this.getBaseDamageModifier(processedMods, weapon, attack, opts);
     const physMult = {};
     if (processedMods.phys) Object.entries(processedMods.phys).forEach(([type, mult]) => { physMult[type] = 1 + mult; });
     const elements = this.resolveElements([processedMods]);
@@ -1806,7 +2014,35 @@ const DamageCalculator = {
       }
     });
 
+    // 16 等分网格量化 (参考站 reCalcWithTypeBase→setQuantize, @206711):
+    // 网格基准 = 原始总base × (1+基础伤害MOD倍率) × 阵营MOD  → y*w*l (不含物理/元素/组合MOD)
+    // 被量化值 = 该型MOD后伤害 (含物理/元素/组合MOD, 不含阵营相性)
+    // 参考站: D=setQuantize(y*w*l, damage[t]*l*c*p*k*v*u*(D?f:1)*d); e[x][t]=calcPercentAdd(D, findTypeOfRes(t))
+    // 总基准非 16 倍数时各型量化后总和偏离原总和 (如 Aeolak Alt 97 → 58.2→60.625)
+    if (!opts.disableQuantize) {
+      const quantBaseRaw = Object.values(weaponDamage).reduce((s, v) => s + v, 0);
+      // 阵营对敌MOD (l): 有 faction 时精确 smite[faction], 否则按 smite 池 max (无 smite = 1)
+      let factionMult = 1;
+      if (processedMods && processedMods.smite) {
+        factionMult = opts.faction ? (processedMods.smite[opts.faction] || 0) : Math.max(0, ...Object.values(processedMods.smite));
+        factionMult = 1 + factionMult;
+      }
+      const quantBase = quantBaseRaw * baseMultiplier * factionMult;
+      Object.keys(result).forEach(type => {
+        if (result[type] > 0) result[type] = this.setQuantize(quantBase, result[type]);
+      });
+    }
+
     return result;
+  },
+
+  // getFactMult 的 MOD 侧取值 (无需 enemy, 参考站 getFactionMod 语义: 武器上某阵营的对敌歧视MOD)
+  // 参考站用 currWeapon 上 smite[faction]; 本地经 opts.faction 精确匹配, 无则按 1+对照 smite_all
+  getFactMultFromMods(processedMods) {
+    if (!processedMods || !processedMods.smite) return 1;
+    const vals = Object.values(processedMods.smite);
+    if (vals.length === 0) return 1;
+    return 1 + Math.max(0, ...vals);
   },
 
   getAoEFalloff(attack, distance) {
@@ -1828,8 +2064,9 @@ const DamageCalculator = {
     return bMS * (1 + mMS) + flatMS;
   },
 
-  calcFireRate(weapon, pMods) {
-    const atk = weapon.attacks[0];
+  calcFireRate(weapon, pMods, attackIndex = 0) {
+    // 防御 null (runSingleQueue 传 attackOnly=null 时默认参数不生效)
+    const atk = weapon.attacks[attackIndex ?? 0];
     if (!atk) return 1;
     if (pMods.setSpeedToDefault) return 1;
     const bSpd = atk.speed || 1;
@@ -1837,10 +2074,16 @@ const DamageCalculator = {
     const mSpdMult = 1 + (pMods.speedMult || 0);
     let spd = bSpd * (1 + mSpd) * mSpdMult;
     if (atk.unique && atk.unique.speed_mult) spd *= atk.unique.speed_mult;
-    // 蓄力武器: 蓄力时间会降低有效射速
-    if (pMods.chargeTime > 0 && weapon.trigger === 'Charge') {
-      const chargeDelay = 1 / (1 + pMods.chargeTime);
-      spd *= chargeDelay;
+    // 点射: ja = burst / ((burst-1)*burstDelay + 1/speed), burstDelay 随射速加成缩短
+    if (atk.burst_count && atk.burst_count > 1) {
+      const burstDelay = (atk.burst_delay || 0) / (1 + mSpd) * mSpdMult;
+      spd = atk.burst_count / ((atk.burst_count - 1) * burstDelay + 1 / spd);
+    }
+    // 蓄力: ja = 1 / (chargeTime + reloadTime), Lanka 特例 ja = 1 / chargeTime
+    if (atk.charge_time) {
+      const chargeTime = atk.charge_time / (1 + (pMods.chargeTime || 0));
+      if (weapon.name === 'Lanka') return 1 / chargeTime;
+      return 1 / (chargeTime + this.calcReload(weapon, pMods));
     }
     return spd;
   },
@@ -1858,10 +2101,25 @@ const DamageCalculator = {
     return Math.max(1, mag);
   },
 
+  /**
+   * 有效装填时间 — 对齐参考站 reCalcWithTypeBase (min-js @550-552)
+   *   普通武器: reloadTime = initial.reloadTime / (1 + reloadTimeMods + unique.reloadTime)
+   *   电池武器(有 reloadRate+reloadDelay): reloadTime = reloadDelay/(1+reloadTimeMods) + magazineSize/reloadRate
+   *   其中 reloadRate = initial.reloadRate / (1 + reloadRateMods)，magazineSize 含 ammoEff
+   */
   calcReload(weapon, pMods) {
     const bRel = weapon.reloadTime || 0;
     const mRel = pMods.reloadTime || 0;
-    return bRel * (1 + mRel);
+    // 装填速度加成 → 装填时间缩短: 参考 /(1+mods) 而非乘法
+    const base = bRel / (1 + mRel);
+    if (weapon.reloadRate && weapon.reloadDelay !== undefined) {
+      const rate = weapon.reloadRate / (1 + (pMods.reloadRate || 0));
+      const delay = weapon.reloadDelay / (1 + mRel);
+      const mag = this.calcMagSize(weapon, pMods);
+      // 试试参考: reloadDelay/a + magazineSize/reloadRate
+      return Math.max(0, delay + mag / rate);
+    }
+    return base;
   },
 
   // ═══════════════ 护甲/护盾系统 ═══════════════
