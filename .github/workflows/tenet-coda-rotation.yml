@@ -8,7 +8,10 @@ name: 信条/终幕武器轮换校准
 # 抓取脚本 fetch_tenet_coda.py 已迁私库 AdminRoc/Ws-Web-core：运行前 checkout 私库覆盖
 # 进工作树；产物 json 提交回公库，私库脚本绝不提交回公库。
 on:
-  # 定时触发已迁移至 Cloudflare Workers Cron Triggers（见私库 cloudflare-worker/）。
+  schedule:
+    # 每日 06:17 UTC 刷新信条/终幕武器轮换（原由 Cloudflare cron 每 4 小时触发，2026-08-07
+    # 迁移回 GitHub schedule 并降频为每日；轮换数据低频，world 独立站经 jsDelivr 引用该产物）
+    - cron: '17 6 * * *'
   workflow_dispatch:
 
 concurrency:

@@ -15,6 +15,9 @@ on:
   push:
     paths:
       - 'data/item-names-zh.json'
+  schedule:
+    # 每日 04:17 UTC 刷新 byLang（远程 dict.zh.json 子集）——原由 Cloudflare cron 触发，2026-08-07 迁移回 GitHub schedule
+    - cron: '17 4 * * *'
   workflow_dispatch:
 
 concurrency:
