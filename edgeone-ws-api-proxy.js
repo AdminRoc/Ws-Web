@@ -24,8 +24,45 @@ const ROUTES = {
   '/raw-ws':         { base: 'https://api.warframe.com/cdn/worldState.php' },
   // 国服 aux 主数据源：worldstate.wf.wiki（Next.js 页面内嵌 RSC 数据，openresty 无 Bot 防护，
   // 服务器透传可行）。前端从透传的 HTML 中提取 self.__next_f 内嵌 JSON（见 worldstate 独立库）。
-  '/wf-wiki':        { base: 'https://worldstate.wf.wiki/', accept: 'text/html,application/xhtml+xml' },
+  '/wf-wiki':        { base: 'https://worldstate.wf.wiki/', accept: 'text/html,application/xhtml+xml', extract: true },
 };
+
+// ── /wf-wiki 提取器：391KB 完整 HTML（Next.js RSC 内嵌）→ 仅返回 initialData JSON（~50KB）。
+//    世界状态页 30 秒轮询/5 分钟 TTL 每次透传整页是 EdgeOne 流量黑洞（2.2GB/天/活跃用户），
+//    服务端提取后出流量降 8 倍；提取失败时透传原始 HTML（前端 wfWikiExtract 降级解析）。
+function cleanUndefined(obj) {
+  if (Array.isArray(obj)) return obj.map(cleanUndefined);
+  if (obj && typeof obj === 'object') {
+    const out = {};
+    for (const k in obj) { if (obj[k] === '$undefined') continue; out[k] = cleanUndefined(obj[k]); }
+    return out;
+  }
+  return obj;
+}
+
+function extractWfWiki(html) {
+  const blocks = [];
+  const re = /self\.__next_f\.push\(\[1,"(.+?)"\]\)/g;
+  let m;
+  while ((m = re.exec(html)) !== null) blocks.push(m[1]);
+  if (!blocks.length) return null;
+  let combined = blocks.join('').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+  const idx = combined.indexOf('"cycles":[');
+  if (idx === -1) return null;
+  let depth = 0, start = idx, i;
+  for (i = idx - 1; i >= 0; i--) {
+    if (combined[i] === '}') depth++;
+    else if (combined[i] === '{') { if (depth === 0) { start = i; break; } depth--; }
+  }
+  depth = 0;
+  let end = start, j;
+  for (j = start; j < combined.length; j++) {
+    if (combined[j] === '{') depth++;
+    else if (combined[j] === '}') { depth--; if (depth === 0) { end = j + 1; break; } }
+  }
+  try { return cleanUndefined(JSON.parse(combined.slice(start, end))); }
+  catch (e) { return null; }
+}
 
 // ── User-Agent 白名单 ──
 const ALLOWED_USER_AGENTS = [
@@ -130,6 +167,27 @@ async function handleRequest(request) {
   headers.set('Accept', match.accept || 'application/json');
 
   const resp = await fetch(target.href, { method: 'GET', headers });
+
+  // /wf-wiki：服务端提取 RSC initialData JSON（391KB HTML -> ~50KB JSON），失败则透传原 HTML
+  if (match.extract && resp.ok) {
+    try {
+      const html = await resp.text();
+      const data = extractWfWiki(html);
+      if (data) {
+        return new Response(JSON.stringify(data), {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Access-Control-Allow-Origin': getAllowedOrigin(origin),
+            'Vary': 'Origin',
+            'Cache-Control': 'public, max-age=300, s-maxage=300',
+          },
+        });
+      }
+    } catch (e) {
+      /* 提取异常：落到下方透传原始 HTML */
+    }
+  }
 
   const out = new Response(resp.body, {
     status: resp.status,
