@@ -1,0 +1,6 @@
+# 旧路径 301 跳转：剥离模块的旧入口 → 独立站
+# EdgeOne Pages 兼容格式（与 _headers 同机制）：/source destination status
+/eelog.html https://eelog.wfspeed.run 301
+/map.html https://map.wfspeed.run 301
+/item.html https://item.wfspeed.run 301
+/worldstate.html https://world.wfspeed.run 301
