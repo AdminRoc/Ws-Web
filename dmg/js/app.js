@@ -1772,7 +1772,19 @@ const App = {
     const picker = document.getElementById('mod-picker');
     const allMods = GameData.getAllMods();
     const usedNames = this.state.weaponArcanes.filter(m => m !== null).map(m => m.name);
-    const filtered = allMods.filter(m => m.type === 'weapon_mist' && !usedNames.includes(m.name));
+    // 参考站: 28槽=主武器赋能(tags含primary), 29槽=副武器赋能(tags含secondary/武器匹配), 10槽=近战赋能(tags含melee)
+    const weapon = this.state.selectedWeapon;
+    const isMelee = weapon && (weapon.category === 'Melee' || weapon.productCategory === 'Melee');
+    const weaponCategory = weapon ? (weapon.category || '') : '';
+    const filtered = allMods.filter(m => {
+      if (m.type !== 'weapon_mist') return false;
+      if (usedNames.includes(m.name)) return false;
+      if (isMelee) return (m.tags || []).includes('melee');
+      if (slotIndex === 0) {
+        return (m.tags || []).includes('primary');
+      }
+      return (m.tags || []).includes('secondary') || (weaponCategory === 'Secondary' && (m.tags || []).some(t => t === 'secondary' || t.startsWith('secondary-')));
+    });
     picker.innerHTML = this.renderWarframeModPickerContent('选择武器赋能', filtered, `App.selectWeaponArcane(${slotIndex},`);
     picker.classList.add('active');
   },

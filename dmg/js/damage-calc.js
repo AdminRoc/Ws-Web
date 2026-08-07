@@ -15,7 +15,7 @@ const DamageCalculator = {
   VIRAL_PER_STACK: 0.25,
   MAGNETIC_BASE_MULT: 2.0,
   MAGNETIC_PER_STACK: 0.25,
-  CORROSIVE_BASE_REDUCTION: 0.26,
+  CORROSIVE_BASE_REDUCTION: 0.2,
   CORROSIVE_PER_STACK: 0.06,
   HEAT_ARMOR_STRIP: 0.5,
   PUNCTURE_WEAKEN: 0.05,
@@ -671,6 +671,35 @@ const DamageCalculator = {
             }
           }
         });
+      });
+    }
+
+    // ═══ Sagek Prime 被动 (参考站 sagekPassive): 暴击时 sagekPassive% 概率激活, 下一发以500%状态几率强制触发状态 ═══
+    // 参考站: xb标志 - 暴击且 isProc(Ib,100) 时置true; 激活后的下一发用 getFinalStatusChance(500) 强制状态
+    const sagekPassive = (weapon && weapon.unique &&
+      (weapon.unique.sagekPassive || (opts.applyWithCond && weapon.unique.WITH_COND && weapon.unique.WITH_COND.sagekPassive))) || 0;
+    if (sagekPassive > 0) {
+      let sagekFlag = false;
+      queue.forEach(shot => {
+        const shotCrit = shot.pellets.some(p => p.isCrit);
+        if (sagekFlag) {
+          sagekFlag = false;
+          // 500%状态几率: 强制触发5个随机状态 (参考站 getFinalStatusChance(f,1,0,500) 语义)
+          const firstPellet = shot.pellets[0];
+          if (firstPellet) {
+            const forcedStatuses = [];
+            for (let i = 0; i < 5; i++) {
+              forcedStatuses.push(this.drawProcType(firstPellet.damage, enemyImmunities));
+            }
+            // 分散到该发各弹片
+            const perPellet = Math.max(1, Math.ceil(forcedStatuses.length / Math.max(1, shot.pellets.length)));
+            shot.pellets.forEach(pellet => {
+              forcedStatuses.splice(0, perPellet).forEach(s => pellet.statusProcs.push(s));
+            });
+          }
+        } else if (shotCrit && Math.random() < sagekPassive / 100) {
+          sagekFlag = true;
+        }
       });
     }
 
@@ -1405,11 +1434,24 @@ const DamageCalculator = {
         let tickDmg = totalModdedDmg * tickMult;
 
         // 元素MOD加成 (Heat用heat mods, Gas用gas mods等)
+        // 参考站 getTickStatusDmg @561: (1 + 元素MOD总和 + p/k/r/v 注入键)
+        //   p=Toxin? add_toxin+unique+SBS×strength; k=Electricity? addElectricity; r=Cold? addCold; v=Heat? addHeat
         // Heat继承: 如果heatInherit > 0, 用heatInherit替代元素自身的mod bonus
         if (pMods.heatInherit > 0 && (type === 'Heat' || type === 'Gas')) {
           tickDmg *= (1 + pMods.heatInherit);
         } else {
-          const elementModBonus = pMods.element[type] || 0;
+          const strengthMult = (opts && opts.abilityStrength) ? (opts.abilityStrength / 100) : 1;
+          let elementModBonus = pMods.element[type] || 0;
+          // 注入键加成 (unique/战甲MOD的元素注入增强对应DoT)
+          if (type === 'Toxin') {
+            elementModBonus += (pMods.addToxinNotCombined || 0) + (pMods.addToxinNotCombinedSBS || 0) * strengthMult + (opts.evoAddToxin || 0);
+          } else if (type === 'Electricity') {
+            elementModBonus += (pMods.addElectricityNotCombined || 0) + (pMods.addElectricityNotCombinedSBS || 0) * strengthMult;
+          } else if (type === 'Cold') {
+            elementModBonus += (pMods.addColdNotCombined || 0) + (pMods.addColdNotCombinedSBS || 0) * strengthMult;
+          } else if (type === 'Heat') {
+            elementModBonus += (pMods.addHeatNotCombined || 0) + (pMods.addHeatNotCombinedSBS || 0) * strengthMult + (pMods.heatAdd || 0);
+          }
           if (elementModBonus > 0) {
             tickDmg *= (1 + elementModBonus);
           }
@@ -1607,7 +1649,7 @@ const DamageCalculator = {
       armor *= 0.5;
     }
 
-    // 穿刺减甲 (参考站 decr_armor_by_punc: 每层穿刺状态移除 ea% 护甲, 乘法叠加)
+    // 穿刺减甲 (参考站 decr_armor_by_punc @230089: 线性 1 - ea×层数, 如 Flensing Spikes 每层20%)
     if (decrArmorByPunc > 0) {
       const punctureEvents = statusTimeQueue.Puncture || [];
       let puncStacks = 0;
@@ -1617,7 +1659,7 @@ const DamageCalculator = {
         }
       });
       if (puncStacks > 0) {
-        armor *= Math.pow(1 - decrArmorByPunc, puncStacks);
+        armor *= (1 - decrArmorByPunc * puncStacks);
       }
     }
 
