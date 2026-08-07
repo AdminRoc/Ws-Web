@@ -151,7 +151,7 @@ const GameData = {
     Zariman: { Void: 1.5 },
     Murmur: { Electricity: 1.5, Radiation: 1.5, Viral: 0.5 },
     Anarchs: { Electricity: 1.5, Radiation: 0.5, Impact: 1.5 },
-    Scaldra: { Toxin: 0.5, Corrosive: 1.5, Impact: 1.5, Gas: 0.5 },
+    Scaldra: { Corrosive: 1.5, Impact: 1.5 },
     Techrot: { Cold: 0.5, Gas: 1.5, Magnetic: 1.5 }
   },
 
