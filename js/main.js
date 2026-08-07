@@ -165,7 +165,7 @@ function initMobileNav() {
     { cn: '关于本站',       href: 'about.html' },
     { cn: '功能扩展', sub: [
         { cn: '全站搜索',  href: 'search.html',    feature: true },
-        { cn: '世界状态',  href: 'worldstate.html', feature: true },
+        { cn: '世界状态',  href: 'https://world.wfspeed.run', feature: true, external: true },
         { cn: '日志解析',  href: 'https://eelog.wfspeed.run', feature: true, external: true },
         { cn: '智能问答',  href: 'https://bot.wfspeed.run', feature: true, external: true },
         { cn: '文档处理',  href: 'https://trans.wfspeed.run', feature: true, external: true }

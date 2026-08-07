@@ -22,6 +22,9 @@ const ROUTES = {
   '/dict-zh':        { base: 'https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@senpai/dict.zh.json' },
   '/null00':         { base: 'https://api.null00.com/world/ZHCN' },
   '/raw-ws':         { base: 'https://api.warframe.com/cdn/worldState.php' },
+  // 国服 aux 主数据源：worldstate.wf.wiki（Next.js 页面内嵌 RSC 数据，openresty 无 Bot 防护，
+  // 服务器透传可行）。前端从透传的 HTML 中提取 self.__next_f 内嵌 JSON（见 worldstate 独立库）。
+  '/wf-wiki':        { base: 'https://worldstate.wf.wiki/', accept: 'text/html,application/xhtml+xml' },
 };
 
 // ── User-Agent 白名单 ──
@@ -123,7 +126,8 @@ async function handleRequest(request) {
   const target = new URL(match.base + targetPath);
   const headers = new Headers();
   headers.set('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36');
-  headers.set('Accept', 'application/json');
+  // /wf-wiki 需要完整 HTML（内嵌 RSC 数据），其余路由要 JSON
+  headers.set('Accept', match.accept || 'application/json');
 
   const resp = await fetch(target.href, { method: 'GET', headers });
 
