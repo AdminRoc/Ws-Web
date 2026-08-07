@@ -166,7 +166,7 @@ function initMobileNav() {
     { cn: '功能扩展', sub: [
         { cn: '全站搜索',  href: 'search.html',    feature: true },
         { cn: '世界状态',  href: 'worldstate.html', feature: true },
-        { cn: '日志解析',  href: 'eelog.html',      feature: true },
+        { cn: '日志解析',  href: 'https://eelog.wfspeed.run', feature: true, external: true },
         { cn: '智能问答',  href: 'https://bot.wfspeed.run', feature: true, external: true },
         { cn: '文档处理',  href: 'https://trans.wfspeed.run', feature: true, external: true }
     ]}
@@ -1244,7 +1244,7 @@ document.addEventListener('click', function(e) {
   if (!link || _glitchBusy) return;
   e.preventDefault();
   _glitchBusy = true;
-  _doGlitchNav(link.getAttribute('href') || 'eelog.html');
+  _doGlitchNav(link.getAttribute('href') || 'https://eelog.wfspeed.run');
 });
 
 document.addEventListener('click', function(e) {
