@@ -15,7 +15,7 @@ const DamageCalculator = {
   VIRAL_PER_STACK: 0.25,
   MAGNETIC_BASE_MULT: 2.0,
   MAGNETIC_PER_STACK: 0.25,
-  CORROSIVE_BASE_REDUCTION: 0.2,
+  CORROSIVE_BASE_REDUCTION: 0.26,
   CORROSIVE_PER_STACK: 0.06,
   HEAT_ARMOR_STRIP: 0.5,
   PUNCTURE_WEAKEN: 0.05,
@@ -40,7 +40,7 @@ const DamageCalculator = {
   STATUS_DELAY: {
     Impact: 0, Slash: 1, Puncture: 0,
     Heat: 1, Toxin: 1, Electricity: 0, Cold: 0,
-    Blast: 1, Gas: 0, Magnetic: 0, Radiation: 0,
+    Blast: 1.5, Gas: 0, Magnetic: 0, Radiation: 0,
     Viral: 0, Corrosive: 0, Void: 0, Tau: 0
   },
 
@@ -524,24 +524,11 @@ const DamageCalculator = {
 
         let finalCritChance = baseCritChance;
 
-        // 冷冻状态暴击加成 (含10层升级tier)
-        let coldTierUpgrade = 0;
-        if (coldStacks > 0) {
-          finalCritChance += 0.05 * coldStacks;
-          if (coldStacks >= 10) {
-            finalCritChance += 0.5;
-            coldTierUpgrade = 1;
-          }
-        }
-
-        if (punctureStacks > 0) {
-          const totalDmg = Object.values(atk.damage || {}).reduce((s, v) => s + v, 0);
-          const punctureDmg = atk.damage?.Puncture || 0;
-          if (totalDmg > 0) {
-            const punctureRatio = punctureDmg / totalDmg;
-            const punctureCritBonus = punctureRatio * ((atk.status_chance || 0) / 100) * 0.1;
-            finalCritChance += Math.min(punctureCritBonus * punctureStacks, 0.5);
-          }
+        // 穿刺状态: 暴击几率 += 0.05 × 穿刺层数 (参考站 @226943: 敌人有穿刺状态且非AoE且不免疫穿刺时)
+        //   仅非AoE攻击 (Pa="AoE"==shot_type), 穿刺层数上限 statusDuration.Puncture.max=5 → 最多+0.25
+        const isAoEAttack = atk.shot_type === 'AoE';
+        if (punctureStacks > 0 && !isAoEAttack) {
+          finalCritChance += Math.min(0.05 * punctureStacks, 0.25);
         }
 
         if (critFlatChancePerStatuses > 0) {
@@ -574,7 +561,7 @@ const DamageCalculator = {
           finalCritChance += incX;
         }
 
-        const critTier = Math.min(this.getHitTier(finalCritChance) + coldTierUpgrade, 5);
+        const critTier = Math.min(this.getHitTier(finalCritChance), 5);
 
         // Vigilante set bonus: 每5%概率升级一层暴击
         let finalTier = critTier;
@@ -592,9 +579,16 @@ const DamageCalculator = {
         if (pMods.critMultAdd > 0) critMult += pMods.critMultAdd;
         if (pMods.critMultMult > 0) critMult *= (1 + pMods.critMultMult);
 
-        // Puncture状态每层增加暴击倍率
-        if (pMods.incrCMPuncStatus > 0 && punctureStacks > 0) {
-          critMult += pMods.incrCMPuncStatus * punctureStacks;
+        // 参考站 getFinalWeaponCritMulti @171809: incr_CM_by_punc_status (Melee Doughty)
+        //   u = 穿刺伤害占比 × 武器状态几率 × 0.1, 上限50; 直接加到暴击倍率上
+        if (pMods.incrCMPuncStatus > 0) {
+          const totalAtkDmg = Object.values(atk.damage || {}).reduce((s, v) => s + v, 0);
+          const atkPunctureDmg = atk.damage?.Puncture || 0;
+          if (totalAtkDmg > 0) {
+            const puncRatio = atkPunctureDmg / totalAtkDmg;
+            const u = puncRatio * (atk.status_chance || 0) * 0.1;
+            critMult += Math.min(u, 50);
+          }
         }
 
         // Incarnon: 条件暴击倍率 (参考站 @507: 暴击几率低于cond时 +val)
@@ -804,7 +798,7 @@ const DamageCalculator = {
         dmgWithCrit *= factMult;
 
         // 应用护甲减免 (实时护甲)
-        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, shot.time, opts.evoDecrArmorByPunc || 0);
+        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, shot.time, opts.evoDecrArmorByPunc || 0, pMods.armor || 0);
         const armorDR = this.getDMGReduction(currentArmor);
         dmgWithCrit *= (1 - armorDR);
 
@@ -944,7 +938,7 @@ const DamageCalculator = {
         }
 
         // 2. 使用最后计算时的伤害区域 (优先级: overguard > shield > armor > health)
-        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, duration > 0 ? duration : 0, opts.evoDecrArmorByPunc || 0);
+        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, duration > 0 ? duration : 0, opts.evoDecrArmorByPunc || 0, pMods.armor || 0);
         let currentRegion = 'health';
         if (enemy.overguard && enemy.overguard > 0) currentRegion = 'overguard';
         else if (enemy.shield > 0) currentRegion = 'shield';
@@ -992,7 +986,7 @@ const DamageCalculator = {
         }
 
         // 计算当前伤害区域的DR因子
-        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, duration > 0 ? duration : 0, opts.evoDecrArmorByPunc || 0);
+        const currentArmor = this.getCurrentArmor(enemy.armor, statusTimeQueue, duration > 0 ? duration : 0, opts.evoDecrArmorByPunc || 0, pMods.armor || 0);
         let armorFactor = 1;
         let currentRegion = 'health';
         if (enemy.overguard && enemy.overguard > 0) currentRegion = 'overguard';
@@ -1105,6 +1099,7 @@ const DamageCalculator = {
             stacks: 1,
             critTier: pellet.critTier || 0,
             isCrit: pellet.isCrit || false,
+            critMult: pellet.critMult || 1,
             atkIndex: pellet._atkIndex
           });
         });
@@ -1255,7 +1250,15 @@ const DamageCalculator = {
 
   getEffCritMult(tier, critDmg, coldStacks = 0) {
     if (tier === 0) return 1;
-    return 1 + tier * critDmg;
+    // 参考站 getFinalWeaponCritMulti: tier1: (CM+e)*h; tier≥2: 1+v*((CM+e)*h-1)
+    // 统一为 1 + tier*(critDmg-1) (critDmg = 完整暴击倍率 CM×h)
+    let mult = 1 + tier * (critDmg - 1);
+    // 冷状态暴击加成 (参考站 @230342: 暴击命中且不免疫冷时 crit += .05*冷层数, 恰好10层再+0.5)
+    if (coldStacks > 0) {
+      mult += 0.05 * coldStacks;
+      if (coldStacks >= 10) mult += 0.5;
+    }
+    return mult;
   },
 
   getStealthDmgBonus(critTier) {
@@ -1326,6 +1329,7 @@ const DamageCalculator = {
             tickDamage: 0,
             critTier: pellet.critTier || 0,
             isCrit: pellet.isCrit || false,
+            critMult: pellet.critMult || 1,
             atkIndex: pellet._atkIndex
           });
         });
@@ -1346,6 +1350,7 @@ const DamageCalculator = {
         tickDamage: 0,
         critTier: evt.critTier || 0,
         isCrit: evt.isCrit || false,
+        critMult: evt.critMult || 1,
         atkIndex: evt.atkIndex
       });
     });
@@ -1409,6 +1414,16 @@ const DamageCalculator = {
 
   // ═══════════════ 步骤12: 状态伤害计算 ═══════════════
 
+  // DoT种子计算: 只含基础MOD后伤害 (Wiki: DoT ignores elemental and physical damage bonuses)
+  // 公式: Base × (1 + base mods) × Multishot
+  getBaseModDamage(baseDmgVec, pMods) {
+    const baseMult = 1 + (pMods.base || 0);
+    let total = 0;
+    // 所有伤害类型 × 基础MOD倍率 (不含物理/元素MOD)
+    Object.values(baseDmgVec).forEach(val => { total += val * baseMult; });
+    return total;
+  },
+
   calculateStatusDamage(statusTimeQueue, pMods, enemy, weapon, opts) {
     let totalDotDamage = 0;
     const dotBreakdown = {};
@@ -1429,9 +1444,11 @@ const DamageCalculator = {
         const eventDuration = event.duration != null ? event.duration : (event.endTime - event.time);
         const ticks = Math.floor(eventDuration);
 
-        // DoT基础伤害 = 总MOD后伤害 × tick倍率 (Slash/Heat/Toxin/Electricity/Gas都用总伤害)
-        const totalModdedDmg = this.getTotalModdedDamage(baseDmgVec, pMods);
-        let tickDmg = totalModdedDmg * tickMult;
+        // DoT基础伤害 = 基础MOD后伤害 × tick倍率 (Wiki: DoT ignores elemental and physical damage bonuses)
+        // Wiki公式: Unrounded Tick Damage = (∑Si + 1) × C × M
+        // 累加器从1开始(非0), "+1"每个tick组只加一次
+        const baseModDmg = this.getBaseModDamage(baseDmgVec, pMods);
+        let tickDmg = (baseModDmg + 1) * tickMult;
 
         // 元素MOD加成 (Heat用heat mods, Gas用gas mods等)
         // 参考站 getTickStatusDmg @561: (1 + 元素MOD总和 + p/k/r/v 注入键)
@@ -1497,13 +1514,17 @@ const DamageCalculator = {
           if (innateDrArmor > 0) tickDmg *= (1 - innateDrArmor);
         }
 
-        // 暴击倍率 - 参考站用武器完整暴击倍率 (k[n].crit: 非暴击1, 暴击=weapon crit_mult×tier)
+        // 暴击倍率 - 参考站复用攻击时刻完整暴击倍率 (k[n].crit, 含冷状态加成)
         let dotCritMult = 1;
         if (event.isCrit) {
-          const dotAtk = event.atkIndex != null ? (weapon.attacks[event.atkIndex] || weapon.attacks[0]) : (weapon.attacks[0] || {});
-          const dotAtkMult = (dotAtk && dotAtk.crit_mult) || 2;
-          const dotBaseCritMult = dotAtkMult * (1 + (pMods.critMult || 0));
-          dotCritMult = this.getEffCritMult(event.critTier || 1, dotBaseCritMult);
+          if (event.critMult && event.critMult > 1) {
+            dotCritMult = event.critMult;
+          } else {
+            const dotAtk = event.atkIndex != null ? (weapon.attacks[event.atkIndex] || weapon.attacks[0]) : (weapon.attacks[0] || {});
+            const dotAtkMult = (dotAtk && dotAtk.crit_mult) || 2;
+            const dotBaseCritMult = dotAtkMult * (1 + (pMods.critMult || 0));
+            dotCritMult = this.getEffCritMult(event.critTier || 1, dotBaseCritMult);
+          }
         }
         tickDmg *= dotCritMult;
 
@@ -1624,8 +1645,14 @@ const DamageCalculator = {
     }
   },
 
-  getCurrentArmor(baseArmor, statusTimeQueue, time, decrArmorByPunc = 0) {
+  getCurrentArmor(baseArmor, statusTimeQueue, time, decrArmorByPunc = 0, externalArmorMult = 0) {
     let armor = baseArmor;
+
+    // 外部护甲削减 (参考站 @218973: O=getStatValFromMods("armor") → 0<O && (W*=1-O))
+    // Corrosive Projection 腐蚀投射光环 action:{armor:0.18} 等
+    if (externalArmorMult > 0) {
+      armor *= (1 - externalArmorMult);
+    }
 
     // Corrosive削减
     const corrosiveEvents = statusTimeQueue.Corrosive || [];
@@ -1898,6 +1925,7 @@ const DamageCalculator = {
       sniperComboDuration: 0, abilityCombo: 0,
       energy: 0, dSound: 0, archRange: 0, reloadRate: 0, reloadDelay: 0,
       ammoEff: 0, na: 0, meleeComboEffP: 0,
+      armor: 0, addWeaknessDmg: 0,
     };
 
     // set 套装计数 (参考站 findAllBaseModsDmg @516: mods.hasOwnProperty("set") 时 base × set[套件数])
@@ -1933,6 +1961,8 @@ const DamageCalculator = {
       if (a.base_per_status) result.basePerStatus += a.base_per_status * rankScale;
       if (a.add_slash) result.addSlash += a.add_slash * rankScale;
       if (a.add_slash_on_impact) result.addSlashOnImpact += a.add_slash_on_impact * rankScale;
+      if (a.armor) result.armor += a.armor * rankScale;
+      if (a.add_weakness_dmg) result.addWeaknessDmg += a.add_weakness_dmg * rankScale;
       if (a.SMITE) Object.entries(a.SMITE).forEach(([f, m]) => { result.smite[f] = (result.smite[f] || 0) + m * rankScale; });
       if (a.element) Object.entries(a.element).forEach(([e, m]) => { result.element[e] = (result.element[e] || 0) + m * rankScale; });
       if (a.phys) Object.entries(a.phys).forEach(([e, m]) => { result.phys[e] = (result.phys[e] || 0) + m * rankScale; });
@@ -2163,13 +2193,12 @@ const DamageCalculator = {
     return [[0]];
   },
 
-  // setQuantize: 参考站 16 等分网格量化 (min.js @206711)
-  // 对武器总伤害按 /16 网格取整到最近网格点:
-  //   step = totalBase / 16; 该型伤害 = Math.round(typeDmg / step) * step
-  // 总伤害是 16 的倍数时各型无变形; 非 16 倍数时产生量化变形 (如 Aeolak Alt 97 → 58.2→60.625)
+  // setQuantize: Wiki 32 等分网格量化 (Update 40.0: 1/16→1/32)
+  // 对武器总伤害按 /32 网格取整到最近网格点:
+  //   step = totalBase / 32; 该型伤害 = Math.round(typeDmg / step) * step
   setQuantize(totalBase, typeDmg) {
     if (typeDmg === 0) return 0;
-    const step = totalBase / 16;
+    const step = totalBase / 32;
     return Math.round(typeDmg / step) * step;
   },
 
@@ -2257,6 +2286,21 @@ const DamageCalculator = {
         result[type] = (result[type] || 0) + baseForInject * mult;
       }
     });
+
+    // 弱点元素伤害注入 (参考站 addWeaknessDmgType @144973: Sentient Incision 等)
+    // 按敌人派系注入对应元素 × add_weakness_dmg 值 (Infested→Heat, Grineer→Corrosive 等)
+    if (processedMods.addWeaknessDmg > 0) {
+      const faction = opts.faction || '';
+      const weaknessMap = {
+        'Infested': 'Heat', 'Anarchs': 'Electricity', 'Narmer': 'Toxin',
+        'Grineer': 'Corrosive', 'Kuva Grineer': 'Corrosive', 'Zariman': 'Corrosive', 'Scaldra': 'Corrosive',
+        'Corpus': 'Magnetic', 'Corpus Amalgam': 'Magnetic', 'Techrot': 'Magnetic',
+        'Orokin': 'Viral', 'Sentient': 'Radiation', 'Murmur': 'Radiation',
+        'Infested Deimos': 'Gas'
+      };
+      const weaknessElem = weaknessMap[faction] || 'Corrosive';
+      result[weaknessElem] = (result[weaknessElem] || 0) + baseForInject * processedMods.addWeaknessDmg;
+    }
 
     // 16 等分网格量化 (参考站 reCalcWithTypeBase→setQuantize, @206711):
     // 网格基准 = 原始总base × (1+基础伤害MOD倍率) × 阵营MOD  → y*w*l (不含物理/元素/组合MOD)
