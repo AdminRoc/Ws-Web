@@ -136,6 +136,10 @@ async function handleRequest(request) {
     headers: {
       'Content-Type': resp.headers.get('Content-Type') || 'application/json',
       'Access-Control-Allow-Origin': getAllowedOrigin(origin),
+      // ACAO 按请求 Origin 动态回显：Vary: Origin 让边缘缓存按 Origin 分键，
+      // 否则长缓存路由（dict-zh/export-regions）会把首个请求者的 ACAO 固化进缓存，
+      // 其他站点（world.wfspeed.run 等）命中同一副本时被 CORS 拦截。
+      'Vary': 'Origin',
       'Cache-Control': getCacheControl(url.pathname),
     },
   });
